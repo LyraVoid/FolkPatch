@@ -7,7 +7,7 @@ const PropItem = struct {
 
 fn setProp(gpa: std.mem.Allocator, io: std.Io, key: []const u8, value: []const u8) !void {
     const result = try std.process.run(gpa, io, .{
-        .argv = &[_][]const u8{ "resetprop", "-n", key, value },
+        .argv = &[_][]const u8{ "/data/adb/ap/bin/resetprop", "-n", key, value },
     });
     gpa.free(result.stdout);
     gpa.free(result.stderr);
@@ -15,7 +15,7 @@ fn setProp(gpa: std.mem.Allocator, io: std.Io, key: []const u8, value: []const u
 
 fn getProp(gpa: std.mem.Allocator, io: std.Io, key: []const u8) !?[]const u8 {
     const result = try std.process.run(gpa, io, .{
-        .argv = &[_][]const u8{ "resetprop", key },
+        .argv = &[_][]const u8{ "/data/adb/ap/bin/resetprop", key },
         .stdout_limit = .limited(1024),
         .stderr_limit = .limited(1024),
     });
