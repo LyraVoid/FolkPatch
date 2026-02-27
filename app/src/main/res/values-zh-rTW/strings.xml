@@ -613,6 +613,10 @@
     <string name="settings_theme_imported">主題已匯入</string>
     <string name="settings_theme_save_failed">儲存主題失敗</string>
     <string name="settings_theme_import_failed">匯入主題失敗</string>
+    <string name="settings_reset_theme">恢復主題</string>
+    <string name="settings_reset_theme_confirm">確定要將所有主題設置恢復為默認值嗎？這將清除所有自定義背景、字體、音樂和音效。</string>
+    <string name="settings_theme_reset">主題已恢復默認</string>
+    <string name="settings_theme_reset_failed">恢復主題失敗</string>
 
     <!-- Theme Strings -->
     <string name="theme_export_title">匯出主題</string>

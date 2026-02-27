@@ -612,6 +612,10 @@
     <string name="settings_theme_imported">تم استيراد السمة</string>
     <string name="settings_theme_save_failed">فشل حفظ السمة</string>
     <string name="settings_theme_import_failed">فشل استيراد السمة</string>
+    <string name="settings_reset_theme">إعادة تعيين السمة</string>
+    <string name="settings_reset_theme_confirm">هل أنت متأكد من أنك تريد إعادة تعيين جميع إعدادات السمة إلى القيم الافتراضية؟ سؤؤدي هذا إلى مسح جميع الخلفيات والخطوط والموسيقى والمؤثرات الصوتية المخصصة.</string>
+    <string name="settings_theme_reset">تمت إعادة تعيين السمة</string>
+    <string name="settings_theme_reset_failed">فشل في إعادة تعيين السمة</string>
 
     <!-- Theme Strings -->
     <string name="theme_export_title">تصدير السمة</string>

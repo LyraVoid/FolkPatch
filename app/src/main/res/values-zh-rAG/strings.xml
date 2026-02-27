@@ -606,6 +606,10 @@
     <string name="settings_theme_imported">主题导好了喵！</string>
     <string name="settings_theme_save_failed">存主题失败了喵...</string>
     <string name="settings_theme_import_failed">导主题失败了喵...</string>
+    <string name="settings_reset_theme">恢复主题喵！</string>
+    <string name="settings_reset_theme_confirm">确定要把所有主题设置恢复成默认喵？这会清掉所有自定义背景、字体、音乐和音效喵~</string>
+    <string name="settings_theme_reset">主题恢复好了喵！</string>
+    <string name="settings_theme_reset_failed">恢复主题失败了喵...</string>
 
     <!-- Theme Strings -->
     <string name="theme_export_title">导出主题喵！</string>

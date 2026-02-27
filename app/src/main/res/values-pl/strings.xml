@@ -614,6 +614,10 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="settings_theme_imported">Motyw zaimportowany</string>
     <string name="settings_theme_save_failed">Nie udało się zapisać motywu</string>
     <string name="settings_theme_import_failed">Nie udało się zaimportować motywu</string>
+    <string name="settings_reset_theme">Zresetuj motyw</string>
+    <string name="settings_reset_theme_confirm">Czy na pewno chcesz zresetować wszystkie ustawienia motywu do domyślnych? Spowoduje to wyczyszczenie wszystkich niestandardowych tłów, czcionek, muzyki i efektów dźwiękowych.</string>
+    <string name="settings_theme_reset">Motyw zresetowany</string>
+    <string name="settings_theme_reset_failed">Nie udało się zresetować motywu</string>
 
     <!-- Theme Strings -->
     <string name="theme_export_title">Eksportuj motyw</string>

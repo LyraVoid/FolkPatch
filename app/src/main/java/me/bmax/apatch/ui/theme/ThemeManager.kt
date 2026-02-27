@@ -795,4 +795,99 @@ object ThemeManager {
         }
         return result
     }
+
+    val refreshTheme = MutableLiveData<Boolean>()
+
+    suspend fun resetTheme(context: Context): Boolean {
+        return withContext(Dispatchers.IO) {
+            try {
+                val prefs = APApplication.sharedPreferences
+
+           
+                prefs.edit()
+                    .putBoolean("night_mode_enabled", true)
+                    .putBoolean("night_mode_follow_sys", true)
+                    .putBoolean("use_system_color_theme", true)
+                    .putString("custom_color", "indigo")
+                    .putString("home_layout_style", "circle")
+                    .remove("appLanguage")
+                    .apply()
+
+           
+                BackgroundConfig.reset()
+                BackgroundConfig.save(context)
+
+       
+                val filesDir = context.filesDir
+                val backgroundFiles = listOf(
+                    "background.jpg",
+                    "background.png",
+                    "background.gif",
+                    "background.webp",
+                    "video_background.mp4",
+                    "video_background.webm",
+                    "video_background.mkv",
+                    "grid_working_card_background.jpg",
+                    "grid_working_card_background.png",
+                    "grid_working_card_background.gif",
+                    "grid_working_card_background.webp",
+                    "background_home.jpg",
+                    "background_home.png",
+                    "background_home.gif",
+                    "background_home.webp",
+                    "background_kernel.jpg",
+                    "background_kernel.png",
+                    "background_kernel.gif",
+                    "background_kernel.webp",
+                    "background_superuser.jpg",
+                    "background_superuser.png",
+                    "background_superuser.gif",
+                    "background_superuser.webp",
+                    "background_system_module.jpg",
+                    "background_system_module.png",
+                    "background_system_module.gif",
+                    "background_system_module.webp",
+                    "background_settings.jpg",
+                    "background_settings.png",
+                    "background_settings.gif",
+                    "background_settings.webp",
+                    "title_image.jpg",
+                    "title_image.png",
+                    "title_image.gif",
+                    "title_image.webp"
+                )
+
+                for (filename in backgroundFiles) {
+                    val file = File(filesDir, filename)
+                    if (file.exists()) {
+                        file.delete()
+                    }
+                }
+
+      
+                FontConfig.clearFont(context)
+
+      
+                MusicConfig.clearMusic(context)
+
+                SoundEffectConfig.clearSoundEffect(context)
+                SoundEffectConfig.clearStartupSound(context)
+                SoundEffectConfig.save(context)
+
+        
+                withContext(Dispatchers.Main) {
+                    AppCompatDelegate.setApplicationLocales(LocaleListCompat.getEmptyLocaleList())
+                }
+
+              
+                refreshTheme.postValue(true)
+
+                Log.i(TAG, "Theme reset to default successfully")
+                true
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to reset theme", e)
+                false
+            }
+        }
+    }
 }

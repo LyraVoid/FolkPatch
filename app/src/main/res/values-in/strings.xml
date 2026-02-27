@@ -598,6 +598,10 @@ Pastikan aplikasi ditutup sepenuhnya dan dimulai ulang untuk menjalankan perinta
     <string name="settings_theme_imported">Tema terimpor</string>
     <string name="settings_theme_save_failed">Gagal menyimpan tema</string>
     <string name="settings_theme_import_failed">Gagal mengimpor tema</string>
+    <string name="settings_reset_theme">Setel Ulang Tema</string>
+    <string name="settings_reset_theme_confirm">Apakah Anda yakin ingin mengatur ulang semua pengaturan tema ke default? Ini akan menghapus semua latar belakang, font, musik, dan efek suara kustom.</string>
+    <string name="settings_theme_reset">Tema diatur ulang</string>
+    <string name="settings_theme_reset_failed">Gagal mengatur ulang tema</string>
 
     <string name="theme_export_title">Ekspor Tema</string>
     <string name="theme_import_title">Impor Tema</string>

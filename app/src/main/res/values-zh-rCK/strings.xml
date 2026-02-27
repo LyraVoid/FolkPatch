@@ -597,6 +597,10 @@
     <string name="settings_theme_imported">主题已导入</string>
     <string name="settings_theme_save_failed">存起主题失败</string>
     <string name="settings_theme_import_failed">导入主题失败</string>
+    <string name="settings_reset_theme">恢复装修</string>
+    <string name="settings_reset_theme_confirm">确定要把装修风格恢复成默认吗？这会清掉所有自定义背景、字体、音乐和音效。</string>
+    <string name="settings_theme_reset">装修已恢复</string>
+    <string name="settings_theme_reset_failed">恢复装修失败</string>
 
     <!-- Theme Strings -->
     <string name="theme_export_title">打包装</string>

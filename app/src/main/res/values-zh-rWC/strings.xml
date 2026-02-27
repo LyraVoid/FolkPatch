@@ -608,6 +608,10 @@
     <string name="settings_theme_imported">仙府色章已引</string>
     <string name="settings_theme_save_failed">藏仙府色章败陨</string>
     <string name="settings_theme_import_failed">引仙府色章败陨</string>
+    <string name="settings_reset_theme">复归仙府本色</string>
+    <string name="settings_reset_theme_confirm">道友确欲复归仙府本色乎？此将尽除诸般私设背景、字样、仙乐与音效。</string>
+    <string name="settings_theme_reset">仙府本色已复</string>
+    <string name="settings_theme_reset_failed">复归仙府本色败陨</string>
 
     <!-- Theme Strings -->
     <string name="theme_export_title">拓印仙府色章</string>

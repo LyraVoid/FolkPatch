@@ -536,6 +536,11 @@
     <string name="settings_theme_imported">テーマをインポートしました。</string>
     <string name="settings_theme_save_failed">テーマの保存に失敗しました。</string>
     <string name="settings_theme_import_failed">テーマのインポートに失敗しました。</string>
+    <string name="settings_reset_theme">テーマをリセット</string>
+    <string name="settings_reset_theme_confirm">すべてのテーマ設定をデフォルトにリセットしますか？これにより、すべてのカスタム背景、フォント、音楽、効果音が消去されます。</string>
+    <string name="settings_theme_reset">テーマをリセットしました</string>
+    <string name="settings_theme_reset_failed">テーマのリセットに失敗しました</string>
+
     <!-- Theme Strings -->
     <string name="theme_export_title">テーマをエクスポート</string>
     <string name="theme_import_title">テーマをインポート</string>

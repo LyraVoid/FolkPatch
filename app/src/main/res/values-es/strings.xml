@@ -609,6 +609,10 @@ Por ejemplo, los KPM que previenen la modificación de particiones solo pueden u
     <string name="settings_theme_imported">Tema importado</string>
     <string name="settings_theme_save_failed">Error al guardar tema</string>
     <string name="settings_theme_import_failed">Error al importar tema</string>
+    <string name="settings_reset_theme">Restablecer tema</string>
+    <string name="settings_reset_theme_confirm">¿Estás seguro de que deseas restablecer todas las configuraciones del tema a los valores predeterminados? Esto eliminará todos los fondos, fuentes, música y efectos de sonido personalizados.</string>
+    <string name="settings_theme_reset">Tema restablecido</string>
+    <string name="settings_theme_reset_failed">Error al restablecer el tema</string>
 
     <!-- Theme Strings -->
     <string name="theme_export_title">Exportar Tema</string>

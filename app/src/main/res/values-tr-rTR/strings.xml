@@ -609,6 +609,10 @@ Komutların çalışması için uygulamanın tamamen kapatılıp yeniden açıld
     <string name="settings_theme_imported">Tema içe aktarıldı</string>
     <string name="settings_theme_save_failed">Tema kaydedilemedi</string>
     <string name="settings_theme_import_failed">Tema içe aktarılamadı</string>
+    <string name="settings_reset_theme">Temayı Sıfırla</string>
+    <string name="settings_reset_theme_confirm">Tüm tema ayarlarını varsayılan değerlere sıfırlamak istediğinizden emin misiniz? Bu işlem tüm özel arka planları, yazı tiplerini, müzikleri ve ses efektlerini siler.</string>
+    <string name="settings_theme_reset">Tema sıfırlandı</string>
+    <string name="settings_theme_reset_failed">Tema sıfırlanamadı</string>
 
     <!-- Theme Strings -->
     <string name="theme_export_title">Temayı Dışa Aktar</string>

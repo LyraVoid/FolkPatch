@@ -612,6 +612,10 @@
     <string name="settings_theme_imported">Тема импортирована</string>
     <string name="settings_theme_save_failed">Не удалось сохранить тему</string>
     <string name="settings_theme_import_failed">Не удалось импортировать тему</string>
+    <string name="settings_reset_theme">Сбросить тему</string>
+    <string name="settings_reset_theme_confirm">Вы уверены, что хотите сбросить все настройки темы до значений по умолчанию? Это очистит все пользовательские фоны, шрифты, музыку и звуковые эффекты.</string>
+    <string name="settings_theme_reset">Тема сброшена</string>
+    <string name="settings_theme_reset_failed">Не удалось сбросить тему</string>
 
     <!-- Theme Strings -->
     <string name="theme_export_title">Экспорт темы</string>

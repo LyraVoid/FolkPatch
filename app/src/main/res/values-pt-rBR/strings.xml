@@ -607,6 +607,10 @@ Por favor, certifique-se de fechar completamente o app e reabri-lo para que os c
     <string name="settings_theme_imported">Tema importado</string>
     <string name="settings_theme_save_failed">Falha ao salvar tema</string>
     <string name="settings_theme_import_failed">Falha ao importar tema</string>
+    <string name="settings_reset_theme">Redefinir tema</string>
+    <string name="settings_reset_theme_confirm">Tem certeza de que deseja redefinir todas as configurações do tema para os padrões? Isso limpará todos os planos de fundo, fontes, músicas e efeitos sonoros personalizados.</string>
+    <string name="settings_theme_reset">Tema redefinido</string>
+    <string name="settings_theme_reset_failed">Falha ao redefinir tema</string>
 
     <!-- Theme Strings -->
     <string name="theme_export_title">Exportar Tema</string>

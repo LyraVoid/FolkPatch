@@ -462,8 +462,11 @@ fun AppearanceSettings(
     
     val importThemeTitle = stringResource(id = R.string.settings_import_theme)
     val showImportTheme = matchAppearance || shouldShow(searchText, importThemeTitle)
-    
-    val showAppearanceCategory = showNightModeFollowSys || showNightModeEnabled || showUseSystemColor || showCustomColor || showHomeLayout || showNavLayout || showGridBackgroundSwitch || showGridOpacity || showGridTextHidden || showGridModeHidden || showListModeHidden || showListCardHideStatusBadge || showCustomBackgroundSwitch || showCustomFontSwitch || showThemeStore || showSaveTheme || showImportTheme || showAdvancedTitleStyleSwitch
+
+    val resetThemeTitle = stringResource(id = R.string.settings_reset_theme)
+    val showResetTheme = matchAppearance || shouldShow(searchText, resetThemeTitle)
+
+    val showAppearanceCategory = showNightModeFollowSys || showNightModeEnabled || showUseSystemColor || showCustomColor || showHomeLayout || showNavLayout || showGridBackgroundSwitch || showGridOpacity || showGridTextHidden || showGridModeHidden || showListModeHidden || showListCardHideStatusBadge || showCustomBackgroundSwitch || showCustomFontSwitch || showThemeStore || showSaveTheme || showImportTheme || showResetTheme || showAdvancedTitleStyleSwitch
 
     val showThemeChooseDialog = remember { mutableStateOf(false) }
     val showHomeLayoutChooseDialog = remember { mutableStateOf(false) }
@@ -1645,6 +1648,32 @@ fun AppearanceSettings(
                     leadingContent = { Icon(Icons.Filled.Folder, null) },
                     modifier = Modifier.clickable {
                         showFilePicker.value = true
+                    }
+                )
+            }
+
+            if (showResetTheme) {
+                val resetThemeDialog = rememberConfirmDialog(
+                    onConfirm = {
+                        scope.launch {
+                            loadingDialog.show()
+                            val success = ThemeManager.resetTheme(context)
+                            loadingDialog.hide()
+                            snackBarHost.showSnackbar(
+                                message = if (success) context.getString(R.string.settings_theme_reset) else context.getString(R.string.settings_theme_reset_failed)
+                            )
+                        }
+                    }
+                )
+                ListItem(
+                    colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+                    headlineContent = { Text(text = resetThemeTitle) },
+                    leadingContent = { Icon(Icons.Filled.Restore, null) },
+                    modifier = Modifier.clickable {
+                        resetThemeDialog.showConfirm(
+                            title = resetThemeTitle,
+                            content = context.getString(R.string.settings_reset_theme_confirm)
+                        )
                     }
                 )
             }
