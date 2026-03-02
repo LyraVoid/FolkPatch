@@ -532,7 +532,7 @@ Pastikan aplikasi ditutup sepenuhnya dan dimulai ulang untuk menjalankan perinta
     <string name="apm_bulk_install_first_use_text">Fitur ini memungkinkan Anda menginstal beberapa modul sekaligus. Ini adalah metode instalasi cepat, cocok untuk modul yang tidak memerlukan operasi tombol selama instalasi. Untuk modul yang memerlukan interaksi tombol volume, silakan aktifkan mode instalasi proses lengkap di pengaturan.</string>
     <string name="apm_bulk_install_remove">Hapus</string>
     <string name="apm_first_use_title">Selamat datang di Modul Sistem</string>
-    <string name="apm_first_use_text">Selamat datang di Modul Sistem, yang menggunakan modul yang kompatibel dengan ekosistem Magisk. Dukungan modul Lua dapat ditambahkan di masa mendatang. Klik tombol di kanan bawah untuk menginstal modul. Anda juga dapat menggunakan penginstal di bagian atas untuk instalasi modul secara massal. Fungsi pencadangan semua modul dengan sekali klik juga disediakan, tetapi perhatikan bahwa solusi ini mungkin tidak cocok untuk semua modul, jadi buatlah cadangan Anda sendiri.</string>
+    <string name="apm_first_use_text">Selamat datang di Modul Sistem, yang menggunakan modul yang kompatibel dengan ekosistem Magisk. Klik tombol di kanan bawah untuk menginstal modul. Anda juga dapat menggunakan penginstal di bagian atas untuk instalasi modul secara massal. Fungsi pencadangan semua modul dengan sekali klik juga disediakan, tetapi perhatikan bahwa solusi ini mungkin tidak cocok untuk semua modul, jadi buatlah cadangan Anda sendiri.</string>
 
     <string name="home_hide_su_path">Sembunyikan jalur file yang dapat dieksekusi su</string>
     <string name="home_hide_kpatch_version">Sembunyikan versi patch kernel</string>

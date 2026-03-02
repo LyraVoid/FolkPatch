@@ -536,7 +536,7 @@
     <string name="apm_bulk_install_first_use_text">这个功能允许你一次性烹饪多道招牌菜,属于快速烹饪,适合烹饪一些过程中没有涉及按键操作的招牌菜,涉及点按音量键等操作的请去烹饪设置启用完整流程烹饪模式</string>
     <string name="apm_bulk_install_remove">撤菜</string>
     <string name="apm_first_use_title">欢迎使用招牌菜</string>
-    <string name="apm_first_use_text">欢迎使用招牌菜，这里使用的是兼容 Magisk 生态的招牌菜，未来可能会加入对 Lua 招牌菜的支持，点击右下角的按钮可以烹饪招牌菜，你也可以使用顶部的烹饪器批量烹饪招牌菜，还提供了一个功能一键备份全部招牌菜，但是注意这种方案不一定适用全部招牌菜，还是自己多加备份</string>
+    <string name="apm_first_use_text">欢迎使用招牌菜，这里使用的是兼容 Magisk 生态的招牌菜，点击右下角的按钮可以烹饪招牌菜，你也可以使用顶部的烹饪器批量烹饪招牌菜，还提供了一个功能一键备份全部招牌菜，但是注意这种方案不一定适用全部招牌菜，还是自己多加备份</string>
     <string name="kpm_autoload_add_kpm">添加酱料</string>
     <string name="kpm_autoload_remove_kpm">删除</string>
     <string name="kpm_autoload_kpm_list_title">酱料列表</string>

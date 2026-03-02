@@ -537,7 +537,7 @@
     <string name="apm_bulk_install_first_use_text">这个功能允许你一次性刷入多个模块,属于快速刷入,适合刷一些过程中没有涉及按键操作的模块,涉及点按音量键等操作的请去设置启用完整流程刷入模式</string>
     <string name="apm_bulk_install_remove">移除</string>
     <string name="apm_first_use_title">欢迎使用系统模块</string>
-    <string name="apm_first_use_text">欢迎使用系统模块，这里使用的是兼容Magisk生态的模块，未来可能会加入对Lua模块的支持，点击右下角的按钮可以安装模块，你也可以使用顶部的安装器批量安装模块，还提供了一个功能一键备份全部模块，但是注意这种方案不一定适用全部模块，还是自己多加备份</string>
+    <string name="apm_first_use_text">欢迎使用系统模块，这里使用的是兼容Magisk生态的模块，点击右下角的按钮可以安装模块，你也可以使用顶部的安装器批量安装模块，还提供了一个功能一键备份全部模块，但是注意这种方案不一定适用全部模块，还是自己多加备份</string>
     <string name="kpm_autoload_add_kpm">添加KPM</string>
     <string name="kpm_autoload_remove_kpm">删除</string>
     <string name="kpm_autoload_kpm_list_title">KPM模块列表</string>

@@ -571,7 +571,7 @@ Here are some possible reasons for authentication failure—please check which o
     <string name="apm_bulk_install_first_use_text">This feature allows you to install multiple modules at once. It is a quick install method suitable for modules that do not involve key operations during installation. For modules requiring volume key interactions, please enable the complete process install mode in settings.</string>
     <string name="apm_bulk_install_remove">Remove</string>
     <string name="apm_first_use_title">Welcome to System Modules</string>
-    <string name="apm_first_use_text">Welcome to System Modules, this uses modules compatible with the Magisk ecosystem. In the future, support for Lua modules may be added. Click the button in the bottom right corner to install modules. You can also use the installer at the top to batch install modules. A feature to backup all modules with one click is also provided, but note that this solution may not be suitable for all modules, so you should make your own backups.</string>
+    <string name="apm_first_use_text">Welcome to System Modules, this uses modules compatible with the Magisk ecosystem. Click the button in the bottom right corner to install modules. You can also use the installer at the top to batch install modules. A feature to backup all modules with one click is also provided, but note that this solution may not be suitable for all modules, so you should make your own backups.</string>
 
     <string name="kpm_autoload_kpm_list_title">KPM Modules</string>
     <string name="kpm_autoload_no_kpm_added">No KPM modules added</string>

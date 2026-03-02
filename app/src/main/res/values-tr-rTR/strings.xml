@@ -547,7 +547,7 @@ Bol şans! Ayrıca, aşağıdaki belge butonuna tıklamak kesinlikle doğru!</st
     <string name="apm_bulk_install_first_use_text">Bu özellik, birden fazla modülü aynı anda kurmanıza olanak tanır. Kurulum sırasında tuş etkileşimi gerektirmeyen modüller için uygun, hızlı bir kurulum yöntemidir. Ses tuşu etkileşimi gerektiren modüller için ayarlardan tam süreç kurulum modunu etkinleştirin.</string>
     <string name="apm_bulk_install_remove">Kaldır</string>
     <string name="apm_first_use_title">Sistem Modüllerine Hoş Geldiniz</string>
-    <string name="apm_first_use_text">Sistem Modüllerine hoş geldiniz. Bu bölüm, Magisk ekosistemiyle uyumlu modülleri kullanır. Gelecekte Lua modülleri için destek eklenebilir. Modül yüklemek için sağ alt köşedeki düğmeye tıklayın. Üst kısımdaki yükleyiciyi kullanarak modülleri toplu olarak da kurabilirsiniz. Tek tıkla tüm modülleri yedekleme özelliği de sunulmaktadır; ancak bu yöntemin tüm modüller için uygun olmayabileceğini unutmayın, bu yüzden kendi yedeklerinizi almanız önerilir.</string>
+    <string name="apm_first_use_text">Sistem Modüllerine hoş geldiniz. Bu bölüm, Magisk ekosistemiyle uyumlu modülleri kullanır. Modül yüklemek için sağ alt köşedeki düğmeye tıklayın. Üst kısımdaki yükleyiciyi kullanarak modülleri toplu olarak da kurabilirsiniz. Tek tıkla tüm modülleri yedekleme özelliği de sunulmaktadır; ancak bu yöntemin tüm modüller için uygun olmayabileceğini unutmayın, bu yüzden kendi yedeklerinizi almanız önerilir.</string>
 
     <string name="kpm_autoload_kpm_list_title">KPM Modülleri</string>
     <string name="kpm_autoload_no_kpm_added">Eklenmiş KPM modülü yok</string>

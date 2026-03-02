@@ -538,7 +538,7 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="apm_bulk_install_first_use_text">Ta funkcja pozwala na zainstalowanie wielu modułów naraz. Jest to szybka metoda instalacji, odpowiednia dla modułów, które podczas instalacji nie wymagają operacji na klawiszach. Dla modułów wymagających interakcji z klawiszami głośności, proszę włącz tryb pełnej instalacji w ustawieniach.</string>
     <string name="apm_bulk_install_remove">Usuń</string>
     <string name="apm_first_use_title">Witaj w modułach systemowych</string>
-    <string name="apm_first_use_text">Witaj w modułach systemowych, tutaj używane są moduły kompatybilne z ekosystemem Magisk. W przyszłości może zostać dodane wsparcie dla modułów Lua. Kliknij przycisk w prawym dolnym rogu, aby zainstalować moduły. Możesz również użyć instalatora na górze, aby zainstalować moduły hurtowo. Dostępna jest również funkcja tworzenia kopii zapasowej wszystkich modułów jednym kliknięciem, ale pamiętaj, że to rozwiązanie może nie być odpowiednie dla wszystkich modułów, więc warto robić własne kopie zapasowe.</string>
+    <string name="apm_first_use_text">Witaj w modułach systemowych, tutaj używane są moduły kompatybilne z ekosystemem Magisk. Kliknij przycisk w prawym dolnym rogu, aby zainstalować moduły. Możesz również użyć instalatora na górze, aby zainstalować moduły hurtowo. Dostępna jest również funkcja tworzenia kopii zapasowej wszystkich modułów jednym kliknięciem, ale pamiętaj, że to rozwiązanie może nie być odpowiednie dla wszystkich modułów, więc warto robić własne kopie zapasowe.</string>
 
     <!-- Hide Settings Strings -->
     <string name="home_hide_su_path">Ukryj ścieżkę pliku wykonywalnego su</string>

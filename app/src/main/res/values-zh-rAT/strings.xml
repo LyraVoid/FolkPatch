@@ -541,7 +541,7 @@
     <string name="apm_bulk_install_first_use_text">这个功能允许你一次性施展多个魔法阵，属于快速施法，适合施展一些过程中没有涉及咒语咏唱的魔法阵，涉及咏唱古代咒语的请去设置启用完整仪式模式</string>
     <string name="apm_bulk_install_remove">移除</string>
     <string name="apm_first_use_title">欢迎使用星之魔法阵</string>
-    <string name="apm_first_use_text">欢迎使用星之魔法阵，这里使用的是兼容Magisk生态的魔法阵，未来可能会加入对Lua魔法阵的支持，点击右下角的按钮可以施展魔法阵，你也可以使用顶部的施法器批量施展魔法阵，还提供了一个功能一键备份全部魔法阵，但是注意这种方案不一定适用全部魔法阵，还是自己多加备份</string>
+    <string name="apm_first_use_text">欢迎使用星之魔法阵，这里使用的是兼容Magisk生态的魔法阵，点击右下角的按钮可以施展魔法阵，你也可以使用顶部的施法器批量施展魔法阵，还提供了一个功能一键备份全部魔法阵，但是注意这种方案不一定适用全部魔法阵，还是自己多加备份</string>
 
     <string name="kpm_page_first_time_title">魔法警告</string>
     <string name="kpm_page_first_time_message">心之结晶是直接修改心之核心的实现，它不像星之魔法阵一样有很好的恢复机制，出问题只能进入天使之门去修复。建议先激活结晶没有问题再融合到心之核心。如果是只能激活使用的结晶，可以尝试使用自动心之结晶激活功能。如果你不了解心之结晶，请不要使用本功能！</string>

@@ -544,7 +544,7 @@
     <string name="apm_bulk_install_first_use_text">此功能允許一次性安裝多個模組，屬於快速安裝，適合安裝過程中未涉及按鍵操作的模組。若模組安裝過程需點按音量鍵，請於設定中啟用「完整批次安裝流程」。</string>
     <string name="apm_bulk_install_remove">移除</string>
     <string name="apm_first_use_title">歡迎使用系統模組</string>
-    <string name="apm_first_use_text">歡迎使用系統模組。本功能支援 Magisk 模組，未來也可能加入對 Lua 模組的支援。您可以點擊右下角的按鈕安裝模組，或使用頂部的安裝器進行模組批次安裝。此外，FolkPatch 也提供一鍵備份所有模組的功能，但請注意，此方式不一定適用於所有模組，建議自行備份關鍵模組。</string>
+    <string name="apm_first_use_text">歡迎使用系統模組。本功能支援 Magisk 模組。您可以點擊右下角的按鈕安裝模組，或使用頂部的安裝器進行模組批次安裝。此外，FolkPatch 也提供一鍵備份所有模組的功能，但請注意，此方式不一定適用於所有模組，建議自行備份關鍵模組。</string>
     <!-- Module Backup/Restore Strings -->
     <string name="apm_backup_title">備份模組</string>
     <string name="apm_restore_title">還原模組</string>

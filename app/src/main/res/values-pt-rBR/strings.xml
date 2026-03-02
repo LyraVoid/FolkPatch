@@ -546,7 +546,7 @@ Aqui estão algumas possíveis razões para a falha de autenticação—verifiqu
     <string name="apm_bulk_install_first_use_text">Este recurso permite instalar vários módulos de uma vez. É um método rápido adequado para módulos que não envolvem operações de tecla durante a instalação. Para módulos que exigem interações com as teclas de volume, ative o modo de instalação completa nas configurações.</string>
     <string name="apm_bulk_install_remove">Remover</string>
     <string name="apm_first_use_title">Bem-vindo aos Módulos de Sistema</string>
-    <string name="apm_first_use_text">Bem-vindo aos Módulos de Sistema. Aqui são usados módulos compatíveis com o ecossistema Magisk. Futuramente, suporte para módulos Lua poderá ser adicionado. Clique no botão no canto inferior direito para instalar módulos. Você também pode usar o instalador no topo para instalação em lote. Um recurso para backup de todos os módulos com um clique também é fornecido, mas note que esta solução pode não ser adequada para todos os módulos, então faça seus próprios backups.</string>
+    <string name="apm_first_use_text">Bem-vindo aos Módulos de Sistema. Aqui são usados módulos compatíveis com o ecossistema Magisk. Clique no botão no canto inferior direito para instalar módulos. Você também pode usar o instalador no topo para instalação em lote. Um recurso para backup de todos os módulos com um clique também é fornecido, mas note que esta solução pode não ser adequada para todos os módulos, então faça seus próprios backups.</string>
 
     <string name="kpm_autoload_kpm_list_title">Módulos KPM</string>
     <string name="kpm_autoload_no_kpm_added">Nenhum módulo KPM adicionado</string>

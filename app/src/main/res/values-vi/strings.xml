@@ -547,7 +547,7 @@ Dưới đây là một số nguyên nhân có thể gây ra thất bại xác t
     <string name="apm_bulk_install_first_use_text">Tính năng này cho phép bạn flash nhiều module một lần, thuộc loại flash nhanh, phù hợp để flash các module không liên quan đến thao tác nút trong quá trình, vui lòng bật chế độ flash quy trình hoàn chỉnh trong cài đặt cho các thao tác liên quan đến nhấn nút âm lượng v.v.</string>
     <string name="apm_bulk_install_remove">Xóa</string>
     <string name="apm_first_use_title">Chào mừng bạn sử dụng module hệ thống</string>
-    <string name="apm_first_use_text">Chào mừng bạn sử dụng module hệ thống, nơi này sử dụng module tương thích với hệ sinh thái Magisk, trong tương lai có thể sẽ thêm hỗ trợ module Lua, nhấn nút góc dưới bên phải để cài đặt module, bạn cũng có thể sử dụng trình cài đặt ở đầu trang để cài đặt module hàng loạt, cũng cung cấp một chức năng sao lưu tất cả module một nút, nhưng lưu ý phương án này có thể không áp dụng cho tất cả module, vẫn hãy tự sao lưu thêm</string>
+    <string name="apm_first_use_text">Chào mừng bạn sử dụng module hệ thống, nơi này sử dụng module tương thích với hệ sinh thái Magisk, nhấn nút góc dưới bên phải để cài đặt module, bạn cũng có thể sử dụng trình cài đặt ở đầu trang để cài đặt module hàng loạt, cũng cung cấp một chức năng sao lưu tất cả module một nút, nhưng lưu ý phương án này có thể không áp dụng cho tất cả module, vẫn hãy tự sao lưu thêm</string>
     <string name="kpm_autoload_add_kpm">Thêm KPM</string>
     <string name="kpm_autoload_remove_kpm">Xóa</string>
     <string name="kpm_autoload_kpm_list_title">Danh sách module KPM</string>
