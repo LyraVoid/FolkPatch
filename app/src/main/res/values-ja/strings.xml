@@ -21,7 +21,7 @@
     <string name="settings_show_kpm">KPM を表示</string>
     <string name="settings_show_superuser">スーパーユーザーを表示</string>
     <string name="settings_block_kernelpatch_update">KernelPatch の更新をブロック</string>
-    <string name="settings_block_kernelpatch_update_summary">KernelPatch の更新通知を表示しない</string>
+    <string name="settings_block_kernelpatch_update_summary">KernelPatch の更新通知を表示しないようにします。</string>
     <string name="reboot">再起動</string>
     <string name="settings">設定</string>
     <string name="reboot_recovery">リカバリーで再起動</string>
@@ -30,6 +30,7 @@
     <string name="reboot_edl">EDL で再起動</string>
     <string name="reboot_fastbootd">FastbootD で再起動</string>
     <string name="about">アプリについて</string>
+    <string name="developer_and_maintainer">開発者 | メンテナ</string>
     <string name="settings_app_language">言語</string>
     <string name="system_default">システムのデフォルト</string>
     <string name="settings_global_namespace_mode">グローバル名前空間モード</string>
@@ -65,9 +66,6 @@
     <string name="save_log">ログを保存</string>
     <string name="log_saved">ログを保存しました。</string>
     <string name="safe_mode">セーフモード</string>
-    <string name="developer_and_maintainer">開発者 | メンテナ</string>
-    <string name="github">GitHub</string>
-    <string name="telegram">Telegram</string>
     <string name="support_or_donate">サポート / 寄付</string>
     <string name="super_key">SuperKey</string>
     <string name="clear_super_key">SuperKey を消去</string>
@@ -169,7 +167,7 @@
     <string name="su_pkg_root_setting_title">スーパーユーザー</string>
     <string name="su_pkg_root_setting_summary">このオプションを有効化すると、アプリへのスーパーユーザーアクセスが許可され SU コマンドを使用できるようになります。</string>
     <string name="su_pkg_normal_setting_title">通常モード</string>
-    <string name="su_pkg_normal_setting_summary">root 権限は付与されません。アプリはスーパーユーザー権限なしで実行されます。</string>
+    <string name="su_pkg_normal_setting_summary">デフォルト、特別な処理はしません。</string>
     <string name="su_show_system_apps">システムアプリを表示</string>
     <string name="su_hide_system_apps">システムアプリを非表示</string>
     <string name="su_refresh">更新</string>
@@ -184,7 +182,7 @@
     <string name="apm_uninstall_confirm">「%s」のモジュールをアンインストールしますか？</string>
     <string name="apm_uninstall_success">「%s」はアンインストールされました</string>
     <string name="apm_uninstall_failed">アンインストールに失敗: %s</string>
-    <string name="apm_undo_uninstall_success">%s を復元しました</string>
+    <string name="apm_undo_uninstall_success">%s 個の復元が成功しました。</string>
     <string name="apm_undo_uninstall_failed">復元に失敗: %s</string>
     <string name="apm_version">バージョン</string>
     <string name="apm_author">作者</string>
@@ -244,7 +242,7 @@
     <string name="module_shortcut_type_action">アクション</string>
     <string name="module_shortcut_icon_default">デフォルトのアイコンを使用</string>
     <string name="module_shortcut_icon_select">アイコンを選択</string>
-    <string name="apm_disable_all_confirm">すべてのモジュールを無効化してもよろしいですか？これにより、インストール済みのすべてのモジュールが無効になります</string>
+    <string name="apm_disable_all_confirm">すべてのモジュールを無効化してもよろしいですか？これにより、インストールされているすべてのモジュールが無効化されます。</string>
     <string name="apm_enable_module_banner">モジュールバナーを有効化</string>
     <string name="apm_enable_module_banner_summary">モジュールのバナー画像が利用可能な場合に表示します。</string>
     <string name="apm_enable_folk_banner">カスタムモジュールバナー</string>
@@ -255,6 +253,31 @@
     <string name="apm_folk_banner_saved">「%s」に Folk バナーをインジェクトしました。</string>
     <string name="apm_folk_banner_cleared">「%s」の Folk バナーを消去しました。</string>
     <string name="apm_folk_banner_failed">「%s」の Folk バナーの更新に失敗しました。</string>
+    <string name="apm_banner_api_mode">API モード</string>
+    <string name="apm_banner_api_mode_summary">モジュールバナーでランダム画像 API またはローカルディレクトリを使用します。</string>
+    <string name="apm_banner_api_source">構成 API ソース</string>
+    <string name="apm_banner_api_source_hint">API URL またはローカルパスを入力</string>
+    <string name="apm_banner_api_source_saved">API ソースを保存しました</string>
+    <string name="apm_banner_api_source_not_configured">未構成</string>
+    <string name="apm_banner_api_url_configured">API URL 構成済み</string>
+    <string name="apm_banner_local_dir_configured">ローカルディレクトリが構成されています。</string>
+    <string name="apm_banner_clear_cache">キャッシュを消去</string>
+    <string name="apm_banner_cache_cleared">バナーキャッシュを消去しました。</string>
+    <string name="apm_banner_api_config_title">構成 API ソース</string>
+    <string name="apm_banner_api_config_desc">ランダム画像 API URL またはローカルディレクトリのパスを入力してください。各モジュールに固有のバナー画像が付与されます。</string>
+    <string name="apm_banner_api_examples_title">例:</string>
+    <string name="apm_banner_api_examples">API: https://picsum.photos/800/400\nローカル: /sdcard/Pictures/Banners</string>
+    <!-- API Marketplace -->
+    <string name="apm_api_marketplace_title">API マーケットプレイス</string>
+    <string name="apm_api_preview">プレビュー</string>
+    <string name="apm_api_apply">適用</string>
+    <string name="apm_api_preview_title">API プレビュー</string>
+    <string name="apm_api_preview_failed">プレビューの読み込みに失敗しました。</string>
+    <string name="apm_api_url_label">API URL:</string>
+    <string name="apm_api_apply_success">API ソースを適用しました。</string>
+    <string name="apm_api_verifying">検証中…</string>
+    <string name="apm_api_retry">再試行</string>
+    <string name="apm_api_empty">利用可能な API ソースがありません</string>
     <string name="settings_banner_custom_opacity">バナーの透過</string>
     <string name="settings_banner_custom_opacity_summary">壁紙モードを使用する代わりにカスタム可能な透過バナーを使用します。</string>
     <string name="settings_banner_opacity">バナーの透過率</string>
@@ -267,7 +290,15 @@
     <string name="mode_select_page_install_inactive_slot">非アクティブスロットにインストール (OTA 後)</string>
     <string name="mode_select_page_install_inactive_slot_warning">再起動後にデバイスは、非アクティブなスロットから**強制的に**起動されます！\nこのオプションは、OTA の完了後にのみ使用してください。\n続行しますか？</string>
     <string name="home_dialog_auth_fail_title">認証に失敗しました。</string>
-    <string name="home_dialog_auth_fail_content">SuperKey を認証できないため、APatch は正常に動作しません。\n認証の失敗で考えられる原因は以下の通りです:\n1. boot.img に KernelPatch を適用していない。\n2. パッチを適用した boot.img をフラッシュしていない。\n3. SuperKey が間違っているか、特殊文字が含まれている。\n4. 使用しているデバイスが APatch と KernelPatch に対応していない。\n\n確認をした上で、再度お試しください。それでも問題が解決しない場合は、公式リポジトリの Issue ページでいつでも質問ができます。</string>
+    <string name="home_dialog_auth_fail_content">SuperKey を認証できないため、FolkPatch の有効化に失敗しました。
+認証の失敗について考えられる原因は以下の通りです。
+該当するものをご確認ください:
+
+\n1. KernelPatch を使用して boot.img にパッチを適用していないか、実際にパッチを適用した内容を忘れている。
+\n2. パッチを適用した boot.img がコンピューター上でスリープ状態のままで、デバイスに書き込まれていない。
+\n3. SuperKey が誤って入力されたか、不明な記号 (例: 外国の文字) が含まれている。
+\n4. デバイスが、FolkPatch および KernelPatch と互換性がない可能性。これは強制的に試行しても無理です。
+\n5. FolkPatch をブロックするパッケージ名を除外する特定のモジュールを使用するなど、不明な操作を行った結果、ゲームから脱落した可能性があります。</string>
     <string name="home_more_menu_feedback_or_suggestion">フィードバックまたは提案</string>
     <string name="home_more_menu_about">アプリについて</string>
     <string name="home_more_menu_document">ドキュメント</string>
@@ -307,35 +338,12 @@
     <string name="sakura_theme">サクラ</string>
     <string name="teal_theme">ティール</string>
     <string name="yellow_theme">イエロー</string>
-
-    <string name="apm_banner_api_mode">APIモード</string>
-    <string name="apm_banner_api_mode_summary">モジュールバナーにランダム画像APIまたはローカルディレクトリを使用</string>
-    <string name="apm_banner_api_source">APIソースを設定</string>
-    <string name="apm_banner_api_source_hint">API URLまたはローカルパスを入力</string>
-    <string name="apm_banner_api_source_saved">APIソースが保存されました</string>
-    <string name="apm_banner_api_source_not_configured">未設定</string>
-    <string name="apm_banner_api_url_configured">API URLが設定されました</string>
-    <string name="apm_banner_local_dir_configured">ローカルディレクトリが設定されました</string>
-    <string name="apm_banner_clear_cache">キャッシュを削除</string>
-    <string name="apm_banner_cache_cleared">バナーキャッシュをクリアしました</string>
-    <string name="apm_banner_api_config_title">APIソースを設定</string>
-    <string name="apm_banner_api_config_desc">ランダム画像APIのURLまたはローカルディレクトリのパスを入力してください。各モジュールはユニークなバナーを取得します。</string>
-    <string name="apm_banner_api_examples_title">例：</string>
-    <string name="apm_banner_api_examples">API: https://picsum.photos/800/400\nローカル: /sdcard/Pictures/Banners</string>
-    <!-- API マーケットプレイス -->
-    <string name="apm_api_marketplace_title">API マーケットプレイス</string>
-    <string name="apm_api_preview">プレビュー</string>
-    <string name="apm_api_apply">適用</string>
-    <string name="apm_api_preview_title">API プレビュー</string>
-    <string name="apm_api_preview_failed">プレビューの読み込みに失敗しました</string>
-    <string name="apm_api_url_label">API URL：</string>
-    <string name="apm_api_apply_success">API ソースを適用しました</string>
-    <string name="apm_api_verifying">検証中…</string>
-    <string name="apm_api_retry">再試行</string>
-    <string name="apm_api_empty">利用可能な API ソースがありません</string>
-    <string name="about_app_desc">KernelPatch ベースの Root 実装で、カーネルを再コンパイルせずにカーネル関数のフックを可能にします。</string>
+    <string name="ink_wash_theme">インクウォッシュ</string>
+    <string name="about_app_desc">KernelPatch ベースの root 実装、カーネルをリコンパイルせずにカーネル関数フックを可能にします。</string>
     <string name="about_powered_by">Powered by %1$s</string>
     <string name="about_telegram_group">Telegram グループ</string>
+    <string name="github">GitHub</string>
+    <string name="telegram">Telegram</string>
     <!-- Online Module Strings -->
     <string name="online_module_title">オンラインシステムモジュール</string>
     <string name="online_module_download_start">ダウンロードを開始中: %s</string>
@@ -375,7 +383,20 @@
     <string name="settings_magic_mount">Folk Mount API</string>
     <string name="settings_magic_mount_summary">内蔵のモジュールマウントシステムを有効化します。</string>
     <string name="settings_hide_service">FolkPatch Hide</string>
-    <string name="settings_hide_service_summary">ブートローダーのアンロック状態をある程度隠します</string>
+    <string name="settings_hide_service_summary">Bootloader Unlock 状態をある程度非表示にします。</string>
+    <!-- Umount Service -->
+    <string name="settings_umount_service">Zig Umount</string>
+    <string name="settings_umount_service_summary">起動時に自動アンマウントするマウントポイントを構成します。</string>
+    <string name="umount_config_title">アンマウントの構成</string>
+    <string name="umount_config_enabled">アンマウントを有効化</string>
+    <string name="umount_config_enabled_summary">起動時に指定したマウントポイントを自動でアンマウントします。</string>
+    <string name="umount_config_paths_label">マウントポイントのパス (1 行に 1 つ)</string>
+    <string name="umount_config_paths_placeholder">/system/vendor/app\n/system/vendor/priv-app</string>
+    <string name="umount_config_paths_helper">アンマウントするには、1 行につき 1 つのマウントポイントパスを入力</string>
+    <string name="umount_config_save">保存</string>
+    <string name="umount_config_save_confirm">構成を保存を確認しますか？</string>
+    <string name="umount_config_save_success">構成の保存に成功しました。</string>
+    <string name="umount_config_save_failed">構成の保存に失敗しました。</string>
     <string name="settings_app_title">アプリのタイトル</string>
     <string name="settings_custom_background">カスタム背景</string>
     <string name="settings_custom_background_enabled">カスタム背景が有効化されています</string>
@@ -392,22 +413,20 @@
     <string name="settings_select_superuser_background">スーパーユーザーの背景</string>
     <string name="settings_select_system_module_background">システムモジュールの背景</string>
     <string name="settings_select_settings_background">設定の背景</string>
-
     <string name="settings_advanced_title_style">高度なタイトルスタイル</string>
-    <string name="settings_advanced_title_style_summary">カスタム画像でトップバーのタイトルを置換</string>
-    <string name="settings_advanced_title_style_enabled">高度なタイトルスタイルが有効</string>
+    <string name="settings_advanced_title_style_summary">トップバータイトルをカスタム画像に置き換えます。</string>
+    <string name="settings_advanced_title_style_enabled">高度なタイトルスタイルが有効化されています</string>
     <string name="settings_select_title_image">タイトル画像を選択</string>
-    <string name="settings_title_image_selected">タイトル画像が選択されました</string>
-    <string name="settings_title_image_saved">タイトル画像の保存に成功しました</string>
-    <string name="settings_title_image_error">タイトル画像の保存に失敗しました</string>
-    <string name="settings_clear_title_image">タイトル画像をクリア</string>
-    <string name="settings_clear_title_image_confirm">タイトル画像をクリアしてもよろしいですか？</string>
-    <string name="settings_title_image_cleared">タイトル画像がクリアされました</string>
-    <string name="settings_title_image_day_opacity">昼モードの不透明度</string>
-    <string name="settings_title_image_night_opacity">夜モードの不透明度</string>
-    <string name="settings_title_image_dim">背景の明度</string>
-    <string name="settings_title_image_offset_x">水平位置</string>
-
+    <string name="settings_title_image_selected">タイトル画像が選択されました。</string>
+    <string name="settings_title_image_saved">タイトル画像の保存に成功しました。</string>
+    <string name="settings_title_image_error">タイトル画像の保存に失敗しました。</string>
+    <string name="settings_clear_title_image">タイトル画像を消去</string>
+    <string name="settings_clear_title_image_confirm">このタイトル画像を消去してもよろしいですか？</string>
+    <string name="settings_title_image_cleared">タイトル画像を消去しました。</string>
+    <string name="settings_title_image_day_opacity">日中モードの不透明度</string>
+    <string name="settings_title_image_night_opacity">夜間モードの不透明度</string>
+    <string name="settings_title_image_dim">背景を暗くする</string>
+    <string name="settings_title_image_offset_x">水平の位置</string>
     <!-- Font Settings -->
     <string name="settings_custom_font">カスタムフォント</string>
     <string name="settings_select_font_file">フォントファイルを選択</string>
@@ -484,7 +503,7 @@
     <string name="apm_bulk_install_first_use_text">この機能を使用すると複数のモジュールを一度にインストールできます。これは、インストール時にボタン操作を必要としないモジュールに適したクイックインストール方法です。音量ボタンの操作が必要なモジュールの場合は、設定でフルプロセスインストールモードを有効化してください。</string>
     <string name="apm_bulk_install_remove">削除</string>
     <string name="apm_first_use_title">システムモジュールへようこそ</string>
-    <string name="apm_first_use_text">システムモジュールへようこそ。Magisk エコシステムと互換性のあるモジュールを使用しています。モジュールをインストールするには、右下のボタンをタップしてください。また、上部のインストーラーを使用してモジュールを一括インストールすることもできます。ワンタップですべてのモジュールをバックアップする機能も提供されていますが、このソリューションはすべてのモジュールに適している訳ではないため、自分でバックアップを作成してください。</string>
+    <string name="apm_first_use_text">システムモジュールへようこそ。Magisk エコシステムとの互換性のあるモジュールを使用しています。右下のボタンをタップしてモジュールをインストールしてください。また、上部のインストーラーを使用してモジュールを一括でインストールすることもできます。ワンタップですべてのモジュールをバックアップする機能も提供されていますが、このソリューションはすべてのモジュールに適しているわけではないため、ご自身でバックアップを作成してください。</string>
     <string name="kpm_autoload_kpm_list_title">KP モジュール</string>
     <string name="kpm_autoload_no_kpm_added">KP モジュールが追加されていません</string>
     <string name="kpm_autoload_kpm_path">KPM のパス</string>
@@ -524,7 +543,7 @@
     <string name="settings_home_layout_focus">フォーカス UI</string>
     <string name="settings_home_layout_sign">サイン UI</string>
     <string name="settings_home_layout_circle">サークル UI</string>
-    <string name="settings_home_layout_dashboard_pro">ダッシュボード Pro</string>
+    <string name="settings_home_layout_dashboard_pro">ダッシュボード UI</string>
     <string name="unofficial_version_title">非公式なバージョン</string>
     <string name="unofficial_version_message">非公式な FolkPatch を使用しています。公式のアプリをダウンロードしてください！</string>
     <string name="go_to_github">GitHub を開く</string>
@@ -535,10 +554,9 @@
     <string name="settings_theme_save_failed">テーマの保存に失敗しました。</string>
     <string name="settings_theme_import_failed">テーマのインポートに失敗しました。</string>
     <string name="settings_reset_theme">テーマをリセット</string>
-    <string name="settings_reset_theme_confirm">すべてのテーマ設定をデフォルトにリセットしますか？これにより、すべてのカスタム背景、フォント、音楽、効果音が消去されます。</string>
-    <string name="settings_theme_reset">テーマをリセットしました</string>
-    <string name="settings_theme_reset_failed">テーマのリセットに失敗しました</string>
-
+    <string name="settings_reset_theme_confirm">すべてのテーマ設定をデフォルトにリセットしてもよろしいですか？すべてのカスタム背景、フォント、音楽、サウンド効果が消去されます。</string>
+    <string name="settings_theme_reset">テーマをデフォルトにリセット</string>
+    <string name="settings_theme_reset_failed">テーマのリセットに失敗しました。</string>
     <!-- Theme Strings -->
     <string name="theme_export_title">テーマをエクスポート</string>
     <string name="theme_import_title">テーマをインポート</string>
@@ -584,6 +602,8 @@
     <string name="theme_store_download_failed">ダウンロードに失敗しました。</string>
     <string name="theme_store_download">ダウンロード</string>
     <string name="theme_store_search_hint">テーマを検索...</string>
+    <string name="search_modules">モジュールを検索...</string>
+    <string name="search_scripts">スクリプトを検索...</string>
     <!-- Update Check Strings -->
     <string name="settings_auto_update_check">自動で更新を確認する</string>
     <string name="settings_auto_update_check_summary">アプリの開始時に更新を自動で確認します。</string>
@@ -595,13 +615,13 @@
     <string name="update_latest">最新のバージョンを使用しています</string>
     <string name="update_error">更新の確認でエラーが発生しました。</string>
     <string name="settings_category_general">一般</string>
-    <string name="superuser">スーパーユーザー</string>
-    <string name="module">モジュール</string>
     <string name="settings_app_list_loading_scheme">アプリリストの読み込み方式</string>
     <string name="settings_app_list_loading_scheme_summary">アプリリストの読み込み方式を選択します。</string>
     <string name="app_list_loading_scheme_root_service">root サービス (デフォルト)</string>
     <string name="app_list_loading_scheme_package_manager">パッケージマネージャー (システム API)</string>
     <string name="app_list_loading_scheme_dialog_title">スキームを読み込み中</string>
+    <string name="superuser">スーパーユーザー</string>
+    <string name="module">モジュール</string>
     <string name="settings_category_appearance">外観</string>
     <string name="settings_category_behavior">動作</string>
     <string name="settings_category_module">モジュール</string>
@@ -636,6 +656,35 @@
     <string name="theme_store_filter_type">デバイスタイプ</string>
     <string name="theme_store_filter_apply">適用</string>
     <string name="theme_store_filter_reset">リセット</string>
+    <!-- My Themes Page -->
+    <string name="my_themes_title">マイテーマ</string>
+    <string name="my_themes_empty">テーマはまだありません</string>
+    <string name="my_themes_empty_action">テーマストアを参照</string>
+    <string name="my_themes_apply">テーマを適用</string>
+    <string name="my_themes_delete">テーマを削除</string>
+    <string name="my_themes_delete_confirm">このテーマを削除してもよろしいですか？</string>
+    <string name="my_themes_deleted">テーマを削除しました。</string>
+    <string name="my_themes_applied">テーマを適用しました。</string>
+    <string name="my_themes_apply_failed">テーマの適用に失敗しました。</string>
+    <string name="my_themes_details">テーマの詳細</string>
+    <!-- Download Dialog -->
+    <string name="theme_download_title">テーマをダウンロード中</string>
+    <string name="theme_download_completed">ダウンロード完了</string>
+    <string name="theme_download_failed">ダウンロード失敗</string>
+    <string name="theme_download_progress">進捗</string>
+    <string name="theme_download_file">テーマファイル</string>
+    <string name="theme_download_image">画像のプレビュー</string>
+    <string name="theme_download_cancel">キャンセル</string>
+    <string name="theme_download_pause">一時停止</string>
+    <string name="theme_download_resume">再開</string>
+    <string name="theme_download_retry">再試行</string>
+    <string name="theme_download_apply">テーマを適用</string>
+    <string name="theme_download_go_to_my_themes">マイテーマ</string>
+    <string name="theme_download_retrying">再試行中 (%d/3)...</string>
+    <string name="theme_download_preparing">ダウンロードを準備中...</string>
+    <string name="theme_download_downloading_file">テーマファイルをダウンロード中...</string>
+    <string name="theme_download_downloading_image">プレビュー画像をダウンロード中...</string>
+    <string name="theme_download_finalizing">ファイナライズ中...</string>
     <!-- File Picker -->
     <string name="file_picker_permission_required">権限が必要です</string>
     <string name="file_picker_permission_desc">ファイルを参照するには「すべてのファイルへのアクセス」の権限を許可してください。</string>
@@ -670,6 +719,12 @@
     <string name="settings_list_card_hide_status_badge_summary">ホームのステータスバッジにクラシックの絵文字を使用します。</string>
     <string name="settings_custom_badge_text">カスタムバッジテキスト</string>
     <string name="settings_custom_badge_text_summary">バッジのテキスト表示を変更します。</string>
+    <string name="settings_custom_badge_text_full_half">完全/一部 (デフォルト)</string>
+    <string name="settings_custom_badge_text_lkm">LKM</string>
+    <string name="settings_custom_badge_text_gki">GKI</string>
+    <string name="settings_custom_badge_text_n_gki">非 GKI</string>
+    <string name="settings_custom_badge_text_oki">OKI</string>
+    <string name="settings_custom_badge_text_built_in">内蔵</string>
     <!-- Install Mode Select -->
     <string name="kp_install_methods">KernelPatch をパッチ/インストール</string>
     <string name="restore_boot_methods">boot パーティションを復元する boot を選択してください</string>
@@ -684,7 +739,7 @@
     <string name="su_app_action_force_stop">強制停止</string>
     <string name="su_app_action_launch_success">「%s」を起動中</string>
     <string name="su_app_action_force_stop_success">「%s」を強制停止しました。</string>
-    <string name="su_app_action_failed">操作に失敗しました: %s</string>
+    <string name="su_app_action_failed">操作に失敗: %s</string>
     <string name="patch_output_written_to">出力ファイル先</string>
     <string name="patch_write_failed">パッチ済みの boot.img のフラッシュに失敗しました。</string>
     <!-- Badge Count Settings -->
@@ -697,10 +752,10 @@
     <string name="settings_sound_effect_summary">タップ時にサウンド効果を再生します。</string>
     <string name="settings_sound_effect_enabled">有効</string>
     <string name="settings_sound_effect_playing">選択済み: %s</string>
-    <string name="settings_sound_effect_source">音源</string>
+    <string name="settings_sound_effect_source">サウンドソース</string>
     <string name="settings_sound_effect_source_local">ローカルファイル</string>
     <string name="settings_sound_effect_source_preset">プリセット</string>
-    <string name="settings_sound_effect_preset_title">プリセットサウンド</string>
+    <string name="settings_sound_effect_preset_title">プリセットのサウンド</string>
     <string name="settings_select_sound_effect">サウンド効果を選択</string>
     <string name="settings_sound_effect_selected">サウンド効果が選択されました。</string>
     <string name="settings_sound_effect_scope">効果のスコープ</string>
@@ -709,17 +764,22 @@
     <string name="settings_clear_sound_effect">サウンド効果を消去</string>
     <string name="settings_clear_sound_effect_confirm">サウンド効果を消去してもよろしいですか？</string>
     <string name="settings_sound_effect_cleared">サウンド効果を消去しました。</string>
-
-    <string name="settings_startup_sound">起動音</string>
-    <string name="settings_startup_sound_summary">アプリ起動時に音を再生</string>
-    <string name="settings_startup_sound_enabled">起動音が有効</string>
+    <string name="settings_startup_sound">起動時のサウンド</string>
+    <string name="settings_startup_sound_summary">アプリの起動時にサウンドを再生します。</string>
+    <string name="settings_startup_sound_enabled">起動時のサウンドが有効化されています</string>
     <string name="settings_startup_sound_playing">再生中: %s</string>
-    <string name="settings_select_startup_sound">起動音を選択</string>
-    <string name="settings_startup_sound_selected">起動音が選択されました</string>
-    <string name="settings_clear_startup_sound">起動音を消去</string>
-    <string name="settings_clear_startup_sound_confirm">起動音を消去してもよろしいですか？</string>
-    <string name="settings_startup_sound_cleared">起動音を消去しました</string>
-
+    <string name="settings_select_startup_sound">起動時のサウンドを選択</string>
+    <string name="settings_startup_sound_selected">起動時のサウンドが選択されました。</string>
+    <string name="settings_clear_startup_sound">起動時のサウンドを消去</string>
+    <string name="settings_clear_startup_sound_confirm">起動時のサウンドを消去してもよろしいですか？</string>
+    <string name="settings_startup_sound_cleared">起動時のサウンドを消去しました。</string>
+    <string name="settings_vibration">振動フィードバック</string>
+    <string name="settings_vibration_summary">タッチイベント時に振動させます。</string>
+    <string name="settings_vibration_enabled">振動を有効化</string>
+    <string name="settings_vibration_intensity">振動の強さ</string>
+    <string name="settings_vibration_scope">振動スコープ</string>
+    <string name="settings_vibration_scope_global">グローバル (常に)</string>
+    <string name="settings_vibration_scope_bottom_bar">ボトムバーのみ</string>
     <!-- Backup Settings -->
     <string name="settings_category_backup">バックアップ</string>
     <string name="settings_enable_cloud_backup">クラウドバックアップを有効化する</string>
@@ -766,58 +826,4 @@
     <string name="script_library_save_log">ログを保存</string>
     <string name="script_library_log_saved">「%s」にログを保存しました。</string>
     <string name="script_library_log_save_failed">ログの保存に失敗: %s</string>
-    <string name="settings_vibration">バイブレーションと触覚</string>
-    <string name="settings_vibration_summary">タッチ操作時に振動する</string>
-    <string name="settings_vibration_enabled">バイブレーションを有効化</string>
-    <string name="settings_vibration_intensity">バイブレーションの強さ</string>
-    <string name="settings_vibration_scope">バイブレーションの範囲</string>
-    <string name="settings_vibration_scope_global">グローバル（すべての場所）</string>
-    <string name="settings_vibration_scope_bottom_bar">下部バーのみ</string>
-    <string name="search_modules">モジュールを検索...</string>
-    <string name="search_scripts">スクリプトを検索...</string>
-
-    <!-- Umount Service -->
-    <string name="settings_umount_service">Zig Umount</string>
-    <string name="settings_umount_service_summary">起動時に自動的にアンマウントするマウントポイントを設定</string>
-    <string name="umount_config_title">Umount 設定</string>
-    <string name="umount_config_enabled">Umount を有効化</string>
-    <string name="umount_config_enabled_summary">起動時に指定したマウントポイントを自動的にアンマウント</string>
-    <string name="umount_config_paths_label">マウントポイントパス（1行に1つ）</string>
-    <string name="umount_config_paths_placeholder">/system/vendor/app\n/system/vendor/priv-app</string>
-    <string name="umount_config_paths_helper">アンマウントするマウントポイントパスを1行に1つ入力してください</string>
-    <string name="umount_config_save">保存</string>
-    <string name="umount_config_save_confirm">設定を保存しますか？</string>
-    <string name="umount_config_save_success">設定を保存しました</string>
-    <string name="umount_config_save_failed">設定の保存に失敗しました</string>
-
-    <!-- マイテーマページ -->
-    <string name="my_themes_title">マイテーマ</string>
-    <string name="my_themes_empty">まだテーマがありません</string>
-    <string name="my_themes_empty_action">テーマストアを見る</string>
-    <string name="my_themes_apply">テーマを適用</string>
-    <string name="my_themes_delete">テーマを削除</string>
-    <string name="my_themes_delete_confirm">このテーマを削除してもよろしいですか？</string>
-    <string name="my_themes_deleted">テーマを削除しました</string>
-    <string name="my_themes_applied">テーマを適用しました</string>
-    <string name="my_themes_apply_failed">テーマの適用に失敗しました</string>
-    <string name="my_themes_details">テーマの詳細</string>
-
-    <!-- ダウンロードダイアログ -->
-    <string name="theme_download_title">テーマをダウンロード中</string>
-    <string name="theme_download_completed">ダウンロード完了</string>
-    <string name="theme_download_failed">ダウンロード失敗</string>
-    <string name="theme_download_progress">進捗</string>
-    <string name="theme_download_file">テーマファイル</string>
-    <string name="theme_download_image">プレビュー画像</string>
-    <string name="theme_download_cancel">キャンセル</string>
-    <string name="theme_download_pause">一時停止</string>
-    <string name="theme_download_resume">再開</string>
-    <string name="theme_download_retry">再試行</string>
-    <string name="theme_download_apply">テーマを適用</string>
-    <string name="theme_download_go_to_my_themes">マイテーマ</string>
-    <string name="theme_download_retrying">再試行中 (%d/3)...</string>
-    <string name="theme_download_preparing">ダウンロードを準備中...</string>
-    <string name="theme_download_downloading_file">テーマファイルをダウンロード中...</string>
-    <string name="theme_download_downloading_image">プレビュー画像をダウンロード中...</string>
-    <string name="theme_download_finalizing">完了中...</string>
 </resources>
