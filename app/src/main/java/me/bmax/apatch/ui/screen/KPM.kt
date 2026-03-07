@@ -886,7 +886,16 @@ private fun KPModuleItem(
     val folkBannerCleared = stringResource(R.string.apm_folk_banner_cleared)
     val folkBannerFailed = stringResource(R.string.apm_folk_banner_failed)
     var showFolkBannerDialog by remember { mutableStateOf(false) }
+    var hasFolkBanner by remember { mutableStateOf(false) }
     var bannerReloadKey by remember { mutableStateOf(0) }
+    
+    LaunchedEffect(showFolkBannerDialog) {
+        if (showFolkBannerDialog) {
+            hasFolkBanner = withContext(Dispatchers.IO) {
+                readKpmBanner(context, module.name) != null
+            }
+        }
+    }
 
     val pickFolkBannerLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.GetContent()
@@ -1185,27 +1194,29 @@ private fun KPModuleItem(
                     ) {
                         Text(folkBannerSelect)
                     }
-                    Button(
-                        onClick = {
-                            showFolkBannerDialog = false
-                            scope.launch {
-                                loadingDialog.show()
-                                val success = withContext(Dispatchers.IO) {
-                                    runCatching { clearKpmBanner(context, module.name) }.getOrDefault(false)
+                    if (hasFolkBanner) {
+                        Button(
+                            onClick = {
+                                showFolkBannerDialog = false
+                                scope.launch {
+                                    loadingDialog.show()
+                                    val success = withContext(Dispatchers.IO) {
+                                        runCatching { clearKpmBanner(context, module.name) }.getOrDefault(false)
+                                    }
+                                    loadingDialog.hide()
+                                    val message = if (success) {
+                                        bannerReloadKey++
+                                        folkBannerCleared.format(module.name)
+                                    } else {
+                                        folkBannerFailed.format(module.name)
+                                    }
+                                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
                                 }
-                                loadingDialog.hide()
-                                val message = if (success) {
-                                    bannerReloadKey++
-                                    folkBannerCleared.format(module.name)
-                                } else {
-                                    folkBannerFailed.format(module.name)
-                                }
-                                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-                            }
-                        },
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text(folkBannerClear)
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(folkBannerClear)
+                        }
                     }
                 }
             },

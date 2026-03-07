@@ -1085,7 +1085,16 @@ private fun ModuleItem(
     val folkBannerFailed = stringResource(R.string.apm_folk_banner_failed)
     
     var showFolkBannerDialog by remember { mutableStateOf(false) }
+    var hasFolkBanner by remember { mutableStateOf(false) }
     var bannerReloadKey by rememberSaveable(module.id) { mutableStateOf(0) }
+    
+    LaunchedEffect(showFolkBannerDialog) {
+        if (showFolkBannerDialog) {
+            hasFolkBanner = withContext(Dispatchers.IO) {
+                readFolkBanner(context, module.id) != null
+            }
+        }
+    }
     
     val pickFolkBannerLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.GetContent()
@@ -1642,35 +1651,37 @@ private fun ModuleItem(
                     ) {
                         Text(folkBannerSelect)
                     }
-                    Button(
-                        onClick = {
-                            showFolkBannerDialog = false
-                            scope.launch {
-                                loadingDialog.show()
-                                val success = withContext(Dispatchers.IO) {
-                                    runCatching {
-                                        val localCleared = clearFolkBanner(context, module.id)
-                                        val legacyCleared = runCatching {
-                                            val rootShell = getRootShell(true)
-                                            val resolvedDir = resolveModuleDir(rootShell, module.id)
-                                            clearLegacyFolkBanner(rootShell, resolvedDir)
+                    if (hasFolkBanner) {
+                        Button(
+                            onClick = {
+                                showFolkBannerDialog = false
+                                scope.launch {
+                                    loadingDialog.show()
+                                    val success = withContext(Dispatchers.IO) {
+                                        runCatching {
+                                            val localCleared = clearFolkBanner(context, module.id)
+                                            val legacyCleared = runCatching {
+                                                val rootShell = getRootShell(true)
+                                                val resolvedDir = resolveModuleDir(rootShell, module.id)
+                                                clearLegacyFolkBanner(rootShell, resolvedDir)
+                                            }.getOrDefault(false)
+                                            localCleared || legacyCleared
                                         }.getOrDefault(false)
-                                        localCleared || legacyCleared
-                                    }.getOrDefault(false)
+                                    }
+                                    loadingDialog.hide()
+                                    if (success) {
+                                        viewModel.removeBannerInfo(module.id)
+                                        bannerReloadKey++
+                                        snackBarHost.showSnackbar(folkBannerCleared.format(module.name))
+                                    } else {
+                                        snackBarHost.showSnackbar(folkBannerFailed.format(module.name))
+                                    }
                                 }
-                                loadingDialog.hide()
-                                if (success) {
-                                    viewModel.removeBannerInfo(module.id)
-                                    bannerReloadKey++
-                                    snackBarHost.showSnackbar(folkBannerCleared.format(module.name))
-                                } else {
-                                    snackBarHost.showSnackbar(folkBannerFailed.format(module.name))
-                                }
-                            }
-                        },
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text(folkBannerClear)
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(folkBannerClear)
+                        }
                     }
                 }
             },
