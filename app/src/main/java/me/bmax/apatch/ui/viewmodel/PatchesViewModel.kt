@@ -440,18 +440,14 @@ class PatchesViewModel : ViewModel() {
             if (prefs.getBoolean("auto_backup_boot", true) && mode == PatchMode.PATCH_ONLY) {
                 try {
                     val timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"))
-                    val backupDir = File("/data/FolkPatch_patched_${apVer}_${timestamp}/")
+                    val backupDir = File("/data/FolkPatch_patched_${apVer}_${timestamp}")
                     backupDirPath = backupDir.absolutePath
-                    if (!backupDir.exists()) {
-                        val mkdirResult = shell.newJob().add("mkdir -p $backupDir").exec()
-                        if (!mkdirResult.isSuccess) {
-                            throw Exception("Failed to create backup directory: ${mkdirResult.err.joinToString("\n")}")
-                        }
-                    }
+                    backupDir.mkdirs()
                     val originalBoot = File(backupDir, "boot.img")
-                    val copyOriginalResult = shell.newJob().add("cp $srcBoot $originalBoot").exec()
-                    if (!copyOriginalResult.isSuccess) {
-                        throw Exception("Failed to copy original boot image: ${copyOriginalResult.err.joinToString("\n")}")
+                    srcBoot.inputStream().use { input ->
+                        originalBoot.outputStream().use { output ->
+                            input.copyTo(output)
+                        }
                     }
                 } catch (e: Exception) {
                     Log.e(TAG, "Backup failed", e)
