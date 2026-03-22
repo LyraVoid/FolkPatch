@@ -9,6 +9,8 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -120,6 +122,7 @@ import java.io.File
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.ui.LocalBottomBarVisible
 import androidx.compose.material3.ButtonDefaults
@@ -369,8 +372,15 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
                 }
             }
             val bottomBarVisible = LocalBottomBarVisible.current.value
+            val configuration = LocalConfiguration.current
+            val isLandscape = configuration.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
+            val animatedOffset by animateDpAsState(
+                targetValue = if (isFloatingMode && bottomBarVisible && !isLandscape) (-88).dp else 0.dp,
+                animationSpec = tween(durationMillis = 300),
+                label = "fabOffset"
+            )
             if (isFloatingMode) {
-                Box(modifier = Modifier.offset(y = if (bottomBarVisible) (-88).dp else 0.dp)) {
+                Box(modifier = Modifier.offset(y = animatedOffset)) {
                     fabContent()
                 }
             } else {
