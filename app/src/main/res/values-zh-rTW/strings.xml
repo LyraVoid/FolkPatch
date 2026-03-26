@@ -674,7 +674,7 @@
     <!--折疊選項-->
     <string name="settings_category_general">一般</string>
     <string name="superuser">超級使用者</string>
-    <string name="module">模組</string>
+    <string name="module">系統模組</string>
     <string name="settings_category_appearance">外觀</string>
     <string name="settings_appearance_font">字體設定</string>
     <string name="settings_appearance_font_summary">自訂字體配置</string>

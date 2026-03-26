@@ -671,7 +671,7 @@
     <string name="app_list_loading_scheme_package_manager">PackageManager (系统 API)</string>
     <string name="app_list_loading_scheme_dialog_title">加载方案</string>
     <string name="superuser">超级用户</string>
-    <string name="module">模块</string>
+    <string name="module">系统模块</string>
     <string name="settings_category_appearance">外观</string>
     <string name="settings_category_behavior">行为</string>
     

@@ -23,7 +23,8 @@ class OnlineKPMViewModel : ViewModel() {
         val name: String,
         val version: String,
         val url: String,
-        val description: String
+        val description: String,
+        val needControl: Boolean
     )
 
     var modules by mutableStateOf<List<OnlineKPM>>(emptyList())
@@ -82,7 +83,8 @@ class OnlineKPMViewModel : ViewModel() {
                                 name = obj.optString("name"),
                                 version = obj.optString("version"),
                                 url = obj.optString("url"),
-                                description = finalDesc
+                                description = finalDesc,
+                                needControl = obj.optInt("parameter", 0) == 1
                             )
                         )
                     }

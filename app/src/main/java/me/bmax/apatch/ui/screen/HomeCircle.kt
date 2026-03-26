@@ -111,7 +111,7 @@ fun HomeScreenCircle(
                             .fillMaxWidth()
                             .clickable {
                                 navigator.navigate(BottomBarDestination.SuperUser.direction) {
-                                    popUpTo(NavGraphs.root) {
+                                    popUpTo(NavGraphs.root.startRoute) {
                                         saveState = true
                                     }
                                     launchSingleTop = true
@@ -151,7 +151,7 @@ fun HomeScreenCircle(
                             .fillMaxWidth()
                             .clickable {
                                 navigator.navigate(BottomBarDestination.AModule.direction) {
-                                    popUpTo(NavGraphs.root) {
+                                    popUpTo(NavGraphs.root.startRoute) {
                                         saveState = true
                                     }
                                     launchSingleTop = true
