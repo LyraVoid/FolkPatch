@@ -47,10 +47,14 @@ import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.offset
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -78,6 +82,8 @@ import me.bmax.apatch.ui.component.IconTextButton
 import me.bmax.apatch.ui.component.ModuleStateIndicator
 import me.bmax.apatch.ui.component.rememberConfirmDialog
 import me.bmax.apatch.ui.component.rememberLoadingDialog
+import me.bmax.apatch.ui.theme.LocalBottomBarVisible
+import me.bmax.apatch.ui.theme.LocalEnableFloatingBottomBar
 import me.bmax.apatch.ui.viewmodel.APModuleViewModel
 import me.bmax.apatch.util.DownloadListener
 import me.bmax.apatch.util.download
@@ -224,20 +230,37 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
                     }
                 }
 
-                FloatingActionButton(
-                    containerColor = MiuixTheme.colorScheme.primary,
-                    modifier = Modifier.padding(bottom = 30.dp),
-                    onClick = {
-                        // select the zip file to install
-                        val intent = Intent(Intent.ACTION_GET_CONTENT)
-                        intent.type = "application/zip"
-                        selectZipLauncher.launch(intent)
-                    }) {
-                    Icon(
-                        imageVector = Icons.Default.Archive,
-                        contentDescription = null,
-                        tint = MiuixTheme.colorScheme.onPrimary
-                    )
+                val isFloatingMode = LocalEnableFloatingBottomBar.current
+                val bottomBarVisible = LocalBottomBarVisible.current.value
+                val configuration = LocalConfiguration.current
+                val isLandscape = configuration.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
+                val animatedOffset by animateDpAsState(
+                    targetValue = if (isFloatingMode && bottomBarVisible && !isLandscape) (-56).dp else 0.dp,
+                    animationSpec = tween(durationMillis = 300),
+                    label = "fabOffset"
+                )
+                val fabContent: @Composable () -> Unit = {
+                    FloatingActionButton(
+                        containerColor = MiuixTheme.colorScheme.primary,
+                        modifier = Modifier.padding(bottom = 30.dp),
+                        onClick = {
+                            val intent = Intent(Intent.ACTION_GET_CONTENT)
+                            intent.type = "application/zip"
+                            selectZipLauncher.launch(intent)
+                        }) {
+                        Icon(
+                            imageVector = Icons.Default.Archive,
+                            contentDescription = null,
+                            tint = MiuixTheme.colorScheme.onPrimary
+                        )
+                    }
+                }
+                if (isFloatingMode) {
+                    Box(modifier = Modifier.offset(y = animatedOffset)) {
+                        fabContent()
+                    }
+                } else {
+                    fabContent()
                 }
             }
         }, popupHost = {}

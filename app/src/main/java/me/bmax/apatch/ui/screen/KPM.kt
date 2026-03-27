@@ -31,9 +31,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.offset
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -65,6 +69,8 @@ import me.bmax.apatch.ui.component.IconTextButton
 import me.bmax.apatch.ui.component.LoadingDialogHandle
 import me.bmax.apatch.ui.component.rememberConfirmDialog
 import me.bmax.apatch.ui.component.rememberLoadingDialog
+import me.bmax.apatch.ui.theme.LocalBottomBarVisible
+import me.bmax.apatch.ui.theme.LocalEnableFloatingBottomBar
 import me.bmax.apatch.ui.viewmodel.KPModel
 import me.bmax.apatch.ui.viewmodel.KPModuleViewModel
 import me.bmax.apatch.ui.viewmodel.PatchesViewModel
@@ -176,64 +182,79 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
             val expanded = remember { mutableStateOf(false) }
             val options = listOf(moduleEmbed, moduleInstall, moduleLoad, moduleAutoLoadConfig)
 
-            Column {
-                FloatingActionButton(
-                    onClick = { expanded.value = !expanded.value },
-                    containerColor = MiuixTheme.colorScheme.primary,
-                    modifier = Modifier.padding(bottom = 30.dp)
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.package_import),
-                        contentDescription = null,
-                        tint = MiuixTheme.colorScheme.onPrimary
-                    )
-                }
+            val isFloatingMode = LocalEnableFloatingBottomBar.current
+            val bottomBarVisible = LocalBottomBarVisible.current.value
+            val configuration = LocalConfiguration.current
+            val isLandscape = configuration.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
+            val animatedOffset by animateDpAsState(
+                targetValue = if (isFloatingMode && bottomBarVisible && !isLandscape) (-56).dp else 0.dp,
+                animationSpec = tween(durationMillis = 300),
+                label = "fabOffset"
+            )
+            val fabContent: @Composable () -> Unit = {
+                Column {
+                    FloatingActionButton(
+                        onClick = { expanded.value = !expanded.value },
+                        containerColor = MiuixTheme.colorScheme.primary,
+                        modifier = Modifier.padding(bottom = 30.dp)
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.package_import),
+                            contentDescription = null,
+                            tint = MiuixTheme.colorScheme.onPrimary
+                        )
+                    }
 
-                ListPopup(
-                    show = expanded,
-                    alignment = PopupPositionProvider.Align.Right,
-                    onDismissRequest = { expanded.value = false }
-                ) {
+                    ListPopup(
+                        show = expanded,
+                        alignment = PopupPositionProvider.Align.Right,
+                        onDismissRequest = { expanded.value = false }
+                    ) {
 
-                    ListPopupColumn {
-                        options.forEachIndexed { index, label ->
-                            DropdownItem(
-                                text = label,
-                                optionSize = options.size,
-                                index = index,
-                                onSelectedIndexChange = {
-                                    when (label) {
-                                        moduleEmbed -> navigator.navigate(
-                                            PatchesDestination(PatchesViewModel.PatchMode.PATCH_AND_INSTALL)
-                                        )
+                        ListPopupColumn {
+                            options.forEachIndexed { index, label ->
+                                DropdownItem(
+                                    text = label,
+                                    optionSize = options.size,
+                                    index = index,
+                                    onSelectedIndexChange = {
+                                        when (label) {
+                                            moduleEmbed -> navigator.navigate(
+                                                PatchesDestination(PatchesViewModel.PatchMode.PATCH_AND_INSTALL)
+                                            )
 
-                                        moduleInstall -> {
-//                                            val intent = Intent(Intent.ACTION_GET_CONTENT)
-//                                            intent.type = "application/zip"
-//                                            selectZipLauncher.launch(intent)
-                                            Toast.makeText(
-                                                context,
-                                                "Under development",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
+                                            moduleInstall -> {
+                                                Toast.makeText(
+                                                    context,
+                                                    "Under development",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            }
+
+                                            moduleLoad -> {
+                                                val intent = Intent(Intent.ACTION_GET_CONTENT)
+                                                intent.type = "*/*"
+                                                selectKpmLauncher.launch(intent)
+                                            }
+
+                                            moduleAutoLoadConfig -> {
+                                                navigator.navigate(KpmAutoLoadConfigScreenDestination)
+                                            }
                                         }
-
-                                        moduleLoad -> {
-                                            val intent = Intent(Intent.ACTION_GET_CONTENT)
-                                            intent.type = "*/*"
-                                            selectKpmLauncher.launch(intent)
-                                        }
-
-                                        moduleAutoLoadConfig -> {
-                                            navigator.navigate(KpmAutoLoadConfigScreenDestination)
-                                        }
-                                    }
-                                    expanded.value = false
-                                },
-                            )
+                                        expanded.value = false
+                                    },
+                                )
+                            }
                         }
                     }
                 }
+            }
+            if (isFloatingMode) {
+                Box(modifier = Modifier.offset(y = animatedOffset)) {
+                    fabContent()
+                }
+            } else {
+                fabContent()
             }
         }
     ) { innerPadding ->

@@ -25,6 +25,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
@@ -32,7 +33,9 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Apps
 import androidx.compose.material.icons.filled.Build
@@ -45,6 +48,7 @@ import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Security
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocal
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -55,12 +59,17 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.Velocity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
@@ -82,6 +91,7 @@ import dev.chrisbanes.haze.hazeSource
 import com.kyant.backdrop.backdrops.layerBackdrop
 import com.kyant.backdrop.backdrops.rememberLayerBackdrop
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
@@ -98,6 +108,7 @@ import me.bmax.apatch.ui.theme.APatchTheme
 import me.bmax.apatch.ui.theme.LocalEnableBlur
 import me.bmax.apatch.ui.theme.LocalEnableFloatingBottomBar
 import me.bmax.apatch.ui.theme.LocalEnableLiquidGlass
+import me.bmax.apatch.ui.theme.LocalBottomBarVisible
 import me.bmax.apatch.ui.viewmodel.APModuleViewModel
 import me.bmax.apatch.util.ModuleParser
 import me.bmax.apatch.util.UpdateChecker
@@ -111,6 +122,7 @@ import top.yukonga.miuix.kmp.basic.NavigationItem
 import top.yukonga.miuix.kmp.basic.Scaffold
 import top.yukonga.miuix.kmp.basic.Text
 import top.yukonga.miuix.kmp.theme.MiuixTheme
+import kotlin.math.abs
 
 class MainActivity : AppCompatActivity() {
 
@@ -181,11 +193,17 @@ class MainActivity : AppCompatActivity() {
             }
 
             APatchTheme(colorMode = colorMode, keyColor = keyColor) {
-                CompositionLocalProvider(
+
+                    val bottomBarVisibleState = remember { mutableStateOf(true) }
+
+                    CompositionLocalProvider(
                     LocalEnableBlur provides enableBlur,
                     LocalEnableFloatingBottomBar provides enableFloatingBottomBar,
                     LocalEnableLiquidGlass provides enableLiquidGlass,
                 ) {
+                    CompositionLocalProvider(
+                        LocalBottomBarVisible provides bottomBarVisibleState
+                    ) {
                     val navController = rememberNavController()
                     val navigator = navController.rememberDestinationsNavigator()
 
@@ -251,7 +269,57 @@ class MainActivity : AppCompatActivity() {
 
                     val currentBackStackEntry by navController.currentBackStackEntryAsState()
                     val currentRoute = currentBackStackEntry?.destination?.route
-                    val showBottomBar = currentRoute != InstallScreenDestination.route
+                    val showBottomBarRoute = currentRoute != InstallScreenDestination.route
+
+                    var isBottomBarVisible by remember { mutableStateOf(true) }
+                    var autoHideKey by remember { mutableStateOf(0) }
+                    val isScrollingDown = remember { mutableStateOf(false) }
+                    val scrollOffset = remember { mutableStateOf(0f) }
+                    val previousScrollOffset = remember { mutableStateOf(0f) }
+
+                    fun resetBottomBarAutoHide() {
+                        isBottomBarVisible = true
+                        autoHideKey++
+                    }
+
+                    val scrollConnection = remember {
+                        object : NestedScrollConnection {
+                            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+                                val delta = available.y
+                                if (delta != 0f) {
+                                    resetBottomBarAutoHide()
+                                }
+                                val newOffset = scrollOffset.value + delta
+                                scrollOffset.value = newOffset
+                                val scrollDelta = previousScrollOffset.value - newOffset
+                                if (abs(scrollDelta) > 50f) {
+                                    isScrollingDown.value = scrollDelta > 0
+                                    previousScrollOffset.value = newOffset
+                                }
+                                return Offset.Zero
+                            }
+
+                            override suspend fun onPostFling(consumed: Velocity, available: Velocity): Velocity {
+                                previousScrollOffset.value = scrollOffset.value
+                                return super.onPostFling(consumed, available)
+                            }
+                        }
+                    }
+
+                    LaunchedEffect(enableFloatingBottomBar, autoHideKey) {
+                        if (enableFloatingBottomBar && isBottomBarVisible) {
+                            delay(3000L)
+                            isBottomBarVisible = false
+                        }
+                    }
+
+                    val showBottomBar = if (enableFloatingBottomBar) {
+                        showBottomBarRoute && isBottomBarVisible && !isScrollingDown.value
+                    } else {
+                        showBottomBarRoute
+                    }
+
+                    bottomBarVisibleState.value = showBottomBar
 
                     // Haze state for standard blur mode
                     val hazeState = remember { HazeState() }
@@ -293,6 +361,10 @@ class MainActivity : AppCompatActivity() {
                         ) {
                             DestinationsNavHost(
                                 modifier = Modifier
+                                    .then(
+                                        if (enableFloatingBottomBar) Modifier.nestedScroll(scrollConnection)
+                                        else Modifier
+                                    )
                                     .padding(bottom = if (showBottomBar) {
                                         if (enableFloatingBottomBar) 0.dp else 65.dp
                                     } else 0.dp)
@@ -412,18 +484,22 @@ class MainActivity : AppCompatActivity() {
                         )
                     } // end Scaffold content
 
-                    // Floating bottom bar overlay (rendered on top of everything)
-                        if (showBottomBar && enableFloatingBottomBar) {
-                            BottomBar(
-                                navController = navController,
-                                enableBlur = enableBlur,
-                                enableFloatingBottomBar = true,
-                                enableLiquidGlass = enableLiquidGlass,
-                                hazeState = hazeState,
-                                hazeStyle = hazeStyle,
-                                backdrop = backdrop,
-                            )
-                        }
+                    AnimatedVisibility(
+                        visible = showBottomBar && enableFloatingBottomBar,
+                        enter = slideInVertically(initialOffsetY = { it }) + fadeIn(),
+                        exit = slideOutVertically(targetOffsetY = { it }) + fadeOut()
+                    ) {
+                        BottomBar(
+                            navController = navController,
+                            enableBlur = enableBlur,
+                            enableFloatingBottomBar = true,
+                            enableLiquidGlass = enableLiquidGlass,
+                            hazeState = hazeState,
+                            hazeStyle = hazeStyle,
+                            backdrop = backdrop,
+                            onUserInteraction = { resetBottomBarAutoHide() },
+                        )
+                    }
                     } // end outer Box
 
                 // Signature verify dialog
@@ -441,7 +517,8 @@ class MainActivity : AppCompatActivity() {
                         }
                     )
                 }
-                } // end CompositionLocalProvider
+                    } // end CompositionLocalProvider
+                } // end outer CompositionLocalProvider
             } // end APatchTheme
         } // end setContent
 
@@ -469,6 +546,7 @@ private fun BottomBar(
     hazeState: HazeState,
     hazeStyle: HazeStyle,
     backdrop: com.kyant.backdrop.Backdrop,
+    onUserInteraction: (() -> Unit)? = null,
 ) {
     val state by APApplication.apStateLiveData.observeAsState(APApplication.State.UNKNOWN_STATE)
     val navigator = navController.rememberDestinationsNavigator()
@@ -520,6 +598,7 @@ private fun BottomBar(
 
         val navigateToDestination: (index: Int) -> Unit = { index ->
             val dest = visibleDestinations[index]
+            onUserInteraction?.invoke()
             if (currentRoute != dest.direction.route) {
                 navigator.navigate(dest.direction) {
                     popUpTo(NavGraphs.root) { saveState = true }

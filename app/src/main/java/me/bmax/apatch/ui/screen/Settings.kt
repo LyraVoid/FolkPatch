@@ -81,6 +81,7 @@ import me.bmax.apatch.Natives
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.LoadingDialogHandle
 import me.bmax.apatch.ui.component.rememberLoadingDialog
+import me.bmax.apatch.ui.theme.LocalEnableFloatingBottomBar
 import me.bmax.apatch.util.APatchKeyHelper
 import me.bmax.apatch.util.DPIUtils
 import me.bmax.apatch.util.getBugreportFile
@@ -235,13 +236,18 @@ fun SettingScreen(navigator: DestinationsNavigator) {
             mutableStateOf(dpiValues.indexOf(currentDpi).coerceAtLeast(0))
         }
 
+        val floatingBottomPadding = if (LocalEnableFloatingBottomBar.current) 88.dp else 0.dp
+
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .overScrollVertical()
                 .nestedScroll(scrollBehavior.nestedScrollConnection)
                 .padding(horizontal = 12.dp),
-            contentPadding = paddingValues
+            contentPadding = PaddingValues(
+                top = paddingValues.calculateTopPadding(),
+                bottom = paddingValues.calculateBottomPadding() + floatingBottomPadding + 12.dp
+            )
         ) {
             // --- Section: Customization ---
             item {
