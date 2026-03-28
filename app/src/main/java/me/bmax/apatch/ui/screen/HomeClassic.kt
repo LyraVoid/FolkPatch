@@ -164,14 +164,12 @@ private fun ClassicWorkCard(
 
     val contentColor = when (kpState) {
         APApplication.State.KERNELPATCH_INSTALLED -> when {
-            isMonet -> colorScheme.onPrimaryContainer
             isDark -> Color(0xFFA8DABC)
             else -> Color(0xFF003920)
         }
         APApplication.State.KERNELPATCH_NEED_UPDATE -> colorScheme.onSecondaryContainer
         APApplication.State.KERNELPATCH_NEED_REBOOT -> colorScheme.onErrorContainer
         else -> when {
-            isMonet -> colorScheme.onSecondaryContainer
             isDark -> Color(0xFFE0E0E0)
             else -> Color(0xFF333333)
         }
