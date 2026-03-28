@@ -26,7 +26,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -99,21 +98,6 @@ fun Patches(mode: PatchesViewModel.PatchMode) {
             title = stringResource(R.string.patch_config_title),
             scrollBehavior = scrollBehavior
         )
-    }, floatingActionButton = {
-        if (viewModel.needReboot) {
-            val reboot = stringResource(id = R.string.reboot)
-            IconButton(
-                onClick = {
-                    scope.launch { withContext(Dispatchers.IO) { reboot() } }
-                }
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Refresh,
-                    contentDescription = reboot,
-                    tint = MiuixTheme.colorScheme.primary
-                )
-            }
-        }
     }, popupHost = {}
     ) { innerPadding ->
         LazyColumn(
@@ -247,6 +231,18 @@ fun Patches(mode: PatchesViewModel.PatchMode) {
                     }
 
                     Spacer(modifier = Modifier.height(12.dp))
+
+                    if (viewModel.needReboot) {
+                        Button(
+                            modifier = Modifier.fillMaxWidth(),
+                            onClick = {
+                                scope.launch { withContext(Dispatchers.IO) { reboot() } }
+                            },
+                            content = {
+                                Text(text = stringResource(id = R.string.reboot))
+                            }
+                        )
+                    }
 
                     // loading progress
                     if (viewModel.running) {
