@@ -95,12 +95,7 @@
     <string name="apm_not_installed">AndroidPatch 尚未安裝</string>
     <string name="system_default">系統預設</string>
     <string name="settings_app_language">語言</string>
-    <string name="settings_app_dpi">應用程式 DPI</string>
-    <string name="dpi_preset_system_default">系統預設</string>
-    <string name="dpi_preset_small">小 (320 DPI)</string>
-    <string name="dpi_preset_medium">中 (400 DPI)</string>
-    <string name="dpi_preset_large">大 (480 DPI)</string>
-    <string name="dpi_preset_xlarge">超大 (560 DPI)</string>
+    <string name="settings_page_scale">應用程式 DPI</string>
     <string name="settings_alt_icon">備選圖示</string>
     <string name="settings_alt_icon_summary">使用備選應用程式圖示</string>
     <string name="settings_nav_layout_title">導覽佈局</string>
@@ -341,7 +336,7 @@
     <!-- Settings Summaries -->
     <string name="settings_theme_summary">選擇應用的顏色模式</string>
     <string name="settings_home_layout_style_summary">切換網格和列表佈局</string>
-    <string name="settings_app_dpi_summary">調整應用顯示密度</string>
+    <string name="settings_page_scale_summary">調整應用顯示密度</string>
     <string name="settings_app_language_summary">更改應用顯示語言</string>
     <string name="clear_super_key_summary">移除已儲存的 SuperKey 憑證</string>
     <string name="setting_reset_su_path_summary">重設 su 可執行檔路徑</string>

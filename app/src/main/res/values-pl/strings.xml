@@ -91,12 +91,7 @@
     <string name="apm_desc">Opis</string>
     <string name="settings_app_language">Język</string>
     <string name="system_default">Domyślne ustawienie systemowe</string>
-    <string name="settings_app_dpi">DPI aplikacji</string>
-    <string name="dpi_preset_system_default">Domyślne systemowe</string>
-    <string name="dpi_preset_small">Mały (320 DPI)</string>
-    <string name="dpi_preset_medium">Średni (400 DPI)</string>
-    <string name="dpi_preset_large">Duży (480 DPI)</string>
-    <string name="dpi_preset_xlarge">Bardzo duży (560 DPI)</string>
+    <string name="settings_page_scale">DPI aplikacji</string>
     <string name="settings_alt_icon">Alternatywna ikona</string>
     <string name="settings_alt_icon_summary">Użyj alternatywnej ikony aplikacji</string>
     <string name="settings_nav_layout_title">Układ nawigacji</string>
@@ -340,7 +335,7 @@
     <!-- Settings Summaries -->
     <string name="settings_theme_summary">Wybierz tryb kolorów aplikacji</string>
     <string name="settings_home_layout_style_summary">Przełącz między siatką a listą</string>
-    <string name="settings_app_dpi_summary">Dostosuj gęstość wyświetlania aplikacji</string>
+    <string name="settings_page_scale_summary">Dostosuj gęstość wyświetlania aplikacji</string>
     <string name="settings_app_language_summary">Zmień język wyświetlania aplikacji</string>
     <string name="clear_super_key_summary">Usuń zapisane poświadczenia SuperKey</string>
     <string name="setting_reset_su_path_summary">Resetuj ścieżkę pliku su</string>

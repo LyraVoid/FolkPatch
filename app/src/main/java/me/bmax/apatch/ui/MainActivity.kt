@@ -24,6 +24,7 @@ import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -73,6 +74,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.Velocity
@@ -169,10 +171,6 @@ private fun <T> navTween() = tween<T>(durationMillis = 500, easing = NavAnimatio
 
 class MainActivity : AppCompatActivity() {
 
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(me.bmax.apatch.util.DPIUtils.updateContext(newBase))
-    }
-
     private var isLoading = true
 
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -187,9 +185,7 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
 
-        // Initialize DPI settings
-        me.bmax.apatch.util.DPIUtils.load(this)
-        me.bmax.apatch.util.DPIUtils.applyDpi(this)
+        me.bmax.apatch.util.PageScaleUtils.load(this)
 
         // Migrate color mode from 0.7.x to 0.8.x ordering
         migrateColorModeIfNeeded(this)
@@ -241,18 +237,23 @@ class MainActivity : AppCompatActivity() {
             APatchTheme(colorMode = colorMode, keyColor = keyColor) {
 
                     val bottomBarVisibleState = remember { mutableStateOf(true) }
+                    val pageScale = me.bmax.apatch.util.PageScaleUtils.currentScale
+                    val systemDensity = LocalDensity.current
+                    val scaledDensity = remember(systemDensity, pageScale) {
+                        Density(systemDensity.density * pageScale, systemDensity.fontScale)
+                    }
 
                     val pagerState = rememberPagerState(
                         initialPage = 0,
                         pageCount = { BottomBarDestination.entries.size }
                     )
                     val coroutineScope = rememberCoroutineScope()
-                    val density = LocalDensity.current
-                    val mainPagerState = remember(pagerState, coroutineScope, density) {
-                        MainPagerState(pagerState, coroutineScope, density)
+                    val mainPagerState = remember(pagerState, coroutineScope, scaledDensity) {
+                        MainPagerState(pagerState, coroutineScope, scaledDensity)
                     }
 
                     CompositionLocalProvider(
+                    LocalDensity provides scaledDensity,
                     LocalEnableBlur provides enableBlur,
                     LocalEnableFloatingBottomBar provides enableFloatingBottomBar,
                     LocalEnableLiquidGlass provides enableLiquidGlass,

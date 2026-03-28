@@ -115,12 +115,7 @@
     <string name="apm_not_installed">系统补丁没装喵！</string>
     <string name="system_default">系统默认哒</string>
     <string name="settings_app_language">语言设置喵</string>
-    <string name="settings_app_dpi">应用 DPI 喵</string>
-    <string name="dpi_preset_system_default">系统默认哒</string>
-    <string name="dpi_preset_small">小 (320 DPI) 喵</string>
-    <string name="dpi_preset_medium">中 (400 DPI) 喵</string>
-    <string name="dpi_preset_large">大 (480 DPI) 喵</string>
-    <string name="dpi_preset_xlarge">超大 (560 DPI) 喵</string>
+    <string name="settings_page_scale">应用 DPI 喵</string>
     <string name="settings_alt_icon">备选图标</string>
     <string name="settings_alt_icon_summary">使用备选应用图标</string>
     <string name="settings_nav_layout_title">导航布局设置喵</string>

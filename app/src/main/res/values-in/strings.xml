@@ -95,12 +95,7 @@
     <string name="apm_not_installed">AndroidPatch tidak terinstal</string>
     <string name="settings_app_language">Bahasa</string>
     <string name="system_default">Bawaan sistem</string>
-    <string name="settings_app_dpi">DPI Aplikasi</string>
-    <string name="dpi_preset_system_default">Bawaan Sistem</string>
-    <string name="dpi_preset_small">Kecil (320 DPI)</string>
-    <string name="dpi_preset_medium">Sedang (400 DPI)</string>
-    <string name="dpi_preset_large">Besar (480 DPI)</string>
-    <string name="dpi_preset_xlarge">Sangat Besar (560 DPI)</string>
+    <string name="settings_page_scale">DPI Aplikasi</string>
     <string name="settings_alt_icon">Ikon alternatif</string>
     <string name="settings_alt_icon_summary">Gunakan ikon aplikasi alternatif</string>
     <string name="settings_nav_layout_title">Tata Letak Navigasi</string>
@@ -340,7 +335,7 @@
     <!-- Settings Summaries -->
     <string name="settings_theme_summary">Pilih mode warna untuk aplikasi</string>
     <string name="settings_home_layout_style_summary">Beralih antara tata letak grid dan daftar</string>
-    <string name="settings_app_dpi_summary">Sesuaikan kepadatan tampilan aplikasi</string>
+    <string name="settings_page_scale_summary">Sesuaikan kepadatan tampilan aplikasi</string>
     <string name="settings_app_language_summary">Ubah bahasa tampilan aplikasi</string>
     <string name="clear_super_key_summary">Hapus kredensial SuperKey yang tersimpan</string>
     <string name="setting_reset_su_path_summary">Atur ulang jalur su</string>

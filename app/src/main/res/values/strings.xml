@@ -26,12 +26,7 @@
     <string name="about">About</string>
     <string name="settings_app_language">Language</string>
     <string name="system_default">System default</string>
-    <string name="settings_app_dpi">App DPI</string>
-    <string name="dpi_preset_system_default">System Default</string>
-    <string name="dpi_preset_small">Small (320 DPI)</string>
-    <string name="dpi_preset_medium">Medium (400 DPI)</string>
-    <string name="dpi_preset_large">Large (480 DPI)</string>
-    <string name="dpi_preset_xlarge">XLarge (560 DPI)</string>
+    <string name="settings_page_scale">App DPI</string>
     <string name="settings_alt_icon">Alternative Icon</string>
     <string name="settings_alt_icon_summary">Use alternative app icon</string>
     <string name="settings_nav_layout_title">Navigation Layout</string>
@@ -406,7 +401,7 @@
 
     <!-- Settings Summaries -->
     <string name="settings_home_layout_style_summary">Switch between grid and list layout</string>
-    <string name="settings_app_dpi_summary">Adjust app display density</string>
+    <string name="settings_page_scale_summary">Adjust app display density</string>
     <string name="settings_app_language_summary">Change app display language</string>
     <string name="clear_super_key_summary">Remove stored SuperKey credential</string>
     <string name="setting_reset_su_path_summary">Reset su executable path</string>

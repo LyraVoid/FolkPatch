@@ -94,12 +94,7 @@
     <string name="apm">APModule</string>
     <string name="settings_app_language">Ngôn ngữ</string>
     <string name="system_default">Mặc định hệ thống</string>
-    <string name="settings_app_dpi">DPI ứng dụng</string>
-    <string name="dpi_preset_system_default">Mặc định hệ thống</string>
-    <string name="dpi_preset_small">Nhỏ (320 DPI)</string>
-    <string name="dpi_preset_medium">Trung bình (400 DPI)</string>
-    <string name="dpi_preset_large">Lớn (480 DPI)</string>
-    <string name="dpi_preset_xlarge">Rất lớn (560 DPI)</string>
+    <string name="settings_page_scale">DPI ứng dụng</string>
     <string name="settings_alt_icon">Biểu tượng thay thế</string>
     <string name="settings_alt_icon_summary">Sử dụng biểu tượng ứng dụng thay thế</string>
     <string name="settings_nav_layout_title">Bố cục điều hướng</string>
@@ -342,7 +337,7 @@
     <!-- Settings Summaries -->
     <string name="settings_theme_summary">Chọn chế độ màu cho ứng dụng</string>
     <string name="settings_home_layout_style_summary">Chuyển đổi giữa bố cục lưới và danh sách</string>
-    <string name="settings_app_dpi_summary">Điều chỉnh mật độ hiển thị ứng dụng</string>
+    <string name="settings_page_scale_summary">Điều chỉnh mật độ hiển thị ứng dụng</string>
     <string name="settings_app_language_summary">Thay đổi ngôn ngữ hiển thị ứng dụng</string>
     <string name="clear_super_key_summary">Xóa SuperKey đã lưu</string>
     <string name="setting_reset_su_path_summary">Đặt lại đường dẫn su</string>

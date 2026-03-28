@@ -22,12 +22,7 @@
     <string name="about">我来自哪?</string>
     <string name="settings_app_language">魔法语言</string>
     <string name="system_default">默认魔法</string>
-    <string name="settings_app_dpi">魔法视界</string>
-    <string name="dpi_preset_system_default">默认魔法</string>
-    <string name="dpi_preset_small">迷你视界 (320 DPI)</string>
-    <string name="dpi_preset_medium">普通视界 (400 DPI)</string>
-    <string name="dpi_preset_large">宏大视界 (480 DPI)</string>
-    <string name="dpi_preset_xlarge">超级视界 (560 DPI)</string>
+    <string name="settings_page_scale">魔法视界</string>
     <string name="settings_alt_icon">Альтернатив дүрс</string>
     <string name="settings_alt_icon_summary">Альтернатив програмын дүрс ашиглах</string>
     <string name="settings_nav_layout_title">魔法导航</string>
@@ -375,7 +370,7 @@
     <!-- Settings Summaries -->
     <string name="settings_theme_summary">Аппын өнгөний горимыг сонгох</string>
     <string name="settings_home_layout_style_summary">Хүснэгт болон жагсаалт layout-ууд хооронд сэлгэх</string>
-    <string name="settings_app_dpi_summary">Аппын харуулах нягтрал тохируулах</string>
+    <string name="settings_page_scale_summary">Аппын харуулах нягтрал тохируулах</string>
     <string name="settings_app_language_summary">Аппын хэлээ солих</string>
     <string name="clear_super_key_summary">Хадгалагдсан SuperKey мэдээллийг устгах</string>
     <string name="setting_reset_su_path_summary">su гүйцэтгэх файлын замыг дахин тохируулах</string>

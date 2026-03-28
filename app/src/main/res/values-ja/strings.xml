@@ -19,12 +19,7 @@
     <string name="about">アプリについて</string>
     <string name="settings_app_language">言語</string>
     <string name="system_default">システムのデフォルト</string>
-    <string name="settings_app_dpi">アプリの DPI</string>
-    <string name="dpi_preset_system_default">システムのデフォルト</string>
-    <string name="dpi_preset_small">小 (320 DPI)</string>
-    <string name="dpi_preset_medium">中 (400 DPI)</string>
-    <string name="dpi_preset_large">大 (480 DPI)</string>
-    <string name="dpi_preset_xlarge">特大 (560 DPI)</string>
+    <string name="settings_page_scale">アプリの DPI</string>
     <string name="settings_alt_icon">代替アイコン</string>
     <string name="settings_alt_icon_summary">代替アプリアイコンを使用</string>
     <string name="settings_nav_layout_title">ナビゲーションレイアウト</string>
@@ -358,7 +353,7 @@
     <!-- Settings Summaries -->
     <string name="settings_theme_summary">アプリのカラーモードを選択</string>
     <string name="settings_home_layout_style_summary">グリッドとリストレイアウトを切り替え</string>
-    <string name="settings_app_dpi_summary">アプリの表示密度を調整</string>
+    <string name="settings_page_scale_summary">アプリの表示密度を調整</string>
     <string name="settings_app_language_summary">アプリの表示言語を変更</string>
     <string name="clear_super_key_summary">保存済みのSuperKeyを削除</string>
     <string name="setting_reset_su_path_summary">su実行ファイルのパスをリセット</string>

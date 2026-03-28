@@ -21,12 +21,7 @@
     <string name="about">仙门叙略</string>
     <string name="settings_app_language">仙音道语</string>
     <string name="system_default">循天道常序</string>
-    <string name="settings_app_dpi">仙域视界</string>
-    <string name="dpi_preset_system_default">循天道常序</string>
-    <string name="dpi_preset_small">芥子视界 (320 DPI)</string>
-    <string name="dpi_preset_medium">中庸视界 (400 DPI)</string>
-    <string name="dpi_preset_large">须弥视界 (480 DPI)</string>
-    <string name="dpi_preset_xlarge">无极视界 (560 DPI)</string>
+    <string name="settings_page_scale">仙域视界</string>
     <string name="settings_alt_icon">备选图标</string>
     <string name="settings_alt_icon_summary">使用备选应用图标</string>
     <string name="settings_nav_layout_title">仙域导航</string>
@@ -371,7 +366,7 @@
     <!-- Settings Summaries -->
     <string name="settings_theme_summary">选择应用的颜色模式</string>
     <string name="settings_home_layout_style_summary">切换网格和列表布局</string>
-    <string name="settings_app_dpi_summary">调整应用显示密度</string>
+    <string name="settings_page_scale_summary">调整应用显示密度</string>
     <string name="settings_app_language_summary">更改应用显示语言</string>
     <string name="clear_super_key_summary">移除已存储的 SuperKey 凭证</string>
     <string name="setting_reset_su_path_summary">重置 su 可执行文件路径</string>

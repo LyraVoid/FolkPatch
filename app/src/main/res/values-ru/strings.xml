@@ -95,12 +95,7 @@
     <string name="apm_not_installed">AndroidPatch не установлен</string>
     <string name="settings_app_language">Язык</string>
     <string name="system_default">Как в системе</string>
-    <string name="settings_app_dpi">DPI приложения</string>
-    <string name="dpi_preset_system_default">По умолчанию системы</string>
-    <string name="dpi_preset_small">Маленький (320 DPI)</string>
-    <string name="dpi_preset_medium">Средний (400 DPI)</string>
-    <string name="dpi_preset_large">Большой (480 DPI)</string>
-    <string name="dpi_preset_xlarge">Очень большой (560 DPI)</string>
+    <string name="settings_page_scale">DPI приложения</string>
     <string name="settings_alt_icon">Альтернативная иконка</string>
     <string name="settings_alt_icon_summary">Использовать альтернативную иконку приложения</string>
     <string name="settings_nav_layout_title">Навигация</string>
@@ -340,7 +335,7 @@
     <!-- Settings Summaries -->
     <string name="settings_theme_summary">Выберите цветовой режим приложения</string>
     <string name="settings_home_layout_style_summary">Переключение между сеткой и списком</string>
-    <string name="settings_app_dpi_summary">Настройка плотности отображения</string>
+    <string name="settings_page_scale_summary">Настройка плотности отображения</string>
     <string name="settings_app_language_summary">Изменить язык приложения</string>
     <string name="clear_super_key_summary">Удалить сохранённый SuperKey</string>
     <string name="setting_reset_su_path_summary">Сбросить путь к su</string>

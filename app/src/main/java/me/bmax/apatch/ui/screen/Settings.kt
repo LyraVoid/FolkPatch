@@ -1,6 +1,5 @@
 package me.bmax.apatch.ui.screen
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -24,6 +23,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AccountTree
+import androidx.compose.material.icons.rounded.AspectRatio
 import androidx.compose.material.icons.rounded.AutoFixHigh
 import androidx.compose.material.icons.rounded.BugReport
 import androidx.compose.material.icons.rounded.BlurOn
@@ -45,11 +45,11 @@ import androidx.compose.material.icons.rounded.SystemUpdate
 import androidx.compose.material.icons.rounded.VerifiedUser
 import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material.icons.rounded.VpnKey
-import androidx.compose.material.icons.rounded.ZoomIn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -82,7 +82,7 @@ import me.bmax.apatch.ui.component.LoadingDialogHandle
 import me.bmax.apatch.ui.component.rememberLoadingDialog
 import me.bmax.apatch.ui.theme.LocalEnableFloatingBottomBar
 import me.bmax.apatch.util.APatchKeyHelper
-import me.bmax.apatch.util.DPIUtils
+import me.bmax.apatch.util.PageScaleUtils
 import me.bmax.apatch.util.LauncherIconUtils
 import me.bmax.apatch.util.getBugreportFile
 import me.bmax.apatch.util.isGlobalNamespaceEnabled
@@ -102,6 +102,9 @@ import top.yukonga.miuix.kmp.basic.Icon
 import top.yukonga.miuix.kmp.basic.MiuixScrollBehavior
 import top.yukonga.miuix.kmp.basic.Scaffold
 import top.yukonga.miuix.kmp.basic.SmallTitle
+import top.yukonga.miuix.kmp.basic.Slider
+import top.yukonga.miuix.kmp.basic.SliderDefaults
+import top.yukonga.miuix.kmp.basic.Text
 import top.yukonga.miuix.kmp.basic.TextButton
 import top.yukonga.miuix.kmp.basic.TextField
 import top.yukonga.miuix.kmp.basic.TopAppBar
@@ -109,6 +112,7 @@ import top.yukonga.miuix.kmp.extra.SuperArrow
 import top.yukonga.miuix.kmp.extra.SuperDialog
 import top.yukonga.miuix.kmp.extra.SuperDropdown
 import top.yukonga.miuix.kmp.extra.SuperSwitch
+import top.yukonga.miuix.kmp.theme.MiuixTheme.colorScheme
 import top.yukonga.miuix.kmp.utils.overScrollVertical
 
 @Composable
@@ -140,6 +144,7 @@ fun SettingScreen(navigator: DestinationsNavigator) {
     val showResetSuPathDialog = remember { mutableStateOf(false) }
     val showLogBottomSheet = remember { mutableStateOf(false) }
     val showClearKeyDialog = rememberSaveable { mutableStateOf(false) }
+    val showScaleDialog = remember { mutableStateOf(false) }
 
     val loadingDialog = rememberLoadingDialog()
 
@@ -185,9 +190,7 @@ fun SettingScreen(navigator: DestinationsNavigator) {
     )
     { paddingValues ->
         val prefs = APApplication.sharedPreferences
-        var currentDpi by rememberSaveable {
-            mutableIntStateOf(prefs.getInt("app_dpi", -1))
-        }
+        var sliderValue by rememberSaveable { mutableFloatStateOf(PageScaleUtils.currentScale) }
 
         val languages = stringArrayResource(id = R.array.languages)
         val languagesValues = stringArrayResource(id = R.array.languages_values)
@@ -221,18 +224,6 @@ fun SettingScreen(navigator: DestinationsNavigator) {
         val homeLayoutValues = listOf("list", "default")
         var currentHomeLayout by rememberSaveable { mutableStateOf(prefs.getString("home_layout_style", "list") ?: "list") }
         val homeLayoutIndex = homeLayoutValues.indexOf(currentHomeLayout).let { if (it == -1) 0 else it }
-
-        val dpiItems = listOf(
-            stringResource(id = R.string.dpi_preset_system_default),
-            stringResource(id = R.string.dpi_preset_small),
-            stringResource(id = R.string.dpi_preset_medium),
-            stringResource(id = R.string.dpi_preset_large),
-            stringResource(id = R.string.dpi_preset_xlarge)
-        )
-        val dpiValues = listOf(-1, 320, 400, 480, 560)
-        var dpiIndex by rememberSaveable {
-            mutableStateOf(dpiValues.indexOf(currentDpi).coerceAtLeast(0))
-        }
 
         val floatingBottomPadding = if (LocalEnableFloatingBottomBar.current) 88.dp else 0.dp
 
@@ -428,24 +419,46 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                         }
                     )
 
-                    SuperDropdown(
-                        title = stringResource(id = R.string.settings_app_dpi),
-                        summary = stringResource(id = R.string.settings_app_dpi_summary),
-                        items = dpiItems,
-                        selectedIndex = dpiIndex,
+                    SuperArrow(
+                        title = stringResource(id = R.string.settings_page_scale),
+                        summary = stringResource(id = R.string.settings_page_scale_summary),
                         startAction = {
                             Icon(
-                                Icons.Rounded.ZoomIn,
+                                Icons.Rounded.AspectRatio,
                                 null,
                                 modifier = Modifier.padding(end = 6.dp)
                             )
                         },
-                        onSelectedIndexChange = { index ->
-                            DPIUtils.setDpi(context, dpiValues[index])
-                            prefs.edit { putInt("app_dpi", dpiValues[index]) }
-                            currentDpi = dpiValues[index]
-                            dpiIndex = index
-                            (context as? Activity)?.recreate()
+                        endActions = {
+                            Text(
+                                text = "${(sliderValue * 100).toInt()}%",
+                                color = colorScheme.onSurfaceVariantActions
+                            )
+                        },
+                        onClick = { showScaleDialog.value = !showScaleDialog.value },
+                        holdDownState = showScaleDialog.value,
+                        bottomAction = {
+                            Slider(
+                                value = sliderValue,
+                                onValueChange = { sliderValue = it },
+                                onValueChangeFinished = {
+                                    PageScaleUtils.setScale(sliderValue)
+                                },
+                                valueRange = 0.8f..1.1f,
+                                showKeyPoints = true,
+                                keyPoints = listOf(0.8f, 0.9f, 1f, 1.1f),
+                                magnetThreshold = 0.01f,
+                                hapticEffect = SliderDefaults.SliderHapticEffect.Step,
+                            )
+                        }
+                    )
+                    ScaleDialog(
+                        showDialog = showScaleDialog.value,
+                        onDismissRequest = { showScaleDialog.value = false },
+                        scaleState = { PageScaleUtils.currentScale },
+                        onScaleChange = {
+                            PageScaleUtils.setScale(it)
+                            sliderValue = it
                         }
                     )
 

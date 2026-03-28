@@ -95,12 +95,7 @@
     <string name="apm_not_installed">AndroidPatch no está instalado</string>
     <string name="settings_app_language">Idioma</string>
     <string name="system_default">Predeterminado del sistema</string>
-    <string name="settings_app_dpi">DPI de la App</string>
-    <string name="dpi_preset_system_default">Predeterminado del sistema</string>
-    <string name="dpi_preset_small">Pequeño (320 DPI)</string>
-    <string name="dpi_preset_medium">Mediano (400 DPI)</string>
-    <string name="dpi_preset_large">Grande (480 DPI)</string>
-    <string name="dpi_preset_xlarge">Muy grande (560 DPI)</string>
+    <string name="settings_page_scale">DPI de la App</string>
     <string name="settings_alt_icon">Icono alternativo</string>
     <string name="settings_alt_icon_summary">Usar icono alternativo de la aplicación</string>
     <string name="settings_nav_layout_title">Diseño de navegación</string>
@@ -341,7 +336,7 @@
     <!-- Settings Summaries -->
     <string name="settings_theme_summary">Elige el modo de color de la aplicación</string>
     <string name="settings_home_layout_style_summary">Cambiar entre diseño de cuadrícula y lista</string>
-    <string name="settings_app_dpi_summary">Ajustar la densidad de visualización de la aplicación</string>
+    <string name="settings_page_scale_summary">Ajustar la densidad de visualización de la aplicación</string>
     <string name="settings_app_language_summary">Cambiar el idioma de la aplicación</string>
     <string name="clear_super_key_summary">Eliminar la credencial SuperKey almacenada</string>
     <string name="setting_reset_su_path_summary">Restablecer la ruta del ejecutable su</string>

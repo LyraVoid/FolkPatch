@@ -115,12 +115,7 @@
     <string name="apm_not_installed">尚未注入系统补丁</string>
     <string name="system_default">系统默认</string>
     <string name="settings_app_language">语言</string>
-    <string name="settings_app_dpi">应用 DPI</string>
-    <string name="dpi_preset_system_default">系统默认</string>
-    <string name="dpi_preset_small">小 (320 DPI)</string>
-    <string name="dpi_preset_medium">中 (400 DPI)</string>
-    <string name="dpi_preset_large">大 (480 DPI)</string>
-    <string name="dpi_preset_xlarge">超大 (560 DPI)</string>
+    <string name="settings_page_scale">应用 DPI</string>
     <string name="settings_alt_icon">备选图标</string>
     <string name="settings_alt_icon_summary">使用备选应用图标</string>
     <string name="settings_nav_layout_title">导航布局</string>
@@ -363,7 +358,7 @@
     <!-- Settings Summaries -->
     <string name="settings_theme_summary">选择应用的颜色模式</string>
     <string name="settings_home_layout_style_summary">切换网格和列表布局</string>
-    <string name="settings_app_dpi_summary">调整应用显示密度</string>
+    <string name="settings_page_scale_summary">调整应用显示密度</string>
     <string name="settings_app_language_summary">更改应用显示语言</string>
     <string name="clear_super_key_summary">移除已存储的 SuperKey 凭证</string>
     <string name="setting_reset_su_path_summary">重置 su 可执行文件路径</string>

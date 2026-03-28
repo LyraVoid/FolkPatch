@@ -78,12 +78,7 @@
     <string name="apm_reboot_to_apply">أعد التشغيل ليصبح ساري المفعول</string>
     <string name="system_default">النظام الافتراضي</string>
     <string name="settings_app_language">الغة</string>
-    <string name="settings_app_dpi">DPI التطبيق</string>
-    <string name="dpi_preset_system_default">افتراضي النظام</string>
-    <string name="dpi_preset_small">صغير (320 DPI)</string>
-    <string name="dpi_preset_medium">متوسط (400 DPI)</string>
-    <string name="dpi_preset_large">كبير (480 DPI)</string>
-    <string name="dpi_preset_xlarge">كبير جداً (560 DPI)</string>
+    <string name="settings_page_scale">DPI التطبيق</string>
     <string name="settings_alt_icon">أيقونة بديلة</string>
     <string name="settings_alt_icon_summary">استخدام أيقونة التطبيق البديلة</string>
     <string name="settings_nav_layout_title">تنسيق التنقل</string>
@@ -340,7 +335,7 @@
     <!-- Settings Summaries -->
     <string name="settings_theme_summary">اختر وضع الألوان للتطبيق</string>
     <string name="settings_home_layout_style_summary">التبديل بين تخطيط الشبكة والقائمة</string>
-    <string name="settings_app_dpi_summary">تعديل كثافة عرض التطبيق</string>
+    <string name="settings_page_scale_summary">تعديل كثافة عرض التطبيق</string>
     <string name="settings_app_language_summary">تغيير لغة عرض التطبيق</string>
     <string name="clear_super_key_summary">إزالة بيانات SuperKey المخزنة</string>
     <string name="setting_reset_su_path_summary">إعادة تعيين مسار su</string>
