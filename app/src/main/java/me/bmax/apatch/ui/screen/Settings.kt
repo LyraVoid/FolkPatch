@@ -366,6 +366,30 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                     )
 
                     AnimatedVisibility(
+                        visible = enableFloatingBottomBar
+                    ) {
+                        var floatingBottomBarAutoHide by rememberSaveable {
+                            mutableStateOf(VisualConfig.floatingBottomBarAutoHide)
+                        }
+                        SuperSwitch(
+                            title = stringResource(id = R.string.settings_floating_bottom_bar_auto_hide),
+                            summary = stringResource(id = R.string.settings_floating_bottom_bar_auto_hide_summary),
+                            checked = floatingBottomBarAutoHide,
+                            startAction = {
+                                Icon(
+                                    Icons.Rounded.VisibilityOff,
+                                    null,
+                                    modifier = Modifier.padding(end = 6.dp)
+                                )
+                            },
+                            onCheckedChange = {
+                                VisualConfig.floatingBottomBarAutoHide = it
+                                floatingBottomBarAutoHide = VisualConfig.floatingBottomBarAutoHide
+                            }
+                        )
+                    }
+
+                    AnimatedVisibility(
                         visible = enableFloatingBottomBar && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
                     ) {
                         var enableLiquidGlass by rememberSaveable {

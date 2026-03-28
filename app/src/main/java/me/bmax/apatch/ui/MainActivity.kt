@@ -233,6 +233,7 @@ class MainActivity : AppCompatActivity() {
             // Visual effect config
             var enableBlur by remember { mutableStateOf(VisualConfig.enableBlur) }
             var enableFloatingBottomBar by remember { mutableStateOf(VisualConfig.enableFloatingBottomBar) }
+            var floatingBottomBarAutoHide by remember { mutableStateOf(VisualConfig.floatingBottomBarAutoHide) }
             var enableLiquidGlass by remember { mutableStateOf(VisualConfig.enableLiquidGlass) }
 
             DisposableEffect(prefs) {
@@ -242,6 +243,7 @@ class MainActivity : AppCompatActivity() {
                         "key_color" -> keyColorInt = VisualConfig.keyColor
                         "enable_blur" -> enableBlur = VisualConfig.enableBlur
                         "enable_floating_bottom_bar" -> enableFloatingBottomBar = VisualConfig.enableFloatingBottomBar
+                        "floating_bottom_bar_auto_hide" -> floatingBottomBarAutoHide = VisualConfig.floatingBottomBarAutoHide
                         "enable_liquid_glass" -> enableLiquidGlass = VisualConfig.enableLiquidGlass
                     }
                 }
@@ -378,8 +380,8 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
 
-                    LaunchedEffect(enableFloatingBottomBar, autoHideKey) {
-                        if (enableFloatingBottomBar && isBottomBarVisible) {
+                    LaunchedEffect(enableFloatingBottomBar, autoHideKey, floatingBottomBarAutoHide) {
+                        if (enableFloatingBottomBar && floatingBottomBarAutoHide && isBottomBarVisible) {
                             delay(3000L)
                             isBottomBarVisible = false
                         }
