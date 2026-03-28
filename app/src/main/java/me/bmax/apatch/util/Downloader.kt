@@ -54,7 +54,7 @@ fun download(
 }
 
 fun checkNewVersion(): LatestVersionInfo {
-    val url = "https://api.github.com/repos/matsuzaka-yuki/FolkPatch/releases/latest"
+    val url = "https://folk.mysqil.com/api/version2.php"
     val defaultValue = LatestVersionInfo()
     runCatching {
         apApp.okhttpClient.newCall(okhttp3.Request.Builder().url(url).build()).execute()
@@ -63,24 +63,11 @@ fun checkNewVersion(): LatestVersionInfo {
                     return defaultValue
                 }
                 val body = response.body?.string() ?: return defaultValue
+                val versionCode = body.trim().toIntOrNull() ?: return defaultValue
 
-                val json = org.json.JSONObject(body)
-                val changelog = json.optString("body")
-                val versionCode = json.getInt("name")
+                val downloadUrl = "https://github.com/matsuzaka-yuki/FolkLite/releases"
 
-                val assets = json.getJSONArray("assets")
-                for (i in 0 until assets.length()) {
-                    val asset = assets.getJSONObject(i)
-                    val name = asset.getString("name")
-                    if (!name.endsWith(".apk")) {
-                        continue
-                    }
-                    val downloadUrl = asset.getString("browser_download_url")
-
-                    return LatestVersionInfo(
-                        versionCode, downloadUrl, changelog
-                    )
-                }
+                return LatestVersionInfo(versionCode, downloadUrl, "")
             }
     }
     return defaultValue

@@ -147,11 +147,6 @@ fun ListHomeScreen(navigator: DestinationsNavigator) {
                     if (kpState != APApplication.State.UNKNOWN_STATE && apState != APApplication.State.ANDROIDPATCH_INSTALLED) {
                         AStatusCardList(apState)
                     }
-                    val checkUpdate =
-                        APApplication.sharedPreferences.getBoolean("check_update", true)
-                    if (checkUpdate) {
-                        UpdateCardList()
-                    }
                     InfoCardList(kpState, apState)
                     val hideAboutCard =
                         APApplication.sharedPreferences.getBoolean("hide_about_card", false)

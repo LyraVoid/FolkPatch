@@ -43,7 +43,7 @@ fun SignatureVerifyDialog() {
             text = stringResource(R.string.go_to_github),
             modifier = Modifier.fillMaxWidth(),
             onClick = {
-                uriHandler.openUri("https://github.com/matsuzaka-yuki/FolkPatch/releases/tag/lite")
+                uriHandler.openUri("https://github.com/matsuzaka-yuki/FolkLite/releases")
             }
         )
     }

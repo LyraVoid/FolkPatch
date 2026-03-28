@@ -18,7 +18,7 @@ object UpdateChecker {
     // Placeholder URL for version file.
     // It is expected to return a plain text integer version code.
     private const val UPDATE_API_URL = "https://folk.mysqil.com/api/version2.php"
-    private const val UPDATE_URL = "https://github.com/matsuzaka-yuki/FolkPatch/releases/tag/lite"
+    private const val UPDATE_URL = "https://github.com/matsuzaka-yuki/FolkLite/releases"
 
     /**
      * Checks for updates.
