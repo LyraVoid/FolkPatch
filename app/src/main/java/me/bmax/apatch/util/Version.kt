@@ -125,6 +125,17 @@ object Version {
     }
 
     private fun installedApdVString(): String {
+        val versionResult = rootShellForResult("cat ${APApplication.APATCH_VERSION_PATH}")
+        if (versionResult.isSuccess && versionResult.out.isNotEmpty()) {
+            val version = versionResult.out.joinToString("\n").trim()
+            val versionNum = Regex("\\d+").find(version)?.value
+            if (versionNum != null && versionNum.isNotEmpty()) {
+                Log.i("APatch", "[installedApdVString@Version] Read version from file: $versionNum")
+                installedApdVString = versionNum
+                return installedApdVString
+            }
+        }
+
         val resultShell = rootShellForResult("${APApplication.APD_PATH} -V")
         if (resultShell.isSuccess) {
             val result = resultShell.out.joinToString("\n")
