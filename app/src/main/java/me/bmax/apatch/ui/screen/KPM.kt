@@ -14,9 +14,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -25,6 +27,9 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -34,10 +39,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.offset
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -50,6 +51,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ramcosta.composedestinations.generated.destinations.InstallScreenDestination
 import com.ramcosta.composedestinations.generated.destinations.PatchesDestination
@@ -94,13 +96,15 @@ import top.yukonga.miuix.kmp.extra.SuperDialog
 import top.yukonga.miuix.kmp.extra.SuperListPopup
 import top.yukonga.miuix.kmp.theme.MiuixTheme
 import top.yukonga.miuix.kmp.basic.TextField
+import top.yukonga.miuix.kmp.basic.InputField
 import top.yukonga.miuix.kmp.basic.TopAppBar
 import top.yukonga.miuix.kmp.basic.rememberPullToRefreshState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CloudDownload
 import java.io.IOException
-
-import androidx.compose.ui.graphics.Color
+import top.yukonga.miuix.kmp.basic.VerticalScrollBar
+import top.yukonga.miuix.kmp.interfaces.ExperimentalScrollBarApi
+import top.yukonga.miuix.kmp.basic.rememberScrollBarAdapter
 
 private const val TAG = "KernelPatchModule"
 private lateinit var targetKPMToControl: KPModel.KPMInfo
@@ -265,12 +269,10 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
     ) { innerPadding ->
         KPModuleList(
             viewModel = viewModel,
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize(),
             state = kpModuleListState,
-            scaffoldPadding = PaddingValues(
-                start = 16.dp,
-                top = innerPadding.calculateTopPadding() + 16.dp,
-                end = 16.dp,
-                bottom = innerPadding.calculateBottomPadding() + 16.dp)
         )
     }
 }
@@ -385,8 +387,8 @@ fun KPMControlDialog(ControlDialog: MutableState<Boolean>) {
 @Composable
 private fun KPModuleList(
     viewModel: KPModuleViewModel,
+    modifier: Modifier = Modifier,
     state: LazyListState,
-    scaffoldPadding: PaddingValues = PaddingValues(),
 ) {
     val moduleStr = stringResource(id = R.string.kpm)
     val moduleUninstallConfirm = stringResource(id = R.string.kpm_unload_confirm)
@@ -398,6 +400,7 @@ private fun KPModuleList(
     val ControlDialog = remember { mutableStateOf(false) }
 
     val pullToRefreshState = rememberPullToRefreshState()
+    var expanded by remember { mutableStateOf(false) }
 
     suspend fun onModuleUninstall(module: KPModel.KPMInfo) {
         val confirmResult = confirmDialog.awaitConfirm(
@@ -420,16 +423,48 @@ private fun KPModuleList(
             viewModel.fetchModuleList()
         }
     }
-    Box(modifier = Modifier.padding(scaffoldPadding)) {
-        PullToRefresh(
-            isRefreshing = viewModel.isRefreshing,
-            pullToRefreshState = pullToRefreshState,
-            onRefresh = { viewModel.fetchModuleList() }
+    PullToRefresh(
+        modifier = modifier,
+        isRefreshing = viewModel.isRefreshing,
+        pullToRefreshState = pullToRefreshState,
+        onRefresh = { viewModel.fetchModuleList() }
+    ) {
+        @OptIn(ExperimentalScrollBarApi::class)
+        val kpmScrollBarAdapter = rememberScrollBarAdapter(state)
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 12.dp, end = 12.dp, top = 5.dp)
+                .zIndex(10f)
         ) {
+            InputField(
+                query = viewModel.search,
+                onQueryChange = { viewModel.search = it },
+                onSearch = { expanded = false },
+                expanded = expanded,
+                onExpandedChange = {
+                    expanded = it
+                    if (!it) viewModel.search = ""
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp, vertical = 6.dp),
+            )
+        }
+        Row(modifier = Modifier.fillMaxSize()) {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 state = state,
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                contentPadding = remember {
+                    PaddingValues(
+                        start = 16.dp,
+                        top = 16.dp,
+                        end = 16.dp,
+                        bottom = 16.dp
+                    )
+                }
             ) {
                 when {
                     viewModel.moduleList.isEmpty() -> {
@@ -466,10 +501,15 @@ private fun KPModuleList(
                     }
                 }
             }
+            @OptIn(ExperimentalScrollBarApi::class)
+            VerticalScrollBar(
+                adapter = kpmScrollBarAdapter,
+                modifier = Modifier.fillMaxHeight()
+            )
         }
-    }
-    if (ControlDialog.value) {
-        KPMControlDialog(ControlDialog = ControlDialog)
+        if (ControlDialog.value) {
+            KPMControlDialog(ControlDialog = ControlDialog)
+        }
     }
 }
 
