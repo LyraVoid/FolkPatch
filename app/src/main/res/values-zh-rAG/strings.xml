@@ -336,4 +336,17 @@
 
     <string name="settings_predictive_back_gesture">预测性返回手势喵</string>
     <string name="settings_predictive_back_gesture_summary">启用 Android 14+ 预测性返回手势动画喵~</string>
+
+    <!-- Module Shortcuts -->
+    <string name="apm_shortcut_created">快捷方式已创建喵！</string>
+    <string name="apm_shortcut_updated">快捷方式已更新喵</string>
+    <string name="apm_shortcut_not_supported">启动器不支持固定快捷方式喵</string>
+    <string name="apm_shortcut_permission_tip_xiaomi">长按应用图标，授予快捷方式权限喵</string>
+    <string name="apm_shortcut_permission_tip_oppo">长按应用图标，授予快捷方式权限喵</string>
+    <string name="apm_shortcut_permission_tip_default">长按应用图标查找快捷方式喵</string>
+    <string name="apm_shortcut_create_title">创建快捷方式喵</string>
+    <string name="apm_shortcut_action">操作喵</string>
+    <string name="apm_shortcut_webui">网页界面喵</string>
+    <string name="apm_shortcut_name_label">名字喵</string>
+    <string name="apm_shortcut_create">创建喵</string>
 </resources>

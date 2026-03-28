@@ -46,9 +46,11 @@ class APModuleViewModel : ViewModel() {
         val updateJson: String,
         val hasWebUi: Boolean,
         val hasActionScript: Boolean,
+        val webuiIcon: String?,
+        val actionIcon: String?,
+        val isMetamodule: Boolean,
         val isZygisk: Boolean,
         val isLSPosed: Boolean,
-        val isMetamodule: Boolean,
     )
 
     data class ModuleUpdateInfo(
@@ -133,9 +135,11 @@ class APModuleViewModel : ViewModel() {
                             obj.optString("updateJson"),
                             obj.optBoolean("web"),
                             obj.optBoolean("action"),
+                            obj.optString("webuiIcon").trim().ifEmpty { null },
+                            obj.optString("actionIcon").trim().ifEmpty { null },
+                            obj.optString("metamodule") == "1" || obj.optString("metamodule").equals("true", ignoreCase = true),
                             zygiskModuleIds.contains(obj.getString("id")),
-                            obj.optString("name").contains("LSPosed", ignoreCase = true),
-                            obj.optString("metamodule") == "1" || obj.optString("metamodule").equals("true", ignoreCase = true)
+                            obj.optString("name").contains("LSPosed", ignoreCase = true)
                         )
                     }.toList()
                 isNeedRefresh = false

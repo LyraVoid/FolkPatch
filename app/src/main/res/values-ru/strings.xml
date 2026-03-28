@@ -353,4 +353,17 @@
 
     <string name="settings_predictive_back_gesture">Предсказательный жест назад</string>
     <string name="settings_predictive_back_gesture_summary">Включить анимацию предсказательного жеста назад в Android 14+</string>
+
+    <!-- Module Shortcuts -->
+    <string name="apm_shortcut_created">Ярлык создан</string>
+    <string name="apm_shortcut_updated">Ярлык обновлён</string>
+    <string name="apm_shortcut_not_supported">Лаунчер не поддерживает закрепление ярлыков</string>
+    <string name="apm_shortcut_permission_tip_xiaomi">Удерживайте значок приложения и предоставьте разрешение на ярлык</string>
+    <string name="apm_shortcut_permission_tip_oppo">Удерживайте значок приложения и предоставьте разрешение на ярлык</string>
+    <string name="apm_shortcut_permission_tip_default">Удерживайте значок приложения, чтобы найти ярлык</string>
+    <string name="apm_shortcut_create_title">Создать ярлык</string>
+    <string name="apm_shortcut_action">Действие</string>
+    <string name="apm_shortcut_webui">WebUI</string>
+    <string name="apm_shortcut_name_label">Имя</string>
+    <string name="apm_shortcut_create">Создать</string>
 </resources>

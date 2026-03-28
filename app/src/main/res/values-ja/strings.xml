@@ -363,4 +363,17 @@
 
     <string name="settings_predictive_back_gesture">予測バックジェスチャ</string>
     <string name="settings_predictive_back_gesture_summary">Android 14+の予測バックジェスチャアニメーションを有効化</string>
+
+    <!-- Module Shortcuts -->
+    <string name="apm_shortcut_created">ショートカットが作成されました</string>
+    <string name="apm_shortcut_updated">ショートカットが更新されました</string>
+    <string name="apm_shortcut_not_supported">ランチャーはショートカットのピン留めをサポートしていません</string>
+    <string name="apm_shortcut_permission_tip_xiaomi">アプリのアイコンを長押しして、ショートカットの権限を付与してください</string>
+    <string name="apm_shortcut_permission_tip_oppo">アプリのアイコンを長押しして、ショートカットの権限を付与してください</string>
+    <string name="apm_shortcut_permission_tip_default">アプリのアイコンを長押ししてショートカットを見つける</string>
+    <string name="apm_shortcut_create_title">ショートカットを作成</string>
+    <string name="apm_shortcut_action">アクション</string>
+    <string name="apm_shortcut_webui">WebUI</string>
+    <string name="apm_shortcut_name_label">名前</string>
+    <string name="apm_shortcut_create">作成</string>
 </resources>

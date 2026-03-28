@@ -409,4 +409,17 @@
 
     <string name="settings_predictive_back_gesture">Predictive back gesture</string>
     <string name="settings_predictive_back_gesture_summary">Enable Android 14+ predictive back gesture animation</string>
+
+    <!-- Module Shortcuts -->
+    <string name="apm_shortcut_created">Shortcut created</string>
+    <string name="apm_shortcut_updated">Shortcut updated</string>
+    <string name="apm_shortcut_not_supported">Launcher does not support pinning shortcuts</string>
+    <string name="apm_shortcut_permission_tip_xiaomi">Long-press the app icon and grant shortcut permission</string>
+    <string name="apm_shortcut_permission_tip_oppo">Long-press the app icon and grant shortcut permission</string>
+    <string name="apm_shortcut_permission_tip_default">Long-press the app icon to find the shortcut</string>
+    <string name="apm_shortcut_create_title">Create Shortcut</string>
+    <string name="apm_shortcut_action">Action</string>
+    <string name="apm_shortcut_webui">WebUI</string>
+    <string name="apm_shortcut_name_label">Name</string>
+    <string name="apm_shortcut_create">Create</string>
 </resources>

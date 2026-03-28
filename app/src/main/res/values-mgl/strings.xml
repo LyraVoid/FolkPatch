@@ -388,4 +388,17 @@
 
     <string name="settings_predictive_back_gesture">Өмнөх татах чимээ</string>
     <string name="settings_predictive_back_gesture_summary">Android 14+ өмнөх татах чимээний анимацийг идэвхжүүлэх</string>
+
+    <!-- Module Shortcuts -->
+    <string name="apm_shortcut_created">Холбоос үүсгэлээ</string>
+    <string name="apm_shortcut_updated">Холбоос шинэчлэгдлээ</string>
+    <string name="apm_shortcut_not_supported">Ачаах төхөөрөмж нь холбоос сулруулахыг дэмждэггүй</string>
+    <string name="apm_shortcut_permission_tip_xiaomi">Аппын дүрс дээр удаан дараарай, холбоос зөвшөөрөл өгөөрэй</string>
+    <string name="apm_shortcut_permission_tip_oppo">Аппын дүрс дээр удаан дараарай, холбоос зөвшөөрөл өгөөрэй</string>
+    <string name="apm_shortcut_permission_tip_default">Холбоосыг олохын тулд аппын дүрс дээр удаан дараарай</string>
+    <string name="apm_shortcut_create_title">Холбоос үүсгэх</string>
+    <string name="apm_shortcut_action">Үйлдэл</string>
+    <string name="apm_shortcut_webui">WebUI</string>
+    <string name="apm_shortcut_name_label">Нэр</string>
+    <string name="apm_shortcut_create">Үүсгэх</string>
 </resources>

@@ -352,4 +352,17 @@
 
     <string name="settings_predictive_back_gesture">預測性返回手勢</string>
     <string name="settings_predictive_back_gesture_summary">啟用 Android 14+ 預測性返回手勢動畫</string>
+
+    <!-- Module Shortcuts -->
+    <string name="apm_shortcut_created">捷徑已創建</string>
+    <string name="apm_shortcut_updated">捷徑已更新</string>
+    <string name="apm_shortcut_not_supported">啟動器不支援釘選捷徑</string>
+    <string name="apm_shortcut_permission_tip_xiaomi">長按應用程式圖示並授予捷徑權限</string>
+    <string name="apm_shortcut_permission_tip_oppo">長按應用程式圖示並授予捷徑權限</string>
+    <string name="apm_shortcut_permission_tip_default">長按應用程式圖示以找到捷徑</string>
+    <string name="apm_shortcut_create_title">創建捷徑</string>
+    <string name="apm_shortcut_action">動作</string>
+    <string name="apm_shortcut_webui">WebUI</string>
+    <string name="apm_shortcut_name_label">名稱</string>
+    <string name="apm_shortcut_create">創建</string>
 </resources>

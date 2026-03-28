@@ -353,4 +353,17 @@
 
     <string name="settings_predictive_back_gesture">إيماءة العودة التنبؤية</string>
     <string name="settings_predictive_back_gesture_summary">تفعيل الرسوم المتحركة لإيماءة العودة التنبؤية في Android 14+</string>
+
+    <!-- Module Shortcuts -->
+    <string name="apm_shortcut_created">تم إنشاء الاختصار</string>
+    <string name="apm_shortcut_updated">تم تحديث الاختصار</string>
+    <string name="apm_shortcut_not_supported">المُطلق لا يدعم تثبيت الاختصارات</string>
+    <string name="apm_shortcut_permission_tip_xiaomi">اضغط مع الاستمرار على أيقونة التطبيق ومنح إذن الاختصار</string>
+    <string name="apm_shortcut_permission_tip_oppo">اضغط مع الاستمرار على أيقونة التطبيق ومنح إذن الاختصار</string>
+    <string name="apm_shortcut_permission_tip_default">اضغط مع الاستمرار على أيقونة التطبيق للعثور على الاختصار</string>
+    <string name="apm_shortcut_create_title">إنشاء اختصار</string>
+    <string name="apm_shortcut_action">إجراء</string>
+    <string name="apm_shortcut_webui">WebUI</string>
+    <string name="apm_shortcut_name_label">اسم</string>
+    <string name="apm_shortcut_create">إنشاء</string>
 </resources>

@@ -2,6 +2,7 @@ package me.bmax.apatch.ui
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.net.Uri
 import android.os.Bundle
@@ -99,7 +100,10 @@ import dev.chrisbanes.haze.hazeSource
 import com.kyant.backdrop.backdrops.layerBackdrop
 import com.kyant.backdrop.backdrops.rememberLayerBackdrop
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
@@ -172,6 +176,8 @@ private fun <T> navTween() = tween<T>(durationMillis = 500, easing = NavAnimatio
 class MainActivity : AppCompatActivity() {
 
     private var isLoading = true
+    private var pendingShortcutModuleId: String? = null
+    private val installUriChannel = Channel<Uri>(Channel.BUFFERED)
 
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -184,6 +190,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         super.onCreate(savedInstanceState)
+
+        pendingShortcutModuleId = intent.getStringExtra("module_id")?.takeIf {
+            intent.getStringExtra("shortcut_type") == "module_action"
+        }
 
         me.bmax.apatch.util.PageScaleUtils.load(this)
 
@@ -205,6 +215,10 @@ class MainActivity : AppCompatActivity() {
                 null
             }
         }
+
+        val shortcutType = intent.getStringExtra("shortcut_type")
+        val shortcutModuleId = intent.getStringExtra("module_id")
+        val isFromShortcut = shortcutType == "module_action" && !shortcutModuleId.isNullOrEmpty()
 
         setContent {
             val context = LocalActivity.current ?: this
@@ -266,21 +280,9 @@ class MainActivity : AppCompatActivity() {
                     val navigator = navController.rememberDestinationsNavigator()
 
                     val loadingDialog = rememberLoadingDialog()
-                    val viewModel = viewModel<APModuleViewModel>()
                     val context = LocalContext.current
                     val currentUri by rememberUpdatedState(uri)
 
-                    val confirmDialog = rememberConfirmDialog(
-                        callback = rememberConfirmCallback(
-                            onConfirm = {
-                                currentUri?.let { uri ->
-                                    navigator.navigate(InstallScreenDestination(uri, MODULE_TYPE.APM))
-                                }
-                            }, onDismiss = { }
-                        )
-                    )
-
-                    var moduleInstallDesc by remember { mutableStateOf("") }
                     var showUpdateDialog by remember { mutableStateOf(false) }
                     var updateChecked by remember { mutableStateOf(false) }
 
@@ -305,19 +307,34 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     LaunchedEffect(currentUri) {
-                        currentUri?.let { uri ->
-                            viewModel.fetchModuleList()
-                            val desc = loadingDialog.withLoading {
-                                withContext(Dispatchers.IO) {
-                                    ModuleParser.getModuleInstallDesc(context, uri, viewModel.moduleList)
-                                }
-                            }
-                            moduleInstallDesc = desc
+                        currentUri?.let { navUri ->
+                            navigator.navigate(InstallScreenDestination(navUri, MODULE_TYPE.APM))
+                        }
+                    }
 
-                            confirmDialog.showConfirm(
-                                title = context.getString(R.string.apm),
-                                content = moduleInstallDesc
+                    LaunchedEffect(Unit) {
+                        installUriChannel.receiveAsFlow().collect { channelUri ->
+                            navigator.navigate(InstallScreenDestination(channelUri, MODULE_TYPE.APM))
+                        }
+                    }
+
+                    if (isFromShortcut) {
+                        LaunchedEffect(Unit) {
+                            navigator.navigate(
+                                com.ramcosta.composedestinations.generated.destinations.ExecuteAPMActionScreenDestination(shortcutModuleId)
                             )
+                            pendingShortcutModuleId = null
+                        }
+                    }
+
+                    val pendingShortcut by rememberUpdatedState(pendingShortcutModuleId)
+                    LaunchedEffect(pendingShortcut) {
+                        val shortcutId = pendingShortcut
+                        if (shortcutId != null && !isFromShortcut) {
+                            navigator.navigate(
+                                com.ramcosta.composedestinations.generated.destinations.ExecuteAPMActionScreenDestination(shortcutId)
+                            )
+                            pendingShortcutModuleId = null
                         }
                     }
 
@@ -517,6 +534,31 @@ class MainActivity : AppCompatActivity() {
         )
 
         isLoading = false
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        val shortcutType = intent.getStringExtra("shortcut_type")
+        val moduleId = intent.getStringExtra("module_id")
+        if (shortcutType == "module_action" && !moduleId.isNullOrEmpty()) {
+            pendingShortcutModuleId = moduleId
+        }
+        val zipUri: Uri? = intent.data ?: run {
+            if (intent.action == android.content.Intent.ACTION_SEND) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    intent.getParcelableExtra(android.content.Intent.EXTRA_STREAM, Uri::class.java)
+                } else {
+                    @Suppress("DEPRECATION")
+                    intent.getParcelableExtra(android.content.Intent.EXTRA_STREAM)
+                }
+            } else {
+                null
+            }
+        }
+        if (zipUri != null && shortcutType == null) {
+            installUriChannel.trySend(zipUri)
+        }
     }
 }
 

@@ -353,4 +353,17 @@
 
     <string name="settings_predictive_back_gesture">Gestur balik prediktif</string>
     <string name="settings_predictive_back_gesture_summary">Aktifkan animasi gestur balik prediktif Android 14+</string>
+
+    <!-- Module Shortcuts -->
+    <string name="apm_shortcut_created">Jalan pintas dibuat</string>
+    <string name="apm_shortcut_updated">Jalan pintas diperbarui</string>
+    <string name="apm_shortcut_not_supported">Peluncur tidak mendukung penyematan jalan pintas</string>
+    <string name="apm_shortcut_permission_tip_xiaomi">Tekan lama ikon aplikasi dan berikan izin jalan pintas</string>
+    <string name="apm_shortcut_permission_tip_oppo">Tekan lama ikon aplikasi dan berikan izin jalan pintas</string>
+    <string name="apm_shortcut_permission_tip_default">Tekan lama ikon aplikasi untuk menemukan jalan pintas</string>
+    <string name="apm_shortcut_create_title">Buat Jalan Pintas</string>
+    <string name="apm_shortcut_action">Tindakan</string>
+    <string name="apm_shortcut_webui">WebUI</string>
+    <string name="apm_shortcut_name_label">Nama</string>
+    <string name="apm_shortcut_create">Buat</string>
 </resources>

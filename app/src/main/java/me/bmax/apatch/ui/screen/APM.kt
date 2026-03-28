@@ -3,6 +3,7 @@ package me.bmax.apatch.ui.screen
 import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.OpenableColumns
 import android.util.Log
@@ -14,15 +15,19 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -46,6 +51,7 @@ import androidx.compose.material.icons.outlined.Delete
 import com.ramcosta.composedestinations.generated.destinations.OnlineAPMModuleScreenDestination
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -96,6 +102,7 @@ import me.bmax.apatch.util.hasMagisk
 import me.bmax.apatch.util.toggleModule
 import me.bmax.apatch.util.uninstallModule
 import me.bmax.apatch.util.undoUninstallModule
+import me.bmax.apatch.util.Shortcut
 import top.yukonga.miuix.kmp.basic.Card
 import top.yukonga.miuix.kmp.basic.Icon
 import top.yukonga.miuix.kmp.basic.IconButton
@@ -112,10 +119,19 @@ import top.yukonga.miuix.kmp.basic.TopAppBar
 import top.yukonga.miuix.kmp.utils.overScrollVertical
 import top.yukonga.miuix.kmp.extra.SuperDialog
 import top.yukonga.miuix.kmp.basic.TextButton
+import top.yukonga.miuix.kmp.basic.TextField
 import top.yukonga.miuix.kmp.basic.ButtonDefaults
 import top.yukonga.miuix.kmp.basic.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.ui.graphics.Color
+import androidx.compose.foundation.Image
+import androidx.compose.ui.draw.clip
+import androidx.compose.foundation.border
+import androidx.compose.ui.graphics.asImageBitmap
+import kotlin.math.min
+import top.yukonga.miuix.kmp.basic.VerticalScrollBar
+import top.yukonga.miuix.kmp.interfaces.ExperimentalScrollBarApi
+import top.yukonga.miuix.kmp.basic.rememberScrollBarAdapter
 
 @Composable
 fun APModuleScreen(navigator: DestinationsNavigator) {
@@ -423,6 +439,7 @@ private fun ModuleList(
 
         val success = loadingDialog.withLoading {
             withContext(Dispatchers.IO) {
+                Shortcut.deleteModuleShortcuts(context, module.id)
                 uninstallModule(module.id)
             }
         }
@@ -463,6 +480,9 @@ private fun ModuleList(
         isRefreshing = viewModel.isRefreshing,
         onRefresh = { viewModel.fetchModuleList() },
     ) {
+        @OptIn(ExperimentalScrollBarApi::class)
+        val scrollBarAdapter = rememberScrollBarAdapter(state)
+
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -483,7 +503,8 @@ private fun ModuleList(
                     .padding(horizontal = 12.dp, vertical = 6.dp),
             )
         }
-        LazyColumn(
+        Row(modifier = Modifier.fillMaxSize()) {
+            LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .overScrollVertical()
@@ -600,11 +621,227 @@ private fun ModuleList(
                 }
             }
         }
+            @OptIn(ExperimentalScrollBarApi::class)
+            VerticalScrollBar(
+                adapter = scrollBarAdapter,
+                modifier = Modifier.fillMaxHeight()
+            )
+        }
 
         DownloadListener(context, onInstallModule)
     }
 }
 
+private enum class ShortcutType { ACTION, WEBUI }
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+private fun ModuleShortcutDialog(
+    module: APModuleViewModel.ModuleInfo,
+    showDialog: MutableState<Boolean>,
+    context: Context,
+) {
+    if (!showDialog.value) return
+
+    val hasAction = module.hasActionScript && !module.remove
+    val hasWebUi = module.hasWebUi && !module.remove
+
+    if (!hasAction && !hasWebUi) {
+        showDialog.value = false
+        return
+    }
+
+    var selectedType by remember(showDialog.value) {
+        mutableStateOf(if (hasWebUi) ShortcutType.WEBUI else ShortcutType.ACTION)
+    }
+    var shortcutName by remember(showDialog.value) { mutableStateOf(module.name) }
+    var shortcutIconUri by remember(showDialog.value) { mutableStateOf<String?>(null) }
+
+    val pickShortcutIconLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        shortcutIconUri = uri?.toString()
+    }
+
+    fun toSuIconUri(path: String?): String? {
+        val trimmed = path?.trim().orEmpty()
+        if (trimmed.isEmpty()) return null
+        return if (trimmed.startsWith("su://", ignoreCase = true)) trimmed else "su://$trimmed"
+    }
+
+    val moduleDefaultIconPath = remember(
+        module.id,
+        selectedType,
+        module.webuiIcon,
+        module.actionIcon
+    ) {
+        val preferred = if (selectedType == ShortcutType.WEBUI) module.webuiIcon else module.actionIcon
+        preferred?.takeIf { it.isNotBlank() }
+            ?: module.webuiIcon?.takeIf { it.isNotBlank() }
+            ?: module.actionIcon?.takeIf { it.isNotBlank() }
+    }
+    val moduleDefaultIconUri = remember(moduleDefaultIconPath) { toSuIconUri(moduleDefaultIconPath) }
+    val effectiveShortcutIconUri = shortcutIconUri ?: moduleDefaultIconUri
+
+    val shortcutPreviewBitmap by produceState<Bitmap?>(initialValue = null, key1 = effectiveShortcutIconUri) {
+        value = if (effectiveShortcutIconUri.isNullOrBlank()) {
+            null
+        } else {
+            withContext(Dispatchers.IO) {
+                Shortcut.loadShortcutBitmap(context, effectiveShortcutIconUri)
+            }
+        }
+    }
+
+    val appIcon = remember(context) { context.packageManager.getApplicationIcon(context.packageName) }
+
+    SuperDialog(
+        title = stringResource(R.string.apm_shortcut_create_title),
+        show = showDialog.value,
+        onDismissRequest = { showDialog.value = false }
+    ) {
+        Column(
+            modifier = Modifier.padding(vertical = 8.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            if (hasAction && hasWebUi) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(8.dp))
+                        .border(1.dp, MiuixTheme.colorScheme.outline, RoundedCornerShape(8.dp)),
+                    horizontalArrangement = Arrangement.spacedBy(0.dp)
+                ) {
+                    val actionSelected = selectedType == ShortcutType.ACTION
+                    androidx.compose.foundation.layout.Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(
+                                if (actionSelected) MiuixTheme.colorScheme.primary
+                                else MiuixTheme.colorScheme.surface,
+                                RoundedCornerShape(8.dp)
+                            )
+                            .clickable { selectedType = ShortcutType.ACTION }
+                            .padding(vertical = 8.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = stringResource(R.string.apm_shortcut_action),
+                            color = if (actionSelected) MiuixTheme.colorScheme.onPrimary
+                            else MiuixTheme.colorScheme.onSurface,
+                            fontWeight = FontWeight.Medium
+                        )
+                    }
+                    androidx.compose.foundation.layout.Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(
+                                if (!actionSelected) MiuixTheme.colorScheme.primary
+                                else MiuixTheme.colorScheme.surface,
+                                RoundedCornerShape(8.dp)
+                            )
+                            .clickable { selectedType = ShortcutType.WEBUI }
+                            .padding(vertical = 8.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = stringResource(R.string.apm_shortcut_webui),
+                            color = if (!actionSelected) MiuixTheme.colorScheme.onPrimary
+                            else MiuixTheme.colorScheme.onSurface,
+                            fontWeight = FontWeight.Medium
+                        )
+                    }
+                }
+            }
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                androidx.compose.foundation.layout.Box(
+                    modifier = Modifier
+                        .size(72.dp)
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(MiuixTheme.colorScheme.surfaceVariant)
+                        .combinedClickable(
+                            onClick = { pickShortcutIconLauncher.launch("image/*") }
+                        ),
+                    contentAlignment = Alignment.Center
+                ) {
+                    val bmp = shortcutPreviewBitmap
+                    if (bmp != null) {
+                        Image(
+                            bitmap = bmp.asImageBitmap(),
+                            contentDescription = null,
+                            modifier = Modifier.size(48.dp)
+                        )
+                    } else {
+                        Icon(
+                            modifier = Modifier.size(36.dp),
+                            imageVector = when (selectedType) {
+                                ShortcutType.ACTION -> Icons.Default.PlayArrow
+                                ShortcutType.WEBUI -> Icons.Default.OpenInBrowser
+                            },
+                            contentDescription = null,
+                            tint = MiuixTheme.colorScheme.onSurfaceVariantSummary
+                        )
+                    }
+                }
+                Spacer(Modifier.width(16.dp))
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = stringResource(R.string.apm_shortcut_name_label),
+                        style = MiuixTheme.textStyles.body2,
+                        color = MiuixTheme.colorScheme.onSurfaceVariantSummary
+                    )
+                    Spacer(Modifier.height(4.dp))
+                    TextField(
+                        value = shortcutName,
+                        onValueChange = { shortcutName = it },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+            }
+        }
+
+        Spacer(Modifier.height(12.dp))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.End
+        ) {
+            TextButton(
+                stringResource(id = android.R.string.cancel),
+                onClick = { showDialog.value = false },
+                modifier = Modifier.weight(1f),
+            )
+
+            Spacer(Modifier.width(20.dp))
+
+            TextButton(
+                stringResource(id = R.string.apm_shortcut_create),
+                onClick = {
+                    when (selectedType) {
+                        ShortcutType.ACTION -> {
+                            Shortcut.createModuleActionShortcut(context, module.id, shortcutName, effectiveShortcutIconUri)
+                        }
+                        ShortcutType.WEBUI -> {
+                            Shortcut.createModuleWebUiShortcut(context, module.id, shortcutName, effectiveShortcutIconUri)
+                        }
+                    }
+                    showDialog.value = false
+                },
+                modifier = Modifier.weight(1f),
+                colors = ButtonDefaults.textButtonColorsPrimary(),
+                enabled = shortcutName.isNotBlank()
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun ModuleItem(
     navigator: DestinationsNavigator,
@@ -621,12 +858,28 @@ private fun ModuleItem(
     val moduleVersion = stringResource(id = R.string.apm_version)
     val moduleAuthor = stringResource(id = R.string.apm_author)
     val viewModel = viewModel<APModuleViewModel>()
+    val context = LocalContext.current
+    val showShortcutDialog = remember { mutableStateOf(false) }
+
+    ModuleShortcutDialog(
+        module = module,
+        showDialog = showShortcutDialog,
+        context = context
+    )
+
     Card(modifier = modifier.graphicsLayer { alpha = if (module.remove) 0.5f else 1f })
     {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable { onClick(module) },
+                .combinedClickable(
+                    onClick = { onClick(module) },
+                    onLongClick = {
+                        if ((module.hasActionScript || module.hasWebUi) && !module.remove) {
+                            showShortcutDialog.value = true
+                        }
+                    }
+                ),
             contentAlignment = Alignment.Center
         ) {
             Column(

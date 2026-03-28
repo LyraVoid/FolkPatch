@@ -354,4 +354,17 @@
 
     <string name="settings_predictive_back_gesture">Gestos de retroceso predictivo</string>
     <string name="settings_predictive_back_gesture_summary">Activar la animación de gestos de retroceso predictivo de Android 14+</string>
+
+    <!-- Module Shortcuts -->
+    <string name="apm_shortcut_created">Acceso directo creado</string>
+    <string name="apm_shortcut_updated">Acceso directo actualizado</string>
+    <string name="apm_shortcut_not_supported">El lanzador no es compatible con la fijación de accesos directos</string>
+    <string name="apm_shortcut_permission_tip_xiaomi">Mantén pulsado el icono de la aplicación y concede el permiso de acceso directo</string>
+    <string name="apm_shortcut_permission_tip_oppo">Mantén pulsado el icono de la aplicación y concede el permiso de acceso directo</string>
+    <string name="apm_shortcut_permission_tip_default">Mantén pulsado el icono de la aplicación para encontrar el acceso directo</string>
+    <string name="apm_shortcut_create_title">Crear acceso directo</string>
+    <string name="apm_shortcut_action">Acción</string>
+    <string name="apm_shortcut_webui">WebUI</string>
+    <string name="apm_shortcut_name_label">Nombre</string>
+    <string name="apm_shortcut_create">Crear</string>
 </resources>

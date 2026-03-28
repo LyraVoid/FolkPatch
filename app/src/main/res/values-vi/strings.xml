@@ -355,4 +355,17 @@
 
     <string name="settings_predictive_back_gesture">Cử chỉ quay lại dự đoán</string>
     <string name="settings_predictive_back_gesture_summary">Bật hoạt animation cử chỉ quay lại dự đoán Android 14+</string>
+
+    <!-- Module Shortcuts -->
+    <string name="apm_shortcut_created">Lối tắt đã được tạo</string>
+    <string name="apm_shortcut_updated">Lối tắt đã được cập nhật</string>
+    <string name="apm_shortcut_not_supported">Trình khởi chạy không hỗ trợ ghim lối tắt</string>
+    <string name="apm_shortcut_permission_tip_xiaomi">Nhấn giữ biểu tượng ứng dụng và cấp quyền lối tắt</string>
+    <string name="apm_shortcut_permission_tip_oppo">Nhấn giữ biểu tượng ứng dụng và cấp quyền lối tắt</string>
+    <string name="apm_shortcut_permission_tip_default">Nhấn giữ biểu tượng ứng dụng để tìm lối tắt</string>
+    <string name="apm_shortcut_create_title">Tạo Lối Tắt</string>
+    <string name="apm_shortcut_action">Hành động</string>
+    <string name="apm_shortcut_webui">WebUI</string>
+    <string name="apm_shortcut_name_label">Tên</string>
+    <string name="apm_shortcut_create">Tạo</string>
 </resources>

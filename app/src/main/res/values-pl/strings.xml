@@ -353,4 +353,17 @@
 
     <string name="settings_predictive_back_gesture">Predykcyjny gest cofania</string>
     <string name="settings_predictive_back_gesture_summary">Włącz animację predykcyjnego gestu cofania w Android 14+</string>
+
+    <!-- Module Shortcuts -->
+    <string name="apm_shortcut_created">Utworzono skrót</string>
+    <string name="apm_shortcut_updated">Zaktualizowano skrót</string>
+    <string name="apm_shortcut_not_supported">Launcher nie obsługuje przypinania skrótów</string>
+    <string name="apm_shortcut_permission_tip_xiaomi">Przytrzymaj ikonę aplikacji i przyznaj uprawnienia do skrótu</string>
+    <string name="apm_shortcut_permission_tip_oppo">Przytrzymaj ikonę aplikacji i przyznaj uprawnienia do skrótu</string>
+    <string name="apm_shortcut_permission_tip_default">Przytrzymaj ikonę aplikacji, aby znaleźć skrót</string>
+    <string name="apm_shortcut_create_title">Utwórz skrót</string>
+    <string name="apm_shortcut_action">Akcja</string>
+    <string name="apm_shortcut_webui">WebUI</string>
+    <string name="apm_shortcut_name_label">Nazwa</string>
+    <string name="apm_shortcut_create">Utwórz</string>
 </resources>

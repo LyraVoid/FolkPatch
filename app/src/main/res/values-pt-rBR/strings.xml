@@ -355,4 +355,17 @@
 
     <string name="settings_predictive_back_gesture">Gesture de retorno preditivo</string>
     <string name="settings_predictive_back_gesture_summary">Ativar animação de gesture de retorno preditivo do Android 14+</string>
+
+    <!-- Module Shortcuts -->
+    <string name="apm_shortcut_created">Atalho criado</string>
+    <string name="apm_shortcut_updated">Atalho atualizado</string>
+    <string name="apm_shortcut_not_supported">O lançador não suporta fixação de atalhos</string>
+    <string name="apm_shortcut_permission_tip_xiaomi">Pressione longamente o ícone do aplicativo e conceda a permissão de atalho</string>
+    <string name="apm_shortcut_permission_tip_oppo">Pressione longamente o ícone do aplicativo e conceda a permissão de atalho</string>
+    <string name="apm_shortcut_permission_tip_default">Pressione longamente o ícone do aplicativo para encontrar o atalho</string>
+    <string name="apm_shortcut_create_title">Criar Atalho</string>
+    <string name="apm_shortcut_action">Ação</string>
+    <string name="apm_shortcut_webui">WebUI</string>
+    <string name="apm_shortcut_name_label">Nome</string>
+    <string name="apm_shortcut_create">Criar</string>
 </resources>
