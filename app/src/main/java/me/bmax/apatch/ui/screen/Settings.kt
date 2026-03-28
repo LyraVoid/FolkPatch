@@ -47,6 +47,7 @@ import androidx.compose.material.icons.rounded.SystemUpdate
 import androidx.compose.material.icons.rounded.VerifiedUser
 import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material.icons.rounded.VpnKey
+import androidx.compose.material.icons.rounded.SwapVert
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
@@ -383,6 +384,30 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                             onCheckedChange = {
                                 VisualConfig.floatingBottomBarAutoHide = it
                                 floatingBottomBarAutoHide = VisualConfig.floatingBottomBarAutoHide
+                            }
+                        )
+                    }
+
+                    AnimatedVisibility(
+                        visible = enableFloatingBottomBar
+                    ) {
+                        var floatingBottomBarScrollHide by rememberSaveable {
+                            mutableStateOf(VisualConfig.floatingBottomBarScrollHide)
+                        }
+                        SuperSwitch(
+                            title = stringResource(id = R.string.settings_floating_bottom_bar_scroll_hide),
+                            summary = stringResource(id = R.string.settings_floating_bottom_bar_scroll_hide_summary),
+                            checked = floatingBottomBarScrollHide,
+                            startAction = {
+                                Icon(
+                                    Icons.Rounded.SwapVert,
+                                    null,
+                                    modifier = Modifier.padding(end = 6.dp)
+                                )
+                            },
+                            onCheckedChange = {
+                                VisualConfig.floatingBottomBarScrollHide = it
+                                floatingBottomBarScrollHide = VisualConfig.floatingBottomBarScrollHide
                             }
                         )
                     }

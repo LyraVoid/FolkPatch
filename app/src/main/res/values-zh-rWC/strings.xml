@@ -340,6 +340,8 @@
     <string name="settings_floating_bottom_bar_summary">使用悬浮仙丹样式的仙域导航阵法</string>
     <string name="settings_floating_bottom_bar_auto_hide">自动隐遁悬浮仙舟底栏</string>
     <string name="settings_floating_bottom_bar_auto_hide_summary">无操作3秒后自动隐遁悬浮仙域导航阵法</string>
+    <string name="settings_floating_bottom_bar_scroll_hide">御风隐遁悬浮仙舟</string>
+    <string name="settings_floating_bottom_bar_scroll_hide_summary">向下御风滑行时隐遁悬浮仙域导航阵法</string>
     <string name="settings_enable_liquid_glass">琉璃仙镜</string>
     <string name="settings_enable_liquid_glass_summary">为悬浮仙舟底栏施加琉璃仙镜之效</string>
     <string name="settings_section_kernel">内核补丁</string>

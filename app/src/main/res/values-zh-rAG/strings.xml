@@ -329,6 +329,8 @@
     <string name="settings_floating_bottom_bar_summary">用悬浮胶囊样式的导航栏喵~</string>
     <string name="settings_floating_bottom_bar_auto_hide">自动隐藏悬浮底栏喵</string>
     <string name="settings_floating_bottom_bar_auto_hide_summary">没有操作3秒后自动藏起来喵~</string>
+    <string name="settings_floating_bottom_bar_scroll_hide">滑动隐藏悬浮底栏喵</string>
+    <string name="settings_floating_bottom_bar_scroll_hide_summary">向下滑动的时候藏起来喵~</string>
     <string name="settings_enable_liquid_glass">液态玻璃喵</string>
     <string name="settings_enable_liquid_glass_summary">给悬浮底栏加玻璃效果喵~</string>
     <string name="settings_section_kernel">内核补丁</string>

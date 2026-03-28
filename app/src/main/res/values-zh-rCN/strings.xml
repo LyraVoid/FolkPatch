@@ -330,6 +330,8 @@
     <string name="settings_floating_bottom_bar_summary">使用悬浮胶囊样式的导航栏</string>
     <string name="settings_floating_bottom_bar_auto_hide">自动隐藏悬浮底栏</string>
     <string name="settings_floating_bottom_bar_auto_hide_summary">无操作3秒后自动隐藏悬浮导航栏</string>
+    <string name="settings_floating_bottom_bar_scroll_hide">滑动隐藏悬浮底栏</string>
+    <string name="settings_floating_bottom_bar_scroll_hide_summary">向下滑动时隐藏悬浮导航栏</string>
     <string name="settings_enable_liquid_glass">液态玻璃</string>
     <string name="settings_enable_liquid_glass_summary">为悬浮底栏添加玻璃效果</string>
     <string name="settings_section_kernel">内核补丁</string>

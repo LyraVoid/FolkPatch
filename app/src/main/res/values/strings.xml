@@ -375,6 +375,8 @@
     <string name="settings_floating_bottom_bar_summary">Use a floating capsule-style navigation bar</string>
     <string name="settings_floating_bottom_bar_auto_hide">Auto hide floating bar</string>
     <string name="settings_floating_bottom_bar_auto_hide_summary">Automatically hide the floating navigation bar after 3 seconds of inactivity</string>
+    <string name="settings_floating_bottom_bar_scroll_hide">Scroll to hide floating bar</string>
+    <string name="settings_floating_bottom_bar_scroll_hide_summary">Hide the floating navigation bar when scrolling down</string>
     <string name="settings_enable_liquid_glass">Liquid glass</string>
     <string name="settings_enable_liquid_glass_summary">Glass effects for floating bottom bar</string>
     <string name="settings_section_kernel">Kernel Patch</string>

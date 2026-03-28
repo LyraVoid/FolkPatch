@@ -344,6 +344,8 @@
     <string name="settings_floating_bottom_bar_summary">使用悬浮圣核样式的圣域导航栏</string>
     <string name="settings_floating_bottom_bar_auto_hide">自动隐藏悬浮圣光底栏</string>
     <string name="settings_floating_bottom_bar_auto_hide_summary">无操作3秒后自动隐遁悬浮圣域导航栏</string>
+    <string name="settings_floating_bottom_bar_scroll_hide">滑动隐藏悬浮圣光底栏</string>
+    <string name="settings_floating_bottom_bar_scroll_hide_summary">向下滑动时隐遁悬浮圣域导航栏</string>
     <string name="settings_enable_liquid_glass">液态圣镜</string>
     <string name="settings_enable_liquid_glass_summary">为悬浮圣光底栏添加圣镜效果</string>
     <string name="settings_section_kernel">内核补丁</string>

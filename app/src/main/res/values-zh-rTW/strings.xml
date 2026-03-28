@@ -308,6 +308,8 @@
     <string name="settings_floating_bottom_bar_summary">使用懸浮膠囊樣式的導航欄</string>
     <string name="settings_floating_bottom_bar_auto_hide">自動隱藏懸浮底欄</string>
     <string name="settings_floating_bottom_bar_auto_hide_summary">無操作3秒後自動隱藏懸浮導航欄</string>
+    <string name="settings_floating_bottom_bar_scroll_hide">滑動隱藏懸浮底欄</string>
+    <string name="settings_floating_bottom_bar_scroll_hide_summary">向下滑動時隱藏懸浮導航欄</string>
     <string name="settings_enable_liquid_glass">液態玻璃</string>
     <string name="settings_enable_liquid_glass_summary">為懸浮底欄添加玻璃效果</string>
     <string name="settings_section_kernel">核心補丁</string>
