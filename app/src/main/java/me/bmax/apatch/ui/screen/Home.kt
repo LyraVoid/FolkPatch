@@ -545,45 +545,29 @@ private fun StatusCard(
                         .fillMaxSize()
                         .padding(all = 16.dp)
                 ) {
-                    val modeText = when (kpState) {
+                    val statusText = when (kpState) {
                         APApplication.State.KERNELPATCH_INSTALLED -> {
-                            if (apState == APApplication.State.ANDROIDPATCH_INSTALLED) {
-                                "<Full>"
-                            } else {
-                                "<Half>"
-                            }
+                            val mode = if (apState == APApplication.State.ANDROIDPATCH_INSTALLED) "<Full>" else "<Half>"
+                            "${stringResource(R.string.home_working)} $mode"
                         }
-                        else -> ""
+                        APApplication.State.KERNELPATCH_NEED_UPDATE -> stringResource(R.string.home_need_update)
+                        APApplication.State.KERNELPATCH_NEED_REBOOT -> stringResource(R.string.home_ap_cando_reboot)
+                        else -> stringResource(R.string.home_not_installed)
                     }
 
                     Text(
                         modifier = Modifier.fillMaxWidth(),
-                        text = when (kpState) {
-                            APApplication.State.KERNELPATCH_INSTALLED -> stringResource(R.string.home_working)
-                            APApplication.State.KERNELPATCH_NEED_UPDATE -> stringResource(R.string.home_need_update)
-                            APApplication.State.KERNELPATCH_NEED_REBOOT -> stringResource(R.string.home_ap_cando_reboot)
-                            else -> stringResource(R.string.home_not_installed)
-                        },
+                        text = statusText,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.SemiBold,
                     )
-
-                    if (modeText.isNotEmpty()) {
-                        Text(
-                            modifier = Modifier.fillMaxWidth(),
-                            text = modeText,
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Medium,
-                            color = colorScheme.onSurfaceVariantSummary,
-                        )
-                    }
 
                     Spacer(Modifier.height(2.dp))
                     Text(
                         modifier = Modifier.fillMaxWidth(),
                         text = when (kpState) {
                             APApplication.State.KERNELPATCH_INSTALLED ->
-                                "Version: " + managerVersion.first
+                                stringResource(R.string.kpatch_version, managerVersion.first)
                             APApplication.State.KERNELPATCH_NEED_UPDATE ->
                                 "${Version.installedKPVString()} → ${Version.buildKPVString()}"
                             else -> stringResource(R.string.home_click_to_install)
