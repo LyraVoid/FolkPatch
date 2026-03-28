@@ -4,7 +4,10 @@ import android.net.Uri
 import android.os.Environment
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -40,6 +43,8 @@ import me.bmax.apatch.ui.component.KeyEventBlocker
 import me.bmax.apatch.util.installModule
 import me.bmax.apatch.util.reboot
 
+import top.yukonga.miuix.kmp.basic.Button
+import top.yukonga.miuix.kmp.basic.ButtonDefaults
 import top.yukonga.miuix.kmp.basic.Icon
 import top.yukonga.miuix.kmp.basic.IconButton
 import top.yukonga.miuix.kmp.basic.Scaffold
@@ -118,24 +123,6 @@ fun InstallScreen(
                 }
             })
         },
-        floatingActionButton = {
-            if (showFloatAction) {
-                val reboot = stringResource(id = R.string.reboot)
-                IconButton(
-                    modifier = Modifier.padding(bottom = 30.dp),
-                    onClick = {
-                        scope.launch {
-                            withContext(Dispatchers.IO) {
-                                reboot()
-                            }
-                        }
-                    }
-                ) {
-                    Icon(Icons.Filled.Refresh, reboot, tint = MiuixTheme.colorScheme.primary)
-                }
-            }
-
-        },
     ) { innerPadding ->
         KeyEventBlocker {
             it.key == Key.VolumeDown || it.key == Key.VolumeUp
@@ -157,6 +144,22 @@ fun InstallScreen(
                 fontFamily = FontFamily.Monospace,
                 lineHeight = MiuixTheme.textStyles.body2.lineHeight,
             )
+            if (showFloatAction) {
+                Spacer(modifier = Modifier.height(12.dp))
+                Button(
+                    modifier = Modifier.fillMaxWidth(),
+                    onClick = {
+                        scope.launch {
+                            withContext(Dispatchers.IO) {
+                                reboot()
+                            }
+                        }
+                    },
+                    content = {
+                        Text(text = stringResource(id = R.string.reboot))
+                    }
+                )
+            }
         }
     }
 }
