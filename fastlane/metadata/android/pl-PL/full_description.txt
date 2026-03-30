@@ -1,0 +1,25 @@
+Patchowanie jądra Androida oraz systemu Android.
+<ul>
+<li>Implementacja root oparta na KernelPatch dla urządzeń z Androidem.</li>
+<li>APM: Obsługa modułów podobnych do Magisk.</li>
+<li>KPM: Obsługa modułów umożliwiających wstrzykiwanie dowolnego kodu do jądra (wymaga włączonych funkcji jądra <code>inline-hook</code> oraz <code>syscall-table-hook</code>).</li>
+<li>APatch opiera się na KernelPatch.</li>
+<li>Interfejs APatch oraz kod źródłowy APModule zostały oparte i zmodyfikowane na bazie KernelSU.</li>
+</ul>
+<ul>
+<li>Obsługuje wyłącznie architekturę ARM64.</li>
+<li>Obsługuje wyłącznie wersje jądra Androida 3.18 - 6.1.</li>
+</ul>
+Wsparcie dla urządzeń Samsung z zabezpieczeniami: Planowane
+Konfiguracje jądra:
+<ul>
+<li>
+<code>CONFIG_KALLSYMS=y</code> oraz <code>CONFIG_KALLSYMS_ALL=y</code>
+</li>
+<li>
+<code>CONFIG_KALLSYMS=y</code> oraz <code>CONFIG_KALLSYMS_ALL=n</code>: Wstępne wsparcie
+</li>
+</ul>
+<strong>SuperKey</strong> posiada wyższe uprawnienia niż dostęp root.
+Słabe lub przejęte klucze mogą prowadzić do nieautoryzowanej kontroli nad urządzeniem.
+Krytyczne jest stosowanie silnych kluczy oraz ich odpowiednie zabezpieczenie, aby utrzymać bezpieczeństwo urządzenia.
