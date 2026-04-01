@@ -16,7 +16,7 @@
     <string name="settings_nav_scheme">Schemat nawigacji</string>
     <string name="settings_nav_mode">Tryb paska nawigacji</string>
     <string name="settings_nav_mode_summary">Wybierz sposób wyświetlania paska nawigacji</string>
-    <string name="settings_nav_mode_auto">Automatycznie Tradycyjny</string>
+    <string name="settings_nav_mode_auto">Tradycyjny (automatycznie)</string>
     <string name="settings_nav_mode_bottom">Zawsze dolny pasek</string>
     <string name="settings_nav_mode_rail">Zawsze boczny pasek</string>
     <string name="settings_nav_mode_floating">Pływający dolny pasek</string>
@@ -35,7 +35,7 @@
     <string name="reboot_bootloader">Restartuj do Bootloadera</string>
     <string name="reboot_download">Restartuj do Download</string>
     <string name="reboot_edl">Restartuj do EDL</string>
-    <string name="reboot_fastbootd">Uruchom ponownie w trybie FastbootD</string>
+    <string name="reboot_fastbootd">Restartuj do FastbootD</string>
     <string name="about">O aplikacji</string>
     <string name="developer_and_maintainer">Deweloper | Opiekun</string>
     <string name="settings_app_language">Język</string>
@@ -153,14 +153,13 @@
     <string name="su_pkg_excluded_setting_title">Wyklucz modyfikacje</string>
     <string name="su_pkg_excluded_setting_summary">Włączenie tej opcji umożliwi FolkPatch przywrócenie wszystkich plików zmodyfikowanych przez moduły tej aplikacji.</string>
     <string name="su_pkg_root_setting_title">Superuser</string>
-    <string name="su_pkg_root_setting_summary">Włączenie tej opcji przyzna dostęp do roota Twojej aplikacji, pozwalając na używanie poleceń SU</string>
+    <string name="su_pkg_root_setting_summary">Włączenie tej opcji przyznaje aplikacji dostęp do roota, umożliwiając korzystanie z poleceń SU.</string>
     <string name="su_pkg_normal_setting_title">Tryb normalny</string>
     <string name="su_pkg_normal_setting_summary">Stan domyślny, brak specjalnego traktowania.</string>
     <string name="su_batch_exclude_title">Masowe wykluczanie</string>
     <string name="su_batch_exclude_content">Wyklucz wstrzykiwanie dla wszystkich aplikacji bez roota, wybierz działanie</string>
     <string name="su_exclude_btn">Wyklucz</string>
     <string name="su_exclude_reverse_btn">Odwróć</string>
-    <!-- SuperUser App Action Dialog -->
     <string name="su_app_action_title">Działanie aplikacji</string>
     <string name="su_app_action_content">Wybierz działanie do wykonania na aplikacji</string>
     <string name="su_app_action_launch">Uruchom aplikację</string>
@@ -196,7 +195,7 @@
     <string name="apm_changelog">Lista zmian</string>
     <string name="apm_update">Aktualizacja</string>
     <string name="apm_downloading">Pobieranie modułu %s…</string>
-    <string name="apm_start_downloading">Rozpocznij pobieranie: %s</string>
+    <string name="apm_start_downloading">Pobieranie: %s</string>
     <string name="apm_new_version_available">Dostępna jest nowa wersja %s. Kliknij, aby uaktualnić.</string>
     <string name="hide_apatch_manager">Ukryj menedżer FolkPatch</string>
     <string name="hide_apatch_manager_summary">Zainstaluj aplikację proxy z losowym ID pakietu i niestandardową etykietą</string>
@@ -238,7 +237,7 @@
     <string name="settings_enable_module_shortcut_add_summary">Pokaż przycisk dodawania skrótu WebUI na stronie modułów systemowych</string>
     <string name="settings_module_sort_optimization">Optymalizacja sortowania modułów</string>
     <string name="settings_module_sort_optimization_summary">Umieść moduły systemowe z WebUI i Action na początku listy</string>
-    <string name="settings_fold_system_module">Zwiń Moduły Systemowe</string>
+    <string name="settings_fold_system_module">Zwiń moduły systemowe</string>
     <string name="settings_fold_system_module_summary">Kliknij kartę modułu, aby rozwinąć/zwinąć akcje</string>
     <string name="settings_simple_list_bottom_bar">Prosty dolny pasek listy</string>
     <string name="settings_simple_list_bottom_bar_summary">Użyj stylu przycisków tylko z ikonami dla akcji modułu, zainspirowane APatch</string>
@@ -252,12 +251,12 @@
     <string name="apm_enable_module_banner_summary">Wyświetl obraz banera dla modułów jeśli jest dostępny</string>
     <string name="apm_enable_folk_banner">Dostosuj baner modułu</string>
     <string name="apm_enable_folk_banner_summary">Naciśnij długo kartę modułu, aby wybrać obraz banera</string>
-    <string name="apm_folk_banner_title">FolkBanner</string>
+    <string name="apm_folk_banner_title">Baner Folk</string>
     <string name="apm_folk_banner_select">Wybierz obraz</string>
-    <string name="apm_folk_banner_clear">Wyczyść FolkBanner</string>
-    <string name="apm_folk_banner_saved">Wstrzyknięto FolkBanner dla %s.</string>
-    <string name="apm_folk_banner_cleared">Wyczyszczono FolkBanner dla %s.</string>
-    <string name="apm_folk_banner_failed">Nie udało się zaktualizować FolkBanner dla %s.</string>
+    <string name="apm_folk_banner_clear">Wyczyść baner Folk</string>
+    <string name="apm_folk_banner_saved">Wstrzyknięto baner Folk dla %s.</string>
+    <string name="apm_folk_banner_cleared">Wyczyszczono baner Folk dla %s.</string>
+    <string name="apm_folk_banner_failed">Nie udało się zaktualizować baneru Folk dla %s.</string>
     <string name="apm_banner_api_mode">Tryb API</string>
     <string name="apm_banner_api_mode_summary">Użyj API losowych obrazów lub katalogu lokalnego dla banerów modułów</string>
     <string name="apm_banner_api_source">Konfiguruj źródło API</string>
@@ -272,7 +271,6 @@
     <string name="apm_banner_api_config_desc">Wprowadź URL API losowych obrazów lub ścieżkę katalogu lokalnego. Każdy moduł otrzyma unikalny baner.</string>
     <string name="apm_banner_api_examples_title">Przykłady:</string>
     <string name="apm_banner_api_examples">API: https://picsum.photos/800/400\nLokalnie: /sdcard/Pictures/Banners</string>
-    <!-- Marketplace API -->
     <string name="apm_api_marketplace_title">Marketplace API</string>
     <string name="apm_api_preview">Podgląd</string>
     <string name="apm_api_apply">Zastosuj</string>
@@ -307,7 +305,6 @@
     <string name="home_dialog_uninstall_ap_only_desc">Usuń tylko AndroidPatch, zachowując menedżer.</string>
     <string name="home_dialog_uninstall_all">Odinstaluj całkowicie</string>
     <string name="home_dialog_uninstall_all_desc">Usuń AndroidPatch i rozpocznij pełny proces odinstalowywania.</string>
-    <!-- Install Mode Select -->
     <string name="kp_install_methods">KernelPatch Łatanie/Instalowanie</string>
     <string name="restore_boot_methods">Wybierz rozruch do przywrócenia do partycji rozruchowej</string>
     <string name="restore_select_file">Wybierz plik rozruchowy partycji do przywrócenia</string>
@@ -345,25 +342,20 @@
     <string name="about_app_desc">Implementacja root oparta na KernelPatch, umożliwiająca hookowanie funkcji jądra bez konieczności rekompilacji jądra.</string>
     <string name="about_powered_by">Zasilany przez %1$s</string>
     <string name="about_telegram_group">Grupa na Telegramie</string>
-    <!-- Online Module Strings -->
     <string name="online_module_title">Moduł systemu online</string>
     <string name="online_module_download_start">Rozpocznij pobieranie: %s</string>
     <string name="online_module_download_complete">Pobieranie zakończone: %s</string>
     <string name="online_module_download_notification">Pobieranie %s. Sprawdź panel powiadomień o postępach i folder Pobrane dla ukończonego pliku.</string>
-    <!-- Online KPM Strings -->
     <string name="online_kpm_title">Moduły jądra online</string>
     <string name="online_kpm_download_start">Rozpocznij pobieranie: %s</string>
     <string name="online_kpm_download_complete">Pobieranie zakończone: %s</string>
     <string name="online_kpm_download_notification">Pobieranie %s. Sprawdź panel powiadomień o postępach i folder Pobrane dla ukończonego pliku。</string>
-    <!-- Online Script Strings -->
     <string name="online_script_title">Skrypty online</string>
     <string name="online_script_download_start">Rozpocznij pobieranie: %s</string>
     <string name="online_script_download_complete">Pobieranie zakończone: %s</string>
     <string name="online_script_download_notification">Pobieranie %s</string>
-    <!-- Crash Handle Strings -->
     <string name="crash_handle_title">Aplikacja się wysypała…</string>
     <string name="crash_handle_copy">Kopiuj</string>
-    <!-- About Screen Strings -->
     <string name="about_app_version">Wersja aplikacji</string>
     <string name="about_github">GitHub</string>
     <string name="about_telegram_channel">Kanał na Telegramie</string>
@@ -416,7 +408,6 @@
     <string name="settings_title_image_night_opacity">Nieprzezroczystość trybu nocnego</string>
     <string name="settings_title_image_dim">Przyciemnienie tła</string>
     <string name="settings_title_image_offset_x">Pozycja pozioma</string>
-    <!-- KPM AutoLoad Strings -->
     <string name="kpm_autoload_title">Automatyczne ładowanie KPM</string>
     <string name="kpm_autoload_enabled">Włącz automatyczne ładowanie</string>
     <string name="kpm_autoload_enabled_summary">Automatycznie ładuj moduły KPM przy starcie aplikacji</string>
@@ -426,7 +417,7 @@
     <string name="settings_grid_working_card_hide_text_summary">Ukryj tekst "Działa" lub "Nie zainstalowano" na karcie roboczej</string>
     <string name="settings_grid_working_card_hide_mode">Ukryj tryb pracy</string>
     <string name="settings_grid_working_card_hide_mode_summary">Ukryj tekst \"W pełni\" lub \"Częściowo\" na karcie roboczej</string>
-    <string name="settings_list_card_hide_status_badge">Użyj Klasycznego Emoji</string>
+    <string name="settings_list_card_hide_status_badge">Użyj klasycznego Emoji</string>
     <string name="settings_list_card_hide_status_badge_summary">Odznaka stanu na stronie głównej zmienia się w klasyczny emoji</string>
     <string name="settings_custom_badge_text">Niestandardowy tekst odznaki</string>
     <string name="settings_custom_badge_text_summary">Zmodyfikuj wyświetlanie tekstu odznaki, tylko dla zabawy</string>
@@ -468,7 +459,6 @@ Na przykład, KPM, które zapobiegają modyfikacji partycji mogą być używane 
 Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby polecenia zostały wykonane. Zazwyczaj ładowanie następuje również przy starcie. Czasowe czarny ekran menedżera jest normalnym zjawiskiem! Używana jest czysto后台owa metoda ładowania, pamiętaj, aby ręcznie przesunąć w dół, aby odświeżyć i sprawdzić, czy moduły zostały poprawnie załadowane!</string>
     <string name="kpm_autoload_first_time_confirm">Rozumiem</string>
     <string name="kpm_autoload_do_not_show_again">Nie pokazuj ponownie</string>
-    <!-- APM Bulk Install Strings -->
     <string name="apm_bulk_install_title">Instalacja zbiorcza APM</string>
     <string name="apm_bulk_install_list_title">Lista modułów</string>
     <string name="apm_bulk_install_add">Dodaj moduły</string>
@@ -486,7 +476,6 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="apm_bulk_install_remove">Usuń</string>
     <string name="apm_first_use_title">Witaj w modułach systemowych</string>
     <string name="apm_first_use_text">Witaj w modułach systemowych, tutaj używane są moduły kompatybilne z ekosystemem Magisk. Kliknij przycisk w prawym dolnym rogu, aby zainstalować moduły. Możesz również użyć instalatora na górze, aby zainstalować moduły hurtowo. Dostępna jest również funkcja tworzenia kopii zapasowej wszystkich modułów jednym kliknięciem, ale pamiętaj, że to rozwiązanie może nie być odpowiednie dla wszystkich modułów, więc warto robić własne kopie zapasowe.</string>
-    <!-- Hide Settings Strings -->
     <string name="home_hide_su_path">Ukryj ścieżkę pliku wykonywalnego su</string>
     <string name="home_hide_kpatch_version">Ukryj wersję poprawki jądra</string>
     <string name="home_hide_fingerprint">Ukryj odcisk palca</string>
@@ -499,7 +488,6 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="home_hide_fingerprint_summary">Ukryj odcisk palca w karcie informacyjnej</string>
     <string name="kpm_page_first_time_title">Ostrzeżenie</string>
     <string name="kpm_page_first_time_message">Moduły jądra bezpośrednio modyfikują implementację rozruchu (Boot). W przeciwieństwie do modułów systemowych, nie posiadają one dobrego mechanizmu ratunkowego. Jeśli pojawią się problemy, można je naprawić tylko wchodząc w tryb Fastboot. Zaleca się najpierw załadować moduł, aby upewnić się, że nie ma problemów przed osadzeniem go w Boot. Jeśli moduł może być używany tylko przez ładowanie, możesz wypróbować funkcję automatycznego ładowania modułów KPM. Jeśli nie rozumiesz modułów jądra, nie używaj tej funkcji!</string>
-    <!-- Module Backup/Restore Strings -->
     <string name="apm_backup_title">Kopia zapasowa modułów</string>
     <string name="apm_restore_title">Przywróć moduły</string>
     <string name="apm_backup_success">Kopia zapasowa zakończona sukcesem</string>
@@ -510,7 +498,6 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="apm_restore_failed_msg">Przywracanie nieudane: %s</string>
     <string name="apm_copy_list_title">Kopiuj listę</string>
     <string name="apm_copy_list_success">Lista modułów skopiowana</string>
-    <!-- Font Settings -->
     <string name="settings_custom_font">Niestandardowa czcionka</string>
     <string name="settings_select_font_file">Wybierz plik czcionki</string>
     <string name="settings_custom_font_enabled">Włączono niestandardową czcionkę</string>
@@ -522,7 +509,6 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="settings_clear_font_confirm">Czy na pewno chcesz przywrócić domyślną czcionkę?</string>
     <string name="settings_font_cleared">Przywrócono domyślną czcionkę</string>
     <string name="settings_font_select_hint">Wybierz plik czcionki TTF</string>
-    <!-- Auto Backup Strings -->
     <string name="settings_auto_backup_module">Automatyczna kopia zapasowa modułów systemowych</string>
     <string name="settings_auto_backup_module_summary">Automatycznie twórz kopię zapasową pliku modułu w katalogu prywatnym podczas instalacji</string>
     <string name="settings_open_backup_dir">Otwórz katalog kopii zapasowych</string>
@@ -532,9 +518,7 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="auto_backup_success">Automatyczna kopia zapasowa zakończona sukcesem: %s</string>
     <string name="settings_auto_backup_boot">Automatyczna kopia zapasowa Boot</string>
     <string name="settings_auto_backup_boot_summary">Automatycznie kopiuj Boot do lokalnego magazynu (Downloads/FolkPatch/BootBackups)</string>
-    <!-- Auto-added missing strings -->
     <string name="app_name" translatable="false">FolkPatch</string>
-    <!-- Home Layout Strings -->
     <string name="settings_home_layout_style">Styl strony głównej</string>
     <string name="settings_home_layout_default">Lista</string>
     <string name="settings_home_layout_grid">Siatka</string>
@@ -542,7 +526,6 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="settings_home_layout_sign">Sign</string>
     <string name="settings_home_layout_circle">Okrągły</string>
     <string name="settings_home_layout_dashboard_pro">Pulpit</string>
-    <!-- Unofficial Version Strings -->
     <string name="unofficial_version_title">Wersja nieoficjalna</string>
     <string name="unofficial_version_message">Używasz FolkPatch, który nie jest oficjalną aplikacją, pobierz oficjalną aplikację!</string>
     <string name="go_to_github">Przejdź na Github</string>
@@ -556,7 +539,6 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="settings_reset_theme_confirm">Czy na pewno chcesz zresetować wszystkie ustawienia motywu do domyślnych? Spowoduje to wyczyszczenie wszystkich niestandardowych tłów, czcionek, muzyki i efektów dźwiękowych.</string>
     <string name="settings_theme_reset">Motyw zresetowany</string>
     <string name="settings_theme_reset_failed">Nie udało się zresetować motywu</string>
-    <!-- Theme Strings -->
     <string name="theme_export_title">Eksportuj motyw</string>
     <string name="theme_import_title">Importuj motyw</string>
     <string name="theme_name">Nazwa motywu</string>
@@ -570,7 +552,6 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="theme_import_action">Importuj</string>
     <string name="theme_import_confirm">Czy na pewno chcesz zaimportować ten motyw?</string>
     <string name="theme_info">Informacje o motywie</string>
-    <!-- Grid Working Card Background -->
     <string name="settings_grid_working_card_background">Tło karty roboczej</string>
     <string name="settings_grid_working_card_background_enabled">Niestandardowe tło karty włączone</string>
     <string name="settings_grid_working_card_background_summary">Niestandardowy obraz tła dla karty roboczej</string>
@@ -580,14 +561,12 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="settings_grid_working_card_background_saved">Tło karty zapisane pomyślnie</string>
     <string name="settings_grid_working_card_background_error">Nie udało się zapisać tła karty</string>
     <string name="settings_grid_working_card_background_cleared">Tło karty wyczyszczone</string>
-    <!-- Biometric Strings -->
     <string name="action_biometric">Uwierzytelnianie biometryczne</string>
     <string name="msg_biometric">Proszę zweryfikować swoją tożsamość biometryczną</string>
     <string name="settings_biometric_login">Uwierzytelnianie biometryczne</string>
     <string name="settings_biometric_login_summary">Wymagaj uwierzytelniania biometrycznego przy otwieraniu aplikacji</string>
     <string name="settings_strong_biometric">Silne uwierzytelnianie biometryczne</string>
     <string name="settings_strong_biometric_summary">Wymagaj uwierzytelniania przy instalowaniu/deinstalowaniu/wyłączaniu modułów</string>
-    <!-- Theme Store Strings -->
     <string name="theme_store_title">Sklep motywów</string>
     <string name="theme_source_official">Oficjalne</string>
     <string name="theme_source_third_party">Trzecie strony</string>
@@ -598,7 +577,6 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="theme_store_download_failed">Pobieranie nie powiodło się</string>
     <string name="theme_store_download">Pobierz</string>
     <string name="theme_store_search_hint">Szukaj motywów...</string>
-    <!-- Update Check Strings -->
     <string name="settings_auto_update_check">Automatyczne sprawdzanie aktualizacji</string>
     <string name="settings_auto_update_check_summary">Automatycznie sprawdzaj aktualizacje przy uruchomieniu aplikacji</string>
     <string name="settings_check_update">Sprawdź dostępność aktualizacji</string>
@@ -608,7 +586,6 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="update_close">Zamknij</string>
     <string name="update_latest">Masz najnowszą wersję</string>
     <string name="update_error">Błąd sprawdzania aktualizacji</string>
-    <!--Opcje zwijania-->
     <string name="settings_category_general">Ogólne</string>
     <string name="settings_category_appearance">Wygląd</string>
     <string name="settings_appearance_font">Czcionka</string>
@@ -629,7 +606,6 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="settings_use_legacy_su_page_summary">Strona superużytkownika przełączona na projekt autoryzacji jednostronicowej</string>
     <string name="settings_category_module">Moduły</string>
     <string name="settings_category_security">Bezpieczeństwo</string>
-    <!-- Background Music Strings -->
     <string name="settings_background_music">Muzyka w tle</string>
     <string name="settings_background_music_summary">Odtwarzaj muzykę w tle, gdy aplikacja jest na pierwszym planie</string>
     <string name="settings_background_music_playing">Odtwarzanie: %s</string>
@@ -648,32 +624,28 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="settings_music_playback_control">Sterowanie odtwarzaniem</string>
     <string name="settings_music_looping">Odtwarzanie w pętli</string>
     <string name="settings_music_looping_summary">Powtarzaj bieżący utwór</string>
-    <!-- Theme Store Filter -->
     <string name="theme_store_filter_title">Filtruj Motywy</string>
     <string name="theme_store_filter_author">Autor</string>
     <string name="theme_store_filter_author_hint">Wprowadź nazwę autora</string>
     <string name="theme_store_filter_source">Źródło</string>
     <string name="theme_store_filter_source_all">Wszystkie</string>
-    <string name="theme_store_filter_type">Typ Urządzenia</string>
+    <string name="theme_store_filter_type">Typ urządzenia</string>
     <string name="theme_store_filter_apply">Zastosuj</string>
     <string name="theme_store_filter_reset">Resetuj</string>
-    <!-- Video Background Settings -->
-    <string name="settings_video_background">Tło Wideo</string>
+    <string name="settings_video_background">Tło wideo</string>
     <string name="settings_video_background_summary">Użyj wideo jako tło</string>
     <string name="settings_select_video">Wybierz Wideo</string>
     <string name="settings_video_selected">Wideo Wybrane</string>
-    <string name="settings_video_background_enabled">Tło Wideo Włączone</string>
+    <string name="settings_video_background_enabled">Tło Wideo włączone</string>
     <string name="settings_clear_video_background">Wyczyść tapetę wideo</string>
     <string name="settings_clear_video_background_confirm">Czy na pewno chcesz wyczyścić tapetę wideo?</string>
-    <string name="settings_video_volume">Głośność Wideo</string>
-    <!-- File Picker -->
+    <string name="settings_video_volume">Głośność wideo</string>
     <string name="file_picker_permission_required">Wymagane uprawnienia</string>
     <string name="file_picker_permission_desc">Aby przeglądać pliki, przyznaj uprawnienia \"Dostęp do wszystkich plików\".</string>
     <string name="file_picker_grant_permission">Przyznaj uprawnienia</string>
     <string name="file_picker_cancel">Anuluj</string>
     <string name="file_picker_internal_storage">Pamięć wewnętrzna</string>
     <string name="file_picker_no_files">Brak plików</string>
-    <!-- HomeV3 Strings -->
     <string name="home_device_status_title">Status urządzenia</string>
     <string name="home_device_status_battery_temp">Temperatura baterii</string>
     <string name="home_device_status_cpu_load">Obciążenie CPU</string>
@@ -684,8 +656,8 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="home_storage_zram">ZRAM</string>
     <string name="home_storage_swap">Plik swap</string>
     <string name="home_info_kernel">Jądro</string>
-    <string name="home_info_superkey">SuperKlucz</string>
-    <string name="home_info_auth_auth">Aut</string>
+    <string name="home_info_superkey">SuperKey</string>
+    <string name="home_info_auth_auth">Autoryzacja</string>
     <string name="home_info_auth_na">N/D</string>
     <string name="home_info_device_slot">Slot urządzenia</string>
     <string name="home_info_device_model">Model urządzenia</string>
@@ -700,10 +672,9 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="app_list_loading_scheme_root_service">RootService (Domyślnie)</string>
     <string name="app_list_loading_scheme_package_manager">PackageManager (API systemowe)</string>
     <string name="app_list_loading_scheme_dialog_title">Schemat wczytywania</string>
-    <string name="su_backup_list">Lista kopii zapasowych</string>
-    <string name="su_restore_list">Lista przywracania zapasowych</string>
-    <string name="backup_success">Kopia zapasowana pomyślnie</string>
-    <!-- Badge Count Settings -->
+    <string name="su_backup_list">Wykonaj kopię listy</string>
+    <string name="su_restore_list">Przywróć z kopii listę</string>
+    <string name="backup_success">Kopia ukończona</string>
     <string name="enable_badge_count">Ustawienia licznika odznak</string>
     <string name="enable_badge_count_summary">Skonfiguruj wyświetlanie licznika odznak dla elementów nawigacyjnych</string>
     <string name="badge_superuser">Pokaż odznakę Superuser</string>
@@ -753,7 +724,6 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="settings_enable_local_backup">Włącz lokalną kopię zapasową</string>
     <string name="settings_enable_local_backup_summary">Kopia zapasowa modułów do lokalnej pamięci (Downloads/FolkPatch/ModuleBackups)</string>
     <string name="close">Zamknij</string>
-    <!-- Backup Settings -->
     <string name="settings_category_backup">Ustawienia kopii zapasowej</string>
     <string name="settings_enable_cloud_backup">Włącz kopię zapasową w chmurze</string>
     <string name="webdav_test_success">Test zakończony sukcesem</string>
@@ -761,7 +731,6 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="restore_success">Przywracanie zakończone sukcesem</string>
     <string name="patch_output_written_to"> Łatka zastosowana pomyślnie, plik zapisano do </string>
     <string name="patch_write_failed"> Błąd zapisu łatkowanego boot.img</string>
-    <!-- Script Library Strings -->
     <string name="script_library">Biblioteka skryptów</string>
     <string name="script_library_title">Biblioteka skryptów</string>
     <string name="script_library_empty">Brak skryptów, kliknij przycisk dodawania</string>
@@ -795,7 +764,6 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="module">Moduły</string>
     <string name="search_modules">Szukaj modułów...</string>
     <string name="search_scripts">Szukaj skryptów...</string>
-    <!-- Umount Service -->
     <string name="settings_umount_service">Odmontowanie Zig</string>
     <string name="settings_umount_service_summary">Skonfiguruj punkty montowania do automatycznego odmontowania przy uruchamianiu</string>
     <string name="umount_config_title">Konfiguracja Umount</string>
@@ -808,7 +776,6 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="umount_config_save_confirm">Potwierdzić zapisanie konfiguracji?</string>
     <string name="umount_config_save_success">Konfiguracja zapisana pomyślnie</string>
     <string name="umount_config_save_failed">Nie udało się zapisać konfiguracji</string>
-    <!-- Strona Moje Motywy -->
     <string name="my_themes_title">Moje motywy</string>
     <string name="my_themes_empty">Brak motywów</string>
     <string name="my_themes_empty_action">Przeglądaj Sklep z Motywami</string>
@@ -819,7 +786,6 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="my_themes_applied">Zastosowano motyw</string>
     <string name="my_themes_apply_failed">Nie udało się zastosować motywu</string>
     <string name="my_themes_details">Szczegóły motywu</string>
-    <!-- Dialog Pobierania -->
     <string name="theme_download_title">Pobieranie motywu</string>
     <string name="theme_download_completed">Pobieranie zakończone</string>
     <string name="theme_download_failed">Pobieranie nieudane</string>
@@ -853,10 +819,10 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="app_title_superuser">Superuser</string>
     <string name="app_title_superpatch">SuperPatch</string>
     <string name="app_title_magicpatch">MagicPatch</string>
-    <string name="settings_custom_badge_text_full_half">W pełni/Częściowo (domyślnie)</string>
+    <string name="settings_custom_badge_text_full_half">FULL/HALF (domyślnie)</string>
     <string name="settings_custom_badge_text_lkm">LKM</string>
     <string name="settings_custom_badge_text_gki">GKI</string>
     <string name="settings_custom_badge_text_n_gki">N-GKI</string>
     <string name="settings_custom_badge_text_oki">OKI</string>
-    <string name="settings_custom_badge_text_built_in">Wbudowany</string>
+    <string name="settings_custom_badge_text_built_in">Built-in</string>
 </resources>
