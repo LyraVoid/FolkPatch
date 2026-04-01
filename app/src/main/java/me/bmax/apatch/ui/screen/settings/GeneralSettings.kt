@@ -118,6 +118,7 @@ fun GeneralSettings(
     val appTitleTitle = stringResource(id = R.string.settings_app_title)
     val currentAppTitle = prefs.getString("app_title", "folkpatch")
     val appTitleLabel = when (currentAppTitle) {
+        "custom" -> prefs.getString("custom_app_title", "FolkPatch") ?: stringResource(R.string.app_title_custom)
         "fpatch" -> stringResource(R.string.app_title_fpatch)
         "apatch_folk" -> stringResource(R.string.app_title_apatch_folk)
         "apatchx" -> stringResource(R.string.app_title_apatchx)
@@ -132,6 +133,10 @@ fun GeneralSettings(
         else -> stringResource(R.string.app_title_folkpatch)
     }
     val showAppTitle = matchGeneral || shouldShow(searchText, appTitleTitle, appTitleLabel)
+
+    val customAppTitleTitle = stringResource(id = R.string.settings_custom_app_title)
+    val currentCustomAppTitle = prefs.getString("custom_app_title", "FolkPatch")
+    val showCustomAppTitle = (currentAppTitle == "custom") && (matchGeneral || shouldShow(searchText, customAppTitleTitle, currentCustomAppTitle ?: ""))
 
     val desktopAppNameTitle = stringResource(id = R.string.desktop_app_name)
     val currentDesktopAppName = prefs.getString("desktop_app_name", "FolkPatch")
@@ -165,6 +170,7 @@ fun GeneralSettings(
     val showUpdateDialog = remember { mutableStateOf(false) }
     val showResetSuPathDialog = remember { mutableStateOf(false) }
     val showAppTitleDialog = remember { mutableStateOf(false) }
+    val showCustomAppTitleDialog = remember { mutableStateOf(false) }
     val showDesktopAppNameDialog = remember { mutableStateOf(false) }
     val showDpiDialog = remember { mutableStateOf(false) }
     val showFolkXAnimationTypeDialog = remember { mutableStateOf(false) }
@@ -438,6 +444,21 @@ fun GeneralSettings(
                 }, leadingContent = { Icon(Icons.Filled.Title, null) })
             }
 
+            // Custom App Title
+            if (showCustomAppTitle) {
+                ListItem(colors = ListItemDefaults.colors(containerColor = Color.Transparent), headlineContent = {
+                    Text(text = customAppTitleTitle)
+                }, modifier = Modifier.clickable {
+                    showCustomAppTitleDialog.value = true
+                }, supportingContent = {
+                    Text(
+                        text = currentCustomAppTitle ?: "",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.outline
+                    )
+                }, leadingContent = { Icon(Icons.Filled.Edit, null) })
+            }
+
             // Desktop App Name
             if (showDesktopAppName) {
                 ListItem(colors = ListItemDefaults.colors(containerColor = Color.Transparent), headlineContent = {
@@ -530,6 +551,10 @@ fun GeneralSettings(
     
     if (showAppTitleDialog.value) {
         AppTitleChooseDialog(showAppTitleDialog)
+    }
+
+    if (showCustomAppTitleDialog.value) {
+        CustomAppTitleDialog(showCustomAppTitleDialog, snackBarHost)
     }
     
     if (showDesktopAppNameDialog.value) {
@@ -765,6 +790,7 @@ fun AppTitleChooseDialog(showDialog: MutableState<Boolean>) {
     val currentTitle = prefs.getString("app_title", "folkpatch")
 
     val titles = listOf(
+        "custom" to stringResource(R.string.app_title_custom),
         "fpatch" to stringResource(R.string.app_title_fpatch),
         "apatch_folk" to stringResource(R.string.app_title_apatch_folk),
         "apatchx" to stringResource(R.string.app_title_apatchx),
@@ -808,6 +834,72 @@ fun AppTitleChooseDialog(showDialog: MutableState<Boolean>) {
                             }
                         }
                     )
+                }
+            }
+
+            val dialogWindowProvider = LocalView.current.parent as DialogWindowProvider
+            APDialogBlurBehindUtils.setupWindowBlurListener(dialogWindowProvider.window)
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CustomAppTitleDialog(showDialog: MutableState<Boolean>, snackBarHost: SnackbarHostState) {
+    val prefs = APApplication.sharedPreferences
+    var customTitle by remember {
+        mutableStateOf(prefs.getString("custom_app_title", "FolkPatch") ?: "FolkPatch")
+    }
+
+    BasicAlertDialog(
+        onDismissRequest = { showDialog.value = false }, properties = DialogProperties(
+            decorFitsSystemWindows = true,
+            usePlatformDefaultWidth = false,
+        )
+    ) {
+        Surface(
+            modifier = Modifier
+                .width(310.dp)
+                .wrapContentHeight()
+                .padding(24.dp),
+            shape = RoundedCornerShape(30.dp),
+            tonalElevation = AlertDialogDefaults.TonalElevation,
+            color = AlertDialogDefaults.containerColor,
+        ) {
+            Column(
+                modifier = Modifier.padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.custom_app_title_dialog_title),
+                    style = MaterialTheme.typography.titleMedium
+                )
+                OutlinedTextField(
+                    value = customTitle,
+                    onValueChange = { customTitle = it },
+                    placeholder = { Text(stringResource(R.string.custom_app_title_dialog_hint)) },
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    TextButton(onClick = { showDialog.value = false }) {
+                        Text(stringResource(R.string.cancel))
+                    }
+                    TextButton(onClick = {
+                        val trimmed = customTitle.trim()
+                        if (trimmed.isEmpty()) {
+                            showDialog.value = false
+                            return@TextButton
+                        }
+                        prefs.edit { putString("custom_app_title", trimmed) }
+                        showDialog.value = false
+                    }) {
+                        Text(stringResource(R.string.custom_app_title_dialog_confirm))
+                    }
                 }
             }
 

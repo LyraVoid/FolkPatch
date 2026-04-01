@@ -429,6 +429,13 @@
     <string name="settings_hide_service">FolkPatch Hide</string>
     <string name="settings_hide_service_summary">一定程度上隱藏Bootloader解鎖狀態</string>
     <string name="settings_app_title">應用程式標題</string>
+    <string name="app_title_custom">自訂</string>
+    <string name="settings_custom_app_title">設定應用程式名稱</string>
+    <string name="custom_app_title_dialog_title">自訂應用程式名稱</string>
+    <string name="custom_app_title_dialog_hint">請輸入應用程式名稱</string>
+    <string name="custom_app_title_dialog_confirm">確定</string>
+    <string name="custom_app_title_dialog_empty">名稱不能為空</string>
+    <string name="cancel">取消</string>
     <string name="settings_custom_background">自訂背景</string>
     <string name="settings_custom_background_enabled">已啟用自訂背景</string>
     <string name="settings_custom_background_opacity">卡片透明度</string>

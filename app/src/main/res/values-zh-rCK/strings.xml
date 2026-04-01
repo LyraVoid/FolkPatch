@@ -425,6 +425,13 @@
     <string name="settings_hide_service">FolkPatch Hide</string>
     <string name="settings_hide_service_summary">把Bootloader解锁状态藏起来呗</string>
     <string name="settings_app_title">软件名</string>
+    <string name="app_title_custom">自个儿起</string>
+    <string name="settings_custom_app_title">设置软件名</string>
+    <string name="custom_app_title_dialog_title">自定义软件名</string>
+    <string name="custom_app_title_dialog_hint">写个名儿呗</string>
+    <string name="custom_app_title_dialog_confirm">中</string>
+    <string name="custom_app_title_dialog_empty">咋能没名儿呢</string>
+    <string name="cancel">算了</string>
     <string name="settings_custom_background">自定背景</string>
     <string name="settings_custom_background_enabled">已开自定背景</string>
     <string name="settings_custom_background_opacity">卡片透明度</string>

@@ -375,6 +375,13 @@
     <string name="settings_hide_service">Ukryj FolkPatch</string>
     <string name="settings_hide_service_summary">Ukryj status odblokowania bootloadera w pewnym stopniu</string>
     <string name="settings_app_title">Tytuł aplikacji</string>
+    <string name="app_title_custom">Niestandardowy</string>
+    <string name="settings_custom_app_title">Ustaw nazwę aplikacji</string>
+    <string name="custom_app_title_dialog_title">Niestandardowa nazwa aplikacji</string>
+    <string name="custom_app_title_dialog_hint">Wprowadź nazwę aplikacji</string>
+    <string name="custom_app_title_dialog_confirm">Potwierdź</string>
+    <string name="custom_app_title_dialog_empty">Nazwa nie może być pusta</string>
+    <string name="cancel">Anuluj</string>
     <string name="settings_custom_background">Niestandardowe tło</string>
     <string name="settings_custom_background_enabled">Włączono niestandardowe tło</string>
     <string name="settings_custom_background_opacity">Przezroczystość karty</string>

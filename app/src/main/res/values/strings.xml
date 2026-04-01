@@ -427,6 +427,7 @@ Here are some possible reasons for authentication failure—please check which o
     <string name="about_telegram_channel">Telegram Channel</string>
 
     <!-- App Title Strings -->
+    <string name="app_title_custom">Custom</string>
     <string name="app_title_fpatch">FPatch</string>
     <string name="app_title_apatch_folk">APatch Folk</string>
     <string name="app_title_apatchx">APatch X</string>
@@ -459,6 +460,12 @@ Here are some possible reasons for authentication failure—please check which o
     <string name="umount_config_save_success">Configuration saved successfully</string>
     <string name="umount_config_save_failed">Failed to save configuration</string>
     <string name="settings_app_title">App Title</string>
+    <string name="settings_custom_app_title">Custom App Name</string>
+    <string name="custom_app_title_dialog_title">Custom App Name</string>
+    <string name="custom_app_title_dialog_hint">Enter app name</string>
+    <string name="custom_app_title_dialog_confirm">Confirm</string>
+    <string name="custom_app_title_dialog_empty">Name cannot be empty</string>
+    <string name="cancel">Cancel</string>
     <string name="settings_custom_background">Custom Background</string>
     <string name="settings_custom_background_enabled">Custom Background Enabled</string>
     <string name="settings_custom_background_opacity">Card opacity</string>

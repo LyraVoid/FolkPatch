@@ -436,6 +436,13 @@ Aqui estão algumas possíveis razões para a falha de autenticação—verifiqu
     <string name="settings_hide_service">FolkPatch Hide</string>
     <string name="settings_hide_service_summary">Ocultar o status de desbloqueio do bootloader em certa medida</string>
     <string name="settings_app_title">Título do App</string>
+    <string name="app_title_custom">Personalizado</string>
+    <string name="settings_custom_app_title">Definir nome do app</string>
+    <string name="custom_app_title_dialog_title">Nome personalizado do app</string>
+    <string name="custom_app_title_dialog_hint">Digite o nome do app</string>
+    <string name="custom_app_title_dialog_confirm">Confirmar</string>
+    <string name="custom_app_title_dialog_empty">O nome não pode ficar vazio</string>
+    <string name="cancel">Cancelar</string>
     <string name="settings_custom_background">Fundo Personalizado</string>
     <string name="settings_custom_background_enabled">Fundo Personalizado Ativo</string>
     <string name="settings_custom_background_opacity">Opacidade do cartão</string>

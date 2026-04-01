@@ -436,6 +436,13 @@
     <string name="settings_hide_service">FolkPatch Hide</string>
     <string name="settings_hide_service_summary">Скрывать статус разблокировки загрузчика в некоторой степени</string>
     <string name="settings_app_title">Заголовок приложения</string>
+    <string name="app_title_custom">Пользовательский</string>
+    <string name="settings_custom_app_title">Задать имя приложения</string>
+    <string name="custom_app_title_dialog_title">Пользовательское имя приложения</string>
+    <string name="custom_app_title_dialog_hint">Введите имя приложения</string>
+    <string name="custom_app_title_dialog_confirm">Подтвердить</string>
+    <string name="custom_app_title_dialog_empty">Имя не может быть пустым</string>
+    <string name="cancel">Отмена</string>
     <string name="settings_custom_background">Пользовательский фон</string>
     <string name="settings_custom_background_enabled">Пользовательский фон включен</string>
     <string name="settings_custom_background_opacity">Прозрачность карточки</string>

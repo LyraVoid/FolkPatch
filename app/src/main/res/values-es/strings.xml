@@ -438,6 +438,13 @@ Aquí hay algunas posibles razones para el fallo de autenticación—por favor v
     <string name="settings_hide_service">FolkPatch Hide</string>
     <string name="settings_hide_service_summary">Ocultar el estado de desbloqueo del bootloader hasta cierto punto</string>
     <string name="settings_app_title">Título de la App</string>
+    <string name="app_title_custom">Personalizado</string>
+    <string name="settings_custom_app_title">Establecer nombre de la app</string>
+    <string name="custom_app_title_dialog_title">Nombre personalizado de la app</string>
+    <string name="custom_app_title_dialog_hint">Introduce el nombre de la app</string>
+    <string name="custom_app_title_dialog_confirm">Confirmar</string>
+    <string name="custom_app_title_dialog_empty">El nombre no puede estar vacío</string>
+    <string name="cancel">Cancelar</string>
     <string name="settings_custom_background">Fondo Personalizado</string>
     <string name="settings_custom_background_enabled">Fondo Personalizado Habilitado</string>
     <string name="settings_custom_background_opacity">Opacidad de tarjetas</string>

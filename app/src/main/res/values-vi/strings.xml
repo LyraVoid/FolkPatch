@@ -430,6 +430,13 @@ Dưới đây là một số nguyên nhân có thể gây ra thất bại xác t
     <string name="settings_hide_service">FolkPatch Hide</string>
     <string name="settings_hide_service_summary">Ẩn trạng thái mở khóa bootloader ở một mức độ nhất định</string>
     <string name="settings_app_title">Tên ứng dụng</string>
+    <string name="app_title_custom">Tùy chỉnh</string>
+    <string name="settings_custom_app_title">Đặt tên ứng dụng</string>
+    <string name="custom_app_title_dialog_title">Tên ứng dụng tùy chỉnh</string>
+    <string name="custom_app_title_dialog_hint">Nhập tên ứng dụng</string>
+    <string name="custom_app_title_dialog_confirm">Xác nhận</string>
+    <string name="custom_app_title_dialog_empty">Tên không được để trống</string>
+    <string name="cancel">Hủy</string>
     <string name="settings_custom_background">Hình nền tùy chỉnh</string>
     <string name="settings_custom_background_enabled">Đã bật hình nền tùy chỉnh</string>
     <string name="settings_custom_background_opacity">Độ mờ của thẻ</string>

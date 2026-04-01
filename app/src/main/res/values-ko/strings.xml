@@ -459,6 +459,13 @@
     <string name="umount_config_save_success">구성 저장됨</string>
     <string name="umount_config_save_failed">구성 저장 실패</string>
     <string name="settings_app_title">앱 제목</string>
+    <string name="app_title_custom">사용자 지정</string>
+    <string name="settings_custom_app_title">앱 이름 설정</string>
+    <string name="custom_app_title_dialog_title">사용자 지정 앱 이름</string>
+    <string name="custom_app_title_dialog_hint">앱 이름 입력</string>
+    <string name="custom_app_title_dialog_confirm">확인</string>
+    <string name="custom_app_title_dialog_empty">이름을 입력해 주세요</string>
+    <string name="cancel">취소</string>
     <string name="settings_custom_background">사용자 지정 배경</string>
     <string name="settings_custom_background_enabled">사용자 지정 배경 활성화됨</string>
     <string name="settings_custom_background_opacity">카드 불투명도</string>

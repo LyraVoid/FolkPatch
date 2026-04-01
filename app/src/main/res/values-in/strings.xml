@@ -429,6 +429,13 @@ Berikut adalah beberapa kemungkinan penyebab kegagalan autentikasi—silakan cek
     <string name="settings_hide_service">FolkPatch Hide</string>
     <string name="settings_hide_service_summary">Sembunyikan status buka kunci bootloader sampai tingkat tertentu</string>
     <string name="settings_app_title">Judul Aplikasi</string>
+    <string name="app_title_custom">Kustom</string>
+    <string name="settings_custom_app_title">Atur nama aplikasi</string>
+    <string name="custom_app_title_dialog_title">Nama aplikasi kustom</string>
+    <string name="custom_app_title_dialog_hint">Masukkan nama aplikasi</string>
+    <string name="custom_app_title_dialog_confirm">Konfirmasi</string>
+    <string name="custom_app_title_dialog_empty">Nama tidak boleh kosong</string>
+    <string name="cancel">Batal</string>
     <string name="settings_custom_background">Latar Belakang Kustom</string>
     <string name="settings_custom_background_enabled">Latar Belakang Kustom diaktifkan</string>
     <string name="settings_custom_background_opacity">Opasitas Kartu</string>

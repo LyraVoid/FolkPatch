@@ -405,6 +405,13 @@
     <string name="umount_config_save_success">構成の保存に成功しました。</string>
     <string name="umount_config_save_failed">構成の保存に失敗しました。</string>
     <string name="settings_app_title">アプリのタイトル</string>
+    <string name="app_title_custom">カスタム</string>
+    <string name="settings_custom_app_title">アプリ名を設定</string>
+    <string name="custom_app_title_dialog_title">カスタムアプリ名</string>
+    <string name="custom_app_title_dialog_hint">アプリ名を入力</string>
+    <string name="custom_app_title_dialog_confirm">決定</string>
+    <string name="custom_app_title_dialog_empty">名前を入力してください</string>
+    <string name="cancel">キャンセル</string>
     <string name="settings_custom_background">カスタム背景</string>
     <string name="settings_custom_background_enabled">カスタム背景が有効化されています</string>
     <string name="settings_custom_background_opacity">カードの透過度</string>

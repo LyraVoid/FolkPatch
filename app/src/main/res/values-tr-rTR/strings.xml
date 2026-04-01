@@ -435,6 +435,13 @@ Bol şans! Ayrıca, aşağıdaki belge butonuna tıklamak kesinlikle doğru!</st
     <string name="settings_hide_service">FolkPatch Hide</string>
     <string name="settings_hide_service_summary">Bootloader kilidi açık durumunu bir ölçüde gizle</string>
     <string name="settings_app_title">Uygulama Başlığı</string>
+    <string name="app_title_custom">Özel</string>
+    <string name="settings_custom_app_title">Uygulama adını ayarla</string>
+    <string name="custom_app_title_dialog_title">Özel uygulama adı</string>
+    <string name="custom_app_title_dialog_hint">Uygulama adını girin</string>
+    <string name="custom_app_title_dialog_confirm">Onayla</string>
+    <string name="custom_app_title_dialog_empty">Ad boş olamaz</string>
+    <string name="cancel">İptal</string>
     <string name="settings_custom_background">Özel Arka Plan</string>
     <string name="settings_custom_background_enabled">Özel Arka Plan Etkin</string>
     <string name="settings_custom_background_opacity">Kart opaklığı</string>

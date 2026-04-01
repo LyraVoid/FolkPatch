@@ -439,6 +439,13 @@
     <string name="settings_hide_service">FolkPatch Hide</string>
     <string name="settings_hide_service_summary">إخفاء حالة فتح قفل محمل الإقلاع إلى حد ما</string>
     <string name="settings_app_title">عنوان التطبيق</string>
+    <string name="app_title_custom">مخصص</string>
+    <string name="settings_custom_app_title">تعيين اسم التطبيق</string>
+    <string name="custom_app_title_dialog_title">اسم التطبيق المخصص</string>
+    <string name="custom_app_title_dialog_hint">أدخل اسم التطبيق</string>
+    <string name="custom_app_title_dialog_confirm">تأكيد</string>
+    <string name="custom_app_title_dialog_empty">لا يمكن أن يكون الاسم فارغاً</string>
+    <string name="cancel">إلغاء</string>
     <string name="settings_custom_background">خلفية مخصصة</string>
     <string name="settings_custom_background_enabled">تمكين الخلفية المخصصة</string>
     <string name="settings_custom_background_opacity">شفافية البطاقة</string>

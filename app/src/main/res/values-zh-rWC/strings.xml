@@ -426,6 +426,13 @@
     <string name="settings_hide_service">FolkPatch Hide</string>
     <string name="settings_hide_service_summary">施展障眼法隐藏Bootloader解锁状态</string>
     <string name="settings_app_title">仙器名讳</string>
+    <string name="app_title_custom">自赐名讳</string>
+    <string name="settings_custom_app_title">设置仙器名讳</string>
+    <string name="custom_app_title_dialog_title">自赐仙器名讳</string>
+    <string name="custom_app_title_dialog_hint">请赐仙器名讳</string>
+    <string name="custom_app_title_dialog_confirm">赐名</string>
+    <string name="custom_app_title_dialog_empty">名讳不可为空</string>
+    <string name="cancel">罢了</string>
     <string name="settings_custom_background">自定仙府背景</string>
     <string name="settings_custom_background_enabled">已启自定仙府背景</string>
     <string name="settings_custom_background_opacity">仙笺透度</string>

@@ -424,6 +424,13 @@
     <string name="settings_hide_service">FolkPatch Hide</string>
     <string name="settings_hide_service_summary">以圣光遮蔽Bootloader解锁状态</string>
     <string name="settings_app_title">天使使名称</string>
+    <string name="app_title_custom">自定义圣名</string>
+    <string name="settings_custom_app_title">设置天使使名称</string>
+    <string name="custom_app_title_dialog_title">自定义天使使名称</string>
+    <string name="custom_app_title_dialog_hint">请赐予圣名</string>
+    <string name="custom_app_title_dialog_confirm">赐名</string>
+    <string name="custom_app_title_dialog_empty">圣名不可为空</string>
+    <string name="cancel">取消赐名</string>
     <string name="settings_custom_background">自定义天使背景</string>
     <string name="settings_custom_background_enabled">已启用自定义天使背景</string>
     <string name="settings_custom_background_opacity">魔法阵透明度</string>

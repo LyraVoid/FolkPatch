@@ -578,7 +578,10 @@ private fun TopBar(
     }
     
     val currentTitle = prefs.getString("app_title", "folkpatch") ?: "folkpatch"
+    val customAppTitle = prefs.getString("custom_app_title", "FolkPatch") ?: "FolkPatch"
+    val isCustomTitle = currentTitle == "custom"
     val titleResId = when (currentTitle) {
+        "custom" -> null
         "fpatch" -> R.string.app_title_fpatch
         "apatch_folk" -> R.string.app_title_apatch_folk
         "apatchx" -> R.string.app_title_apatchx
@@ -612,7 +615,7 @@ private fun TopBar(
                     .data(BackgroundConfig.titleImageUri)
                     .crossfade(true)
                     .build(),
-                contentDescription = stringResource(titleResId),
+                contentDescription = titleResId?.let { stringResource(it) } ?: customAppTitle,
                 modifier = Modifier
                     .height(40.dp)
                     .offset(x = titleOffsetX.dp)
@@ -634,7 +637,7 @@ private fun TopBar(
                 contentScale = ContentScale.Fit
             )
         } else {
-            Text(stringResource(titleResId))
+            Text(if (isCustomTitle) customAppTitle else stringResource(titleResId!!))
         }
     }, actions = {
         if (MusicConfig.isMusicEnabled) {
