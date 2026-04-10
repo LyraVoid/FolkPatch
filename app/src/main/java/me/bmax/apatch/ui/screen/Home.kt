@@ -20,28 +20,28 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.HelpOutline
+import androidx.compose.material.icons.automirrored.outlined.RotateRight
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.AutoFixHigh
 import androidx.compose.material.icons.filled.InstallMobile
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Pause
+import androidx.compose.material.icons.filled.PowerSettingsNew
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.SwapVerticalCircle
-import androidx.compose.material.icons.filled.SystemUpdate
-import androidx.compose.material.icons.filled.Fingerprint
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material3.Button
-import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.RadioButtonChecked
 import androidx.compose.material.icons.filled.RadioButtonUnchecked
+import androidx.compose.material.icons.filled.Fingerprint
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material.icons.filled.SwapVerticalCircle
+import androidx.compose.material.icons.filled.SystemUpdate
 import me.bmax.apatch.ui.theme.MusicConfig
 import me.bmax.apatch.util.MusicManager
 import androidx.compose.material.icons.filled.Warning
@@ -63,6 +63,10 @@ import androidx.compose.material.icons.outlined.Layers
 import androidx.compose.material.icons.outlined.PhoneAndroid
 import androidx.compose.material.icons.outlined.Shield
 import androidx.compose.material.icons.outlined.SdStorage
+import androidx.compose.material.icons.outlined.DeveloperMode
+import androidx.compose.material.icons.outlined.Download
+import androidx.compose.material.icons.outlined.Memory
+import androidx.compose.material.icons.outlined.RestartAlt
 import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BasicAlertDialog
@@ -550,13 +554,86 @@ fun AuthSuperKey(showDialog: MutableState<Boolean>, showFailedDialog: MutableSta
     }
 }
 
+private data class RebootOption(
+    @StringRes val titleRes: Int,
+    val reason: String,
+    val icon: ImageVector
+)
+
 @Composable
-fun RebootDropdownItem(@StringRes id: Int, reason: String = "") {
-    DropdownMenuItem(text = {
-        Text(stringResource(id))
-    }, onClick = {
-        reboot(reason)
-    })
+private fun getRebootOptions(): List<RebootOption> = listOf(
+    RebootOption(R.string.reboot, "", Icons.Filled.Refresh),
+    RebootOption(R.string.reboot_recovery, "recovery", Icons.Outlined.SystemUpdate),
+    RebootOption(R.string.reboot_bootloader, "bootloader", Icons.Outlined.Memory),
+    RebootOption(R.string.reboot_download, "download", Icons.Outlined.Download),
+    RebootOption(R.string.reboot_edl, "edl", Icons.Outlined.DeveloperMode),
+    RebootOption(R.string.reboot_fastbootd, "fastboot", Icons.Outlined.RestartAlt),
+)
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun RebootDialog(
+    show: Boolean,
+    onDismiss: () -> Unit,
+    onReboot: (String) -> Unit
+) {
+    if (!show) return
+
+    val options = getRebootOptions()
+
+    BasicAlertDialog(onDismissRequest = onDismiss) {
+        Surface(
+            shape = RoundedCornerShape(28.dp),
+            color = MaterialTheme.colorScheme.surfaceContainerHigh
+        ) {
+            Column(modifier = Modifier.padding(24.dp)) {
+                Column(
+                    modifier = Modifier.padding(top = 4.dp),
+                    verticalArrangement = Arrangement.spacedBy(2.dp)
+                ) {
+                    options.forEach { option ->
+                        Surface(
+                            shape = RoundedCornerShape(16.dp),
+                            color = MaterialTheme.colorScheme.surfaceContainerLowest,
+                            onClick = {
+                                onDismiss()
+                                onReboot(option.reason)
+                            }
+                        ) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .size(40.dp)
+                                        .background(
+                                            color = MaterialTheme.colorScheme.secondaryContainer,
+                                            shape = CircleShape
+                                        ),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Icon(
+                                        imageVector = option.icon,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(20.dp),
+                                        tint = MaterialTheme.colorScheme.onSecondaryContainer
+                                    )
+                                }
+                                Spacer(modifier = Modifier.width(16.dp))
+                                Text(
+                                    text = stringResource(option.titleRes),
+                                    style = MaterialTheme.typography.bodyLarge
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -658,45 +735,18 @@ private fun TopBar(
         }
 
         if (kpState != APApplication.State.UNKNOWN_STATE) {
-            IconButton(onClick = {
-                showDropdownReboot = true
-            }) {
+            IconButton(onClick = { showDropdownReboot = true }) {
                 Icon(
-                    imageVector = Icons.Filled.Refresh,
+                    imageVector = Icons.Filled.PowerSettingsNew,
                     contentDescription = stringResource(id = R.string.reboot)
                 )
-
-                WallpaperAwareDropdownMenu(
-                    expanded = showDropdownReboot,
-                    onDismissRequest = { showDropdownReboot = false },
-                    shape = RoundedCornerShape(10.dp)
-                ) {
-                    WallpaperAwareDropdownMenuItem(
-                        text = { Text(stringResource(id = R.string.reboot)) },
-                        onClick = { reboot() }
-                    )
-                    WallpaperAwareDropdownMenuItem(
-                        text = { Text(stringResource(id = R.string.reboot_recovery)) },
-                        onClick = { reboot("recovery") }
-                    )
-                    WallpaperAwareDropdownMenuItem(
-                        text = { Text(stringResource(id = R.string.reboot_bootloader)) },
-                        onClick = { reboot("bootloader") }
-                    )
-                    WallpaperAwareDropdownMenuItem(
-                        text = { Text(stringResource(id = R.string.reboot_download)) },
-                        onClick = { reboot("download") }
-                    )
-                    WallpaperAwareDropdownMenuItem(
-                        text = { Text(stringResource(id = R.string.reboot_edl)) },
-                        onClick = { reboot("edl") }
-                    )
-                    WallpaperAwareDropdownMenuItem(
-                        text = { Text(stringResource(id = R.string.reboot_fastbootd)) },
-                        onClick = { reboot("fastboot") }
-                    )
-                }
             }
+
+            RebootDialog(
+                show = showDropdownReboot,
+                onDismiss = { showDropdownReboot = false },
+                onReboot = { reason -> reboot(reason) }
+            )
         }
 
         Box {
