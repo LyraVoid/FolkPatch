@@ -58,7 +58,8 @@ class KPModuleViewModel : ViewModel() {
                     val author = spi.find { it.startsWith("author=") }?.removePrefix("author=")
                     val description =
                         spi.find { it.startsWith("description=") }?.removePrefix("description=")
-                    val args = spi.find { it.startsWith("args=") }?.removePrefix("args=")
+                    val rawArgs = spi.find { it.startsWith("args=") }?.removePrefix("args=")
+                    val args = if (rawArgs == "(null)") "" else (rawArgs ?: "")
                     val info = KPModel.KPMInfo(
                         KPModel.ExtraType.KPM,
                         name ?: "",

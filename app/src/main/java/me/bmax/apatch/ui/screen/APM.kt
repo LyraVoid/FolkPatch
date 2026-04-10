@@ -16,14 +16,15 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.Crossfade
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -72,9 +73,12 @@ import androidx.compose.material.icons.outlined.Restore
 import androidx.compose.material.icons.outlined.Terminal
 import androidx.compose.material.icons.automirrored.outlined.Wysiwyg
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.FloatingActionButtonMenu
+import androidx.compose.material3.FloatingActionButtonMenuItem
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -155,6 +159,7 @@ import com.ramcosta.composedestinations.generated.destinations.ApmBulkInstallScr
 import com.ramcosta.composedestinations.generated.destinations.OnlineModuleScreenDestination
 import androidx.compose.material.icons.automirrored.filled.PlaylistAdd
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.DeleteSweep
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.MoreVert
@@ -174,7 +179,7 @@ import java.io.File
 
 import me.bmax.apatch.util.BiometricUtils
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Destination<RootGraph>
 @Composable
 fun APModuleScreen(navigator: DestinationsNavigator) {
@@ -353,12 +358,51 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
                 label = "fabOffset"
             )
 
-            if (isFloatingMode) {
-                Box(modifier = Modifier.offset(y = animatedOffset)) {
-                    FloatingActionButton(
-                        contentColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 1f),
-                        containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
+            var fabExpanded by remember { mutableStateOf(false) }
+
+            val fabContent: @Composable () -> Unit = {
+                FloatingActionButtonMenu(
+                    expanded = fabExpanded,
+                    button = {
+                        FloatingActionButton(
+                            onClick = { fabExpanded = !fabExpanded },
+                            shape = CircleShape,
+                            contentColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 1f),
+                            containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
+                        ) {
+                            Crossfade(
+                                targetState = fabExpanded,
+                                animationSpec = tween(durationMillis = 200),
+                                label = "fabIconCrossfade"
+                            ) { isExpanded ->
+                                if (isExpanded) {
+                                    Icon(
+                                        Icons.Filled.Close,
+                                        contentDescription = null,
+                                    )
+                                } else {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.package_import),
+                                        contentDescription = null,
+                                    )
+                                }
+                            }
+                        }
+                    },
+                ) {
+                    // 批量刷入 (Bulk Install)
+                    FloatingActionButtonMenuItem(
                         onClick = {
+                            fabExpanded = false
+                            navigator.navigate(ApmBulkInstallScreenDestination())
+                        },
+                        icon = { Icon(Icons.AutoMirrored.Filled.PlaylistAdd, contentDescription = null, modifier = Modifier.size(18.dp)) },
+                        text = { Text(text = stringResource(R.string.apm_bulk_install_action), style = MaterialTheme.typography.bodyMedium) },
+                    )
+                    // 安装 (Install)
+                    FloatingActionButtonMenuItem(
+                        onClick = {
+                            fabExpanded = false
                             scope.launch {
                                 if (checkStrongBiometric()) {
                                     val intent = Intent(Intent.ACTION_GET_CONTENT)
@@ -367,32 +411,18 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
                                     selectZipLauncher.launch(intent)
                                 }
                             }
-                        }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.package_import),
-                            contentDescription = null
-                        )
-                    }
-                }
-            } else {
-                FloatingActionButton(
-                    contentColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 1f),
-                    containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                    onClick = {
-                        scope.launch {
-                            if (checkStrongBiometric()) {
-                                val intent = Intent(Intent.ACTION_GET_CONTENT)
-                                intent.type = "application/zip"
-                                intent.addCategory(Intent.CATEGORY_OPENABLE)
-                                selectZipLauncher.launch(intent)
-                            }
-                        }
-                    }) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.package_import),
-                        contentDescription = null
+                        },
+                        icon = { Icon(Icons.Outlined.Download, contentDescription = null, modifier = Modifier.size(18.dp)) },
+                        text = { Text(text = stringResource(R.string.apm_install), style = MaterialTheme.typography.bodyMedium) },
                     )
                 }
+            }
+            if (isFloatingMode) {
+                Box(modifier = Modifier.offset(y = animatedOffset)) {
+                    fabContent()
+                }
+            } else {
+                fabContent()
             }
         }
     }, snackbarHost = { SnackbarHost(snackBarHost) }) { innerPadding ->
@@ -913,14 +943,6 @@ private fun TopBar(
                 Icon(
                     imageVector = Icons.Filled.Download,
                     contentDescription = "Online Modules"
-                )
-            }
-            androidx.compose.material3.IconButton(onClick = {
-                navigator.navigate(ApmBulkInstallScreenDestination())
-            }) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.PlaylistAdd,
-                    contentDescription = "Bulk Install"
                 )
             }
         },

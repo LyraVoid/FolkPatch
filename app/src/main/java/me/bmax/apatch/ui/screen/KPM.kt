@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
@@ -25,6 +26,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -40,9 +42,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.outlined.Code
 import androidx.compose.material.icons.outlined.Delete
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.*
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.ui.text.input.KeyboardType
@@ -103,13 +107,8 @@ import me.bmax.apatch.apApp
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import me.bmax.apatch.ui.component.ConfirmResult
-import me.bmax.apatch.ui.component.KPModuleRemoveButton
 import me.bmax.apatch.ui.component.KpmAutoLoadManager
-import me.bmax.apatch.ui.component.SearchAppBar
 import me.bmax.apatch.ui.component.LoadingDialogHandle
-import me.bmax.apatch.ui.component.ProvideMenuShape
-import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenu
-import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenuItem
 import me.bmax.apatch.ui.component.rememberConfirmDialog
 import me.bmax.apatch.ui.component.rememberLoadingDialog
 import me.bmax.apatch.ui.viewmodel.KPModel
@@ -185,7 +184,7 @@ private fun clearKpmBanner(context: Context, moduleName: String): Boolean {
 }
 
 @Destination<RootGraph>
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun KPModuleScreen(navigator: DestinationsNavigator) {
     val state by APApplication.apStateLiveData.observeAsState(APApplication.State.UNKNOWN_STATE)
@@ -277,8 +276,8 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
             val context = LocalContext.current
 
             val moduleLoad = stringResource(id = R.string.kpm_load)
-            val moduleInstall = stringResource(id = R.string.kpm_install)
             val moduleEmbed = stringResource(id = R.string.kpm_embed)
+            val autoLoadConfig = stringResource(id = R.string.kpm_autoload_title)
             val successToastText = stringResource(id = R.string.kpm_load_toast_succ)
             val failToastText = stringResource(id = R.string.kpm_load_toast_failed)
             val loadingDialog = rememberLoadingDialog()
@@ -321,58 +320,74 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
             }
 
             var expanded by remember { mutableStateOf(false) }
-            val options = listOf(moduleEmbed, moduleInstall, moduleLoad)
             val isFloatingMode = LocalIsFloatingNavMode.current
 
             val fabContent: @Composable () -> Unit = {
-                Column {
-                    FloatingActionButton(
-                        onClick = {
-                            expanded = !expanded
-                        },
-                        contentColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 1f),
-                        containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.package_import),
-                            contentDescription = null
-                        )
-                    }
-
-                    WallpaperAwareDropdownMenu(
-                        expanded = expanded,
-                        onDismissRequest = { expanded = false },
-                        shape = RoundedCornerShape(10.dp)
-                    ) {
-                        options.forEach { label ->
-                            WallpaperAwareDropdownMenuItem(text = { Text(label) }, onClick = {
-                                expanded = false
-                                scope.launch {
-                                    if (!checkStrongBiometric()) return@launch
-                                    when (label) {
-                                        moduleEmbed -> {
-                                            navigator.navigate(PatchesDestination(PatchesViewModel.PatchMode.PATCH_AND_INSTALL))
-                                        }
-
-                                        moduleInstall -> {
-                                            Toast.makeText(
-                                                context,
-                                                "Under development",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-                                        }
-
-                                        moduleLoad -> {
-                                            val intent = Intent(Intent.ACTION_GET_CONTENT)
-                                            intent.type = "*/*"
-                                            intent.addCategory(Intent.CATEGORY_OPENABLE)
-                                            selectKpmLauncher.launch(intent)
-                                        }
-                                    }
+                FloatingActionButtonMenu(
+                    expanded = expanded,
+                    button = {
+                        FloatingActionButton(
+                            onClick = { expanded = !expanded },
+                            shape = CircleShape,
+                            contentColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 1f),
+                            containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
+                        ) {
+                            Crossfade(
+                                targetState = expanded,
+                                animationSpec = tween(durationMillis = 200),
+                                label = "fabIconCrossfade"
+                            ) { isExpanded ->
+                                if (isExpanded) {
+                                    Icon(
+                                        Icons.Filled.Close,
+                                        contentDescription = null,
+                                    )
+                                } else {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.package_import),
+                                        contentDescription = null,
+                                    )
                                 }
-                            })
+                            }
                         }
-                    }
+                    },
+                ) {
+                    // 自动配置 (Auto Config) — top
+                    FloatingActionButtonMenuItem(
+                        onClick = {
+                            expanded = false
+                            navigator.navigate(KpmAutoLoadConfigScreenDestination)
+                        },
+                        icon = { Icon(Icons.Outlined.Settings, contentDescription = null, modifier = Modifier.size(18.dp)) },
+                        text = { Text(text = autoLoadConfig, style = MaterialTheme.typography.bodyMedium) },
+                    )
+                    // 嵌入 (Embed)
+                    FloatingActionButtonMenuItem(
+                        onClick = {
+                            expanded = false
+                            scope.launch {
+                                if (!checkStrongBiometric()) return@launch
+                                navigator.navigate(PatchesDestination(PatchesViewModel.PatchMode.PATCH_AND_INSTALL))
+                            }
+                        },
+                        icon = { Icon(Icons.Outlined.Code, contentDescription = null, modifier = Modifier.size(18.dp)) },
+                        text = { Text(text = moduleEmbed, style = MaterialTheme.typography.bodyMedium) },
+                    )
+                    // 加载 (Load)
+                    FloatingActionButtonMenuItem(
+                        onClick = {
+                            expanded = false
+                            scope.launch {
+                                if (!checkStrongBiometric()) return@launch
+                                val intent = Intent(Intent.ACTION_GET_CONTENT)
+                                intent.type = "*/*"
+                                intent.addCategory(Intent.CATEGORY_OPENABLE)
+                                selectKpmLauncher.launch(intent)
+                            }
+                        },
+                        icon = { Icon(Icons.Filled.Download, contentDescription = null, modifier = Modifier.size(18.dp)) },
+                        text = { Text(text = moduleLoad, style = MaterialTheme.typography.bodyMedium) },
+                    )
                 }
             }
             val bottomBarVisible = LocalBottomBarVisible.current.value
@@ -849,15 +864,6 @@ private fun TopBar(
                         Icon(
                             imageVector = Icons.Filled.Download,
                             contentDescription = "Online KPM"
-                        )
-                    }
-                    // 设置按钮
-                    IconButton(onClick = {
-                        navigator.navigate(KpmAutoLoadConfigScreenDestination)
-                    }) {
-                        Icon(
-                            imageVector = Icons.Filled.Settings,
-                            contentDescription = stringResource(R.string.kpm_autoload_title)
                         )
                     }
                 }
