@@ -35,13 +35,14 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import me.bmax.apatch.R
+import me.bmax.apatch.ui.component.AppLoadingIndicator
 import me.bmax.apatch.ui.viewmodel.ThemeStoreViewModel
 import me.bmax.apatch.util.DownloadProgress
 import me.bmax.apatch.util.DownloadStatus
 import me.bmax.apatch.util.ThemeDownloader
 
 @Destination<RootGraph>
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun ThemeStoreScreen(
     navigator: DestinationsNavigator
@@ -336,7 +337,7 @@ fun ThemeStoreScreen(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                CircularProgressIndicator()
+                AppLoadingIndicator()
             }
         } else if (viewModel.errorMessage != null) {
             Column(

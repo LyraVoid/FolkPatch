@@ -43,6 +43,8 @@ import kotlinx.coroutines.withContext
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
 import me.bmax.apatch.data.ScriptInfo
+import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import me.bmax.apatch.ui.component.FilePickerDialog
 import me.bmax.apatch.ui.component.rememberConfirmDialog
 import me.bmax.apatch.ui.component.rememberLoadingDialog
@@ -113,10 +115,13 @@ fun ScriptLibraryScreen(navigator: DestinationsNavigator) {
             )
         }
     ) { innerPadding ->
+        val pullToRefreshState = rememberPullToRefreshState()
         PullToRefreshBox(
             modifier = Modifier.padding(innerPadding),
             onRefresh = { viewModel.loadScripts() },
-            isRefreshing = isLoading
+            isRefreshing = isLoading,
+            state = pullToRefreshState,
+            indicator = { PullToRefreshDefaults.LoadingIndicator(state = pullToRefreshState, isRefreshing = isLoading, modifier = Modifier.align(Alignment.TopCenter)) }
         ) {
             if (scripts.isEmpty()) {
                 Box(

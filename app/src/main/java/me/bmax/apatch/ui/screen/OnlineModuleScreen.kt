@@ -28,6 +28,7 @@ import com.ramcosta.composedestinations.generated.destinations.InstallScreenDest
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import me.bmax.apatch.R
+import me.bmax.apatch.ui.component.AppLoadingIndicator
 import me.bmax.apatch.ui.viewmodel.OnlineModuleViewModel
 import me.bmax.apatch.util.download
 import me.bmax.apatch.util.DownloadListener
@@ -101,7 +102,7 @@ fun OnlineModuleScreen(navigator: DestinationsNavigator) {
             .fillMaxSize()
             .padding(innerPadding)) {
             if (viewModel.isRefreshing) {
-                CircularProgressIndicator(
+                AppLoadingIndicator(
                     modifier = Modifier.align(Alignment.Center)
                 )
             } else {

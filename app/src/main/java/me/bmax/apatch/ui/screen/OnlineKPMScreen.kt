@@ -28,6 +28,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import me.bmax.apatch.R
+import me.bmax.apatch.ui.component.AppLoadingIndicator
 import me.bmax.apatch.ui.viewmodel.OnlineKPMViewModel
 import me.bmax.apatch.util.download
 
@@ -100,7 +101,7 @@ fun OnlineKPMScreen(navigator: DestinationsNavigator) {
             .fillMaxSize()
             .padding(innerPadding)) {
             if (viewModel.isRefreshing) {
-                CircularProgressIndicator(
+                AppLoadingIndicator(
                     modifier = Modifier.align(Alignment.Center)
                 )
             } else {

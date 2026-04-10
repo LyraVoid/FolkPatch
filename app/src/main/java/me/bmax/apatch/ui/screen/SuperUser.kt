@@ -79,6 +79,8 @@ import me.bmax.apatch.apApp
 import me.bmax.apatch.ui.component.SearchAppBar
 import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenu
 import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenuItem
+import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import me.bmax.apatch.ui.component.SwitchItem
 import me.bmax.apatch.ui.viewmodel.SuperUserViewModel
 import me.bmax.apatch.util.PkgConfig
@@ -93,8 +95,8 @@ fun SuperUserScreen(navigator: DestinationsNavigator) {
     val useLegacySuPage = prefs.getBoolean("use_legacy_su_page", false)
 
     if (useLegacySuPage) {
-        // Legacy APatch-style single-screen UI
-        SuperUserScreenLegacy(navigator)
+        // Legacy APatch-style single-screen UI (not yet implemented)
+        SuperUserScreenModern(navigator)
     } else {
         // Current FolkPatch-style multi-screen UI
         SuperUserScreenModern(navigator)
@@ -276,158 +278,13 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator) {
             )
         },
     ) { innerPadding ->
+        val pullToRefreshState = rememberPullToRefreshState()
         PullToRefreshBox(
             modifier = Modifier.padding(innerPadding),
             onRefresh = { scope.launch { viewModel.fetchAppList() } },
-            isRefreshing = viewModel.isRefreshing
-        ) {
-            LazyColumn(Modifier.fillMaxSize()) {
-                items(viewModel.appList.filter { it.packageName != apApp.packageName }, key = { it.packageName + it.uid }) { app ->
-                    AppItem(
-                        app = app,
-                        onClick = {
-                            navigator.navigate(AppProfileScreenDestination(app.packageName, app.uid))
-                            viewModel.search = ""
-                        },
-                        onLongClick = {
-                            selectedApp = app
-                            showAppActionDialog = true
-                        }
-                    )
-                }
-            }
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
-@Composable
-private fun SuperUserScreenLegacy(navigator: DestinationsNavigator) {
-    val viewModel = viewModel<SuperUserViewModel>()
-    val scope = rememberCoroutineScope()
-    val context = LocalContext.current
-
-    val backupLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.CreateDocument("application/json")
-    ) { uri ->
-        uri?.let { viewModel.backupAppList(context, it) }
-    }
-
-    val restoreLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.OpenDocument()
-    ) { uri ->
-        uri?.let { viewModel.restoreAppList(context, it) }
-    }
-
-    var showBatchExcludeDialog by remember { mutableStateOf(false) }
-
-    if (showBatchExcludeDialog) {
-        BatchExcludeDialog(
-            onDismiss = { showBatchExcludeDialog = false },
-            onExclude = {
-                viewModel.excludeAll()
-                showBatchExcludeDialog = false
-            },
-            onReverseExclude = {
-                viewModel.reverseExcludeAll()
-                showBatchExcludeDialog = false
-            }
-        )
-    }
-
-    LaunchedEffect(Unit) {
-        if (viewModel.appList.isEmpty()) {
-            viewModel.fetchAppList()
-        }
-    }
-
-    Scaffold(
-        topBar = {
-            SearchAppBar(
-                title = { Text(stringResource(R.string.su_title)) },
-                searchText = viewModel.search,
-                onSearchTextChange = { viewModel.search = it },
-                onClearClick = { viewModel.search = "" },
-                leadingActions = {
-                    IconButton(onClick = {
-                        navigator.navigate(ScriptLibraryScreenDestination)
-                    }) {
-                        Icon(Icons.Filled.Terminal, contentDescription = stringResource(R.string.script_library))
-                    }
-                    IconButton(onClick = {
-                        showBatchExcludeDialog = true
-                    }) {
-                        Icon(Icons.AutoMirrored.Filled.PlaylistAddCheck, contentDescription = stringResource(R.string.su_batch_exclude_title))
-                    }
-                },
-                dropdownContent = {
-                    var showDropdown by remember { mutableStateOf(false) }
-
-                    IconButton(
-                        onClick = { showDropdown = true },
-                    ) {
-                        Icon(
-                            imageVector = Icons.Filled.MoreVert,
-                            contentDescription = stringResource(id = R.string.settings)
-                        )
-
-                        WallpaperAwareDropdownMenu(
-                            expanded = showDropdown,
-                            onDismissRequest = { showDropdown = false },
-                            shape = RoundedCornerShape(10.dp)
-                        ) {
-                            WallpaperAwareDropdownMenuItem(
-                                text = { Text(stringResource(R.string.su_refresh)) },
-                                onClick = {
-                                    scope.launch {
-                                        viewModel.fetchAppList()
-                                    }
-                                    showDropdown = false
-                                }
-                            )
-
-                            WallpaperAwareDropdownMenuItem(
-                                text = {
-                                    Text(
-                                        if (viewModel.showSystemApps) {
-                                            stringResource(R.string.su_hide_system_apps)
-                                        } else {
-                                            stringResource(R.string.su_show_system_apps)
-                                        }
-                                    )
-                                },
-                                onClick = {
-                                    viewModel.showSystemApps = !viewModel.showSystemApps
-                                    showDropdown = false
-                                }
-                            )
-
-                            WallpaperAwareDropdownMenuItem(
-                                text = { Text(stringResource(R.string.su_backup_list)) },
-                                onClick = {
-                                    backupLauncher.launch("FolkPatch_list_backup.json")
-                                    showDropdown = false
-                                }
-                            )
-
-                            WallpaperAwareDropdownMenuItem(
-                                text = { Text(stringResource(R.string.su_restore_list)) },
-                                onClick = {
-                                    restoreLauncher.launch(arrayOf("application/json", "*/*"))
-                                    showDropdown = false
-                                }
-                            )
-                        }
-                    }
-                }
-            )
-        },
-    ) { innerPadding ->
-
-        PullToRefreshBox(
-            modifier = Modifier.padding(innerPadding),
-            onRefresh = { scope.launch { viewModel.fetchAppList() } },
-            isRefreshing = viewModel.isRefreshing
+            isRefreshing = viewModel.isRefreshing,
+            state = pullToRefreshState,
+            indicator = { PullToRefreshDefaults.LoadingIndicator(state = pullToRefreshState, isRefreshing = viewModel.isRefreshing, modifier = Modifier.align(Alignment.TopCenter)) }
         ) {
             LazyColumn(Modifier.fillMaxSize()) {
                 items(viewModel.appList.filter { it.packageName != apApp.packageName }, key = { it.packageName + it.uid }) { app ->

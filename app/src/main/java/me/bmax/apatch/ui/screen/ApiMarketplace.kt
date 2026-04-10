@@ -27,6 +27,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import me.bmax.apatch.R
+import me.bmax.apatch.ui.component.AppLoadingIndicator
 import me.bmax.apatch.ui.model.ApiMarketplaceItem
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.ui.viewmodel.ApiMarketplaceViewModel
@@ -106,7 +107,7 @@ fun ApiMarketplaceScreen(
                         .padding(paddingValues),
                     contentAlignment = Alignment.Center
                 ) {
-                    CircularProgressIndicator()
+                    AppLoadingIndicator()
                 }
             }
             viewModel.errorMessage != null -> {

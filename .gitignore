@@ -19,7 +19,7 @@ keystore.properties
 app/src/main/resources/
 private
 .claude/
-.qoder
+.opencode
 
 # Built native binaries
 app/src/main/assets/Service/

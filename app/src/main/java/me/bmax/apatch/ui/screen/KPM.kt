@@ -100,6 +100,8 @@ import me.bmax.apatch.APApplication
 import me.bmax.apatch.Natives
 import me.bmax.apatch.R
 import me.bmax.apatch.apApp
+import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import me.bmax.apatch.ui.component.ConfirmResult
 import me.bmax.apatch.ui.component.KPModuleRemoveButton
 import me.bmax.apatch.ui.component.KpmAutoLoadManager
@@ -683,10 +685,13 @@ private fun KPModuleList(
         }
     }
 
+    val pullToRefreshState = rememberPullToRefreshState()
     PullToRefreshBox(
         modifier = modifier,
         onRefresh = { viewModel.fetchModuleList() },
-        isRefreshing = viewModel.isRefreshing
+        isRefreshing = viewModel.isRefreshing,
+        state = pullToRefreshState,
+        indicator = { PullToRefreshDefaults.LoadingIndicator(state = pullToRefreshState, isRefreshing = viewModel.isRefreshing, modifier = Modifier.align(Alignment.TopCenter)) }
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),

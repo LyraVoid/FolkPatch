@@ -33,6 +33,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.bmax.apatch.R
+import me.bmax.apatch.ui.component.AppLoadingIndicator
 import me.bmax.apatch.ui.viewmodel.OnlineScriptViewModel
 import me.bmax.apatch.util.SafeUriResolver
 import me.bmax.apatch.util.download
@@ -109,7 +110,7 @@ fun OnlineScriptScreen(navigator: DestinationsNavigator) {
             .fillMaxSize()
             .padding(innerPadding)) {
             if (viewModel.isRefreshing) {
-                CircularProgressIndicator(
+                AppLoadingIndicator(
                     modifier = Modifier.align(Alignment.Center)
                 )
             } else {
