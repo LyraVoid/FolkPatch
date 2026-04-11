@@ -1,0 +1,52 @@
+name: CI Upload to Telegram
+
+on:
+  workflow_call:
+    inputs:
+      artifact_name:
+        required: true
+        type: string
+        description: 'Artifact name to download'
+      file_name:
+        required: true
+        type: string
+        description: 'File name for Telegram message'
+      message:
+        required: false
+        type: string
+        default: 'FolkPatch Build'
+        description: 'Telegram message caption'
+
+jobs:
+  upload:
+    name: Upload to Telegram
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ inputs.artifact_name }}
+          path: artifacts
+
+      - name: Send to Telegram
+        run: |
+          FILE=$(find artifacts -type f | head -1)
+          if [ -z "$FILE" ]; then
+            echo "::error::No file found in artifacts"
+            exit 1
+          fi
+          
+          CAPTION="${{ inputs.message }}
+          Branch: ${{ github.ref_name }}
+          Commit: ${{ github.sha }}
+          Run: [${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+          
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendDocument" \
+            -F "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
+            -F "document=@${FILE}" \
+            -F "caption=${CAPTION}" \
+            -F "parse_mode=Markdown"
