@@ -156,6 +156,8 @@
     <string name="patch_item_extra_event">Olay:</string>
     <string name="patch_item_skey">SuperKey</string>
     <string name="patch_item_set_skey_label">SuperKey 8-63 karakter uzunluğunda olmalı; rakam ve harf içermeli, özel karakter içermemelidir.</string>
+    <string name="patch_confirm_superkey">SuperKey Onayla</string>
+    <string name="patch_skey_mismatch">SuperKey eşleşmiyor</string>
 
     <string name="home_kernel">Kernel sürümü</string>
     <string name="home_manager_version">Yönetici sürümü</string>

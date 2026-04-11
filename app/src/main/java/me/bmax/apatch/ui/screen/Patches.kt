@@ -447,7 +447,9 @@ private fun ExtraItem(extra: KPModel.IExtraInfo, existed: Boolean, onDelete: () 
 @Composable
 private fun SetSuperKeyView(viewModel: PatchesViewModel) {
     var skey by remember { mutableStateOf(viewModel.superkey) }
+    var skeyConfirm by remember { mutableStateOf("") }
     var showWarn by remember { mutableStateOf(!viewModel.checkSuperKeyValidation(skey)) }
+    var showMismatch by remember { mutableStateOf(false) }
     var keyVisible by remember { mutableStateOf(false) }
     ElevatedCard(
         colors = CardDefaults.elevatedCardColors(containerColor = run {
@@ -478,7 +480,6 @@ private fun SetSuperKeyView(viewModel: PatchesViewModel) {
                 )
             }
             Column {
-                //Spacer(modifier = Modifier.height(8.dp))
                 Box(
                     contentAlignment = Alignment.CenterEnd,
                 ) {
@@ -493,8 +494,13 @@ private fun SetSuperKeyView(viewModel: PatchesViewModel) {
                         shape = RoundedCornerShape(50.0f),
                         onValueChange = {
                             skey = it
+                            showMismatch = skeyConfirm.isNotEmpty() && skey != skeyConfirm
                             if (viewModel.checkSuperKeyValidation(it)) {
-                                viewModel.superkey = it
+                                if (skeyConfirm.isNotEmpty() && skey == skeyConfirm) {
+                                    viewModel.superkey = it
+                                } else {
+                                    viewModel.superkey = ""
+                                }
                                 showWarn = false
                             } else {
                                 viewModel.superkey = ""
@@ -514,6 +520,49 @@ private fun SetSuperKeyView(viewModel: PatchesViewModel) {
                             tint = Color.Gray
                         )
                     }
+                }
+                Box(
+                    contentAlignment = Alignment.CenterEnd,
+                ) {
+                    OutlinedTextField(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 6.dp),
+                        value = skeyConfirm,
+                        label = { Text(stringResource(id = R.string.patch_confirm_superkey)) },
+                        visualTransformation = if (keyVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                        shape = RoundedCornerShape(50.0f),
+                        onValueChange = {
+                            skeyConfirm = it
+                            showMismatch = skeyConfirm.isNotEmpty() && skey != skeyConfirm
+                            if (viewModel.checkSuperKeyValidation(skey) && skey == skeyConfirm) {
+                                viewModel.superkey = skey
+                            } else {
+                                viewModel.superkey = ""
+                            }
+                        },
+                    )
+                    IconButton(
+                        modifier = Modifier
+                            .size(40.dp)
+                            .padding(top = 15.dp, end = 5.dp),
+                        onClick = { keyVisible = !keyVisible }
+                    ) {
+                        Icon(
+                            imageVector = if (keyVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
+                            contentDescription = null,
+                            tint = Color.Gray
+                        )
+                    }
+                }
+                if (showMismatch) {
+                    Spacer(modifier = Modifier.height(3.dp))
+                    Text(
+                        color = Color.Red,
+                        text = stringResource(id = R.string.patch_skey_mismatch),
+                        style = MaterialTheme.typography.bodyMedium
+                    )
                 }
             }
         }
