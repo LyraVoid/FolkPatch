@@ -102,10 +102,15 @@ jobs:
 
       - run: ./gradlew assembleDebug --no-daemon
 
+      - name: Rename Debug APK
+        run: |
+          SHORT="${GITHUB_SHA::7}"
+          mv app/build/outputs/apk/debug/*.apk "FolkPatch-Debug-${SHORT}.apk"
+
       - uses: actions/upload-artifact@v4
         with:
           name: folkpatch-debug-${{ github.sha }}
-          path: app/build/outputs/apk/debug/*.apk
+          path: FolkPatch-Debug-*.apk
           retention-days: 30
 
   build-release:
@@ -151,10 +156,15 @@ jobs:
 
       - run: ./gradlew assembleRelease --no-daemon
 
+      - name: Rename Release APK
+        run: |
+          SHORT="${GITHUB_SHA::7}"
+          mv app/build/outputs/apk/release/*.apk "FolkPatch-Release-${SHORT}.apk"
+
       - uses: actions/upload-artifact@v4
         with:
           name: folkpatch-release-${{ github.sha }}
-          path: app/build/outputs/apk/release/*.apk
+          path: FolkPatch-Release-*.apk
           retention-days: 30
 
       - name: Create Release (if tagged)
