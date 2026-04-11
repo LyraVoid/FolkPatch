@@ -17,6 +17,7 @@ jobs:
   upload:
     name: Upload to Telegram
     runs-on: ubuntu-latest
+    if: ${{ vars.TELEGRAM_ENABLED == 'true' }}
 
     steps:
       - name: Checkout repository
