@@ -65,18 +65,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           submodules: recursive
 
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '21'
 
-      - uses: android-actions/setup-android@v3
+      - uses: android-actions/setup-android@v4
 
-      - uses: gradle/actions/setup-gradle@v3
+      - uses: gradle/actions/setup-gradle@v6
 
       - uses: actions-rs/toolchain@v1
         with:
@@ -92,7 +92,7 @@ jobs:
 
       - run: chmod +x gradlew
 
-      - uses: actions/cache@v4
+      - uses: actions/cache@v5
         with:
           path: |
             ~/.gradle/caches
@@ -107,7 +107,7 @@ jobs:
           SHORT="${GITHUB_SHA::7}"
           mv app/build/outputs/apk/debug/*.apk "FolkPatch-Debug-${SHORT}.apk"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: folkpatch-debug-${{ github.sha }}
           path: FolkPatch-Debug-*.apk
@@ -119,18 +119,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           submodules: recursive
 
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '21'
 
-      - uses: android-actions/setup-android@v3
+      - uses: android-actions/setup-android@v4
 
-      - uses: gradle/actions/setup-gradle@v3
+      - uses: gradle/actions/setup-gradle@v6
 
       - uses: actions-rs/toolchain@v1
         with:
@@ -146,7 +146,7 @@ jobs:
 
       - run: chmod +x gradlew
 
-      - uses: actions/cache@v4
+      - uses: actions/cache@v5
         with:
           path: |
             ~/.gradle/caches
@@ -161,7 +161,7 @@ jobs:
           SHORT="${GITHUB_SHA::7}"
           mv app/build/outputs/apk/release/*.apk "FolkPatch-Release-${SHORT}.apk"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: folkpatch-release-${{ github.sha }}
           path: FolkPatch-Release-*.apk
@@ -169,7 +169,7 @@ jobs:
 
       - name: Create Release (if tagged)
         if: startsWith(github.ref, 'refs/tags/')
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v3
         with:
           files: app/build/outputs/apk/release/*.apk
           generate_release_notes: true
