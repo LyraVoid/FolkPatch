@@ -81,7 +81,7 @@ jobs:
             enabled: ${{ needs.prepare.outputs.build_release == 'true' }}
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         if: matrix.enabled == 'true'
         with:
           submodules: recursive
@@ -98,7 +98,7 @@ jobs:
           SHORT="${GITHUB_SHA::7}"
           mv app/build/outputs/apk/${{ matrix.apk_dir }}/*.apk "${{ matrix.apk_prefix }}-${SHORT}.apk"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: matrix.enabled == 'true'
         with:
           name: ${{ matrix.artifact_name }}
