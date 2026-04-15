@@ -17,13 +17,23 @@ jobs:
   upload:
     name: Upload to Telegram
     runs-on: ubuntu-latest
-    if: ${{ vars.TELEGRAM_ENABLED == 'true' }}
 
     steps:
+      - name: Check Telegram config
+        id: tg_check
+        run: |
+          if [ -n "${{ secrets.TELEGRAM_BOT_TOKEN }}" ] && [ -n "${{ secrets.TELEGRAM_CHAT_ID }}" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::Telegram secrets not configured, skipping upload"
+          fi
+
       - name: Checkout repository
+        if: steps.tg_check.outputs.enabled == 'true'
         uses: actions/checkout@v5
 
       - name: Download artifacts
+        if: steps.tg_check.outputs.enabled == 'true'
         run: |
           mkdir -p artifacts
           IFS=',' read -ra NAMES <<< "${{ inputs.artifact_names }}"
@@ -37,8 +47,8 @@ jobs:
           RUN_ID: ${{ github.run_id }}
 
       - name: Send to Telegram
+        if: steps.tg_check.outputs.enabled == 'true'
         run: |
-          mkdir -p artifacts
           FILES=$(find artifacts -type f 2>/dev/null | sort)
           FILE_COUNT=$(echo "$FILES" | grep -c . || true)
           
@@ -53,7 +63,7 @@ jobs:
           Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           
           if [ "$FILE_COUNT" -eq 1 ]; then
-            curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendDocument" \
+            curl -sf -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendDocument" \
               -F "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
               -F "document=@$FILES" \
               -F "caption=${CAPTION}"
@@ -87,5 +97,5 @@ jobs:
               ARGS+=(-F "$FNAME=@$f")
             done <<< "$FILES"
             
-            curl -s "${ARGS[@]}"
+            curl -sf "${ARGS[@]}"
           fi

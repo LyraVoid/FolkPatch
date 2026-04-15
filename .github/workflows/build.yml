@@ -81,24 +81,25 @@ jobs:
             enabled: ${{ needs.prepare.outputs.build_release == 'true' }}
 
     steps:
-      - name: Skip disabled build type
-        if: matrix.enabled != 'true'
-        run: echo "Skipping ${{ matrix.type }} build" && exit 0
-
       - uses: actions/checkout@v5
+        if: matrix.enabled == 'true'
         with:
           submodules: recursive
 
       - uses: ./.github/actions/setup-build-env
+        if: matrix.enabled == 'true'
 
       - run: ./gradlew ${{ matrix.task }} --no-daemon
+        if: matrix.enabled == 'true'
 
       - name: Rename APK
+        if: matrix.enabled == 'true'
         run: |
           SHORT="${GITHUB_SHA::7}"
           mv app/build/outputs/apk/${{ matrix.apk_dir }}/*.apk "${{ matrix.apk_prefix }}-${SHORT}.apk"
 
       - uses: actions/upload-artifact@v4
+        if: matrix.enabled == 'true'
         with:
           name: ${{ matrix.artifact_name }}
           path: ${{ matrix.apk_prefix }}-*.apk
@@ -106,7 +107,7 @@ jobs:
 
   upload:
     needs: [prepare, build]
-    if: always() && needs.prepare.result == 'success' && (needs.build.jobs.debug.result == 'success' || needs.build.jobs.release.result == 'success') && github.actor != 'dependabot[bot]'
+    if: always() && needs.prepare.result == 'success' && needs.build.result == 'success' && github.actor != 'dependabot[bot]'
     uses: ./.github/workflows/CI_up.yml
     with:
       artifact_names: ${{ needs.prepare.outputs.artifact_list }}
