@@ -533,7 +533,7 @@ Dưới đây là một số nguyên nhân có thể gây ra thất bại xác t
     <!-- KPM AutoLoad Strings -->
     <string name="kpm_autoload_title">Tải tự động KPM</string>
     <string name="kpm_autoload_enabled">Bật tải tự động</string>
-    <string name="kpm_autoload_enabled_summary">Tự động tải module KPM khi ứng dụng khởi chạy</string>
+    <string name="kpm_autoload_enabled_summary">Tự động tải module KPM khi khởi động máy</string>
     <string name="kpm_autoload_json_config">Cấu hình JSON</string>
     <string name="kpm_autoload_json_label">Cấu hình JSON</string>
     <string name="kpm_autoload_json_placeholder">{

@@ -524,7 +524,7 @@
     <!-- KPM AutoLoad Strings -->
     <string name="kpm_autoload_title">التحميل التلقائي لـ KPM</string>
     <string name="kpm_autoload_enabled">تمكين التحميل التلقائي</string>
-    <string name="kpm_autoload_enabled_summary">تحميل وحدات KPM تلقائيًا عند بدء تشغيل التطبيق</string>
+    <string name="kpm_autoload_enabled_summary">تحميل وحدات KPM تلقائيًا عند بدء تشغيل الجهاز</string>
     <string name="kpm_autoload_json_config">تكوين JSON</string>
     <string name="kpm_autoload_json_label">تكوين JSON</string>
 <string name="kpm_autoload_json_placeholder">{

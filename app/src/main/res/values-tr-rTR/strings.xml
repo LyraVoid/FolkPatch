@@ -521,7 +521,7 @@ Bol şans! Ayrıca, aşağıdaki belge butonuna tıklamak kesinlikle doğru!</st
     <!-- KPM AutoLoad Strings -->
     <string name="kpm_autoload_title">KPM Otomatik Yükleme</string>
     <string name="kpm_autoload_enabled">Otomatik yüklemeyi etkinleştir</string>
-    <string name="kpm_autoload_enabled_summary">Uygulama başlatıldığında KPM modüllerini otomatik olarak yükle</string>
+    <string name="kpm_autoload_enabled_summary">Cihaz açıldığında KPM modüllerini otomatik olarak yükle</string>
     <string name="kpm_autoload_json_config">JSON Yapılandırması</string>
     <string name="kpm_autoload_json_label">Yapılandırma JSON’u</string>
     <string name="kpm_autoload_json_placeholder">{

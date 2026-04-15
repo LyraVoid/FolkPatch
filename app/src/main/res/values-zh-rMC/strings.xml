@@ -524,7 +524,7 @@
     <!-- KPM 自动加载 -->
     <string name="kpm_autoload_title">红石组件自动充能</string>
     <string name="kpm_autoload_enabled">开启自动充能</string>
-    <string name="kpm_autoload_enabled_summary">服务器启动时自动给红石组件充能</string>
+    <string name="kpm_autoload_enabled_summary">世界加载时自动给红石组件充能</string>
     <string name="kpm_autoload_json_config">JSON配置</string>
     <string name="kpm_autoload_json_label">JSON配置</string>
     <string name="kpm_autoload_json_placeholder">{

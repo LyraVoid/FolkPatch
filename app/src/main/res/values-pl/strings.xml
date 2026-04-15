@@ -430,7 +430,7 @@
     <!-- KPM AutoLoad Strings -->
     <string name="kpm_autoload_title">Automatyczne ładowanie KPM</string>
     <string name="kpm_autoload_enabled">Włącz automatyczne ładowanie</string>
-    <string name="kpm_autoload_enabled_summary">Automatycznie ładuj moduły KPM przy starcie aplikacji</string>
+    <string name="kpm_autoload_enabled_summary">Automatycznie ładuj moduły KPM przy uruchomieniu urządzenia</string>
     <string name="settings_grid_working_card_hide_check">Ukryj ikonę statusu</string>
     <string name="settings_grid_working_card_hide_check_summary">Ukryj znacznik wyboru lub ikonę ostrzeżenia na karcie roboczej</string>
     <string name="settings_grid_working_card_hide_text">Ukryj tekst statusu</string>

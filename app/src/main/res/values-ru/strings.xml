@@ -510,7 +510,7 @@
     <!-- KPM AutoLoad Strings -->
     <string name="kpm_autoload_title">Автозагрузка KPM</string>
     <string name="kpm_autoload_enabled">Включить автозагрузку</string>
-    <string name="kpm_autoload_enabled_summary">Автоматически загружать модули KPM при запуске приложения</string>
+    <string name="kpm_autoload_enabled_summary">Автоматически загружать модули KPM при загрузке устройства</string>
     <string name="kpm_autoload_json_config">Конфигурация JSON</string>
     <string name="kpm_autoload_json_label">Конфигурация JSON</string>
     <string name="kpm_autoload_json_placeholder">{

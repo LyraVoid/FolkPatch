@@ -488,7 +488,7 @@ Berikut adalah beberapa kemungkinan penyebab kegagalan autentikasi—silakan cek
 
     <string name="kpm_autoload_title">Muat Otomatis KPM</string>
     <string name="kpm_autoload_enabled">Aktifkan muat otomatis</string>
-    <string name="kpm_autoload_enabled_summary">Muat modul KPM secara otomatis saat aplikasi dimulai</string>
+    <string name="kpm_autoload_enabled_summary">Muat modul KPM secara otomatis saat perangkat booting</string>
     <string name="kpm_autoload_json_config">Konfigurasi JSON</string>
     <string name="kpm_autoload_json_label">Konfigurasi JSON</string>
     <string name="kpm_autoload_json_placeholder">{

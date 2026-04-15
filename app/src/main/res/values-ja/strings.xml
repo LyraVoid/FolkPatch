@@ -486,7 +486,7 @@
     <!-- KPM AutoLoad Strings -->
     <string name="kpm_autoload_title">KPM を自動で読み込み</string>
     <string name="kpm_autoload_enabled">自動で読み込みが有効化されています</string>
-    <string name="kpm_autoload_enabled_summary">アプリの起動時に KP モジュールを自動で読み込みます。</string>
+    <string name="kpm_autoload_enabled_summary">端末の起動時に KP モジュールを自動で読み込みます。</string>
     <string name="kpm_autoload_json_config">JSON を構成</string>
     <string name="kpm_autoload_json_label">JSON を構成します</string>
     <string name="kpm_autoload_json_placeholder">{\n  \"enabled\": true,\n  \"kpmPaths\": [\n    \"/path/to/module1.kpm\",\n    \"/path/to/module2.kpm\"\n  ]\n}</string>

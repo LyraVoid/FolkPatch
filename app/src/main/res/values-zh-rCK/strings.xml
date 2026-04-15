@@ -524,7 +524,7 @@
     <!-- KPM AutoLoad Strings -->
     <string name="kpm_autoload_title">酱料自动添加</string>
     <string name="kpm_autoload_enabled">启用自动添加</string>
-    <string name="kpm_autoload_enabled_summary">餐厅启动时自动添加酱料</string>
+    <string name="kpm_autoload_enabled_summary">开餐时自动添加酱料</string>
     <string name="kpm_autoload_json_config">JSON 菜谱配置</string>
     <string name="kpm_autoload_json_label">JSON 菜谱配置</string>
     <string name="kpm_autoload_json_placeholder">{

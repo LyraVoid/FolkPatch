@@ -537,7 +537,7 @@
     <!-- KPM AutoLoad Strings -->
     <string name="kpm_autoload_title">KPM自动加载喵</string>
     <string name="kpm_autoload_enabled">开自动加载喵</string>
-    <string name="kpm_autoload_enabled_summary">应用开了就自动加载KPM模块哒喵！</string>
+    <string name="kpm_autoload_enabled_summary">开机就自动加载KPM模块哒喵！</string>
     <string name="kpm_autoload_json_config">JSON配置喵</string>
     <string name="kpm_autoload_json_label">JSON配置喵</string>
     <string name="kpm_autoload_json_placeholder">{

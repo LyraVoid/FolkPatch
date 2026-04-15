@@ -1,0 +1,36 @@
+name: Setup Build Environment
+description: Install all build dependencies (Java, Android SDK, Gradle, Rust toolchain)
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-java@v4
+      with:
+        distribution: temurin
+        java-version: '21'
+
+    - uses: android-actions/setup-android@v3
+
+    - uses: gradle/actions/setup-gradle@v3
+
+    - uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        target: aarch64-linux-android
+        override: true
+
+    - name: Install cargo-ndk
+      shell: bash
+      run: cargo install cargo-ndk
+
+    - name: Grant execute permission
+      shell: bash
+      run: chmod +x gradlew
+
+    - uses: actions/cache@v4
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: ${{ runner.os }}-gradle-

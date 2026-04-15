@@ -41,11 +41,12 @@ pub fn report_kernel(superkey: Option<String>, event: &str, state: &str) -> Resu
 pub fn on_post_data_fs(superkey: Option<String>) -> Result<()> {
     utils::umask(0);
     report_kernel(superkey.clone(), "post-fs-data", "before")?;
-    use std::process::Stdio;
 
     // Create /data/adb/fp/bin directory for fpd binary
     let fp_dir = Path::new("/data/adb/fp");
     let fp_bin_dir = Path::new("/data/adb/fp/bin");
+    let fp_kpms_dir = Path::new(defs::FP_KPMS_DIR);
+    let fp_kpms_autoload_dir = Path::new(defs::FP_KPMS_AUTOLOAD_DIR);
     if !fp_bin_dir.exists() {
         fs::create_dir_all(fp_bin_dir)
             .with_context(|| "Failed to create /data/adb/fp/bin directory")?;
@@ -55,6 +56,16 @@ pub fn on_post_data_fs(superkey: Option<String>) -> Result<()> {
         fs::set_permissions(fp_bin_dir, permissions)
             .with_context(|| "Failed to set permissions for /data/adb/fp/bin")?;
         info!("Created directory: /data/adb/fp/bin");
+    }
+    if !fp_kpms_autoload_dir.exists() {
+        fs::create_dir_all(fp_kpms_autoload_dir)
+            .with_context(|| "Failed to create /data/adb/fp/kpms/autoload directory")?;
+        let permissions = fs::Permissions::from_mode(0o755);
+        fs::set_permissions(fp_kpms_dir, permissions.clone())
+            .with_context(|| "Failed to set permissions for /data/adb/fp/kpms")?;
+        fs::set_permissions(fp_kpms_autoload_dir, permissions)
+            .with_context(|| "Failed to set permissions for /data/adb/fp/kpms/autoload")?;
+        info!("Created directory: /data/adb/fp/kpms/autoload");
     }
 
     init_load_su_path(&superkey);
@@ -287,6 +298,9 @@ fn run_stage(stage: &str, superkey: Option<String>, block: bool) {
 
 pub fn on_services(superkey: Option<String>) -> Result<()> {
     info!("on_services triggered!");
+
+    supercall::autoload_kpm_modules(&superkey);
+
     run_stage("service", superkey, false);
 
     Ok(())

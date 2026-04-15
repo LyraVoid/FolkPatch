@@ -520,7 +520,7 @@ Aqui estão algumas possíveis razões para a falha de autenticação—verifiqu
     <!-- KPM AutoLoad Strings -->
     <string name="kpm_autoload_title">Auto-Carregamento KPM</string>
     <string name="kpm_autoload_enabled">Ativar auto-carregamento</string>
-    <string name="kpm_autoload_enabled_summary">Carregar módulos KPM automaticamente ao iniciar o aplicativo</string>
+    <string name="kpm_autoload_enabled_summary">Carregar módulos KPM automaticamente ao iniciar o dispositivo</string>
     <string name="kpm_autoload_json_config">Configuração JSON</string>
     <string name="kpm_autoload_json_label">JSON de Configuração</string>
     <string name="kpm_autoload_json_placeholder">{

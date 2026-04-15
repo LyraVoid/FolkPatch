@@ -545,7 +545,7 @@
     <!-- KPM AutoLoad Strings -->
     <string name="kpm_autoload_title">KPM 자동 로드</string>
     <string name="kpm_autoload_enabled">자동 로드 활성화</string>
-    <string name="kpm_autoload_enabled_summary">애플리케이션 시작 시 자동으로 KPM 모듈을 로드합니다.</string>
+    <string name="kpm_autoload_enabled_summary">기기 부팅 시 자동으로 KPM 모듈을 로드합니다.</string>
     <string name="kpm_autoload_json_config">JSON 구성</string>
     <string name="kpm_autoload_json_label">구성 JSON</string>
     <string name="kpm_autoload_json_placeholder">{

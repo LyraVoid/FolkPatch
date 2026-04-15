@@ -490,7 +490,7 @@
     <!-- KPM AutoLoad Strings -->
     <string name="kpm_autoload_title">KPM 自動載入</string>
     <string name="kpm_autoload_enabled">啟用自動載入</string>
-    <string name="kpm_autoload_enabled_summary">應用程式啟動時自動載入 KPM 模組</string>
+    <string name="kpm_autoload_enabled_summary">開機時自動載入 KPM 模組</string>
     <string name="kpm_autoload_json_config">JSON 設定</string>
     <string name="kpm_autoload_json_label">JSON 設定</string>
     <string name="kpm_autoload_json_placeholder">{

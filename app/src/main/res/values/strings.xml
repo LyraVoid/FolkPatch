@@ -545,7 +545,7 @@ Here are some possible reasons for authentication failure—please check which o
     <!-- KPM AutoLoad Strings -->
     <string name="kpm_autoload_title">KPM Auto-Load</string>
     <string name="kpm_autoload_enabled">Enable auto-load</string>
-    <string name="kpm_autoload_enabled_summary">Automatically load KPM modules on application startup</string>
+    <string name="kpm_autoload_enabled_summary">Automatically load KPM modules on boot</string>
     <string name="kpm_autoload_json_config">JSON Configuration</string>
     <string name="kpm_autoload_json_label">Configuration JSON</string>
     <string name="kpm_autoload_json_placeholder">{

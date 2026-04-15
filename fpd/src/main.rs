@@ -28,7 +28,7 @@ fn main() {
             .unwrap_or("");
         match name {
             "hide" => return prop_patch::run(),
-            "umount" => return std::process::exit(umount::run() as i32),
+            "umount" => std::process::exit(umount::run() as i32),
             _ => {}
         }
     }

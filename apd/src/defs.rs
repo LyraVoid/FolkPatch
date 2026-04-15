@@ -36,6 +36,10 @@ pub const METAMODULE_METAINSTALL_SCRIPT: &str = "metainstall.sh";
 pub const METAMODULE_METAUNINSTALL_SCRIPT: &str = "metauninstall.sh";
 pub const METAMODULE_DIR: &str = concatcp!(ADB_DIR, "metamodule/");
 
+pub const FP_KPMS_DIR: &str = concatcp!(ADB_DIR, "fp/kpms/");
+pub const FP_KPMS_AUTOLOAD_DIR: &str = concatcp!(ADB_DIR, "fp/kpms/autoload/");
+pub const KPM_AUTOLOAD_CONFIG: &str = concatcp!(ADB_DIR, "fp/kpms/kpm_autoload_config.json");
+
 pub const PTS_NAME: &str = "pts";
 
 pub const VERSION_CODE: &str = include_str!(concat!(env!("OUT_DIR"), "/VERSION_CODE"));

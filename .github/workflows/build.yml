@@ -21,7 +21,6 @@ env:
   KEYSTORE_PASSWORD: android
   KEY_ALIAS: androiddebugkey
   KEY_PASSWORD: android
-  ZIG_EXE: /opt/hostedtoolcache/zig/master/x64/zig
 
 jobs:
   prepare:
@@ -57,128 +56,57 @@ jobs:
             pull_request) TEXT="PR: ${{ github.event.pull_request.title }}" ;;
             *)            TEXT="FolkPatch Build" ;;
           esac
+          TEXT="${TEXT%%$'\n'*}"
           echo "text=$TEXT" >> "$GITHUB_OUTPUT"
 
-  build-debug:
+  build:
     needs: prepare
-    if: needs.prepare.outputs.build_debug == 'true'
+    if: needs.prepare.outputs.build_debug == 'true' || needs.prepare.outputs.build_release == 'true'
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - type: debug
+            task: assembleDebug
+            artifact_name: folkpatch-debug-${{ github.sha }}
+            apk_prefix: FolkPatch-Debug
+            apk_dir: debug
+            enabled: ${{ needs.prepare.outputs.build_debug == 'true' }}
+          - type: release
+            task: assembleRelease
+            artifact_name: folkpatch-release-${{ github.sha }}
+            apk_prefix: FolkPatch-Release
+            apk_dir: release
+            enabled: ${{ needs.prepare.outputs.build_release == 'true' }}
 
     steps:
+      - name: Skip disabled build type
+        if: matrix.enabled != 'true'
+        run: echo "Skipping ${{ matrix.type }} build" && exit 0
+
       - uses: actions/checkout@v5
         with:
           submodules: recursive
 
-      - uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: '21'
+      - uses: ./.github/actions/setup-build-env
 
-      - uses: android-actions/setup-android@v3
+      - run: ./gradlew ${{ matrix.task }} --no-daemon
 
-      - uses: gradle/actions/setup-gradle@v3
-
-      - uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          target: aarch64-linux-android
-          override: true
-
-      - run: cargo install cargo-ndk
-
-      - uses: goto-bus-stop/setup-zig@v2
-        with:
-          version: master
-
-      - run: chmod +x gradlew
-
-      - uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: ${{ runner.os }}-gradle-
-
-      - run: ./gradlew assembleDebug --no-daemon
-
-      - name: Rename Debug APK
+      - name: Rename APK
         run: |
           SHORT="${GITHUB_SHA::7}"
-          mv app/build/outputs/apk/debug/*.apk "FolkPatch-Debug-${SHORT}.apk"
+          mv app/build/outputs/apk/${{ matrix.apk_dir }}/*.apk "${{ matrix.apk_prefix }}-${SHORT}.apk"
 
       - uses: actions/upload-artifact@v4
         with:
-          name: folkpatch-debug-${{ github.sha }}
-          path: FolkPatch-Debug-*.apk
+          name: ${{ matrix.artifact_name }}
+          path: ${{ matrix.apk_prefix }}-*.apk
           retention-days: 30
-
-  build-release:
-    needs: prepare
-    if: needs.prepare.outputs.build_release == 'true'
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v5
-        with:
-          submodules: recursive
-
-      - uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: '21'
-
-      - uses: android-actions/setup-android@v3
-
-      - uses: gradle/actions/setup-gradle@v3
-
-      - uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          target: aarch64-linux-android
-          override: true
-
-      - run: cargo install cargo-ndk
-
-      - uses: goto-bus-stop/setup-zig@v2
-        with:
-          version: master
-
-      - run: chmod +x gradlew
-
-      - uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: ${{ runner.os }}-gradle-
-
-      - run: ./gradlew assembleRelease --no-daemon
-
-      - name: Rename Release APK
-        run: |
-          SHORT="${GITHUB_SHA::7}"
-          mv app/build/outputs/apk/release/*.apk "FolkPatch-Release-${SHORT}.apk"
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: folkpatch-release-${{ github.sha }}
-          path: FolkPatch-Release-*.apk
-          retention-days: 30
-
-      - name: Create Release (if tagged)
-        if: startsWith(github.ref, 'refs/tags/')
-        uses: softprops/action-gh-release@v1
-        with:
-          files: app/build/outputs/apk/release/*.apk
-          generate_release_notes: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   upload:
-    needs: [prepare, build-debug, build-release]
-    if: always() && needs.prepare.result == 'success' && (needs.build-debug.result == 'success' || needs.build-release.result == 'success') && github.actor != 'dependabot[bot]'
+    needs: [prepare, build]
+    if: always() && needs.prepare.result == 'success' && (needs.build.jobs.debug.result == 'success' || needs.build.jobs.release.result == 'success') && github.actor != 'dependabot[bot]'
     uses: ./.github/workflows/CI_up.yml
     with:
       artifact_names: ${{ needs.prepare.outputs.artifact_list }}

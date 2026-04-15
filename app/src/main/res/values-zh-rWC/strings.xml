@@ -516,7 +516,7 @@
     <!-- KPM AutoLoad Strings -->
     <string name="kpm_autoload_title">道核仙符自动引符</string>
     <string name="kpm_autoload_enabled">启自动引符</string>
-    <string name="kpm_autoload_enabled_summary">仙器启时，自动引道核仙符入道</string>
+    <string name="kpm_autoload_enabled_summary">重铸仙躯时，自动引道核仙符入道</string>
     <string name="kpm_autoload_json_config">JSON天机典式</string>
     <string name="kpm_autoload_json_label">JSON天机典式</string>
     <string name="kpm_autoload_json_placeholder">{

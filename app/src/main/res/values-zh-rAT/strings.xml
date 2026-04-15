@@ -512,7 +512,7 @@
     <!-- KPM AutoLoad Strings -->
     <string name="kpm_autoload_title">心之结晶自动觉醒</string>
     <string name="kpm_autoload_enabled">启用结晶自主觉醒</string>
-    <string name="kpm_autoload_enabled_summary">应用启动时自动激活心之结晶</string>
+    <string name="kpm_autoload_enabled_summary">开机时自动激活心之结晶</string>
     <string name="kpm_autoload_json_config">星界咒语配置</string>
     <string name="kpm_autoload_json_label">星界咒语</string>
     <string name="kpm_autoload_json_placeholder">{

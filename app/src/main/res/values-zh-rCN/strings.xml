@@ -525,7 +525,7 @@
     <!-- KPM AutoLoad Strings -->
     <string name="kpm_autoload_title">KPM自动加载</string>
     <string name="kpm_autoload_enabled">启用自动加载</string>
-    <string name="kpm_autoload_enabled_summary">应用启动时自动加载KPM模块</string>
+    <string name="kpm_autoload_enabled_summary">开机时自动加载KPM模块</string>
     <string name="kpm_autoload_json_config">JSON配置</string>
     <string name="kpm_autoload_json_label">JSON配置</string>
     <string name="kpm_autoload_json_placeholder">{

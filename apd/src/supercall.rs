@@ -27,6 +27,8 @@ const SUPERCALL_SU_LIST: c_long = 0x1103;
 const SUPERCALL_SU_RESET_PATH: c_long = 0x1111;
 const SUPERCALL_SU_GET_SAFEMODE: c_long = 0x1112;
 
+const SUPERCALL_KPM_LOAD: c_long = 0x1020;
+
 const SUPERCALL_SCONTEXT_LEN: usize = 0x60;
 
 #[repr(C)]
@@ -149,6 +151,22 @@ fn sc_su_reset_path(key: &CStr, path: &CStr) -> c_long {
             key.as_ptr(),
             ver_and_cmd(SUPERCALL_SU_RESET_PATH),
             path.as_ptr(),
+        ) as c_long
+    }
+}
+
+fn sc_kpm_load(key: &CStr, path: &CStr, args: &CStr) -> c_long {
+    if key.to_bytes().is_empty() || path.to_bytes().is_empty() {
+        return (-EINVAL).into();
+    }
+    unsafe {
+        syscall(
+            __NR_SUPERCALL,
+            key.as_ptr(),
+            ver_and_cmd(SUPERCALL_KPM_LOAD),
+            path.as_ptr(),
+            args.as_ptr(),
+            std::ptr::null::<c_void>(),
         ) as c_long
     }
 }
@@ -303,4 +321,109 @@ pub fn init_load_su_path(superkey: &Option<String>) {
             warn!("Failed to read su_path file: {}", e);
         }
     }
+}
+
+pub fn autoload_kpm_modules(superkey: &Option<String>) {
+    use serde::Deserialize;
+
+    #[derive(Deserialize, Default)]
+    struct KpmAutoLoadConfig {
+        enabled: bool,
+        #[serde(default, rename = "kpmPaths")]
+        kpm_paths: Vec<String>,
+    }
+
+    let config_path = crate::defs::KPM_AUTOLOAD_CONFIG;
+    let content = match std::fs::read_to_string(config_path) {
+        Ok(c) => c,
+        Err(e) => {
+            info!("[kpm_autoload] config not found or unreadable ({}): {}", config_path, e);
+            return;
+        }
+    };
+
+    let config: KpmAutoLoadConfig = match serde_json::from_str(&content) {
+        Ok(c) => c,
+        Err(e) => {
+            warn!("[kpm_autoload] failed to parse config: {}", e);
+            return;
+        }
+    };
+
+    if !config.enabled || config.kpm_paths.is_empty() {
+        info!("[kpm_autoload] disabled or no paths configured, skipping");
+        return;
+    }
+
+    let key = convert_superkey(superkey);
+    let key = match key {
+        Some(k) => k,
+        None => {
+            warn!("[kpm_autoload] no superkey available");
+            return;
+        }
+    };
+
+    let empty_args = match CString::new("") {
+        Ok(s) => s,
+        Err(_) => return,
+    };
+
+    const MAX_KPM_MODULES: usize = 64;
+
+    if config.kpm_paths.len() > MAX_KPM_MODULES {
+        warn!(
+            "[kpm_autoload] too many paths ({}), truncating to {}",
+            config.kpm_paths.len(),
+            MAX_KPM_MODULES
+        );
+    }
+
+    let mut success = 0u32;
+    let mut fail = 0u32;
+    for path_str in config.kpm_paths.iter().take(MAX_KPM_MODULES) {
+        if !std::path::Path::new(path_str).exists() {
+            warn!("[kpm_autoload] file not found: {}", path_str);
+            fail += 1;
+            continue;
+        }
+
+        let canonical = match std::fs::canonicalize(path_str) {
+            Ok(p) => p,
+            Err(e) => {
+                warn!("[kpm_autoload] cannot canonicalize '{}': {}", path_str, e);
+                fail += 1;
+                continue;
+            }
+        };
+
+        let allowed_dir = std::path::Path::new(crate::defs::FP_KPMS_AUTOLOAD_DIR);
+        if !canonical.starts_with(allowed_dir) {
+            warn!(
+                "[kpm_autoload] path '{}' outside allowed directory '{}', skipping",
+                path_str,
+                crate::defs::FP_KPMS_AUTOLOAD_DIR
+            );
+            fail += 1;
+            continue;
+        }
+
+        let path_cstr = match CString::new(canonical.to_string_lossy().into_owned()) {
+            Ok(c) => c,
+            Err(e) => {
+                warn!("[kpm_autoload] invalid canonical path: {}", e);
+                fail += 1;
+                continue;
+            }
+        };
+        let rc = sc_kpm_load(&key, &path_cstr, &empty_args);
+        if rc == 0 {
+            success += 1;
+            info!("[kpm_autoload] loaded: {}", path_str);
+        } else {
+            fail += 1;
+            warn!("[kpm_autoload] failed to load '{}', rc={}", path_str, rc);
+        }
+    }
+    info!("[kpm_autoload] done: success={}, fail={}", success, fail);
 }
