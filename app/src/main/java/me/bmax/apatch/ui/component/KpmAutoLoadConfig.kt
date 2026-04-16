@@ -19,7 +19,7 @@ data class KpmAutoLoadEntry(
 
 data class KpmAutoLoadConfig(
     val enabled: Boolean = false,
-    val kpmPaths: List<KpmAutoLoadEntry> = emptyList()
+    val entries: List<KpmAutoLoadEntry> = emptyList()
 )
 
 object KpmAutoLoadManager {
@@ -33,7 +33,7 @@ object KpmAutoLoadManager {
 
     var isEnabled = mutableStateOf(false)
         private set
-    var kpmPaths = mutableStateOf<List<KpmAutoLoadEntry>>(emptyList())
+    var entries = mutableStateOf<List<KpmAutoLoadEntry>>(emptyList())
         private set
 
     fun isFirstTime(context: Context): Boolean {
@@ -152,7 +152,7 @@ object KpmAutoLoadManager {
             val jsonContent = outList.joinToString("\n")
             val config = parseConfigFromJson(jsonContent) ?: KpmAutoLoadConfig()
             isEnabled.value = config.enabled
-            kpmPaths.value = config.kpmPaths
+            entries.value = config.entries
             config
         } catch (e: Exception) {
             Log.e(TAG, "加载配置失败: ${e.message}", e)
@@ -174,8 +174,8 @@ object KpmAutoLoadManager {
 
             if (result.isSuccess) {
                 isEnabled.value = config.enabled
-                kpmPaths.value = config.kpmPaths
-                cleanupUnusedKpms(config.kpmPaths)
+                entries.value = config.entries
+                cleanupUnusedKpms(config.entries)
                 true
             } else {
                 Log.e(TAG, "配置保存失败")
@@ -188,7 +188,7 @@ object KpmAutoLoadManager {
     }
 
     fun getConfigJson(): String {
-        return getConfigJson(KpmAutoLoadConfig(isEnabled.value, kpmPaths.value))
+        return getConfigJson(KpmAutoLoadConfig(isEnabled.value, entries.value))
     }
 
     fun getConfigJson(config: KpmAutoLoadConfig): String {
@@ -196,7 +196,7 @@ object KpmAutoLoadManager {
         jsonObject.put("enabled", config.enabled)
 
         val entriesArray = JSONArray()
-        config.kpmPaths.forEach { entry ->
+        config.entries.forEach { entry ->
             val entryObj = JSONObject()
             entryObj.put("path", entry.path)
             entryObj.put("event", entry.event)

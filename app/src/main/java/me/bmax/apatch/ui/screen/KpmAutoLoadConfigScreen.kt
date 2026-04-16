@@ -79,7 +79,7 @@ fun KpmAutoLoadConfigScreen(navigator: DestinationsNavigator) {
     var showSaveDialog by remember { mutableStateOf(false) }
     var isValidJson by remember { mutableStateOf(true) }
     var isVisualMode by remember { mutableStateOf(true) }
-    var kpmEntriesList by remember { mutableStateOf(KpmAutoLoadManager.kpmPaths.value.toList()) }
+    var kpmEntriesList by remember { mutableStateOf(KpmAutoLoadManager.entries.value.toList()) }
     var showFirstTimeDialog by remember { mutableStateOf(KpmAutoLoadManager.isFirstTime(context)) }
     var dontShowAgain by remember { mutableStateOf(false) }
 
@@ -130,7 +130,7 @@ fun KpmAutoLoadConfigScreen(navigator: DestinationsNavigator) {
         val config = KpmAutoLoadManager.loadConfig(context)
         isEnabled = config.enabled
         jsonString = KpmAutoLoadManager.getConfigJson()
-        kpmEntriesList = config.kpmPaths
+        kpmEntriesList = config.entries
     }
 
     Scaffold(
@@ -347,7 +347,7 @@ fun KpmAutoLoadConfigScreen(navigator: DestinationsNavigator) {
                                 isValidJson = KpmAutoLoadManager.parseConfigFromJson(it) != null
                                 if (isValidJson) {
                                     KpmAutoLoadManager.parseConfigFromJson(it)?.let { config ->
-                                        kpmEntriesList = config.kpmPaths
+                                        kpmEntriesList = config.entries
                                     }
                                 }
                             },
@@ -429,10 +429,10 @@ fun KpmAutoLoadConfigScreen(navigator: DestinationsNavigator) {
                         Spacer(modifier = Modifier.width(8.dp))
                         Button(onClick = {
                             val config = if (isVisualMode) {
-                                KpmAutoLoadConfig(enabled = isEnabled, kpmPaths = kpmEntriesList)
+                                KpmAutoLoadConfig(enabled = isEnabled, entries = kpmEntriesList)
                             } else {
-                                KpmAutoLoadConfig(enabled = isEnabled, kpmPaths =
-                                    KpmAutoLoadManager.parseConfigFromJson(jsonString)?.kpmPaths ?: emptyList()
+                                KpmAutoLoadConfig(enabled = isEnabled, entries =
+                                    KpmAutoLoadManager.parseConfigFromJson(jsonString)?.entries ?: emptyList()
                                 )
                             }
                             
