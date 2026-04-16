@@ -5,6 +5,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -25,13 +26,13 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
@@ -62,7 +63,6 @@ import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.KpmAutoLoadConfig
-import me.bmax.apatch.ui.component.KpmAutoLoadConfig.KpmAutoLoadEntry
 import me.bmax.apatch.ui.component.KpmAutoLoadManager
 import me.bmax.apatch.util.ui.APDialogBlurBehindUtils
 import me.bmax.apatch.util.ui.showToast
@@ -81,7 +81,7 @@ fun KpmAutoLoadConfigScreen(navigator: DestinationsNavigator) {
     var showFirstTimeDialog by remember { mutableStateOf(KpmAutoLoadManager.isFirstTime(context)) }
     var dontShowAgain by remember { mutableStateOf(false) }
 
-    var editingEntry by remember { mutableStateOf<KpmAutoLoadEntry?>(null) }
+    var editingEntry by remember { mutableStateOf<KpmAutoLoadConfig.KpmAutoLoadEntry?>(null) }
     var showEditDialog by remember { mutableStateOf(false) }
     
     // 获取URI的真实路径
@@ -99,7 +99,7 @@ fun KpmAutoLoadConfigScreen(navigator: DestinationsNavigator) {
     }
     
     // 根据路径列表更新JSON字符串
-    fun updateJsonString(entries: List<KpmAutoLoadEntry>, enabled: Boolean, onUpdate: (String) -> Unit) {
+    fun updateJsonString(entries: List<KpmAutoLoadConfig.KpmAutoLoadEntry>, enabled: Boolean, onUpdate: (String) -> Unit) {
         val config = KpmAutoLoadConfig(enabled, entries)
         onUpdate(KpmAutoLoadManager.getConfigJson(config))
     }
@@ -113,7 +113,7 @@ fun KpmAutoLoadConfigScreen(navigator: DestinationsNavigator) {
             val importedPath = KpmAutoLoadManager.importKpm(context, it)
             
             if (importedPath != null && importedPath.endsWith(".kpm", ignoreCase = true) && importedPath !in kpmEntriesList.map { it.path }) {
-                kpmEntriesList = kpmEntriesList + KpmAutoLoadEntry(path = importedPath)
+                kpmEntriesList = kpmEntriesList + KpmAutoLoadConfig.KpmAutoLoadEntry(path = importedPath)
                 updateJsonString(kpmEntriesList, isEnabled) { newJson ->
                     jsonString = newJson
                 }
@@ -544,7 +544,7 @@ private fun KpmEditDialog(
 ) {
     var selectedEvent by remember { mutableStateOf(entry.event) }
     var argsValue by remember { mutableStateOf(entry.args) }
-    var eventExpanded by remember { mutableStateOf(false) }
+    var showEventDropdown by remember { mutableStateOf(false) }
 
     val eventOptions = listOf("service", "post-fs-data")
     val eventLabels = mapOf(
@@ -573,34 +573,75 @@ private fun KpmEditDialog(
                     modifier = Modifier.padding(bottom = 4.dp)
                 )
 
-                ExposedDropdownMenuBox(
-                    expanded = eventExpanded,
-                    onExpandedChange = { eventExpanded = it },
-                    modifier = Modifier.fillMaxWidth()
-                ) {
+                Box(modifier = Modifier.fillMaxWidth()) {
                     OutlinedTextField(
                         value = eventLabels[selectedEvent] ?: selectedEvent,
                         onValueChange = {},
                         readOnly = true,
-                        modifier = Modifier.menuAnchor().fillMaxWidth(),
-                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = eventExpanded) },
-                        colors = OutlinedTextFieldDefaults.colors(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { showEventDropdown = true },
+                        trailingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.FolderOpen,
+                                contentDescription = null,
+                                modifier = Modifier.padding(end = 8.dp)
+                            )
+                        },
                         singleLine = true
                     )
-                    ExposedDropdownMenu(
-                        expanded = eventExpanded,
-                        onDismissRequest = { eventExpanded = false }
+                    DropdownMenu(
+                        expanded = showEventDropdown,
+                        onDismissRequest = { showEventDropdown = false }
                     ) {
                         eventOptions.forEach { option ->
                             DropdownMenuItem(
                                 text = { Text(eventLabels[option] ?: option) },
                                 onClick = {
                                     selectedEvent = option
-                                    eventExpanded = false
-                                },
-                                contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
+                                    showEventDropdown = false
+                                }
                             )
                         }
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Text(
+                    text = stringResource(R.string.kpm_autoload_args_label),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(bottom = 4.dp)
+                )
+                OutlinedTextField(
+                    value = argsValue,
+                    onValueChange = { argsValue = it },
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    shape = RoundedCornerShape(12.dp)
+                )
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    TextButton(onClick = onDismiss) {
+                        Text(stringResource(android.R.string.cancel))
+                    }
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Button(onClick = {
+                        onConfirm(entry.copy(event = selectedEvent, args = argsValue))
+                    }) {
+                        Text(stringResource(android.R.string.ok))
+                    }
+                }
+            }
+        }
+    }
+}
                     }
                 }
 
