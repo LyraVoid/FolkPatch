@@ -565,6 +565,8 @@ Here are some possible reasons for authentication failure—please check which o
     <string name="kpm_autoload_json_mode">JSON Mode</string>
     <string name="kpm_autoload_add_kpm">Add KPM</string>
     <string name="kpm_autoload_remove_kpm">Remove</string>
+    <string name="kpm_autoload_edit_kpm">Editar</string>
+    <string name="kpm_autoload_edit_dialog_title">Editar KPM</string>    <string name="kpm_autoload_event_label">Evento:</string>    <string name="kpm_autoload_args_label">Argumentos:</string>    <string name="kpm_autoload_event_service">service</string>    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
     
     <!-- Module Backup/Restore Strings -->
     <string name="apm_backup_title">Backup Modules</string>

@@ -532,6 +532,8 @@
     <string name="kpm_autoload_json_mode">星界咒语模式</string>
     <string name="kpm_autoload_add_kpm">添加心之结晶</string>
     <string name="kpm_autoload_remove_kpm">解除</string>
+    <string name="kpm_autoload_edit_kpm">编辑</string>
+    <string name="kpm_autoload_edit_dialog_title">编辑 KPM</string>    <string name="kpm_autoload_event_label">事件:</string>    <string name="kpm_autoload_args_label">参数:</string>    <string name="kpm_autoload_event_service">service</string>    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
     <string name="kpm_autoload_kpm_list_title">心之结晶列表</string>
     <string name="kpm_autoload_no_kpm_added">未添加心之结晶</string>
     <string name="kpm_autoload_kpm_path">心之结晶路径</string>

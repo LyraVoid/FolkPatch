@@ -544,6 +544,8 @@
     <string name="kpm_autoload_json_mode">وضع JSON</string>
     <string name="kpm_autoload_add_kpm">إضافة KPM</string>
     <string name="kpm_autoload_remove_kpm">إزالة</string>
+    <string name="kpm_autoload_edit_kpm">Editar</string>
+    <string name="kpm_autoload_edit_dialog_title">Editar KPM</string>    <string name="kpm_autoload_event_label">Evento:</string>    <string name="kpm_autoload_args_label">Argumentos:</string>    <string name="kpm_autoload_event_service">service</string>    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
     
     <!-- Module Backup/Restore Strings -->
     <string name="apm_backup_title">النسخ الاحتياطي للوحدات</string>

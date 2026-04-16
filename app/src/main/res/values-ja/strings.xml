@@ -500,6 +500,8 @@
     <string name="kpm_autoload_json_mode">JSON モード</string>
     <string name="kpm_autoload_add_kpm">KPM を追加</string>
     <string name="kpm_autoload_remove_kpm">削除</string>
+    <string name="kpm_autoload_edit_kpm">編集</string>
+    <string name="kpm_autoload_edit_dialog_title">KPM を編集</string>    <string name="kpm_autoload_event_label">イベント:</string>    <string name="kpm_autoload_args_label">引数:</string>    <string name="kpm_autoload_event_service">service</string>    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
     <!-- Module Backup/Restore Strings -->
     <string name="apm_backup_title">モジュールをバックアップ</string>
     <string name="apm_restore_title">モジュールを復元</string>

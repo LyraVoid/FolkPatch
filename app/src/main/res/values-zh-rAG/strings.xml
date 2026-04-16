@@ -576,6 +576,8 @@
     <string name="apm_first_use_text">欢迎用系统模块喵！这里用的是兼容Magisk的模块，点右下角装模块，也可以用顶部安装器批量装，还能一键备份所有模块喵！但这方案不一定都能用，自己要多备份哦</string>
     <string name="kpm_autoload_add_kpm">加KPM喵！</string>
     <string name="kpm_autoload_remove_kpm">删掉喵！</string>
+    <string name="kpm_autoload_edit_kpm">编辑</string>
+    <string name="kpm_autoload_edit_dialog_title">编辑 KPM</string>    <string name="kpm_autoload_event_label">事件:</string>    <string name="kpm_autoload_args_label">参数:</string>    <string name="kpm_autoload_event_service">service</string>    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
     <string name="kpm_autoload_kpm_list_title">KPM模块列表喵</string>
     <string name="kpm_autoload_no_kpm_added">没加KPM模块喵！</string>
     <string name="kpm_autoload_kpm_path">KPM路径喵</string>
