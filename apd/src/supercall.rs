@@ -323,7 +323,7 @@ pub fn init_load_su_path(superkey: &Option<String>) {
     }
 }
 
-pub fn autoload_kpm_modules(superkey: &Option<String>) {
+pub fn autoload_kpm_modules(superkey: &Option<String>, event_filter: &str) {
     use serde::Deserialize;
 
     #[derive(Deserialize, Default)]
@@ -390,6 +390,11 @@ pub fn autoload_kpm_modules(superkey: &Option<String>) {
     let mut success = 0u32;
     let mut fail = 0u32;
     for entry in config.kpm_entries.iter().take(MAX_KPM_MODULES) {
+        if entry.event != event_filter {
+            info!("[kpm_autoload] skipping '{}' (event='{}', expected='{}')", entry.path, entry.event, event_filter);
+            continue;
+        }
+
         let path_str = &entry.path;
 
         if !std::path::Path::new(path_str).exists() {

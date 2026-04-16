@@ -68,6 +68,8 @@ pub fn on_post_data_fs(superkey: Option<String>) -> Result<()> {
         info!("Created directory: /data/adb/fp/kpms/autoload");
     }
 
+    supercall::autoload_kpm_modules(&superkey, "post-fs-data");
+
     init_load_su_path(&superkey);
 
     let mut sepol = get_policy_main(&["magiskpolicy".to_string(), "--live".to_string()])?;
@@ -299,7 +301,7 @@ fn run_stage(stage: &str, superkey: Option<String>, block: bool) {
 pub fn on_services(superkey: Option<String>) -> Result<()> {
     info!("on_services triggered!");
 
-    supercall::autoload_kpm_modules(&superkey);
+    supercall::autoload_kpm_modules(&superkey, "service");
 
     run_stage("service", superkey, false);
 
