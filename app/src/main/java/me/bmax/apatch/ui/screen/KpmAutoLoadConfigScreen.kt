@@ -603,44 +603,6 @@ private fun KpmEditDialog(
                                     showEventDropdown = false
                                 }
                             )
-                        }
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(12.dp))
-
-                Text(
-                    text = stringResource(R.string.kpm_autoload_args_label),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(bottom = 4.dp)
-                )
-                OutlinedTextField(
-                    value = argsValue,
-                    onValueChange = { argsValue = it },
-                    modifier = Modifier.fillMaxWidth(),
-                    singleLine = true,
-                    shape = RoundedCornerShape(12.dp)
-                )
-
-                Spacer(modifier = Modifier.height(20.dp))
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End
-                ) {
-                    TextButton(onClick = onDismiss) {
-                        Text(stringResource(android.R.string.cancel))
-                    }
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Button(onClick = {
-                        onConfirm(entry.copy(event = selectedEvent, args = argsValue))
-                    }) {
-                        Text(stringResource(android.R.string.ok))
-                    }
-                }
-            }
-        }
     }
 }
                     }
