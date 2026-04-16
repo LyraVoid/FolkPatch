@@ -603,8 +603,7 @@ private fun KpmEditDialog(
                                     showEventDropdown = false
                                 }
                             )
-    }
-}
+                        }
                     }
                 }
 
