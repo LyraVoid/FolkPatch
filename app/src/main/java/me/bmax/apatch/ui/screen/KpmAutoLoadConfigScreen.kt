@@ -45,6 +45,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.FolderOpen
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -583,7 +584,7 @@ private fun KpmEditDialog(
                         trailingIcon = {
                             IconButton(onClick = { showEventDropdown = true }) {
                                 Icon(
-                                    imageVector = Icons.Default.KeyboardArrowDown,
+                                    imageVector = Icons.Filled.KeyboardArrowDown,
                                     contentDescription = stringResource(R.string.kpm_autoload_edit_kpm)
                                 )
                             }
