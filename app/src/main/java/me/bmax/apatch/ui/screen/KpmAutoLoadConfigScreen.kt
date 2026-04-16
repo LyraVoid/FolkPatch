@@ -579,15 +579,14 @@ private fun KpmEditDialog(
                         value = eventLabels[selectedEvent] ?: selectedEvent,
                         onValueChange = {},
                         readOnly = true,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable { showEventDropdown = true },
+                        modifier = Modifier.fillMaxWidth(),
                         trailingIcon = {
-                            Icon(
-                                imageVector = Icons.Default.FolderOpen,
-                                contentDescription = null,
-                                modifier = Modifier.padding(end = 8.dp)
-                            )
+                            IconButton(onClick = { showEventDropdown = true }) {
+                                Icon(
+                                    imageVector = Icons.Default.KeyboardArrowDown,
+                                    contentDescription = stringResource(R.string.kpm_autoload_edit_kpm)
+                                )
+                            }
                         },
                         singleLine = true
                     )
