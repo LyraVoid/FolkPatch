@@ -11,9 +11,15 @@ import java.io.File
 import java.io.FileOutputStream
 import android.util.Base64
 
+data class KpmAutoLoadEntry(
+    val path: String,
+    val event: String = "service",
+    val args: String = ""
+)
+
 data class KpmAutoLoadConfig(
     val enabled: Boolean = false,
-    val kpmPaths: List<String> = emptyList()
+    val kpmPaths: List<KpmAutoLoadEntry> = emptyList()
 )
 
 object KpmAutoLoadManager {
@@ -27,7 +33,7 @@ object KpmAutoLoadManager {
 
     var isEnabled = mutableStateOf(false)
         private set
-    var kpmPaths = mutableStateOf<List<String>>(emptyList())
+    var kpmPaths = mutableStateOf<List<KpmAutoLoadEntry>>(emptyList())
         private set
 
     fun isFirstTime(context: Context): Boolean {
@@ -118,10 +124,10 @@ object KpmAutoLoadManager {
         return result
     }
 
-    fun cleanupUnusedKpms(currentPaths: List<String>) {
+    fun cleanupUnusedKpms(currentEntries: List<KpmAutoLoadEntry>) {
         try {
             val shell = getRootShell()
-            val keepSet = currentPaths.toSet()
+            val keepSet = currentEntries.map { it.path }.toSet()
             val outList = java.util.ArrayList<String>()
             val listResult = shell.newJob().add("ls -1 '$KPMS_AUTOLOAD_DIR'/*.kpm 2>/dev/null").to(outList, null).exec()
             if (!listResult.isSuccess) return
@@ -190,8 +196,20 @@ object KpmAutoLoadManager {
         jsonObject.put("enabled", config.enabled)
 
         val pathsArray = JSONArray()
-        config.kpmPaths.forEach { path -> pathsArray.put(path) }
+        config.kpmPaths.forEach { entry ->
+            pathsArray.put(entry.path)
+        }
         jsonObject.put("kpmPaths", pathsArray)
+
+        val entriesArray = JSONArray()
+        config.kpmPaths.forEach { entry ->
+            val entryObj = JSONObject()
+            entryObj.put("path", entry.path)
+            entryObj.put("event", entry.event)
+            entryObj.put("args", entry.args)
+            entriesArray.put(entryObj)
+        }
+        jsonObject.put("kpmEntries", entriesArray)
 
         return jsonObject.toString(2)
     }
@@ -201,17 +219,48 @@ object KpmAutoLoadManager {
             val jsonObject = JSONObject(jsonString)
             val enabled = jsonObject.optBoolean("enabled", false)
 
-            val kpmPaths = mutableListOf<String>()
-            val pathsArray = jsonObject.optJSONArray("kpmPaths")
-            if (pathsArray != null) {
-                for (i in 0 until pathsArray.length()) {
-                    pathsArray.optString(i)?.let { path ->
-                        if (path.isNotEmpty()) kpmPaths.add(path)
+            val kpmEntries = mutableListOf<KpmAutoLoadEntry>()
+
+            val entriesArray = jsonObject.optJSONArray("kpmEntries")
+            if (entriesArray != null) {
+                for (i in 0 until entriesArray.length()) {
+                    val item = entriesArray.optJSONObject(i) ?: continue
+                    val path = item.optString("path", "")
+                    if (path.isNotEmpty()) {
+                        kpmEntries.add(KpmAutoLoadEntry(
+                            path = path,
+                            event = item.optString("event", "service"),
+                            args = item.optString("args", "")
+                        ))
                     }
                 }
             }
 
-            KpmAutoLoadConfig(enabled, kpmPaths)
+            if (kpmEntries.isEmpty()) {
+                val pathsArray = jsonObject.optJSONArray("kpmPaths")
+                if (pathsArray != null) {
+                    for (i in 0 until pathsArray.length()) {
+                        val item = pathsArray.opt(i)
+                        when (item) {
+                            is String -> {
+                                if (item.isNotEmpty()) kpmEntries.add(KpmAutoLoadEntry(path = item))
+                            }
+                            is JSONObject -> {
+                                val path = item.optString("path", "")
+                                if (path.isNotEmpty()) {
+                                    kpmEntries.add(KpmAutoLoadEntry(
+                                        path = path,
+                                        event = item.optString("event", "service"),
+                                        args = item.optString("args", "")
+                                    ))
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            KpmAutoLoadConfig(enabled, kpmEntries)
         } catch (e: Exception) {
             Log.e(TAG, "解析JSON失败: ${e.message}", e)
             null
