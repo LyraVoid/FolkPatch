@@ -195,12 +195,6 @@ object KpmAutoLoadManager {
         val jsonObject = JSONObject()
         jsonObject.put("enabled", config.enabled)
 
-        val pathsArray = JSONArray()
-        config.kpmPaths.forEach { entry ->
-            pathsArray.put(entry.path)
-        }
-        jsonObject.put("kpmPaths", pathsArray)
-
         val entriesArray = JSONArray()
         config.kpmPaths.forEach { entry ->
             val entryObj = JSONObject()
