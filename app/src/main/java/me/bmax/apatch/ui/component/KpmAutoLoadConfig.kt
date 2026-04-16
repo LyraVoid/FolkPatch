@@ -230,30 +230,6 @@ object KpmAutoLoadManager {
                 }
             }
 
-            if (kpmEntries.isEmpty()) {
-                val pathsArray = jsonObject.optJSONArray("kpmPaths")
-                if (pathsArray != null) {
-                    for (i in 0 until pathsArray.length()) {
-                        val item = pathsArray.opt(i)
-                        when (item) {
-                            is String -> {
-                                if (item.isNotEmpty()) kpmEntries.add(KpmAutoLoadEntry(path = item))
-                            }
-                            is JSONObject -> {
-                                val path = item.optString("path", "")
-                                if (path.isNotEmpty()) {
-                                    kpmEntries.add(KpmAutoLoadEntry(
-                                        path = path,
-                                        event = item.optString("event", "service"),
-                                        args = item.optString("args", "")
-                                    ))
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
             KpmAutoLoadConfig(enabled, kpmEntries)
         } catch (e: Exception) {
             Log.e(TAG, "解析JSON失败: ${e.message}", e)

@@ -327,10 +327,23 @@ pub fn autoload_kpm_modules(superkey: &Option<String>) {
     use serde::Deserialize;
 
     #[derive(Deserialize, Default)]
+    struct KpmAutoLoadEntry {
+        path: String,
+        #[serde(default = "default_event")]
+        event: String,
+        #[serde(default)]
+        args: String,
+    }
+
+    fn default_event() -> String {
+        "service".to_string()
+    }
+
+    #[derive(Deserialize, Default)]
     struct KpmAutoLoadConfig {
         enabled: bool,
-        #[serde(default, rename = "kpmPaths")]
-        kpm_paths: Vec<String>,
+        #[serde(default, rename = "kpmEntries")]
+        kpm_entries: Vec<KpmAutoLoadEntry>,
     }
 
     let config_path = crate::defs::KPM_AUTOLOAD_CONFIG;
@@ -350,8 +363,8 @@ pub fn autoload_kpm_modules(superkey: &Option<String>) {
         }
     };
 
-    if !config.enabled || config.kpm_paths.is_empty() {
-        info!("[kpm_autoload] disabled or no paths configured, skipping");
+    if !config.enabled || config.kpm_entries.is_empty() {
+        info!("[kpm_autoload] disabled or no entries configured, skipping");
         return;
     }
 
@@ -364,24 +377,21 @@ pub fn autoload_kpm_modules(superkey: &Option<String>) {
         }
     };
 
-    let empty_args = match CString::new("") {
-        Ok(s) => s,
-        Err(_) => return,
-    };
-
     const MAX_KPM_MODULES: usize = 64;
 
-    if config.kpm_paths.len() > MAX_KPM_MODULES {
+    if config.kpm_entries.len() > MAX_KPM_MODULES {
         warn!(
-            "[kpm_autoload] too many paths ({}), truncating to {}",
-            config.kpm_paths.len(),
+            "[kpm_autoload] too many entries ({}), truncating to {}",
+            config.kpm_entries.len(),
             MAX_KPM_MODULES
         );
     }
 
     let mut success = 0u32;
     let mut fail = 0u32;
-    for path_str in config.kpm_paths.iter().take(MAX_KPM_MODULES) {
+    for entry in config.kpm_entries.iter().take(MAX_KPM_MODULES) {
+        let path_str = &entry.path;
+
         if !std::path::Path::new(path_str).exists() {
             warn!("[kpm_autoload] file not found: {}", path_str);
             fail += 1;
@@ -416,7 +426,16 @@ pub fn autoload_kpm_modules(superkey: &Option<String>) {
                 continue;
             }
         };
-        let rc = sc_kpm_load(&key, &path_cstr, &empty_args);
+        let args_cstr = match CString::new(entry.args.clone()) {
+            Ok(c) => c,
+            Err(e) => {
+                warn!("[kpm_autoload] invalid args for '{}': {}", path_str, e);
+                fail += 1;
+                continue;
+            }
+        };
+        info!("[kpm_autoload] loading '{}' with event='{}' args='{}'", path_str, entry.event, entry.args);
+        let rc = sc_kpm_load(&key, &path_cstr, &args_cstr);
         if rc == 0 {
             success += 1;
             info!("[kpm_autoload] loaded: {}", path_str);
