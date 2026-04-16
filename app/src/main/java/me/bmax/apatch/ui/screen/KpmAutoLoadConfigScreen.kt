@@ -24,12 +24,15 @@ import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBoxes
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
@@ -40,6 +43,7 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.FolderOpen
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -49,7 +53,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
@@ -58,8 +61,6 @@ import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.KpmAutoLoadConfig
 import me.bmax.apatch.ui.component.KpmAutoLoadManager
@@ -75,10 +76,13 @@ fun KpmAutoLoadConfigScreen(navigator: DestinationsNavigator) {
     var jsonString by remember { mutableStateOf(KpmAutoLoadManager.getConfigJson()) }
     var showSaveDialog by remember { mutableStateOf(false) }
     var isValidJson by remember { mutableStateOf(true) }
-    var isVisualMode by remember { mutableStateOf(false) }
-    var kpmPathsList by remember { mutableStateOf(KpmAutoLoadManager.kpmPaths.value.toList()) }
+    var isVisualMode by remember { mutableStateOf(true) }
+    var kpmEntriesList by remember { mutableStateOf(KpmAutoLoadManager.kpmPaths.value.toList()) }
     var showFirstTimeDialog by remember { mutableStateOf(KpmAutoLoadManager.isFirstTime(context)) }
     var dontShowAgain by remember { mutableStateOf(false) }
+
+    var editingEntry by remember { mutableStateOf<KpmAutoLoadEntry?>(null) }
+    var showEditDialog by remember { mutableStateOf(false) }
     
     // 获取URI的真实路径
     fun getPathFromUri(context: Context, uri: android.net.Uri): String {
@@ -95,8 +99,8 @@ fun KpmAutoLoadConfigScreen(navigator: DestinationsNavigator) {
     }
     
     // 根据路径列表更新JSON字符串
-    fun updateJsonString(paths: List<String>, enabled: Boolean, onUpdate: (String) -> Unit) {
-        val config = KpmAutoLoadConfig(enabled, paths)
+    fun updateJsonString(entries: List<KpmAutoLoadEntry>, enabled: Boolean, onUpdate: (String) -> Unit) {
+        val config = KpmAutoLoadConfig(enabled, entries)
         onUpdate(KpmAutoLoadManager.getConfigJson(config))
     }
     
@@ -108,10 +112,9 @@ fun KpmAutoLoadConfigScreen(navigator: DestinationsNavigator) {
             // 导入KPM文件到内部存储
             val importedPath = KpmAutoLoadManager.importKpm(context, it)
             
-            if (importedPath != null && importedPath.endsWith(".kpm", ignoreCase = true) && importedPath !in kpmPathsList) {
-                kpmPathsList = kpmPathsList + importedPath
-                // 更新JSON字符串
-                updateJsonString(kpmPathsList, isEnabled) { newJson ->
+            if (importedPath != null && importedPath.endsWith(".kpm", ignoreCase = true) && importedPath !in kpmEntriesList.map { it.path }) {
+                kpmEntriesList = kpmEntriesList + KpmAutoLoadEntry(path = importedPath)
+                updateJsonString(kpmEntriesList, isEnabled) { newJson ->
                     jsonString = newJson
                 }
                 showToast(context, context.getString(R.string.kpm_autoload_save_success))
@@ -125,7 +128,7 @@ fun KpmAutoLoadConfigScreen(navigator: DestinationsNavigator) {
         val config = KpmAutoLoadManager.loadConfig(context)
         isEnabled = config.enabled
         jsonString = KpmAutoLoadManager.getConfigJson()
-        kpmPathsList = config.kpmPaths
+        kpmEntriesList = config.kpmPaths
     }
 
     Scaffold(
@@ -180,7 +183,7 @@ fun KpmAutoLoadConfigScreen(navigator: DestinationsNavigator) {
                         checked = isEnabled,
                         onCheckedChange = { 
                             isEnabled = it
-                            updateJsonString(kpmPathsList, it) { newJson ->
+                            updateJsonString(kpmEntriesList, it) { newJson ->
                                 jsonString = newJson
                             }
                         }
@@ -229,7 +232,7 @@ fun KpmAutoLoadConfigScreen(navigator: DestinationsNavigator) {
                         
                         Spacer(modifier = Modifier.height(8.dp))
                         
-                        if (kpmPathsList.isEmpty()) {
+                        if (kpmEntriesList.isEmpty()) {
                             Box(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -246,35 +249,66 @@ fun KpmAutoLoadConfigScreen(navigator: DestinationsNavigator) {
                             LazyColumn(
                                 modifier = Modifier.weight(1f)
                             ) {
-                                items(kpmPathsList) { path ->
+                                items(kpmEntriesList, key = { it.path }) { entry ->
                                     ListItem(
-                                        headlineContent = { 
+                                        headlineContent = {
                                             Text(
-                                                text = path.substringAfterLast("/"),
+                                                text = entry.path.substringAfterLast("/"),
                                                 style = MaterialTheme.typography.bodyMedium
                                             )
                                         },
-                                        supportingContent = { 
-                                            Text(
-                                                text = path,
-                                                style = MaterialTheme.typography.bodySmall,
-                                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                                            )
+                                        supportingContent = {
+                                            Column {
+                                                Text(
+                                                    text = entry.path,
+                                                    style = MaterialTheme.typography.bodySmall,
+                                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                                )
+                                                if (entry.event != "service" || entry.args.isNotEmpty()) {
+                                                    Text(
+                                                        text = buildString {
+                                                            if (entry.event != "service") append("${stringResource(R.string.kpm_autoload_event_label).trimEnd(':')} ${entry.event}")
+                                                            if (entry.args.isNotEmpty()) {
+                                                                if (entry.event != "service") append(" | ")
+                                                                append("${stringResource(R.string.kpm_autoload_args_label).trimEnd(':')} ${entry.args}")
+                                                            }
+                                                        },
+                                                        style = MaterialTheme.typography.bodySmall,
+                                                        color = MaterialTheme.colorScheme.primary
+                                                    )
+                                                }
+                                            }
                                         },
                                         trailingContent = {
-                                            IconButton(
-                                                onClick = {
-                                                    kpmPathsList = kpmPathsList - path
-                                                    updateJsonString(kpmPathsList, isEnabled) { newJson ->
-                                                        jsonString = newJson
-                                                    }
-                                                }
+                                            Row(
+                                                horizontalArrangement = Arrangement.spacedBy(4.dp)
                                             ) {
-                                                Icon(
-                                                    imageVector = Icons.Default.Delete,
-                                                    contentDescription = stringResource(R.string.kpm_autoload_remove_kpm),
-                                                    tint = MaterialTheme.colorScheme.error
-                                                )
+                                                IconButton(
+                                                    onClick = {
+                                                        editingEntry = entry
+                                                        showEditDialog = true
+                                                    }
+                                                ) {
+                                                    Icon(
+                                                        imageVector = Icons.Default.Edit,
+                                                        contentDescription = stringResource(R.string.kpm_autoload_edit_kpm),
+                                                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                                    )
+                                                }
+                                                IconButton(
+                                                    onClick = {
+                                                        kpmEntriesList = kpmEntriesList.filter { it.path != entry.path }
+                                                        updateJsonString(kpmEntriesList, isEnabled) { newJson ->
+                                                            jsonString = newJson
+                                                        }
+                                                    }
+                                                ) {
+                                                    Icon(
+                                                        imageVector = Icons.Default.Delete,
+                                                        contentDescription = stringResource(R.string.kpm_autoload_remove_kpm),
+                                                        tint = MaterialTheme.colorScheme.error
+                                                    )
+                                                }
                                             }
                                         }
                                     )
@@ -309,10 +343,9 @@ fun KpmAutoLoadConfigScreen(navigator: DestinationsNavigator) {
                             onValueChange = { 
                                 jsonString = it
                                 isValidJson = KpmAutoLoadManager.parseConfigFromJson(it) != null
-                                // 如果JSON有效，更新路径列表
                                 if (isValidJson) {
                                     KpmAutoLoadManager.parseConfigFromJson(it)?.let { config ->
-                                        kpmPathsList = config.kpmPaths
+                                        kpmEntriesList = config.kpmPaths
                                     }
                                 }
                             },
@@ -356,7 +389,7 @@ fun KpmAutoLoadConfigScreen(navigator: DestinationsNavigator) {
                         showSaveDialog = true
                     },
                     modifier = Modifier.weight(1f),
-                    enabled = if (isVisualMode) kpmPathsList.isNotEmpty() else isValidJson
+                    enabled = if (isVisualMode) kpmEntriesList.isNotEmpty() else isValidJson
                 ) {
                     Text(stringResource(R.string.kpm_autoload_save))
                 }
@@ -394,11 +427,9 @@ fun KpmAutoLoadConfigScreen(navigator: DestinationsNavigator) {
                         Spacer(modifier = Modifier.width(8.dp))
                         Button(onClick = {
                             val config = if (isVisualMode) {
-                                // 使用可视化模式的数据
-                                KpmAutoLoadConfig(enabled = isEnabled, kpmPaths = kpmPathsList)
+                                KpmAutoLoadConfig(enabled = isEnabled, kpmPaths = kpmEntriesList)
                             } else {
-                                // 使用JSON模式的数据
-                                KpmAutoLoadConfig(enabled = isEnabled, kpmPaths = 
+                                KpmAutoLoadConfig(enabled = isEnabled, kpmPaths =
                                     KpmAutoLoadManager.parseConfigFromJson(jsonString)?.kpmPaths ?: emptyList()
                                 )
                             }
@@ -420,6 +451,19 @@ fun KpmAutoLoadConfigScreen(navigator: DestinationsNavigator) {
         }
     }
     
+    // 编辑 KPM 对话框
+    if (showEditDialog && editingEntry != null) {
+        KpmEditDialog(
+            entry = editingEntry!!,
+            onDismiss = { showEditDialog = false },
+            onConfirm = { updatedEntry ->
+                kpmEntriesList = kpmEntriesList.map { if (it.path == updatedEntry.path) updatedEntry else it }
+                updateJsonString(kpmEntriesList, isEnabled) { jsonString = it }
+                showEditDialog = false
+            }
+        )
+    }
+
     // 首次使用提示对话框
     if (showFirstTimeDialog) {
         BasicAlertDialog(
@@ -484,6 +528,112 @@ fun KpmAutoLoadConfigScreen(navigator: DestinationsNavigator) {
                         }) {
                             Text(stringResource(R.string.kpm_autoload_first_time_confirm))
                         }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun KpmEditDialog(
+    entry: KpmAutoLoadConfig.KpmAutoLoadEntry,
+    onDismiss: () -> Unit,
+    onConfirm: (KpmAutoLoadConfig.KpmAutoLoadEntry) -> Unit
+) {
+    var selectedEvent by remember { mutableStateOf(entry.event) }
+    var argsValue by remember { mutableStateOf(entry.args) }
+    var eventExpanded by remember { mutableStateOf(false) }
+
+    val eventOptions = listOf("service", "post-fs-data")
+    val eventLabels = mapOf(
+        "service" to stringResource(R.string.kpm_autoload_event_service),
+        "post-fs-data" to stringResource(R.string.kpm_autoload_event_post_fs_data)
+    )
+
+    BasicAlertDialog(onDismissRequest = onDismiss) {
+        Surface(
+            modifier = Modifier.width(320.dp).padding(16.dp),
+            shape = RoundedCornerShape(20.dp),
+            tonalElevation = AlertDialogDefaults.TonalElevation,
+            color = AlertDialogDefaults.containerColor,
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(
+                    text = "${stringResource(R.string.kpm_autoload_edit_dialog_title)}: ${entry.path.substringAfterLast("/")}",
+                    style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+
+                Text(
+                    text = stringResource(R.string.kpm_autoload_event_label),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(bottom = 4.dp)
+                )
+
+                ExposedDropdownMenuBox(
+                    expanded = eventExpanded,
+                    onExpandedChange = { eventExpanded = it },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    OutlinedTextField(
+                        value = eventLabels[selectedEvent] ?: selectedEvent,
+                        onValueChange = {},
+                        readOnly = true,
+                        modifier = Modifier.menuAnchor().fillMaxWidth(),
+                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = eventExpanded) },
+                        colors = OutlinedTextFieldDefaults.colors(),
+                        singleLine = true
+                    )
+                    ExposedDropdownMenu(
+                        expanded = eventExpanded,
+                        onDismissRequest = { eventExpanded = false }
+                    ) {
+                        eventOptions.forEach { option ->
+                            DropdownMenuItem(
+                                text = { Text(eventLabels[option] ?: option) },
+                                onClick = {
+                                    selectedEvent = option
+                                    eventExpanded = false
+                                },
+                                contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
+                            )
+                        }
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Text(
+                    text = stringResource(R.string.kpm_autoload_args_label),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(bottom = 4.dp)
+                )
+                OutlinedTextField(
+                    value = argsValue,
+                    onValueChange = { argsValue = it },
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    shape = RoundedCornerShape(12.dp)
+                )
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    TextButton(onClick = onDismiss) {
+                        Text(stringResource(android.R.string.cancel))
+                    }
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Button(onClick = {
+                        onConfirm(entry.copy(event = selectedEvent, args = argsValue))
+                    }) {
+                        Text(stringResource(android.R.string.ok))
                     }
                 }
             }
