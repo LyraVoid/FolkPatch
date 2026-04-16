@@ -63,9 +63,8 @@ import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.KpmAutoLoadConfig
+import me.bmax.apatch.ui.component.KpmAutoLoadEntry
 import me.bmax.apatch.ui.component.KpmAutoLoadManager
-
-private typealias KpmEntry = KpmAutoLoadConfig.KpmAutoLoadEntry
 import me.bmax.apatch.util.ui.APDialogBlurBehindUtils
 import me.bmax.apatch.util.ui.showToast
 
@@ -83,7 +82,7 @@ fun KpmAutoLoadConfigScreen(navigator: DestinationsNavigator) {
     var showFirstTimeDialog by remember { mutableStateOf(KpmAutoLoadManager.isFirstTime(context)) }
     var dontShowAgain by remember { mutableStateOf(false) }
 
-    var editingEntry by remember { mutableStateOf<KpmEntry?>(null) }
+    var editingEntry by remember { mutableStateOf<KpmAutoLoadEntry?>(null) }
     var showEditDialog by remember { mutableStateOf(false) }
     
     // 获取URI的真实路径
@@ -101,7 +100,7 @@ fun KpmAutoLoadConfigScreen(navigator: DestinationsNavigator) {
     }
     
     // 根据路径列表更新JSON字符串
-    fun updateJsonString(entries: List<KpmEntry>, enabled: Boolean, onUpdate: (String) -> Unit) {
+    fun updateJsonString(entries: List<KpmAutoLoadEntry>, enabled: Boolean, onUpdate: (String) -> Unit) {
         val config = KpmAutoLoadConfig(enabled, entries)
         onUpdate(KpmAutoLoadManager.getConfigJson(config))
     }
@@ -115,7 +114,7 @@ fun KpmAutoLoadConfigScreen(navigator: DestinationsNavigator) {
             val importedPath = KpmAutoLoadManager.importKpm(context, it)
             
             if (importedPath != null && importedPath.endsWith(".kpm", ignoreCase = true) && importedPath !in kpmEntriesList.map { it.path }) {
-                kpmEntriesList = kpmEntriesList + KpmEntry(path = importedPath)
+                kpmEntriesList = kpmEntriesList + KpmAutoLoadEntry(path = importedPath)
                 updateJsonString(kpmEntriesList, isEnabled) { newJson ->
                     jsonString = newJson
                 }
@@ -540,9 +539,9 @@ fun KpmAutoLoadConfigScreen(navigator: DestinationsNavigator) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun KpmEditDialog(
-    entry: KpmEntry,
+    entry: KpmAutoLoadEntry,
     onDismiss: () -> Unit,
-    onConfirm: (KpmEntry) -> Unit
+    onConfirm: (KpmAutoLoadEntry) -> Unit
 ) {
     var selectedEvent by remember { mutableStateOf(entry.event) }
     var argsValue by remember { mutableStateOf(entry.args) }
