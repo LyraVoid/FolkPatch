@@ -86,20 +86,6 @@ fun KpmAutoLoadConfigScreen(navigator: DestinationsNavigator) {
     var editingEntry by remember { mutableStateOf<KpmAutoLoadEntry?>(null) }
     var showEditDialog by remember { mutableStateOf(false) }
     
-    // 获取URI的真实路径
-    fun getPathFromUri(context: Context, uri: android.net.Uri): String {
-        // 简化处理，在实际应用中应该更完善地处理不同类型的URI
-        return when (uri.scheme) {
-            "content" -> {
-                // 对于content URI，尝试从文件名获取一个合理的路径
-                val fileName = uri.lastPathSegment?.substringAfterLast("/") ?: "unknown.kpm"
-                "/storage/emulated/0/Download/$fileName"
-            }
-            "file" -> uri.path ?: ""
-            else -> uri.toString()
-        }
-    }
-    
     // 根据路径列表更新JSON字符串
     fun updateJsonString(entries: List<KpmAutoLoadEntry>, enabled: Boolean, onUpdate: (String) -> Unit) {
         val config = KpmAutoLoadConfig(enabled, entries)
