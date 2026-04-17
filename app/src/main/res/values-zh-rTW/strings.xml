@@ -520,6 +520,7 @@
     <string name="settings_custom_background_day_dim">白天模式暗度</string>
     <string name="settings_custom_background_night_dim">夜晚模式暗度</string>
     <string name="settings_grid_working_card_dual_opacity">啟用日夜雙切透明度</string>
+    <string name="settings_grid_working_card_dual_opacity_desc">根據亮色和暗色主題自動調整卡片透明度</string>
     <string name="settings_grid_working_card_day_opacity">白天模式卡片透明度</string>
     <string name="settings_grid_working_card_night_opacity">夜晚模式卡片透明度</string>
     <string name="kpm_autoload_save_confirm">儲存自動載入設定？</string>

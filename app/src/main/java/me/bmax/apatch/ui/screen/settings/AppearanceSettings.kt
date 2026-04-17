@@ -1012,7 +1012,7 @@ fun AppearanceSettingsContent(
                 ToggleSettingCard(
                     flat = flat,
                     title = stringResource(id = R.string.settings_grid_working_card_dual_opacity),
-                    description = "",
+                    description = stringResource(id = R.string.settings_grid_working_card_dual_opacity_desc),
                     checked = BackgroundConfig.isGridDualOpacityEnabled,
                     onCheckedChange = {
                         BackgroundConfig.setGridDualOpacityEnabledState(it)

@@ -665,6 +665,7 @@
     <string name="settings_grid_working_card_background_summary">صورة خلفية مخصصة لبطاقة العمل</string>
     <string name="settings_grid_working_card_background_selected">تم تحديد الخلفية</string>
     <string name="settings_grid_working_card_dual_opacity">تمكين شفافية مزدوجة لليوم/الليل</string>
+    <string name="settings_grid_working_card_dual_opacity_desc">ضبط شفافية البطاقة تلقائيًا للسمات الفاتحة والداكنة</string>
     <string name="settings_grid_working_card_day_opacity">شفافية البطاقة في وضع النهار</string>
     <string name="settings_grid_working_card_night_opacity">شفافية البطاقة في وضع الليل</string>
     <string name="settings_clear_grid_working_card_background">مسح خلفية البطاقة</string>

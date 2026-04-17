@@ -519,6 +519,7 @@
     <string name="settings_custom_background_day_dim">星之契约魔力</string>
     <string name="settings_custom_background_night_dim">月之契约魔力</string>
     <string name="settings_grid_working_card_dual_opacity">双向契约透明</string>
+    <string name="settings_grid_working_card_dual_opacity_desc">Гэгээлэг ба харанхуй загварын дагуу картын тунгалаглалыг автоматаар тохируулах</string>
     <string name="settings_grid_working_card_day_opacity">日间魔力透明</string>
     <string name="settings_grid_working_card_night_opacity">月间魔力透明</string>
     <!-- KPM AutoLoad Strings -->

@@ -661,6 +661,7 @@
     <string name="settings_grid_working_card_background_summary">给工作卡片设自定义背景图喵！</string>
     <string name="settings_grid_working_card_background_selected">背景选好了喵！</string>
     <string name="settings_grid_working_card_dual_opacity">开双切透明度适配喵</string>
+    <string name="settings_grid_working_card_dual_opacity_desc">根据亮色和暗色主题自动调整卡片透明度喵</string>
     <string name="settings_grid_working_card_day_opacity">白天模式透明度喵</string>
     <string name="settings_grid_working_card_night_opacity">夜间模式透明度喵</string>
     <string name="settings_clear_grid_working_card_background">清卡片背景喵</string>

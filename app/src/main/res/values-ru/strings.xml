@@ -507,6 +507,7 @@
     <string name="settings_custom_background_day_dim">Затемненность фона в дневном режиме</string>
     <string name="settings_custom_background_night_dim">Затемненность фона в ночном режиме</string>
     <string name="settings_grid_working_card_dual_opacity">Включить двойную дневную/ночную прозрачность</string>
+    <string name="settings_grid_working_card_dual_opacity_desc">Автоматическая регулировка прозрачности карточки для светлой и тёмной темы</string>
     <string name="settings_grid_working_card_day_opacity">Прозрачность карточки в дневном режиме</string>
     <string name="settings_grid_working_card_night_opacity">Прозрачность карточки в ночном режиме</string>
     

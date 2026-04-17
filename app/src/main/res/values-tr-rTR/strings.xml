@@ -662,6 +662,7 @@ Komutların çalışması için uygulamanın tamamen kapatılıp yeniden açıld
     <string name="settings_grid_working_card_background_summary">Çalışma kartı için özel arka plan görseli</string>
     <string name="settings_grid_working_card_background_selected">Arka plan seçildi</string>
     <string name="settings_grid_working_card_dual_opacity">Çift gündüz/gece opaklığını etkinleştir</string>
+    <string name="settings_grid_working_card_dual_opacity_desc">Açık ve koyu temalar için kart opaklığını otomatik olarak ayarla</string>
     <string name="settings_grid_working_card_day_opacity">Gündüz modu kart opaklığı</string>
     <string name="settings_grid_working_card_night_opacity">Gece modu kart opaklığı</string>
     <string name="settings_clear_grid_working_card_background">Kart Arka Planını Temizle</string>

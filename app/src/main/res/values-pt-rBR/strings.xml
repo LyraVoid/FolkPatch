@@ -660,6 +660,7 @@ Por favor, certifique-se de fechar completamente o app e reabri-lo para que os c
     <string name="settings_grid_working_card_background_summary">Imagem de fundo personalizada para o cartão de status</string>
     <string name="settings_grid_working_card_background_selected">Fundo selecionado</string>
     <string name="settings_grid_working_card_dual_opacity">Opacidade dupla dia/noite</string>
+    <string name="settings_grid_working_card_dual_opacity_desc">Ajustar automaticamente a opacidade do cartão para temas claros e escuros</string>
     <string name="settings_grid_working_card_day_opacity">Opacidade do cartão (dia)</string>
     <string name="settings_grid_working_card_night_opacity">Opacidade do cartão (noite)</string>
     <string name="settings_clear_grid_working_card_background">Limpar Fundo do Cartão</string>

@@ -607,6 +607,7 @@
     <string name="settings_grid_working_card_background_summary">動作中カードのカスタム背景画像です。</string>
     <string name="settings_grid_working_card_background_selected">背景が選択されました。</string>
     <string name="settings_grid_working_card_dual_opacity">日中/夜間でのデュアル透過を有効化する</string>
+    <string name="settings_grid_working_card_dual_opacity_desc">ライトテーマとダークテーマに合わせてカードの透明度を自動調整</string>
     <string name="settings_grid_working_card_day_opacity">日中モードのカード透過</string>
     <string name="settings_grid_working_card_night_opacity">夜間モードのカード透過</string>
     <string name="settings_clear_grid_working_card_background">カードの背景を消去する</string>

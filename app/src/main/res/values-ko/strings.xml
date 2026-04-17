@@ -686,6 +686,7 @@
     <string name="settings_grid_working_card_background_summary">작업 카드에 사용자 지정 배경 이미지를 사용합니다.</string>
     <string name="settings_grid_working_card_background_selected">배경 선택됨</string>
     <string name="settings_grid_working_card_dual_opacity">주야간 이중 투명도 적용 활성화</string>
+    <string name="settings_grid_working_card_dual_opacity_desc">라이트 및 다크 테마에 맞게 카드 투명도를 자동 조정</string>
     <string name="settings_grid_working_card_day_opacity">주간 모드 카드 투명도</string>
     <string name="settings_grid_working_card_night_opacity">야간 모드 카드 투명도</string>
     <string name="settings_clear_grid_working_card_background">카드 배경 지우기</string>

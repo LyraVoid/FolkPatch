@@ -688,6 +688,7 @@ Please ensure the app is completely closed and reopened for the commands to exec
     <string name="settings_grid_working_card_background_summary">Custom background image for the working card</string>
     <string name="settings_grid_working_card_background_selected">Background selected</string>
     <string name="settings_grid_working_card_dual_opacity">Enable dual day/night opacity</string>
+    <string name="settings_grid_working_card_dual_opacity_desc">Automatically adjust card opacity for light and dark themes</string>
     <string name="settings_grid_working_card_day_opacity">Day mode card opacity</string>
     <string name="settings_grid_working_card_night_opacity">Night mode card opacity</string>
     <string name="settings_clear_grid_working_card_background">Clear Card Background</string>

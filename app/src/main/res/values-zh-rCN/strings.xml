@@ -652,6 +652,7 @@
     <string name="settings_grid_working_card_background_summary">为工作卡片设置自定义背景图片</string>
     <string name="settings_grid_working_card_background_selected">背景已选择</string>
     <string name="settings_grid_working_card_dual_opacity">启用双切透明度适配</string>
+    <string name="settings_grid_working_card_dual_opacity_desc">根据亮色和暗色主题自动调整卡片透明度</string>
     <string name="settings_grid_working_card_day_opacity">白天模式透明度</string>
     <string name="settings_grid_working_card_night_opacity">夜间模式透明度</string>
     <string name="settings_clear_grid_working_card_background">清除卡片背景</string>

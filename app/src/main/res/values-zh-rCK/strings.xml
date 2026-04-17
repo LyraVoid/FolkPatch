@@ -650,6 +650,7 @@
     <string name="settings_grid_working_card_background_summary">给工牌设置自定义背景图</string>
     <string name="settings_grid_working_card_background_selected">背景已选好</string>
     <string name="settings_grid_working_card_dual_opacity">启用明暗双透明度</string>
+    <string name="settings_grid_working_card_dual_opacity_desc">根据亮色和暗色主题自动调整卡片透明度</string>
     <string name="settings_grid_working_card_day_opacity">白天透明度</string>
     <string name="settings_grid_working_card_night_opacity">夜间透明度</string>
     <string name="settings_clear_grid_working_card_background">清除工牌背景</string>

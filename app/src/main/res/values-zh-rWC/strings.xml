@@ -514,6 +514,7 @@
     <string name="settings_custom_background_day_dim">白昼仙法暗度</string>
     <string name="settings_custom_background_night_dim">夜晚仙法暗度</string>
     <string name="settings_grid_working_card_dual_opacity">启昼夜双透仙法</string>
+    <string name="settings_grid_working_card_dual_opacity_desc">根据亮色和暗色主题自动调整卡片透明度</string>
     <string name="settings_grid_working_card_day_opacity">白昼卡片透法</string>
     <string name="settings_grid_working_card_night_opacity">夜晚卡片透法</string>
     <!-- KPM AutoLoad Strings -->

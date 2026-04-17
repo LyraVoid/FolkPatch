@@ -662,6 +662,7 @@ Por ejemplo, los KPM que previenen la modificación de particiones solo pueden u
     <string name="settings_grid_working_card_background_summary">Imagen de fondo personalizada para la tarjeta de estado</string>
     <string name="settings_grid_working_card_background_selected">Fondo seleccionado</string>
     <string name="settings_grid_working_card_dual_opacity">Habilitar opacidad dual día/noche</string>
+    <string name="settings_grid_working_card_dual_opacity_desc">Ajustar automáticamente la opacidad de la tarjeta para temas claros y oscuros</string>
     <string name="settings_grid_working_card_day_opacity">Opacidad de tarjeta en modo día</string>
     <string name="settings_grid_working_card_night_opacity">Opacidad de tarjeta en modo noche</string>
     <string name="settings_clear_grid_working_card_background">Borrar Fondo de Tarjeta</string>

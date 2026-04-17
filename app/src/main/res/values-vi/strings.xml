@@ -516,6 +516,7 @@ Dưới đây là một số nguyên nhân có thể gây ra thất bại xác t
     <string name="settings_custom_background_day_dim">Độ tối nền ban ngày</string>
     <string name="settings_custom_background_night_dim">Độ tối nền ban đêm</string>
     <string name="settings_grid_working_card_dual_opacity">Bật chế độ độ trong suốt ngày/đêm kép</string>
+    <string name="settings_grid_working_card_dual_opacity_desc">Tự động điều chỉnh độ trong suốt thẻ cho chủ đề sáng và tối</string>
     <string name="settings_grid_working_card_day_opacity">Độ trong suốt thẻ ban ngày</string>
     <string name="settings_grid_working_card_night_opacity">Độ trong suốt thẻ ban đêm</string>
     
