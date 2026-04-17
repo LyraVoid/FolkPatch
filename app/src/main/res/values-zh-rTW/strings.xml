@@ -526,6 +526,8 @@
     <string name="kpm_autoload_json_mode">JSON 模式</string>
     <string name="kpm_autoload_add_kpm">新增 KPM</string>
     <string name="kpm_autoload_remove_kpm">移除</string>
+    <string name="kpm_autoload_edit_kpm">編輯</string>
+    <string name="kpm_autoload_edit_dialog_title">編輯 KPM</string>    <string name="kpm_autoload_event_label">事件:</string>    <string name="kpm_autoload_args_label">參數:</string>    <string name="kpm_autoload_event_service">service</string>    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
     <string name="kpm_autoload_kpm_list_title">KPM 模組列表</string>
     <string name="kpm_autoload_no_kpm_added">未新增 KPM 模組</string>
     <string name="kpm_autoload_kpm_path">KPM 路徑</string>

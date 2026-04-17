@@ -565,6 +565,8 @@
     <string name="kpm_autoload_json_mode">JSON 모드</string>
     <string name="kpm_autoload_add_kpm">KPM 추가</string>
     <string name="kpm_autoload_remove_kpm">제거</string>
+    <string name="kpm_autoload_edit_kpm">편집</string>
+    <string name="kpm_autoload_edit_dialog_title">KPM 편집</string>    <string name="kpm_autoload_event_label">이벤트:</string>    <string name="kpm_autoload_args_label">매개변수:</string>    <string name="kpm_autoload_event_service">service</string>    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
     
     <!-- Module Backup/Restore Strings -->
     <string name="apm_backup_title">모듈 백업</string>

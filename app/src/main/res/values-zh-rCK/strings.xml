@@ -563,6 +563,8 @@
     <string name="apm_first_use_text">欢迎使用招牌菜，这里使用的是兼容 Magisk 生态的招牌菜，点击右下角的按钮可以烹饪招牌菜，你也可以使用顶部的烹饪器批量烹饪招牌菜，还提供了一个功能一键备份全部招牌菜，但是注意这种方案不一定适用全部招牌菜，还是自己多加备份</string>
     <string name="kpm_autoload_add_kpm">添加酱料</string>
     <string name="kpm_autoload_remove_kpm">删除</string>
+    <string name="kpm_autoload_edit_kpm">编辑</string>
+    <string name="kpm_autoload_edit_dialog_title">编辑 KPM</string>    <string name="kpm_autoload_event_label">事件:</string>    <string name="kpm_autoload_args_label">参数:</string>    <string name="kpm_autoload_event_service">service</string>    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
     <string name="kpm_autoload_kpm_list_title">酱料列表</string>
     <string name="kpm_autoload_no_kpm_added">未添加酱料</string>
     <string name="kpm_autoload_kpm_path">酱料路径</string>

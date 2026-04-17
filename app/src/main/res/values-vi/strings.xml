@@ -572,6 +572,8 @@ Dưới đây là một số nguyên nhân có thể gây ra thất bại xác t
     <string name="apm_first_use_text">Chào mừng bạn sử dụng module hệ thống, nơi này sử dụng module tương thích với hệ sinh thái Magisk, nhấn nút góc dưới bên phải để cài đặt module, bạn cũng có thể sử dụng trình cài đặt ở đầu trang để cài đặt module hàng loạt, cũng cung cấp một chức năng sao lưu tất cả module một nút, nhưng lưu ý phương án này có thể không áp dụng cho tất cả module, vẫn hãy tự sao lưu thêm</string>
     <string name="kpm_autoload_add_kpm">Thêm KPM</string>
     <string name="kpm_autoload_remove_kpm">Xóa</string>
+    <string name="kpm_autoload_edit_kpm">Editar</string>
+    <string name="kpm_autoload_edit_dialog_title">Editar KPM</string>    <string name="kpm_autoload_event_label">Evento:</string>    <string name="kpm_autoload_args_label">Argumentos:</string>    <string name="kpm_autoload_event_service">service</string>    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
     <string name="kpm_autoload_kpm_list_title">Danh sách module KPM</string>
     <string name="kpm_autoload_no_kpm_added">Chưa thêm module KPM</string>
     <string name="kpm_autoload_kpm_path">Đường dẫn KPM</string>

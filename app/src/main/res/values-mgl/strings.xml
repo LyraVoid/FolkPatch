@@ -560,6 +560,8 @@
     <string name="apm_first_use_text">欢迎使用星之魔法阵，这里使用的是兼容Magisk生态的魔法阵，点击右下角的按钮可以施展魔法阵，你也可以使用顶部的施法器批量施展魔法阵，还提供了一个功能一键备份全部魔法阵，但是注意这种方案不一定适用全部魔法阵，还是自己多加备份</string>
     <string name="kpm_autoload_add_kpm">添加心之结晶</string>
     <string name="kpm_autoload_remove_kpm">解除</string>
+    <string name="kpm_autoload_edit_kpm">Editar</string>
+    <string name="kpm_autoload_edit_dialog_title">Editar KPM</string>    <string name="kpm_autoload_event_label">Evento:</string>    <string name="kpm_autoload_args_label">Argumentos:</string>    <string name="kpm_autoload_event_service">service</string>    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
     <string name="kpm_autoload_kpm_list_title">心之结晶列表</string>
     <string name="kpm_autoload_no_kpm_added">未添加心之结晶</string>
     <string name="kpm_autoload_kpm_path">心之结晶路径</string>

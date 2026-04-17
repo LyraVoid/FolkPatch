@@ -563,6 +563,8 @@
     <string name="apm_first_use_text">欢迎来到模组世界！这里用的是兼容Magisk生态的模组，右下角按钮可以安装单个模组，顶部有批量安装器。还有一键备份全部模组到末影箱的功能，不过不是所有模组都能用这个方式备份，建议自己多留几份</string>
     <string name="kpm_autoload_add_kpm">添加红石组件</string>
     <string name="kpm_autoload_remove_kpm">删除</string>
+    <string name="kpm_autoload_edit_kpm">编辑</string>
+    <string name="kpm_autoload_edit_dialog_title">编辑 KPM</string>    <string name="kpm_autoload_event_label">事件:</string>    <string name="kpm_autoload_args_label">参数:</string>    <string name="kpm_autoload_event_service">service</string>    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
     <string name="kpm_autoload_kpm_list_title">红石组件列表</string>
     <string name="kpm_autoload_no_kpm_added">未添加红石组件</string>
     <string name="kpm_autoload_kpm_path">红石组件路径</string>

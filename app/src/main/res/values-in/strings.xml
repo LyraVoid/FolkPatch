@@ -524,6 +524,8 @@ Berikut adalah beberapa kemungkinan penyebab kegagalan autentikasi—silakan cek
     <string name="kpm_autoload_json_mode">Mode JSON</string>
     <string name="kpm_autoload_add_kpm">Tambahkan KPM</string>
     <string name="kpm_autoload_remove_kpm">Hapus</string>
+    <string name="kpm_autoload_edit_kpm">Editar</string>
+    <string name="kpm_autoload_edit_dialog_title">Editar KPM</string>    <string name="kpm_autoload_event_label">Evento:</string>    <string name="kpm_autoload_args_label">Argumentos:</string>    <string name="kpm_autoload_event_service">service</string>    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
     <string name="kpm_autoload_kpm_list_title">Modul KPM</string>
     <string name="kpm_autoload_no_kpm_added">Tidak ada modul KPM yang ditambahkan</string>
     <string name="kpm_autoload_kpm_path">Jalur KPM</string>
