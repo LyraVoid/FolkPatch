@@ -24,7 +24,7 @@ use crate::{
     },
     magic_mount::NodeFileType::{Directory, RegularFile, Symlink, Whiteout},
     restorecon::{lgetfilecon, lsetfilecon},
-    utils::{ensure_dir_exists, get_work_dir},
+    utils::ensure_dir_exists,
 };
 
 const REPLACE_DIR_FILE_NAME: &str = ".replace";
@@ -452,16 +452,9 @@ fn do_magic_mount<P: AsRef<Path>, WP: AsRef<Path>>(
 pub fn magic_mount() -> Result<()> {
     if let Some(root) = collect_module_files()? {
         log::debug!("collected: {:#?}", root);
-        let tmp_dir = PathBuf::from(get_work_dir());
+        let tmp_dir = PathBuf::from(AP_MAGIC_MOUNT_SOURCE);
         ensure_dir_exists(&tmp_dir)?;
-        mount(
-            AP_MAGIC_MOUNT_SOURCE,
-            &tmp_dir,
-            "tmpfs",
-            MountFlags::empty(),
-            None,
-        )
-        .context("mount tmp")?;
+        mount("tmpfs", &tmp_dir, "tmpfs", MountFlags::empty(), None).context("mount tmp")?;
         mount_change(&tmp_dir, MountPropagationFlags::PRIVATE).context("make tmp private")?;
         let result = do_magic_mount("/", &tmp_dir, root, false);
         if let Err(e) = unmount(&tmp_dir, UnmountFlags::DETACH) {
