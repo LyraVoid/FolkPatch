@@ -92,4 +92,3 @@ FolkPatch - 专注界面优化与功能扩展的Root管理工具
 
 ### FolkPatch讨论交流
 - Telegram 频道: [@FolkPatch](https://t.me/FolkPatch)
-- QQ群: 1049815774
