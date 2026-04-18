@@ -451,6 +451,7 @@ private fun SetSuperKeyView(viewModel: PatchesViewModel) {
     var showWarn by remember { mutableStateOf(!viewModel.checkSuperKeyValidation(skey)) }
     var showMismatch by remember { mutableStateOf(false) }
     var keyVisible by remember { mutableStateOf(false) }
+    var keyConfirmVisible by remember { mutableStateOf(false) }
     ElevatedCard(
         colors = CardDefaults.elevatedCardColors(containerColor = run {
             MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 1f)
@@ -530,7 +531,7 @@ private fun SetSuperKeyView(viewModel: PatchesViewModel) {
                             .padding(top = 6.dp),
                         value = skeyConfirm,
                         label = { Text(stringResource(id = R.string.patch_confirm_superkey)) },
-                        visualTransformation = if (keyVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                        visualTransformation = if (keyConfirmVisible) VisualTransformation.None else PasswordVisualTransformation(),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                         shape = RoundedCornerShape(50.0f),
                         onValueChange = {
@@ -547,10 +548,10 @@ private fun SetSuperKeyView(viewModel: PatchesViewModel) {
                         modifier = Modifier
                             .size(40.dp)
                             .padding(top = 15.dp, end = 5.dp),
-                        onClick = { keyVisible = !keyVisible }
+                        onClick = { keyConfirmVisible = !keyConfirmVisible }
                     ) {
                         Icon(
-                            imageVector = if (keyVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
+                            imageVector = if (keyConfirmVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
                             contentDescription = null,
                             tint = Color.Gray
                         )
