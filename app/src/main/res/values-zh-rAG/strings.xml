@@ -557,7 +557,7 @@
     <!-- KPM AutoLoad Strings -->
     <string name="kpm_autoload_title">KPM自动加载喵</string>
     <string name="kpm_autoload_enabled">开自动加载喵</string>
-    <string name="kpm_autoload_enabled_summary">开机就自动加载KPM模块哒喵！</string>
+    <string name="kpm_autoload_enabled_summary">开机就自动加载内核补丁模块哒喵！</string>
     <string name="kpm_autoload_json_config">JSON配置喵</string>
     <string name="kpm_autoload_json_label">JSON配置喵</string>
     <string name="kpm_autoload_json_placeholder">{
@@ -598,8 +598,8 @@
     <string name="kpm_autoload_remove_kpm">删掉喵！</string>
     <string name="kpm_autoload_edit_kpm">编辑</string>
     <string name="kpm_autoload_edit_dialog_title">编辑 KPM</string>    <string name="kpm_autoload_event_label">事件:</string>    <string name="kpm_autoload_args_label">参数:</string>    <string name="kpm_autoload_event_service">service</string>    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
-    <string name="kpm_autoload_kpm_list_title">KPM模块列表喵</string>
-    <string name="kpm_autoload_no_kpm_added">没加KPM模块喵！</string>
+    <string name="kpm_autoload_kpm_list_title">内核补丁模块列表喵</string>
+    <string name="kpm_autoload_no_kpm_added">没加内核补丁模块喵！</string>
     <string name="kpm_autoload_kpm_path">KPM路径喵</string>
     <string name="kpm_autoload_file_not_found">文件没找到喵！</string>
     <string name="kpm_autoload_select_kpm_file">选KPM文件喵！</string>

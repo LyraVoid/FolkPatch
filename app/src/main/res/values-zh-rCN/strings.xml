@@ -549,7 +549,7 @@
     <!-- KPM AutoLoad Strings -->
     <string name="kpm_autoload_title">KPM自动加载</string>
     <string name="kpm_autoload_enabled">启用自动加载</string>
-    <string name="kpm_autoload_enabled_summary">开机时自动加载KPM模块</string>
+    <string name="kpm_autoload_enabled_summary">开机时自动加载内核补丁模块</string>
     <string name="kpm_autoload_json_config">JSON配置</string>
     <string name="kpm_autoload_json_label">JSON配置</string>
     <string name="kpm_autoload_json_placeholder">{
@@ -590,8 +590,8 @@
     <string name="kpm_autoload_remove_kpm">删除</string>
     <string name="kpm_autoload_edit_kpm">编辑</string>
     <string name="kpm_autoload_edit_dialog_title">编辑 KPM</string>    <string name="kpm_autoload_event_label">事件:</string>    <string name="kpm_autoload_args_label">参数:</string>    <string name="kpm_autoload_event_service">service</string>    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
-    <string name="kpm_autoload_kpm_list_title">KPM模块列表</string>
-    <string name="kpm_autoload_no_kpm_added">未添加KPM模块</string>
+    <string name="kpm_autoload_kpm_list_title">内核补丁模块列表</string>
+    <string name="kpm_autoload_no_kpm_added">未添加内核补丁模块</string>
     <string name="kpm_autoload_kpm_path">KPM路径</string>
     <string name="kpm_autoload_file_not_found">文件未找到</string>
     <string name="kpm_autoload_select_kpm_file">选择KPM文件</string>
@@ -605,7 +605,7 @@
     <string name="kpm_autoload_do_not_show_again">不再显示</string>
 
     <string name="kpm_page_first_time_title">警告</string>
-    <string name="kpm_page_first_time_message">内核模块是直接修改Boot的实现，它不像系统模块一样有很好的救砖机制，出问题只能进入Fastboot去修复。建议先加载模块没有问题再嵌入到Boot。如果是只能加载使用的模块，可以尝试使用自动KPM模块加载功能。如果你不了解内核模块，请不要使用本功能！</string>
+    <string name="kpm_page_first_time_message">内核模块是直接修改Boot的实现，它不像系统模块一样有很好的救砖机制，出问题只能进入Fastboot去修复。建议先加载模块没有问题再嵌入到Boot。如果是只能加载使用的模块，可以尝试使用自动内核补丁模块加载功能。如果你不了解内核模块，请不要使用本功能！</string>
     <!-- Module Backup/Restore Strings -->
     <string name="apm_backup_title">备份模块</string>
     <string name="apm_restore_title">恢复模块</string>
