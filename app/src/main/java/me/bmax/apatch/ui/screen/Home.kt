@@ -73,8 +73,6 @@ import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Card

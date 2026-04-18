@@ -3,6 +3,7 @@ package me.bmax.apatch.ui.screen
 import android.content.Context
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.clickable
@@ -25,8 +26,8 @@ import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.DropdownMenu
+import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenu
+import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -54,6 +55,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
@@ -235,71 +237,73 @@ fun KpmAutoLoadConfigScreen(navigator: DestinationsNavigator) {
                             }
                         } else {
                             LazyColumn(
-                                modifier = Modifier.weight(1f)
+                                modifier = Modifier.weight(1f),
+                                verticalArrangement = Arrangement.spacedBy(8.dp)
                             ) {
                                 items(kpmEntriesList, key = { it.path }) { entry ->
-                                    ListItem(
-                                        headlineContent = {
+                                    Row(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .clip(RoundedCornerShape(16.dp))
+                                            .background(MaterialTheme.colorScheme.surfaceContainerHighest)
+                                            .padding(horizontal = 16.dp, vertical = 12.dp),
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        Column(modifier = Modifier.weight(1f)) {
                                             Text(
                                                 text = entry.path.substringAfterLast("/"),
                                                 style = MaterialTheme.typography.bodyMedium
                                             )
-                                        },
-                                        supportingContent = {
-                                            Column {
+                                            Text(
+                                                text = entry.path,
+                                                style = MaterialTheme.typography.bodySmall,
+                                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                                            )
+                                            if (entry.event != "service" || entry.args.isNotEmpty()) {
                                                 Text(
-                                                    text = entry.path,
-                                                    style = MaterialTheme.typography.bodySmall,
-                                                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                                                )
-                                                if (entry.event != "service" || entry.args.isNotEmpty()) {
-                                                    Text(
-                                                        text = buildString {
-                                                            if (entry.event != "service") append("${stringResource(R.string.kpm_autoload_event_label).trimEnd(':')} ${entry.event}")
-                                                            if (entry.args.isNotEmpty()) {
-                                                                if (entry.event != "service") append(" | ")
-                                                                append("${stringResource(R.string.kpm_autoload_args_label).trimEnd(':')} ${entry.args}")
-                                                            }
-                                                        },
-                                                        style = MaterialTheme.typography.bodySmall,
-                                                        color = MaterialTheme.colorScheme.primary
-                                                    )
-                                                }
-                                            }
-                                        },
-                                        trailingContent = {
-                                            Row(
-                                                horizontalArrangement = Arrangement.spacedBy(4.dp)
-                                            ) {
-                                                IconButton(
-                                                    onClick = {
-                                                        editingEntry = entry
-                                                        showEditDialog = true
-                                                    }
-                                                ) {
-                                                    Icon(
-                                                        imageVector = Icons.Default.Edit,
-                                                        contentDescription = stringResource(R.string.kpm_autoload_edit_kpm),
-                                                        tint = MaterialTheme.colorScheme.onSurfaceVariant
-                                                    )
-                                                }
-                                                IconButton(
-                                                    onClick = {
-                                                        kpmEntriesList = kpmEntriesList.filter { it.path != entry.path }
-                                                        updateJsonString(kpmEntriesList, isEnabled) { newJson ->
-                                                            jsonString = newJson
+                                                    text = buildString {
+                                                        if (entry.event != "service") append("${stringResource(R.string.kpm_autoload_event_label).trimEnd(':')} ${entry.event}")
+                                                        if (entry.args.isNotEmpty()) {
+                                                            if (entry.event != "service") append(" | ")
+                                                            append("${stringResource(R.string.kpm_autoload_args_label).trimEnd(':')} ${entry.args}")
                                                         }
-                                                    }
-                                                ) {
-                                                    Icon(
-                                                        imageVector = Icons.Default.Delete,
-                                                        contentDescription = stringResource(R.string.kpm_autoload_remove_kpm),
-                                                        tint = MaterialTheme.colorScheme.error
-                                                    )
-                                                }
+                                                    },
+                                                    style = MaterialTheme.typography.bodySmall,
+                                                    color = MaterialTheme.colorScheme.primary
+                                                )
                                             }
                                         }
-                                    )
+                                        Row(
+                                            horizontalArrangement = Arrangement.spacedBy(4.dp)
+                                        ) {
+                                            IconButton(
+                                                onClick = {
+                                                    editingEntry = entry
+                                                    showEditDialog = true
+                                                }
+                                            ) {
+                                                Icon(
+                                                    imageVector = Icons.Default.Edit,
+                                                    contentDescription = stringResource(R.string.kpm_autoload_edit_kpm),
+                                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                                )
+                                            }
+                                            IconButton(
+                                                onClick = {
+                                                    kpmEntriesList = kpmEntriesList.filter { it.path != entry.path }
+                                                    updateJsonString(kpmEntriesList, isEnabled) { newJson ->
+                                                        jsonString = newJson
+                                                    }
+                                                }
+                                            ) {
+                                                Icon(
+                                                    imageVector = Icons.Default.Delete,
+                                                    contentDescription = stringResource(R.string.kpm_autoload_remove_kpm),
+                                                    tint = MaterialTheme.colorScheme.error
+                                                )
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -577,12 +581,12 @@ private fun KpmEditDialog(
                         },
                         singleLine = true
                     )
-                    DropdownMenu(
+                    WallpaperAwareDropdownMenu(
                         expanded = showEventDropdown,
                         onDismissRequest = { showEventDropdown = false }
                     ) {
                         eventOptions.forEach { option ->
-                            DropdownMenuItem(
+                            WallpaperAwareDropdownMenuItem(
                                 text = { Text(eventLabels[option] ?: option) },
                                 onClick = {
                                     selectedEvent = option
