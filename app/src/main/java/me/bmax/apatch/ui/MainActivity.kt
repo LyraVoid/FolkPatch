@@ -1212,7 +1212,7 @@ private fun BottomBarContent(
                         .padding(vertical = 8.dp)
                         .offset {
                             IntOffset(
-                                x = indicatorOffset.toInt(),
+                                x = (indicatorOffset - with(density) { indicatorHorizontalPadding.toPx() }).toInt(),
                                 y = 0
                             )
                         }
