@@ -79,13 +79,11 @@ jobs:
 
       - run: ./gradlew assembleDebug --no-daemon
 
-      - name: Debug APK location
-        run: find app/build/outputs -name "*.apk" -type f || echo "No APK found"
-
       - name: Rename APK
         run: |
           SHORT="${GITHUB_SHA::7}"
-          mv app/build/outputs/apk/debug/*.apk "FolkPatch-Debug-${SHORT}.apk"
+          APK=$(find app/build/outputs/apk/debug -name "*.apk" -type f | head -1)
+          [ -n "$APK" ] && mv "$APK" "FolkPatch-Debug-${SHORT}.apk"
 
       - uses: actions/upload-artifact@v4
         with:
@@ -114,7 +112,8 @@ jobs:
       - name: Rename APK
         run: |
           SHORT="${GITHUB_SHA::7}"
-          mv app/build/outputs/apk/release/*.apk "FolkPatch-Release-${SHORT}.apk"
+          APK=$(find app/build/outputs/apk/release -name "*.apk" -type f | head -1)
+          [ -n "$APK" ] && mv "$APK" "FolkPatch-Release-${SHORT}.apk"
 
       - uses: actions/upload-artifact@v4
         with:
