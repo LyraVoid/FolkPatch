@@ -210,18 +210,22 @@ fun AppearanceSettingsContent(
     var customFontEnabled by remember { mutableStateOf(FontConfig.isCustomFontEnabled) }
 
     val refreshThemeObserver by refreshTheme.observeAsState(false)
+
+    var customColorScheme by remember { mutableStateOf(prefs.getString("custom_color", "indigo")) }
+
+    var currentStyle by remember { mutableStateOf(prefs.getString("home_layout_style", "stats")) }
+
     if (refreshThemeObserver) {
         nightModeFollowSys = prefs.getBoolean("night_mode_follow_sys", false)
         nightModeEnabled = prefs.getBoolean("night_mode_enabled", true)
         useSystemDynamicColor = prefs.getBoolean("use_system_color_theme", true)
         customFontEnabled = FontConfig.isCustomFontEnabled
+        customColorScheme = prefs.getString("custom_color", "indigo")
+        currentStyle = prefs.getString("home_layout_style", "stats")
     }
 
     val isDarkTheme = if (nightModeFollowSys) isSystemInDarkTheme() else nightModeEnabled
     val themeMode = if (nightModeFollowSys) ThemeMode.SYSTEM else if (nightModeEnabled) ThemeMode.DARK else ThemeMode.LIGHT
-    val customColorScheme = remember { prefs.getString("custom_color", "indigo") }
-
-    val currentStyle = remember { prefs.getString("home_layout_style", "stats") }
     val isStatsLayout = currentStyle == "stats"
     var statsTopLayout by remember { mutableStateOf(prefs.getString("stats_top_layout", "list") ?: "list") }
     val statsTopLayoutListLabel = stringResource(id = R.string.settings_stats_top_layout_list)
@@ -300,6 +304,7 @@ fun AppearanceSettingsContent(
             selectedColorKey = customColorScheme ?: "indigo",
             onColorSelected = { key ->
                 prefs.edit().putString("custom_color", key).putBoolean("use_system_color_theme", false).apply()
+                customColorScheme = key
                 useSystemDynamicColor = false
                 refreshTheme.value = true
             },

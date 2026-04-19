@@ -8,6 +8,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -64,8 +65,18 @@ fun BackgroundLayer(
 ) {
     val context = LocalContext.current
     val prefs = APApplication.sharedPreferences
-    val darkThemeFollowSys = remember { prefs.getBoolean("night_mode_follow_sys", false) }
-    val nightModeEnabled = remember { prefs.getBoolean("night_mode_enabled", true) }
+    var darkThemeFollowSys by remember { mutableStateOf(prefs.getBoolean("night_mode_follow_sys", false)) }
+    var nightModeEnabled by remember { mutableStateOf(prefs.getBoolean("night_mode_enabled", true)) }
+
+    val refreshThemeObserver by refreshTheme.observeAsState(false)
+    LaunchedEffect(refreshThemeObserver) {
+        if (refreshThemeObserver) {
+            darkThemeFollowSys = prefs.getBoolean("night_mode_follow_sys", false)
+            nightModeEnabled = prefs.getBoolean("night_mode_enabled", true)
+            refreshTheme.postValue(false)
+        }
+    }
+
     val isDarkTheme = if (darkThemeFollowSys) {
         isSystemInDarkTheme()
     } else {
