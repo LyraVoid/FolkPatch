@@ -166,6 +166,8 @@
     <string name="patch_item_extra_args">Argümanlar:</string>
     <string name="patch_item_extra_event">Olay:</string>
     <string name="patch_item_skey">SuperKey</string>
+    <string name="patch_custom_superkey">Özel SuperKey</string>
+    <string name="patch_custom_superkey_summary">Hâlâ root ve kernel yönetimi için SuperKey kullanabilirsiniz, yönetici çekirdek tarafından yerleşik imza ile yetkilendirilmiştir</string>
     <string name="patch_item_set_skey_label">SuperKey 8-63 karakter uzunluğunda olmalı; rakam ve harf içermeli, özel karakter içermemelidir.</string>
     <string name="patch_confirm_superkey">SuperKey Onayla</string>
     <string name="patch_skey_mismatch">SuperKey eşleşmiyor</string>
@@ -749,6 +751,8 @@ Komutların çalışması için uygulamanın tamamen kapatılıp yeniden açıld
     <string name="settings_appearance_background_summary">Özel arka plan, video ve çoklu arka plan</string>
     <string name="settings_appearance_night_mode">Gece Modu Ayarları</string>
     <string name="settings_appearance_night_mode_summary">Koyu tema ve renk yapılandırması</string>
+    <string name="settings_amoled_theme">AMOLED Siyah Tema</string>
+    <string name="settings_amoled_theme_desc">Karanlık mod için tam siyah arka plan</string>
     <string name="settings_category_behavior">Davranış</string>
     <string name="settings_category_function">Fonksiyon</string>
     <string name="settings_category_module">Modüller</string>

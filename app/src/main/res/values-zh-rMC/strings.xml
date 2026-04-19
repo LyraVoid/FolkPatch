@@ -160,6 +160,8 @@
     <string name="patch_item_extra_args">NBT参数:</string>
     <string name="patch_item_extra_event">触发事件:</string>
     <string name="patch_item_skey">OP密钥</string>
+    <string name="patch_custom_superkey">自定义OP密钥</string>
+    <string name="patch_custom_superkey_summary">你还能设OP密钥来管Root和内核，管理器已经内置签名授权了</string>
     <string name="patch_item_set_skey_label">OP密钥需要8-63个字符，只能用数字和字母，别夹带特殊符号进去</string>
     <string name="patch_confirm_superkey">再输一次OP密钥</string>
     <string name="patch_skey_mismatch">两次OP密钥对不上啊</string>
@@ -733,6 +735,8 @@
     <string name="settings_appearance_background_summary">自定义背景、视频和多维度背景</string>
     <string name="settings_appearance_night_mode">夜间模式</string>
     <string name="settings_appearance_night_mode_summary">夜间主题和颜色配置</string>
+    <string name="settings_amoled_theme">AMOLED 纯黑主题</string>
+    <string name="settings_amoled_theme_desc">为深色模式使用纯黑背景</string>
     <string name="settings_use_legacy_su_page">单页OP权限授权</string>
     <string name="settings_use_legacy_su_page_summary">OP权限页面改用单页授权设计</string>
     <string name="settings_category_module">模组</string>

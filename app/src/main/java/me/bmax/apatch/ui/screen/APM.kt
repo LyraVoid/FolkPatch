@@ -275,7 +275,9 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
     ) { viewModel.fetchModuleList() }
     //TODO: FIXME -> val isSafeMode = Natives.getSafeMode()
     val isSafeMode = false
-    val hasMagisk = hasMagisk()
+    val hasMagisk by produceState(initialValue = false) {
+        value = withContext(Dispatchers.IO) { hasMagisk() }
+    }
     val hideInstallButton = isSafeMode || hasMagisk
 
     val moduleListState = rememberLazyListState()
@@ -819,11 +821,7 @@ private fun ModuleList(
                     itemsIndexed(modules, key = { _, module -> module.id }) { index, module ->
                         var isChecked by rememberSaveable(module) { mutableStateOf(module.enabled) }
                         val scope = rememberCoroutineScope()
-                        val updatedModule by produceState(initialValue = Triple("", "", ""), key1 = module.id) {
-                            scope.launch(Dispatchers.IO) {
-                                value = viewModel.checkUpdate(module)
-                            }
-                        }
+                        val updatedModule = viewModel.getCachedUpdate(module.id)
 
                         ModuleItem(
                             navigator,
@@ -1242,25 +1240,17 @@ private fun ModuleItem(
     val moduleDefaultIconUri = remember(moduleDefaultIconPath) { toSuIconUri(moduleDefaultIconPath) }
     val effectiveShortcutIconUri = shortcutIconUri ?: moduleDefaultIconUri
 
-    val shortcutPreviewBitmap by produceState<Bitmap?>(initialValue = null, key1 = effectiveShortcutIconUri) {
-        value = if (effectiveShortcutIconUri.isNullOrBlank()) {
-            null
+    val shortcutPreviewBitmap by produceState<Bitmap?>(initialValue = null, key1 = if (showShortcutDialog) effectiveShortcutIconUri else null) {
+        if (!showShortcutDialog || effectiveShortcutIconUri.isNullOrBlank()) {
+            value = null
         } else {
-            withContext(Dispatchers.IO) {
+            value = withContext(Dispatchers.IO) {
                 ModuleShortcut.loadShortcutBitmap(context, effectiveShortcutIconUri)
             }
         }
     }
     
-    val sizeStr by produceState(initialValue = "0 KB", key1 = module.id) {
-        if (!showMoreModuleInfo) {
-            value = "0 KB"
-            return@produceState
-        }
-        value = withContext(Dispatchers.IO) {
-            viewModel.getModuleSize(module.id)
-        }
-    }
+    val sizeStr = if (showMoreModuleInfo) viewModel.getModuleSize(module.id) else "0 KB"
 
     val bannerInfo by produceState<APModuleViewModel.BannerInfo?>(
         initialValue = viewModel.getBannerInfo(module.id),
@@ -1295,7 +1285,7 @@ private fun ModuleItem(
         }
 
         val cached = viewModel.getBannerInfo(module.id)
-        if (cached != null && (BackgroundConfig.isFolkBannerEnabled || cached.bytes == null)) {
+        if (cached != null && (cached.bytes != null || cached.url != null)) {
             value = cached
             return@produceState
         }
@@ -1334,14 +1324,21 @@ private fun ModuleItem(
                         return@withContext APModuleViewModel.BannerInfo(file.newInputStream().use { it.readBytes() }, null)
                     }
                 }
-                APModuleViewModel.BannerInfo(null, null)
+                null
             } catch (e: Exception) {
-                APModuleViewModel.BannerInfo(null, null)
+                null
             }
         }
 
-        viewModel.putBannerInfo(module.id, loaded)
-        value = loaded
+        if (loaded != null) {
+            viewModel.putBannerInfo(module.id, loaded)
+            value = loaded
+        } else if (cached != null) {
+            value = cached
+        } else {
+            viewModel.putBannerInfo(module.id, APModuleViewModel.BannerInfo(null, null))
+            value = APModuleViewModel.BannerInfo(null, null)
+        }
         }
     }
 

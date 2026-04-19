@@ -28,6 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
+import coil.request.CachePolicy
 import coil.request.ImageRequest
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
@@ -38,6 +39,7 @@ import kotlinx.coroutines.launch
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.AppLoadingIndicator
 import me.bmax.apatch.ui.viewmodel.ThemeStoreViewModel
+import java.io.File
 import me.bmax.apatch.util.DownloadProgress
 import me.bmax.apatch.util.DownloadStatus
 import me.bmax.apatch.util.ThemeDownloader
@@ -368,8 +370,10 @@ fun ThemeStoreScreen(
                     items = viewModel.themes.distinctBy { it.id },
                     key = { it.id }
                 ) { theme ->
+                    val localTheme = viewModel.localThemes.find { it.id == theme.id }
                     ThemeGridItem(
                         theme = theme,
+                        localPreviewPath = localTheme?.previewImagePath,
                         onClick = { selectedTheme = theme }
                     )
                 }
@@ -404,6 +408,8 @@ fun ThemeDownloadDialog(
                         model = ImageRequest.Builder(LocalContext.current)
                             .data(theme.previewUrl)
                             .crossfade(true)
+                            .diskCachePolicy(CachePolicy.ENABLED)
+                            .memoryCachePolicy(CachePolicy.ENABLED)
                             .build(),
                         contentDescription = theme.name,
                         modifier = Modifier
@@ -660,8 +666,17 @@ fun ThemeFilterSheetContent(
 @Composable
 fun ThemeGridItem(
     theme: ThemeStoreViewModel.RemoteTheme,
+    localPreviewPath: String? = null,
     onClick: () -> Unit
 ) {
+    val context = LocalContext.current
+    val previewFile = localPreviewPath?.let { File(it) }
+    val imageModel = if (previewFile != null && previewFile.exists()) {
+        Uri.fromFile(previewFile)
+    } else {
+        theme.previewUrl
+    }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -669,9 +684,11 @@ fun ThemeGridItem(
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(theme.previewUrl)
+            model = ImageRequest.Builder(context)
+                .data(imageModel)
                 .crossfade(true)
+                .diskCachePolicy(CachePolicy.ENABLED)
+                .memoryCachePolicy(CachePolicy.ENABLED)
                 .build(),
             contentDescription = theme.name,
             modifier = Modifier

@@ -97,9 +97,10 @@ class APModuleViewModel : ViewModel() {
         prefs.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener)
     }
 
+    private val collator = Collator.getInstance(Locale.getDefault())
+
     val moduleList by derivedStateOf {
-        val collator = Collator.getInstance(Locale.getDefault())
-        val sortedList = if (sortOptimizationEnabled) {
+        if (sortOptimizationEnabled) {
             modules.sortedWith(
                 compareByDescending<ModuleInfo> { it.isMetamodule }
                     .thenByDescending { it.isZygisk }
@@ -110,11 +111,7 @@ class APModuleViewModel : ViewModel() {
                     .thenBy(collator) { it.id }
             )
         } else {
-            val comparator = compareBy(collator, ModuleInfo::id)
-            modules.sortedWith(comparator)
-        }
-        sortedList.also {
-            isRefreshing = false
+            modules.sortedWith(compareBy(collator, ModuleInfo::id))
         }
     }
 
@@ -161,15 +158,14 @@ class APModuleViewModel : ViewModel() {
         keysToRemove.forEach { moduleSizeCache.remove(it) }
     }
 
+    private val updateCache = mutableStateMapOf<String, Triple<String, String, String>>()
+
     fun fetchModuleList() {
         viewModelScope.launch(Dispatchers.IO) {
             isRefreshing = true
 
-            val oldModuleList = modules
-
-            val start = SystemClock.elapsedRealtime()
-
-            kotlin.runCatching {
+            try {
+                val start = SystemClock.elapsedRealtime()
 
                 val result = listModules()
 
@@ -201,21 +197,21 @@ class APModuleViewModel : ViewModel() {
                             obj.optString("name").contains("LSPosed", ignoreCase = true)
                         )
                     }.toList()
-                pruneBannerCache(modules.map { it.id }.toSet())
-                pruneModuleSizeCache(modules.map { it.id }.toSet())
-                prefetchModuleSizes(modules.map { it.id })
                 isNeedRefresh = false
-            }.onFailure { e ->
+
+                // Non-critical: run in background without blocking module display
+                val ids = modules.map { it.id }
+                pruneBannerCache(ids.toSet())
+                pruneModuleSizeCache(ids.toSet())
+                viewModelScope.launch(Dispatchers.IO) { prefetchModuleSizes(ids) }
+                viewModelScope.launch(Dispatchers.IO) { batchCheckUpdates() }
+
+                Log.i(TAG, "load cost: ${SystemClock.elapsedRealtime() - start}, modules: $modules")
+            } catch (e: Exception) {
                 Log.e(TAG, "fetchModuleList: ", e)
+            } finally {
                 isRefreshing = false
             }
-
-
-            if (oldModuleList === modules) {
-                isRefreshing = false
-            }
-
-            Log.i(TAG, "load cost: ${SystemClock.elapsedRealtime() - start}, modules: $modules")
         }
     }
 
@@ -224,8 +220,34 @@ class APModuleViewModel : ViewModel() {
     }
 
     suspend fun checkUpdate(m: ModuleInfo): Triple<String, String, String> {
+        updateCache[m.id]?.let { return it }
         updateSemaphore.withPermit {
-            return checkUpdateInternal(m)
+            val result = checkUpdateInternal(m)
+            if (result.first.isNotEmpty()) {
+                updateCache[m.id] = result
+            }
+            return result
+        }
+    }
+
+    fun getCachedUpdate(moduleId: String): Triple<String, String, String> {
+        return updateCache[moduleId] ?: Triple("", "", "")
+    }
+
+    fun batchCheckUpdates() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val eligible = modules.filter {
+                it.updateJson.isNotEmpty() && !it.remove && !it.update && it.enabled
+            }
+            eligible.forEach { m ->
+                if (updateCache.containsKey(m.id)) return@forEach
+                try {
+                    val result = updateSemaphore.withPermit { checkUpdateInternal(m) }
+                    if (result.first.isNotEmpty()) {
+                        updateCache[m.id] = result
+                    }
+                } catch (_: Exception) {}
+            }
         }
     }
 

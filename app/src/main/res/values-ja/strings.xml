@@ -143,6 +143,8 @@
     <string name="patch_item_extra_args">引数:</string>
     <string name="patch_item_extra_event">イベント:</string>
     <string name="patch_item_skey">SuperKey</string>
+    <string name="patch_custom_superkey">カスタム SuperKey</string>
+    <string name="patch_custom_superkey_summary">Root とカーネルの管理に SuperKey を引き続き使用できます。マネージャーはカーネルの組み込み署名で認証されています</string>
     <string name="patch_item_set_skey_label">SuperKey の長さは 8～63 文字で、数字と文字を含めることができますが、特殊文字を含めることはできません。</string>
     <string name="patch_confirm_superkey">SuperKey を確認</string>
     <string name="patch_skey_mismatch">SuperKey が一致しません</string>
@@ -683,6 +685,8 @@
     <string name="settings_appearance_background_summary">カスタム背景、動画、マルチ背景</string>
     <string name="settings_appearance_night_mode">ナイトモード設定</string>
     <string name="settings_appearance_night_mode_summary">ダークテーマと色設定</string>
+    <string name="settings_amoled_theme">AMOLEDブラックテーマ</string>
+    <string name="settings_amoled_theme_desc">ダークモードで完全な黒い背景を使用</string>
     <string name="settings_category_behavior">動作</string>
     <string name="settings_category_function">機能</string>
     <string name="settings_category_module">モジュール</string>

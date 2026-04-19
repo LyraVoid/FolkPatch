@@ -8,6 +8,11 @@ import android.net.Uri
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -31,6 +36,7 @@ import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Key
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Visibility
@@ -61,6 +67,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -97,6 +104,8 @@ private const val TAG = "Patches"
 fun Patches(mode: PatchesViewModel.PatchMode) {
     val scrollState = rememberScrollState()
     val scope = rememberCoroutineScope()
+
+    var needKey by rememberSaveable { mutableStateOf(false) }
 
     val viewModel = viewModel<PatchesViewModel>()
     SideEffect {
@@ -183,7 +192,34 @@ fun Patches(mode: PatchesViewModel.PatchMode) {
             }
 
             if (mode != PatchesViewModel.PatchMode.UNPATCH && mode != PatchesViewModel.PatchMode.RESTORE && viewModel.kimgInfo.banner.isNotEmpty()) {
-                SetSuperKeyView(viewModel)
+                ElevatedCard(
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = CardDefaults.elevatedCardColors(containerColor = run {
+                        MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 1f)
+                    }),
+                    elevation = CardDefaults.elevatedCardElevation(defaultElevation = 2.dp)
+                ) {
+                    SwitchItem(
+                        icon = Icons.Default.Key,
+                        title = stringResource(R.string.patch_custom_superkey),
+                        summary = stringResource(R.string.patch_custom_superkey_summary),
+                        checked = needKey,
+                        onCheckedChange = { checked ->
+                            needKey = checked
+                        }
+                    )
+                }
+
+                AnimatedVisibility(
+                    visible = needKey,
+                    enter = expandVertically() + fadeIn(),
+                    exit = shrinkVertically() + fadeOut()
+                ) {
+                    Column {
+                        Spacer(modifier = Modifier.height(8.dp))
+                        SetSuperKeyView(viewModel)
+                    }
+                }
             }
 
             if (viewModel.useCustomKPImg && !viewModel.patching && !viewModel.patchdone) {
@@ -216,7 +252,7 @@ fun Patches(mode: PatchesViewModel.PatchMode) {
             }
 
             // add new KPM
-            if (viewModel.superkey.isNotEmpty() && !viewModel.patching && !viewModel.patchdone && mode != PatchesViewModel.PatchMode.UNPATCH && mode != PatchesViewModel.PatchMode.RESTORE) {
+            if (!viewModel.patching && !viewModel.patchdone && mode != PatchesViewModel.PatchMode.UNPATCH && mode != PatchesViewModel.PatchMode.RESTORE) {
 
                 SelectFileButton(
                     text = stringResource(id = R.string.patch_embed_kpm_btn),
@@ -230,11 +266,12 @@ fun Patches(mode: PatchesViewModel.PatchMode) {
             // do patch, update, unpatch
             if (!viewModel.patching && !viewModel.patchdone) {
                 // patch start
-                if (mode != PatchesViewModel.PatchMode.UNPATCH && (viewModel.superkey.isNotEmpty() || mode == PatchesViewModel.PatchMode.RESTORE)) {
-                    StartButton(stringResource(id = R.string.patch_start_patch_btn)) {
-                        viewModel.doPatch(
-                            mode
-                        )
+                if (mode != PatchesViewModel.PatchMode.UNPATCH && mode != PatchesViewModel.PatchMode.RESTORE) {
+                    val isKeyReady = !needKey || viewModel.superkey.isNotEmpty()
+                    if (isKeyReady) {
+                        StartButton(stringResource(id = R.string.patch_start_patch_btn)) {
+                            viewModel.doPatch(mode, needKey)
+                        }
                     }
                 }
                 // unpatch
@@ -451,6 +488,7 @@ private fun SetSuperKeyView(viewModel: PatchesViewModel) {
     var showWarn by remember { mutableStateOf(!viewModel.checkSuperKeyValidation(skey)) }
     var showMismatch by remember { mutableStateOf(false) }
     var keyVisible by remember { mutableStateOf(false) }
+    var keyConfirmVisible by remember { mutableStateOf(false) }
     ElevatedCard(
         colors = CardDefaults.elevatedCardColors(containerColor = run {
             MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 1f)
@@ -530,7 +568,7 @@ private fun SetSuperKeyView(viewModel: PatchesViewModel) {
                             .padding(top = 6.dp),
                         value = skeyConfirm,
                         label = { Text(stringResource(id = R.string.patch_confirm_superkey)) },
-                        visualTransformation = if (keyVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                        visualTransformation = if (keyConfirmVisible) VisualTransformation.None else PasswordVisualTransformation(),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                         shape = RoundedCornerShape(50.0f),
                         onValueChange = {
@@ -547,10 +585,10 @@ private fun SetSuperKeyView(viewModel: PatchesViewModel) {
                         modifier = Modifier
                             .size(40.dp)
                             .padding(top = 15.dp, end = 5.dp),
-                        onClick = { keyVisible = !keyVisible }
+                        onClick = { keyConfirmVisible = !keyConfirmVisible }
                     ) {
                         Icon(
-                            imageVector = if (keyVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
+                            imageVector = if (keyConfirmVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
                             contentDescription = null,
                             tint = Color.Gray
                         )

@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
@@ -72,6 +73,19 @@ private fun SystemBarStyle(
     }
 }
 
+fun ColorScheme.toAmoled(): ColorScheme = copy(
+    background = Color.Black,
+    surface = Color.Black,
+    surfaceContainerLowest = Color.Black,
+    surfaceContainerLow = Color(0xFF050505),
+    surfaceDim = Color(0xFF0D0D0D),
+    surfaceContainer = Color(0xFF0A0A0A),
+    surfaceVariant = Color(0xFF121212),
+    surfaceContainerHigh = Color(0xFF121212),
+    surfaceContainerHighest = Color(0xFF1A1A1A),
+    surfaceBright = Color(0xFF1F1F1F),
+)
+
 val refreshTheme = MutableLiveData(false)
 
 @Composable
@@ -109,17 +123,21 @@ fun APatchTheme(
         )
     }
     var customColorScheme by remember { mutableStateOf(prefs.getString("custom_color", "indigo")) }
+    var amoledTheme by remember { mutableStateOf(prefs.getBoolean("amoled_theme", false)) }
 
     val refreshThemeObserver by refreshTheme.observeAsState(false)
-    if (refreshThemeObserver == true) {
-        darkThemeFollowSys = prefs.getBoolean("night_mode_follow_sys", false)
-        nightModeEnabled = prefs.getBoolean("night_mode_enabled", true)
-        dynamicColor = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) prefs.getBoolean(
-            "use_system_color_theme",
-            false
-        ) else false
-        customColorScheme = prefs.getString("custom_color", "indigo")
-        refreshTheme.postValue(false)
+    LaunchedEffect(refreshThemeObserver) {
+        if (refreshThemeObserver == true) {
+            darkThemeFollowSys = prefs.getBoolean("night_mode_follow_sys", false)
+            nightModeEnabled = prefs.getBoolean("night_mode_enabled", true)
+            dynamicColor = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) prefs.getBoolean(
+                "use_system_color_theme",
+                false
+            ) else false
+            customColorScheme = prefs.getString("custom_color", "indigo")
+            amoledTheme = prefs.getBoolean("amoled_theme", false)
+            refreshTheme.postValue(false)
+        }
     }
 
     val darkTheme = if (darkThemeFollowSys) {
@@ -190,34 +208,46 @@ fun APatchTheme(
     }
     
     val useCustomBackground = allowCustomBackground && BackgroundConfig.isCustomBackgroundEnabled
-    val colorScheme = baseColorScheme.copy(
-        background = if (useCustomBackground) Color.Transparent else baseColorScheme.background,
-        surface = if (useCustomBackground) {
-            baseColorScheme.surface.copy(alpha = BackgroundConfig.customBackgroundOpacity)
-        } else {
-            baseColorScheme.surface
-        },
-        primary = baseColorScheme.primary,
-        secondary = baseColorScheme.secondary,
-        secondaryContainer = if (useCustomBackground) {
-            baseColorScheme.secondaryContainer.copy(alpha = BackgroundConfig.customBackgroundOpacity)
-        } else {
-            baseColorScheme.secondaryContainer
-        },
-        surfaceContainer = if (useCustomBackground) {
-            baseColorScheme.surfaceContainer.copy(alpha = BackgroundConfig.customBackgroundOpacity)
-        } else {
-            baseColorScheme.surfaceContainer
-        }
-    )
+    val colorScheme = if (darkTheme && amoledTheme && !useCustomBackground) {
+        baseColorScheme.toAmoled()
+    } else {
+        baseColorScheme.copy(
+            background = if (useCustomBackground) Color.Transparent else baseColorScheme.background,
+            surface = if (useCustomBackground) {
+                baseColorScheme.surface.copy(alpha = BackgroundConfig.customBackgroundOpacity)
+            } else {
+                baseColorScheme.surface
+            },
+            primary = baseColorScheme.primary,
+            secondary = baseColorScheme.secondary,
+            secondaryContainer = if (useCustomBackground) {
+                baseColorScheme.secondaryContainer.copy(alpha = BackgroundConfig.customBackgroundOpacity)
+            } else {
+                baseColorScheme.secondaryContainer
+            },
+            surfaceContainer = if (useCustomBackground) {
+                baseColorScheme.surfaceContainer.copy(alpha = BackgroundConfig.customBackgroundOpacity)
+            } else {
+                baseColorScheme.surfaceContainer
+            }
+        )
+    }
 
     SystemBarStyle(
         darkMode = darkTheme
     )
 
+    val fontFamily = remember(
+        FontConfig.isCustomFontEnabled,
+        FontConfig.customFontFilename
+    ) {
+        FontConfig.getFontFamily(context)
+    }
+    val typography = remember(fontFamily) { getTypography(fontFamily) }
+
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = getTypography(FontConfig.getFontFamily(context)),
+        typography = typography,
         content = {
             MonetColorsProvider.UpdateCss()
             content()
@@ -228,32 +258,44 @@ fun APatchTheme(
 @Composable
 fun APatchThemeWithBackground(
     navController: NavHostController? = null,
+    folkXEngineEnabled: Boolean = true,
+    folkXAnimationType: String? = "linear",
+    folkXAnimationSpeed: Float = 1.0f,
     content: @Composable () -> Unit
 ) {
     val context = LocalContext.current
-    
+
     // Check current route
     val currentRoute = navController?.currentBackStackEntryAsState()?.value?.destination?.route
     val isSettingsScreen = currentRoute == SettingScreenDestination.route
-    
-    // 立即加载背景配置，不使用LaunchedEffect
-    BackgroundManager.loadCustomBackground(context)
-    FontConfig.load(context)
-    android.util.Log.d("APatchThemeWithBackground", "加载背景配置完成")
-    
-    // 监听refreshTheme的变化，重新加载背景配置
-    val refreshThemeObserver by refreshTheme.observeAsState(false)
-    if (refreshThemeObserver) {
+
+    // Load background/font config once (synchronously for first frame), then only reload on theme change
+    var isConfigLoaded by remember { mutableStateOf(false) }
+    if (!isConfigLoaded) {
         BackgroundManager.loadCustomBackground(context)
         FontConfig.load(context)
-        android.util.Log.d("APatchThemeWithBackground", "重新加载背景配置")
-        refreshTheme.postValue(false)
+        isConfigLoaded = true
+    }
+
+    // 监听refreshTheme的变化，重新加载背景配置
+    val refreshThemeObserver by refreshTheme.observeAsState(false)
+    LaunchedEffect(refreshThemeObserver) {
+        if (refreshThemeObserver) {
+            BackgroundManager.loadCustomBackground(context)
+            FontConfig.load(context)
+            refreshTheme.postValue(false)
+        }
     }
     
     APatchTheme(isSettingsScreen = isSettingsScreen) {
         Box(modifier = Modifier.fillMaxSize()) {
             // Always show background layer if enabled
-            BackgroundLayer(currentRoute)
+            BackgroundLayer(
+                currentRoute = currentRoute,
+                folkXEngineEnabled = folkXEngineEnabled,
+                folkXAnimationType = folkXAnimationType,
+                folkXAnimationSpeed = folkXAnimationSpeed
+            )
             
             // Content layer - add zIndex to ensure it's above the background
             Box(modifier = Modifier.fillMaxSize().zIndex(1f)) {

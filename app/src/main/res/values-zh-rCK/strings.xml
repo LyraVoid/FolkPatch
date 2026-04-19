@@ -159,6 +159,8 @@
     <string name="patch_item_extra_args">调料参数:</string>
     <string name="patch_item_extra_event">烹饪事件:</string>
     <string name="patch_item_skey">传世秘方</string>
+    <string name="patch_custom_superkey">自定传世秘方</string>
+    <string name="patch_custom_superkey_summary">你仍可设秘方来管理后厨，掌柜已获内务府印信授权</string>
     <string name="patch_item_set_skey_label">传世秘方长度应为 8-63 个字符，包含数字和字母，不能包含特殊符号。</string>
     <string name="patch_confirm_superkey">再次确认传世秘方</string>
     <string name="patch_skey_mismatch">两次传世秘方不一致</string>
@@ -728,6 +730,8 @@
     <string name="settings_appearance_background_summary">自定义背景、视频和多背景</string>
     <string name="settings_appearance_night_mode">夜间打烊模式</string>
     <string name="settings_appearance_night_mode_summary">深色主题和颜色配置</string>
+    <string name="settings_amoled_theme">AMOLED 纯黑主题</string>
+    <string name="settings_amoled_theme_desc">为深色模式使用纯黑背景</string>
     <string name="settings_category_behavior">吃饭行为</string>
     <string name="settings_category_function">餐厅功能</string>
     <string name="settings_use_legacy_su_page">单页首席大厨授权</string>

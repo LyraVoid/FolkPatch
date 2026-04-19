@@ -128,6 +128,8 @@
     <string name="patch_item_extra_args">Argumenty:</string>
     <string name="patch_item_extra_event">Wydarzenie:</string>
     <string name="patch_item_skey">SuperKey</string>
+    <string name="patch_custom_superkey">Niestandardowy SuperKey</string>
+    <string name="patch_custom_superkey_summary">Nadal możesz ustawić SuperKey do zarządzania Root i jądrem, menedżer jest autoryzowany przez wbudowany podpis jądra</string>
     <string name="patch_item_set_skey_label">SuperKey powinien mieć od 8 do 63 znaków i zawierać zarówno cyfry, jak i litery, ale bez znaków specjalnych.</string>
     <string name="patch_confirm_superkey">Potwierdź SuperKey</string>
     <string name="patch_skey_mismatch">SuperKey się nie zgadza</string>
@@ -649,6 +651,8 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="settings_appearance_background_summary">Niestandardowe tło, wideo i wiele teł</string>
     <string name="settings_appearance_night_mode">Tryb nocny</string>
     <string name="settings_appearance_night_mode_summary">Ciemny motyw i konfiguracja kolorów</string>
+    <string name="settings_amoled_theme">Czarny motyw AMOLED</string>
+    <string name="settings_amoled_theme_desc">Czysto czarne tło dla trybu ciemnego</string>
     <string name="settings_category_behavior">Zachowanie</string>
     <string name="settings_category_function">Funkcje</string>
     <string name="settings_use_legacy_su_page">Jednostronicowa autoryzacja superużytkownika</string>

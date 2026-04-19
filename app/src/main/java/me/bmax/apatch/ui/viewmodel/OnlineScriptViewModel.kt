@@ -9,13 +9,14 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import me.bmax.apatch.apApp
+import me.bmax.apatch.util.FolkApiClient
 import org.json.JSONArray
 import java.util.Locale
 
 class OnlineScriptViewModel : ViewModel() {
     companion object {
         private const val TAG = "OnlineScriptViewModel"
-        const val MODULES_URL = "https://folk.mysqil.com/api/modules.php?type=script"
+        const val MODULES_URL = "https://folk.mysqil.com/api/modules?type=script"
     }
 
     data class OnlineScript(
@@ -62,12 +63,9 @@ class OnlineScriptViewModel : ViewModel() {
                 val token = me.bmax.apatch.Natives.getApiToken(apApp)
                 val url = "$MODULES_URL&lang=$lang&token=$token"
 
-                val response = apApp.okhttpClient.newCall(
-                    okhttp3.Request.Builder().url(url).build()
-                ).execute()
-                
-                if (response.isSuccessful) {
-                    val jsonString = response.body?.string() ?: "[]"
+                val result = FolkApiClient.fetchJson(url)
+                val jsonString = result.getOrNull()
+                if (jsonString != null) {
                     val jsonArray = JSONArray(jsonString)
                     val list = ArrayList<OnlineScript>()
                     for (i in 0 until jsonArray.length()) {
@@ -92,8 +90,9 @@ class OnlineScriptViewModel : ViewModel() {
                     allModules = list
                     onSearchQueryChange(searchQuery)
                 } else {
-                    Log.e(TAG, "Failed to fetch modules: ${response.code}")
-                    errorMessage = "Failed to fetch scripts: HTTP ${response.code}"
+                    val exception = result.exceptionOrNull()
+                    Log.e(TAG, "Failed to fetch scripts: ${exception?.message}")
+                    errorMessage = "Error: ${exception?.message}"
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "Error fetching modules", e)

@@ -179,20 +179,20 @@ fun execApd(args: String, newShell: Boolean = false): Boolean {
 suspend fun listModules(): String = withContext(Dispatchers.IO) {
     val shell = getRootShell()
     val out = try {
-        withTimeout(30000L) { // 30 second timeout for listModules
+        withTimeout(30000L) {
             shell.newJob().add("${APApplication.APD_PATH} module list").to(ArrayList(), null).exec().out
         }
     } catch (e: TimeoutCancellationException) {
         Log.e(TAG, "listModules timed out after 30 seconds")
-        ArrayList<String>() // Return empty list on timeout
+        ArrayList<String>()
     } catch (e: Exception) {
         Log.e(TAG, "listModules failed: ${e.message}")
-        ArrayList<String>() // Return empty list on error
+        ArrayList<String>()
     }
-    withNewRootShell{
-       newJob().add("cp /data/user/*/me.bmax.apatch/patch/ori.img /data/adb/ap/ && rm /data/user/*/me.bmax.apatch/patch/ori.img")
-       .to(ArrayList(),null).exec()
-   }
+    withNewRootShell {
+        newJob().add("cp /data/user/*/me.bmax.apatch/patch/ori.img /data/adb/ap/ && rm /data/user/*/me.bmax.apatch/patch/ori.img")
+            .to(ArrayList(), null).exec()
+    }
     return@withContext out.joinToString("\n").ifBlank { "[]" }
 }
 
@@ -409,9 +409,11 @@ fun setHideServiceEnabled(enable: Boolean) {
         .submit { result ->
             Log.i(TAG, "setHideServiceEnabled result: ${result.isSuccess} [${result.out}]")
         }
-    // 如果启用，立即执行一次 Hide 二进制
+    // 如果启用，异步执行一次 Hide 二进制（避免阻塞 UI 线程）
     if (enable) {
-        executeHideBinary()
+        CoroutineScope(Dispatchers.IO).launch {
+            executeHideBinary()
+        }
     }
 }
 

@@ -176,6 +176,8 @@
     <string name="patch_item_extra_args">Args:</string>
     <string name="patch_item_extra_event">Evento:</string>
     <string name="patch_item_skey">SuperKey</string>
+    <string name="patch_custom_superkey">SuperKey personalizado</string>
+    <string name="patch_custom_superkey_summary">Aún puedes configurar un SuperKey para gestionar Root y el kernel, el gestor está autorizado por la firma integrada del kernel</string>
     <string name="patch_item_set_skey_label">La SuperKey debe tener entre 8 y 63 caracteres e incluir números y letras, pero no caracteres especiales.</string>
     <string name="patch_confirm_superkey">Confirmar SuperKey</string>
     <string name="patch_skey_mismatch">SuperKey no coincide</string>
@@ -733,6 +735,8 @@ Por ejemplo, los KPM que previenen la modificación de particiones solo pueden u
     <string name="settings_appearance_background_summary">Fondo personalizado, video y multi-fondo</string>
     <string name="settings_appearance_night_mode">Configuración de modo nocturno</string>
     <string name="settings_appearance_night_mode_summary">Tema oscuro y configuración de color</string>
+    <string name="settings_amoled_theme">Tema Negro AMOLED</string>
+    <string name="settings_amoled_theme_desc">Fondo negro puro para el modo oscuro</string>
     <string name="settings_category_behavior">Comportamiento</string>
     <string name="settings_category_function">Función</string>
     <string name="settings_use_legacy_su_page">Autorización de superusuario de página única</string>

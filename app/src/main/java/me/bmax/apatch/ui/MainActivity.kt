@@ -94,6 +94,8 @@ import com.ramcosta.composedestinations.generated.destinations.SecuritySettingsS
 import com.ramcosta.composedestinations.generated.destinations.SettingScreenDestination
 import coil.Coil
 import coil.ImageLoader
+import coil.disk.DiskCache
+import coil.memory.MemoryCache
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.animations.NavHostAnimatedDestinationStyle
 import com.ramcosta.composedestinations.generated.NavGraphs
@@ -523,7 +525,12 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            APatchThemeWithBackground(navController = navController) {
+            APatchThemeWithBackground(
+                navController = navController,
+                folkXEngineEnabled = folkXEngineEnabled,
+                folkXAnimationType = folkXAnimationType,
+                folkXAnimationSpeed = folkXAnimationSpeed
+            ) {
                 
                 val showUpdateDialog = remember { mutableStateOf(false) }
                 val context = LocalContext.current
@@ -724,12 +731,15 @@ class MainActivity : AppCompatActivity() {
                                     LocalSnackbarHost provides snackBarHostState,
                                     LocalIsFloatingNavMode provides false,
                                 ) {
+                                    val railNavTransitions = remember(folkXEngineEnabled, folkXAnimationType, folkXAnimationSpeed, bottomBarRoutes) {
+                                        createNavTransitions(folkXEngineEnabled, folkXAnimationType, folkXAnimationSpeed, bottomBarRoutes, useNavigationRail = true)
+                                    }
                                     DestinationsNavHost(
                                         modifier = Modifier.fillMaxSize(),
                                         navGraph = NavGraphs.root,
                                         navController = navController,
                                         engine = rememberNavHostEngine(navHostContentAlignment = Alignment.TopCenter),
-                                        defaultTransitions = createNavTransitions(folkXEngineEnabled, folkXAnimationType, folkXAnimationSpeed, bottomBarRoutes, useNavigationRail = true)
+                                        defaultTransitions = railNavTransitions
                                     )
                                 }
                             }
@@ -760,6 +770,9 @@ class MainActivity : AppCompatActivity() {
                                 LocalBottomBarVisible provides bottomBarVisibleState,
                                 LocalIsFloatingNavMode provides isFloatingMode
                             ) {
+                                val bottomNavTransitions = remember(folkXEngineEnabled, folkXAnimationType, folkXAnimationSpeed, bottomBarRoutes) {
+                                    createNavTransitions(folkXEngineEnabled, folkXAnimationType, folkXAnimationSpeed, bottomBarRoutes, useNavigationRail = false)
+                                }
                                 DestinationsNavHost(
                                     modifier = Modifier
                                         .fillMaxSize()
@@ -779,7 +792,7 @@ class MainActivity : AppCompatActivity() {
                                     navGraph = NavGraphs.root,
                                     navController = navController,
                                     engine = rememberNavHostEngine(navHostContentAlignment = Alignment.TopCenter),
-                                    defaultTransitions = createNavTransitions(folkXEngineEnabled, folkXAnimationType, folkXAnimationSpeed, bottomBarRoutes, useNavigationRail = false)
+                                    defaultTransitions = bottomNavTransitions
                                 )
                             }
 
@@ -823,7 +836,24 @@ class MainActivity : AppCompatActivity() {
                 .components {
                     add(AppIconKeyer())
                     add(AppIconFetcher.Factory(iconSize, false, this@MainActivity))
+                    if (Build.VERSION.SDK_INT >= 28) {
+                        add(coil.decode.ImageDecoderDecoder.Factory())
+                    } else {
+                        add(coil.decode.GifDecoder.Factory())
+                    }
                 }
+                .diskCache(
+                    DiskCache.Builder()
+                        .directory(cacheDir.resolve("image_cache"))
+                        .maxSizeBytes(100L * 1024 * 1024)
+                        .build()
+                )
+                .memoryCache(
+                    MemoryCache.Builder(this@MainActivity)
+                        .maxSizePercent(0.20)
+                        .build()
+                )
+                .crossfade(true)
                 .build()
         )
 
@@ -1475,7 +1505,6 @@ private fun NavigationRailBar(navController: NavHostController) {
     }
 }
 
-@Composable
 private fun createNavTransitions(
     folkXEngineEnabled: Boolean,
     folkXAnimationType: String?,

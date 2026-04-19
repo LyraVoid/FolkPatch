@@ -17,6 +17,7 @@ import java.util.Locale
 object BannerApiService {
     private const val TAG = "BannerApiService"
     private const val API_BANNER_DIR_NAME = "api_banners"
+    private const val CACHE_TTL_MS = 24 * 60 * 60 * 1000L
 
     // 支持的图片扩展名
     private val IMAGE_EXTENSIONS = setOf(".jpg", ".jpeg", ".png", ".webp", ".gif", ".bmp")
@@ -223,6 +224,11 @@ object BannerApiService {
         try {
             val file = getCachedBannerFile(context, moduleId, sourceHash)
             if (file.exists()) {
+                if (System.currentTimeMillis() - file.lastModified() > CACHE_TTL_MS) {
+                    file.delete()
+                    Log.d(TAG, "Cache expired for module $moduleId (source: $sourceHash)")
+                    return@withContext null
+                }
                 file.readBytes()
             } else {
                 null

@@ -141,6 +141,8 @@
     <string name="patch_item_extra_args">渡劫数参：</string>
     <string name="patch_item_extra_event">应劫机宜：</string>
     <string name="patch_item_skey">登仙秘钥</string>
+    <string name="patch_custom_superkey">自拟登仙秘钥</string>
+    <string name="patch_custom_superkey_summary">道友仍可设秘钥以御内核，此器已获仙印认可</string>
     <string name="patch_item_set_skey_label">登仙秘钥须凝炼八至六十三道符文，含天数字文，毋杂邪魔异符。</string>
     <string name="patch_confirm_superkey">再次凝炼登仙秘钥</string>
     <string name="patch_skey_mismatch">两次登仙秘钥不合</string>
@@ -729,6 +731,8 @@
     <string name="settings_appearance_background_summary">自定义背景、视频和多背景</string>
     <string name="settings_appearance_night_mode">夜间闭关模式</string>
     <string name="settings_appearance_night_mode_summary">深色主题和颜色配置</string>
+    <string name="settings_amoled_theme">AMOLED 纯黑主题</string>
+    <string name="settings_amoled_theme_desc">为深色模式使用纯黑背景</string>
     <string name="settings_category_behavior">功法运转</string>
     <string name="settings_category_function">悟道功能</string>
     <string name="settings_category_module">悟道模块</string>

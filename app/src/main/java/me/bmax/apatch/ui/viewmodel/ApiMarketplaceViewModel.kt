@@ -13,6 +13,7 @@ import me.bmax.apatch.Natives
 import me.bmax.apatch.ui.model.ApiMarketplaceItem
 import me.bmax.apatch.ui.screen.BannerApiService
 import me.bmax.apatch.ui.theme.BackgroundConfig
+import me.bmax.apatch.util.FolkApiClient
 import okhttp3.Request
 import org.json.JSONArray
 import java.net.SocketTimeoutException
@@ -22,7 +23,7 @@ import java.util.concurrent.TimeUnit
 class ApiMarketplaceViewModel : ViewModel() {
     companion object {
         private const val TAG = "ApiMarketplaceViewModel"
-        private const val MARKETPLACE_URL = "https://folk.mysqil.com/api/banners.php"
+        private const val MARKETPLACE_URL = "https://folk.mysqil.com/api/banners"
         private const val VERIFICATION_TIMEOUT_SECONDS = 10L
         private val VALID_IMAGE_TYPES = listOf("image/jpeg", "image/png", "image/webp", "image/gif", "image/bmp")
     }
@@ -58,14 +59,10 @@ class ApiMarketplaceViewModel : ViewModel() {
             try {
                 val token = Natives.getApiToken(apApp)
                 val url = "$MARKETPLACE_URL?token=$token"
-                val request = Request.Builder()
-                    .url(url)
-                    .build()
 
-                val response = apApp.okhttpClient.newCall(request).execute()
-
-                if (response.isSuccessful) {
-                    val jsonString = response.body?.string() ?: "[]"
+                val result = FolkApiClient.fetchJson(url)
+                val jsonString = result.getOrNull()
+                if (jsonString != null) {
                     val jsonArray = JSONArray(jsonString)
                     val list = ArrayList<ApiMarketplaceItem>()
 
@@ -83,8 +80,9 @@ class ApiMarketplaceViewModel : ViewModel() {
                     items = list
                     Log.d(TAG, "Fetched ${list.size} marketplace items")
                 } else {
-                    Log.e(TAG, "Failed to fetch marketplace: ${response.code}")
-                    errorMessage = "Failed to fetch API sources: HTTP ${response.code}"
+                    val exception = result.exceptionOrNull()
+                    Log.e(TAG, "Failed to fetch marketplace: ${exception?.message}")
+                    errorMessage = "Error: ${exception?.message}"
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "Error fetching marketplace", e)

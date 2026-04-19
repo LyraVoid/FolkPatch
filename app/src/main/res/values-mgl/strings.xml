@@ -143,6 +143,8 @@
     <string name="patch_item_extra_args">咒语参数:</string>
     <string name="patch_item_extra_event">触发事件:</string>
     <string name="patch_item_skey">心之密钥</string>
+    <string name="patch_custom_superkey">自定义心之密钥</string>
+    <string name="patch_custom_superkey_summary">你仍可设心之密钥来管理魔法，魔法书已获内印授权</string>
     <string name="patch_item_set_skey_label">心之密钥长度应为8-63个字符，包含星光和月辉，不能含有混沌之力。</string>
     <string name="patch_confirm_superkey">再次凝炼心之密钥</string>
     <string name="patch_skey_mismatch">两次心之密钥不契合</string>
@@ -732,6 +734,8 @@
     <string name="settings_appearance_background_summary">自定义背景、视频和多背景</string>
     <string name="settings_appearance_night_mode">暗夜模式</string>
     <string name="settings_appearance_night_mode_summary">深色主题和颜色配置</string>
+    <string name="settings_amoled_theme">AMOLED 纯黑主题</string>
+    <string name="settings_amoled_theme_desc">为深色模式使用纯黑背景</string>
     <string name="settings_category_behavior">咒语指令</string>
     <string name="settings_category_function">魔法功能</string>
     <string name="settings_use_legacy_su_page">单页超级用户授权喵</string>

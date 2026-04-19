@@ -389,7 +389,7 @@ pub fn start_uid_listener() -> Result<()> {
                 let skey = CStr::from_bytes_with_nul(b"su\0")
                     .expect("[shutdown_listener] CStr::from_bytes_with_nul failed");
                 refresh_ap_package_list(&skey, &mutex_clone);
-                break; // 执行一次后退出线程
+                break;
             }
         });
     }
@@ -421,6 +421,10 @@ pub fn start_uid_listener() -> Result<()> {
             let skey = CStr::from_bytes_with_nul(b"su\0")
                 .expect("[start_uid_listener] CStr::from_bytes_with_nul failed");
             refresh_ap_package_list(&skey, &mutex);
+            report_kernel(None, "uid_listener", "package-list-updated")
+                .unwrap_or_else(|e| {
+                    warn!("Failed to report kernel about package list update: {e}");
+            });
         } else if !debounce {
             thread::sleep(Duration::from_secs(1));
             debounce = true;

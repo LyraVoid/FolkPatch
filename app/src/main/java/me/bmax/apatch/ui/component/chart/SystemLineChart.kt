@@ -75,7 +75,7 @@ fun SystemLineChart(
             )
     ) {
         Text(
-            text = "${currentValue.toInt()}$unit",
+            text = if (currentValue > 0f && currentValue.isFinite() && currentValue < Int.MAX_VALUE) "${currentValue.toInt()}$unit" else "--$unit",
             style = MaterialTheme.typography.headlineSmall.copy(
                 fontWeight = FontWeight.Bold,
                 color = lineColor

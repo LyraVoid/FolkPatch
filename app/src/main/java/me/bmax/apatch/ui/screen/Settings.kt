@@ -295,7 +295,7 @@ fun DeveloperInfo(
                         .size(110.dp)
                         .shadow(8.dp, CircleShape)
                         .clip(CircleShape)
-                        .background(Color(0xFF303030)),
+                        .background(MaterialTheme.colorScheme.surfaceContainerHighest),
                     contentAlignment = Alignment.Center
                 ) {
                     AsyncImage(
@@ -310,7 +310,7 @@ fun DeveloperInfo(
                         modifier = Modifier
                             .fillMaxSize()
                             .clip(CircleShape)
-                            .background(Color(0xFF303030))
+                            .background(MaterialTheme.colorScheme.surfaceContainerHighest)
                     )
                 }
 

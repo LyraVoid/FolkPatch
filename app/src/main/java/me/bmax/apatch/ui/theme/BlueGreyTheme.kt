@@ -34,6 +34,12 @@ private val md_theme_light_shadow = Color(0xFF000000)
 private val md_theme_light_surfaceTint = Color(0xFF00668A)
 private val md_theme_light_outlineVariant = Color(0xFFC0C7CD)
 private val md_theme_light_scrim = Color(0xFF000000)
+private val md_theme_light_surfaceContainerLowest = Color(0xFFF9FAFD)
+private val md_theme_light_surfaceContainerLow = Color(0xFFF7F9FC)
+private val md_theme_light_surfaceContainer = Color(0xFFF5F7FB)
+private val md_theme_light_surfaceContainerHigh = Color(0xFFF2F5F8)
+private val md_theme_light_surfaceContainerHighest = Color(0xFFEFF2F6)
+
 
 private val md_theme_dark_primary = Color(0xFF7BD0FF)
 private val md_theme_dark_onPrimary = Color(0xFF003549)
@@ -65,6 +71,12 @@ private val md_theme_dark_shadow = Color(0xFF000000)
 private val md_theme_dark_surfaceTint = Color(0xFF7BD0FF)
 private val md_theme_dark_outlineVariant = Color(0xFF41484D)
 private val md_theme_dark_scrim = Color(0xFF000000)
+private val md_theme_dark_surfaceContainerLowest = Color(0xFF1B1E20)
+private val md_theme_dark_surfaceContainerLow = Color(0xFF1D2022)
+private val md_theme_dark_surfaceContainer = Color(0xFF202326)
+private val md_theme_dark_surfaceContainerHigh = Color(0xFF24282B)
+private val md_theme_dark_surfaceContainerHighest = Color(0xFF282C2F)
+
 
 val LightBlueGreyTheme = lightColorScheme(
     primary = md_theme_light_primary,
@@ -95,6 +107,11 @@ val LightBlueGreyTheme = lightColorScheme(
     inversePrimary = md_theme_light_inversePrimary,
     surfaceTint = md_theme_light_surfaceTint,
     outlineVariant = md_theme_light_outlineVariant,
+    surfaceContainerLowest = md_theme_light_surfaceContainerLowest,
+    surfaceContainerLow = md_theme_light_surfaceContainerLow,
+    surfaceContainer = md_theme_light_surfaceContainer,
+    surfaceContainerHigh = md_theme_light_surfaceContainerHigh,
+    surfaceContainerHighest = md_theme_light_surfaceContainerHighest,
     scrim = md_theme_light_scrim,
 )
 
@@ -127,5 +144,10 @@ val DarkBlueGreyTheme = darkColorScheme(
     inversePrimary = md_theme_dark_inversePrimary,
     surfaceTint = md_theme_dark_surfaceTint,
     outlineVariant = md_theme_dark_outlineVariant,
+    surfaceContainerLowest = md_theme_dark_surfaceContainerLowest,
+    surfaceContainerLow = md_theme_dark_surfaceContainerLow,
+    surfaceContainer = md_theme_dark_surfaceContainer,
+    surfaceContainerHigh = md_theme_dark_surfaceContainerHigh,
+    surfaceContainerHighest = md_theme_dark_surfaceContainerHighest,
     scrim = md_theme_dark_scrim,
 )

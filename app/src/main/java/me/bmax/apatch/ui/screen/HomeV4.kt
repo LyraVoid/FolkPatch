@@ -129,7 +129,7 @@ private val managerVersion = getManagerVersion()
  * 特色功能：
  * - Hero状态卡：大型动态状态展示区，显示APatch状态和工作模式
  * - 内核补丁安装/卸载UI：完整的安装流程和进度显示
- * - 计数卡片组：超级用户、APM模块、KPM模块数量
+ * - 计数卡片组：超级用户、APM模块、内核补丁模块数量
  * - 快捷操作面板：重启菜单、SELinux切换等
  * - 系统信息网格：设备信息、内核版本、存储空间
  * - 响应式设计：宽屏双栏，窄屏单栏
@@ -769,7 +769,7 @@ private fun VersionInfoColumn(
 }
 
 /**
- * 计数卡片组 - 超级用户、APM模块、KPM模块
+ * 计数卡片组 - 超级用户、APM模块、内核补丁模块
  */
 @Composable
 private fun CountCardsRow(

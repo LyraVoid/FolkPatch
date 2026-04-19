@@ -54,13 +54,17 @@ open class APDialogBlurBehindUtils {
                         animator.addUpdateListener { animation: ValueAnimator ->
                             try {
                                 val transaction = SurfaceControl.Transaction()
-                                val animatedValue = animation.animatedValue
-                                if (animatedValue != null) {
-                                    setBackgroundBlurRadius.invoke(
-                                        transaction, surfaceControl, animatedValue as Int
-                                    )
+                                try {
+                                    val animatedValue = animation.animatedValue
+                                    if (animatedValue != null) {
+                                        setBackgroundBlurRadius.invoke(
+                                            transaction, surfaceControl, animatedValue as Int
+                                        )
+                                    }
+                                    transaction.apply()
+                                } finally {
+                                    transaction.close()
                                 }
-                                transaction.apply()
                             } catch (t: Throwable) {
                                 Log.e(
                                     "APatchUI",

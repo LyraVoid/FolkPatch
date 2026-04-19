@@ -73,8 +73,6 @@ import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Card
@@ -174,11 +172,13 @@ fun HomeScreen(navigator: DestinationsNavigator) {
     val kpState by APApplication.kpStateLiveData.observeAsState(APApplication.State.UNKNOWN_STATE)
     val apState by APApplication.apStateLiveData.observeAsState(APApplication.State.UNKNOWN_STATE)
 
-    if (kpState != APApplication.State.UNKNOWN_STATE) {
-        showPatchFloatAction = false
+    SideEffect {
+        if (kpState != APApplication.State.UNKNOWN_STATE) {
+            showPatchFloatAction = false
+        }
     }
 
-    val homeLayout = APApplication.sharedPreferences.getString("home_layout_style", "stats")
+    val homeLayout = remember { APApplication.sharedPreferences.getString("home_layout_style", "stats") }
 
     Scaffold(topBar = {
         TopBar(onInstallClick = dropUnlessResumed {
@@ -985,7 +985,7 @@ private fun KStatusCard(
                     val onAction = {
                         when (kpState) {
                             APApplication.State.UNKNOWN_STATE -> {
-                                showAuthKeyDialog.value = true
+                                navigator.navigate(InstallModeSelectScreenDestination)
                             }
 
                             APApplication.State.KERNELPATCH_NEED_UPDATE -> {
@@ -1031,7 +1031,7 @@ private fun KStatusCard(
                     }, content = {
                         when (kpState) {
                             APApplication.State.UNKNOWN_STATE -> {
-                                Text(text = stringResource(id = R.string.super_key))
+                                Text(text = stringResource(id = R.string.home_ap_cando_install))
                             }
 
                             APApplication.State.KERNELPATCH_NEED_UPDATE -> {

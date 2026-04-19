@@ -22,7 +22,7 @@ object BackgroundConfig {
         private set
     var customBackgroundOpacity: Float by mutableStateOf(0.5f)
         private set
-    var customBackgroundBlur: Float by mutableStateOf(0f)
+    var customBackgroundBlur: Float by mutableStateOf(0.2f)
         private set
     var customBackgroundDim: Float by mutableStateOf(0.0f)
         private set
@@ -115,7 +115,7 @@ object BackgroundConfig {
         private set
 
     // NavBar Glass Effect (Floating mode only)
-    var isNavBarGlassEnabled: Boolean by mutableStateOf(false)
+    var isNavBarGlassEnabled: Boolean by mutableStateOf(true)
         private set
     var navBarGlassBlurStrength: Float by mutableStateOf(0.7f)
         private set
@@ -574,7 +574,7 @@ object BackgroundConfig {
         val uri = prefs.getString(KEY_CUSTOM_BACKGROUND_URI, null)
         val enabled = prefs.getBoolean(KEY_CUSTOM_BACKGROUND_ENABLED, false)
         val opacity = prefs.getFloat(KEY_CUSTOM_BACKGROUND_OPACITY, 0.5f)
-        val blur = prefs.getFloat(KEY_CUSTOM_BACKGROUND_BLUR, 0f)
+        val blur = prefs.getFloat(KEY_CUSTOM_BACKGROUND_BLUR, 0.2f)
         val dim = prefs.getFloat(KEY_CUSTOM_BACKGROUND_DIM, 0.0f)
         val dualDimEnabled = prefs.getBoolean(KEY_CUSTOM_BACKGROUND_DUAL_DIM_ENABLED, true)
         val dayDim = prefs.getFloat(KEY_CUSTOM_BACKGROUND_DAY_DIM, 0.0f)
@@ -623,7 +623,7 @@ object BackgroundConfig {
         val titleDim = prefs.getFloat(KEY_TITLE_IMAGE_DIM, 0.0f)
         val titleOffsetX = prefs.getFloat(KEY_TITLE_IMAGE_OFFSET_X, 0f)
 
-        val navBarGlassEnabled = prefs.getBoolean(KEY_NAVBAR_GLASS_ENABLED, false)
+        val navBarGlassEnabled = prefs.getBoolean(KEY_NAVBAR_GLASS_ENABLED, true)
         val prefsNavBarGlassBlurStrength = prefs.getFloat(KEY_NAVBAR_GLASS_BLUR_STRENGTH, 0.7f)
         val prefsNavBarGlassTransparency = prefs.getFloat(KEY_NAVBAR_GLASS_TRANSPARENCY, 0.3f)
         val prefsNavBarGlassHighlightStrength = prefs.getFloat(KEY_NAVBAR_GLASS_HIGHLIGHT_STRENGTH, 0.5f)
@@ -699,7 +699,7 @@ object BackgroundConfig {
         customBackgroundUri = null
         isCustomBackgroundEnabled = false
         customBackgroundOpacity = 0.5f
-        customBackgroundBlur = 0f
+        customBackgroundBlur = 0.2f
         customBackgroundDim = 0.0f
         isDualBackgroundDimEnabled = true
         customBackgroundDayDim = 0.0f
@@ -745,7 +745,7 @@ object BackgroundConfig {
         titleImageDim = 0.0f
         titleImageOffsetX = 0f
 
-        isNavBarGlassEnabled = false
+        isNavBarGlassEnabled = true
         navBarGlassBlurStrength = 0.7f
         navBarGlassTransparency = 0.3f
         navBarGlassHighlightStrength = 0.5f

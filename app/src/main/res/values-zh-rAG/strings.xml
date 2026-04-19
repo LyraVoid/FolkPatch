@@ -158,6 +158,8 @@
     <string name="patch_item_extra_args">参数喵：</string>
     <string name="patch_item_extra_event">事件喵：</string>
     <string name="patch_item_skey">超级密钥喵</string>
+    <string name="patch_custom_superkey">自定义超级密钥喵</string>
+    <string name="patch_custom_superkey_summary">你仍然可以设置超级密钥来管理Root和内核喵，管理器已经由内置签名授权了喵</string>
     <string name="patch_item_set_skey_label">超级密钥要是8-63个字符喵，只有数字字母哦，绝对不要加奇怪符号啦喵！</string>
     <string name="patch_confirm_superkey">再确认一次超级密钥喵</string>
     <string name="patch_skey_mismatch">两次超级密钥不一样喵</string>
@@ -557,7 +559,7 @@
     <!-- KPM AutoLoad Strings -->
     <string name="kpm_autoload_title">KPM自动加载喵</string>
     <string name="kpm_autoload_enabled">开自动加载喵</string>
-    <string name="kpm_autoload_enabled_summary">开机就自动加载KPM模块哒喵！</string>
+    <string name="kpm_autoload_enabled_summary">开机就自动加载内核补丁模块哒喵！</string>
     <string name="kpm_autoload_json_config">JSON配置喵</string>
     <string name="kpm_autoload_json_label">JSON配置喵</string>
     <string name="kpm_autoload_json_placeholder">{
@@ -598,8 +600,8 @@
     <string name="kpm_autoload_remove_kpm">删掉喵！</string>
     <string name="kpm_autoload_edit_kpm">编辑</string>
     <string name="kpm_autoload_edit_dialog_title">编辑 KPM</string>    <string name="kpm_autoload_event_label">事件:</string>    <string name="kpm_autoload_args_label">参数:</string>    <string name="kpm_autoload_event_service">service</string>    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
-    <string name="kpm_autoload_kpm_list_title">KPM模块列表喵</string>
-    <string name="kpm_autoload_no_kpm_added">没加KPM模块喵！</string>
+    <string name="kpm_autoload_kpm_list_title">内核补丁模块列表喵</string>
+    <string name="kpm_autoload_no_kpm_added">没加内核补丁模块喵！</string>
     <string name="kpm_autoload_kpm_path">KPM路径喵</string>
     <string name="kpm_autoload_file_not_found">文件没找到喵！</string>
     <string name="kpm_autoload_select_kpm_file">选KPM文件喵！</string>
@@ -741,6 +743,8 @@
     <string name="settings_appearance_background_summary">自定义背景、视频和多背景喵</string>
     <string name="settings_appearance_night_mode">夜间模式设置喵</string>
     <string name="settings_appearance_night_mode_summary">深色主题和颜色配置喵</string>
+    <string name="settings_amoled_theme">AMOLED 纯黑主题喵</string>
+    <string name="settings_amoled_theme_desc">为深色模式使用纯黑背景喵</string>
     <string name="settings_category_behavior">行为喵</string>
     <string name="settings_category_function">功能喵</string>
     <string name="settings_category_module">模块喵</string>

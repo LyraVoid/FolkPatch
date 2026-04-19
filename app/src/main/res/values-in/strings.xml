@@ -149,6 +149,8 @@
     <string name="patch_item_extra_args">Argumen:</string>
     <string name="patch_item_extra_event">Acara:</string>
     <string name="patch_item_skey">SuperKey</string>
+    <string name="patch_custom_superkey">SuperKey kustom</string>
+    <string name="patch_custom_superkey_summary">Anda masih dapat mengatur SuperKey untuk mengelola Root dan kernel, manajer telah diotorisasi oleh tanda tangan bawaan kernel</string>
     <string name="patch_item_set_skey_label">SuperKey harus berisi 8-63 karakter dan menyertakan angka dan huruf, tetapi tanpa karakter khusus.</string>
     <string name="patch_confirm_superkey">Konfirmasi SuperKey</string>
     <string name="patch_skey_mismatch">SuperKey tidak cocok</string>
@@ -713,6 +715,8 @@ Pastikan aplikasi ditutup sepenuhnya dan dimulai ulang untuk menjalankan perinta
     <string name="settings_appearance_background_summary">Latar belakang kustom, video, dan multi-latar belakang</string>
     <string name="settings_appearance_night_mode">Pengaturan mode malam</string>
     <string name="settings_appearance_night_mode_summary">Tema gelap dan konfigurasi warna</string>
+    <string name="settings_amoled_theme">Tema Hitam AMOLED</string>
+    <string name="settings_amoled_theme_desc">Latar belakang hitam penuh untuk mode gelap</string>
     <string name="settings_category_behavior">Perilaku</string>
     <string name="settings_category_function">Fungsi</string>
     <string name="settings_use_legacy_su_page">Otorisasi superuser satu halaman</string>

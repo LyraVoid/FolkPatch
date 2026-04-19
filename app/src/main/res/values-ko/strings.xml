@@ -164,6 +164,8 @@
     <string name="patch_item_extra_args">인수:</string>
     <string name="patch_item_extra_event">이벤트:</string>
     <string name="patch_item_skey">SuperKey</string>
+    <string name="patch_custom_superkey">사용자 지정 SuperKey</string>
+    <string name="patch_custom_superkey_summary">여전히 Root 및 커널 관리를 위해 SuperKey를 설정할 수 있으며, 관리자는 커널의 내장 서명으로 인증됩니다</string>
     <string name="patch_item_set_skey_label">SuperKey는 8~63자 사이여야 하며 숫자와 영문자를 포함해야 합니다. 특수 문자는 사용할 수 없습니다.</string>
     <string name="patch_confirm_superkey">SuperKey 확인</string>
     <string name="patch_skey_mismatch">SuperKey가 일치하지 않습니다</string>
@@ -768,6 +770,8 @@
     <string name="settings_appearance_background_summary">사용자 지정 배경, 비디오 및 다중 배경을 설정합니다.</string>
     <string name="settings_appearance_night_mode">야간 모드 설정</string>
     <string name="settings_appearance_night_mode_summary">다크 테마 및 색상을 구성합니다.</string>
+    <string name="settings_amoled_theme">AMOLED 블랙 테마</string>
+    <string name="settings_amoled_theme_desc">다크 모드에서 순정 블랙 배경 사용</string>
     <string name="settings_category_module">모듈</string>
     <string name="settings_category_security">보안</string>
     <string name="settings_category_function">기능</string>

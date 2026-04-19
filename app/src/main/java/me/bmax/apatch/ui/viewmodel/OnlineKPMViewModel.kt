@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import me.bmax.apatch.apApp
+import me.bmax.apatch.util.FolkApiClient
 import org.json.JSONArray
 import java.util.Locale
 
@@ -16,7 +17,7 @@ class OnlineKPMViewModel : ViewModel() {
     companion object {
         private const val TAG = "OnlineKPMViewModel"
         // Placeholder URL. User should update this.
-        const val MODULES_URL = "https://folk.mysqil.com/api/modules.php?type=kpm"
+        const val MODULES_URL = "https://folk.mysqil.com/api/modules?type=kpm"
     }
 
     data class OnlineKPM(
@@ -64,12 +65,9 @@ class OnlineKPMViewModel : ViewModel() {
                 val token = me.bmax.apatch.Natives.getApiToken(apApp)
                 val url = "$MODULES_URL&lang=$lang&token=$token"
 
-                val response = apApp.okhttpClient.newCall(
-                    okhttp3.Request.Builder().url(url).build()
-                ).execute()
-                
-                if (response.isSuccessful) {
-                    val jsonString = response.body?.string() ?: "[]"
+                val result = FolkApiClient.fetchJson(url)
+                val jsonString = result.getOrNull()
+                if (jsonString != null) {
                     val jsonArray = JSONArray(jsonString)
                     val list = ArrayList<OnlineKPM>()
                     for (i in 0 until jsonArray.length()) {
@@ -95,8 +93,9 @@ class OnlineKPMViewModel : ViewModel() {
                     allModules = list
                     onSearchQueryChange(searchQuery)
                 } else {
-                    Log.e(TAG, "Failed to fetch modules: ${response.code}")
-                    errorMessage = "Failed to fetch modules: HTTP ${response.code}"
+                    val exception = result.exceptionOrNull()
+                    Log.e(TAG, "Failed to fetch modules: ${exception?.message}")
+                    errorMessage = "Error: ${exception?.message}"
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "Error fetching modules", e)

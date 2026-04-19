@@ -18,6 +18,7 @@ import me.bmax.apatch.apApp
 import me.bmax.apatch.ui.theme.ThemeManager
 import me.bmax.apatch.util.DownloadStatus
 import me.bmax.apatch.util.DownloadProgress
+import me.bmax.apatch.util.FolkApiClient
 import me.bmax.apatch.util.ThemeDownloader
 import org.json.JSONArray
 import java.io.File
@@ -25,7 +26,7 @@ import java.io.File
 class ThemeStoreViewModel(private val context: Context) : ViewModel() {
     companion object {
         private const val TAG = "ThemeStoreViewModel"
-        private const val THEMES_URL = "https://folk.mysqil.com/api/themes.php"
+        private const val THEMES_URL = "https://folk.mysqil.com/api/themes"
         
         // SharedPreferences 文件名
         private const val PREFS_NAME = "theme_store_prefs"
@@ -147,14 +148,10 @@ class ThemeStoreViewModel(private val context: Context) : ViewModel() {
             try {
                 val token = me.bmax.apatch.Natives.getApiToken(apApp)
                 val url = if (THEMES_URL.contains("?")) "$THEMES_URL&token=$token" else "$THEMES_URL?token=$token"
-                val request = okhttp3.Request.Builder()
-                    .url(url)
-                    .build()
-                
-                val response = apApp.okhttpClient.newCall(request).execute()
-                
-                if (response.isSuccessful) {
-                    val jsonString = response.body?.string() ?: "[]"
+
+                val result = FolkApiClient.fetchJson(url)
+                val jsonString = result.getOrNull()
+                if (jsonString != null) {
                     val jsonArray = JSONArray(jsonString)
                     val list = ArrayList<RemoteTheme>()
                     for (i in 0 until jsonArray.length()) {
@@ -175,11 +172,11 @@ class ThemeStoreViewModel(private val context: Context) : ViewModel() {
                     }
                     allThemes = list
                     onSearchQueryChange(searchQuery)
-                    // 加载本地主题
                     loadLocalThemes()
                 } else {
-                    Log.e(TAG, "Failed to fetch themes: ${response.code}")
-                    errorMessage = "Failed to fetch themes: HTTP ${response.code}"
+                    val exception = result.exceptionOrNull()
+                    Log.e(TAG, "Failed to fetch themes: ${exception?.message}")
+                    errorMessage = "Error: ${exception?.message}"
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "Error fetching themes", e)

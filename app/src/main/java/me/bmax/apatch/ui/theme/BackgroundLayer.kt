@@ -8,6 +8,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -56,14 +57,26 @@ import me.bmax.apatch.ui.screen.BottomBarDestination
  * Priority: Video > Multi/Single Image > Default
  */
 @Composable
-fun BackgroundLayer(currentRoute: String? = null) {
+fun BackgroundLayer(
+    currentRoute: String? = null,
+    folkXEngineEnabled: Boolean = true,
+    folkXAnimationType: String? = "linear",
+    folkXAnimationSpeed: Float = 1.0f
+) {
     val context = LocalContext.current
     val prefs = APApplication.sharedPreferences
-    val darkThemeFollowSys = prefs.getBoolean("night_mode_follow_sys", false)
-    val nightModeEnabled = prefs.getBoolean("night_mode_enabled", true)
-    val folkXEngineEnabled = prefs.getBoolean("folkx_engine_enabled", true)
-    val folkXAnimationType = prefs.getString("folkx_animation_type", "linear")
-    val folkXAnimationSpeed = prefs.getFloat("folkx_animation_speed", 1.0f)
+    var darkThemeFollowSys by remember { mutableStateOf(prefs.getBoolean("night_mode_follow_sys", false)) }
+    var nightModeEnabled by remember { mutableStateOf(prefs.getBoolean("night_mode_enabled", true)) }
+
+    val refreshThemeObserver by refreshTheme.observeAsState(false)
+    LaunchedEffect(refreshThemeObserver) {
+        if (refreshThemeObserver) {
+            darkThemeFollowSys = prefs.getBoolean("night_mode_follow_sys", false)
+            nightModeEnabled = prefs.getBoolean("night_mode_enabled", true)
+            refreshTheme.postValue(false)
+        }
+    }
+
     val isDarkTheme = if (darkThemeFollowSys) {
         isSystemInDarkTheme()
     } else {

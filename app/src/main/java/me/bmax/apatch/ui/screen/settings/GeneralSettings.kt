@@ -91,9 +91,9 @@ fun GeneralSettingsContent(
     val launcherIconSummary = stringResource(id = R.string.alt_icon_summary)
 
     val appTitleTitle = stringResource(id = R.string.settings_app_title)
-    val currentAppTitle = prefs.getString("app_title", "folkpatch")
+    val currentAppTitle = remember { prefs.getString("app_title", "folkpatch") }
     val appTitleLabel = when (currentAppTitle) {
-        "custom" -> prefs.getString("custom_app_title", "FolkPatch") ?: stringResource(R.string.app_title_custom)
+        "custom" -> remember { prefs.getString("custom_app_title", "FolkPatch") } ?: stringResource(R.string.app_title_custom)
         "fpatch" -> stringResource(R.string.app_title_fpatch)
         "apatch_folk" -> stringResource(R.string.app_title_apatch_folk)
         "apatchx" -> stringResource(R.string.app_title_apatchx)
@@ -109,10 +109,10 @@ fun GeneralSettingsContent(
     }
 
     val customAppTitleTitle = stringResource(id = R.string.settings_custom_app_title)
-    val currentCustomAppTitle = prefs.getString("custom_app_title", "FolkPatch")
+    val currentCustomAppTitle = remember { prefs.getString("custom_app_title", "FolkPatch") }
 
     val desktopAppNameTitle = stringResource(id = R.string.desktop_app_name)
-    val currentDesktopAppName = prefs.getString("desktop_app_name", "FolkPatch")
+    val currentDesktopAppName = remember { prefs.getString("desktop_app_name", "FolkPatch") }
 
     val dpiTitle = stringResource(id = R.string.settings_app_dpi)
     val currentDpiVal = DPIUtils.currentDpi
@@ -127,7 +127,7 @@ fun GeneralSettingsContent(
     val predictiveBackSummary = stringResource(id = R.string.settings_predictive_back_summary)
 
     val appListLoadingSchemeTitle = stringResource(id = R.string.settings_app_list_loading_scheme)
-    val currentScheme = prefs.getString("app_list_loading_scheme", "root_service")
+    val currentScheme = remember { prefs.getString("app_list_loading_scheme", "root_service") }
     val currentSchemeLabel = if (currentScheme == "root_service") stringResource(R.string.app_list_loading_scheme_root_service) else stringResource(R.string.app_list_loading_scheme_package_manager)
 
     val blockUpdateTitle = stringResource(id = R.string.settings_block_kernelpatch_update)
@@ -246,8 +246,8 @@ fun GeneralSettingsContent(
         )
 
         if (folkXEngineEnabled) {
-            val currentType = prefs.getString("folkx_animation_type", "linear")
-            val currentSpeed = prefs.getFloat("folkx_animation_speed", 1.0f)
+            val currentType = remember { prefs.getString("folkx_animation_type", "linear") }
+            val currentSpeed = remember { prefs.getFloat("folkx_animation_speed", 1.0f) }
 
             val animationTypeLabel = when (currentType) {
                 "linear" -> R.string.settings_folkx_animation_linear
@@ -788,8 +788,7 @@ fun SELinuxModeDialog(
 @Composable
 fun AppTitleChooseDialog(showDialog: MutableState<Boolean>) {
     val prefs = APApplication.sharedPreferences
-    val currentTitle = prefs.getString("app_title", "folkpatch")
-
+    val currentTitle = remember { prefs.getString("app_title", "folkpatch") }
     val titles = listOf(
         "custom" to stringResource(R.string.app_title_custom),
         "fpatch" to stringResource(R.string.app_title_fpatch),
@@ -915,8 +914,7 @@ fun CustomAppTitleDialog(showDialog: MutableState<Boolean>, snackBarHost: Snackb
 fun DesktopAppNameChooseDialog(showDialog: MutableState<Boolean>) {
     val prefs = APApplication.sharedPreferences
     val context = LocalContext.current
-    val currentName = prefs.getString("desktop_app_name", "FolkPatch")
-
+    val currentName = remember { prefs.getString("desktop_app_name", "FolkPatch") }
     BasicAlertDialog(
         onDismissRequest = { showDialog.value = false }, properties = DialogProperties(
             decorFitsSystemWindows = true,
@@ -1000,7 +998,7 @@ fun FolkXAnimationTypeDialog(showDialog: MutableState<Boolean>) {
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
 
-                val currentType = prefs.getString("folkx_animation_type", "linear")
+                val currentType = remember { prefs.getString("folkx_animation_type", "linear") }
 
                 Surface(
                     shape = RoundedCornerShape(12.dp),
@@ -1077,7 +1075,7 @@ fun AppListLoadingSchemeDialog(showDialog: MutableState<Boolean>) {
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
 
-                val currentScheme = prefs.getString("app_list_loading_scheme", "root_service")
+                val currentScheme = remember { prefs.getString("app_list_loading_scheme", "root_service") }
 
                 Surface(
                     shape = RoundedCornerShape(12.dp),
@@ -1225,7 +1223,7 @@ fun FolkXAnimationSpeedDialog(showDialog: MutableState<Boolean>) {
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
 
-                val currentSpeed = prefs.getFloat("folkx_animation_speed", 1.0f)
+                val currentSpeed = remember { prefs.getFloat("folkx_animation_speed", 1.0f) }
 
                 Surface(
                     shape = RoundedCornerShape(12.dp),

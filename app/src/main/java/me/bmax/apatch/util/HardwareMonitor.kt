@@ -288,7 +288,7 @@ object HardwareMonitor {
                 )
                 if (result.isSuccess && result.out.isNotEmpty()) {
                     val temp = result.out[0].trim().toFloatOrNull()
-                    if (temp != null) {
+                    if (temp != null && temp > 0) {
                         return@withContext if (temp > 1000) temp / 1000f else temp
                     }
                 }

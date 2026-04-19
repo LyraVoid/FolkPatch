@@ -176,6 +176,8 @@
     <string name="patch_item_extra_args">Args:</string>
     <string name="patch_item_extra_event">Evento:</string>
     <string name="patch_item_skey">SuperKey</string>
+    <string name="patch_custom_superkey">SuperKey personalizado</string>
+    <string name="patch_custom_superkey_summary">Você ainda pode definir um SuperKey para gerenciar o Root e o kernel, o gerenciador já está autorizado pela assinatura integrada do kernel</string>
     <string name="patch_item_set_skey_label">A SuperKey deve ter de 8 a 63 caracteres e incluir números e letras, mas sem caracteres especiais.</string>
     <string name="patch_confirm_superkey">Confirmar SuperKey</string>
     <string name="patch_skey_mismatch">SuperKey não confere</string>
@@ -729,6 +731,8 @@ Por favor, certifique-se de fechar completamente o app e reabri-lo para que os c
     <string name="settings_appearance_background_summary">Fundo personalizado, vídeo e multi-fundo</string>
     <string name="settings_appearance_night_mode">Configuração de modo noturno</string>
     <string name="settings_appearance_night_mode_summary">Tema escuro e configuração de cor</string>
+    <string name="settings_amoled_theme">Tema Preto AMOLED</string>
+    <string name="settings_amoled_theme_desc">Fundo preto puro para o modo escuro</string>
     <string name="settings_category_behavior">Comportamento</string>
     <string name="settings_category_function">Função</string>
     <string name="settings_use_legacy_su_page">Autorização de superusuário de página única</string>
