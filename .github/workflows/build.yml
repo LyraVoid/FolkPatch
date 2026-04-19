@@ -79,6 +79,9 @@ jobs:
 
       - run: ./gradlew assembleDebug --no-daemon
 
+      - name: Debug APK location
+        run: find app/build/outputs -name "*.apk" -type f || echo "No APK found"
+
       - name: Rename APK
         run: |
           SHORT="${GITHUB_SHA::7}"
@@ -104,6 +107,9 @@ jobs:
       - uses: ./.github/actions/setup-build-env
 
       - run: ./gradlew assembleRelease --no-daemon
+
+      - name: Debug APK location
+        run: find app/build/outputs -name "*.apk" -type f || echo "No APK found"
 
       - name: Rename APK
         run: |
