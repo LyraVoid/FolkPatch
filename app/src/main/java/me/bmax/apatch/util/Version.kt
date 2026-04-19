@@ -1,5 +1,6 @@
 package me.bmax.apatch.util
 
+import java.security.MessageDigest
 import android.util.Log
 import androidx.core.content.pm.PackageInfoCompat
 import me.bmax.apatch.APApplication
@@ -126,31 +127,33 @@ object Version {
     }
 
 
-    private fun installedKPatchVString(): String {
-        val resultShell = rootShellForResult("${APApplication.APD_PATH} -V")
-        val result = resultShell.out.toString()
-        return result.trim().ifEmpty { "0" }
+    fun getBundledApdSha256(): String {
+        val nativeDir = apApp.applicationInfo.nativeLibraryDir
+        val libapd = File(nativeDir, "libapd.so")
+        return computeSHA256(libapd)
     }
 
-    fun installedKPatchVUInt(): UInt {
-        return installedKPatchVString().trim().toUInt(0x10)
-    }
-
-    private fun installedApdVString(): String {
-        val resultShell = rootShellForResult("${APApplication.APD_PATH} -V")
-        installedApdVString = if (resultShell.isSuccess) {
-            val result = resultShell.out.toString()
-            Log.i("APatch", "[installedApdVString@Version] resultFromShell: $result")
-            Regex("\\d+").find(result)?.value ?: "0"
+    fun getInstalledApdSha256(): String {
+        val resultShell = rootShellForResult("sha256sum ${APApplication.APD_PATH}")
+        installedApdHash = if (resultShell.isSuccess) {
+            resultShell.out.firstOrNull()?.split("\\s+".toRegex())?.first() ?: ""
         } else {
-            "0"
+            ""
         }
-        return installedApdVString
+        return installedApdHash
     }
 
-    fun installedApdVUInt(): Int {
-        installedApdVInt = installedApdVString().toInt()
-        return installedApdVInt
+    private fun computeSHA256(file: File): String {
+        val digest = MessageDigest.getInstance("SHA-256")
+        file.inputStream().use { fis ->
+            val buffer = ByteArray(8192)
+            var read = fis.read(buffer)
+            while (read != -1) {
+                digest.update(buffer, 0, read)
+                read = fis.read(buffer)
+            }
+        }
+        return digest.digest().joinToString("") { "%02x".format(it) }
     }
 
 
@@ -160,6 +163,5 @@ object Version {
         return Pair(packageInfo.versionName!!, versionCode)
     }
 
-    var installedApdVInt: Int = 0
-    var installedApdVString: String = "0"
+    var installedApdHash: String = ""
 }

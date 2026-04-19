@@ -73,7 +73,7 @@ suspend fun getBugreportFile(context: Context): File = withContext(Dispatchers.I
         pw.println("Sysname: ${uname.sysname}")
 
         pw.println("KPatch: ${Version.installedKPVString()}")
-        pw.println("APatch: ${Version.installedApdVString}")
+        pw.println("APatch: ${Version.installedApdHash}")
         val safeMode = false
         pw.println("SafeMode: $safeMode")
     }

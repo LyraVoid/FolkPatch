@@ -102,7 +102,7 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
         const val UMOUNT_BINARY_PATH = "/data/adb/fp/bin/fpd"
         const val KPMS_DIR = APATCH_FOLDER + "kpms/"
 
-        @Deprecated("Use 'apd -V'")
+        @Deprecated("Use SHA256 comparison instead")
         const val APATCH_VERSION_PATH = APATCH_FOLDER + "version"
         private const val MAGISKPOLICY_BIN_PATH = APATCH_BIN_FOLDER + "magiskpolicy"
         private const val BUSYBOX_BIN_PATH = APATCH_BIN_FOLDER + "busybox"
@@ -273,14 +273,14 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
                     Log.d(TAG, "kp state: " + _kpStateLiveData.value)
 
                     // AndroidPatch version
-                    val mgv = Version.getManagerVersion().second
-                    val installedApdVInt = Version.installedApdVUInt()
-                    Log.d(TAG, "manager version: $mgv, installed apd version: $installedApdVInt")
+                    val bundledHash = Version.getBundledApdSha256()
+                    val installedHash = Version.getInstalledApdSha256()
+                    Log.d(TAG, "bundled apd sha256: $bundledHash, installed apd sha256: $installedHash")
 
                     val isApBlocked = apApp.isAndroidPatchUpdateBlocked()
 
-                    if (BuildConfig.DEBUG_FAKE_ROOT || Version.installedApdVInt > 0) {
-                        if (Version.installedApdVInt == mgv.toInt()) {
+                    if (BuildConfig.DEBUG_FAKE_ROOT || installedHash.isNotEmpty()) {
+                        if (bundledHash == installedHash) {
                             _apStateLiveData.postValue(State.ANDROIDPATCH_INSTALLED)
                         } else {
                             if (isApBlocked) {
