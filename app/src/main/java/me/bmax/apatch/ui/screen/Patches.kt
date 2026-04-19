@@ -194,9 +194,9 @@ fun Patches(mode: PatchesViewModel.PatchMode) {
             if (mode != PatchesViewModel.PatchMode.UNPATCH && mode != PatchesViewModel.PatchMode.RESTORE && viewModel.kimgInfo.banner.isNotEmpty()) {
                 ElevatedCard(
                     modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.elevatedCardColors(
-                        containerColor = MaterialTheme.colorScheme.secondaryContainer
-                    ),
+                    colors = CardDefaults.elevatedCardColors(containerColor = run {
+                        MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 1f)
+                    }),
                     elevation = CardDefaults.elevatedCardElevation(defaultElevation = 2.dp)
                 ) {
                     SwitchItem(
