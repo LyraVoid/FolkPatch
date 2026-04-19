@@ -12,7 +12,7 @@ use std::{
 
 use anyhow::{Ok, Result, bail};
 use libc::{
-    __errno, EINTR, SIG_BLOCK, SIG_UNBLOCK, SIGWINCH, TIOCGWINSZ, TIOCSWINSZ, fork,
+    EINTR, SIG_BLOCK, SIG_UNBLOCK, SIGWINCH, TIOCGWINSZ, TIOCSWINSZ, fork,
     pthread_sigmask, sigaddset, sigemptyset, sigset_t, sigwait, waitpid, winsize,
 };
 use rustix::{
@@ -148,7 +148,7 @@ fn create_transfer(ptmx: OwnedFd) -> Result<()> {
 
     unsafe {
         loop {
-            if waitpid(pid, &mut status, 0) == -1 && *__errno() != EINTR {
+            if waitpid(pid, &mut status, 0) == -1 && std::io::Error::last_os_error().raw_os_error() != Some(EINTR) {
                 continue;
             }
             break;

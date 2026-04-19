@@ -40,6 +40,21 @@ pub fn ensure_dir_exists<T: AsRef<Path>>(dir: T) -> Result<()> {
     }
 }
 
+pub fn ensure_dir_with_perms(dir: &Path, parent: &Path, mode: u32) -> Result<()> {
+    if dir.exists() {
+        return Ok(());
+    }
+    create_dir_all(dir)
+        .with_context(|| format!("Failed to create {} directory", dir.display()))?;
+    let permissions = Permissions::from_mode(mode);
+    set_permissions(parent, permissions.clone())
+        .with_context(|| format!("Failed to set permissions for {}", parent.display()))?;
+    set_permissions(dir, permissions)
+        .with_context(|| format!("Failed to set permissions for {}", dir.display()))?;
+    info!("Created directory: {}", dir.display());
+    Ok(())
+}
+
 // todo: ensure
 pub fn ensure_binary<T: AsRef<Path>>(path: T) -> Result<()> {
     set_permissions(&path, Permissions::from_mode(0o755))?;

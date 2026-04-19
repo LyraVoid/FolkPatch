@@ -38,35 +38,82 @@ pub fn report_kernel(superkey: Option<String>, event: &str, state: &str) -> Resu
     Ok(())
 }
 
+fn setup_fp_directories() -> Result<()> {
+    utils::ensure_dir_with_perms(
+        Path::new("/data/adb/fp/bin"),
+        Path::new("/data/adb/fp"),
+        0o755,
+    )?;
+    utils::ensure_dir_with_perms(
+        Path::new(defs::FP_KPMS_AUTOLOAD_DIR),
+        Path::new(defs::FP_KPMS_DIR),
+        0o755,
+    )?;
+    Ok(())
+}
+
+fn setup_logging() -> Result<()> {
+    let log_dir = Path::new(defs::APATCH_LOG_FOLDER);
+    if !log_dir.exists() {
+        fs::create_dir(log_dir).expect("Failed to create log folder");
+        let permissions = fs::Permissions::from_mode(0o700);
+        fs::set_permissions(log_dir, permissions).expect("Failed to set permissions");
+    }
+
+    let command_string = format!(
+        "cd {}; rm -f *.last; [ -f dmesg.log ] && mv dmesg.log dmesg.last; [ -f logcat.log ] && mv logcat.log logcat.last; [ -f locat.log ] && mv locat.log logcat.last; rm -f *.log *.old.log",
+        defs::APATCH_LOG_FOLDER
+    );
+    let result = utils::run_command("sh", &["-c", &command_string], None)?.wait()?;
+    if result.success() {
+        info!("Successfully rotated logs.");
+    } else {
+        info!("Failed to rotate logs.");
+    }
+
+    let logcat_path = format!("{}logcat.log", defs::APATCH_LOG_FOLDER);
+    let dmesg_path = format!("{}dmesg.log", defs::APATCH_LOG_FOLDER);
+    let bootlog = fs::File::create(&dmesg_path)?;
+
+    let _ = unsafe {
+        Command::new("timeout")
+            .process_group(0)
+            .pre_exec(|| {
+                switch_cgroups();
+                Ok(())
+            })
+            .args(vec![
+                "-s", "9", "45s", "logcat", "-b", "main,system,crash",
+                "DrmLibFs:S", "-f", &logcat_path, "logcatcher-bootlog:S", "&",
+            ])
+            .spawn()
+    };
+    let _ = unsafe {
+        Command::new("timeout")
+            .process_group(0)
+            .pre_exec(|| {
+                switch_cgroups();
+                Ok(())
+            })
+            .args(["-s", "9", "120s", "dmesg", "-w"])
+            .stdout(Stdio::from(bootlog))
+            .spawn()
+    };
+
+    Ok(())
+}
+
+fn disable_all_modules_safe() {
+    if let Err(e) = module::disable_all_modules() {
+        warn!("disable all modules failed: {e}");
+    }
+}
+
 pub fn on_post_data_fs(superkey: Option<String>) -> Result<()> {
     utils::umask(0);
     report_kernel(superkey.clone(), "post-fs-data", "before")?;
 
-    // Create /data/adb/fp/bin directory for fpd binary
-    let fp_dir = Path::new("/data/adb/fp");
-    let fp_bin_dir = Path::new("/data/adb/fp/bin");
-    let fp_kpms_dir = Path::new(defs::FP_KPMS_DIR);
-    let fp_kpms_autoload_dir = Path::new(defs::FP_KPMS_AUTOLOAD_DIR);
-    if !fp_bin_dir.exists() {
-        fs::create_dir_all(fp_bin_dir)
-            .with_context(|| "Failed to create /data/adb/fp/bin directory")?;
-        let permissions = fs::Permissions::from_mode(0o755);
-        fs::set_permissions(fp_dir, permissions.clone())
-            .with_context(|| "Failed to set permissions for /data/adb/fp")?;
-        fs::set_permissions(fp_bin_dir, permissions)
-            .with_context(|| "Failed to set permissions for /data/adb/fp/bin")?;
-        info!("Created directory: /data/adb/fp/bin");
-    }
-    if !fp_kpms_autoload_dir.exists() {
-        fs::create_dir_all(fp_kpms_autoload_dir)
-            .with_context(|| "Failed to create /data/adb/fp/kpms/autoload directory")?;
-        let permissions = fs::Permissions::from_mode(0o755);
-        fs::set_permissions(fp_kpms_dir, permissions.clone())
-            .with_context(|| "Failed to set permissions for /data/adb/fp/kpms")?;
-        fs::set_permissions(fp_kpms_autoload_dir, permissions)
-            .with_context(|| "Failed to set permissions for /data/adb/fp/kpms/autoload")?;
-        info!("Created directory: /data/adb/fp/kpms/autoload");
-    }
+    setup_fp_directories()?;
 
     supercall::autoload_kpm_modules(&superkey, "post-fs-data");
 
@@ -87,74 +134,13 @@ pub fn on_post_data_fs(superkey: Option<String>) -> Result<()> {
         return Ok(());
     }
 
-    // Create log environment
-    if !Path::new(defs::APATCH_LOG_FOLDER).exists() {
-        fs::create_dir(defs::APATCH_LOG_FOLDER).expect("Failed to create log folder");
-        let permissions = fs::Permissions::from_mode(0o700);
-        fs::set_permissions(defs::APATCH_LOG_FOLDER, permissions)
-            .expect("Failed to set permissions");
-    }
-    let command_string = format!(
-        "cd {}; rm -f *.last; [ -f dmesg.log ] && mv dmesg.log dmesg.last; [ -f logcat.log ] && mv logcat.log logcat.last; [ -f locat.log ] && mv locat.log logcat.last; rm -f *.log *.old.log",
-        defs::APATCH_LOG_FOLDER
-    );
-    let mut args = vec!["-c", &command_string];
-    // for all file to .old
-    let result = utils::run_command("sh", &args, None)?.wait()?;
-    if result.success() {
-        info!("Successfully rotated logs.");
-    } else {
-        info!("Failed to rotate logs.");
-    }
-    let logcat_path = format!("{}logcat.log", defs::APATCH_LOG_FOLDER);
-    let dmesg_path = format!("{}dmesg.log", defs::APATCH_LOG_FOLDER);
-    let bootlog = fs::File::create(dmesg_path)?;
-    args = vec![
-        "-s",
-        "9",
-        "45s",
-        "logcat",
-        "-b",
-        "main,system,crash",
-        "DrmLibFs:S",
-        "-f",
-        &logcat_path,
-        "logcatcher-bootlog:S",
-        "&",
-    ];
-    let _ = unsafe {
-        Command::new("timeout")
-            .process_group(0)
-            .pre_exec(|| {
-                switch_cgroups();
-                Ok(())
-            })
-            .args(args)
-            .spawn()
-    };
-    args = vec!["-s", "9", "120s", "dmesg", "-w"];
-    let _result = unsafe {
-        Command::new("timeout")
-            .process_group(0)
-            .pre_exec(|| {
-                switch_cgroups();
-                Ok(())
-            })
-            .args(args)
-            .stdout(Stdio::from(bootlog))
-            .spawn()
-    };
+    setup_logging()?;
 
-    let key = "KERNELPATCH_VERSION";
-    match env::var(key) {
-        Ok(value) => println!("{}: {}", key, value),
-        Err(_) => println!("{} not found", key),
-    }
-
-    let key = "KERNEL_VERSION";
-    match env::var(key) {
-        Ok(value) => println!("{}: {}", key, value),
-        Err(_) => println!("{} not found", key),
+    for key in ["KERNELPATCH_VERSION", "KERNEL_VERSION"] {
+        match env::var(key) {
+            Ok(value) => println!("{key}: {value}"),
+            Err(_) => println!("{key} not found"),
+        }
     }
 
     let safe_mode = utils::is_safe_mode(superkey.clone());
@@ -163,9 +149,7 @@ pub fn on_post_data_fs(superkey: Option<String>) -> Result<()> {
         // we should still mount modules.img to `/data/adb/modules` in safe mode
         // becuase we may need to operate the module dir in safe mode
         warn!("safe mode, skip common post-fs-data.d scripts");
-        if let Err(e) = module::disable_all_modules() {
-            warn!("disable all modules failed: {}", e);
-        }
+        disable_all_modules_safe();
     } else {
         // Then exec common post-fs-data scripts
         if let Err(e) = module::exec_common_scripts("post-fs-data.d", true) {
@@ -184,9 +168,7 @@ pub fn on_post_data_fs(superkey: Option<String>) -> Result<()> {
 
     if safe_mode {
         warn!("safe mode, skip post-fs-data scripts and disable all modules!");
-        if let Err(e) = module::disable_all_modules() {
-            warn!("disable all modules failed: {}", e);
-        }
+        disable_all_modules_safe();
         return Ok(());
     }
 
@@ -276,9 +258,7 @@ fn run_stage(stage: &str, superkey: Option<String>, block: bool) {
 
     if utils::is_safe_mode(superkey.clone()) {
         warn!("safe mode, skip {stage} scripts");
-        if let Err(e) = module::disable_all_modules() {
-            warn!("disable all modules failed: {}", e);
-        }
+        disable_all_modules_safe();
         return;
     }
 

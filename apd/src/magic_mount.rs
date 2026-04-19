@@ -50,6 +50,22 @@ impl NodeFileType {
             Whiteout
         }
     }
+
+    /// Check if mounting this node type over `real_path` requires a tmpfs overlay
+    /// due to type mismatch or missing file.
+    fn needs_tmpfs_vs_real(&self, real_path: &Path) -> bool {
+        match self {
+            Symlink => true,
+            Whiteout => real_path.exists(),
+            _ => match real_path.symlink_metadata() {
+                Ok(metadata) => {
+                    let real_type = Self::from_file_type(metadata.file_type());
+                    real_type != *self || real_type == Symlink
+                }
+                Err(_) => true,
+            },
+        }
+    }
 }
 
 #[derive(Debug, Clone)]
@@ -271,13 +287,125 @@ fn mount_mirror<P: AsRef<Path>, WP: AsRef<Path>>(
     Ok(())
 }
 
+fn should_create_tmpfs(path: &Path, current: &mut Node, has_tmpfs: bool) -> bool {
+    if has_tmpfs {
+        return false;
+    }
+    if current.replace && current.module_path.is_some() {
+        return true;
+    }
+    for (name, node) in &mut current.children {
+        let real_path = path.join(name);
+        if node.file_type.needs_tmpfs_vs_real(&real_path) {
+            if current.module_path.is_none() {
+                log::error!("cannot create tmpfs on {}, ignore: {name}", path.display());
+                node.skip = true;
+                continue;
+            }
+            return true;
+        }
+    }
+    false
+}
+
+fn prepare_tmpfs_skeleton(
+    path: &Path,
+    work_dir_path: &Path,
+    module_path: Option<&PathBuf>,
+) -> Result<()> {
+    log::debug!(
+        "creating tmpfs skeleton for {} at {}",
+        path.display(),
+        work_dir_path.display()
+    );
+    create_dir_all(work_dir_path)?;
+    let source: &Path = if path.exists() {
+        path
+    } else if let Some(mp) = module_path {
+        mp
+    } else {
+        bail!("cannot mount root dir {}!", path.display());
+    };
+    let metadata = source.metadata()?;
+    chmod(work_dir_path, Mode::from_raw_mode(metadata.mode()))?;
+    chown(
+        work_dir_path,
+        Some(Uid::from_raw(metadata.uid())),
+        Some(Gid::from_raw(metadata.gid())),
+    )?;
+    lsetfilecon(work_dir_path, lgetfilecon(source)?.as_str())?;
+    Ok(())
+}
+
+fn handle_mount_result(result: Result<()>, path: &Path, name: &str, has_tmpfs: bool) -> Result<()> {
+    if let Err(e) = result {
+        if has_tmpfs {
+            return Err(e);
+        }
+        log::error!("mount child {}/{} failed: {}", path.display(), name, e);
+    }
+    Ok(())
+}
+
+fn process_existing_entries(
+    path: &Path,
+    work_dir_path: &Path,
+    children: &mut HashMap<String, Node>,
+    has_tmpfs: bool,
+) -> Result<()> {
+    for entry in path.read_dir()?.flatten() {
+        let name = entry.file_name().to_string_lossy().to_string();
+        let result = if let Some(node) = children.remove(&name) {
+            if node.skip {
+                continue;
+            }
+            do_magic_mount(path, work_dir_path, node, has_tmpfs)
+                .with_context(|| format!("magic mount {}/{name}", path.display()))
+        } else if has_tmpfs {
+            mount_mirror(path, work_dir_path, &entry)
+                .with_context(|| format!("mount mirror {}/{name}", path.display()))
+        } else {
+            Ok(())
+        };
+        handle_mount_result(result, path, &name, has_tmpfs)?;
+    }
+    Ok(())
+}
+
+fn process_remaining_children(
+    path: &Path,
+    work_dir_path: &Path,
+    children: HashMap<String, Node>,
+    has_tmpfs: bool,
+) -> Result<()> {
+    for (name, node) in children {
+        if node.skip {
+            continue;
+        }
+        let result = do_magic_mount(path, work_dir_path, node, has_tmpfs)
+            .with_context(|| format!("magic mount {}/{name}", path.display()));
+        handle_mount_result(result, path, &name, has_tmpfs)?;
+    }
+    Ok(())
+}
+
+fn move_tmpfs_to_target(work_dir_path: &Path, target: &Path) -> Result<()> {
+    log::debug!(
+        "moving tmpfs {} -> {}",
+        work_dir_path.display(),
+        target.display()
+    );
+    mount_move(work_dir_path, target).context("move self")?;
+    mount_change(target, MountPropagationFlags::PRIVATE).context("make self private")?;
+    Ok(())
+}
+
 fn do_magic_mount<P: AsRef<Path>, WP: AsRef<Path>>(
     path: P,
     work_dir_path: WP,
-    current: Node,
+    mut current: Node,
     has_tmpfs: bool,
 ) -> Result<()> {
-    let mut current = current;
     let path = path.as_ref().join(&current.name);
     let work_dir_path = work_dir_path.as_ref().join(&current.name);
     match current.file_type {
@@ -312,64 +440,12 @@ fn do_magic_mount<P: AsRef<Path>, WP: AsRef<Path>>(
             }
         }
         Directory => {
-            let mut create_tmpfs = !has_tmpfs && current.replace && current.module_path.is_some();
-            if !has_tmpfs && !create_tmpfs {
-                for it in &mut current.children {
-                    let (name, node) = it;
-                    let real_path = path.join(name);
-                    let need = match node.file_type {
-                        Symlink => true,
-                        Whiteout => real_path.exists(),
-                        _ => {
-                            if let Ok(metadata) = real_path.symlink_metadata() {
-                                let file_type = NodeFileType::from_file_type(metadata.file_type());
-                                file_type != node.file_type || file_type == Symlink
-                            } else {
-                                // real path not exists
-                                true
-                            }
-                        }
-                    };
-                    if need {
-                        if current.module_path.is_none() {
-                            log::error!(
-                                "cannot create tmpfs on {}, ignore: {name}",
-                                path.display()
-                            );
-                            node.skip = true;
-                            continue;
-                        }
-                        create_tmpfs = true;
-                        break;
-                    }
-                }
-            }
-
+            let create_tmpfs = should_create_tmpfs(&path, &mut current, has_tmpfs);
             let has_tmpfs = has_tmpfs || create_tmpfs;
 
             if has_tmpfs {
-                log::debug!(
-                    "creating tmpfs skeleton for {} at {}",
-                    path.display(),
-                    work_dir_path.display()
-                );
-                create_dir_all(&work_dir_path)?;
-                let (metadata, path) = if path.exists() {
-                    (path.metadata()?, &path)
-                } else if let Some(module_path) = &current.module_path {
-                    (module_path.metadata()?, module_path)
-                } else {
-                    bail!("cannot mount root dir {}!", path.display());
-                };
-                chmod(&work_dir_path, Mode::from_raw_mode(metadata.mode()))?;
-                chown(
-                    &work_dir_path,
-                    Some(Uid::from_raw(metadata.uid())),
-                    Some(Gid::from_raw(metadata.gid())),
-                )?;
-                lsetfilecon(&work_dir_path, lgetfilecon(path)?.as_str())?;
+                prepare_tmpfs_skeleton(&path, &work_dir_path, current.module_path.as_ref())?;
             }
-
             if create_tmpfs {
                 log::debug!(
                     "creating tmpfs for {} at {}",
@@ -378,74 +454,29 @@ fn do_magic_mount<P: AsRef<Path>, WP: AsRef<Path>>(
                 );
                 mount_bind(&work_dir_path, &work_dir_path).context("bind self")?;
             }
-
             if path.exists() && !current.replace {
-                for entry in path.read_dir()?.flatten() {
-                    let name = entry.file_name().to_string_lossy().to_string();
-                    let result = if let Some(node) = current.children.remove(&name) {
-                        if node.skip {
-                            continue;
-                        }
-                        do_magic_mount(&path, &work_dir_path, node, has_tmpfs)
-                            .with_context(|| format!("magic mount {}/{name}", path.display()))
-                    } else if has_tmpfs {
-                        mount_mirror(&path, &work_dir_path, &entry)
-                            .with_context(|| format!("mount mirror {}/{name}", path.display()))
-                    } else {
-                        Ok(())
-                    };
-
-                    if let Err(e) = result {
-                        if has_tmpfs {
-                            return Err(e);
-                        } else {
-                            log::error!("mount child {}/{name} failed: {}", path.display(), e);
-                        }
-                    }
-                }
+                process_existing_entries(
+                    &path,
+                    &work_dir_path,
+                    &mut current.children,
+                    has_tmpfs,
+                )?;
             }
-
             if current.replace {
                 if current.module_path.is_none() {
-                    bail!(
-                        "dir {} is declared as replaced but it is root!",
-                        path.display()
-                    );
-                } else {
-                    log::debug!("dir {} is replaced", path.display());
+                    bail!("dir {} is declared as replaced but it is root!", path.display());
                 }
+                log::debug!("dir {} is replaced", path.display());
             }
-
-            for (name, node) in current.children.into_iter() {
-                if node.skip {
-                    continue;
-                }
-                if let Err(e) = do_magic_mount(&path, &work_dir_path, node, has_tmpfs)
-                    .with_context(|| format!("magic mount {}/{name}", path.display()))
-                {
-                    if has_tmpfs {
-                        return Err(e);
-                    } else {
-                        log::error!("mount child {}/{name} failed: {}", path.display(), e);
-                    }
-                }
-            }
-
+            process_remaining_children(&path, &work_dir_path, current.children, has_tmpfs)?;
             if create_tmpfs {
-                log::debug!(
-                    "moving tmpfs {} -> {}",
-                    work_dir_path.display(),
-                    path.display()
-                );
-                mount_move(&work_dir_path, &path).context("move self")?;
-                mount_change(&path, MountPropagationFlags::PRIVATE).context("make self private")?;
+                move_tmpfs_to_target(&work_dir_path, &path)?;
             }
         }
         Whiteout => {
             log::debug!("file {} is removed", path.display());
         }
     }
-
     Ok(())
 }
 
