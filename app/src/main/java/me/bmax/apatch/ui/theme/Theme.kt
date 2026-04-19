@@ -126,16 +126,18 @@ fun APatchTheme(
     var amoledTheme by remember { mutableStateOf(prefs.getBoolean("amoled_theme", false)) }
 
     val refreshThemeObserver by refreshTheme.observeAsState(false)
-    if (refreshThemeObserver == true) {
-        darkThemeFollowSys = prefs.getBoolean("night_mode_follow_sys", false)
-        nightModeEnabled = prefs.getBoolean("night_mode_enabled", true)
-        dynamicColor = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) prefs.getBoolean(
-            "use_system_color_theme",
-            false
-        ) else false
-        customColorScheme = prefs.getString("custom_color", "indigo")
-        amoledTheme = prefs.getBoolean("amoled_theme", false)
-        refreshTheme.postValue(false)
+    LaunchedEffect(refreshThemeObserver) {
+        if (refreshThemeObserver == true) {
+            darkThemeFollowSys = prefs.getBoolean("night_mode_follow_sys", false)
+            nightModeEnabled = prefs.getBoolean("night_mode_enabled", true)
+            dynamicColor = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) prefs.getBoolean(
+                "use_system_color_theme",
+                false
+            ) else false
+            customColorScheme = prefs.getString("custom_color", "indigo")
+            amoledTheme = prefs.getBoolean("amoled_theme", false)
+            refreshTheme.postValue(false)
+        }
     }
 
     val darkTheme = if (darkThemeFollowSys) {
@@ -235,9 +237,17 @@ fun APatchTheme(
         darkMode = darkTheme
     )
 
+    val fontFamily = remember(
+        FontConfig.isCustomFontEnabled,
+        FontConfig.customFontFilename
+    ) {
+        FontConfig.getFontFamily(context)
+    }
+    val typography = remember(fontFamily) { getTypography(fontFamily) }
+
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = getTypography(FontConfig.getFontFamily(context)),
+        typography = typography,
         content = {
             MonetColorsProvider.UpdateCss()
             content()
@@ -269,10 +279,12 @@ fun APatchThemeWithBackground(
 
     // 监听refreshTheme的变化，重新加载背景配置
     val refreshThemeObserver by refreshTheme.observeAsState(false)
-    if (refreshThemeObserver) {
-        BackgroundManager.loadCustomBackground(context)
-        FontConfig.load(context)
-        refreshTheme.postValue(false)
+    LaunchedEffect(refreshThemeObserver) {
+        if (refreshThemeObserver) {
+            BackgroundManager.loadCustomBackground(context)
+            FontConfig.load(context)
+            refreshTheme.postValue(false)
+        }
     }
     
     APatchTheme(isSettingsScreen = isSettingsScreen) {

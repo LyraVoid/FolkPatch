@@ -10,9 +10,13 @@ import androidx.core.graphics.scale
 import me.bmax.apatch.ui.viewmodel.SuperUserViewModel.Companion.getAppIconDrawable
 
 object AppIconUtil {
-    // Limit cache size to 200 icons
-    private const val CACHE_SIZE = 200
-    private val iconCache = LruCache<String?, Bitmap?>(CACHE_SIZE)
+    // Limit cache to 8MB by byte size instead of icon count
+    private const val CACHE_SIZE_BYTES = 8 * 1024 * 1024
+    private val iconCache = object : LruCache<String?, Bitmap?>(CACHE_SIZE_BYTES) {
+        override fun sizeOf(key: String?, value: Bitmap?): Int {
+            return value?.allocationByteCount ?: 0
+        }
+    }
 
     @Synchronized
     fun loadAppIconSync(context: Context, packageName: String, sizePx: Int): Bitmap? {

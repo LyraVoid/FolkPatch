@@ -128,18 +128,37 @@ object FontConfig {
         save(context)
     }
 
+    // Font cache to avoid Typeface.createFromFile disk I/O on every recomposition
+    private var cachedFontFamily: FontFamily? = null
+    private var cachedFilename: String? = null
+
     fun getFontFamily(context: Context): FontFamily {
         if (isCustomFontEnabled && customFontFilename != null) {
+            // Return cached font if filename hasn't changed
+            if (customFontFilename == cachedFilename && cachedFontFamily != null) {
+                return cachedFontFamily!!
+            }
             val file = File(context.filesDir, customFontFilename!!)
             if (file.exists()) {
                 try {
                     val typeface = Typeface.createFromFile(file)
-                    return FontFamily(typeface)
+                    val family = FontFamily(typeface)
+                    cachedFilename = customFontFilename
+                    cachedFontFamily = family
+                    return family
                 } catch (e: Exception) {
                     Log.e(TAG, "Failed to load custom font", e)
                 }
             }
         }
+        // Invalidate cache when custom font is disabled
+        cachedFilename = null
+        cachedFontFamily = null
         return FontFamily.Default
+    }
+
+    fun invalidateFontCache() {
+        cachedFilename = null
+        cachedFontFamily = null
     }
 }

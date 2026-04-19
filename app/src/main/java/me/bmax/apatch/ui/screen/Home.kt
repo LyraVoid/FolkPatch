@@ -172,11 +172,13 @@ fun HomeScreen(navigator: DestinationsNavigator) {
     val kpState by APApplication.kpStateLiveData.observeAsState(APApplication.State.UNKNOWN_STATE)
     val apState by APApplication.apStateLiveData.observeAsState(APApplication.State.UNKNOWN_STATE)
 
-    if (kpState != APApplication.State.UNKNOWN_STATE) {
-        showPatchFloatAction = false
+    SideEffect {
+        if (kpState != APApplication.State.UNKNOWN_STATE) {
+            showPatchFloatAction = false
+        }
     }
 
-    val homeLayout = APApplication.sharedPreferences.getString("home_layout_style", "stats")
+    val homeLayout = remember { APApplication.sharedPreferences.getString("home_layout_style", "stats") }
 
     Scaffold(topBar = {
         TopBar(onInstallClick = dropUnlessResumed {

@@ -788,7 +788,8 @@ fun SELinuxModeDialog(
 @Composable
 fun AppTitleChooseDialog(showDialog: MutableState<Boolean>) {
     val prefs = APApplication.sharedPreferences
-    val currentTitle = remember { prefs.getString("app_title", "folkpatch") }    val titles = listOf(
+    val currentTitle = remember { prefs.getString("app_title", "folkpatch") }
+    val titles = listOf(
         "custom" to stringResource(R.string.app_title_custom),
         "fpatch" to stringResource(R.string.app_title_fpatch),
         "apatch_folk" to stringResource(R.string.app_title_apatch_folk),
@@ -913,7 +914,8 @@ fun CustomAppTitleDialog(showDialog: MutableState<Boolean>, snackBarHost: Snackb
 fun DesktopAppNameChooseDialog(showDialog: MutableState<Boolean>) {
     val prefs = APApplication.sharedPreferences
     val context = LocalContext.current
-    val currentName = remember { prefs.getString("desktop_app_name", "FolkPatch") }    BasicAlertDialog(
+    val currentName = remember { prefs.getString("desktop_app_name", "FolkPatch") }
+    BasicAlertDialog(
         onDismissRequest = { showDialog.value = false }, properties = DialogProperties(
             decorFitsSystemWindows = true,
             usePlatformDefaultWidth = false,
