@@ -326,7 +326,10 @@ class MainActivity : AppCompatActivity() {
                 window.javaClass
                     .getMethod("setEnableOnBackInvokedCallback", Boolean::class.javaPrimitiveType)
                     .invoke(window, false)
-            } catch (_: Exception) {}
+                android.util.Log.d("MainActivity", "Predictive back disabled via reflection")
+            } catch (e: Exception) {
+                android.util.Log.e("MainActivity", "Failed to disable predictive back via reflection", e)
+            }
         }
 
         super.onCreate(savedInstanceState)

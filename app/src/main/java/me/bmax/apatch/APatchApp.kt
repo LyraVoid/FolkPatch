@@ -298,10 +298,31 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
                     Log.d(TAG, "ap state: " + _apStateLiveData.value)
                 }
             }
+
+        private fun bypassHiddenApiRestrictions() {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) return
+            try {
+                val forName = Class::class.java.getDeclaredMethod("forName", String::class.java)
+                val getDeclaredMethod = Class::class.java.getDeclaredMethod(
+                    "getDeclaredMethod", String::class.java, Array<Any>::class.java
+                )
+                val vmRuntimeClass = forName.invoke(null, "dalvik.system.VMRuntime") as Class<*>
+                val getRuntime = getDeclaredMethod.invoke(vmRuntimeClass, "getRuntime", null) as java.lang.reflect.Method
+                val setHiddenApiExemptions = getDeclaredMethod.invoke(
+                    vmRuntimeClass, "setHiddenApiExemptions", arrayOf(Array<String>::class.java)
+                ) as java.lang.reflect.Method
+                val vmRuntime = getRuntime.invoke(null)
+                setHiddenApiExemptions.invoke(vmRuntime, arrayOf("L"))
+                Log.d(TAG, "Hidden API bypass applied successfully")
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to bypass hidden API restrictions", e)
+            }
+        }
     }
 
     override fun onCreate() {
         super.onCreate()
+        bypassHiddenApiRestrictions()
         Log.d(TAG, "APApplication onCreate started")
         apApp = this
 
