@@ -101,7 +101,7 @@ fun GeneralSettingsContent(
         "kernelpatch" -> stringResource(R.string.app_title_kernelpatch)
         "kernelsu" -> stringResource(R.string.app_title_kernelsu)
         "supersu" -> stringResource(R.string.app_title_supersu)
-        "folksu" -> stringResource(R.string.app_title_folksu)
+        "folksu" -> stringResource(R.string.app_title_fpatch)
         "superuser" -> stringResource(R.string.app_title_superuser)
         "superpatch" -> stringResource(R.string.app_title_superpatch)
         "magicpatch" -> stringResource(R.string.app_title_magicpatch)
@@ -799,7 +799,7 @@ fun AppTitleChooseDialog(showDialog: MutableState<Boolean>) {
         "kernelpatch" to stringResource(R.string.app_title_kernelpatch),
         "kernelsu" to stringResource(R.string.app_title_kernelsu),
         "supersu" to stringResource(R.string.app_title_supersu),
-        "folksu" to stringResource(R.string.app_title_folksu),
+        "folksu" to stringResource(R.string.app_title_fpatch),
         "superuser" to stringResource(R.string.app_title_superuser),
         "superpatch" to stringResource(R.string.app_title_superpatch),
         "magicpatch" to stringResource(R.string.app_title_magicpatch)
@@ -949,16 +949,16 @@ fun DesktopAppNameChooseDialog(showDialog: MutableState<Boolean>) {
                 }
                 item {
                     ListItem(
-                        headlineContent = { Text(text = "FolkSU") },
+                        headlineContent = { Text(text = "FPatch") },
                         modifier = Modifier.clickable {
                             showDialog.value = false
                             prefs.edit {
-                                putString("desktop_app_name", "FolkSU")
+                                putString("desktop_app_name", "FPatch")
                             }
                             LauncherIconUtils.applySaved(context)
                         },
                         trailingContent = {
-                            if (currentName == "FolkSU") {
+                            if (currentName == "FPatch") {
                                 Icon(Icons.Filled.Check, contentDescription = null)
                             }
                         }

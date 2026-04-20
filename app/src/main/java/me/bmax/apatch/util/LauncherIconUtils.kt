@@ -15,7 +15,7 @@ object LauncherIconUtils {
         val prefs = APApplication.sharedPreferences
         val useAlt = prefs.getBoolean("use_alt_icon", false)
         val appName = prefs.getString("desktop_app_name", "FolkPatch")
-        val isSu = appName == "FolkSU"
+        val isSu = appName == "FPatch"
 
         val pm = context.packageManager
         val basePackage = APApplication::class.java.`package`?.name ?: "me.bmax.apatch"

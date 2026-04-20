@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">FolkPatch</string>
-    <string name="app_name_folksu">FolkSU</string>
+    <string name="app_name_fpatch">FPatch</string>
 
     <string name="desktop_app_name">홈 화면 앱 이름</string>
 
@@ -32,17 +32,17 @@
     <string name="settings_floating_auto_hide_summary">3초 동작 없이 플로팅 바 자동 숨기기</string>
     <string name="settings_floating_swipe_hide">스와이프 숨기기</string>
     <string name="settings_floating_swipe_hide_summary">아래로 스와이프 시 숨기기, 위로 스와이프 시 표시</string>
-    <string name="settings_navbar_glass_effect">Glass Effect</string>
-    <string name="settings_navbar_glass_effect_summary">Apply frosted glass effect to the floating navigation bar</string>
-    <string name="settings_navbar_glass_blur_strength">Blur Strength</string>
-    <string name="settings_navbar_glass_transparency">Background Transparency</string>
-    <string name="settings_navbar_glass_highlight_strength">Highlight Intensity</string>
-    <string name="settings_navbar_glass_specular">Specular Reflection</string>
-    <string name="settings_navbar_glass_specular_summary">Enable mirror-like highlight at the top of the navigation bar</string>
-    <string name="settings_navbar_glass_inner_glow">Inner Glow</string>
-    <string name="settings_navbar_glass_inner_glow_summary">Enable subtle glow effect at the bottom of the navigation bar</string>
-    <string name="settings_navbar_glass_border">Glass Border</string>
-    <string name="settings_navbar_glass_border_summary">Enable subtle border outline around the navigation bar</string>
+    <string name="settings_navbar_glass_effect">글래스 효과</string>
+    <string name="settings_navbar_glass_effect_summary">플로팅 내비게이션 바에 프로스트 글래스 효과 적용</string>
+    <string name="settings_navbar_glass_blur_strength">블러 강도</string>
+    <string name="settings_navbar_glass_transparency">배경 투명도</string>
+    <string name="settings_navbar_glass_highlight_strength">하이라이트 강도</string>
+    <string name="settings_navbar_glass_specular">거울 반사</string>
+    <string name="settings_navbar_glass_specular_summary">내비게이션 바 상단에 거울 같은 하이라이트 활성화</string>
+    <string name="settings_navbar_glass_inner_glow">내부 발광</string>
+    <string name="settings_navbar_glass_inner_glow_summary">내비게이션 바 하단에 은은한 발광 효과 활성화</string>
+    <string name="settings_navbar_glass_border">글래스 테두리</string>
+    <string name="settings_navbar_glass_border_summary">내비게이션 바 주위에 은은한 테두리 활성화</string>
     <string name="settings_stats_top_layout">상단 레이아웃</string>
     <string name="settings_stats_top_layout_summary">상단 정보 카드 스타일 선택</string>
     <string name="settings_stats_top_layout_list">리스트</string>
@@ -466,7 +466,6 @@
     <string name="app_title_kernelpatch">KernelPatch</string>
     <string name="app_title_kernelsu">KernelSU</string>
     <string name="app_title_supersu">SuperSU</string>
-    <string name="app_title_folksu">FolkSU</string>
     <string name="app_title_superuser">Superuser</string>
     <string name="app_title_superpatch">SuperPatch</string>
     <string name="app_title_magicpatch">MagicPatch</string>

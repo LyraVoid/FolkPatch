@@ -5,6 +5,9 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -127,26 +130,15 @@ fun OnlineModuleScreen(navigator: DestinationsNavigator) {
                 val isWideScreen = configuration.screenWidthDp >= 600
 
                 if (isWideScreen) {
-                    val chunkedModules = remember(viewModel.modules) { viewModel.modules.chunked(2) }
-                    LazyColumn(
+                    LazyVerticalStaggeredGrid(
                         modifier = Modifier.fillMaxSize(),
-                        contentPadding = PaddingValues(16.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                        columns = StaggeredGridCells.Fixed(2),
+                        verticalItemSpacing = 8.dp,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        contentPadding = PaddingValues(16.dp)
                     ) {
-                        items(chunkedModules, key = { chunk -> chunk.joinToString("|") { it.name } }) { chunk ->
-                            Row(
-                                modifier = Modifier.fillMaxWidth().height(IntrinsicSize.Min),
-                                horizontalArrangement = Arrangement.spacedBy(8.dp)
-                            ) {
-                                chunk.forEach { module ->
-                                    Column(modifier = Modifier.weight(1f).fillMaxHeight()) {
-                                        OnlineModuleItem(module, context)
-                                    }
-                                }
-                                if (chunk.size == 1) {
-                                    Spacer(modifier = Modifier.weight(1f))
-                                }
-                            }
+                        items(viewModel.modules, key = { module -> module.name }) { module ->
+                            OnlineModuleItem(module, context)
                         }
                     }
                 } else {

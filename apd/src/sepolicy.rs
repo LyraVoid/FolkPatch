@@ -1,6 +1,6 @@
-use anyhow::{bail, Context, Result};
+use anyhow::{Context, Result, bail};
 use clap::Parser;
-use policy::{format_statement_help, SePolicy};
+use policy::{SePolicy, format_statement_help};
 use std::io::{self, Write};
 use std::path::PathBuf;
 

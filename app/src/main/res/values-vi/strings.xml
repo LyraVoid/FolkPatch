@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">FolkPatch</string>
-    <string name="app_name_folksu">FolkSU</string>
+    <string name="app_name_fpatch">FPatch</string>
 
     <string name="desktop_app_name">Tên ứng dụng máy tính để bàn</string>
 
@@ -32,17 +32,17 @@
     <string name="settings_floating_auto_hide_summary">Tự động ẩn thanh nổi sau 3 giây không hoạt động</string>
     <string name="settings_floating_swipe_hide">Vuốt để ẩn thanh nổi</string>
     <string name="settings_floating_swipe_hide_summary">Ẩn thanh khi vuốt xuống, hiện khi vuốt lên</string>
-    <string name="settings_navbar_glass_effect">Glass Effect</string>
-    <string name="settings_navbar_glass_effect_summary">Apply frosted glass effect to the floating navigation bar</string>
-    <string name="settings_navbar_glass_blur_strength">Blur Strength</string>
-    <string name="settings_navbar_glass_transparency">Background Transparency</string>
-    <string name="settings_navbar_glass_highlight_strength">Highlight Intensity</string>
-    <string name="settings_navbar_glass_specular">Specular Reflection</string>
-    <string name="settings_navbar_glass_specular_summary">Enable mirror-like highlight at the top of the navigation bar</string>
-    <string name="settings_navbar_glass_inner_glow">Inner Glow</string>
-    <string name="settings_navbar_glass_inner_glow_summary">Enable subtle glow effect at the bottom of the navigation bar</string>
-    <string name="settings_navbar_glass_border">Glass Border</string>
-    <string name="settings_navbar_glass_border_summary">Enable subtle border outline around the navigation bar</string>
+    <string name="settings_navbar_glass_effect">Hiệu ứng kính mờ</string>
+    <string name="settings_navbar_glass_effect_summary">Áp dụng hiệu ứng kính mờ cho thanh điều hướng nổi</string>
+    <string name="settings_navbar_glass_blur_strength">Độ làm mờ</string>
+    <string name="settings_navbar_glass_transparency">Độ trong suốt của nền</string>
+    <string name="settings_navbar_glass_highlight_strength">Cường độ phản chiếu</string>
+    <string name="settings_navbar_glass_specular">Phản chiếu gương</string>
+    <string name="settings_navbar_glass_specular_summary">Bật hiệu ứng phản chiếu gương ở phần trên thanh điều hướng</string>
+    <string name="settings_navbar_glass_inner_glow">Phát sáng bên trong</string>
+    <string name="settings_navbar_glass_inner_glow_summary">Bật hiệu ứng phát sáng nhẹ ở phần dưới thanh điều hướng</string>
+    <string name="settings_navbar_glass_border">Viền kính</string>
+    <string name="settings_navbar_glass_border_summary">Bật viền tinh tế xung quanh thanh điều hướng</string>
     <string name="settings_stats_top_layout">Bố cục trên</string>
     <string name="settings_stats_top_layout_summary">Chọn kiểu thẻ thông tin trên</string>
     <string name="settings_stats_top_layout_list">Danh sách</string>

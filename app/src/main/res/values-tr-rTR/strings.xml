@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">FolkPatch</string>
-    <string name="app_name_folksu">FolkSU</string>
+    <string name="app_name_fpatch">FPatch</string>
 
     <string name="desktop_app_name">Masaüstü Uygulama Adı</string>
 
@@ -32,17 +32,17 @@
     <string name="settings_floating_auto_hide_summary">3 saniye işlem yapılmadığında kayan çubuğu otomatik gizle</string>
     <string name="settings_floating_swipe_hide">Kaydırarak Gizle</string>
     <string name="settings_floating_swipe_hide_summary">Aşağı kaydırmada gizle, yukarı kaydırmada göster</string>
-    <string name="settings_navbar_glass_effect">Glass Effect</string>
-    <string name="settings_navbar_glass_effect_summary">Apply frosted glass effect to the floating navigation bar</string>
-    <string name="settings_navbar_glass_blur_strength">Blur Strength</string>
-    <string name="settings_navbar_glass_transparency">Background Transparency</string>
-    <string name="settings_navbar_glass_highlight_strength">Highlight Intensity</string>
-    <string name="settings_navbar_glass_specular">Specular Reflection</string>
-    <string name="settings_navbar_glass_specular_summary">Enable mirror-like highlight at the top of the navigation bar</string>
-    <string name="settings_navbar_glass_inner_glow">Inner Glow</string>
-    <string name="settings_navbar_glass_inner_glow_summary">Enable subtle glow effect at the bottom of the navigation bar</string>
-    <string name="settings_navbar_glass_border">Glass Border</string>
-    <string name="settings_navbar_glass_border_summary">Enable subtle border outline around the navigation bar</string>
+    <string name="settings_navbar_glass_effect">Buzlanmış cam efekti</string>
+    <string name="settings_navbar_glass_effect_summary">Kayan gezinme çubuğuna buzlanmış cam efekti uygula</string>
+    <string name="settings_navbar_glass_blur_strength">Bulanıklık yoğunluğu</string>
+    <string name="settings_navbar_glass_transparency">Arka plan saydamlığı</string>
+    <string name="settings_navbar_glass_highlight_strength">Vurgu yoğunluğu</string>
+    <string name="settings_navbar_glass_specular">Ayna yansıması</string>
+    <string name="settings_navbar_glass_specular_summary">Gezinme çubuğunun üst kısmında ayna benzeri vurguyu etkinleştir</string>
+    <string name="settings_navbar_glass_inner_glow">İç parıltı</string>
+    <string name="settings_navbar_glass_inner_glow_summary">Gezinme çubuğunun alt kısmında hafif parıltı efektini etkinleştir</string>
+    <string name="settings_navbar_glass_border">Cam kenarlık</string>
+    <string name="settings_navbar_glass_border_summary">Gezinme çubuğu çevresinde hafif kenarlık çizgisini etkinleştir</string>
     <string name="settings_stats_top_layout">Üst Yerleşim</string>
     <string name="settings_stats_top_layout_summary">Üst bilgi kartı stilini seçin</string>
     <string name="settings_stats_top_layout_list">Liste</string>
@@ -465,7 +465,6 @@ Bol şans! Ayrıca, aşağıdaki belge butonuna tıklamak kesinlikle doğru!</st
     <string name="app_title_kernelpatch">KernelPatch</string>
     <string name="app_title_kernelsu">KernelSU</string>
     <string name="app_title_supersu">SuperSU</string>
-    <string name="app_title_folksu">FolkSU</string>
     <string name="app_title_superuser">Superuser</string>
     <string name="app_title_superpatch">SuperPatch</string>
     <string name="app_title_magicpatch">MagicPatch</string>

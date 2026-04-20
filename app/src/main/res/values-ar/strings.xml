@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">FolkPatch</string>
-    <string name="app_name_folksu">FolkSU</string>
+    <string name="app_name_fpatch">FPatch</string>
 
     <string name="desktop_app_name">اسم تطبيق سطح المكتب</string>
 
@@ -32,17 +32,17 @@
     <string name="settings_floating_auto_hide_summary">إخفاء الشريط العائم تلقائيًا بعد 3 ثوانٍ بدون تفاعل</string>
     <string name="settings_floating_swipe_hide">إخفاء بالتمرير</string>
     <string name="settings_floating_swipe_hide_summary">إخفاء الشريط عند التمرير لأسفل، إظهاره عند التمرير لأعلى</string>
-    <string name="settings_navbar_glass_effect">Glass Effect</string>
-    <string name="settings_navbar_glass_effect_summary">Apply frosted glass effect to the floating navigation bar</string>
-    <string name="settings_navbar_glass_blur_strength">Blur Strength</string>
-    <string name="settings_navbar_glass_transparency">Background Transparency</string>
-    <string name="settings_navbar_glass_highlight_strength">Highlight Intensity</string>
-    <string name="settings_navbar_glass_specular">Specular Reflection</string>
-    <string name="settings_navbar_glass_specular_summary">Enable mirror-like highlight at the top of the navigation bar</string>
-    <string name="settings_navbar_glass_inner_glow">Inner Glow</string>
-    <string name="settings_navbar_glass_inner_glow_summary">Enable subtle glow effect at the bottom of the navigation bar</string>
-    <string name="settings_navbar_glass_border">Glass Border</string>
-    <string name="settings_navbar_glass_border_summary">Enable subtle border outline around the navigation bar</string>
+    <string name="settings_navbar_glass_effect">تأثير الزجاج المصنفر</string>
+    <string name="settings_navbar_glass_effect_summary">تطبيق تأثير الزجاج المصنفر على شريط التنقل العائم</string>
+    <string name="settings_navbar_glass_blur_strength">قوة التمويه</string>
+    <string name="settings_navbar_glass_transparency">شفافية الخلفية</string>
+    <string name="settings_navbar_glass_highlight_strength">شدة التمييز</string>
+    <string name="settings_navbar_glass_specular">انعكاس مرآوي</string>
+    <string name="settings_navbar_glass_specular_summary">تفعيل تمييز يشبه المرآة في أعلى شريط التنقل</string>
+    <string name="settings_navbar_glass_inner_glow">توهج داخلي</string>
+    <string name="settings_navbar_glass_inner_glow_summary">تفعيل تأثير توهج خفيف في أسفل شريط التنقل</string>
+    <string name="settings_navbar_glass_border">إطار زجاجي</string>
+    <string name="settings_navbar_glass_border_summary">تفعيل إطار خفيف حول شريط التنقل</string>
     <string name="settings_stats_top_layout">تخطيط علوي</string>
     <string name="settings_stats_top_layout_summary">اختيار نمط بطاقة المعلومات العلوية</string>
     <string name="settings_stats_top_layout_list">قائمة</string>

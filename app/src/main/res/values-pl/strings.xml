@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name_folksu">FolkSU</string>
+    <string name="app_name_fpatch">FPatch</string>
     <string name="desktop_app_name">Nazwa aplikacji desktopowej</string>
     <string name="home">Pulpit</string>
     <string name="settings_apm_stay_on_page">Pozostań na stronie operacji</string>
@@ -27,17 +27,17 @@
     <string name="settings_floating_auto_hide_summary">Automatycznie ukrywaj pływający pasek po 3 sekundach bezczynności</string>
     <string name="settings_floating_swipe_hide">Ukrywanie przy przewijaniu</string>
     <string name="settings_floating_swipe_hide_summary">Ukrywaj pasek przy przewijaniu w dół, pokazuj przy przewijaniu w górę</string>
-    <string name="settings_navbar_glass_effect">Glass Effect</string>
-    <string name="settings_navbar_glass_effect_summary">Apply frosted glass effect to the floating navigation bar</string>
-    <string name="settings_navbar_glass_blur_strength">Blur Strength</string>
-    <string name="settings_navbar_glass_transparency">Background Transparency</string>
-    <string name="settings_navbar_glass_highlight_strength">Highlight Intensity</string>
-    <string name="settings_navbar_glass_specular">Specular Reflection</string>
-    <string name="settings_navbar_glass_specular_summary">Enable mirror-like highlight at the top of the navigation bar</string>
-    <string name="settings_navbar_glass_inner_glow">Inner Glow</string>
-    <string name="settings_navbar_glass_inner_glow_summary">Enable subtle glow effect at the bottom of the navigation bar</string>
-    <string name="settings_navbar_glass_border">Glass Border</string>
-    <string name="settings_navbar_glass_border_summary">Enable subtle border outline around the navigation bar</string>
+    <string name="settings_navbar_glass_effect">Efekt matowego szkła</string>
+    <string name="settings_navbar_glass_effect_summary">Zastosuj efekt matowego szkła do pływającego paska nawigacji</string>
+    <string name="settings_navbar_glass_blur_strength">Siła rozmycia</string>
+    <string name="settings_navbar_glass_transparency">Przezroczystość tła</string>
+    <string name="settings_navbar_glass_highlight_strength">Intensywność poświaty</string>
+    <string name="settings_navbar_glass_specular">Odbicie lustrzane</string>
+    <string name="settings_navbar_glass_specular_summary">Włącz lustrzane odbicie w górnej części paska nawigacji</string>
+    <string name="settings_navbar_glass_inner_glow">Wewnętrzna poświata</string>
+    <string name="settings_navbar_glass_inner_glow_summary">Włącz delikatny efekt poświaty na dole paska nawigacji</string>
+    <string name="settings_navbar_glass_border">Ramka szklana</string>
+    <string name="settings_navbar_glass_border_summary">Włącz delikatną ramkę wokół paska nawigacji</string>
     <string name="settings_stats_top_layout">Górny układ</string>
     <string name="settings_stats_top_layout_summary">Wybierz styl górnej karty informacyjnej</string>
     <string name="settings_stats_top_layout_list">Lista</string>
@@ -895,7 +895,6 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="app_title_kernelpatch">KernelPatch</string>
     <string name="app_title_kernelsu">KernelSU</string>
     <string name="app_title_supersu">SuperSU</string>
-    <string name="app_title_folksu">FolkSU</string>
     <string name="app_title_superuser">Superuser</string>
     <string name="app_title_superpatch">SuperPatch</string>
     <string name="app_title_magicpatch">MagicPatch</string>

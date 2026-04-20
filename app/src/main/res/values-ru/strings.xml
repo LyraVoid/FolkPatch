@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">FolkPatch</string>
-    <string name="app_name_folksu">FolkSU</string>
+    <string name="app_name_fpatch">FPatch</string>
 
     <string name="desktop_app_name">Имя настольного приложения</string>
 
@@ -35,17 +35,17 @@
     <string name="settings_floating_auto_hide_summary">Автоматически скрывать плавающую панель через 3 секунды</string>
     <string name="settings_floating_swipe_hide">Скрытие при прокрутке</string>
     <string name="settings_floating_swipe_hide_summary">Скрывать панель при прокрутке вниз, показывать при прокрутке вверх</string>
-    <string name="settings_navbar_glass_effect">Glass Effect</string>
-    <string name="settings_navbar_glass_effect_summary">Apply frosted glass effect to the floating navigation bar</string>
-    <string name="settings_navbar_glass_blur_strength">Blur Strength</string>
-    <string name="settings_navbar_glass_transparency">Background Transparency</string>
-    <string name="settings_navbar_glass_highlight_strength">Highlight Intensity</string>
-    <string name="settings_navbar_glass_specular">Specular Reflection</string>
-    <string name="settings_navbar_glass_specular_summary">Enable mirror-like highlight at the top of the navigation bar</string>
-    <string name="settings_navbar_glass_inner_glow">Inner Glow</string>
-    <string name="settings_navbar_glass_inner_glow_summary">Enable subtle glow effect at the bottom of the navigation bar</string>
-    <string name="settings_navbar_glass_border">Glass Border</string>
-    <string name="settings_navbar_glass_border_summary">Enable subtle border outline around the navigation bar</string>
+    <string name="settings_navbar_glass_effect">Эффект матового стекла</string>
+    <string name="settings_navbar_glass_effect_summary">Применить эффект матового стекла к плавающей панели навигации</string>
+    <string name="settings_navbar_glass_blur_strength">Сила размытия</string>
+    <string name="settings_navbar_glass_transparency">Прозрачность фона</string>
+    <string name="settings_navbar_glass_highlight_strength">Интенсивность блика</string>
+    <string name="settings_navbar_glass_specular">Зеркальное отражение</string>
+    <string name="settings_navbar_glass_specular_summary">Включить зеркальный блик в верхней части панели навигации</string>
+    <string name="settings_navbar_glass_inner_glow">Внутреннее свечение</string>
+    <string name="settings_navbar_glass_inner_glow_summary">Включить мягкое свечение в нижней части панели навигации</string>
+    <string name="settings_navbar_glass_border">Стеклянная рамка</string>
+    <string name="settings_navbar_glass_border_summary">Включить тонкую рамку вокруг панели навигации</string>
     <string name="settings_stats_top_layout">Верхняя карточка</string>
     <string name="settings_stats_top_layout_summary">Выберите стиль верхней информационной карточки</string>
     <string name="settings_stats_top_layout_list">Список</string>

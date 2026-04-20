@@ -329,7 +329,6 @@ pub fn init_load_su_path(superkey: &Option<String>) {
         }
     }
 }
-
 pub fn autoload_kpm_modules(superkey: &Option<String>, event_filter: &str) {
     use serde::Deserialize;
 

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">FolkPatch</string>
-    <string name="app_name_folksu">FolkSU</string>
+    <string name="app_name_fpatch">FPatch</string>
 
     <string name="desktop_app_name">圣光应用名称</string>
 
@@ -32,17 +32,17 @@
     <string name="settings_floating_auto_hide_summary">3秒无圣光操作后底栏自动隐匿</string>
     <string name="settings_floating_swipe_hide">圣光底栏滑动隐匿</string>
     <string name="settings_floating_swipe_hide_summary">向下滑动隐匿底栏，向上滑动现出底栏</string>
-    <string name="settings_navbar_glass_effect">Glass Effect</string>
-    <string name="settings_navbar_glass_effect_summary">Apply frosted glass effect to the floating navigation bar</string>
-    <string name="settings_navbar_glass_blur_strength">Blur Strength</string>
-    <string name="settings_navbar_glass_transparency">Background Transparency</string>
-    <string name="settings_navbar_glass_highlight_strength">Highlight Intensity</string>
-    <string name="settings_navbar_glass_specular">Specular Reflection</string>
-    <string name="settings_navbar_glass_specular_summary">Enable mirror-like highlight at the top of the navigation bar</string>
-    <string name="settings_navbar_glass_inner_glow">Inner Glow</string>
-    <string name="settings_navbar_glass_inner_glow_summary">Enable subtle glow effect at the bottom of the navigation bar</string>
-    <string name="settings_navbar_glass_border">Glass Border</string>
-    <string name="settings_navbar_glass_border_summary">Enable subtle border outline around the navigation bar</string>
+    <string name="settings_navbar_glass_effect">圣光玻璃效果</string>
+    <string name="settings_navbar_glass_effect_summary">为悬浮圣光导航栏施加圣光玻璃视觉效果</string>
+    <string name="settings_navbar_glass_blur_strength">圣光模糊强度</string>
+    <string name="settings_navbar_glass_transparency">圣光背景透明度</string>
+    <string name="settings_navbar_glass_highlight_strength">圣光高光强度</string>
+    <string name="settings_navbar_glass_specular">圣光镜面反射</string>
+    <string name="settings_navbar_glass_specular_summary">在圣光导航栏顶部启用圣光镜面高光效果</string>
+    <string name="settings_navbar_glass_inner_glow">圣光内发光</string>
+    <string name="settings_navbar_glass_inner_glow_summary">在圣光导航栏底部启用圣光微光效果</string>
+    <string name="settings_navbar_glass_border">圣光玻璃边框</string>
+    <string name="settings_navbar_glass_border_summary">在圣光导航栏周围启用圣光边框描边</string>
     <string name="settings_stats_top_layout">顶部圣光阵</string>
     <string name="settings_stats_top_layout_summary">选择顶部信息圣卡样式</string>
     <string name="settings_stats_top_layout_list">列表圣卡</string>

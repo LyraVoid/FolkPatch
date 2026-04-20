@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">FolkPatch</string>
-    <string name="app_name_folksu">FolkSU</string>
+    <string name="app_name_fpatch">FPatch</string>
 
     <string name="desktop_app_name">仙府应用名称</string>
 
@@ -31,17 +31,17 @@
     <string name="settings_floating_auto_hide_summary">3秒无仙法操作后底栏自动隐遁</string>
     <string name="settings_floating_swipe_hide">仙法底栏滑动隐遁</string>
     <string name="settings_floating_swipe_hide_summary">向下划动隐遁底栏，向上划动现出底栏</string>
-    <string name="settings_navbar_glass_effect">Glass Effect</string>
-    <string name="settings_navbar_glass_effect_summary">Apply frosted glass effect to the floating navigation bar</string>
-    <string name="settings_navbar_glass_blur_strength">Blur Strength</string>
-    <string name="settings_navbar_glass_transparency">Background Transparency</string>
-    <string name="settings_navbar_glass_highlight_strength">Highlight Intensity</string>
-    <string name="settings_navbar_glass_specular">Specular Reflection</string>
-    <string name="settings_navbar_glass_specular_summary">Enable mirror-like highlight at the top of the navigation bar</string>
-    <string name="settings_navbar_glass_inner_glow">Inner Glow</string>
-    <string name="settings_navbar_glass_inner_glow_summary">Enable subtle glow effect at the bottom of the navigation bar</string>
-    <string name="settings_navbar_glass_border">Glass Border</string>
-    <string name="settings_navbar_glass_border_summary">Enable subtle border outline around the navigation bar</string>
+    <string name="settings_navbar_glass_effect">仙法琉璃效果</string>
+    <string name="settings_navbar_glass_effect_summary">为悬浮仙法导航栏施加仙法琉璃视觉效果</string>
+    <string name="settings_navbar_glass_blur_strength">琉璃模糊强度</string>
+    <string name="settings_navbar_glass_transparency">琉璃背景透明度</string>
+    <string name="settings_navbar_glass_highlight_strength">琉璃高光强度</string>
+    <string name="settings_navbar_glass_specular">琉璃镜面反射</string>
+    <string name="settings_navbar_glass_specular_summary">在仙法导航栏顶部启用琉璃镜面高光效果</string>
+    <string name="settings_navbar_glass_inner_glow">琉璃内发光</string>
+    <string name="settings_navbar_glass_inner_glow_summary">在仙法导航栏底部启用琉璃微光效果</string>
+    <string name="settings_navbar_glass_border">琉璃边框</string>
+    <string name="settings_navbar_glass_border_summary">在仙法导航栏周围启用琉璃边框描边</string>
     <string name="settings_stats_top_layout">顶部仙法阵</string>
     <string name="settings_stats_top_layout_summary">选择顶部信息仙卡样式</string>
     <string name="settings_stats_top_layout_list">列表仙卡</string>

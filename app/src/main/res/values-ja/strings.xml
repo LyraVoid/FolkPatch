@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name_folksu">FolkSU</string>
+    <string name="app_name_fpatch">FPatch</string>
     <string name="desktop_app_name">デスクトップのアプリ名</string>
     <string name="home">ホーム</string>
     <string name="success">成功しました。</string>
@@ -25,17 +25,17 @@
     <string name="settings_floating_auto_hide_summary">3秒間操作がないとフローティングバーを自動的に非表示</string>
     <string name="settings_floating_swipe_hide">スワイプで非表示</string>
     <string name="settings_floating_swipe_hide_summary">下にスワイプで非表示、上にスワイプで表示</string>
-    <string name="settings_navbar_glass_effect">Glass Effect</string>
-    <string name="settings_navbar_glass_effect_summary">Apply frosted glass effect to the floating navigation bar</string>
-    <string name="settings_navbar_glass_blur_strength">Blur Strength</string>
-    <string name="settings_navbar_glass_transparency">Background Transparency</string>
-    <string name="settings_navbar_glass_highlight_strength">Highlight Intensity</string>
-    <string name="settings_navbar_glass_specular">Specular Reflection</string>
-    <string name="settings_navbar_glass_specular_summary">Enable mirror-like highlight at the top of the navigation bar</string>
-    <string name="settings_navbar_glass_inner_glow">Inner Glow</string>
-    <string name="settings_navbar_glass_inner_glow_summary">Enable subtle glow effect at the bottom of the navigation bar</string>
-    <string name="settings_navbar_glass_border">Glass Border</string>
-    <string name="settings_navbar_glass_border_summary">Enable subtle border outline around the navigation bar</string>
+    <string name="settings_navbar_glass_effect">すりガラス効果</string>
+    <string name="settings_navbar_glass_effect_summary">フローティングナビゲーションバーにすりガラス効果を適用</string>
+    <string name="settings_navbar_glass_blur_strength">ぼかし強度</string>
+    <string name="settings_navbar_glass_transparency">背景の透明度</string>
+    <string name="settings_navbar_glass_highlight_strength">ハイライト強度</string>
+    <string name="settings_navbar_glass_specular">鏡面反射</string>
+    <string name="settings_navbar_glass_specular_summary">ナビゲーションバーの上部に鏡面ハイライトを有効にする</string>
+    <string name="settings_navbar_glass_inner_glow">インナーグロー</string>
+    <string name="settings_navbar_glass_inner_glow_summary">ナビゲーションバーの下部にさりげない発光効果を有効にする</string>
+    <string name="settings_navbar_glass_border">ガラスボーダー</string>
+    <string name="settings_navbar_glass_border_summary">ナビゲーションバーの周囲にさりげないボーダーを有効にする</string>
     <string name="settings_stats_top_layout">上部レイアウト</string>
     <string name="settings_stats_top_layout_summary">上部情報カードのスタイルを選択</string>
     <string name="settings_stats_top_layout_list">リスト</string>
@@ -414,7 +414,6 @@
     <string name="app_title_kernelpatch">KernelPatch</string>
     <string name="app_title_kernelsu">KernelSU</string>
     <string name="app_title_supersu">SuperSU</string>
-    <string name="app_title_folksu">FolkSU</string>
     <string name="app_title_superuser">Superuser</string>
     <string name="app_title_superpatch">SuperPatch</string>
     <string name="app_title_magicpatch">MagicPatch</string>

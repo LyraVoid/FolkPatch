@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">FolkPatch</string>
-    <string name="app_name_folksu">FolkSU</string>
+    <string name="app_name_fpatch">FPatch</string>
 
     <string name="desktop_app_name">桌面應用程式名稱</string>
 
@@ -35,17 +35,17 @@
     <string name="settings_floating_auto_hide_summary">無操作3秒後自動隱藏懸浮底欄</string>
     <string name="settings_floating_swipe_hide">滑動隱藏懸浮底欄</string>
     <string name="settings_floating_swipe_hide_summary">向下滑動時隱藏底欄，向上滑動時顯示底欄</string>
-    <string name="settings_navbar_glass_effect">Glass Effect</string>
-    <string name="settings_navbar_glass_effect_summary">Apply frosted glass effect to the floating navigation bar</string>
-    <string name="settings_navbar_glass_blur_strength">Blur Strength</string>
-    <string name="settings_navbar_glass_transparency">Background Transparency</string>
-    <string name="settings_navbar_glass_highlight_strength">Highlight Intensity</string>
-    <string name="settings_navbar_glass_specular">Specular Reflection</string>
-    <string name="settings_navbar_glass_specular_summary">Enable mirror-like highlight at the top of the navigation bar</string>
-    <string name="settings_navbar_glass_inner_glow">Inner Glow</string>
-    <string name="settings_navbar_glass_inner_glow_summary">Enable subtle glow effect at the bottom of the navigation bar</string>
-    <string name="settings_navbar_glass_border">Glass Border</string>
-    <string name="settings_navbar_glass_border_summary">Enable subtle border outline around the navigation bar</string>
+    <string name="settings_navbar_glass_effect">毛玻璃效果</string>
+    <string name="settings_navbar_glass_effect_summary">為懸浮導航列套用毛玻璃視覺效果</string>
+    <string name="settings_navbar_glass_blur_strength">模糊強度</string>
+    <string name="settings_navbar_glass_transparency">背景透明度</string>
+    <string name="settings_navbar_glass_highlight_strength">高光強度</string>
+    <string name="settings_navbar_glass_specular">鏡面反射</string>
+    <string name="settings_navbar_glass_specular_summary">在導航列頂部啟用鏡面高光效果</string>
+    <string name="settings_navbar_glass_inner_glow">內發光</string>
+    <string name="settings_navbar_glass_inner_glow_summary">在導航列底部啟用微光效果</string>
+    <string name="settings_navbar_glass_border">玻璃邊框</string>
+    <string name="settings_navbar_glass_border_summary">在導航列周圍啟用微妙的邊框描邊</string>
     <string name="settings_stats_top_layout">頂部佈局</string>
     <string name="settings_stats_top_layout_summary">選擇頂部資訊卡片樣式</string>
     <string name="settings_stats_top_layout_list">列表樣式</string>

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">FolkPatch</string>
-    <string name="app_name_folksu">FolkSU</string>
+    <string name="app_name_fpatch">FPatch</string>
 
     <string name="desktop_app_name">Nama Aplikasi Desktop</string>
 
@@ -35,17 +35,17 @@
     <string name="settings_floating_auto_hide_summary">Sembunyikan bilah mengambang secara otomatis setelah 3 detik tanpa aktivitas</string>
     <string name="settings_floating_swipe_hide">Sembunyikan dengan Geser</string>
     <string name="settings_floating_swipe_hide_summary">Sembunyikan saat geser ke bawah, tampilkan saat geser ke atas</string>
-    <string name="settings_navbar_glass_effect">Glass Effect</string>
-    <string name="settings_navbar_glass_effect_summary">Apply frosted glass effect to the floating navigation bar</string>
-    <string name="settings_navbar_glass_blur_strength">Blur Strength</string>
-    <string name="settings_navbar_glass_transparency">Background Transparency</string>
-    <string name="settings_navbar_glass_highlight_strength">Highlight Intensity</string>
-    <string name="settings_navbar_glass_specular">Specular Reflection</string>
-    <string name="settings_navbar_glass_specular_summary">Enable mirror-like highlight at the top of the navigation bar</string>
-    <string name="settings_navbar_glass_inner_glow">Inner Glow</string>
-    <string name="settings_navbar_glass_inner_glow_summary">Enable subtle glow effect at the bottom of the navigation bar</string>
-    <string name="settings_navbar_glass_border">Glass Border</string>
-    <string name="settings_navbar_glass_border_summary">Enable subtle border outline around the navigation bar</string>
+    <string name="settings_navbar_glass_effect">Efek Kaca Buram</string>
+    <string name="settings_navbar_glass_effect_summary">Terapkan efek kaca buram pada bilah navigasi mengambang</string>
+    <string name="settings_navbar_glass_blur_strength">Kekuatan Blur</string>
+    <string name="settings_navbar_glass_transparency">Transparansi Latar Belakang</string>
+    <string name="settings_navbar_glass_highlight_strength">Intensitas Sorotan</string>
+    <string name="settings_navbar_glass_specular">Refleksi Spekular</string>
+    <string name="settings_navbar_glass_specular_summary">Aktifkan sorotan cermin di bagian atas bilah navigasi</string>
+    <string name="settings_navbar_glass_inner_glow">Cahaya Dalam</string>
+    <string name="settings_navbar_glass_inner_glow_summary">Aktifkan efek cahaya halus di bagian bawah bilah navigasi</string>
+    <string name="settings_navbar_glass_border">Batas Kaca</string>
+    <string name="settings_navbar_glass_border_summary">Aktifkan batas halus di sekitar bilah navigasi</string>
     <string name="settings_stats_top_layout">Tata Letak Atas</string>
     <string name="settings_stats_top_layout_summary">Pilih gaya kartu info atas</string>
     <string name="settings_stats_top_layout_list">Daftar</string>

@@ -672,7 +672,7 @@ private fun TopBar(
         "kernelpatch" -> R.string.app_title_kernelpatch
         "kernelsu" -> R.string.app_title_kernelsu
         "supersu" -> R.string.app_title_supersu
-        "folksu" -> R.string.app_title_folksu
+        "folksu" -> R.string.app_title_fpatch
         "superuser" -> R.string.app_title_superuser
         "superpatch" -> R.string.app_title_superpatch
         "magicpatch" -> R.string.app_title_magicpatch

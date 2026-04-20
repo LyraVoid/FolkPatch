@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">FolkPatch</string>
-    <string name="app_name_folksu">FolkSU 小食堂</string>
+    <string name="app_name_fpatch">FPatch</string>
 
     <string name="desktop_app_name">餐厅招牌菜</string>
 
@@ -32,17 +32,17 @@
     <string name="settings_floating_auto_hide_summary">3秒没操作就把底栏藏起来</string>
     <string name="settings_floating_swipe_hide">滑动收起底栏</string>
     <string name="settings_floating_swipe_hide_summary">往下滑的时候藏底栏，往上滑的时候亮出来</string>
-    <string name="settings_navbar_glass_effect">Glass Effect</string>
-    <string name="settings_navbar_glass_effect_summary">Apply frosted glass effect to the floating navigation bar</string>
-    <string name="settings_navbar_glass_blur_strength">Blur Strength</string>
-    <string name="settings_navbar_glass_transparency">Background Transparency</string>
-    <string name="settings_navbar_glass_highlight_strength">Highlight Intensity</string>
-    <string name="settings_navbar_glass_specular">Specular Reflection</string>
-    <string name="settings_navbar_glass_specular_summary">Enable mirror-like highlight at the top of the navigation bar</string>
-    <string name="settings_navbar_glass_inner_glow">Inner Glow</string>
-    <string name="settings_navbar_glass_inner_glow_summary">Enable subtle glow effect at the bottom of the navigation bar</string>
-    <string name="settings_navbar_glass_border">Glass Border</string>
-    <string name="settings_navbar_glass_border_summary">Enable subtle border outline around the navigation bar</string>
+    <string name="settings_navbar_glass_effect">毛玻璃效果</string>
+    <string name="settings_navbar_glass_effect_summary">给悬浮底栏加个毛玻璃特效</string>
+    <string name="settings_navbar_glass_blur_strength">模糊程度</string>
+    <string name="settings_navbar_glass_transparency">背景透明度</string>
+    <string name="settings_navbar_glass_highlight_strength">高光程度</string>
+    <string name="settings_navbar_glass_specular">镜面反光</string>
+    <string name="settings_navbar_glass_specular_summary">在底栏顶部开个镜面高光</string>
+    <string name="settings_navbar_glass_inner_glow">内发光</string>
+    <string name="settings_navbar_glass_inner_glow_summary">在底栏底部加个微光效果</string>
+    <string name="settings_navbar_glass_border">玻璃边框</string>
+    <string name="settings_navbar_glass_border_summary">给底栏加个微妙的边框描边</string>
     <string name="settings_stats_top_layout">顶部摆盘</string>
     <string name="settings_stats_top_layout_summary">选择顶部信息卡片摆盘样式</string>
     <string name="settings_stats_top_layout_list">列表摆盘</string>

@@ -1,3 +1,10 @@
+use crate::sepolicy::get_policy_main;
+use crate::{lua, module_config};
+use anyhow::{Context, Result, anyhow, bail, ensure};
+use const_format::concatcp;
+use is_executable::is_executable;
+use java_properties::PropertiesIter;
+use log::{debug, info, warn};
 #[cfg(unix)]
 use std::os::unix::{prelude::PermissionsExt, process::CommandExt};
 use std::{
@@ -9,13 +16,6 @@ use std::{
     process::Command,
     str::FromStr,
 };
-use crate::sepolicy::{get_policy_main};
-use crate::lua;
-use anyhow::{Context, Result, anyhow, bail, ensure};
-use const_format::concatcp;
-use is_executable::is_executable;
-use java_properties::PropertiesIter;
-use log::{info, warn};
 use zip_extensions::zip_extract_file_to_memory;
 
 #[allow(clippy::wildcard_imports)]
@@ -188,7 +188,7 @@ pub fn load_sepolicy_rule() -> Result<()> {
             "magiskpolicy".to_string(),
             "--live".to_string(),
             "--apply".to_string(),
-            rule_file.display().to_string()
+            rule_file.display().to_string(),
         ])?;
 
         Ok(())
@@ -199,6 +199,26 @@ pub fn load_sepolicy_rule() -> Result<()> {
 
 pub fn exec_script<T: AsRef<Path>>(path: T, wait: bool) -> Result<()> {
     info!("exec {}", path.as_ref().display());
+
+    let is_module_script = path.as_ref().starts_with(defs::MODULE_DIR);
+    // Extract module_id from path if it matches /data/adb/modules/{id}/...
+    let module_id = if is_module_script {
+        path.as_ref()
+            .strip_prefix(defs::MODULE_DIR)
+            .ok()
+            .and_then(|p| p.components().next())
+            .and_then(|c| c.as_os_str().to_str())
+            .map(ToString::to_string)
+    } else {
+        None
+    };
+
+    if is_module_script && module_id.is_none() {
+        debug!(
+            "Failed to extract module_id from script path '{}'. Script will run without AP_MODULE environment variable.",
+            path.as_ref().display()
+        );
+    }
 
     let mut command = &mut Command::new(assets::BUSYBOX_PATH);
     #[cfg(unix)]
@@ -228,6 +248,11 @@ pub fn exec_script<T: AsRef<Path>>(path: T, wait: bool) -> Result<()> {
                 defs::BINARY_DIR.trim_end_matches('/')
             ),
         );
+
+    // Set AP_MODULE environment variable
+    if let Some(id) = module_id {
+        command = command.env("AP_MODULE", id);
+    }
 
     let result = if wait {
         command.status().map(|_| ())
@@ -280,7 +305,7 @@ pub fn load_system_prop() -> Result<()> {
         info!("load {} system.prop", module.display());
 
         crate::resetprop::load_system_prop_file(&system_prop)?;
-        
+
         Ok(())
     })?;
 
@@ -319,6 +344,11 @@ pub fn prune_modules() -> Result<()> {
             && let Err(e) = exec_script(uninstaller, true)
         {
             warn!("Failed to exec uninstaller: {e}");
+        }
+
+        // Clear module configs before removing module directory
+        if let Err(e) = module_config::clear_module_configs(module_id) {
+            warn!("Failed to clear configs for {module_id}: {e}");
         }
 
         // Finally remove the module directory
@@ -696,6 +726,15 @@ fn resolve_module_icon_path(
 }
 
 fn _list_modules(path: &str) -> Vec<HashMap<String, String>> {
+    // Load all module configs once to minimize I/O overhead
+    let all_configs = match module_config::get_all_module_configs() {
+        Ok(configs) => configs,
+        Err(e) => {
+            warn!("Failed to load module configs: {e}");
+            HashMap::new()
+        }
+    };
+
     // first check enabled modules
     let dir = fs::read_dir(path);
     let Ok(dir) = dir else {
@@ -718,10 +757,16 @@ fn _list_modules(path: &str) -> Vec<HashMap<String, String>> {
         };
         let mut module_prop_map: HashMap<String, String> = HashMap::new();
         let encoding = encoding_rs::UTF_8;
-        let result =
-            PropertiesIter::new_with_encoding(Cursor::new(content), encoding).read_into(|k, v| {
+
+        if PropertiesIter::new_with_encoding(Cursor::new(content), encoding)
+            .read_into(|k, v| {
                 module_prop_map.insert(k, v);
-            });
+            })
+            .is_err()
+        {
+            warn!("Failed to parse module.prop: {}", module_prop.display());
+            continue;
+        }
 
         if !module_prop_map.contains_key("id") || module_prop_map["id"].is_empty() {
             match entry.file_name().to_str() {
@@ -755,10 +800,16 @@ fn _list_modules(path: &str) -> Vec<HashMap<String, String>> {
         resolve_module_icon_path(&mut module_prop_map, "actionIcon", &path);
         resolve_module_icon_path(&mut module_prop_map, "webuiIcon", &path);
 
-        if result.is_err() {
-            warn!("Failed to parse module.prop: {}", module_prop.display());
-            continue;
+        // Apply module config overrides and extract managed features
+        if let Some(module_id) = module_prop_map.get("id")
+            && let Some(config) = all_configs.get(module_id.as_str())
+        {
+            // Apply override.description
+            if let Some(desc) = config.get("override.description") {
+                module_prop_map.insert("description".to_owned(), desc.clone());
+            }
         }
+
         modules.push(module_prop_map);
     }
 

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">FolkPatch</string>
-    <string name="app_name_folksu">FolkSU</string>
+    <string name="app_name_fpatch">FPatch</string>
 
     <string name="desktop_app_name">魔法应用名称</string>
 
@@ -32,17 +32,17 @@
     <string name="settings_floating_auto_hide_summary">3秒无魔法操作后底栏自动隐遁</string>
     <string name="settings_floating_swipe_hide">魔法底栏滑动隐遁</string>
     <string name="settings_floating_swipe_hide_summary">向下划动隐遁底栏，向上划动现出底栏</string>
-    <string name="settings_navbar_glass_effect">Glass Effect</string>
-    <string name="settings_navbar_glass_effect_summary">Apply frosted glass effect to the floating navigation bar</string>
-    <string name="settings_navbar_glass_blur_strength">Blur Strength</string>
-    <string name="settings_navbar_glass_transparency">Background Transparency</string>
-    <string name="settings_navbar_glass_highlight_strength">Highlight Intensity</string>
-    <string name="settings_navbar_glass_specular">Specular Reflection</string>
-    <string name="settings_navbar_glass_specular_summary">Enable mirror-like highlight at the top of the navigation bar</string>
-    <string name="settings_navbar_glass_inner_glow">Inner Glow</string>
-    <string name="settings_navbar_glass_inner_glow_summary">Enable subtle glow effect at the bottom of the navigation bar</string>
-    <string name="settings_navbar_glass_border">Glass Border</string>
-    <string name="settings_navbar_glass_border_summary">Enable subtle border outline around the navigation bar</string>
+    <string name="settings_navbar_glass_effect">Цаасан шил эффект</string>
+    <string name="settings_navbar_glass_effect_summary">Хөвөгч навигацйн самбарт цаасан шил эффект оруулах</string>
+    <string name="settings_navbar_glass_blur_strength">Тодорхой бус байдал</string>
+    <string name="settings_navbar_glass_transparency">Дэвсгэр тунгалаг байдал</string>
+    <string name="settings_navbar_glass_highlight_strength">Гэрэлтэлтийн хүч</string>
+    <string name="settings_navbar_glass_specular">Толь хийцэл</string>
+    <string name="settings_navbar_glass_specular_summary">Навигацйн самбарын дээд хэсэгт толь мэт гэрэлтэлтийг идэвхжүүлэх</string>
+    <string name="settings_navbar_glass_inner_glow">Дотоод гэрэлтэлт</string>
+    <string name="settings_navbar_glass_inner_glow_summary">Навигацйн самбарын доод хэсэгт сул гэрэлтэлтийн эффектийг идэвхжүүлэх</string>
+    <string name="settings_navbar_glass_border">Шил хүрээ</string>
+    <string name="settings_navbar_glass_border_summary">Навигацйн самбарын тойрогт сул хүрээг идэвхжүүлэх</string>
     <string name="settings_stats_top_layout">顶部魔法阵</string>
     <string name="settings_stats_top_layout_summary">选择顶部信息魔法卡样式</string>
     <string name="settings_stats_top_layout_list">列表魔法卡</string>

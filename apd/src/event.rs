@@ -3,8 +3,8 @@ use anyhow::{Context, Result};
 use libc::SIGPWR;
 use log::{info, warn};
 use notify::{
-    event::{ModifyKind, RenameMode},
     Config, Event, EventKind, INotifyWatcher, RecursiveMode, Watcher,
+    event::{ModifyKind, RenameMode},
 };
 use signal_hook::{consts::signal::*, iterator::Signals};
 use std::process::Stdio;
@@ -139,6 +139,11 @@ pub fn on_post_data_fs(superkey: Option<String>) -> Result<()> {
 
     info!("Re-privilege apd profile after injecting sepolicy");
     supercall::privilege_apd_profile(&superkey);
+
+    // Clear all temporary module configs early
+    if let Err(e) = crate::module_config::clear_all_temp_configs() {
+        warn!("clear temp configs failed: {e}");
+    }
 
     if utils::has_magisk() {
         warn!("Magisk detected, skip post-fs-data!");
@@ -438,9 +443,8 @@ pub fn start_uid_listener() -> Result<()> {
             let skey = CStr::from_bytes_with_nul(b"su\0")
                 .expect("[start_uid_listener] CStr::from_bytes_with_nul failed");
             refresh_ap_package_list(&skey, &mutex);
-            report_kernel(None, "uid_listener", "package-list-updated")
-                .unwrap_or_else(|e| {
-                    warn!("Failed to report kernel about package list update: {e}");
+            report_kernel(None, "uid_listener", "package-list-updated").unwrap_or_else(|e| {
+                warn!("Failed to report kernel about package list update: {e}");
             });
         } else if !debounce {
             thread::sleep(Duration::from_secs(1));

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">FolkPatch</string>
-    <string name="app_name_folksu">FolkSU 喵</string>
+    <string name="app_name_fpatch">FPatch</string>
 
     <string name="desktop_app_name">桌面上的名字喵</string>
 
@@ -32,17 +32,17 @@
     <string name="settings_floating_auto_hide_summary">3秒没操作就自动藏起来喵</string>
     <string name="settings_floating_swipe_hide">滑动隐藏悬浮底栏喵</string>
     <string name="settings_floating_swipe_hide_summary">往下滑藏起来，往上滑亮出来喵</string>
-    <string name="settings_navbar_glass_effect">Glass Effect</string>
-    <string name="settings_navbar_glass_effect_summary">Apply frosted glass effect to the floating navigation bar</string>
-    <string name="settings_navbar_glass_blur_strength">Blur Strength</string>
-    <string name="settings_navbar_glass_transparency">Background Transparency</string>
-    <string name="settings_navbar_glass_highlight_strength">Highlight Intensity</string>
-    <string name="settings_navbar_glass_specular">Specular Reflection</string>
-    <string name="settings_navbar_glass_specular_summary">Enable mirror-like highlight at the top of the navigation bar</string>
-    <string name="settings_navbar_glass_inner_glow">Inner Glow</string>
-    <string name="settings_navbar_glass_inner_glow_summary">Enable subtle glow effect at the bottom of the navigation bar</string>
-    <string name="settings_navbar_glass_border">Glass Border</string>
-    <string name="settings_navbar_glass_border_summary">Enable subtle border outline around the navigation bar</string>
+    <string name="settings_navbar_glass_effect">毛玻璃效果喵</string>
+    <string name="settings_navbar_glass_effect_summary">给悬浮导航栏加上毛玻璃效果喵</string>
+    <string name="settings_navbar_glass_blur_strength">模糊强度喵</string>
+    <string name="settings_navbar_glass_transparency">背景透明度喵</string>
+    <string name="settings_navbar_glass_highlight_strength">高光强度喵</string>
+    <string name="settings_navbar_glass_specular">镜面反射喵</string>
+    <string name="settings_navbar_glass_specular_summary">在导航栏顶部启用镜面高光效果喵</string>
+    <string name="settings_navbar_glass_inner_glow">内发光喵</string>
+    <string name="settings_navbar_glass_inner_glow_summary">在导航栏底部启用微光效果喵</string>
+    <string name="settings_navbar_glass_border">玻璃边框喵</string>
+    <string name="settings_navbar_glass_border_summary">在导航栏周围启用微妙的边框描边喵</string>
     <string name="settings_stats_top_layout">顶部布局喵</string>
     <string name="settings_stats_top_layout_summary">选择顶部信息卡片样式喵</string>
     <string name="settings_stats_top_layout_list">列表样式喵</string>

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">FolkPatch</string>
-    <string name="app_name_folksu">FolkSU</string>
+    <string name="app_name_fpatch">FPatch</string>
 
     <string name="desktop_app_name">Nome do Aplicativo da Área de Trabalho</string>
 
@@ -32,17 +32,17 @@
     <string name="settings_floating_auto_hide_summary">Ocultar automaticamente a barra flutuante após 3 segundos de inatividade</string>
     <string name="settings_floating_swipe_hide">Ocultar ao Deslizar</string>
     <string name="settings_floating_swipe_hide_summary">Ocultar a barra ao deslizar para baixo, mostrar ao deslizar para cima</string>
-    <string name="settings_navbar_glass_effect">Glass Effect</string>
-    <string name="settings_navbar_glass_effect_summary">Apply frosted glass effect to the floating navigation bar</string>
-    <string name="settings_navbar_glass_blur_strength">Blur Strength</string>
-    <string name="settings_navbar_glass_transparency">Background Transparency</string>
-    <string name="settings_navbar_glass_highlight_strength">Highlight Intensity</string>
-    <string name="settings_navbar_glass_specular">Specular Reflection</string>
-    <string name="settings_navbar_glass_specular_summary">Enable mirror-like highlight at the top of the navigation bar</string>
-    <string name="settings_navbar_glass_inner_glow">Inner Glow</string>
-    <string name="settings_navbar_glass_inner_glow_summary">Enable subtle glow effect at the bottom of the navigation bar</string>
-    <string name="settings_navbar_glass_border">Glass Border</string>
-    <string name="settings_navbar_glass_border_summary">Enable subtle border outline around the navigation bar</string>
+    <string name="settings_navbar_glass_effect">Efeito de vidro fosco</string>
+    <string name="settings_navbar_glass_effect_summary">Aplicar efeito de vidro fosco na barra de navegação flutuante</string>
+    <string name="settings_navbar_glass_blur_strength">Intensidade do desfoque</string>
+    <string name="settings_navbar_glass_transparency">Transparência do fundo</string>
+    <string name="settings_navbar_glass_highlight_strength">Intensidade do destaque</string>
+    <string name="settings_navbar_glass_specular">Reflexo especular</string>
+    <string name="settings_navbar_glass_specular_summary">Ativar reflexo espelhado na parte superior da barra de navegação</string>
+    <string name="settings_navbar_glass_inner_glow">Brilho interno</string>
+    <string name="settings_navbar_glass_inner_glow_summary">Ativar sutil efeito de brilho na parte inferior da barra de navegação</string>
+    <string name="settings_navbar_glass_border">Borda de vidro</string>
+    <string name="settings_navbar_glass_border_summary">Ativar sutil borda ao redor da barra de navegação</string>
     <string name="settings_stats_top_layout">Layout Superior</string>
     <string name="settings_stats_top_layout_summary">Escolha o estilo do cartão de informações superior</string>
     <string name="settings_stats_top_layout_list">Lista</string>

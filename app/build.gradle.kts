@@ -79,6 +79,10 @@ android {
             storePassword = keystoreProperties.getProperty("KEYSTORE_PASSWORD") ?: "android"
             keyAlias = keystoreProperties.getProperty("KEY_ALIAS") ?: "androiddebugkey"
             keyPassword = keystoreProperties.getProperty("KEY_PASSWORD") ?: "android"
+            enableV1Signing = true
+            enableV2Signing = true
+            enableV3Signing = true
+            enableV4Signing = true
         }
     }
 

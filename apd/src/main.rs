@@ -7,6 +7,7 @@ mod lua;
 mod magic_mount;
 mod metamodule;
 mod module;
+mod module_config;
 mod package;
 #[cfg(any(target_os = "linux", target_os = "android"))]
 mod pty;
