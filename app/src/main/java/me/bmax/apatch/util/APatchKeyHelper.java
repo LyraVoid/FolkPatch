@@ -135,11 +135,19 @@ public class APatchKeyHelper {
         if (!encKey.isEmpty()) {
             Log.d(TAG, "Decrypting superKey");
             String decryptedKey = decrypt(encKey);
-            Log.d(TAG, "SuperKey decrypted successfully, length: " + decryptedKey.length());
-            return decryptedKey;
+            if (decryptedKey != null) {
+                Log.d(TAG, "SuperKey decrypted successfully, length: " + decryptedKey.length());
+                return decryptedKey;
+            } else {
+                Log.w(TAG, "SuperKey decryption failed, clearing corrupted encrypted key from SharedPreferences");
+                prefs.edit()
+                    .remove(SUPER_KEY_ENC)
+                    .remove(SUPER_KEY_IV)
+                    .apply();
+            }
         }
 
-        Log.d(TAG, "Encrypted key is empty, trying deprecated key");
+        Log.d(TAG, "Trying deprecated plaintext key");
         @Deprecated()
         String key = prefs.getString(SUPER_KEY, "");
         if (!key.isEmpty()) {

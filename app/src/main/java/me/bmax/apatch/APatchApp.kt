@@ -118,6 +118,10 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
         const val PREF_BLOCK_KERNELPATCH_UPDATE = "block_kernelpatch_update"
         const val PREF_BLOCK_ANDROIDPATCH_UPDATE = "block_androidpatch_update"
         private const val SHOW_BACKUP_WARN = "show_backup_warning"
+        private const val CRASH_COUNT_KEY = "fp_crash_count"
+        private const val CRASH_TIMESTAMP_KEY = "fp_crash_timestamp"
+        private const val CRASH_LOOP_THRESHOLD = 2
+        private const val CRASH_WINDOW_MS = 30_000L
         lateinit var sharedPreferences: SharedPreferences
         var isSignatureValid = true // removed signature check, always valid
 
@@ -222,17 +226,20 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
         var superKey: String = ""
             set(value) {
                 field = value
-                val ready = BuildConfig.DEBUG_FAKE_ROOT || Natives.nativeReady(value)
-                _kpStateLiveData.value =
-                    if (ready) State.KERNELPATCH_INSTALLED else State.UNKNOWN_STATE
-                _apStateLiveData.value =
-                    if (ready) State.ANDROIDPATCH_NOT_INSTALLED else State.UNKNOWN_STATE
-                Log.d(TAG, "state: " + _kpStateLiveData.value)
-                if (!ready) return
+                // Run entire init chain on a background thread to avoid blocking main thread
+                thread(name = "superkey-init") {
+                    val ready = BuildConfig.DEBUG_FAKE_ROOT || Natives.nativeReady(value)
+                    _kpStateLiveData.postValue(
+                        if (ready) State.KERNELPATCH_INSTALLED else State.UNKNOWN_STATE
+                    )
+                    _apStateLiveData.postValue(
+                        if (ready) State.ANDROIDPATCH_NOT_INSTALLED else State.UNKNOWN_STATE
+                    )
+                    Log.d(TAG, "state: " + _kpStateLiveData.value)
+                    if (!ready) return@thread
 
-                APatchKeyHelper.writeSPSuperKey(value)
+                    APatchKeyHelper.writeSPSuperKey(value)
 
-                thread {
                     val rc = BuildConfig.DEBUG_FAKE_ROOT || Natives.su(0, null)
                     if (!rc) {
                         Log.e(TAG, "Native.su failed")
@@ -243,8 +250,6 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
                     APatchCli.refresh()
 
                     // KernelPatch version
-                    //val buildV = Version.buildKPVUInt()
-                    //val installedV = Version.installedKPVUInt()
                     //use build time to check update
                     val buildV = Version.getKpImg()
                     val installedV = Version.installedKPTime()
@@ -258,10 +263,8 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
 
                     if (buildV != installedV) {
                         if (isBlocked) {
-                            // 如果屏蔽更新，将状态设置为已安装而不是需要更新
                             _kpStateLiveData.postValue(State.KERNELPATCH_INSTALLED)
                         } else {
-                            // 正常显示更新提示
                             _kpStateLiveData.postValue(State.KERNELPATCH_NEED_UPDATE)
                         }
                     }
@@ -293,8 +296,6 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
                         _apStateLiveData.postValue(State.ANDROIDPATCH_NOT_INSTALLED)
                     }
                     Log.d(TAG, "ap state: " + _apStateLiveData.value)
-
-                    return@thread
                 }
             }
     }
@@ -332,12 +333,26 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
         APatchKeyHelper.setSharedPreferences(sharedPreferences)
         me.bmax.apatch.util.LauncherIconUtils.applySaved(this)
         Log.d(TAG, "Reading superKey...")
-        val savedKey = APatchKeyHelper.readSPSuperKey()
+        val savedKey = try {
+            APatchKeyHelper.readSPSuperKey()
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to read superKey from SharedPreferences", e)
+            null
+        }
         if (!savedKey.isNullOrEmpty()) {
             superKey = savedKey
         } else {
             val keyFile = java.io.File("/data/adb/folk_superkey")
-            superKey = if (keyFile.exists()) keyFile.readText().trim() else "su"
+            superKey = if (keyFile.exists()) {
+                try {
+                    keyFile.readText().trim()
+                } catch (e: Exception) {
+                    Log.e(TAG, "Failed to read folk_superkey file", e)
+                    "su"
+                }
+            } else {
+                "su"
+            }
         }
         Log.d(TAG, "superKey read completed, length=${superKey.length}")
 
@@ -368,6 +383,12 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
         MusicManager.init(this)
         
         Log.d(TAG, "APApplication onCreate completed")
+
+        // Reset crash counter on successful initialization
+        sharedPreferences.edit()
+            .remove(CRASH_COUNT_KEY)
+            .remove(CRASH_TIMESTAMP_KEY)
+            .apply()
     }
 
     fun getBackupWarningState(): Boolean {
@@ -390,12 +411,31 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
         val exceptionMessage = Log.getStackTraceString(e)
         val threadName = t.name
         Log.e(TAG, "Error on thread $threadName:\n $exceptionMessage")
-        val intent = Intent(this, CrashHandleActivity::class.java).apply {
-            putExtra("exception_message", exceptionMessage)
-            putExtra("thread", threadName)
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+
+        val now = System.currentTimeMillis()
+        val prefs = getSharedPreferences(SP_NAME, Context.MODE_PRIVATE)
+        val lastCrashTime = prefs.getLong(CRASH_TIMESTAMP_KEY, 0L)
+        val crashCount = if (now - lastCrashTime < CRASH_WINDOW_MS) {
+            prefs.getInt(CRASH_COUNT_KEY, 0) + 1
+        } else {
+            1
         }
-        startActivity(intent)
+        prefs.edit()
+            .putInt(CRASH_COUNT_KEY, crashCount)
+            .putLong(CRASH_TIMESTAMP_KEY, now)
+            .commit()
+
+        if (crashCount <= CRASH_LOOP_THRESHOLD) {
+            val intent = Intent(this, CrashHandleActivity::class.java).apply {
+                putExtra("exception_message", exceptionMessage)
+                putExtra("thread", threadName)
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            }
+            startActivity(intent)
+        } else {
+            Log.e(TAG, "Crash loop detected ($crashCount crashes in ${CRASH_WINDOW_MS}ms window). " +
+                    "Skipping CrashHandleActivity to prevent infinite loop.")
+        }
         exitProcess(10)
     }
 }
