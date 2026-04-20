@@ -112,18 +112,12 @@ fn disable_kpm_autoload() {
             return;
         }
     };
-    let mut config: serde_json::Value = match serde_json::from_str(&content) {
-        Ok(v) => v,
-        Err(e) => {
-            warn!("failed to parse KPM autoload config: {e}");
-            return;
+    let re = regex_lite::Regex::new(r#""enabled"\s*:\s*true"#).unwrap();
+    let new_content = re.replace_all(&content, "\"enabled\": false");
+    if new_content != content {
+        if let Err(e) = std::fs::write(config_path, new_content.as_bytes()) {
+            warn!("failed to write KPM autoload config: {e}");
         }
-    };
-    if let Some(obj) = config.as_object_mut() {
-        obj.insert("enabled".into(), serde_json::Value::Bool(false));
-    }
-    if let Err(e) = std::fs::write(config_path, serde_json::to_string_pretty(&config).unwrap_or_default()) {
-        warn!("failed to write KPM autoload config: {e}");
     }
 }
 
