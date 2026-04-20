@@ -1273,7 +1273,11 @@ private fun BottomBarContent(
                             .padding(horizontal = indicatorHorizontalPadding)
                             .width(itemSize + with(density) { stretchPx.toDp() })
                             .background(
-                                color = MaterialTheme.colorScheme.secondaryContainer,
+                                color = if (isGlassEnabled) {
+                                    MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.8f)
+                                } else {
+                                    MaterialTheme.colorScheme.secondaryContainer
+                                },
                                 shape = itemShape
                             )
                             .then(
