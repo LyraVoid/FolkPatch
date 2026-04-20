@@ -1,12 +1,10 @@
 package me.bmax.apatch.ui.screen
 
-import android.content.Context
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -15,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
@@ -31,7 +30,6 @@ import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -41,6 +39,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
@@ -52,6 +51,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -64,11 +64,13 @@ import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.KpmAutoLoadConfig
 import me.bmax.apatch.ui.component.KpmAutoLoadEntry
 import me.bmax.apatch.ui.component.KpmAutoLoadManager
-import me.bmax.apatch.util.ui.APDialogBlurBehindUtils
 import me.bmax.apatch.util.ui.showToast
 
 @Destination<RootGraph>
@@ -77,16 +79,19 @@ import me.bmax.apatch.util.ui.showToast
 fun KpmAutoLoadConfigScreen(navigator: DestinationsNavigator) {
     val context = LocalContext.current
     var isEnabled by remember { mutableStateOf(KpmAutoLoadManager.isEnabled.value) }
-    var jsonString by remember { mutableStateOf(KpmAutoLoadManager.getConfigJson()) }
+    var jsonString by remember { mutableStateOf("") }
     var showSaveDialog by remember { mutableStateOf(false) }
     var isValidJson by remember { mutableStateOf(true) }
     var isVisualMode by remember { mutableStateOf(true) }
     var kpmEntriesList by remember { mutableStateOf(KpmAutoLoadManager.entries.value.toList()) }
     var showFirstTimeDialog by remember { mutableStateOf(KpmAutoLoadManager.isFirstTime(context)) }
     var dontShowAgain by remember { mutableStateOf(false) }
+    var isLoading by remember { mutableStateOf(true) }
 
     var editingEntry by remember { mutableStateOf<KpmAutoLoadEntry?>(null) }
     var showEditDialog by remember { mutableStateOf(false) }
+
+    val scope = rememberCoroutineScope()
     
     // 根据路径列表更新JSON字符串
     fun updateJsonString(entries: List<KpmAutoLoadEntry>, enabled: Boolean, onUpdate: (String) -> Unit) {
@@ -99,26 +104,32 @@ fun KpmAutoLoadConfigScreen(navigator: DestinationsNavigator) {
         contract = ActivityResultContracts.GetContent()
     ) { uri ->
         uri?.let {
-            // 导入KPM文件到内部存储
-            val importedPath = KpmAutoLoadManager.importKpm(context, it)
-            
-            if (importedPath != null && importedPath.endsWith(".kpm", ignoreCase = true) && importedPath !in kpmEntriesList.map { it.path }) {
-                kpmEntriesList = kpmEntriesList + KpmAutoLoadEntry(path = importedPath)
-                updateJsonString(kpmEntriesList, isEnabled) { newJson ->
-                    jsonString = newJson
+            scope.launch {
+                val importedPath = withContext(Dispatchers.IO) {
+                    KpmAutoLoadManager.importKpm(context, it)
                 }
-                showToast(context, context.getString(R.string.kpm_autoload_save_success))
-            } else if (importedPath == null) {
-                showToast(context, context.getString(R.string.kpm_autoload_file_not_found))
+
+                if (importedPath != null && importedPath.endsWith(".kpm", ignoreCase = true) && importedPath !in kpmEntriesList.map { it.path }) {
+                    kpmEntriesList = kpmEntriesList + KpmAutoLoadEntry(path = importedPath)
+                    updateJsonString(kpmEntriesList, isEnabled) { newJson ->
+                        jsonString = newJson
+                    }
+                    showToast(context, context.getString(R.string.kpm_autoload_save_success))
+                } else if (importedPath == null) {
+                    showToast(context, context.getString(R.string.kpm_autoload_file_not_found))
+                }
             }
         }
     }
     
     LaunchedEffect(Unit) {
-        val config = KpmAutoLoadManager.loadConfig(context)
-        isEnabled = config.enabled
-        jsonString = KpmAutoLoadManager.getConfigJson()
-        kpmEntriesList = config.entries
+        withContext(Dispatchers.IO) {
+            val config = KpmAutoLoadManager.loadConfig(context)
+            isEnabled = config.enabled
+            jsonString = KpmAutoLoadManager.getConfigJson()
+            kpmEntriesList = config.entries
+        }
+        isLoading = false
     }
 
     Scaffold(
@@ -136,6 +147,16 @@ fun KpmAutoLoadConfigScreen(navigator: DestinationsNavigator) {
             )
         }
     ) { innerPadding ->
+        if (isLoading) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(modifier = Modifier.size(48.dp))
+            }
+        } else {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -387,6 +408,7 @@ fun KpmAutoLoadConfigScreen(navigator: DestinationsNavigator) {
                 }
             }
         }
+        }
     }
 
     // 保存确认对话框
@@ -425,15 +447,19 @@ fun KpmAutoLoadConfigScreen(navigator: DestinationsNavigator) {
                                     KpmAutoLoadManager.parseConfigFromJson(jsonString)?.entries ?: emptyList()
                                 )
                             }
-                            
-                            val success = KpmAutoLoadManager.saveConfig(context, config)
-                            if (success) {
-                                showToast(context, context.getString(R.string.kpm_autoload_save_success))
-                                navigator.navigateUp()
-                            } else {
-                                showToast(context, context.getString(R.string.kpm_autoload_save_failed))
-                            }
+
                             showSaveDialog = false
+                            scope.launch {
+                                val success = withContext(Dispatchers.IO) {
+                                    KpmAutoLoadManager.saveConfig(context, config)
+                                }
+                                if (success) {
+                                    showToast(context, context.getString(R.string.kpm_autoload_save_success))
+                                    navigator.navigateUp()
+                                } else {
+                                    showToast(context, context.getString(R.string.kpm_autoload_save_failed))
+                                }
+                            }
                         }) {
                             Text(stringResource(android.R.string.ok))
                         }

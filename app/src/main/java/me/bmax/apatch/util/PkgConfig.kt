@@ -57,35 +57,41 @@ object PkgConfig {
     private fun writeConfigs(configs: HashMap<Int, Config>) {
         val file = File(APApplication.PACKAGE_CONFIG_FILE)
         if (!file.parentFile?.exists()!!) file.parentFile?.mkdirs()
-        val writer = FileWriter(file, false)
-        writer.write(CSV_HEADER + '\n')
-        configs.values.forEach {
-            if (!it.isDefault()) {
-                writer.write(it.toLine() + '\n')
+        val tmpFile = File.createTempFile("package_config", ".tmp", file.parentFile)
+        try {
+            val writer = FileWriter(tmpFile, false)
+            writer.use { w ->
+                w.write(CSV_HEADER + '\n')
+                configs.values.forEach {
+                    if (!it.isDefault()) {
+                        w.write(it.toLine() + '\n')
+                    }
+                }
             }
+            if (!tmpFile.renameTo(file)) {
+                throw IllegalStateException("Failed to rename temp file to ${file.absolutePath}")
+            }
+        } catch (e: Exception) {
+            tmpFile.delete()
+            throw e
         }
-        writer.flush()
-        writer.close()
     }
 
     fun changeConfig(config: Config) {
-        thread {
-            synchronized(PkgConfig.javaClass) {
-                Natives.su()
-                val configs = readConfigs()
-                val uid = config.profile.uid
-                // Root App should not be excluded
-                if (config.allow == 1) {
-                    config.exclude = 0
-                }
-                if (config.isDefault() && configs[uid] != null) {
-                    configs.remove(uid)
-                } else {
-                    Log.d(TAG, "change config: $config")
-                    configs[uid] = config
-                }
-                writeConfigs(configs)
+        synchronized(PkgConfig.javaClass) {
+            Natives.su()
+            val configs = readConfigs()
+            val uid = config.profile.uid
+            if (config.allow == 1) {
+                config.exclude = 0
             }
+            if (config.isDefault() && configs[uid] != null) {
+                configs.remove(uid)
+            } else {
+                Log.d(TAG, "change config: $config")
+                configs[uid] = config
+            }
+            writeConfigs(configs)
         }
     }
 

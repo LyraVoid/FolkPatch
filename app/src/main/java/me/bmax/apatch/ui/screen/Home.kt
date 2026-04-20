@@ -96,6 +96,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
+import me.bmax.apatch.ui.theme.refreshTheme
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -178,7 +179,11 @@ fun HomeScreen(navigator: DestinationsNavigator) {
         }
     }
 
-    val homeLayout = remember { APApplication.sharedPreferences.getString("home_layout_style", "stats") }
+    var homeLayout by remember { mutableStateOf(APApplication.sharedPreferences.getString("home_layout_style", "stats")) }
+    val homeRefreshObserver by refreshTheme.observeAsState(false)
+    if (homeRefreshObserver) {
+        homeLayout = APApplication.sharedPreferences.getString("home_layout_style", "stats")
+    }
 
     Scaffold(topBar = {
         TopBar(onInstallClick = dropUnlessResumed {

@@ -24,6 +24,7 @@ import me.bmax.apatch.R
 import me.bmax.apatch.apApp
 import me.bmax.apatch.ui.screen.MODULE_TYPE
 import java.io.File
+import java.io.IOException
 import java.security.MessageDigest
 import java.security.cert.CertificateFactory
 import java.security.cert.X509Certificate
@@ -37,6 +38,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
 
 private const val TAG = "APatchCli"
+private const val SHELL_TIMEOUT_MS = 10_000L
 
 private fun getKPatchPath(): String {
     return apApp.applicationInfo.nativeLibraryDir + File.separator + "libkpatch.so"
@@ -52,32 +54,54 @@ class RootShellInitializer : Shell.Initializer() {
     }
 }
 
+private fun buildWithTimeout(builder: Shell.Builder, vararg commands: String): Shell {
+    var result: Shell? = null
+    var error: Throwable? = null
+    val t = Thread {
+        try {
+            result = builder.build(*commands)
+        } catch (e: Throwable) {
+            error = e
+        }
+    }
+    t.name = "shell-build-${commands.firstOrNull() ?: "unknown"}"
+    t.start()
+    t.join(SHELL_TIMEOUT_MS)
+    if (t.isAlive) {
+        t.interrupt()
+        throw IOException("Shell creation timed out after ${SHELL_TIMEOUT_MS}ms: ${commands.joinToString(" ")}")
+    }
+    return result ?: throw (error ?: IOException("Shell creation failed"))
+}
+
 fun createRootShell(globalMnt: Boolean = false): Shell {
     Shell.enableVerboseLogging = BuildConfig.DEBUG
     val builder = Shell.Builder.create().setInitializers(RootShellInitializer::class.java)
 
     if (android.os.Process.myUid() == 0 && !globalMnt) {
         try {
-            return builder.build("sh")
+            return buildWithTimeout(builder, "sh")
         } catch (e: Throwable) {
             Log.e(TAG, "sh failed for root process", e)
         }
     }
 
     return try {
-        builder.build(
-            SUPERCMD, APApplication.superKey, "-Z", APApplication.MAGISK_SCONTEXT
+        buildWithTimeout(
+            builder, SUPERCMD, APApplication.superKey, "-Z", APApplication.MAGISK_SCONTEXT
         )
     } catch (e: Throwable) {
         Log.e(TAG, "su failed: ", e)
         return try {
             Log.e(TAG, "retry compat kpatch su")
             if (globalMnt) {
-                builder.build(
+                buildWithTimeout(
+                    builder,
                     getKPatchPath(), APApplication.superKey, "su", "-Z", APApplication.MAGISK_SCONTEXT, "--mount-master"
                 )
             }else{
-                builder.build(
+                buildWithTimeout(
+                    builder,
                     getKPatchPath(), APApplication.superKey, "su", "-Z", APApplication.MAGISK_SCONTEXT
                 )
             }
@@ -86,13 +110,13 @@ fun createRootShell(globalMnt: Boolean = false): Shell {
             return try {
                 Log.e(TAG, "retry su: ", e)
                 if (globalMnt) {
-                    builder.build("su","-mm")
+                    buildWithTimeout(builder, "su","-mm")
                 }else{
-                    builder.build("su")
+                    buildWithTimeout(builder, "su")
                 }
             } catch (e: Throwable) {
                 Log.e(TAG, "retry su failed: ", e)
-                return builder.build("sh")
+                return buildWithTimeout(builder, "sh")
             }
         }
     }

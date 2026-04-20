@@ -218,6 +218,12 @@ fn convert_superkey(s: &Option<String>) -> Option<CString> {
 pub fn refresh_ap_package_list(skey: &CStr, mutex: &Arc<Mutex<()>>) {
     let _lock = mutex.lock().unwrap();
 
+    if let Err(e) = synchronize_package_uid() {
+        error!("Failed to synchronize package UIDs: {}", e);
+    }
+
+    let package_configs = read_ap_package_config();
+
     let num = sc_su_uid_nums(skey);
     if num < 0 {
         error!("[refresh_su_list] Error getting number of UIDs: {}", num);
@@ -230,12 +236,18 @@ pub fn refresh_ap_package_list(skey: &CStr, mutex: &Arc<Mutex<()>>) {
         error!("[refresh_su_list] Error getting su list");
         return;
     }
+
+    let granted_uids: std::collections::HashSet<uid_t> = package_configs
+        .iter()
+        .filter(|c| c.allow == 1 && c.exclude == 0)
+        .map(|c| c.uid as uid_t)
+        .collect();
+
     for uid in &uids {
         if *uid == 0 || *uid == 2000 {
-            warn!(
-                "[refresh_ap_package_list] Skip revoking critical uid: {}",
-                uid
-            );
+            continue;
+        }
+        if granted_uids.contains(uid) {
             continue;
         }
         info!(
@@ -248,12 +260,7 @@ pub fn refresh_ap_package_list(skey: &CStr, mutex: &Arc<Mutex<()>>) {
         }
     }
 
-    if let Err(e) = synchronize_package_uid() {
-        error!("Failed to synchronize package UIDs: {}", e);
-    }
-
-    let package_configs = read_ap_package_config();
-    for config in package_configs {
+    for config in &package_configs {
         if config.allow == 1 && config.exclude == 0 {
             let profile = SuProfile {
                 uid: config.uid,

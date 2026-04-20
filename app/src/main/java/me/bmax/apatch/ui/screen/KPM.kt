@@ -22,9 +22,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.layout.size
@@ -709,6 +711,10 @@ private fun KPModuleList(
         state = pullToRefreshState,
         indicator = { PullToRefreshDefaults.LoadingIndicator(state = pullToRefreshState, isRefreshing = viewModel.isRefreshing, modifier = Modifier.align(Alignment.TopCenter)) }
     ) {
+        val configuration = LocalConfiguration.current
+        val isWideScreen = configuration.screenWidthDp >= 600
+        val chunkedModules = if (isWideScreen) remember(moduleList) { moduleList.chunked(2) } else null
+
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             state = state,
@@ -726,7 +732,9 @@ private fun KPModuleList(
                 moduleList.isEmpty() -> {
                     item {
                         Box(
-                            modifier = Modifier.fillParentMaxSize(),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .fillParentMaxHeight(),
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
@@ -737,32 +745,71 @@ private fun KPModuleList(
                 }
 
                 else -> {
-                    itemsIndexed(moduleList, key = { _, module -> module.name }) { index, module ->
-                        val scope = rememberCoroutineScope()
-                        KPModuleItem(
-                            module,
-                            onUninstall = {
-                                scope.launch { onModuleUninstall(module) }
-                            },
-                            onControl = {
-                                scope.launch {
-                                    if (checkStrongBiometric()) {
-                                        targetKPMToControl = module
-                                        showKPMControlDialog.value = true
+                    if (isWideScreen) {
+                        items(chunkedModules!!, key = { chunk -> chunk.joinToString("|") { it.name } }) { chunk ->
+                            Row(
+                                modifier = Modifier.fillMaxWidth().height(IntrinsicSize.Min),
+                                horizontalArrangement = Arrangement.spacedBy(16.dp)
+                            ) {
+                                chunk.forEach { module ->
+                                    Column(modifier = Modifier.weight(1f).fillMaxHeight()) {
+                                        val scope = rememberCoroutineScope()
+                                        KPModuleItem(
+                                            module,
+                                            onUninstall = {
+                                                scope.launch { onModuleUninstall(module) }
+                                            },
+                                            onControl = {
+                                                scope.launch {
+                                                    if (checkStrongBiometric()) {
+                                                        targetKPMToControl = module
+                                                        showKPMControlDialog.value = true
+                                                    }
+                                                }
+                                            },
+                                            showMoreModuleInfo = showMoreModuleInfo,
+                                            simpleListBottomBar = simpleListBottomBar,
+                                            foldSystemModule = foldSystemModule,
+                                            expanded = expandedModuleId == module.name,
+                                            onExpandToggle = {
+                                                expandedModuleId = if (expandedModuleId == module.name) null else module.name
+                                            }
+                                        )
                                     }
                                 }
-                            },
-                            showMoreModuleInfo = showMoreModuleInfo,
-                            simpleListBottomBar = simpleListBottomBar,
-                            foldSystemModule = foldSystemModule,
-                            expanded = expandedModuleId == module.name,
-                            onExpandToggle = {
-                                expandedModuleId = if (expandedModuleId == module.name) null else module.name
+                                if (chunk.size == 1) {
+                                    Spacer(modifier = Modifier.weight(1f))
+                                }
                             }
-                        )
+                        }
+                    } else {
+                        itemsIndexed(moduleList, key = { _, module -> module.name }) { index, module ->
+                            val scope = rememberCoroutineScope()
+                            KPModuleItem(
+                                module,
+                                onUninstall = {
+                                    scope.launch { onModuleUninstall(module) }
+                                },
+                                onControl = {
+                                    scope.launch {
+                                        if (checkStrongBiometric()) {
+                                            targetKPMToControl = module
+                                            showKPMControlDialog.value = true
+                                        }
+                                    }
+                                },
+                                showMoreModuleInfo = showMoreModuleInfo,
+                                simpleListBottomBar = simpleListBottomBar,
+                                foldSystemModule = foldSystemModule,
+                                expanded = expandedModuleId == module.name,
+                                onExpandToggle = {
+                                    expandedModuleId = if (expandedModuleId == module.name) null else module.name
+                                }
+                            )
 
-                        // fix last item shadow incomplete in LazyColumn
-                        Spacer(Modifier.height(1.dp))
+                            // fix last item shadow incomplete in LazyColumn
+                            Spacer(Modifier.height(1.dp))
+                        }
                     }
                 }
             }
@@ -1019,6 +1066,7 @@ private fun KPModuleItem(
     Surface(
         modifier = modifier
             .fillMaxWidth()
+            .fillMaxHeight()
             .clip(cardShape)
             .combinedClickable(
                 onClick = {

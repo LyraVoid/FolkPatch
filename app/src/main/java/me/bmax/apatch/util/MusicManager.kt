@@ -73,17 +73,24 @@ object MusicManager : DefaultLifecycleObserver {
                 setDataSource(context!!, Uri.fromFile(file))
                 setVolume(MusicConfig.volume, MusicConfig.volume)
                 isLooping = MusicConfig.isLoopingEnabled
+                setOnPreparedListener { mp ->
+                    mp.start()
+                    _duration.value = mp.duration
+                    _isPlaying.value = true
+                    startProgressUpdater()
+                }
                 setOnCompletionListener {
                     if (!isLooping) {
                         _isPlaying.value = false
                         _currentPosition.value = 0
                     }
                 }
-                prepare()
-                _duration.value = duration
-                start()
-                _isPlaying.value = true
-                startProgressUpdater()
+                setOnErrorListener { _, what, extra ->
+                    Log.e(TAG, "MediaPlayer error: what=$what extra=$extra")
+                    _isPlaying.value = false
+                    true
+                }
+                prepareAsync()
             }
         } catch (e: Exception) {
             Log.e(TAG, "Failed to play music", e)

@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Build
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -304,6 +306,14 @@ class MainActivity : AppCompatActivity() {
 
         installSplashScreen().setKeepOnScreenCondition { isLoading }
 
+        // Safety net: force dismiss splash after 15 seconds to prevent permanent hang
+        Handler(Looper.getMainLooper()).postDelayed({
+            if (isLoading) {
+                android.util.Log.w("MainActivity", "Splash safety net triggered - force dismissing")
+                isLoading = false
+            }
+        }, 15_000)
+
         enableEdgeToEdge()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             window.isNavigationBarContrastEnforced = false
@@ -316,7 +326,10 @@ class MainActivity : AppCompatActivity() {
                 window.javaClass
                     .getMethod("setEnableOnBackInvokedCallback", Boolean::class.javaPrimitiveType)
                     .invoke(window, false)
-            } catch (_: Exception) {}
+                android.util.Log.d("MainActivity", "Predictive back disabled via reflection")
+            } catch (e: Exception) {
+                android.util.Log.e("MainActivity", "Failed to disable predictive back via reflection", e)
+            }
         }
 
         super.onCreate(savedInstanceState)

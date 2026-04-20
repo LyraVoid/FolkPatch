@@ -16,6 +16,25 @@ import org.json.JSONArray
  */
 object AppData {
     private const val TAG = "AppData"
+    private const val NATIVE_CALL_TIMEOUT_MS = 5_000L
+
+    /**
+     * Run a potentially blocking native call with a timeout fallback.
+     * Since JNI syscalls cannot be cancelled by coroutines, we use a thread + join(timeout).
+     */
+    private fun <T> runNativeWithTimeout(timeoutMs: Long, defaultValue: T, block: () -> T): T {
+        var result: T? = null
+        val t = Thread { result = block() }
+        t.name = "native-call-timeout"
+        t.start()
+        t.join(timeoutMs)
+        return if (t.isAlive) {
+            Log.w(TAG, "Native call timed out after ${timeoutMs}ms")
+            defaultValue
+        } else {
+            result ?: defaultValue
+        }
+    }
 
     object DataRefreshManager {
         // Private state flows for counts
@@ -101,13 +120,14 @@ object AppData {
      * Note: Minus 1 to exclude the APatch manager itself from the count
      */
     private fun getSuperuserCount(): Int {
-        return try {
-            val uids = Natives.suUids()
-            // Subtract 1 because the manager itself is hidden from the list
-            (uids.size - 1).coerceAtLeast(0)
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to get superuser count", e)
-            0
+        return runNativeWithTimeout(NATIVE_CALL_TIMEOUT_MS, 0) {
+            try {
+                val uids = Natives.suUids()
+                (uids.size - 1).coerceAtLeast(0)
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to get superuser count", e)
+                0
+            }
         }
     }
 
@@ -129,11 +149,13 @@ object AppData {
      * Get kernel module count
      */
     private fun getKernelModuleCount(): Int {
-        return try {
-            Natives.kernelPatchModuleNum().toInt()
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to get kernel module count", e)
-            0
+        return runNativeWithTimeout(NATIVE_CALL_TIMEOUT_MS, 0) {
+            try {
+                Natives.kernelPatchModuleNum().toInt()
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to get kernel module count", e)
+                0
+            }
         }
     }
 }

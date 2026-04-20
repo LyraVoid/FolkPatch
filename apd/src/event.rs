@@ -414,6 +414,13 @@ pub fn start_uid_listener() -> Result<()> {
 
     watcher.watch(dir.as_ref(), RecursiveMode::NonRecursive)?;
 
+    {
+        let skey = CStr::from_bytes_with_nul(b"su\0")
+            .expect("[start_uid_listener] CStr::from_bytes_with_nul failed");
+        info!("[uid_monitor] Performing initial refresh on startup...");
+        refresh_ap_package_list(&skey, &mutex);
+    }
+
     let mut debounce = false;
     while let Ok(delayed) = rx.recv() {
         if delayed {

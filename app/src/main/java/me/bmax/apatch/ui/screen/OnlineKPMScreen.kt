@@ -17,6 +17,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -121,13 +122,41 @@ fun OnlineKPMScreen(navigator: DestinationsNavigator) {
                     }
                 }
             } else {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    items(viewModel.modules) { module ->
-                        OnlineKPMItem(module, context)
+                val configuration = LocalConfiguration.current
+                val isWideScreen = configuration.screenWidthDp >= 600
+
+                if (isWideScreen) {
+                    val chunkedModules = remember(viewModel.modules) { viewModel.modules.chunked(2) }
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding = PaddingValues(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        items(chunkedModules, key = { chunk -> chunk.joinToString("|") { it.name } }) { chunk ->
+                            Row(
+                                modifier = Modifier.fillMaxWidth().height(IntrinsicSize.Min),
+                                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                chunk.forEach { module ->
+                                    Column(modifier = Modifier.weight(1f).fillMaxHeight()) {
+                                        OnlineKPMItem(module, context)
+                                    }
+                                }
+                                if (chunk.size == 1) {
+                                    Spacer(modifier = Modifier.weight(1f))
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding = PaddingValues(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        items(viewModel.modules) { module ->
+                            OnlineKPMItem(module, context)
+                        }
                     }
                 }
             }
@@ -141,7 +170,7 @@ fun OnlineKPMItem(module: OnlineKPMViewModel.OnlineKPM, context: Context) {
     val downloadNotificationText = stringResource(R.string.online_kpm_download_notification, module.name)
 
     Surface(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth().fillMaxHeight(),
         color = MaterialTheme.colorScheme.surface,
         tonalElevation = 1.dp,
         shape = RoundedCornerShape(20.dp)

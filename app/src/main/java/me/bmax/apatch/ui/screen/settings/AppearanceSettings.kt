@@ -1667,7 +1667,10 @@ fun AppearanceSettingsContent(
         }
 
     if (showHomeLayoutChooseDialog.value) {
-        HomeLayoutChooseDialog(showHomeLayoutChooseDialog)
+        HomeLayoutChooseDialog(showHomeLayoutChooseDialog) { selectedLayout ->
+            currentStyle = selectedLayout
+            refreshTheme.value = true
+        }
     }
 
     if (showNavSchemeDialog) {
@@ -1860,7 +1863,7 @@ fun ThemeChooseDialog(showDialog: MutableState<Boolean>) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeLayoutChooseDialog(showDialog: MutableState<Boolean>) {
+fun HomeLayoutChooseDialog(showDialog: MutableState<Boolean>, onLayoutSelected: (String) -> Unit) {
     val prefs = APApplication.sharedPreferences
 
     BasicAlertDialog(
@@ -1902,6 +1905,7 @@ fun HomeLayoutChooseDialog(showDialog: MutableState<Boolean>) {
                             },
                             modifier = Modifier.clickable {
                                 prefs.edit().putString("home_layout_style", "default").apply()
+                                onLayoutSelected("default")
                                 showDialog.value = false
                             }
                         )
@@ -1916,6 +1920,7 @@ fun HomeLayoutChooseDialog(showDialog: MutableState<Boolean>) {
                             },
                             modifier = Modifier.clickable {
                                 prefs.edit().putString("home_layout_style", "kernelsu").apply()
+                                onLayoutSelected("kernelsu")
                                 showDialog.value = false
                             }
                         )
@@ -1930,6 +1935,7 @@ fun HomeLayoutChooseDialog(showDialog: MutableState<Boolean>) {
                             },
                             modifier = Modifier.clickable {
                                 prefs.edit().putString("home_layout_style", "focus").apply()
+                                onLayoutSelected("focus")
                                 showDialog.value = false
                             }
                         )
@@ -1944,6 +1950,7 @@ fun HomeLayoutChooseDialog(showDialog: MutableState<Boolean>) {
                             },
                             modifier = Modifier.clickable {
                                 prefs.edit().putString("home_layout_style", "sign").apply()
+                                onLayoutSelected("sign")
                                 showDialog.value = false
                             }
                         )
@@ -1958,6 +1965,7 @@ fun HomeLayoutChooseDialog(showDialog: MutableState<Boolean>) {
                             },
                             modifier = Modifier.clickable {
                                 prefs.edit().putString("home_layout_style", "circle").apply()
+                                onLayoutSelected("circle")
                                 showDialog.value = false
                             }
                         )
@@ -1972,6 +1980,7 @@ fun HomeLayoutChooseDialog(showDialog: MutableState<Boolean>) {
                             },
                             modifier = Modifier.clickable {
                                 prefs.edit().putString("home_layout_style", "dashboard_ui").apply()
+                                onLayoutSelected("dashboard_ui")
                                 showDialog.value = false
                             }
                         )
@@ -1986,6 +1995,7 @@ fun HomeLayoutChooseDialog(showDialog: MutableState<Boolean>) {
                             },
                             modifier = Modifier.clickable {
                                 prefs.edit().putString("home_layout_style", "stats").apply()
+                                onLayoutSelected("stats")
                                 showDialog.value = false
                             }
                         )
