@@ -39,7 +39,6 @@ pub const METAMODULE_DIR: &str = concatcp!(ADB_DIR, "metamodule/");
 pub const FP_KPMS_DIR: &str = concatcp!(ADB_DIR, "fp/kpms/");
 pub const FP_KPMS_AUTOLOAD_DIR: &str = concatcp!(ADB_DIR, "fp/kpms/autoload/");
 pub const KPM_AUTOLOAD_CONFIG: &str = concatcp!(ADB_DIR, "fp/kpms/kpm_autoload_config.json");
-pub const KPM_DISABLE_FILE: &str = concatcp!(FP_KPMS_DIR, DISABLE_FILE_NAME);
 
 // Module config
 pub const MODULE_CONFIG_DIR: &str = concatcp!(WORKING_DIR, "module_configs/");

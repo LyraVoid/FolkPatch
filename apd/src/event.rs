@@ -104,8 +104,26 @@ fn setup_logging() -> Result<()> {
 }
 
 fn disable_kpm_autoload() {
-    if let Err(e) = utils::ensure_file_exists(defs::KPM_DISABLE_FILE) {
-        warn!("failed to create KPM disable file: {e}");
+    let config_path = defs::KPM_AUTOLOAD_CONFIG;
+    let content = match std::fs::read_to_string(config_path) {
+        Ok(c) => c,
+        Err(e) => {
+            info!("KPM autoload config not found, skipping disable: {e}");
+            return;
+        }
+    };
+    let mut config: serde_json::Value = match serde_json::from_str(&content) {
+        Ok(v) => v,
+        Err(e) => {
+            warn!("failed to parse KPM autoload config: {e}");
+            return;
+        }
+    };
+    if let Some(obj) = config.as_object_mut() {
+        obj.insert("enabled".into(), serde_json::Value::Bool(false));
+    }
+    if let Err(e) = std::fs::write(config_path, serde_json::to_string_pretty(&config).unwrap_or_default()) {
+        warn!("failed to write KPM autoload config: {e}");
     }
 }
 
