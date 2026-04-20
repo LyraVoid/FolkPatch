@@ -353,6 +353,11 @@ pub fn autoload_kpm_modules(superkey: &Option<String>, event_filter: &str) {
         kpm_entries: Vec<KpmAutoLoadEntry>,
     }
 
+    if std::path::Path::new(crate::defs::KPM_DISABLE_FILE).exists() {
+        info!("[kpm_autoload] disable file exists, skipping all KPM auto-load");
+        return;
+    }
+
     let config_path = crate::defs::KPM_AUTOLOAD_CONFIG;
     let content = match std::fs::read_to_string(config_path) {
         Ok(c) => c,

@@ -103,10 +103,17 @@ fn setup_logging() -> Result<()> {
     Ok(())
 }
 
+fn disable_kpm_autoload() {
+    if let Err(e) = utils::ensure_file_exists(defs::KPM_DISABLE_FILE) {
+        warn!("failed to create KPM disable file: {e}");
+    }
+}
+
 fn disable_all_modules_safe() {
     if let Err(e) = module::disable_all_modules() {
         warn!("disable all modules failed: {e}");
     }
+    disable_kpm_autoload();
 }
 
 pub fn on_post_data_fs(superkey: Option<String>) -> Result<()> {
@@ -114,6 +121,11 @@ pub fn on_post_data_fs(superkey: Option<String>) -> Result<()> {
     report_kernel(superkey.clone(), "post-fs-data", "before")?;
 
     setup_fp_directories()?;
+
+    let safe_mode = utils::is_safe_mode(superkey.clone());
+    if safe_mode {
+        disable_kpm_autoload();
+    }
 
     supercall::autoload_kpm_modules(&superkey, "post-fs-data");
 
@@ -142,8 +154,6 @@ pub fn on_post_data_fs(superkey: Option<String>) -> Result<()> {
             Err(_) => println!("{key} not found"),
         }
     }
-
-    let safe_mode = utils::is_safe_mode(superkey.clone());
 
     if safe_mode {
         // we should still mount modules.img to `/data/adb/modules` in safe mode
