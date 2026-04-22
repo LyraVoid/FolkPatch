@@ -1,5 +1,0 @@
-# API Token Configuration
-# 请填入服务端Token
-api.token=YOUR_SERVER_TOKEN_HERE
-# 请填入应用签名Hash (SHA-256)
-app.signature.hash=YOUR_APP_SIGNATURE_HASH_HERE
