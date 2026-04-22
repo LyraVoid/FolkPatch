@@ -369,18 +369,6 @@ fun GeneralSettingsContent(
             )
         }
 
-        ToggleSettingCard(
-            flat = flat,
-            title = launcherIconTitle,
-            description = launcherIconSummary,
-            checked = useAltIcon.value,
-            onCheckedChange = {
-                prefs.edit { putBoolean("use_alt_icon", it) }
-                LauncherIconUtils.updateLauncherState(context)
-                useAltIcon.value = it
-            }
-        )
-
         if (kPatchReady) {
             ExpressiveCard(flat = flat, onClick = { showResetSuPathDialog.value = true }) {
                 Row(
