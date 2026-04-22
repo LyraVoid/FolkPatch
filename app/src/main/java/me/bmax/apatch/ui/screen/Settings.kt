@@ -112,6 +112,9 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                     IconButton(onClick = { showDevDialog = true }) {
                         Icon(Icons.Outlined.Info, contentDescription = null)
                     }
+                    IconButton(onClick = { navigator.navigate(FunctionSettingsScreenDestination) }) {
+                        Icon(Icons.Filled.Tune, contentDescription = null)
+                    }
                 },
                 scrollBehavior = scrollBehavior,
             )
@@ -179,15 +182,6 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                         onClick = { navigator.navigate(ModuleSettingsScreenDestination) },
                     )
                 }
-            }
-
-            item {
-                SettingsListItem(
-                    icon = Icons.Filled.Tune,
-                    title = stringResource(R.string.settings_category_function),
-                    summary = stringResource(R.string.settings_category_function_summary),
-                    onClick = { navigator.navigate(FunctionSettingsScreenDestination) },
-                )
             }
 
             item {
