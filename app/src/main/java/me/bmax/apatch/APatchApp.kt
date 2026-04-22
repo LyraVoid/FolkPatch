@@ -372,7 +372,6 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
         }
         
         APatchKeyHelper.setSharedPreferences(sharedPreferences)
-        me.bmax.apatch.util.LauncherIconUtils.applySaved(this)
         Log.d(TAG, "Reading superKey...")
         val savedKey = try {
             APatchKeyHelper.readSPSuperKey()
