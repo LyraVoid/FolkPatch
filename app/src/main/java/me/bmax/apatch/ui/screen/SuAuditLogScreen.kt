@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -37,14 +38,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.ramcosta.composedestinations.annotation.Destination
@@ -163,35 +166,25 @@ private fun KernelAuditList(entries: List<SuAuditLog.AuditEntry.KernelEntry>) {
                     }
                 }
 
-                val dateFormat = remember {
-                    SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-                }
-
                 ListItem(
                     colors = ListItemDefaults.colors(containerColor = Color.Transparent),
                     headlineContent = {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text(appLabel)
-                            Spacer(Modifier.width(8.dp))
-                            AuditActionBadge(
-                                label = if (entry.toUid == 0) "ROOT" else "UID ${entry.toUid}",
-                                color = Color(0xFF4CAF50),
-                            )
-                        }
+                        Text(
+                            buildAnnotatedString {
+                                append(appLabel)
+                                append("  ")
+                                withStyle(SpanStyle(color = MaterialTheme.colorScheme.primary)) {
+                                    append(if (entry.toUid == 0) "root" else "uid ${entry.toUid}")
+                                }
+                            }
+                        )
                     },
                     supportingContent = {
-                        Column {
-                            Text(
-                                "PID: ${entry.pid}  ${entry.comm}",
-                                style = MaterialTheme.typography.bodySmall.copy(fontFamily = FontFamily.Monospace),
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                            Text(
-                                "#${entry.timestamp}",
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.outline,
-                            )
-                        }
+                        Text(
+                            "${entry.comm}  PID ${entry.pid}",
+                            style = MaterialTheme.typography.bodySmall.copy(fontFamily = FontFamily.Monospace),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
                     },
                     leadingContent = {
                         val appInfo = remember(entry.uid) {
@@ -209,21 +202,20 @@ private fun KernelAuditList(entries: List<SuAuditLog.AuditEntry.KernelEntry>) {
                                 model = ImageRequest.Builder(LocalContext.current).data(appInfo)
                                     .crossfade(true).build(),
                                 contentDescription = null,
-                                modifier = Modifier.size(48.dp),
+                                modifier = Modifier.size(40.dp).clip(CircleShape),
                             )
                         } else {
                             Box(
                                 modifier = Modifier
-                                    .size(48.dp)
-                                    .background(
-                                        MaterialTheme.colorScheme.surfaceContainerHigh,
-                                        RoundedCornerShape(8.dp),
-                                    ),
+                                    .size(40.dp)
+                                    .clip(CircleShape)
+                                    .background(MaterialTheme.colorScheme.surfaceContainerHigh),
                                 contentAlignment = Alignment.Center,
                             ) {
                                 Text(
                                     text = entry.uid.toString().take(2),
-                                    style = MaterialTheme.typography.titleMedium,
+                                    style = MaterialTheme.typography.labelMedium,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 )
                             }
                         }
@@ -260,38 +252,35 @@ private fun AppAuditList(entries: List<SuAuditLog.AuditEntry.AppEntry>) {
                     }
                 }
 
-                val actionLabel = when (entry.action) {
-                    "GRANT" -> stringResource(R.string.su_audit_action_grant)
-                    "REVOKE" -> stringResource(R.string.su_audit_action_revoke)
-                    else -> stringResource(R.string.su_audit_action_exclude)
-                }
-
-                val actionColor = when (entry.action) {
-                    "GRANT" -> Color(0xFF4CAF50)
-                    "REVOKE" -> Color(0xFFF44336)
-                    else -> Color(0xFFFF9800)
-                }
-
                 val dateFormat = remember {
                     SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
                 }
 
+                val (actionLabel, actionColor) = when (entry.action) {
+                    "GRANT" -> stringResource(R.string.su_audit_action_grant) to MaterialTheme.colorScheme.primary
+                    "REVOKE" -> stringResource(R.string.su_audit_action_revoke) to MaterialTheme.colorScheme.error
+                    else -> stringResource(R.string.su_audit_action_exclude) to MaterialTheme.colorScheme.tertiary
+                }
+
                 ListItem(
                     colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                    headlineContent = { Text(appLabel) },
+                    headlineContent = {
+                        Text(
+                            buildAnnotatedString {
+                                append(appLabel)
+                                append("  ")
+                                withStyle(SpanStyle(color = actionColor, fontWeight = FontWeight.Medium)) {
+                                    append(actionLabel)
+                                }
+                            }
+                        )
+                    },
                     supportingContent = {
-                        Column {
-                            Text(
-                                entry.packageName,
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                            Text(
-                                dateFormat.format(Date(entry.timestamp)),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.outline,
-                            )
-                        }
+                        Text(
+                            dateFormat.format(Date(entry.timestamp)),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
                     },
                     leadingContent = {
                         val appInfo = remember(entry.packageName) {
@@ -306,47 +295,28 @@ private fun AppAuditList(entries: List<SuAuditLog.AuditEntry.AppEntry>) {
                                 model = ImageRequest.Builder(LocalContext.current).data(appInfo)
                                     .crossfade(true).build(),
                                 contentDescription = null,
-                                modifier = Modifier.size(48.dp),
+                                modifier = Modifier.size(40.dp).clip(CircleShape),
                             )
                         } else {
                             Box(
                                 modifier = Modifier
-                                    .size(48.dp)
-                                    .background(
-                                        MaterialTheme.colorScheme.surfaceContainerHigh,
-                                        RoundedCornerShape(8.dp),
-                                    ),
+                                    .size(40.dp)
+                                    .clip(CircleShape)
+                                    .background(MaterialTheme.colorScheme.surfaceContainerHigh),
                                 contentAlignment = Alignment.Center,
                             ) {
                                 Text(
                                     text = entry.packageName.take(1).uppercase(),
-                                    style = MaterialTheme.typography.titleMedium,
+                                    style = MaterialTheme.typography.labelMedium,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 )
                             }
                         }
-                    },
-                    trailingContent = {
-                        AuditActionBadge(label = actionLabel, color = actionColor)
                     },
                 )
             }
             item { Spacer(Modifier.height(16.dp)) }
         }
-    }
-}
-
-@Composable
-private fun AuditActionBadge(label: String, color: Color) {
-    Box(
-        modifier = Modifier
-            .background(color, shape = RoundedCornerShape(4.dp))
-            .padding(horizontal = 8.dp, vertical = 4.dp),
-    ) {
-        Text(
-            text = label,
-            style = TextStyle(fontSize = 11.sp, fontWeight = FontWeight.Medium),
-            color = Color.White,
-        )
     }
 }
 
