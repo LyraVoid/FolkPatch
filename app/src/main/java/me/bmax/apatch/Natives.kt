@@ -166,6 +166,18 @@ object Natives {
         return nativeUtsReset(APApplication.superKey)
     }
 
+    @FastNative
+    private external fun nativeSuAuditList(superKey: String): String
+    fun suAuditList(): String {
+        return nativeSuAuditList(APApplication.superKey)
+    }
+
+    @FastNative
+    private external fun nativeSuAuditClear(superKey: String): Long
+    fun suAuditClear(): Long {
+        return nativeSuAuditClear(APApplication.superKey)
+    }
+
     external fun nativeGetApiToken(context: Context): String
     fun getApiToken(context: Context): String {
         return nativeGetApiToken(context)
