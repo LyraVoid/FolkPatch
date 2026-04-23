@@ -100,7 +100,7 @@ object SuAuditLog {
             Log.e(TAG, "Failed to parse kernel audit log", e)
         }
 
-        return entries.reversed()
+        return entries.filter { it.uid != 0 }.reversed()
     }
 
     fun getAppEntries(): List<AuditEntry.AppEntry> {

@@ -64,16 +64,16 @@ fun SuAuditLogScreen(navigator: DestinationsNavigator) {
     var showClearDialog by remember { mutableStateOf(false) }
     var selectedTab by remember { mutableIntStateOf(0) }
 
-    val kernelEntries = remember { SuAuditLog.getKernelEntries() }
-    val appEntries = remember { SuAuditLog.getKernelEntries().let { _ ->
-        SuAuditLog.getAppEntries()
-    }}
+    var kernelEntries by remember { mutableStateOf(SuAuditLog.getKernelEntries()) }
+    var appEntries by remember { mutableStateOf(SuAuditLog.getAppEntries()) }
 
     if (showClearDialog) {
         SuAuditClearDialog(
             onDismiss = { showClearDialog = false },
             onConfirm = {
                 SuAuditLog.clearEntries()
+                kernelEntries = SuAuditLog.getKernelEntries()
+                appEntries = SuAuditLog.getAppEntries()
                 showClearDialog = false
             }
         )
@@ -148,7 +148,7 @@ private fun KernelAuditList(entries: List<SuAuditLog.AuditEntry.KernelEntry>) {
         }
     } else {
         LazyColumn(Modifier.fillMaxSize()) {
-            items(entries, key = { it.timestamp + it.pid }) { entry ->
+            items(entries, key = { it.timestamp }) { entry ->
                 val pm = LocalContext.current.packageManager
                 val appLabel = remember(entry.uid) {
                     try {
@@ -250,7 +250,7 @@ private fun AppAuditList(entries: List<SuAuditLog.AuditEntry.AppEntry>) {
         }
     } else {
         LazyColumn(Modifier.fillMaxSize()) {
-            items(entries, key = { it.timestamp + it.uid }) { entry ->
+            items(entries, key = { "${it.packageName}_${it.timestamp}" }) { entry ->
                 val pm = LocalContext.current.packageManager
                 val appLabel = remember(entry.packageName) {
                     try {
