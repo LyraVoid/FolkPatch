@@ -231,6 +231,8 @@
     <string name="su_audit_action_grant">已授权</string>
     <string name="su_audit_action_revoke">已撤销</string>
     <string name="su_audit_action_exclude">已排除</string>
+    <string name="su_audit_tab_usage">使用记录</string>
+    <string name="su_audit_tab_operations">操作记录</string>
 
     <string name="su_pkg_excluded_setting_title">改排除设置喵</string>
     <string name="su_pkg_excluded_setting_summary">开这个，FolkPatch就能恢复这应用改过的文件哒喵！</string>

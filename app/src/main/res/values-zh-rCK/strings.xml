@@ -838,6 +838,8 @@
     <string name="su_audit_action_grant">已授权</string>
     <string name="su_audit_action_revoke">已撤销</string>
     <string name="su_audit_action_exclude">已排除</string>
+    <string name="su_audit_tab_usage">使用记录</string>
+    <string name="su_audit_tab_operations">操作记录</string>
 
     <string name="patch_output_written_to"> 烹饪成功，菜品输出到 </string>
     <string name="patch_write_failed"> 烹饪失败，发生了厨房事故</string>

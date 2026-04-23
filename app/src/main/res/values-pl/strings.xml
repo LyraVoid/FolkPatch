@@ -201,6 +201,8 @@
     <string name="su_audit_action_grant">Udzielono</string>
     <string name="su_audit_action_revoke">Unieważniono</string>
     <string name="su_audit_action_exclude">Wykluczono</string>
+    <string name="su_audit_tab_usage">Dziennik użycia</string>
+    <string name="su_audit_tab_operations">Dziennik operacji</string>
 
     <string name="su_show_system_apps">Pokaż aplikacje systemowe</string>
     <string name="su_hide_system_apps">Ukryj aplikacje systemowe</string>

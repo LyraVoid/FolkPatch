@@ -109,6 +109,8 @@
     <string name="su_audit_action_grant">Concedido</string>
     <string name="su_audit_action_revoke">Revogado</string>
     <string name="su_audit_action_exclude">Excluído</string>
+    <string name="su_audit_tab_usage">Registro de Uso</string>
+    <string name="su_audit_tab_operations">Registro de Operações</string>
 
     <string name="home_learn_apatch">Aprenda FolkPatch</string>
     <string name="home_click_to_learn_apatch">Saiba mais sobre os recursos do FolkPatch e como usar</string>

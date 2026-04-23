@@ -222,6 +222,8 @@
     <string name="su_audit_action_grant">已授權</string>
     <string name="su_audit_action_revoke">已撤銷</string>
     <string name="su_audit_action_exclude">已排除</string>
+    <string name="su_audit_tab_usage">使用記錄</string>
+    <string name="su_audit_tab_operations">操作記錄</string>
 
     <string name="su_show_system_apps">顯示系統應用程式</string>
     <string name="su_hide_system_apps">隱藏系統應用程式</string>

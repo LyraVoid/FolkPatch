@@ -214,6 +214,8 @@
     <string name="su_audit_action_grant">已授权</string>
     <string name="su_audit_action_revoke">已撤销</string>
     <string name="su_audit_action_exclude">已排除</string>
+    <string name="su_audit_tab_usage">使用记录</string>
+    <string name="su_audit_tab_operations">操作记录</string>
 
     <string name="su_pkg_excluded_setting_title">改仙籍摒除之令</string>
     <string name="su_pkg_excluded_setting_summary">启此仙令，许FolkPatch仙法复此凡器仙符所改之诸天道文卷。</string>

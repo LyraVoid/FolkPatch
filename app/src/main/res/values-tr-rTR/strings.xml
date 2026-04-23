@@ -859,6 +859,8 @@ Komutların çalışması için uygulamanın tamamen kapatılıp yeniden açıld
     <string name="su_audit_action_grant">İzin Verildi</string>
     <string name="su_audit_action_revoke">İptal Edildi</string>
     <string name="su_audit_action_exclude">Dışlandı</string>
+    <string name="su_audit_tab_usage">Kullanım Günlüğü</string>
+    <string name="su_audit_tab_operations">İşlem Günlüğü</string>
 
     <string name="patch_output_written_to"> Çıktı dosyası şuraya yazıldı: </string>
     <string name="patch_write_failed"> Yamalanmış boot.img yazılamadı</string>

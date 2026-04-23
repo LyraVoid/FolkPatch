@@ -216,6 +216,8 @@
     <string name="su_audit_action_grant">Đã cấp quyền</string>
     <string name="su_audit_action_revoke">Đã thu hồi</string>
     <string name="su_audit_action_exclude">Đã loại trừ</string>
+    <string name="su_audit_tab_usage">Nhật ký sử dụng</string>
+    <string name="su_audit_tab_operations">Nhật ký thao tác</string>
 
     <string name="su_pkg_excluded_setting_title">Chỉnh sửa loại trừ</string>
     <string name="su_pkg_excluded_setting_summary">Bật tùy chọn này sẽ cho phép FolkPatch khôi phục mọi tệp đã được module ứng dụng này sửa đổi。</string>

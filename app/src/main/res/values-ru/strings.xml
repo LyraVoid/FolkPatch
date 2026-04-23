@@ -228,6 +228,8 @@
     <string name="su_audit_action_grant">Разрешено</string>
     <string name="su_audit_action_revoke">Отозвано</string>
     <string name="su_audit_action_exclude">Исключено</string>
+    <string name="su_audit_tab_usage">Журнал использования</string>
+    <string name="su_audit_tab_operations">Журнал операций</string>
 
     <string name="su_show_system_apps">Показать системные приложения</string>
     <string name="su_hide_system_apps">Скрыть системные приложения</string>

@@ -914,6 +914,8 @@
     <string name="su_audit_action_grant">허용됨</string>
     <string name="su_audit_action_revoke">취소됨</string>
     <string name="su_audit_action_exclude">제외됨</string>
+    <string name="su_audit_tab_usage">사용 기록</string>
+    <string name="su_audit_tab_operations">작업 기록</string>
 
     <string name="patch_output_written_to"> 출력 파일이 저장된 위치: </string>
     <string name="patch_write_failed"> 패치된 boot.img 작성 실패</string>

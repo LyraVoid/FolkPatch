@@ -109,6 +109,8 @@
     <string name="su_audit_action_grant">مُصرح</string>
     <string name="su_audit_action_revoke">مُلغى</string>
     <string name="su_audit_action_exclude">مُستثنى</string>
+    <string name="su_audit_tab_usage">سجل الاستخدام</string>
+    <string name="su_audit_tab_operations">سجل العمليات</string>
 
     <string name="home_learn_apatch">تعلم FolkPatch</string>
     <string name="home_click_to_learn_apatch">تعرف على ميزات FolkPatch وكيفية استخدامه</string>

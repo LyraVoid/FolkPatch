@@ -228,6 +228,8 @@
     <string name="su_audit_action_grant">Diizinkan</string>
     <string name="su_audit_action_revoke">Dicabut</string>
     <string name="su_audit_action_exclude">Dikecualikan</string>
+    <string name="su_audit_tab_usage">Log Penggunaan</string>
+    <string name="su_audit_tab_operations">Log Operasi</string>
 
     <string name="su_show_system_apps">Tampilkan aplikasi sistem</string>
     <string name="su_hide_system_apps">Sembunyikan aplikasi sistem</string>

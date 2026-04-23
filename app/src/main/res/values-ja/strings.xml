@@ -819,6 +819,8 @@
     <string name="su_audit_action_grant">許可済み</string>
     <string name="su_audit_action_revoke">取り消し済み</string>
     <string name="su_audit_action_exclude">除外済み</string>
+    <string name="su_audit_tab_usage">使用履歴</string>
+    <string name="su_audit_tab_operations">操作履歴</string>
 
     <string name="patch_output_written_to">出力ファイル先</string>
     <string name="patch_write_failed">パッチ済みの boot.img のフラッシュに失敗しました。</string>

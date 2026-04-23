@@ -872,6 +872,8 @@
     <string name="su_audit_action_grant">已授权</string>
     <string name="su_audit_action_revoke">已撤销</string>
     <string name="su_audit_action_exclude">已排除</string>
+    <string name="su_audit_tab_usage">使用记录</string>
+    <string name="su_audit_tab_operations">操作记录</string>
 
     <string name="patch_output_written_to"> 锻造完成！输出到了 </string>
     <string name="patch_write_failed"> 合成台炸了！检查一下材料够不够</string>

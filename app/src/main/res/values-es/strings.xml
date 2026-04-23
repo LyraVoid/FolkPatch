@@ -109,6 +109,8 @@
     <string name="su_audit_action_grant">Autorizado</string>
     <string name="su_audit_action_revoke">Revocado</string>
     <string name="su_audit_action_exclude">Excluido</string>
+    <string name="su_audit_tab_usage">Registro de uso</string>
+    <string name="su_audit_tab_operations">Registro de operaciones</string>
 
     <string name="home_learn_apatch">Aprender FolkPatch</string>
     <string name="home_click_to_learn_apatch">Aprende sobre las características de FolkPatch y cómo usarlo</string>
