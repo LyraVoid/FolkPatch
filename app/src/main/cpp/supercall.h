@@ -546,6 +546,23 @@ static inline long sc_su_get_safemode(const char *key)
     return syscall(__NR_supercall, key, ver_and_cmd(key, SUPERCALL_SU_GET_SAFEMODE));
 }
 
+static inline long sc_su_audit_nums(const char *key)
+{
+    if (!key || !key[0]) return -EINVAL;
+    return syscall(__NR_supercall, key, ver_and_cmd(key, SUPERCALL_SU_AUDIT_LIST), (struct su_audit_entry *)0, 0);
+}
+
+static inline long sc_su_audit_list(const char *key, struct su_audit_entry *entries, int num)
+{
+    if (!key || !key[0]) return -EINVAL;
+    return syscall(__NR_supercall, key, ver_and_cmd(key, SUPERCALL_SU_AUDIT_LIST), entries, num);
+}
+
+static inline long sc_su_audit_clear(const char *key)
+{
+    if (!key || !key[0]) return -EINVAL;
+    return syscall(__NR_supercall, key, ver_and_cmd(key, SUPERCALL_SU_AUDIT_CLEAR));
+}
 
 static inline long sc_bootlog(const char *key)
 {

@@ -878,6 +878,8 @@
     <string name="su_audit_action_grant">已授权</string>
     <string name="su_audit_action_revoke">已撤销</string>
     <string name="su_audit_action_exclude">已排除</string>
+    <string name="su_audit_tab_usage">使用记录</string>
+    <string name="su_audit_tab_operations">操作记录</string>
 
     <string name="patch_output_written_to"> 修补成功，文件输出到 </string>
     <string name="patch_write_failed"> 修补失败，发生了致命错误</string>

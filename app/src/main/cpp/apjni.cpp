@@ -6,6 +6,8 @@
  */
 
 #include <cstring>
+#include <cstdio>
+#include <string>
 #include <vector>
 
 #include "apjni.hpp"
@@ -278,6 +280,60 @@ jlong nativeUtsReset(JNIEnv *env, jobject /* this */, jstring super_key_jstr) {
     return rc;
 }
 
+jstring nativeSuAuditList(JNIEnv *env, jobject /* this */, jstring super_key_jstr) {
+    ensureSuperKeyNonNull(super_key_jstr);
+
+    const auto super_key = JUTFString(env, super_key_jstr);
+
+    // First get the count
+    long count = sc_su_audit_list(super_key.get(), nullptr, 0);
+    if (count <= 0) {
+        return env->NewStringUTF("[]");
+    }
+    if (count > 256) count = 256;
+
+    // Allocate buffer and fetch entries
+    struct su_audit_entry *entries = (struct su_audit_entry *)malloc(count * sizeof(struct su_audit_entry));
+    if (!entries) {
+        return env->NewStringUTF("[]");
+    }
+
+    long actual = sc_su_audit_list(super_key.get(), entries, (int)count);
+    if (actual <= 0) {
+        free(entries);
+        return env->NewStringUTF("[]");
+    }
+
+    // Build JSON array
+    std::string json = "[";
+    for (int i = 0; i < actual; i++) {
+        struct su_audit_entry *e = &entries[i];
+        if (i > 0) json += ",";
+
+        char buf[512];
+        snprintf(buf, sizeof(buf),
+                 "{\"ts\":%llu,\"uid\":%d,\"pid\":%d,\"tgid\":%d,\"to_uid\":%d,\"sctx\":\"%s\",\"comm\":\"%s\"}",
+                 (unsigned long long)e->timestamp, e->uid, e->pid, e->tgid, e->to_uid,
+                 e->scontext, e->comm);
+        json += buf;
+    }
+    json += "]";
+
+    free(entries);
+    return env->NewStringUTF(json.c_str());
+}
+
+jlong nativeSuAuditClear(JNIEnv *env, jobject /* this */, jstring super_key_jstr) {
+    ensureSuperKeyNonNull(super_key_jstr);
+
+    const auto super_key = JUTFString(env, super_key_jstr);
+    long rc = sc_su_audit_clear(super_key.get());
+    if (rc < 0) [[unlikely]] {
+        LOGE("nativeSuAuditClear error: %ld", rc);
+    }
+    return rc;
+}
+
 JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void * /*reserved*/) {
     LOGI("Enter OnLoad");
 
@@ -314,6 +370,8 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void * /*reserved*/) {
         {"nativeResetSuPath", "(Ljava/lang/String;Ljava/lang/String;)Z", reinterpret_cast<void *>(&nativeResetSuPath)},
         {"nativeUtsSet", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)J", reinterpret_cast<void *>(&nativeUtsSet)},
         {"nativeUtsReset", "(Ljava/lang/String;)J", reinterpret_cast<void *>(&nativeUtsReset)},
+        {"nativeSuAuditList", "(Ljava/lang/String;)Ljava/lang/String;", reinterpret_cast<void *>(&nativeSuAuditList)},
+        {"nativeSuAuditClear", "(Ljava/lang/String;)J", reinterpret_cast<void *>(&nativeSuAuditClear)},
         {"nativeGetApiToken", "(Landroid/content/Context;)Ljava/lang/String;", reinterpret_cast<void *>(&nativeGetApiToken)},
     };
 
