@@ -208,7 +208,7 @@ class PatchesViewModel : ViewModel() {
     }
 
     val checkSuperKeyValidation: (superKey: String) -> Boolean = { superKey ->
-        superKey.length in 8..63 && superKey.any { it.isDigit() } && superKey.any { it.isLetter() }
+        superKey.length in 8..63 && superKey.all { it.isLetterOrDigit() } && superKey.any { it.isDigit() } && superKey.any { it.isLetter() }
     }
 
     fun copyAndParseBootimg(uri: Uri) {
@@ -601,7 +601,11 @@ class PatchesViewModel : ViewModel() {
                 APApplication.updateSuperKeyQuietly(superkey)
             }
 
-            shell.newJob().add("echo '$superkey' > /data/adb/folk_superkey", "chmod 600 /data/adb/folk_superkey", "chown root:root /data/adb/folk_superkey").exec()
+            shell.newJob().add(
+                "printf '%s' '$superkey' > /data/adb/folk_superkey",
+                "chmod 600 /data/adb/folk_superkey",
+                "chown root:root /data/adb/folk_superkey"
+            ).exec()
 
             if (mode == PatchMode.PATCH_AND_INSTALL) {
                 logs.add("- Reboot to finish the installation...")
