@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">FolkPatch</string>
     <string name="app_name_fpatch">FPatch</string>
@@ -205,6 +205,15 @@
     <string name="su_app_action_launch_success">正在唤出法器 %s</string>
     <string name="su_app_action_force_stop_success">已封禁法器 %s</string>
     <string name="su_app_action_failed">渡劫败陨: %s</string>
+
+    <!-- SU Audit Log -->
+    <string name="su_audit_log_title">授权日志</string>
+    <string name="su_audit_log_empty">暂无授权记录</string>
+    <string name="su_audit_log_clear">清除日志</string>
+    <string name="su_audit_log_clear_confirm">确认清除所有授权记录？</string>
+    <string name="su_audit_action_grant">已授权</string>
+    <string name="su_audit_action_revoke">已撤销</string>
+    <string name="su_audit_action_exclude">已排除</string>
 
     <string name="su_pkg_excluded_setting_title">改仙籍摒除之令</string>
     <string name="su_pkg_excluded_setting_summary">启此仙令，许FolkPatch仙法复此凡器仙符所改之诸天道文卷。</string>
@@ -987,4 +996,9 @@
     <string name="home_stats_kernel_modules">内核仙卷</string>
     <string name="home_stats_apm_modules">APM 仙卷</string>
     <string name="home_stats_superusers">至尊权限</string>
+    <string name="settings_kernel_spoof">内核伪装术</string>
+    <string name="settings_kernel_spoof_summary">伪装内核版本和修炼时辰</string>
+    <string name="settings_kernel_spoof_version">内核仙卷版本</string>
+    <string name="settings_kernel_spoof_build_time">内核修炼时辰</string>
+    <string name="settings_kernel_spoof_restore">恢复原状</string>
 </resources>

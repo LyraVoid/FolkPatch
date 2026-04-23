@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">FolkPatch</string>
     <string name="app_name_fpatch">FPatch</string>
@@ -207,6 +207,15 @@
     <string name="su_app_action_launch_success">正在召唤 %s</string>
     <string name="su_app_action_force_stop_success">已封印 %s</string>
     <string name="su_app_action_failed">魔法失效: %s</string>
+
+    <!-- SU Audit Log -->
+    <string name="su_audit_log_title">授权日志</string>
+    <string name="su_audit_log_empty">暂无授权记录</string>
+    <string name="su_audit_log_clear">清除日志</string>
+    <string name="su_audit_log_clear_confirm">确认清除所有授权记录？</string>
+    <string name="su_audit_action_grant">已授权</string>
+    <string name="su_audit_action_revoke">已撤销</string>
+    <string name="su_audit_action_exclude">已排除</string>
 
     <string name="su_pkg_excluded_setting_title">免疫设置</string>
     <string name="su_pkg_excluded_setting_summary">启用此选项将允许魔法工坊恢复此应用所受的魔法影响。</string>
@@ -989,4 +998,9 @@
     <string name="home_stats_kernel_modules">内核魔法书</string>
     <string name="home_stats_apm_modules">APM 魔法书</string>
     <string name="home_stats_superusers">大魔法师</string>
+    <string name="settings_kernel_spoof">内核伪装魔法</string>
+    <string name="settings_kernel_spoof_summary">伪装内核版本和施法时间</string>
+    <string name="settings_kernel_spoof_version">内核魔法版本</string>
+    <string name="settings_kernel_spoof_build_time">内核施法时间</string>
+    <string name="settings_kernel_spoof_restore">恢复魔法</string>
 </resources>

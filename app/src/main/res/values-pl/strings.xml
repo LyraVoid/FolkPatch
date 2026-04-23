@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name_fpatch">FPatch</string>
     <string name="desktop_app_name">Nazwa aplikacji desktopowej</string>
@@ -192,6 +192,16 @@
     <string name="su_app_action_launch_success">Uruchamianie %s</string>
     <string name="su_app_action_force_stop_success">Wymuszono zatrzymanie %s</string>
     <string name="su_app_action_failed">Operacja nie powiodła się: %s</string>
+
+    <!-- SU Audit Log -->
+    <string name="su_audit_log_title">Dziennik autoryzacji</string>
+    <string name="su_audit_log_empty">Brak rekordów autoryzacji</string>
+    <string name="su_audit_log_clear">Wyczyść dziennik</string>
+    <string name="su_audit_log_clear_confirm">Potwierdź wyczyszczenie wszystkich rekordów autoryzacji?</string>
+    <string name="su_audit_action_grant">Udzielono</string>
+    <string name="su_audit_action_revoke">Unieważniono</string>
+    <string name="su_audit_action_exclude">Wykluczono</string>
+
     <string name="su_show_system_apps">Pokaż aplikacje systemowe</string>
     <string name="su_hide_system_apps">Ukryj aplikacje systemowe</string>
     <string name="su_refresh">Odśwież</string>
@@ -920,4 +930,9 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="home_stats_kernel_modules">Moduły jądra</string>
     <string name="home_stats_apm_modules">Moduły systemowe</string>
     <string name="home_stats_superusers">Superużytkownicy</string>
+    <string name="settings_kernel_spoof">Konfiguracja fałszowania jądra</string>
+    <string name="settings_kernel_spoof_summary">Fałszuj wersję jądra i czas budowy</string>
+    <string name="settings_kernel_spoof_version">Wersja jądra</string>
+    <string name="settings_kernel_spoof_build_time">Czas budowy jądra</string>
+    <string name="settings_kernel_spoof_restore">Przywróć</string>
 </resources>

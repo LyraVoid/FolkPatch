@@ -254,7 +254,7 @@ fun installModule(
     } catch (e: Exception) {
         Log.e(TAG, "Failed to open input stream", e)
         Handler(Looper.getMainLooper()).post {
-            Toast.makeText(apApp, permissionMessage, Toast.LENGTH_SHORT).show()
+            me.bmax.apatch.util.ui.showToast(apApp, permissionMessage)
         }
         onStderr("$permissionMessage\n")
         onFinish(false)
@@ -439,6 +439,32 @@ fun setHideServiceEnabled(enable: Boolean) {
             executeHideBinary()
         }
     }
+}
+
+fun isUtsSpoofEnabled(): Boolean {
+    val flagFile = SuFile(APApplication.UTS_SPOOF_ENABLE_FILE)
+    flagFile.shell = getRootShell()
+    return flagFile.exists()
+}
+
+fun setUtsSpoofEnabled(enable: Boolean) {
+    val shell = getRootShell()
+    shell.newJob().add("${if (enable) "touch" else "rm -f"} ${APApplication.UTS_SPOOF_ENABLE_FILE}")
+        .exec()
+}
+
+fun writeUtsSpoofConfig(release: String, version: String) {
+    val shell = getRootShell()
+    val escapedRelease = release.replace("\\", "\\\\").replace("\"", "\\\"").replace("'", "'\\''")
+    val escapedVersion = version.replace("\\", "\\\\").replace("\"", "\\\"").replace("'", "'\\''")
+    val json = "{\"release\":\"$escapedRelease\",\"version\":\"$escapedVersion\"}"
+    shell.newJob().add("echo '$json' > ${APApplication.UTS_SPOOF_CONFIG_FILE}")
+        .exec()
+}
+
+fun removeUtsSpoofConfig() {
+    val shell = getRootShell()
+    shell.newJob().add("rm -f ${APApplication.UTS_SPOOF_CONFIG_FILE}").exec()
 }
 
 fun executeHideBinary(): Boolean {

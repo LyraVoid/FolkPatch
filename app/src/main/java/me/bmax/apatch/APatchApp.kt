@@ -100,6 +100,8 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
         const val HIDE_BINARY_PATH = "/data/adb/fp/bin/fpd"
         const val UMOUNT_SERVICE_FILE = "/data/adb/.umount_service_enable"
         const val UMOUNT_BINARY_PATH = "/data/adb/fp/bin/fpd"
+        const val UTS_SPOOF_ENABLE_FILE = "/data/adb/.uts_spoof_enable"
+        const val UTS_SPOOF_CONFIG_FILE = "/data/adb/.uts_spoof_config"
         const val KPMS_DIR = APATCH_FOLDER + "kpms/"
 
         @Deprecated("Use SHA256 comparison instead")
@@ -117,6 +119,9 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
         const val SP_NAME = "config"
         const val PREF_BLOCK_KERNELPATCH_UPDATE = "block_kernelpatch_update"
         const val PREF_BLOCK_ANDROIDPATCH_UPDATE = "block_androidpatch_update"
+        const val PREF_UTS_SPOOF_ENABLED = "uts_spoof_enabled"
+        const val PREF_UTS_SPOOF_RELEASE = "uts_spoof_release"
+        const val PREF_UTS_SPOOF_VERSION = "uts_spoof_version"
         private const val SHOW_BACKUP_WARN = "show_backup_warning"
         private const val CRASH_COUNT_KEY = "fp_crash_count"
         private const val CRASH_TIMESTAMP_KEY = "fp_crash_timestamp"

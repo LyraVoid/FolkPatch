@@ -154,6 +154,18 @@ object Natives {
         return nativeResetSuPath(APApplication.superKey, path)
     }
 
+    @FastNative
+    private external fun nativeUtsSet(superKey: String, release: String?, version: String?): Long
+    fun utsSet(release: String?, version: String?): Long {
+        return nativeUtsSet(APApplication.superKey, release, version)
+    }
+
+    @FastNative
+    private external fun nativeUtsReset(superKey: String): Long
+    fun utsReset(): Long {
+        return nativeUtsReset(APApplication.superKey)
+    }
+
     external fun nativeGetApiToken(context: Context): String
     fun getApiToken(context: Context): String {
         return nativeGetApiToken(context)

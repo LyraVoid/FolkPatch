@@ -480,6 +480,11 @@ Here are some possible reasons for authentication failure—please check which o
     <string name="settings_magic_mount_summary">Enable the built-in module mounting system</string>
     <string name="settings_hide_service">FolkPatch Hide</string>
     <string name="settings_hide_service_summary">Hide Bootloader unlock status to some extent</string>
+    <string name="settings_kernel_spoof">Kernel Spoof Config</string>
+    <string name="settings_kernel_spoof_summary">Spoof kernel version and build time</string>
+    <string name="settings_kernel_spoof_version">Kernel Version</string>
+    <string name="settings_kernel_spoof_build_time">Kernel Build Time</string>
+    <string name="settings_kernel_spoof_restore">Restore</string>
     <!-- Umount Service -->
     <string name="settings_umount_service">Umount Service</string>
     <string name="settings_umount_service_summary">Configure mount points to auto-unmount at boot</string>
@@ -917,6 +922,16 @@ Please ensure the app is completely closed and reopened for the commands to exec
     <string name="su_app_action_launch_success">Launching %s</string>
     <string name="su_app_action_force_stop_success">Force stopped %s</string>
     <string name="su_app_action_failed">Operation failed: %s</string>
+
+    <!-- SU Audit Log -->
+    <string name="su_audit_log_title">Authorization Log</string>
+    <string name="su_audit_log_empty">No authorization records yet</string>
+    <string name="su_audit_log_clear">Clear Log</string>
+    <string name="su_audit_log_clear_confirm">Clear all authorization records?</string>
+    <string name="su_audit_action_grant">Granted</string>
+    <string name="su_audit_action_revoke">Revoked</string>
+    <string name="su_audit_action_exclude">Excluded</string>
+
     <string name="patch_output_written_to"> Output file is written to </string>
     <string name="patch_write_failed"> Write patched boot.img failed</string>
 

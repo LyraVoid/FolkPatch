@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">FolkPatch</string>
     <string name="app_name_fpatch">FPatch</string>
@@ -863,6 +863,16 @@
     <string name="su_app_action_launch_success">正在启动 %s</string>
     <string name="su_app_action_force_stop_success">%s 已经被关掉了</string>
     <string name="su_app_action_failed">搞砸了: %s</string>
+
+    <!-- SU Audit Log -->
+    <string name="su_audit_log_title">授权日志</string>
+    <string name="su_audit_log_empty">暂无授权记录</string>
+    <string name="su_audit_log_clear">清除日志</string>
+    <string name="su_audit_log_clear_confirm">确认清除所有授权记录？</string>
+    <string name="su_audit_action_grant">已授权</string>
+    <string name="su_audit_action_revoke">已撤销</string>
+    <string name="su_audit_action_exclude">已排除</string>
+
     <string name="patch_output_written_to"> 锻造完成！输出到了 </string>
     <string name="patch_write_failed"> 合成台炸了！检查一下材料够不够</string>
 
@@ -977,4 +987,9 @@
     <string name="home_stats_kernel_modules">内核模块（核心模组）</string>
     <string name="home_stats_apm_modules">APM模块（APM模组）</string>
     <string name="home_stats_superusers">超级用户（管理员）</string>
+    <string name="settings_kernel_spoof">内核伪装配置（核心伪装）</string>
+    <string name="settings_kernel_spoof_summary">伪装内核版本和构建时间（修改核心版本和时间）</string>
+    <string name="settings_kernel_spoof_version">内核版本（核心版本）</string>
+    <string name="settings_kernel_spoof_build_time">内核构建时间（核心构建时间）</string>
+    <string name="settings_kernel_spoof_restore">恢复（复原）</string>
 </resources>

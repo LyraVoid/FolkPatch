@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">FolkPatch</string>
     <string name="app_name_fpatch">FPatch</string>
@@ -850,6 +850,16 @@ Komutların çalışması için uygulamanın tamamen kapatılıp yeniden açıld
     <string name="su_app_action_launch_success">%s başlatılıyor</string>
     <string name="su_app_action_force_stop_success">%s zorla durduruldu</string>
     <string name="su_app_action_failed">İşlem başarısız: %s</string>
+
+    <!-- SU Audit Log -->
+    <string name="su_audit_log_title">Yetkilendirme Günlüğü</string>
+    <string name="su_audit_log_empty">Henüz yetkilendirme kaydı yok</string>
+    <string name="su_audit_log_clear">Günlüğü Temizle</string>
+    <string name="su_audit_log_clear_confirm">Tüm yetkilendirme kayıtları temizlensin mi?</string>
+    <string name="su_audit_action_grant">İzin Verildi</string>
+    <string name="su_audit_action_revoke">İptal Edildi</string>
+    <string name="su_audit_action_exclude">Dışlandı</string>
+
     <string name="patch_output_written_to"> Çıktı dosyası şuraya yazıldı: </string>
     <string name="patch_write_failed"> Yamalanmış boot.img yazılamadı</string>
 
@@ -1007,4 +1017,9 @@ Komutların çalışması için uygulamanın tamamen kapatılıp yeniden açıld
     <string name="home_stats_kernel_modules">Çekirdek Modüller</string>
     <string name="home_stats_apm_modules">Sistem Modülleri</string>
     <string name="home_stats_superusers">Süper Kullanıcılar</string>
+    <string name="settings_kernel_spoof">Çekirdek Sahtekarlık Yapılandırması</string>
+    <string name="settings_kernel_spoof_summary">Çekirdek sürümünü ve yapım zamanını sahtele</string>
+    <string name="settings_kernel_spoof_version">Çekirdek Sürümü</string>
+    <string name="settings_kernel_spoof_build_time">Çekirdek Yapım Zamanı</string>
+    <string name="settings_kernel_spoof_restore">Geri Yükle</string>
 </resources>

@@ -869,6 +869,16 @@
     <string name="su_app_action_launch_success">正在启动 %s</string>
     <string name="su_app_action_force_stop_success">已强行停止 %s</string>
     <string name="su_app_action_failed">操作失败: %s</string>
+
+    <!-- SU Audit Log -->
+    <string name="su_audit_log_title">授权日志</string>
+    <string name="su_audit_log_empty">暂无授权记录</string>
+    <string name="su_audit_log_clear">清除日志</string>
+    <string name="su_audit_log_clear_confirm">确认清除所有授权记录？</string>
+    <string name="su_audit_action_grant">已授权</string>
+    <string name="su_audit_action_revoke">已撤销</string>
+    <string name="su_audit_action_exclude">已排除</string>
+
     <string name="patch_output_written_to"> 修补成功，文件输出到 </string>
     <string name="patch_write_failed"> 修补失败，发生了致命错误</string>
 
@@ -964,6 +974,11 @@
     <string name="script_library_log_save_failed">保存日志失败：%s</string>
 
     <!-- Umount Service -->
+    <string name="settings_kernel_spoof">内核伪装配置</string>
+    <string name="settings_kernel_spoof_summary">伪装内核版本和构建时间</string>
+    <string name="settings_kernel_spoof_version">内核版本</string>
+    <string name="settings_kernel_spoof_build_time">内核构建时间</string>
+    <string name="settings_kernel_spoof_restore">恢复</string>
     <string name="settings_umount_service">Umount Service</string>
     <string name="settings_umount_service_summary">配置开机自动卸载的挂载点</string>
     <string name="umount_config_title">Umount 配置</string>

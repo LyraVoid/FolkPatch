@@ -39,8 +39,6 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -93,6 +91,11 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.SemiBold,
                     )
+                },
+                actions = {
+                    IconButton(onClick = { navigator.navigate(FunctionSettingsScreenDestination) }) {
+                        Icon(Icons.Filled.Tune, contentDescription = null)
+                    }
                 },
                 scrollBehavior = scrollBehavior,
             )
@@ -160,15 +163,6 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                         onClick = { navigator.navigate(ModuleSettingsScreenDestination) },
                     )
                 }
-            }
-
-            item {
-                SettingsListItem(
-                    icon = Icons.Filled.Tune,
-                    title = stringResource(R.string.settings_category_function),
-                    summary = stringResource(R.string.settings_category_function_summary),
-                    onClick = { navigator.navigate(FunctionSettingsScreenDestination) },
-                )
             }
 
             item {

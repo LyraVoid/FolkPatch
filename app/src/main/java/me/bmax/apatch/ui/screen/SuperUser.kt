@@ -2,6 +2,9 @@ package me.bmax.apatch.ui.screen
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -16,14 +19,18 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Security
@@ -32,6 +39,10 @@ import androidx.compose.material.icons.filled.Terminal
 import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.FloatingActionButtonMenu
+import androidx.compose.material3.FloatingActionButtonMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
@@ -55,6 +66,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -70,6 +82,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.AppProfileScreenDestination
 import com.ramcosta.composedestinations.generated.destinations.ScriptLibraryScreenDestination
+import com.ramcosta.composedestinations.generated.destinations.SuAuditLogScreenDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.launch
 import me.bmax.apatch.APApplication
@@ -79,11 +92,14 @@ import me.bmax.apatch.apApp
 import me.bmax.apatch.ui.component.SearchAppBar
 import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenu
 import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenuItem
+import me.bmax.apatch.ui.LocalBottomBarVisible
+import me.bmax.apatch.ui.LocalIsFloatingNavMode
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import me.bmax.apatch.ui.component.SwitchItem
 import me.bmax.apatch.ui.viewmodel.SuperUserViewModel
 import me.bmax.apatch.util.PkgConfig
+import me.bmax.apatch.util.SuAuditLog
 import me.bmax.apatch.util.ui.APDialogBlurBehindUtils.Companion.setupWindowBlurListener
 
 
@@ -97,7 +113,7 @@ fun SuperUserScreen(navigator: DestinationsNavigator) {
     SuperUserScreenModern(navigator, useLegacySuPage)
 }
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuPage: Boolean) {
     val viewModel = viewModel<SuperUserViewModel>()
@@ -199,11 +215,6 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
                 onClearClick = { viewModel.search = "" },
                 leadingActions = {
                     IconButton(onClick = {
-                        navigator.navigate(ScriptLibraryScreenDestination)
-                    }) {
-                        Icon(Icons.Filled.Terminal, contentDescription = stringResource(R.string.script_library))
-                    }
-                    IconButton(onClick = {
                         showBatchExcludeDialog = true
                     }) {
                         Icon(Icons.AutoMirrored.Filled.PlaylistAddCheck, contentDescription = stringResource(R.string.su_batch_exclude_title))
@@ -271,6 +282,83 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
                 },
             )
         },
+        floatingActionButton = run {
+            {
+                var fabExpanded by remember { mutableStateOf(false) }
+                val isFloatingMode = LocalIsFloatingNavMode.current
+
+                val fabContent: @Composable () -> Unit = {
+                    FloatingActionButtonMenu(
+                        expanded = fabExpanded,
+                        button = {
+                            FloatingActionButton(
+                                onClick = { fabExpanded = !fabExpanded },
+                                shape = CircleShape,
+                                contentColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 1f),
+                                containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
+                            ) {
+                                Crossfade(
+                                    targetState = fabExpanded,
+                                    animationSpec = tween(durationMillis = 200),
+                                    label = "fabIconCrossfade"
+                                ) { isExpanded ->
+                                    if (isExpanded) {
+                                        Icon(Icons.Filled.Close, contentDescription = null)
+                                    } else {
+                                        Icon(Icons.Filled.History, contentDescription = null)
+                                    }
+                                }
+                            }
+                        },
+                    ) {
+                        FloatingActionButtonMenuItem(
+                            onClick = {
+                                fabExpanded = false
+                                navigator.navigate(ScriptLibraryScreenDestination)
+                            },
+                            icon = {
+                                Icon(
+                                    Icons.Filled.Terminal,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(18.dp)
+                                )
+                            },
+                            text = { Text(stringResource(R.string.script_library), style = MaterialTheme.typography.bodyMedium) },
+                        )
+                        FloatingActionButtonMenuItem(
+                            onClick = {
+                                fabExpanded = false
+                                navigator.navigate(SuAuditLogScreenDestination)
+                            },
+                            icon = {
+                                Icon(
+                                    Icons.Filled.History,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(18.dp)
+                                )
+                            },
+                            text = { Text(stringResource(R.string.su_audit_log_title), style = MaterialTheme.typography.bodyMedium) },
+                        )
+                    }
+                }
+
+                val bottomBarVisible = LocalBottomBarVisible.current.value
+                val configuration = LocalConfiguration.current
+                val isLandscape = configuration.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
+                val animatedOffset by animateDpAsState(
+                    targetValue = if (isFloatingMode && bottomBarVisible && !isLandscape) (-88).dp else 0.dp,
+                    animationSpec = tween(durationMillis = 300),
+                    label = "fabOffset"
+                )
+                if (isFloatingMode) {
+                    Box(modifier = Modifier.offset(y = animatedOffset)) {
+                        fabContent()
+                    }
+                } else {
+                    fabContent()
+                }
+            }
+        }
     ) { innerPadding ->
         val pullToRefreshState = rememberPullToRefreshState()
         PullToRefreshBox(
@@ -375,6 +463,7 @@ private fun AppItemLegacy(
                 config.allow = 0
                 Natives.revokeSu(app.uid)
                 PkgConfig.changeConfig(config)
+                SuAuditLog.logRevoke(app.packageName, app.uid)
             }
         }),
         colors = ListItemDefaults.colors(containerColor = Color.Transparent),
@@ -426,8 +515,10 @@ private fun AppItemLegacy(
                 if (config.allow == 1) {
                     Natives.grantSu(app.uid, 0, config.profile.scontext)
                     Natives.setUidExclude(app.uid, 0)
+                    SuAuditLog.logGrant(app.packageName, app.uid)
                 } else {
                     Natives.revokeSu(app.uid)
+                    SuAuditLog.logRevoke(app.packageName, app.uid)
                 }
             })
         },
@@ -448,8 +539,10 @@ private fun AppItemLegacy(
                     config.allow = 0
                     config.profile.scontext = APApplication.DEFAULT_SCONTEXT
                     Natives.revokeSu(app.uid)
+                    SuAuditLog.logExclude(app.packageName, app.uid)
                 } else {
                     excludeApp = 0
+                    SuAuditLog.logRevoke(app.packageName, app.uid)
                 }
                 config.exclude = excludeApp
                 config.profile.uid = app.uid

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">FolkPatch</string>
     <string name="app_name_fpatch">FPatch</string>
@@ -219,6 +219,15 @@
     <string name="su_app_action_launch_success">Запуск %s</string>
     <string name="su_app_action_force_stop_success">%s принудительно остановлено</string>
     <string name="su_app_action_failed">Операция не удалась: %s</string>
+
+    <!-- SU Audit Log -->
+    <string name="su_audit_log_title">Журнал авторизации</string>
+    <string name="su_audit_log_empty">Нет записей авторизации</string>
+    <string name="su_audit_log_clear">Очистить журнал</string>
+    <string name="su_audit_log_clear_confirm">Очистить все записи авторизации?</string>
+    <string name="su_audit_action_grant">Разрешено</string>
+    <string name="su_audit_action_revoke">Отозвано</string>
+    <string name="su_audit_action_exclude">Исключено</string>
 
     <string name="su_show_system_apps">Показать системные приложения</string>
     <string name="su_hide_system_apps">Скрыть системные приложения</string>
@@ -1003,4 +1012,9 @@
     <string name="home_stats_kernel_modules">Модули ядра</string>
     <string name="home_stats_apm_modules">Системные модули</string>
     <string name="home_stats_superusers">Суперпользователи</string>
+    <string name="settings_kernel_spoof">Настройка подмены ядра</string>
+    <string name="settings_kernel_spoof_summary">Подмена версии ядра и времени сборки</string>
+    <string name="settings_kernel_spoof_version">Версия ядра</string>
+    <string name="settings_kernel_spoof_build_time">Время сборки ядра</string>
+    <string name="settings_kernel_spoof_restore">Восстановить</string>
 </resources>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">FolkPatch</string>
     <string name="app_name_fpatch">FPatch</string>
@@ -100,6 +100,15 @@
     <string name="su_app_action_launch_success">Iniciando %s</string>
     <string name="su_app_action_force_stop_success">%s detenida forzosamente</string>
     <string name="su_app_action_failed">Operación fallida: %s</string>
+
+    <!-- SU Audit Log -->
+    <string name="su_audit_log_title">Registro de autorización</string>
+    <string name="su_audit_log_empty">No hay registros de autorización</string>
+    <string name="su_audit_log_clear">Borrar registro</string>
+    <string name="su_audit_log_clear_confirm">¿Confirmar eliminación de todos los registros de autorización?</string>
+    <string name="su_audit_action_grant">Autorizado</string>
+    <string name="su_audit_action_revoke">Revocado</string>
+    <string name="su_audit_action_exclude">Excluido</string>
 
     <string name="home_learn_apatch">Aprender FolkPatch</string>
     <string name="home_click_to_learn_apatch">Aprende sobre las características de FolkPatch y cómo usarlo</string>
@@ -1006,4 +1015,9 @@ Por ejemplo, los KPM que previenen la modificación de particiones solo pueden u
     <string name="home_stats_kernel_modules">Módulos del Kernel</string>
     <string name="home_stats_apm_modules">Módulos del Sistema</string>
     <string name="home_stats_superusers">Superusuarios</string>
+    <string name="settings_kernel_spoof">Configuración de Falsificación del Kernel</string>
+    <string name="settings_kernel_spoof_summary">Falsificar versión del kernel y tiempo de compilación</string>
+    <string name="settings_kernel_spoof_version">Versión del Kernel</string>
+    <string name="settings_kernel_spoof_build_time">Tiempo de Compilación del Kernel</string>
+    <string name="settings_kernel_spoof_restore">Restaurar</string>
 </resources>

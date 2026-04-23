@@ -127,18 +127,23 @@ class PatchesViewModel : ViewModel() {
         )
 
         if (result.isSuccess) {
-            val ini = Ini(StringReader(result.out.joinToString("\n")))
-            val kpimg = ini["kpimg"]
-            if (kpimg != null) {
-                kpimgInfo = KPModel.KPImgInfo(
-                    kpimg["version"].toString(),
-                    kpimg["compile_time"].toString(),
-                    kpimg["config"].toString(),
-                    APApplication.superKey,     // current key
-                    kpimg["root_superkey"].toString(),   // empty
-                )
-            } else {
-                error += "parse kpimg error\n"
+            try {
+                val ini = Ini(StringReader(result.out.joinToString("\n")))
+                val kpimg = ini["kpimg"]
+                if (kpimg != null) {
+                    kpimgInfo = KPModel.KPImgInfo(
+                        kpimg["version"].toString(),
+                        kpimg["compile_time"].toString(),
+                        kpimg["config"].toString(),
+                        APApplication.superKey,     // current key
+                        kpimg["root_superkey"].toString(),   // empty
+                    )
+                } else {
+                    error += "parse kpimg error\n"
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "parseKpimg INI error: ${e.message}")
+                error += "parse kpimg error: ${e.message}\n"
             }
         } else {
             error = result.err.joinToString("\n")
@@ -153,54 +158,59 @@ class PatchesViewModel : ViewModel() {
             "./kptools -l -i kernel",
         )
         if (result.isSuccess) {
-            val ini = Ini(StringReader(result.out.joinToString("\n")))
-            Log.d(TAG, "kernel image info: $ini")
+            try {
+                val ini = Ini(StringReader(result.out.joinToString("\n")))
+                Log.d(TAG, "kernel image info: $ini")
 
-            val kernel = ini["kernel"]
-            if (kernel == null) {
-                error += "empty kernel section"
-                Log.d(TAG, error)
-                return
-            }
-            kimgInfo = KPModel.KImgInfo(kernel["banner"].toString(), kernel["patched"].toBoolean())
-            if (kimgInfo.patched) {
-                val superkey = ini["kpimg"]?.getOrDefault("superkey", "") ?: ""
-                kpimgInfo.superKey = superkey
-                if (checkSuperKeyValidation(superkey)) {
-                    this.superkey = superkey
+                val kernel = ini["kernel"]
+                if (kernel == null) {
+                    error += "empty kernel section"
+                    Log.d(TAG, error)
+                    return
                 }
-                var kpmNum = kernel["extra_num"]?.toInt()
-                if (kpmNum == null) {
-                    val extras = ini["extras"]
-                    kpmNum = extras?.get("num")?.toInt()
-                }
-                if (kpmNum != null && kpmNum > 0) {
-                    for (i in 0..<kpmNum) {
-                        val extra = ini["extra $i"]
-                        if (extra == null) {
-                            error += "empty extra section"
-                            break
-                        }
-                        val type = KPModel.ExtraType.valueOf(extra["type"]!!.uppercase())
-                        val name = extra["name"].toString()
-                        val args = extra["args"].toString()
-                        var event = extra["event"].toString()
-                        if (event.isEmpty()) {
-                            event = KPModel.TriggerEvent.PRE_KERNEL_INIT.event
-                        }
-                        if (type == KPModel.ExtraType.KPM) {
-                            val kpmInfo = KPModel.KPMInfo(
-                                type, name, event, args,
-                                extra["version"].toString(),
-                                extra["license"].toString(),
-                                extra["author"].toString(),
-                                extra["description"].toString(),
-                            )
-                            existedExtras.add(kpmInfo)
-                        }
+                kimgInfo = KPModel.KImgInfo(kernel["banner"].toString(), kernel["patched"].toBoolean())
+                if (kimgInfo.patched) {
+                    val superkey = ini["kpimg"]?.getOrDefault("superkey", "") ?: ""
+                    kpimgInfo.superKey = superkey
+                    if (checkSuperKeyValidation(superkey)) {
+                        this.superkey = superkey
                     }
+                    var kpmNum = kernel["extra_num"]?.toInt()
+                    if (kpmNum == null) {
+                        val extras = ini["extras"]
+                        kpmNum = extras?.get("num")?.toInt()
+                    }
+                    if (kpmNum != null && kpmNum > 0) {
+                        for (i in 0..<kpmNum) {
+                            val extra = ini["extra $i"]
+                            if (extra == null) {
+                                error += "empty extra section"
+                                break
+                            }
+                            val type = KPModel.ExtraType.valueOf(extra["type"]!!.uppercase())
+                            val name = extra["name"].toString()
+                            val args = extra["args"].toString()
+                            var event = extra["event"].toString()
+                            if (event.isEmpty()) {
+                                event = KPModel.TriggerEvent.PRE_KERNEL_INIT.event
+                            }
+                            if (type == KPModel.ExtraType.KPM) {
+                                val kpmInfo = KPModel.KPMInfo(
+                                    type, name, event, args,
+                                    extra["version"].toString(),
+                                    extra["license"].toString(),
+                                    extra["author"].toString(),
+                                    extra["description"].toString(),
+                                )
+                                existedExtras.add(kpmInfo)
+                            }
+                        }
 
+                    }
                 }
+            } catch (e: Exception) {
+                Log.e(TAG, "parseBootimg INI error: ${e.message}")
+                error += "parse boot image error: ${e.message}\n"
             }
         } else {
             error += result.err.joinToString("\n")
@@ -208,7 +218,7 @@ class PatchesViewModel : ViewModel() {
     }
 
     val checkSuperKeyValidation: (superKey: String) -> Boolean = { superKey ->
-        superKey.length in 8..63 && superKey.any { it.isDigit() } && superKey.any { it.isLetter() }
+        superKey.length in 8..63 && superKey.all { it.isLetterOrDigit() } && superKey.any { it.isDigit() } && superKey.any { it.isLetter() }
     }
 
     fun copyAndParseBootimg(uri: Uri) {
@@ -344,21 +354,26 @@ class PatchesViewModel : ViewModel() {
             )
 
             if (result.isSuccess) {
-                val ini = Ini(StringReader(result.out.joinToString("\n")))
-                val kpm = ini["kpm"]
-                if (kpm != null) {
-                    val kpmInfo = KPModel.KPMInfo(
-                        KPModel.ExtraType.KPM,
-                        kpm["name"].toString(),
-                        KPModel.TriggerEvent.PRE_KERNEL_INIT.event,
-                        "",
-                        kpm["version"].toString(),
-                        kpm["license"].toString(),
-                        kpm["author"].toString(),
-                        kpm["description"].toString(),
-                    )
-                    newExtras.add(kpmInfo)
-                    newExtrasFileName.add(kpmFileName)
+                try {
+                    val ini = Ini(StringReader(result.out.joinToString("\n")))
+                    val kpm = ini["kpm"]
+                    if (kpm != null) {
+                        val kpmInfo = KPModel.KPMInfo(
+                            KPModel.ExtraType.KPM,
+                            kpm["name"].toString(),
+                            KPModel.TriggerEvent.PRE_KERNEL_INIT.event,
+                            "",
+                            kpm["version"].toString(),
+                            kpm["license"].toString(),
+                            kpm["author"].toString(),
+                            kpm["description"].toString(),
+                        )
+                        newExtras.add(kpmInfo)
+                        newExtrasFileName.add(kpmFileName)
+                    }
+                } catch (e: Exception) {
+                    Log.e(TAG, "embedKPM INI error: ${e.message}")
+                    error = "Invalid KPM: parse error\n"
                 }
             } else {
                 error = "Invalid KPM\n"
@@ -601,7 +616,11 @@ class PatchesViewModel : ViewModel() {
                 APApplication.updateSuperKeyQuietly(superkey)
             }
 
-            shell.newJob().add("echo '$superkey' > /data/adb/folk_superkey", "chmod 600 /data/adb/folk_superkey", "chown root:root /data/adb/folk_superkey").exec()
+            shell.newJob().add(
+                "printf '%s' '$superkey' > /data/adb/folk_superkey",
+                "chmod 600 /data/adb/folk_superkey",
+                "chown root:root /data/adb/folk_superkey"
+            ).exec()
 
             if (mode == PatchMode.PATCH_AND_INSTALL) {
                 logs.add("- Reboot to finish the installation...")

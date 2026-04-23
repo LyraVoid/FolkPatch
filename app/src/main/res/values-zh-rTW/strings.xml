@@ -214,6 +214,15 @@
     <string name="su_app_action_force_stop_success">已強行停止 %s</string>
     <string name="su_app_action_failed">操作失敗: %s</string>
 
+    <!-- SU Audit Log -->
+    <string name="su_audit_log_title">授權日誌</string>
+    <string name="su_audit_log_empty">暫無授權記錄</string>
+    <string name="su_audit_log_clear">清除日誌</string>
+    <string name="su_audit_log_clear_confirm">確認清除所有授權記錄？</string>
+    <string name="su_audit_action_grant">已授權</string>
+    <string name="su_audit_action_revoke">已撤銷</string>
+    <string name="su_audit_action_exclude">已排除</string>
+
     <string name="su_show_system_apps">顯示系統應用程式</string>
     <string name="su_hide_system_apps">隱藏系統應用程式</string>
     <string name="su_refresh">重新整理</string>
@@ -992,4 +1001,9 @@
     <string name="home_stats_kernel_modules">內核模組</string>
     <string name="home_stats_apm_modules">系統模組</string>
     <string name="home_stats_superusers">超級使用者</string>
+    <string name="settings_kernel_spoof">內核偽裝配置</string>
+    <string name="settings_kernel_spoof_summary">偽裝內核版本和構建時間</string>
+    <string name="settings_kernel_spoof_version">內核版本</string>
+    <string name="settings_kernel_spoof_build_time">內核構建時間</string>
+    <string name="settings_kernel_spoof_restore">恢復</string>
 </resources>

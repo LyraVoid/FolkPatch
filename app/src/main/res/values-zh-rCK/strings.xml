@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">FolkPatch</string>
     <string name="app_name_fpatch">FPatch</string>
@@ -829,6 +829,16 @@
     <string name="su_app_action_launch_success">正在启动 %s</string>
     <string name="su_app_action_force_stop_success">已强行停止 %s</string>
     <string name="su_app_action_failed">烹饪操作失败: %s</string>
+
+    <!-- SU Audit Log -->
+    <string name="su_audit_log_title">授权日志</string>
+    <string name="su_audit_log_empty">暂无授权记录</string>
+    <string name="su_audit_log_clear">清除日志</string>
+    <string name="su_audit_log_clear_confirm">确认清除所有授权记录？</string>
+    <string name="su_audit_action_grant">已授权</string>
+    <string name="su_audit_action_revoke">已撤销</string>
+    <string name="su_audit_action_exclude">已排除</string>
+
     <string name="patch_output_written_to"> 烹饪成功，菜品输出到 </string>
     <string name="patch_write_failed"> 烹饪失败，发生了厨房事故</string>
 
@@ -987,4 +997,9 @@
     <string name="home_stats_kernel_modules">内核菜谱</string>
     <string name="home_stats_apm_modules">APM 菜谱</string>
     <string name="home_stats_superusers">主厨权限</string>
+    <string name="settings_kernel_spoof">内核伪装配方</string>
+    <string name="settings_kernel_spoof_summary">伪装内核版本和出炉时间</string>
+    <string name="settings_kernel_spoof_version">内核版本</string>
+    <string name="settings_kernel_spoof_build_time">内核出炉时间</string>
+    <string name="settings_kernel_spoof_restore">重新出炉</string>
 </resources>

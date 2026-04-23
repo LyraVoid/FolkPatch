@@ -67,18 +67,22 @@ object Version {
         )
 
         if (result.isSuccess) {
-            val ini = Ini(StringReader(result.out.joinToString("\n")))
-            val kpimg = ini["kpimg"]
-            if (kpimg != null) {
-                kpimgInfo.value = KPModel.KPImgInfo(
-                    kpimg["version"].toString(),
-                    kpimg["compile_time"].toString(),
-                    kpimg["config"].toString(),
-                    APApplication.superKey,     // current key
-                    kpimg["root_superkey"].toString()      // possibly empty
-                )
-                return kpimg["compile_time"].toString()
-            } 
+            try {
+                val ini = Ini(StringReader(result.out.joinToString("\n")))
+                val kpimg = ini["kpimg"]
+                if (kpimg != null) {
+                    kpimgInfo.value = KPModel.KPImgInfo(
+                        kpimg["version"].toString(),
+                        kpimg["compile_time"].toString(),
+                        kpimg["config"].toString(),
+                        APApplication.superKey,     // current key
+                        kpimg["root_superkey"].toString()      // possibly empty
+                    )
+                    return kpimg["compile_time"].toString()
+                }
+            } catch (e: Exception) {
+                Log.e("Version", "getKpImg INI error: ${e.message}")
+            }
         } 
 
         return "unknown"

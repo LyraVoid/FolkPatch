@@ -239,12 +239,12 @@ class SuperUserViewModel : ViewModel() {
                     outputStream.write(jsonArray.toString(4).toByteArray())
                 }
                 withContext(Dispatchers.Main) {
-                    android.widget.Toast.makeText(context, me.bmax.apatch.R.string.backup_success, android.widget.Toast.LENGTH_SHORT).show()
+                    me.bmax.apatch.util.ui.showToast(context, me.bmax.apatch.R.string.backup_success)
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "Backup failed", e)
                 withContext(Dispatchers.Main) {
-                    android.widget.Toast.makeText(context, "Backup failed: ${e.message}", android.widget.Toast.LENGTH_SHORT).show()
+                    me.bmax.apatch.util.ui.showToast(context, "Backup failed: ${e.message}")
                 }
             }
         }
@@ -337,13 +337,13 @@ class SuperUserViewModel : ViewModel() {
 
                     fetchAppList()
                     withContext(Dispatchers.Main) {
-                        android.widget.Toast.makeText(context, me.bmax.apatch.R.string.restore_success, android.widget.Toast.LENGTH_SHORT).show()
+                        me.bmax.apatch.util.ui.showToast(context, me.bmax.apatch.R.string.restore_success)
                     }
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "Restore failed", e)
                 withContext(Dispatchers.Main) {
-                    android.widget.Toast.makeText(context, "Restore failed: ${e.message}", android.widget.Toast.LENGTH_SHORT).show()
+                    me.bmax.apatch.util.ui.showToast(context, "Restore failed: ${e.message}")
                 }
             }
         }
