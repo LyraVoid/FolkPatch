@@ -118,7 +118,30 @@ fun FunctionSettingsScreen(navigator: DestinationsNavigator) {
                     isHideServiceEnabled = isHideServiceEnabled,
                     onHideServiceChange = { isHideServiceEnabled = it },
                     isKernelSpoofEnabled = isKernelSpoofEnabled,
-                    onKernelSpoofChange = { isKernelSpoofEnabled = it },
+                    onKernelSpoofChange = { enabled ->
+                        isKernelSpoofEnabled = enabled
+                        scope.launch(Dispatchers.IO) {
+                            val prefs = APApplication.sharedPreferences
+                            prefs.edit().putBoolean(APApplication.PREF_UTS_SPOOF_ENABLED, enabled).apply()
+                            if (enabled) {
+                                setUtsSpoofEnabled(true)
+                                val savedRelease = prefs.getString(APApplication.PREF_UTS_SPOOF_RELEASE, "") ?: ""
+                                val savedVersion = prefs.getString(APApplication.PREF_UTS_SPOOF_VERSION, "") ?: ""
+                                writeUtsSpoofConfig(savedRelease, savedVersion)
+                                Natives.utsSet(savedRelease.ifBlank { null }, savedVersion.ifBlank { null })
+                                withContext(Dispatchers.Main) {
+                                    snackBarHost.showSnackbar("Kernel spoof enabled")
+                                }
+                            } else {
+                                Natives.utsReset()
+                                setUtsSpoofEnabled(false)
+                                removeUtsSpoofConfig()
+                                withContext(Dispatchers.Main) {
+                                    snackBarHost.showSnackbar("Kernel spoof disabled and restored")
+                                }
+                            }
+                        }
+                    },
                     kernelSpoofVersion = kernelSpoofVersion,
                     onKernelSpoofVersionChange = { kernelSpoofVersion = it },
                     kernelSpoofBuildTime = kernelSpoofBuildTime,
@@ -184,7 +207,20 @@ fun FunctionSettingsScreen(navigator: DestinationsNavigator) {
                     },
                     snackBarHost = snackBarHost,
                     isUmountEnabled = isUmountEnabled,
-                    onUmountEnabledChange = { isUmountEnabled = it },
+                    onUmountEnabledChange = { enabled ->
+                        isUmountEnabled = enabled
+                        scope.launch(Dispatchers.IO) {
+                            val config = UmountConfig(enabled = enabled, paths = umountPaths)
+                            val success = UmountConfigManager.saveConfig(context, config)
+                            withContext(Dispatchers.Main) {
+                                if (success) {
+                                    showToast(context, context.getString(R.string.umount_config_save_success))
+                                } else {
+                                    showToast(context, context.getString(R.string.umount_config_save_failed))
+                                }
+                            }
+                        }
+                    },
                     umountPaths = umountPaths,
                     onUmountPathsChange = { umountPaths = it },
                     onUmountSave = {
