@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,10 +25,13 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -37,6 +41,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -46,7 +51,6 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import me.bmax.apatch.R
-import me.bmax.apatch.ui.viewmodel.SuperUserViewModel
 import me.bmax.apatch.util.SuAuditLog
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -57,19 +61,28 @@ import java.util.Locale
 @Composable
 fun SuAuditLogScreen(navigator: DestinationsNavigator) {
     val context = LocalContext.current
-    var entries by remember { mutableStateOf(SuAuditLog.getEntries()) }
     var showClearDialog by remember { mutableStateOf(false) }
+    var selectedTab by remember { mutableIntStateOf(0) }
+
+    var kernelEntries by remember { mutableStateOf(SuAuditLog.getKernelEntries()) }
+    var appEntries by remember { mutableStateOf(SuAuditLog.getAppEntries()) }
 
     if (showClearDialog) {
         SuAuditClearDialog(
             onDismiss = { showClearDialog = false },
             onConfirm = {
                 SuAuditLog.clearEntries()
-                entries = emptyList()
+                kernelEntries = SuAuditLog.getKernelEntries()
+                appEntries = SuAuditLog.getAppEntries()
                 showClearDialog = false
             }
         )
     }
+
+    val tabs = listOf(
+        stringResource(R.string.su_audit_tab_usage),
+        stringResource(R.string.su_audit_tab_operations),
+    )
 
     Scaffold(
         containerColor = Color.Transparent,
@@ -88,7 +101,7 @@ fun SuAuditLogScreen(navigator: DestinationsNavigator) {
                     }
                 },
                 actions = {
-                    if (entries.isNotEmpty()) {
+                    if (kernelEntries.isNotEmpty() || appEntries.isNotEmpty()) {
                         IconButton(onClick = { showClearDialog = true }) {
                             Icon(Icons.Filled.DeleteOutline, contentDescription = stringResource(R.string.su_audit_log_clear))
                         }
@@ -97,113 +110,227 @@ fun SuAuditLogScreen(navigator: DestinationsNavigator) {
             )
         },
     ) { innerPadding ->
-        if (entries.isEmpty()) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding),
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(
-                    text = stringResource(R.string.su_audit_log_empty),
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-        } else {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding),
-            ) {
-                items(entries, key = { it.timestamp }) { entry ->
-                    val pm = context.packageManager
-                    val appLabel = remember(entry.packageName) {
-                        try {
-                            pm.getApplicationInfo(entry.packageName, 0)
-                                .loadLabel(pm).toString()
-                        } catch (_: Exception) {
-                            entry.packageName
-                        }
-                    }
-
-                    val actionLabel = when (entry.action) {
-                        "GRANT" -> stringResource(R.string.su_audit_action_grant)
-                        "REVOKE" -> stringResource(R.string.su_audit_action_revoke)
-                        else -> stringResource(R.string.su_audit_action_exclude)
-                    }
-
-                    val actionColor = when (entry.action) {
-                        "GRANT" -> Color(0xFF4CAF50)
-                        "REVOKE" -> Color(0xFFF44336)
-                        else -> Color(0xFFFF9800)
-                    }
-
-                    val dateFormat = remember {
-                        SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-                    }
-
-                    ListItem(
-                        colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                        headlineContent = { Text(appLabel) },
-                        supportingContent = {
-                            Column {
-                                Text(
-                                    entry.packageName,
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                )
-                                Text(
-                                    dateFormat.format(Date(entry.timestamp)),
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.outline,
-                                )
-                            }
-                        },
-                        leadingContent = {
-                            val appInfo = remember(entry.packageName) {
-                                try {
-                                    pm.getPackageInfo(entry.packageName, 0)
-                                } catch (_: Exception) {
-                                    null
-                                }
-                            }
-                            if (appInfo != null) {
-                                AsyncImage(
-                                    model = ImageRequest.Builder(context)
-                                        .data(appInfo)
-                                        .crossfade(true)
-                                        .build(),
-                                    contentDescription = appLabel,
-                                    modifier = Modifier
-                                        .padding(4.dp)
-                                        .size(48.dp),
-                                )
-                            } else {
-                                Box(
-                                    modifier = Modifier
-                                        .size(48.dp)
-                                        .background(
-                                            MaterialTheme.colorScheme.surfaceContainerHigh,
-                                            RoundedCornerShape(8.dp),
-                                        ),
-                                    contentAlignment = Alignment.Center,
-                                ) {
-                                    Text(
-                                        text = entry.packageName.take(1).uppercase(),
-                                        style = MaterialTheme.typography.titleMedium,
-                                    )
-                                }
-                            }
-                        },
-                        trailingContent = {
-                            AuditActionBadge(label = actionLabel, color = actionColor)
-                        },
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding),
+        ) {
+            TabRow(selectedTabIndex = selectedTab) {
+                tabs.forEachIndexed { index, title ->
+                    Tab(
+                        selected = selectedTab == index,
+                        onClick = { selectedTab = index },
+                        text = { Text(title, style = MaterialTheme.typography.bodyMedium) },
                     )
                 }
-
-                item { Spacer(Modifier.height(16.dp)) }
             }
+
+            when (selectedTab) {
+                0 -> KernelAuditList(entries = kernelEntries)
+                1 -> AppAuditList(entries = appEntries)
+            }
+        }
+    }
+}
+
+@Composable
+private fun KernelAuditList(entries: List<SuAuditLog.AuditEntry.KernelEntry>) {
+    if (entries.isEmpty()) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center,
+        ) {
+            Text(
+                text = stringResource(R.string.su_audit_log_empty),
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+    } else {
+        LazyColumn(Modifier.fillMaxSize()) {
+            items(entries, key = { it.timestamp }) { entry ->
+                val pm = LocalContext.current.packageManager
+                val appLabel = remember(entry.uid) {
+                    try {
+                        val packages = pm.getPackagesForUid(entry.uid)
+                        if (packages != null && packages.isNotEmpty()) {
+                            pm.getApplicationInfo(packages[0], 0).loadLabel(pm).toString()
+                        } else {
+                            "UID ${entry.uid}"
+                        }
+                    } catch (_: Exception) {
+                        "UID ${entry.uid}"
+                    }
+                }
+
+                val dateFormat = remember {
+                    SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+                }
+
+                ListItem(
+                    colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+                    headlineContent = {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(appLabel)
+                            Spacer(Modifier.width(8.dp))
+                            AuditActionBadge(
+                                label = if (entry.toUid == 0) "ROOT" else "UID ${entry.toUid}",
+                                color = Color(0xFF4CAF50),
+                            )
+                        }
+                    },
+                    supportingContent = {
+                        Column {
+                            Text(
+                                "PID: ${entry.pid}  ${entry.comm}",
+                                style = MaterialTheme.typography.bodySmall.copy(fontFamily = FontFamily.Monospace),
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                            Text(
+                                "#${entry.timestamp}",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.outline,
+                            )
+                        }
+                    },
+                    leadingContent = {
+                        val appInfo = remember(entry.uid) {
+                            try {
+                                val packages = pm.getPackagesForUid(entry.uid)
+                                if (packages != null && packages.isNotEmpty()) {
+                                    pm.getPackageInfo(packages[0], 0)
+                                } else null
+                            } catch (_: Exception) {
+                                null
+                            }
+                        }
+                        if (appInfo != null) {
+                            AsyncImage(
+                                model = ImageRequest.Builder(LocalContext.current).data(appInfo)
+                                    .crossfade(true).build(),
+                                contentDescription = null,
+                                modifier = Modifier.size(48.dp),
+                            )
+                        } else {
+                            Box(
+                                modifier = Modifier
+                                    .size(48.dp)
+                                    .background(
+                                        MaterialTheme.colorScheme.surfaceContainerHigh,
+                                        RoundedCornerShape(8.dp),
+                                    ),
+                                contentAlignment = Alignment.Center,
+                            ) {
+                                Text(
+                                    text = entry.uid.toString().take(2),
+                                    style = MaterialTheme.typography.titleMedium,
+                                )
+                            }
+                        }
+                    },
+                )
+            }
+            item { Spacer(Modifier.height(16.dp)) }
+        }
+    }
+}
+
+@Composable
+private fun AppAuditList(entries: List<SuAuditLog.AuditEntry.AppEntry>) {
+    if (entries.isEmpty()) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center,
+        ) {
+            Text(
+                text = stringResource(R.string.su_audit_log_empty),
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+    } else {
+        LazyColumn(Modifier.fillMaxSize()) {
+            items(entries, key = { "${it.packageName}_${it.timestamp}" }) { entry ->
+                val pm = LocalContext.current.packageManager
+                val appLabel = remember(entry.packageName) {
+                    try {
+                        pm.getApplicationInfo(entry.packageName, 0).loadLabel(pm).toString()
+                    } catch (_: Exception) {
+                        entry.packageName
+                    }
+                }
+
+                val actionLabel = when (entry.action) {
+                    "GRANT" -> stringResource(R.string.su_audit_action_grant)
+                    "REVOKE" -> stringResource(R.string.su_audit_action_revoke)
+                    else -> stringResource(R.string.su_audit_action_exclude)
+                }
+
+                val actionColor = when (entry.action) {
+                    "GRANT" -> Color(0xFF4CAF50)
+                    "REVOKE" -> Color(0xFFF44336)
+                    else -> Color(0xFFFF9800)
+                }
+
+                val dateFormat = remember {
+                    SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+                }
+
+                ListItem(
+                    colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+                    headlineContent = { Text(appLabel) },
+                    supportingContent = {
+                        Column {
+                            Text(
+                                entry.packageName,
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                            Text(
+                                dateFormat.format(Date(entry.timestamp)),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.outline,
+                            )
+                        }
+                    },
+                    leadingContent = {
+                        val appInfo = remember(entry.packageName) {
+                            try {
+                                pm.getPackageInfo(entry.packageName, 0)
+                            } catch (_: Exception) {
+                                null
+                            }
+                        }
+                        if (appInfo != null) {
+                            AsyncImage(
+                                model = ImageRequest.Builder(LocalContext.current).data(appInfo)
+                                    .crossfade(true).build(),
+                                contentDescription = null,
+                                modifier = Modifier.size(48.dp),
+                            )
+                        } else {
+                            Box(
+                                modifier = Modifier
+                                    .size(48.dp)
+                                    .background(
+                                        MaterialTheme.colorScheme.surfaceContainerHigh,
+                                        RoundedCornerShape(8.dp),
+                                    ),
+                                contentAlignment = Alignment.Center,
+                            ) {
+                                Text(
+                                    text = entry.packageName.take(1).uppercase(),
+                                    style = MaterialTheme.typography.titleMedium,
+                                )
+                            }
+                        }
+                    },
+                    trailingContent = {
+                        AuditActionBadge(label = actionLabel, color = actionColor)
+                    },
+                )
+            }
+            item { Spacer(Modifier.height(16.dp)) }
         }
     }
 }
@@ -253,7 +380,7 @@ private fun SuAuditClearDialog(
                     style = MaterialTheme.typography.bodyMedium,
                 )
                 Spacer(Modifier.height(24.dp))
-                androidx.compose.foundation.layout.Row(
+                Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.End,
                 ) {

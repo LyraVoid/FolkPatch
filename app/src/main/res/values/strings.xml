@@ -931,6 +931,8 @@ Please ensure the app is completely closed and reopened for the commands to exec
     <string name="su_audit_action_grant">Granted</string>
     <string name="su_audit_action_revoke">Revoked</string>
     <string name="su_audit_action_exclude">Excluded</string>
+    <string name="su_audit_tab_usage">Usage Log</string>
+    <string name="su_audit_tab_operations">Operations</string>
 
     <string name="patch_output_written_to"> Output file is written to </string>
     <string name="patch_write_failed"> Write patched boot.img failed</string>
