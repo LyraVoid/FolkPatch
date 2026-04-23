@@ -922,6 +922,16 @@ Please ensure the app is completely closed and reopened for the commands to exec
     <string name="su_app_action_launch_success">Launching %s</string>
     <string name="su_app_action_force_stop_success">Force stopped %s</string>
     <string name="su_app_action_failed">Operation failed: %s</string>
+
+    <!-- SU Audit Log -->
+    <string name="su_audit_log_title">Authorization Log</string>
+    <string name="su_audit_log_empty">No authorization records yet</string>
+    <string name="su_audit_log_clear">Clear Log</string>
+    <string name="su_audit_log_clear_confirm">Clear all authorization records?</string>
+    <string name="su_audit_action_grant">Granted</string>
+    <string name="su_audit_action_revoke">Revoked</string>
+    <string name="su_audit_action_exclude">Excluded</string>
+
     <string name="patch_output_written_to"> Output file is written to </string>
     <string name="patch_write_failed"> Write patched boot.img failed</string>
 

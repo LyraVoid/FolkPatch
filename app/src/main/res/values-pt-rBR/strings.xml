@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">FolkPatch</string>
     <string name="app_name_fpatch">FPatch</string>
@@ -100,6 +100,15 @@
     <string name="su_app_action_launch_success">Iniciando %s</string>
     <string name="su_app_action_force_stop_success">%s forçado a parar</string>
     <string name="su_app_action_failed">Operação falhou: %s</string>
+
+    <!-- SU Audit Log -->
+    <string name="su_audit_log_title">Registro de autorização</string>
+    <string name="su_audit_log_empty">Nenhum registro de autorização</string>
+    <string name="su_audit_log_clear">Limpar registro</string>
+    <string name="su_audit_log_clear_confirm">Limpar todos os registros de autorização?</string>
+    <string name="su_audit_action_grant">Concedido</string>
+    <string name="su_audit_action_revoke">Revogado</string>
+    <string name="su_audit_action_exclude">Excluído</string>
 
     <string name="home_learn_apatch">Aprenda FolkPatch</string>
     <string name="home_click_to_learn_apatch">Saiba mais sobre os recursos do FolkPatch e como usar</string>

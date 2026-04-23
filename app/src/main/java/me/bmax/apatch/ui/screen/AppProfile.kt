@@ -52,6 +52,7 @@ import me.bmax.apatch.ui.component.SegmentedControl
 import me.bmax.apatch.ui.component.SwitchItem
 import me.bmax.apatch.ui.viewmodel.SuperUserViewModel
 import me.bmax.apatch.util.PkgConfig
+import me.bmax.apatch.util.SuAuditLog
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Destination<RootGraph>
@@ -159,12 +160,14 @@ fun AppProfileScreen(
                             config.profile.scontext = APApplication.MAGISK_SCONTEXT
                             Natives.grantSu(appInfo.uid, 0, config.profile.scontext)
                             Natives.setUidExclude(appInfo.uid, 0)
+                            SuAuditLog.logGrant(appInfo.packageName, appInfo.uid)
                         }
                         1 -> { // NO ROOT
                             config.allow = 0
                             config.exclude = 0
                             Natives.revokeSu(appInfo.uid)
                             Natives.setUidExclude(appInfo.uid, 0)
+                            SuAuditLog.logRevoke(appInfo.packageName, appInfo.uid)
                         }
                         2 -> { // Exclude
                             config.allow = 0
@@ -172,6 +175,7 @@ fun AppProfileScreen(
                             config.profile.scontext = APApplication.DEFAULT_SCONTEXT
                             Natives.revokeSu(appInfo.uid)
                             Natives.setUidExclude(appInfo.uid, 1)
+                            SuAuditLog.logExclude(appInfo.packageName, appInfo.uid)
                         }
                     }
                     config.profile.uid = appInfo.uid

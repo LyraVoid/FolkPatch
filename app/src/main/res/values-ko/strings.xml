@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">FolkPatch</string>
     <string name="app_name_fpatch">FPatch</string>
@@ -905,6 +905,16 @@
     <string name="su_app_action_launch_success">%s 실행 중</string>
     <string name="su_app_action_force_stop_success">%s이(가) 강제로 중지됨</string>
     <string name="su_app_action_failed">작업 실패: %s</string>
+
+    <!-- SU Audit Log -->
+    <string name="su_audit_log_title">권한 로그</string>
+    <string name="su_audit_log_empty">권한 기록이 없습니다</string>
+    <string name="su_audit_log_clear">로그 지우기</string>
+    <string name="su_audit_log_clear_confirm">모든 권한 기록을 삭제하시겠습니까?</string>
+    <string name="su_audit_action_grant">허용됨</string>
+    <string name="su_audit_action_revoke">취소됨</string>
+    <string name="su_audit_action_exclude">제외됨</string>
+
     <string name="patch_output_written_to"> 출력 파일이 저장된 위치: </string>
     <string name="patch_write_failed"> 패치된 boot.img 작성 실패</string>
 

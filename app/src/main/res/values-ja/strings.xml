@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name_fpatch">FPatch</string>
     <string name="desktop_app_name">デスクトップのアプリ名</string>
@@ -810,6 +810,16 @@
     <string name="su_app_action_launch_success">「%s」を起動中</string>
     <string name="su_app_action_force_stop_success">「%s」を強制停止しました。</string>
     <string name="su_app_action_failed">操作に失敗: %s</string>
+
+    <!-- SU Audit Log -->
+    <string name="su_audit_log_title">認証ログ</string>
+    <string name="su_audit_log_empty">認証記録がありません</string>
+    <string name="su_audit_log_clear">ログを消去</string>
+    <string name="su_audit_log_clear_confirm">すべての認証記録を消去しますか？</string>
+    <string name="su_audit_action_grant">許可済み</string>
+    <string name="su_audit_action_revoke">取り消し済み</string>
+    <string name="su_audit_action_exclude">除外済み</string>
+
     <string name="patch_output_written_to">出力ファイル先</string>
     <string name="patch_write_failed">パッチ済みの boot.img のフラッシュに失敗しました。</string>
     <!-- Badge Count Settings -->
