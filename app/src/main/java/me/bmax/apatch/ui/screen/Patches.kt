@@ -90,6 +90,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.bmax.apatch.R
+import me.bmax.apatch.APApplication
 import me.bmax.apatch.ui.component.SwitchItem
 import me.bmax.apatch.ui.viewmodel.KPModel
 import me.bmax.apatch.ui.viewmodel.PatchesViewModel
@@ -104,9 +105,7 @@ private const val TAG = "Patches"
 fun Patches(mode: PatchesViewModel.PatchMode) {
     val scrollState = rememberScrollState()
     val scope = rememberCoroutineScope()
-
-    var needKey by rememberSaveable { mutableStateOf(false) }
-
+    var needKey by remember { mutableStateOf(APApplication.sharedPreferences.getBoolean("patch_custom_superkey_enabled", false)) }
     val viewModel = viewModel<PatchesViewModel>()
     SideEffect {
         viewModel.prepare(mode)
@@ -206,6 +205,7 @@ fun Patches(mode: PatchesViewModel.PatchMode) {
                         checked = needKey,
                         onCheckedChange = { checked ->
                             needKey = checked
+                            APApplication.sharedPreferences.edit().putBoolean("patch_custom_superkey_enabled", checked).apply()
                         }
                     )
                 }
