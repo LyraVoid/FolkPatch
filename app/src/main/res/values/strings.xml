@@ -509,6 +509,11 @@ Here are some possible reasons for authentication failure—please check which o
     <string name="path_hide_uid_mode_enabled">UID execution mode enabled</string>
     <string name="path_hide_uid_mode_disabled">UID execution mode disabled</string>
     <string name="path_hide_uid_applied">UID whitelist applied</string>
+    <string name="path_hide_select_apps">Select Apps</string>
+    <string name="path_hide_no_apps_selected">No apps selected</string>
+    <string name="path_hide_app_removed">Removed %d stale entry for uninstalled app(s)</string>
+    <string name="path_hide_search_apps">Search apps…</string>
+    <string name="path_hide_show_system">Show system apps</string>
     <!-- Umount Service -->
     <string name="settings_umount_service">Umount Service</string>
     <string name="settings_umount_service_summary">Configure mount points to auto-unmount at boot</string>

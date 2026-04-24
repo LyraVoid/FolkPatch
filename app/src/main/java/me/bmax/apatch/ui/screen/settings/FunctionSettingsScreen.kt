@@ -76,7 +76,7 @@ fun FunctionSettingsScreen(navigator: DestinationsNavigator) {
     var isPathHideEnabled by rememberSaveable { mutableStateOf(false) }
     var pathHidePaths by rememberSaveable { mutableStateOf("") }
     var isPathHideUidMode by rememberSaveable { mutableStateOf(false) }
-    var pathHideUids by rememberSaveable { mutableStateOf("") }
+    var selectedUids by rememberSaveable { mutableStateOf(emptySet<Int>()) }
 
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
@@ -104,11 +104,28 @@ fun FunctionSettingsScreen(navigator: DestinationsNavigator) {
                 }
                 // Load UID mode state
                 isPathHideUidMode = APApplication.sharedPreferences.getBoolean("pathhide_uid_mode", false)
-                val kernelUids = Natives.pathHideUidList()
-                if (kernelUids.isNotBlank()) {
-                    pathHideUids = kernelUids.trimEnd('\n')
-                } else {
-                    pathHideUids = me.bmax.apatch.util.readPathHideUids()
+                val pm = context.packageManager
+                val uidSource = Natives.pathHideUidList().ifBlank {
+                    me.bmax.apatch.util.readPathHideUids()
+                }
+                if (uidSource.isNotBlank()) {
+                    val loaded = uidSource.lines()
+                        .map { it.trim() }
+                        .filter { it.isNotBlank() }
+                        .mapNotNull { it.toIntOrNull() }
+                        .toMutableSet()
+                    // Auto-cleanup: remove UIDs for uninstalled apps
+                    val stale = loaded.filter { uid ->
+                        uid > 0 && pm.getPackagesForUid(uid) == null
+                    }
+                    if (stale.isNotEmpty()) {
+                        stale.forEach { loaded.remove(it) }
+                        // Sync cleanup to kernel + file
+                        Natives.pathHideUidClear()
+                        loaded.forEach { Natives.pathHideUidAdd(it) }
+                        writePathHideUids(loaded.joinToString("\n"))
+                    }
+                    selectedUids = loaded.toSet()
                 }
             }
         }
@@ -286,29 +303,23 @@ fun FunctionSettingsScreen(navigator: DestinationsNavigator) {
                             }
                         }
                     },
-                    pathHideUids = pathHideUids,
-                    onPathHideUidsChange = { pathHideUids = it },
-                    onPathHideUidSave = {
-                        val currentUids = pathHideUids
+                    selectedUids = selectedUids,
+                    onUidToggle = { uid ->
                         scope.launch(Dispatchers.IO) {
-                            // Save to config file for persistence
-                            writePathHideUids(currentUids)
-                            Natives.pathHideUidClear()
-                            if (currentUids.isNotBlank()) {
-                                currentUids.lines()
-                                    .map { it.trim() }
-                                    .filter { it.isNotBlank() }
-                                    .forEach { uidStr ->
-                                        uidStr.toIntOrNull()?.let { uid ->
-                                            Natives.pathHideUidAdd(uid)
-                                        }
-                                    }
+                            val newSet = if (uid in selectedUids) {
+                                Natives.pathHideUidRemove(uid)
+                                selectedUids - uid
+                            } else {
+                                Natives.pathHideUidAdd(uid)
+                                selectedUids + uid
                             }
+                            writePathHideUids(newSet.joinToString("\n"))
                             withContext(Dispatchers.Main) {
-                                snackBarHost.showSnackbar(context.getString(R.string.path_hide_uid_applied))
+                                selectedUids = newSet
                             }
                         }
                     },
+                    onUidRemoveStale = {},
                     isUmountEnabled = isUmountEnabled,
                     onUmountEnabledChange = { enabled ->
                         isUmountEnabled = enabled

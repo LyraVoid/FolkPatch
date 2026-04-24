@@ -1,35 +1,66 @@
 package me.bmax.apatch.ui.screen.settings
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.FolderOff
 import androidx.compose.material.icons.filled.Memory
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.filled.HideSource
 import androidx.compose.material.icons.filled.PersonPin
 import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.text.KeyboardOptions
+import coil.compose.AsyncImage
+import coil.imageLoader
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.ExpressiveCard
@@ -37,9 +68,6 @@ import me.bmax.apatch.ui.component.ExpressiveSwitch
 import me.bmax.apatch.ui.component.SplicedColumnGroup
 import me.bmax.apatch.ui.component.ToggleSettingCard
 import me.bmax.apatch.util.setHideServiceEnabled
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.input.KeyboardType
 
 @Composable
 fun FunctionSettingsContent(
@@ -63,9 +91,9 @@ fun FunctionSettingsContent(
     onPathHideSave: () -> Unit,
     isPathHideUidMode: Boolean,
     onPathHideUidModeChange: (Boolean) -> Unit,
-    pathHideUids: String,
-    onPathHideUidsChange: (String) -> Unit,
-    onPathHideUidSave: () -> Unit,
+    selectedUids: Set<Int>,
+    onUidToggle: (Int) -> Unit,
+    onUidRemoveStale: () -> Unit,
     isUmountEnabled: Boolean,
     onUmountEnabledChange: (Boolean) -> Unit,
     umountPaths: String,
@@ -344,8 +372,6 @@ fun FunctionSettingsContent(
                             // UID Execution Mode
                             val uidModeTitle = stringResource(id = R.string.path_hide_uid_mode)
                             val uidModeSummary = stringResource(id = R.string.path_hide_uid_mode_summary)
-                            val uidsLabel = stringResource(id = R.string.path_hide_uids_label)
-                            val uidsHelper = stringResource(id = R.string.path_hide_uids_helper)
 
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
@@ -385,29 +411,249 @@ fun FunctionSettingsContent(
 
                             AnimatedVisibility(visible = isPathHideUidMode) {
                                 Column(modifier = Modifier.padding(top = 8.dp)) {
-                                    OutlinedTextField(
-                                        value = pathHideUids,
-                                        onValueChange = onPathHideUidsChange,
-                                        modifier = Modifier.fillMaxWidth().height(120.dp),
-                                        label = { Text(uidsLabel) },
-                                        placeholder = { Text("10134\n10087") },
-                                        supportingText = { Text(uidsHelper) },
-                                        minLines = 3,
-                                        maxLines = Int.MAX_VALUE,
-                                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                                    )
+                                    val pm = context.packageManager
+                                    val noAppsText = stringResource(R.string.path_hide_no_apps_selected)
+
+                                    if (selectedUids.isNotEmpty()) {
+                                        @OptIn(ExperimentalLayoutApi::class)
+                                        FlowRow(
+                                            horizontalArrangement = Arrangement.spacedBy(6.dp),
+                                            verticalArrangement = Arrangement.spacedBy(6.dp),
+                                        ) {
+                                            selectedUids.forEach { uid ->
+                                                val pkgs = pm.getPackagesForUid(uid)
+                                                val label = pkgs?.firstOrNull()?.let {
+                                                    try { pm.getApplicationInfo(it, 0).loadLabel(pm).toString() }
+                                                    catch (_: Exception) { it }
+                                                } ?: "UID $uid"
+                                                FilterChip(
+                                                    selected = true,
+                                                    onClick = { onUidToggle(uid) },
+                                                    label = {
+                                                        Text(
+                                                            label,
+                                                            maxLines = 1,
+                                                            overflow = TextOverflow.Ellipsis,
+                                                            style = MaterialTheme.typography.bodySmall,
+                                                        )
+                                                    },
+                                                    trailingIcon = {
+                                                        Icon(
+                                                            Icons.Filled.Close,
+                                                            contentDescription = null,
+                                                            modifier = Modifier.size(FilterChipDefaults.IconSize),
+                                                        )
+                                                    },
+                                                )
+                                            }
+                                        }
+                                    } else {
+                                        Text(
+                                            noAppsText,
+                                            style = MaterialTheme.typography.bodySmall,
+                                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        )
+                                    }
 
                                     Spacer(modifier = Modifier.height(8.dp))
 
-                                    Button(
-                                        onClick = onPathHideUidSave,
-                                        modifier = Modifier.fillMaxWidth(),
-                                    ) {
-                                        Text(stringResource(R.string.path_hide_uid_save))
-                                    }
+                                    AppPickerButton(
+                                        selectedUids = selectedUids,
+                                        onUidToggle = onUidToggle,
+                                    )
                                 }
                             }
                         }
+                    }
+                }
+            }
+        }
+    }
+}
+
+data class AppListEntry(
+    val uid: Int,
+    val packageName: String,
+    val label: String,
+)
+
+@Composable
+private fun AppPickerButton(
+    selectedUids: Set<Int>,
+    onUidToggle: (Int) -> Unit,
+) {
+    val context = LocalContext.current
+    var showPicker by remember { mutableStateOf(false) }
+    val selectText = stringResource(R.string.path_hide_select_apps)
+
+    OutlinedButton(
+        onClick = { showPicker = true },
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        Icon(Icons.Filled.Add, contentDescription = null, modifier = Modifier.size(18.dp))
+        Spacer(Modifier.width(8.dp))
+        Text(selectText)
+    }
+
+    if (showPicker) {
+        AppPickerSheet(
+            selectedUids = selectedUids,
+            onUidToggle = onUidToggle,
+            onDismiss = { showPicker = false },
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun AppPickerSheet(
+    selectedUids: Set<Int>,
+    onUidToggle: (Int) -> Unit,
+    onDismiss: () -> Unit,
+) {
+    val context = LocalContext.current
+    val pm = context.packageManager
+    var searchQuery by remember { mutableStateOf("") }
+    var showSystem by remember { mutableStateOf(false) }
+
+    val allApps = remember {
+        pm.getInstalledApplications(0)
+            .filter { showSystem || it.uid >= 10000 }
+            .map { appInfo ->
+                AppListEntry(
+                    uid = appInfo.uid,
+                    packageName = appInfo.packageName,
+                    label = appInfo.loadLabel(pm).toString(),
+                )
+            }
+            .distinctBy { it.uid }
+            .sortedWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it.label })
+    }
+
+    val filteredApps = remember(searchQuery, showSystem) {
+        val base = if (showSystem) {
+            pm.getInstalledApplications(0)
+        } else {
+            pm.getInstalledApplications(0).filter { it.uid >= 10000 }
+        }
+        base
+            .let { apps ->
+                if (searchQuery.isBlank()) apps
+                else apps.filter {
+                    it.packageName.contains(searchQuery, true) ||
+                        it.loadLabel(pm).toString().contains(searchQuery, true)
+                }
+            }
+            .map { AppListEntry(it.uid, it.packageName, it.loadLabel(pm).toString()) }
+            .distinctBy { it.uid }
+            .sortedWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it.label })
+    }
+
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val searchHint = stringResource(R.string.path_hide_search_apps)
+    val systemLabel = stringResource(R.string.path_hide_show_system)
+
+    ModalBottomSheet(
+        onDismissRequest = onDismiss,
+        sheetState = sheetState,
+    ) {
+        Column(modifier = Modifier.fillMaxWidth().fillMaxHeight(0.7f)) {
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Text(
+                    stringResource(R.string.path_hide_select_apps),
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold,
+                )
+                TextButton(onClick = onDismiss) {
+                    Text(stringResource(android.R.string.ok))
+                }
+            }
+
+            Spacer(Modifier.height(8.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                OutlinedTextField(
+                    value = searchQuery,
+                    onValueChange = { searchQuery = it },
+                    modifier = Modifier.weight(1f),
+                    placeholder = { Text(searchHint) },
+                    leadingIcon = { Icon(Icons.Filled.Search, contentDescription = null) },
+                    singleLine = true,
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+                        unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+                    ),
+                )
+            }
+
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Checkbox(checked = showSystem, onCheckedChange = { showSystem = it })
+                Spacer(Modifier.width(4.dp))
+                Text(systemLabel, style = MaterialTheme.typography.bodySmall)
+            }
+
+            val dividerColor = MaterialTheme.colorScheme.outlineVariant
+            LazyColumn(modifier = Modifier.fillMaxWidth().weight(1f)) {
+                items(filteredApps, key = { it.uid }) { app ->
+                    val isSelected = app.uid in selectedUids
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { onUidToggle(app.uid) }
+                            .padding(horizontal = 16.dp, vertical = 8.dp)
+                            .drawBehind {
+                                drawLine(
+                                    dividerColor,
+                                    Offset(0f, size.height),
+                                    Offset(size.width, size.height),
+                                    strokeWidth = 0.5.dp.toPx(),
+                                )
+                            },
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Checkbox(
+                            checked = isSelected,
+                            onCheckedChange = { onUidToggle(app.uid) },
+                        )
+                        Spacer(Modifier.width(8.dp))
+                        AsyncImage(
+                            model = app.packageName,
+                            contentDescription = null,
+                            modifier = Modifier.size(36.dp),
+                            imageLoader = context.imageLoader,
+                        )
+                        Spacer(Modifier.width(12.dp))
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(
+                                app.label,
+                                style = MaterialTheme.typography.bodyMedium,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                            )
+                            Text(
+                                app.packageName,
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                                fontFamily = FontFamily.Monospace,
+                            )
+                        }
+                        Text(
+                            "UID ${app.uid}",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
                     }
                 }
             }
