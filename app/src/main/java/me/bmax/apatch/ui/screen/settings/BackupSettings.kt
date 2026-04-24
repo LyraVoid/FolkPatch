@@ -1,7 +1,7 @@
 package me.bmax.apatch.ui.screen.settings
 
 import android.content.Intent
-import android.widget.Toast
+import me.bmax.apatch.util.ui.showToast
 import androidx.core.content.FileProvider
 import me.bmax.apatch.BuildConfig
 import androidx.compose.foundation.layout.*
@@ -108,7 +108,7 @@ fun BackupSettingsContent(
                                 context.startActivity(Intent.createChooser(intent2, context.getString(R.string.settings_open_backup_dir)))
                             }
                         } catch (e3: Exception) {
-                            Toast.makeText(context, R.string.backup_dir_open_failed, Toast.LENGTH_SHORT).show()
+                            showToast(context, R.string.backup_dir_open_failed)
                         }
                     }
                 }
@@ -278,9 +278,9 @@ fun WebDavConfigDialog(showDialog: MutableState<Boolean>) {
                                 val result = WebDavUtils.testConnection(url, username, password)
                                 isTesting = false
                                 if (result.isSuccess) {
-                                    Toast.makeText(context, context.getString(R.string.webdav_test_success), Toast.LENGTH_SHORT).show()
+                                    showToast(context, context.getString(R.string.webdav_test_success))
                                 } else {
-                                    Toast.makeText(context, context.getString(R.string.webdav_test_failed, result.exceptionOrNull()?.message), Toast.LENGTH_LONG).show()
+                                    showToast(context, context.getString(R.string.webdav_test_failed, result.exceptionOrNull()?.message))
                                 }
                             }
                         },

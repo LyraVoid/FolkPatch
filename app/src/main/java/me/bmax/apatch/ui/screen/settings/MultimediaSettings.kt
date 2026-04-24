@@ -2,7 +2,7 @@ package me.bmax.apatch.ui.screen.settings
 
 import android.content.ActivityNotFoundException
 import android.net.Uri
-import android.widget.Toast
+import me.bmax.apatch.util.ui.showToast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
@@ -252,7 +252,7 @@ fun MultimediaSettingsContent(
                     try {
                         pickMusicLauncher.launch("audio/*")
                     } catch (e: ActivityNotFoundException) {
-                        Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+                        showToast(context, e.message ?: "")
                     }
                 }
             ) {
@@ -491,7 +491,7 @@ fun MultimediaSettingsContent(
                     try {
                         pickSoundEffectLauncher.launch("audio/*")
                     } catch (e: ActivityNotFoundException) {
-                        Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+                        showToast(context, e.message ?: "")
                     }
                 }
             ) {
@@ -684,7 +684,7 @@ fun MultimediaSettingsContent(
                     try {
                         pickStartupSoundLauncher.launch("audio/*")
                     } catch (e: ActivityNotFoundException) {
-                        Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+                        showToast(context, e.message ?: "")
                     }
                 }
             ) {

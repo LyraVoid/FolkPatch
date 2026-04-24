@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
-import android.widget.Toast
+import me.bmax.apatch.util.ui.showToast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -195,7 +195,7 @@ fun GeneralSettingsContent(
                     if (hasUpdate) {
                         showUpdateDialog.value = true
                     } else {
-                        Toast.makeText(context, R.string.update_latest, Toast.LENGTH_SHORT).show()
+                        showToast(context, R.string.update_latest)
                     }
                 }
             }) {
@@ -1252,11 +1252,7 @@ fun ResetSUPathDialog(showDialog: MutableState<Boolean>) {
                     Button(enabled = suPath.startsWith("/") && suPath.trim().length > 1, onClick = {
                         showDialog.value = false
                         val success = me.bmax.apatch.Natives.resetSuPath(suPath)
-                        Toast.makeText(
-                            context,
-                            if (success) R.string.success else R.string.failure,
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        showToast(context, if (success) R.string.success else R.string.failure)
                         rootShellForResult("echo $suPath > ${APApplication.SU_PATH_FILE}")
                     }) {
                         Text(stringResource(id = android.R.string.ok))

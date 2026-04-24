@@ -1,7 +1,7 @@
 package me.bmax.apatch.ui.screen
 
 import android.content.Context
-import android.widget.Toast
+import me.bmax.apatch.util.ui.showToast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -205,7 +205,7 @@ fun OnlineKPMItem(module: OnlineKPMViewModel.OnlineKPM, context: Context) {
             IconButton(
                 onClick = {
                     // Show toast message with download info
-                    Toast.makeText(context, downloadNotificationText, Toast.LENGTH_LONG).show()
+                    showToast(context, downloadNotificationText)
 
                     // Start the download
                     download(

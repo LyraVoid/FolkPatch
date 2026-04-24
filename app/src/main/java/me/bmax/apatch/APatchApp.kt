@@ -6,7 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
 import android.util.Log
-import android.widget.Toast
+import me.bmax.apatch.util.ui.showToast
 import androidx.core.content.edit
 import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
@@ -360,8 +360,7 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
         Log.d(TAG, "Device architecture check: isArm64=$isArm64, supported ABIs=${Build.SUPPORTED_ABIS.joinToString(", ")}")
         if (!isArm64) {
             Log.e(TAG, "Unsupported architecture!")
-            Toast.makeText(applicationContext, "Unsupported architecture!", Toast.LENGTH_LONG)
-                .show()
+            showToast(applicationContext, "Unsupported architecture!")
             Thread.sleep(5000)
             exitProcess(0)
         }

@@ -11,7 +11,7 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.util.Log
-import android.widget.Toast
+import me.bmax.apatch.util.ui.showToast
 import androidx.core.content.ContextCompat
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
@@ -173,7 +173,7 @@ object ModuleShortcut {
 
         if (hasPinned) {
             Log.d(TAG, "$logPrefix: detected existing pinned shortcut, updating only")
-            Toast.makeText(context, context.getString(R.string.module_shortcut_updated), Toast.LENGTH_SHORT).show()
+            showToast(context, context.getString(R.string.module_shortcut_updated))
             return
         }
 
@@ -198,11 +198,7 @@ object ModuleShortcut {
         }
         if (!ShortcutManagerCompat.isRequestPinShortcutSupported(context)) {
             Log.w(TAG, "$logPrefix: requestPinShortcut not supported on this launcher")
-            Toast.makeText(
-                context,
-                context.getString(R.string.module_shortcut_not_supported),
-                Toast.LENGTH_LONG
-            ).show()
+            showToast(context, context.getString(R.string.module_shortcut_not_supported))
             return
         }
 
@@ -218,11 +214,7 @@ object ModuleShortcut {
 
         if (pinned) {
             Log.d(TAG, "$logPrefix: pinned shortcut created successfully for moduleId=$moduleId")
-            Toast.makeText(
-                context,
-                context.getString(R.string.module_shortcut_created),
-                Toast.LENGTH_SHORT
-            ).show()
+            showToast(context, context.getString(R.string.module_shortcut_created))
         } else {
             Log.w(TAG, "$logPrefix: pinned shortcut not created, showing permission hint for moduleId=$moduleId")
             showShortcutPermissionHint(context)
@@ -434,7 +426,7 @@ object ModuleShortcut {
             else -> R.string.module_shortcut_permission_tip_default
         }
         Log.d(TAG, "showShortcutPermissionHint: state=$state, messageRes=$messageRes")
-        Toast.makeText(context, context.getString(messageRes), Toast.LENGTH_LONG).show()
+        showToast(context, context.getString(messageRes))
         if (state != ShortcutPermissionState.Granted) {
             Log.d(TAG, "showShortcutPermissionHint: state is not Granted, opening app details settings")
             openAppDetailsSettings(context)

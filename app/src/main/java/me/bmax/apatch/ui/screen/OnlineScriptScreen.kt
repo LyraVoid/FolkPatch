@@ -6,7 +6,7 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.Environment
 import android.provider.OpenableColumns
-import android.widget.Toast
+import me.bmax.apatch.util.ui.showToast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -201,19 +201,11 @@ fun OnlineScriptItem(
                 }
 
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(
-                        context,
-                        "Downloaded to: ${targetFile.absolutePath}",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    showToast(context, "Downloaded to: ${targetFile.absolutePath}")
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(
-                        context,
-                        "Download failed: ${e.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    showToast(context, "Download failed: ${e.message}")
                 }
             }
         }
@@ -253,7 +245,7 @@ fun OnlineScriptItem(
 
             IconButton(
                 onClick = {
-                    Toast.makeText(context, downloadNotificationText, Toast.LENGTH_LONG).show()
+                    showToast(context, downloadNotificationText)
                     
                     download(
                         context = context,

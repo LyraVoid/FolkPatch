@@ -9,7 +9,7 @@ import android.text.TextUtils
 import android.view.Window
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
-import android.widget.Toast
+import me.bmax.apatch.util.ui.showToast
 import androidx.core.content.pm.PackageInfoCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -148,7 +148,7 @@ class WebViewInterface(val context: Context, private val webView: WebView) {
     @JavascriptInterface
     fun toast(msg: String) {
         webView.post {
-            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+            showToast(context, msg)
         }
     }
 

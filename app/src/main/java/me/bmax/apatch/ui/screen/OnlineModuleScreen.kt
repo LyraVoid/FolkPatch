@@ -1,7 +1,7 @@
 package me.bmax.apatch.ui.screen
 
 import android.content.Context
-import android.widget.Toast
+import me.bmax.apatch.util.ui.showToast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -201,7 +201,7 @@ fun OnlineModuleItem(module: OnlineModuleViewModel.OnlineModule, context: Contex
             IconButton(
                 onClick = {
                     // Show toast message with download info
-                    Toast.makeText(context, downloadNotificationText, Toast.LENGTH_LONG).show()
+                    showToast(context, downloadNotificationText)
                     
                     // Start the download
                     download(

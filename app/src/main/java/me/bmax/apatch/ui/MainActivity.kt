@@ -164,7 +164,7 @@ import androidx.compose.ui.platform.LocalContext
 import android.provider.OpenableColumns
 import me.bmax.apatch.ui.theme.ThemeManager
 import me.bmax.apatch.ui.component.rememberLoadingDialog
-import android.widget.Toast
+
 
 import me.bmax.apatch.ui.screen.settings.ThemeImportDialog
 import me.bmax.apatch.util.BiometricUtils
@@ -172,6 +172,7 @@ import me.bmax.apatch.util.ui.navBarGlassEffect
 import me.bmax.apatch.util.ui.navBarLiquefiable
 import me.bmax.apatch.util.ui.rememberNavBarGlassLiquidState
 import me.bmax.apatch.util.ui.isRealTimeBlurAvailable
+import me.bmax.apatch.util.ui.showToast
 
 data class ScrollState(
     val isScrollingDown: MutableState<Boolean>,
@@ -382,7 +383,7 @@ class MainActivity : AppCompatActivity() {
                 object : androidx.biometric.BiometricPrompt.AuthenticationCallback() {
                     override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                         super.onAuthenticationError(errorCode, errString)
-                        android.widget.Toast.makeText(this@MainActivity, errString, android.widget.Toast.LENGTH_SHORT).show()
+                        showToast(this@MainActivity, errString.toString())
                         finishAndRemoveTask()
                     }
 
@@ -586,7 +587,7 @@ class MainActivity : AppCompatActivity() {
                                     themeImportMetadata.value = metadata
                                     showThemeImportDialog.value = true
                                 } else {
-                                    Toast.makeText(context, context.getString(R.string.settings_theme_import_failed), Toast.LENGTH_SHORT).show()
+                                    showToast(context, context.getString(R.string.settings_theme_import_failed))
                                 }
                             }
                         } else {
@@ -610,9 +611,9 @@ class MainActivity : AppCompatActivity() {
                                     ThemeManager.importTheme(context, themeImportUri.value!!)
                                 }
                                 if (success) {
-                                    Toast.makeText(context, context.getString(R.string.settings_theme_imported), Toast.LENGTH_LONG).show()
+                                    showToast(context, context.getString(R.string.settings_theme_imported))
                                 } else {
-                                    Toast.makeText(context, context.getString(R.string.settings_theme_import_failed), Toast.LENGTH_SHORT).show()
+                                    showToast(context, context.getString(R.string.settings_theme_import_failed))
                                 }
                             }
                         }

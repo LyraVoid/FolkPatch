@@ -1,6 +1,6 @@
 package me.bmax.apatch.ui.screen
 
-import android.widget.Toast
+import me.bmax.apatch.util.ui.showToast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -56,11 +56,10 @@ fun ApiMarketplaceScreen(
     LaunchedEffect(viewModel.verificationState) {
         when (val state = viewModel.verificationState) {
             is ApiMarketplaceViewModel.VerificationState.Success -> {
-                Toast.makeText(
+                showToast(
                     context,
-                    context.getString(R.string.apm_api_apply_success),
-                    Toast.LENGTH_SHORT
-                ).show()
+                    context.getString(R.string.apm_api_apply_success)
+                )
                 navigator.popBackStack()
             }
             is ApiMarketplaceViewModel.VerificationState.Error -> {

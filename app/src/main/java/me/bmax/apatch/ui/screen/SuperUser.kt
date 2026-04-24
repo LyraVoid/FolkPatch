@@ -101,6 +101,7 @@ import me.bmax.apatch.ui.viewmodel.SuperUserViewModel
 import me.bmax.apatch.util.PkgConfig
 import me.bmax.apatch.util.SuAuditLog
 import me.bmax.apatch.util.ui.APDialogBlurBehindUtils.Companion.setupWindowBlurListener
+import me.bmax.apatch.util.ui.showToast
 
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
@@ -159,19 +160,11 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
                 if (success) {
                     scope.launch {
                         // Show toast for launch success
-                        android.widget.Toast.makeText(
-                            context,
-                            context.getString(R.string.su_app_action_launch_success, selectedApp!!.label),
-                            android.widget.Toast.LENGTH_SHORT
-                        ).show()
+                        showToast(context, context.getString(R.string.su_app_action_launch_success, selectedApp!!.label))
                     }
                 } else {
                     scope.launch {
-                        android.widget.Toast.makeText(
-                            context,
-                            context.getString(R.string.su_app_action_failed, selectedApp!!.label),
-                            android.widget.Toast.LENGTH_SHORT
-                        ).show()
+                        showToast(context, context.getString(R.string.su_app_action_failed, selectedApp!!.label))
                     }
                 }
                 showAppActionDialog = false
@@ -180,19 +173,11 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
                 val success = viewModel.forceStopApp(selectedApp!!.packageName)
                 if (success) {
                     scope.launch {
-                        android.widget.Toast.makeText(
-                            context,
-                            context.getString(R.string.su_app_action_force_stop_success, selectedApp!!.label),
-                            android.widget.Toast.LENGTH_SHORT
-                        ).show()
+                        showToast(context, context.getString(R.string.su_app_action_force_stop_success, selectedApp!!.label))
                     }
                 } else {
                     scope.launch {
-                        android.widget.Toast.makeText(
-                            context,
-                            context.getString(R.string.su_app_action_failed, selectedApp!!.label),
-                            android.widget.Toast.LENGTH_SHORT
-                        ).show()
+                        showToast(context, context.getString(R.string.su_app_action_failed, selectedApp!!.label))
                     }
                 }
                 showAppActionDialog = false

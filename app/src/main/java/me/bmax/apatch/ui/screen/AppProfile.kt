@@ -53,6 +53,7 @@ import me.bmax.apatch.ui.component.SwitchItem
 import me.bmax.apatch.ui.viewmodel.SuperUserViewModel
 import me.bmax.apatch.util.PkgConfig
 import me.bmax.apatch.util.SuAuditLog
+import me.bmax.apatch.util.ui.showToast
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Destination<RootGraph>
@@ -104,15 +105,14 @@ fun AppProfileScreen(
                     IconButton(onClick = {
                         val success = viewModel.launchApp(context, appInfo.packageName)
                         scope.launch {
-                            android.widget.Toast.makeText(
+                            showToast(
                                 context,
                                 if (success) {
                                     context.getString(R.string.su_app_action_launch_success, appInfo.label)
                                 } else {
                                     context.getString(R.string.su_app_action_failed, appInfo.label)
-                                },
-                                android.widget.Toast.LENGTH_SHORT
-                            ).show()
+                                }
+                            )
                         }
                     }) {
                         Icon(Icons.AutoMirrored.Outlined.OpenInNew, contentDescription = stringResource(R.string.su_app_action_launch))

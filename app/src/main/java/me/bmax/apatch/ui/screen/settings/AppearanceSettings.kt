@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.net.Uri
 import android.os.Build
-import android.widget.Toast
+import me.bmax.apatch.util.ui.showToast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
@@ -835,10 +835,10 @@ fun AppearanceSettingsContent(
                                 try {
                                     pickTitleImageLauncher.launch("image/*")
                                 } catch (e: ActivityNotFoundException) {
-                                    Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+                                    showToast(context, e.message ?: "")
                                 }
                             } else {
-                                Toast.makeText(context, "请先授予存储权限才能选择标题图片", Toast.LENGTH_SHORT).show()
+                                showToast(context, "请先授予存储权限才能选择标题图片")
                             }
                         }
                     ) {
@@ -1045,7 +1045,7 @@ fun AppearanceSettingsContent(
                                 try {
                                     pickVideoLauncher.launch("video/*")
                                 } catch (e: ActivityNotFoundException) {
-                                    Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+                                    showToast(context, e.message ?: "")
                                 }
                             }
                         ) {
@@ -1156,10 +1156,10 @@ fun AppearanceSettingsContent(
                                                 try {
                                                     pickImageLauncher.launch("image/*")
                                                 } catch (e: ActivityNotFoundException) {
-                                                    Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+                                                    showToast(context, e.message ?: "")
                                                 }
                                             } else {
-                                                Toast.makeText(context, "请先授予存储权限才能选择背景图片", Toast.LENGTH_SHORT).show()
+                                                showToast(context, "请先授予存储权限才能选择背景图片")
                                             }
                                         }
                                     ) {
@@ -1192,10 +1192,10 @@ fun AppearanceSettingsContent(
                                         try {
                                             pickImageLauncher.launch("image/*")
                                         } catch (e: ActivityNotFoundException) {
-                                            Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+                                            showToast(context, e.message ?: "")
                                         }
                                     } else {
-                                        Toast.makeText(context, "请先授予存储权限才能选择背景图片", Toast.LENGTH_SHORT).show()
+                                        showToast(context, "请先授予存储权限才能选择背景图片")
                                     }
                                 }
                             ) {
@@ -1368,10 +1368,10 @@ fun AppearanceSettingsContent(
                                     try {
                                         pickGridImageLauncher.launch("image/*")
                                     } catch (e: ActivityNotFoundException) {
-                                        Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+                                        showToast(context, e.message ?: "")
                                     }
                                 } else {
-                                    Toast.makeText(context, "请先授予存储权限才能选择背景图片", Toast.LENGTH_SHORT).show()
+                                    showToast(context, "请先授予存储权限才能选择背景图片")
                                 }
                             }
                         ) {
@@ -1630,7 +1630,7 @@ fun AppearanceSettingsContent(
                                                 loadingDialog.show()
                                                 me.bmax.apatch.ui.screen.BannerApiService.clearAllCache(context)
                                                 loadingDialog.hide()
-                                                Toast.makeText(context, context.getString(R.string.apm_banner_cache_cleared), Toast.LENGTH_SHORT).show()
+                                                showToast(context, context.getString(R.string.apm_banner_cache_cleared))
                                             }
                                         }
                                     )
@@ -1720,7 +1720,7 @@ fun AppearanceSettingsContent(
                             try {
                                 pickFontLauncher.launch("*/*")
                             } catch (e: ActivityNotFoundException) {
-                                Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+                                showToast(context, e.message ?: "")
                             }
                         }
                     ) {
@@ -2697,7 +2697,7 @@ fun BannerApiConfigDialog(
                         onClick = {
                             onConfirm(sourceText)
                             showDialog.value = false
-                            Toast.makeText(context, context.getString(R.string.apm_banner_api_source_saved), Toast.LENGTH_SHORT).show()
+                            showToast(context, context.getString(R.string.apm_banner_api_source_saved))
                         },
                         enabled = sourceText.isNotBlank(),
                         modifier = Modifier.weight(1f)

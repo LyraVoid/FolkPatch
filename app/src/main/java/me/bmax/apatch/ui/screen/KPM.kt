@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
-import android.widget.Toast
+import me.bmax.apatch.util.ui.showToast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
@@ -317,9 +317,7 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
                     val rc = loadModule(loadingDialog, uri, "")
                     val toastText = if (rc == 0) successToastText else "$failToastText: $rc"
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(
-                            context, toastText, Toast.LENGTH_SHORT
-                        ).show()
+                        showToast(context, toastText)
                     }
                     viewModel.markNeedRefresh()
                     viewModel.fetchModuleList()
@@ -564,17 +562,9 @@ fun KPMControlDialog(showDialog: MutableState<Boolean>) {
         }
 
         if (controlResult.rc >= 0) {
-            Toast.makeText(
-                context,
-                "$okStringRes\n${outMsgStringRes}: ${controlResult.outMsg}",
-                Toast.LENGTH_SHORT
-            ).show()
+            showToast(context, "$okStringRes\n${outMsgStringRes}: ${controlResult.outMsg}")
         } else {
-            Toast.makeText(
-                context,
-                "$failedStringRes\n${outMsgStringRes}: ${controlResult.outMsg}",
-                Toast.LENGTH_SHORT
-            ).show()
+            showToast(context, "$failedStringRes\n${outMsgStringRes}: ${controlResult.outMsg}")
         }
     }
 
@@ -1019,7 +1009,7 @@ private fun KPModuleItem(
                 } else {
                     folkBannerFailed.format(module.name)
                 }
-                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                showToast(context, message)
             }
         }
     }
@@ -1318,7 +1308,7 @@ private fun KPModuleItem(
                                     } else {
                                         folkBannerFailed.format(module.name)
                                     }
-                                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                                    showToast(context, message)
                                 }
                             },
                             modifier = Modifier.fillMaxWidth()

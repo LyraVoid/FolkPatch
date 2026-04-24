@@ -10,7 +10,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
 import android.util.Patterns
-import android.widget.Toast
+import me.bmax.apatch.util.ui.showToast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
@@ -645,9 +645,7 @@ private fun ModuleList(
         }
 
         withContext(Dispatchers.Main) {
-            Toast.makeText(
-                context, startDownloadingText.format(module.name), Toast.LENGTH_SHORT
-            ).show()
+            showToast(context, startDownloadingText.format(module.name))
         }
 
         val downloading = downloadingText.format(module.name)
@@ -660,7 +658,7 @@ private fun ModuleList(
                 onDownloaded = onInstallModule,
                 onDownloading = {
                     launch(Dispatchers.Main) {
-                        Toast.makeText(context, downloading, Toast.LENGTH_SHORT).show()
+                        showToast(context, downloading)
                     }
                 })
         }
