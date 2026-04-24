@@ -179,10 +179,10 @@ fun HomeScreen(navigator: DestinationsNavigator) {
         }
     }
 
-    var homeLayout by remember { mutableStateOf(APApplication.sharedPreferences.getString("home_layout_style", "stats")) }
+    var homeLayout by remember { mutableStateOf(APApplication.sharedPreferences.getString("home_layout_style", "circle")) }
     val homeRefreshObserver by refreshTheme.observeAsState(false)
     if (homeRefreshObserver) {
-        homeLayout = APApplication.sharedPreferences.getString("home_layout_style", "stats")
+        homeLayout = APApplication.sharedPreferences.getString("home_layout_style", "circle")
     }
 
     Scaffold(topBar = {

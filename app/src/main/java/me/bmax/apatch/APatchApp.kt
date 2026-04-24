@@ -376,7 +376,7 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
                 .putBoolean("night_mode_follow_sys", true)
                 .putBoolean("use_system_color_theme", true)
                 .putString("custom_color", "indigo")
-                .putString("home_layout_style", "stats")
+                .putString("home_layout_style", "circle")
                 .apply()
         }
         

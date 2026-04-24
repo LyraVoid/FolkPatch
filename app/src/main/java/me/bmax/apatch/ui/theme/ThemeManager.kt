@@ -124,7 +124,7 @@ object ThemeManager {
                     backgroundNightDim = BackgroundConfig.customBackgroundNightDim,
                     isFontEnabled = FontConfig.isCustomFontEnabled,
                     customColor = prefs.getString("custom_color", "indigo") ?: "indigo",
-                    homeLayoutStyle = prefs.getString("home_layout_style", "stats") ?: "stats",
+                    homeLayoutStyle = prefs.getString("home_layout_style", "circle") ?: "circle",
                     statsTopLayout = prefs.getString("stats_top_layout", "list") ?: "list",
                     nightModeEnabled = prefs.getBoolean("night_mode_enabled", true),
                     nightModeFollowSys = prefs.getBoolean("night_mode_follow_sys", false),
@@ -815,7 +815,7 @@ object ThemeManager {
                     .putBoolean("night_mode_follow_sys", true)
                     .putBoolean("use_system_color_theme", true)
                     .putString("custom_color", "indigo")
-                    .putString("home_layout_style", "stats")
+                    .putString("home_layout_style", "circle")
                     .putString("stats_top_layout", "list")
                     .remove("appLanguage")
                     .apply()

@@ -221,7 +221,7 @@ fun AppearanceSettingsContent(
     var customColorScheme by remember { mutableStateOf(prefs.getString("custom_color", "indigo")) }
     var amoledTheme by remember { mutableStateOf(prefs.getBoolean("amoled_theme", false)) }
 
-    var currentStyle by remember { mutableStateOf(prefs.getString("home_layout_style", "stats")) }
+    var currentStyle by remember { mutableStateOf(prefs.getString("home_layout_style", "circle")) }
 
     if (refreshThemeObserver) {
         nightModeFollowSys = prefs.getBoolean("night_mode_follow_sys", false)
@@ -230,7 +230,7 @@ fun AppearanceSettingsContent(
         customFontEnabled = FontConfig.isCustomFontEnabled
         customColorScheme = prefs.getString("custom_color", "indigo")
         amoledTheme = prefs.getBoolean("amoled_theme", false)
-        currentStyle = prefs.getString("home_layout_style", "stats")
+        currentStyle = prefs.getString("home_layout_style", "circle")
     }
 
     val isDarkTheme = if (nightModeFollowSys) isSystemInDarkTheme() else nightModeEnabled
@@ -2069,7 +2069,7 @@ fun HomeLayoutChooseDialog(showDialog: MutableState<Boolean>, onLayoutSelected: 
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
                 
-                val currentStyle = prefs.getString("home_layout_style", "stats")
+                val currentStyle = prefs.getString("home_layout_style", "circle")
                 
                 Surface(
                     shape = RoundedCornerShape(12.dp),
@@ -2176,8 +2176,8 @@ fun HomeLayoutChooseDialog(showDialog: MutableState<Boolean>, onLayoutSelected: 
                                 )
                             },
                             modifier = Modifier.clickable {
-                                prefs.edit().putString("home_layout_style", "stats").apply()
-                                onLayoutSelected("stats")
+                                prefs.edit().putString("home_layout_style", "circle").apply()
+                                onLayoutSelected("circle")
                                 showDialog.value = false
                             }
                         )

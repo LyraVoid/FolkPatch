@@ -50,11 +50,11 @@ fun BehaviorSettingsContent(
 ) {
     val prefs = APApplication.sharedPreferences
 
-    var currentStyle by remember { mutableStateOf(prefs.getString("home_layout_style", "stats")) }
+    var currentStyle by remember { mutableStateOf(prefs.getString("home_layout_style", "circle")) }
     DisposableEffect(Unit) {
         val listener = android.content.SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
             if (key == "home_layout_style") {
-                currentStyle = sharedPreferences.getString("home_layout_style", "stats")
+                currentStyle = sharedPreferences.getString("home_layout_style", "circle")
             }
         }
         prefs.registerOnSharedPreferenceChangeListener(listener)
