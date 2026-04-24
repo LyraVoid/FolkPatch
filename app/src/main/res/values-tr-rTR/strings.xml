@@ -1040,7 +1040,7 @@ Komutların çalışması için uygulamanın tamamen kapatılıp yeniden açıld
     <string name="settings_path_hide">Yolu Gizle</string>
     <string name="settings_path_hide_summary">Dosya ve dizinleri uygulamalardan çekirdek seviyesinde gizle</string>
     <string name="path_hide_paths_label">Gizli Yollar (her satıra bir tane)</string>
-    <string name="path_hide_paths_placeholder">/data/adb\n/system/bin/su</string>
+   <string name="path_hide_paths_placeholder_global">/storage/emulated/0/Android/data\n/storage/emulated/0/Download</string>
     <string name="path_hide_paths_helper">Her satıra bir yol girin. Eşleşen yollar ENOENT döndürecektir.</string>
     <string name="path_hide_save">Kaydet</string>
     <string name="path_hide_enabled">Yol gizleme etkinleştirildi</string>

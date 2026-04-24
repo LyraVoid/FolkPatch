@@ -1023,7 +1023,7 @@
     <string name="settings_path_hide">路径隐藏喵</string>
     <string name="settings_path_hide_summary">在内核层面隐藏文件和目录不让应用看到喵</string>
     <string name="path_hide_paths_label">隐藏路径（每行一个）喵</string>
-    <string name="path_hide_paths_placeholder">/data/adb\n/system/bin/su</string>
+   <string name="path_hide_paths_placeholder_global">/storage/emulated/0/Android/data\n/storage/emulated/0/Download</string>
     <string name="path_hide_paths_helper">每行输入一个路径喵，匹配的路径会返回文件不存在喵</string>
     <string name="path_hide_save">保存喵</string>
     <string name="path_hide_enabled">路径隐藏已启用喵</string>

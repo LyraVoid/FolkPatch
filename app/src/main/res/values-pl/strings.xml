@@ -953,7 +953,7 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="settings_path_hide">Ukrywanie ścieżek</string>
     <string name="settings_path_hide_summary">Ukrywaj pliki i katalogi przed aplikacjami na poziomie jądra</string>
     <string name="path_hide_paths_label">Ukryte ścieżki (po jednej w linii)</string>
-    <string name="path_hide_paths_placeholder">/data/adb\n/system/bin/su</string>
+   <string name="path_hide_paths_placeholder_global">/storage/emulated/0/Android/data\n/storage/emulated/0/Download</string>
     <string name="path_hide_paths_helper">Wprowadź jedną ścieżkę w każdej linii. Pasujące ścieżki zwrócą ENOENT.</string>
     <string name="path_hide_save">Zapisz</string>
     <string name="path_hide_enabled">Ukrywanie ścieżek włączone</string>

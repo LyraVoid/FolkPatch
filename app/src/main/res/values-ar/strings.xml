@@ -1023,7 +1023,7 @@
     <string name="settings_path_hide">إخفاء المسار</string>
     <string name="settings_path_hide_summary">إخفاء الملفات والأدلة من التطبيقات على مستوى النواة</string>
     <string name="path_hide_paths_label">المسارات المخفية (واحد في كل سطر)</string>
-    <string name="path_hide_paths_placeholder">/data/adb\n/system/bin/su</string>
+   <string name="path_hide_paths_placeholder_global">/storage/emulated/0/Android/data\n/storage/emulated/0/Download</string>
     <string name="path_hide_paths_helper">أدخل مساراً واحداً في كل سطر. المسارات المتطابقة ستعيد ENOENT.</string>
     <string name="path_hide_save">حفظ</string>
     <string name="path_hide_enabled">تم تفعيل إخفاء المسار</string>

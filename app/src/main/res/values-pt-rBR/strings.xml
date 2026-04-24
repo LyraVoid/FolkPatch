@@ -1036,7 +1036,7 @@ Por favor, certifique-se de fechar completamente o app e reabri-lo para que os c
     <string name="settings_path_hide">Ocultar caminho</string>
     <string name="settings_path_hide_summary">Ocultar arquivos e diretórios de aplicativos em nível de kernel</string>
     <string name="path_hide_paths_label">Caminhos ocultos (um por linha)</string>
-    <string name="path_hide_paths_placeholder">/data/adb\n/system/bin/su</string>
+   <string name="path_hide_paths_placeholder_global">/storage/emulated/0/Android/data\n/storage/emulated/0/Download</string>
     <string name="path_hide_paths_helper">Insira um caminho por linha. Caminhos correspondentes retornarão ENOENT.</string>
     <string name="path_hide_save">Salvar</string>
     <string name="path_hide_enabled">Ocultar caminho ativado</string>

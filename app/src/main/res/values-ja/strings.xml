@@ -947,7 +947,7 @@
     <string name="settings_path_hide">パス非表示</string>
     <string name="settings_path_hide_summary">カーネルレベルでアプリからファイルやディレクトリを隠す</string>
     <string name="path_hide_paths_label">非表示パス（1行に1つ）</string>
-    <string name="path_hide_paths_placeholder">/data/adb\n/system/bin/su</string>
+   <string name="path_hide_paths_placeholder_global">/storage/emulated/0/Android/data\n/storage/emulated/0/Download</string>
     <string name="path_hide_paths_helper">1行に1つのパスを入力してください。一致するパスは ENOENT を返します。</string>
     <string name="path_hide_save">保存</string>
     <string name="path_hide_enabled">パス非表示が有効になりました</string>

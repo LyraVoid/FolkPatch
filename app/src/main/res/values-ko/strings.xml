@@ -1049,7 +1049,7 @@
     <string name="settings_path_hide">경로 숨기기</string>
     <string name="settings_path_hide_summary">커널 수준에서 앱에 파일 및 디렉터리 숨기기</string>
     <string name="path_hide_paths_label">숨길 경로 (한 줄에 하나씩)</string>
-    <string name="path_hide_paths_placeholder">/data/adb\n/system/bin/su</string>
+   <string name="path_hide_paths_placeholder_global">/storage/emulated/0/Android/data\n/storage/emulated/0/Download</string>
     <string name="path_hide_paths_helper">한 줄에 하나의 경로를 입력하세요. 일치하는 경로는 ENOENT를 반환합니다.</string>
     <string name="path_hide_save">저장</string>
     <string name="path_hide_enabled">경로 숨기기 활성화됨</string>

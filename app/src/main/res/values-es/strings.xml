@@ -1038,7 +1038,7 @@ Por ejemplo, los KPM que previenen la modificación de particiones solo pueden u
     <string name="settings_path_hide">Ocultar ruta</string>
     <string name="settings_path_hide_summary">Ocultar archivos y directorios de las aplicaciones a nivel de kernel</string>
     <string name="path_hide_paths_label">Rutas ocultas (una por línea)</string>
-    <string name="path_hide_paths_placeholder">/data/adb\n/system/bin/su</string>
+   <string name="path_hide_paths_placeholder_global">/storage/emulated/0/Android/data\n/storage/emulated/0/Download</string>
     <string name="path_hide_paths_helper">Ingrese una ruta por línea. Las rutas coincidentes devolverán ENOENT.</string>
     <string name="path_hide_save">Guardar</string>
     <string name="path_hide_enabled">Ocultar ruta habilitado</string>

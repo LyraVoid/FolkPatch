@@ -494,7 +494,7 @@ Here are some possible reasons for authentication failure—please check which o
     <string name="settings_path_hide">Path Hide</string>
     <string name="settings_path_hide_summary">Hide files and directories from apps at kernel level</string>
     <string name="path_hide_paths_label">Hidden Paths (one per line)</string>
-    <string name="path_hide_paths_placeholder">/data/adb\n/system/bin/su</string>
+    <string name="path_hide_paths_placeholder">/storage/emulated/0/secret\n/sdcard/backup</string>
     <string name="path_hide_paths_helper">Enter one path per line. Matching paths will return ENOENT.</string>
     <string name="path_hide_save">Save</string>
     <string name="path_hide_enabled">Path hide enabled</string>

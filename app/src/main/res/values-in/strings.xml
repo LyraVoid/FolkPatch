@@ -1017,7 +1017,7 @@ Pastikan aplikasi ditutup sepenuhnya dan dimulai ulang untuk menjalankan perinta
     <string name="settings_path_hide">Sembunyikan Jalur</string>
     <string name="settings_path_hide_summary">Sembunyikan file dan direktori dari aplikasi di level kernel</string>
     <string name="path_hide_paths_label">Jalur Tersembunyi (satu per baris)</string>
-    <string name="path_hide_paths_placeholder">/data/adb\n/system/bin/su</string>
+   <string name="path_hide_paths_placeholder_global">/storage/emulated/0/Android/data\n/storage/emulated/0/Download</string>
     <string name="path_hide_paths_helper">Masukkan satu jalur per baris. Jalur yang cocok akan mengembalikan ENOENT.</string>
     <string name="path_hide_save">Simpan</string>
     <string name="path_hide_enabled">Sembunyikan jalur diaktifkan</string>

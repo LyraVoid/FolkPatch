@@ -1010,7 +1010,7 @@
     <string name="settings_path_hide">路径隐藏（方块隐身）</string>
     <string name="settings_path_hide_summary">在核心层面隐藏文件和目录（就像方块变透明）</string>
     <string name="path_hide_paths_label">隐藏路径（每行一个，像列清单）</string>
-    <string name="path_hide_paths_placeholder">/data/adb\n/system/bin/su</string>
+   <string name="path_hide_paths_placeholder_global">/storage/emulated/0/Android/data\n/storage/emulated/0/Download</string>
     <string name="path_hide_paths_helper">每行输入一个路径，匹配的路径会返回不存在（就像找不到方块）</string>
     <string name="path_hide_save">保存（存档）</string>
     <string name="path_hide_enabled">路径隐藏已启用（方块已隐身）</string>

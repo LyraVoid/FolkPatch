@@ -1035,7 +1035,7 @@
     <string name="settings_path_hide">Скрытие путей</string>
     <string name="settings_path_hide_summary">Скрывать файлы и каталоги от приложений на уровне ядра</string>
     <string name="path_hide_paths_label">Скрытые пути (по одному на строку)</string>
-    <string name="path_hide_paths_placeholder">/data/adb\n/system/bin/su</string>
+   <string name="path_hide_paths_placeholder_global">/storage/emulated/0/Android/data\n/storage/emulated/0/Download</string>
     <string name="path_hide_paths_helper">Введите по одному пути на строку. Совпадающие пути будут возвращать ENOENT.</string>
     <string name="path_hide_save">Сохранить</string>
     <string name="path_hide_enabled">Скрытие путей включено</string>
