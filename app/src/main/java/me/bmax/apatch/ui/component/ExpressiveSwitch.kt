@@ -21,7 +21,7 @@ import me.bmax.apatch.APApplication
 
 object SwitchIconState {
     var showIcon by mutableStateOf(
-        APApplication.sharedPreferences.getBoolean("show_switch_icon", false)
+        APApplication.sharedPreferences.getBoolean("show_switch_icon", true)
     )
 }
 
