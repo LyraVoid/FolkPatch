@@ -291,6 +291,8 @@
     <string name="settings_fold_system_module_summary">Click module card to expand/collapse actions</string>
     <string name="settings_simple_list_bottom_bar">Simple List Bottom Bar</string>
     <string name="settings_simple_list_bottom_bar_summary">Use icon-only buttons style for module actions, inspired by APatch</string>
+    <string name="settings_spliced_card_group">Spliced Card Group</string>
+    <string name="settings_spliced_card_group_summary">Use M3E continuous card group style for module list</string>
     <string name="apm_install_confirm_title">Install Module</string>
     <string name="apm_install_confirm_content">Are you sure you want to install %s?</string>
     <string name="apm_disable_all_title">Disable All Modules</string>

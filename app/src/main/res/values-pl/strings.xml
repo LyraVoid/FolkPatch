@@ -278,6 +278,8 @@
     <string name="settings_fold_system_module_summary">Kliknij kartę modułu, aby rozwinąć/zwinąć akcje</string>
     <string name="settings_simple_list_bottom_bar">Prosty dolny pasek listy</string>
     <string name="settings_simple_list_bottom_bar_summary">Użyj stylu przycisków tylko z ikonami dla akcji modułu, zainspirowane APatch</string>
+    <string name="settings_spliced_card_group">Spliced Card Group</string>
+    <string name="settings_spliced_card_group_summary">Use M3E continuous card group style for module list</string>
     <string name="settings_show_more_module_info">Pokaż szczegóły modułu</string>
     <string name="settings_show_more_module_info_summary">Pokaż ID i rozmiar modułu na liście modułów</string>
     <string name="apm_install_confirm_title">Instalacja modułu</string>

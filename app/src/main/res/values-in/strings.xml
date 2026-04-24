@@ -310,6 +310,8 @@
     <string name="settings_fold_system_module_summary">Klik kartu modul untuk memperluas/menyembunyikan tindakan</string>
     <string name="settings_simple_list_bottom_bar">Bar Bawah Daftar Sederhana</string>
     <string name="settings_simple_list_bottom_bar_summary">Gunakan gaya tombol hanya ikon untuk tindakan modul, terinspirasi dari APatch</string>
+    <string name="settings_spliced_card_group">Spliced Card Group</string>
+    <string name="settings_spliced_card_group_summary">Use M3E continuous card group style for module list</string>
     <string name="settings_show_more_module_info">Tampilkan detail modul</string>
     <string name="settings_show_more_module_info_summary">Tampilkan ID dan ukuran modul dalam daftar modul</string>
     <string name="apm_install_confirm_title">Instal modul</string>

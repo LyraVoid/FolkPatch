@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.Folder
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Sort
 import androidx.compose.material.icons.filled.Update
+import androidx.compose.material.icons.filled.ViewAgenda
 import androidx.compose.runtime.*
 import androidx.compose.ui.res.stringResource
 import me.bmax.apatch.APApplication
@@ -40,12 +41,16 @@ fun ModuleSettingsContent(
     val simpleListBottomBarTitle = stringResource(id = R.string.settings_simple_list_bottom_bar)
     val simpleListBottomBarSummary = stringResource(id = R.string.settings_simple_list_bottom_bar_summary)
 
+    val splicedCardGroupTitle = stringResource(id = R.string.settings_spliced_card_group)
+    val splicedCardGroupSummary = stringResource(id = R.string.settings_spliced_card_group_summary)
+
     var disableModuleUpdateCheck by remember { mutableStateOf(prefs.getBoolean("disable_module_update_check", false)) }
     var showMoreModuleInfo by remember { mutableStateOf(prefs.getBoolean("show_more_module_info", true)) }
     var moduleSortOptimization by remember { mutableStateOf(prefs.getBoolean("module_sort_optimization", true)) }
     var foldSystemModule by remember { mutableStateOf(prefs.getBoolean("fold_system_module", true)) }
     var apmBatchInstallFullProcess by remember { mutableStateOf(prefs.getBoolean("apm_batch_install_full_process", false)) }
     var simpleListBottomBar by remember { mutableStateOf(prefs.getBoolean("simple_list_bottom_bar", false)) }
+    var splicedCardGroup by remember { mutableStateOf(prefs.getBoolean("spliced_card_group", true)) }
 
     SplicedColumnGroup(flat = flat) {
         item {
@@ -128,6 +133,20 @@ fun ModuleSettingsContent(
                 onCheckedChange = {
                     simpleListBottomBar = it
                     prefs.edit().putBoolean("simple_list_bottom_bar", it).apply()
+                }
+            )
+        }
+
+        item {
+            ToggleSettingCard(
+                icon = Icons.Filled.ViewAgenda,
+                flat = flat,
+                title = splicedCardGroupTitle,
+                description = splicedCardGroupSummary,
+                checked = splicedCardGroup,
+                onCheckedChange = {
+                    splicedCardGroup = it
+                    prefs.edit().putBoolean("spliced_card_group", it).apply()
                 }
             )
         }

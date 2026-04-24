@@ -222,6 +222,7 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
     var showMoreModuleInfo by remember { mutableStateOf(prefs.getBoolean("show_more_module_info", true)) }
     var foldSystemModule by remember { mutableStateOf(prefs.getBoolean("fold_system_module", true)) }
     var simpleListBottomBar by remember { mutableStateOf(prefs.getBoolean("simple_list_bottom_bar", false)) }
+    var splicedCardGroup by remember { mutableStateOf(prefs.getBoolean("spliced_card_group", true)) }
 
     DisposableEffect(Unit) {
         val listener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPrefs, key ->
@@ -231,6 +232,8 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
                 foldSystemModule = sharedPrefs.getBoolean("fold_system_module", false)
             } else if (key == "simple_list_bottom_bar") {
                 simpleListBottomBar = sharedPrefs.getBoolean("simple_list_bottom_bar", false)
+            } else if (key == "spliced_card_group") {
+                splicedCardGroup = sharedPrefs.getBoolean("spliced_card_group", true)
             }
         }
         prefs.registerOnSharedPreferenceChangeListener(listener)
@@ -422,6 +425,7 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
             showMoreModuleInfo = showMoreModuleInfo,
             foldSystemModule = foldSystemModule,
             simpleListBottomBar = simpleListBottomBar,
+            splicedCardGroup = splicedCardGroup,
             checkStrongBiometric = ::checkStrongBiometric
         )
     }
@@ -656,6 +660,7 @@ private fun KPModuleList(
     showMoreModuleInfo: Boolean,
     foldSystemModule: Boolean,
     simpleListBottomBar: Boolean,
+    splicedCardGroup: Boolean,
     checkStrongBiometric: suspend () -> Boolean
 ) {
     val moduleStr = stringResource(id = R.string.kpm)
@@ -791,36 +796,67 @@ private fun KPModuleList(
                     }
 
                     else -> {
-                        item { Spacer(Modifier.height(8.dp)) }
-                        splicedLazyColumnGroup(
-                            items = moduleList,
-                            key = { _, module -> module.name },
-                            contentType = { _, _ -> "KPModuleItem" },
-                        ) { _, module ->
-                            val scope = rememberCoroutineScope()
-                            KPModuleItem(
-                                module,
-                                onUninstall = {
-                                    scope.launch { onModuleUninstall(module) }
-                                },
-                                onControl = {
-                                    scope.launch {
-                                        if (checkStrongBiometric()) {
-                                            targetKPMToControl = module
-                                            showKPMControlDialog.value = true
+                        if (splicedCardGroup) {
+                            item { Spacer(Modifier.height(8.dp)) }
+                            splicedLazyColumnGroup(
+                                items = moduleList,
+                                key = { _, module -> module.name },
+                                contentType = { _, _ -> "KPModuleItem" },
+                            ) { _, module ->
+                                val scope = rememberCoroutineScope()
+                                KPModuleItem(
+                                    module,
+                                    onUninstall = {
+                                        scope.launch { onModuleUninstall(module) }
+                                    },
+                                    onControl = {
+                                        scope.launch {
+                                            if (checkStrongBiometric()) {
+                                                targetKPMToControl = module
+                                                showKPMControlDialog.value = true
+                                            }
                                         }
+                                    },
+                                    showMoreModuleInfo = showMoreModuleInfo,
+                                    simpleListBottomBar = simpleListBottomBar,
+                                    foldSystemModule = foldSystemModule,
+                                    expanded = expandedModuleId == module.name,
+                                    onExpandToggle = {
+                                        expandedModuleId = if (expandedModuleId == module.name) null else module.name
                                     }
-                                },
-                                showMoreModuleInfo = showMoreModuleInfo,
-                                simpleListBottomBar = simpleListBottomBar,
-                                foldSystemModule = foldSystemModule,
-                                expanded = expandedModuleId == module.name,
-                                onExpandToggle = {
-                                    expandedModuleId = if (expandedModuleId == module.name) null else module.name
+                                )
+                            }
+                            item { Spacer(Modifier.height(88.dp)) }
+                        } else {
+                            item { Spacer(Modifier.height(8.dp)) }
+                            itemsIndexed(moduleList, key = { _, module -> module.name }) { _, module ->
+                                Box(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
+                                val scope = rememberCoroutineScope()
+                                KPModuleItem(
+                                    module,
+                                    onUninstall = {
+                                        scope.launch { onModuleUninstall(module) }
+                                    },
+                                    onControl = {
+                                        scope.launch {
+                                            if (checkStrongBiometric()) {
+                                                targetKPMToControl = module
+                                                showKPMControlDialog.value = true
+                                            }
+                                        }
+                                    },
+                                    showMoreModuleInfo = showMoreModuleInfo,
+                                    simpleListBottomBar = simpleListBottomBar,
+                                    foldSystemModule = foldSystemModule,
+                                    expanded = expandedModuleId == module.name,
+                                    onExpandToggle = {
+                                        expandedModuleId = if (expandedModuleId == module.name) null else module.name
+                                    }
+                                )
                                 }
-                            )
+                            }
+                            item { Spacer(Modifier.height(88.dp)) }
                         }
-                        item { Spacer(Modifier.height(88.dp)) }
                     }
                 }
             }

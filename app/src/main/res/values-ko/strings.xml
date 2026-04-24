@@ -291,6 +291,8 @@
     <string name="settings_fold_system_module_summary">모듈 카드를 눌러 작업을 확장하거나 접습니다.</string>
     <string name="settings_simple_list_bottom_bar">간결한 목록 하단 바</string>
     <string name="settings_simple_list_bottom_bar_summary">APatch에서 영감을 받아 모듈 작업에 아이콘 전용 버튼 스타일을 사용합니다.</string>
+    <string name="settings_spliced_card_group">Spliced Card Group</string>
+    <string name="settings_spliced_card_group_summary">Use M3E continuous card group style for module list</string>
     <string name="apm_install_confirm_title">모듈 설치</string>
     <string name="apm_install_confirm_content">%s 모듈을 설치할까요?</string>
     <string name="apm_disable_all_title">모든 모듈 비활성화</string>

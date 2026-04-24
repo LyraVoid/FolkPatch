@@ -310,6 +310,8 @@
     <string name="settings_fold_system_module_summary">Нажмите на карточку модуля, чтобы развернуть/свернуть действия</string>
         <string name="settings_simple_list_bottom_bar">Простая нижняя панель списка</string>
         <string name="settings_simple_list_bottom_bar_summary">Использовать стиль кнопок только с иконками для действий модуля, вдохновлено APatch</string>
+    <string name="settings_spliced_card_group">Spliced Card Group</string>
+    <string name="settings_spliced_card_group_summary">Use M3E continuous card group style for module list</string>
     <string name="settings_show_more_module_info">Показать подробности о модуле</string>
     <string name="settings_show_more_module_info_summary">Показать ID и размер модуля в списке модулей</string>
     <string name="apm_install_confirm_title">Установить модуль</string>

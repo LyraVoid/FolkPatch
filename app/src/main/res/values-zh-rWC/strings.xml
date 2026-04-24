@@ -308,6 +308,8 @@
     <string name="settings_fold_system_module_summary">点击仙符画卷展开/折叠符法按钮</string>
         <string name="settings_simple_list_bottom_bar">简约仙符底栏</string>
         <string name="settings_simple_list_bottom_bar_summary">仙符符法使用纯图标按钮样式，灵感来自APatch</string>
+    <string name="settings_spliced_card_group">拼接天界仙符</string>
+    <string name="settings_spliced_card_group_summary">仙符符法使用连续拼接卡片样式</string>
     <string name="apm_disable_all_title">禁诸仙符</string>
     <string name="apm_disable_all_confirm">确欲尽禁诸仙符乎？此术将废诸已施之仙符</string>
     <string name="apm_enable_module_banner">启仙阵横幅</string>

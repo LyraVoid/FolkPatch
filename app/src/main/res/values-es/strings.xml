@@ -317,6 +317,8 @@
     <string name="settings_fold_system_module_summary">Haz clic en la tarjeta del módulo para expandir/contraer acciones</string>
     <string name="settings_simple_list_bottom_bar">Barra Inferior Simple</string>
     <string name="settings_simple_list_bottom_bar_summary">Usar botones solo con iconos para acciones de módulo, inspirado en APatch</string>
+    <string name="settings_spliced_card_group">Spliced Card Group</string>
+    <string name="settings_spliced_card_group_summary">Use M3E continuous card group style for module list</string>
     <string name="apm_install_confirm_title">Instalar Módulo</string>
     <string name="apm_install_confirm_content">¿Seguro que deseas instalar %s?</string>
     <string name="apm_disable_all_title">Deshabilitar todos los módulos</string>

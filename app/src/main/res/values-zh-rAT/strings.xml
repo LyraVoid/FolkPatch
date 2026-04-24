@@ -305,6 +305,8 @@
     <string name="settings_fold_system_module_summary">点击圣光阵卡片展开/折叠操作按钮</string>
         <string name="settings_simple_list_bottom_bar">简约圣光底栏</string>
         <string name="settings_simple_list_bottom_bar_summary">圣光阵符法使用纯图标按钮样式，灵感来自APatch</string>
+    <string name="settings_spliced_card_group">拼接圣光阵符</string>
+    <string name="settings_spliced_card_group_summary">圣光阵符法使用连续拼接卡片样式</string>
     <string name="apm_install_confirm_title">安装圣光阵</string>
     <string name="settings_show_more_module_info">显示圣光阵详细信息</string>
     <string name="settings_show_more_module_info_summary">在圣光阵列表中显示圣光阵 ID 和大小</string>

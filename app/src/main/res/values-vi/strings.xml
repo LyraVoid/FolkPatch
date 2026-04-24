@@ -306,6 +306,8 @@
     <string name="settings_fold_system_module_summary">Nhấp vào thẻ module để mở rộng/gộp lại các hành động</string>
     <string name="settings_simple_list_bottom_bar">Thanh dưới đơn giản</string>
     <string name="settings_simple_list_bottom_bar_summary">Sử dụng kiểu nút chỉ có biểu tượng cho các hành động module, lấy cảm hứng từ APatch</string>
+    <string name="settings_spliced_card_group">Spliced Card Group</string>
+    <string name="settings_spliced_card_group_summary">Use M3E continuous card group style for module list</string>
     <string name="apm_install_confirm_title">Cài đặt module</string>
     <string name="apm_install_confirm_content">Bạn có chắc chắn muốn cài đặt %s không?</string>
     <string name="settings_show_more_module_info">Hiển thị chi tiết module</string>

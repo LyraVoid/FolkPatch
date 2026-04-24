@@ -201,6 +201,7 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
     var showMoreModuleInfo by remember { mutableStateOf(prefs.getBoolean("show_more_module_info", true)) }
     var foldSystemModule by remember { mutableStateOf(prefs.getBoolean("fold_system_module", true)) }
     var simpleListBottomBar by remember { mutableStateOf(prefs.getBoolean("simple_list_bottom_bar", false)) }
+    var splicedCardGroup by remember { mutableStateOf(prefs.getBoolean("spliced_card_group", true)) }
 
     val viewModel = viewModel<APModuleViewModel>()
 
@@ -212,6 +213,8 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
                 foldSystemModule = sharedPrefs.getBoolean("fold_system_module", false)
             } else if (key == "simple_list_bottom_bar") {
                 simpleListBottomBar = sharedPrefs.getBoolean("simple_list_bottom_bar", false)
+            } else if (key == "spliced_card_group") {
+                splicedCardGroup = sharedPrefs.getBoolean("spliced_card_group", true)
             }
         }
         prefs.registerOnSharedPreferenceChangeListener(listener)
@@ -456,6 +459,7 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
                     showMoreModuleInfo = showMoreModuleInfo,
                     foldSystemModule = foldSystemModule,
                     simpleListBottomBar = simpleListBottomBar,
+                    splicedCardGroup = splicedCardGroup,
                     checkStrongBiometric = ::checkStrongBiometric,
                     modifier = Modifier
                         .padding(innerPadding)
@@ -561,6 +565,7 @@ private fun ModuleList(
     showMoreModuleInfo: Boolean,
     foldSystemModule: Boolean,
     simpleListBottomBar: Boolean,
+    splicedCardGroup: Boolean,
     checkStrongBiometric: suspend () -> Boolean,
     modifier: Modifier = Modifier,
     state: LazyListState,
@@ -984,76 +989,148 @@ private fun ModuleList(
                     }
 
                     else -> {
-                        item { Spacer(Modifier.height(8.dp)) }
-                        splicedLazyColumnGroup(
-                            items = modules,
-                            key = { _, module -> module.id },
-                            contentType = { _, _ -> "ModuleItem" },
-                        ) { _, module ->
-                            var isChecked by rememberSaveable(module) { mutableStateOf(module.enabled) }
-                            val scope = rememberCoroutineScope()
-                            val updatedModule = viewModel.getCachedUpdate(module.id)
+                        if (splicedCardGroup) {
+                            item { Spacer(Modifier.height(8.dp)) }
+                            splicedLazyColumnGroup(
+                                items = modules,
+                                key = { _, module -> module.id },
+                                contentType = { _, _ -> "ModuleItem" },
+                            ) { _, module ->
+                                var isChecked by rememberSaveable(module) { mutableStateOf(module.enabled) }
+                                val scope = rememberCoroutineScope()
+                                val updatedModule = viewModel.getCachedUpdate(module.id)
 
-                            ModuleItem(
-                                navigator,
-                                module,
-                                isChecked,
-                                updatedModule.first,
-                                showMoreModuleInfo = showMoreModuleInfo,
-                                foldSystemModule = foldSystemModule,
-                                simpleListBottomBar = simpleListBottomBar,
-                                enableModuleShortcutAdd = enableModuleShortcutAdd,
-                                expanded = expandedModuleId == module.id,
-                                onExpandToggle = {
-                                    expandedModuleId = if (expandedModuleId == module.id) null else module.id
-                                },
-                                onUninstall = {
-                                    scope.launch { onModuleUninstall(module) }
-                                },
-                                onUndoUninstall = {
-                                    scope.launch { onModuleUndoUninstall(module) }
-                                },
-                                onCheckChanged = { checked ->
-                                    scope.launch {
-                                        if (!checkStrongBiometric()) return@launch
-                                        val success = loadingDialog.withLoading {
-                                            withContext(Dispatchers.IO) {
-                                                toggleModule(module.id, !isChecked)
+                                ModuleItem(
+                                    navigator,
+                                    module,
+                                    isChecked,
+                                    updatedModule.first,
+                                    showMoreModuleInfo = showMoreModuleInfo,
+                                    foldSystemModule = foldSystemModule,
+                                    simpleListBottomBar = simpleListBottomBar,
+                                    enableModuleShortcutAdd = enableModuleShortcutAdd,
+                                    expanded = expandedModuleId == module.id,
+                                    onExpandToggle = {
+                                        expandedModuleId = if (expandedModuleId == module.id) null else module.id
+                                    },
+                                    onUninstall = {
+                                        scope.launch { onModuleUninstall(module) }
+                                    },
+                                    onUndoUninstall = {
+                                        scope.launch { onModuleUndoUninstall(module) }
+                                    },
+                                    onCheckChanged = { checked ->
+                                        scope.launch {
+                                            if (!checkStrongBiometric()) return@launch
+                                            val success = loadingDialog.withLoading {
+                                                withContext(Dispatchers.IO) {
+                                                    toggleModule(module.id, !isChecked)
+                                                }
+                                            }
+                                            if (success) {
+                                                isChecked = checked
+                                                viewModel.fetchModuleList()
+
+                                                val result = snackBarHost.showSnackbar(
+                                                    message = rebootToApply,
+                                                    actionLabel = reboot,
+                                                    duration = SnackbarDuration.Long
+                                                )
+                                                if (result == SnackbarResult.ActionPerformed) {
+                                                    reboot()
+                                                }
+                                            } else {
+                                                val message = if (isChecked) failedDisable else failedEnable
+                                                snackBarHost.showSnackbar(message.format(module.name))
                                             }
                                         }
-                                        if (success) {
-                                            isChecked = checked
-                                            viewModel.fetchModuleList()
-
-                                            val result = snackBarHost.showSnackbar(
-                                                message = rebootToApply,
-                                                actionLabel = reboot,
-                                                duration = SnackbarDuration.Long
+                                    },
+                                    onUpdate = {
+                                        scope.launch {
+                                            onModuleUpdate(
+                                                module,
+                                                updatedModule.third,
+                                                updatedModule.first,
+                                                "${module.name}-${updatedModule.second}.zip"
                                             )
-                                            if (result == SnackbarResult.ActionPerformed) {
-                                                reboot()
-                                            }
-                                        } else {
-                                            val message = if (isChecked) failedDisable else failedEnable
-                                            snackBarHost.showSnackbar(message.format(module.name))
                                         }
-                                    }
-                                },
-                                onUpdate = {
-                                    scope.launch {
-                                        onModuleUpdate(
-                                            module,
-                                            updatedModule.third,
-                                            updatedModule.first,
-                                            "${module.name}-${updatedModule.second}.zip"
-                                        )
-                                    }
-                                },
-                                onClick = { clickedModule ->
-                                    onClickModule(clickedModule.id, clickedModule.name, clickedModule.hasWebUi)
-                                })
+                                    },
+                                    onClick = { clickedModule ->
+                                        onClickModule(clickedModule.id, clickedModule.name, clickedModule.hasWebUi)
+                                    })
+                            }
+                            item { Spacer(Modifier.height(88.dp)) }
+                        } else {
+                            item { Spacer(Modifier.height(8.dp)) }
+                            itemsIndexed(modules, key = { _, module -> module.id }) { _, module ->
+                                Box(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
+                                var isChecked by rememberSaveable(module) { mutableStateOf(module.enabled) }
+                                val scope = rememberCoroutineScope()
+                                val updatedModule = viewModel.getCachedUpdate(module.id)
+
+                                ModuleItem(
+                                    navigator,
+                                    module,
+                                    isChecked,
+                                    updatedModule.first,
+                                    showMoreModuleInfo = showMoreModuleInfo,
+                                    foldSystemModule = foldSystemModule,
+                                    simpleListBottomBar = simpleListBottomBar,
+                                    enableModuleShortcutAdd = enableModuleShortcutAdd,
+                                    expanded = expandedModuleId == module.id,
+                                    onExpandToggle = {
+                                        expandedModuleId = if (expandedModuleId == module.id) null else module.id
+                                    },
+                                    onUninstall = {
+                                        scope.launch { onModuleUninstall(module) }
+                                    },
+                                    onUndoUninstall = {
+                                        scope.launch { onModuleUndoUninstall(module) }
+                                    },
+                                    onCheckChanged = { checked ->
+                                        scope.launch {
+                                            if (!checkStrongBiometric()) return@launch
+                                            val success = loadingDialog.withLoading {
+                                                withContext(Dispatchers.IO) {
+                                                    toggleModule(module.id, !isChecked)
+                                                }
+                                            }
+                                            if (success) {
+                                                isChecked = checked
+                                                viewModel.fetchModuleList()
+
+                                                val result = snackBarHost.showSnackbar(
+                                                    message = rebootToApply,
+                                                    actionLabel = reboot,
+                                                    duration = SnackbarDuration.Long
+                                                )
+                                                if (result == SnackbarResult.ActionPerformed) {
+                                                    reboot()
+                                                }
+                                            } else {
+                                                val message = if (isChecked) failedDisable else failedEnable
+                                                snackBarHost.showSnackbar(message.format(module.name))
+                                            }
+                                        }
+                                    },
+                                    onUpdate = {
+                                        scope.launch {
+                                            onModuleUpdate(
+                                                module,
+                                                updatedModule.third,
+                                                updatedModule.first,
+                                                "${module.name}-${updatedModule.second}.zip"
+                                            )
+                                        }
+                                    },
+                                    onClick = { clickedModule ->
+                                        onClickModule(clickedModule.id, clickedModule.name, clickedModule.hasWebUi)
+                                    })
+
+                                }
+                            }
+                            item { Spacer(Modifier.height(88.dp)) }
                         }
-                        item { Spacer(Modifier.height(88.dp)) }
                     }
                 }
             }

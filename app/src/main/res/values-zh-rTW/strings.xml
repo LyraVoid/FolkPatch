@@ -303,6 +303,8 @@
     <string name="settings_fold_system_module_summary">點擊模組卡片展開/折疊操作按鈕</string>
     <string name="settings_simple_list_bottom_bar">簡約列表底欄</string>
     <string name="settings_simple_list_bottom_bar_summary">模組操作使用純圖示按鈕樣式，靈感來自APatch</string>
+    <string name="settings_spliced_card_group">拼接卡片組</string>
+    <string name="settings_spliced_card_group_summary">模組列表使用 M3E 連續拼接卡片樣式</string>
     <string name="apm_install_confirm_title">安裝模組</string>
     <string name="apm_install_confirm_content">確定要安裝 %s 嗎？</string>
     <string name="apm_disable_all_title">停用所有系統模組</string>

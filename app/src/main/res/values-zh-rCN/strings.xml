@@ -295,6 +295,8 @@
     <string name="settings_fold_system_module_summary">点击模块卡片展开/折叠操作按钮</string>
     <string name="settings_simple_list_bottom_bar">简约列表底栏</string>
     <string name="settings_simple_list_bottom_bar_summary">模块操作使用纯图标按钮样式，灵感来自APatch</string>
+    <string name="settings_spliced_card_group">拼接卡片组</string>
+    <string name="settings_spliced_card_group_summary">模块列表使用 M3E 连续拼接卡片样式</string>
     <string name="apm_install_confirm_title">安装模块</string>
     <string name="apm_install_confirm_content">确定要安装 %s 吗？</string>
     <string name="apm_disable_all_title">禁用所有模块</string>

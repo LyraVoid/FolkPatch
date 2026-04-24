@@ -317,6 +317,8 @@
     <string name="settings_fold_system_module_summary">点模块卡片展开/收起操作按钮喵！</string>
     <string name="settings_simple_list_bottom_bar">简约列表底栏喵</string>
     <string name="settings_simple_list_bottom_bar_summary">模块操作用纯图标按钮喵，灵感来自APatch喵！</string>
+    <string name="settings_spliced_card_group">拼接卡片组喵</string>
+    <string name="settings_spliced_card_group_summary">模块列表用连续拼接卡片样式喵！</string>
     <string name="apm_install_confirm_title">装模块喵</string>
     <string name="apm_install_confirm_content">确定装 %s 嘛喵？不要装错哦！</string>
     <string name="apm_disable_all_title">关所有模块喵</string>

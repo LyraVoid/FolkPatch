@@ -259,6 +259,8 @@
     <string name="settings_fold_system_module_summary">モジュールカードをタップで展開/折りたたみのアクションをします。</string>
     <string name="settings_simple_list_bottom_bar">シンプルリストボトムバー</string>
     <string name="settings_simple_list_bottom_bar_summary">モジュールアクションにアイコンのみのボタンスタイルを使用します (APatch にインスパイア)。</string>
+    <string name="settings_spliced_card_group">Spliced Card Group</string>
+    <string name="settings_spliced_card_group_summary">Use M3E continuous card group style for module list</string>
     <string name="apm_install_confirm_title">モジュールをインストール</string>
     <string name="apm_install_confirm_content">「%s」をインストールしてもよろしいですか？</string>
     <string name="apm_disable_all_title">すべてのモジュールを無効化</string>
