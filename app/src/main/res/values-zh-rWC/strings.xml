@@ -1035,4 +1035,9 @@
     <string name="path_hide_uid_mode_enabled">UID 锁定术已施展</string>
     <string name="path_hide_uid_mode_disabled">UID 锁定术已解除</string>
     <string name="path_hide_uid_applied">UID 锁定名录已布阵生效</string>
+    <string name="path_hide_select_apps">拣选应用</string>
+    <string name="path_hide_no_apps_selected">未拣到任何应用</string>
+    <string name="path_hide_app_removed">已清走 %d 个已卸载应用的残局</string>
+    <string name="path_hide_search_apps">捞应用…</string>
+    <string name="path_hide_show_system">露系统应用</string>
 </resources>

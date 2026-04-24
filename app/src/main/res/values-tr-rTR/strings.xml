@@ -1055,4 +1055,9 @@ Komutların çalışması için uygulamanın tamamen kapatılıp yeniden açıld
     <string name="path_hide_uid_mode_enabled">UID yürütme modu etkinleştirildi</string>
     <string name="path_hide_uid_mode_disabled">UID yürütme modu devre dışı bırakıldı</string>
     <string name="path_hide_uid_applied">UID beyaz liste uygulandı</string>
+    <string name="path_hide_select_apps">Uygulama seç</string>
+    <string name="path_hide_no_apps_selected">Hiçbir uygulama seçilmedi</string>
+    <string name="path_hide_app_removed">%d kaldırılan uygulamanın yapılandırması temizlendi</string>
+    <string name="path_hide_search_apps">Uygulama ara…</string>
+    <string name="path_hide_show_system">Sistem uygulamalarını göster</string>
 </resources>

@@ -968,4 +968,9 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="path_hide_uid_mode_enabled">Tryb wykonywania wg UID włączony</string>
     <string name="path_hide_uid_mode_disabled">Tryb wykonywania wg UID wyłączony</string>
     <string name="path_hide_uid_applied">Biała lista UID zastosowana</string>
+    <string name="path_hide_select_apps">Wybierz aplikacje</string>
+    <string name="path_hide_no_apps_selected">Brak wybranych aplikacji</string>
+    <string name="path_hide_app_removed">Usunięto %d wpisów odinstalowanych aplikacji</string>
+    <string name="path_hide_search_apps">Szukaj aplikacji…</string>
+    <string name="path_hide_show_system">Pokaż aplikacje systemowe</string>
 </resources>

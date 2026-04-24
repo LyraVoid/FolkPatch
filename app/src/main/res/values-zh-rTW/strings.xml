@@ -1039,4 +1039,9 @@
     <string name="path_hide_uid_mode_enabled">UID 執行模式已啟用</string>
     <string name="path_hide_uid_mode_disabled">UID 執行模式已停用</string>
     <string name="path_hide_uid_applied">UID 白名單已套用</string>
+    <string name="path_hide_select_apps">選擇應用</string>
+    <string name="path_hide_no_apps_selected">未選擇應用</string>
+    <string name="path_hide_app_removed">已移除 %d 個已解除安裝應用的設定</string>
+    <string name="path_hide_search_apps">搜尋應用…</string>
+    <string name="path_hide_show_system">顯示系統應用</string>
 </resources>

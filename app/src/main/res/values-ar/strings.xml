@@ -1038,4 +1038,9 @@
     <string name="path_hide_uid_mode_enabled">تم تفعيل وضع تنفيذ UID</string>
     <string name="path_hide_uid_mode_disabled">تم تعطيل وضع تنفيذ UID</string>
     <string name="path_hide_uid_applied">تم تطبيق القائمة البيضاء لـ UID</string>
+    <string name="path_hide_select_apps">اختر التطبيقات</string>
+    <string name="path_hide_no_apps_selected">لم يتم اختيار أي تطبيق</string>
+    <string name="path_hide_app_removed">تمت إزالة إعدادات %d تطبيق تم إلغاء تثبيته</string>
+    <string name="path_hide_search_apps">البحث عن التطبيقات…</string>
+    <string name="path_hide_show_system">عرض تطبيقات النظام</string>
 </resources>

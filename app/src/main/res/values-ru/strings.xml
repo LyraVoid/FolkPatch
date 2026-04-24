@@ -1050,4 +1050,9 @@
     <string name="path_hide_uid_mode_enabled">Режим выполнения по UID включён</string>
     <string name="path_hide_uid_mode_disabled">Режим выполнения по UID отключён</string>
     <string name="path_hide_uid_applied">Белый список UID применён</string>
+    <string name="path_hide_select_apps">Выбрать приложения</string>
+    <string name="path_hide_no_apps_selected">Приложения не выбраны</string>
+    <string name="path_hide_app_removed">Удалено %d устаревших записей удалённых приложений</string>
+    <string name="path_hide_search_apps">Поиск приложений…</string>
+    <string name="path_hide_show_system">Показать системные приложения</string>
 </resources>

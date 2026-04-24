@@ -1038,4 +1038,9 @@
     <string name="path_hide_uid_mode_enabled">UID 执行模式已启用喵</string>
     <string name="path_hide_uid_mode_disabled">UID 执行模式已禁用喵</string>
     <string name="path_hide_uid_applied">UID 白名单已生效喵</string>
+    <string name="path_hide_select_apps">挑选应用喵</string>
+    <string name="path_hide_no_apps_selected">还没有选应用喵</string>
+    <string name="path_hide_app_removed">已经清理掉 %d 个已卸载应用的配置了喵</string>
+    <string name="path_hide_search_apps">搜索应用…喵</string>
+    <string name="path_hide_show_system">显示系统应用喵</string>
 </resources>

@@ -1051,4 +1051,9 @@ Por favor, certifique-se de fechar completamente o app e reabri-lo para que os c
     <string name="path_hide_uid_mode_enabled">Modo de execução por UID ativado</string>
     <string name="path_hide_uid_mode_disabled">Modo de execução por UID desativado</string>
     <string name="path_hide_uid_applied">Lista de permissão de UIDs aplicada</string>
+    <string name="path_hide_select_apps">Selecionar apps</string>
+    <string name="path_hide_no_apps_selected">Nenhum app selecionado</string>
+    <string name="path_hide_app_removed">Removidas %d entradas de apps desinstalados</string>
+    <string name="path_hide_search_apps">Pesquisar apps…</string>
+    <string name="path_hide_show_system">Mostrar apps do sistema</string>
 </resources>

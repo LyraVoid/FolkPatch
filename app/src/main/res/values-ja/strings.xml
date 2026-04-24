@@ -962,4 +962,9 @@
     <string name="path_hide_uid_mode_enabled">UID 実行モードが有効になりました</string>
     <string name="path_hide_uid_mode_disabled">UID 実行モードが無効になりました</string>
     <string name="path_hide_uid_applied">UID ホワイトリストが適用されました</string>
+    <string name="path_hide_select_apps">アプリを選択</string>
+    <string name="path_hide_no_apps_selected">アプリが選択されていません</string>
+    <string name="path_hide_app_removed">アンインストール済みのアプリ %d 件の設定を削除しました</string>
+    <string name="path_hide_search_apps">アプリを検索…</string>
+    <string name="path_hide_show_system">システムアプリを表示</string>
 </resources>

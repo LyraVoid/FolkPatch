@@ -1032,4 +1032,9 @@ Pastikan aplikasi ditutup sepenuhnya dan dimulai ulang untuk menjalankan perinta
     <string name="path_hide_uid_mode_enabled">Mode eksekusi UID diaktifkan</string>
     <string name="path_hide_uid_mode_disabled">Mode eksekusi UID dinonaktifkan</string>
     <string name="path_hide_uid_applied">Daftar putih UID diterapkan</string>
+    <string name="path_hide_select_apps">Pilih aplikasi</string>
+    <string name="path_hide_no_apps_selected">Tidak ada aplikasi yang dipilih</string>
+    <string name="path_hide_app_removed">Dihapus %d entri konfigurasi aplikasi yang sudah di-uninstall</string>
+    <string name="path_hide_search_apps">Cari aplikasi…</string>
+    <string name="path_hide_show_system">Tampilkan aplikasi sistem</string>
 </resources>

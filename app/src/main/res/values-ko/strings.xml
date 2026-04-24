@@ -1064,4 +1064,9 @@
     <string name="path_hide_uid_mode_enabled">UID 실행 모드가 활성화되었습니다</string>
     <string name="path_hide_uid_mode_disabled">UID 실행 모드가 비활성화되었습니다</string>
     <string name="path_hide_uid_applied">UID 허용 목록이 적용되었습니다</string>
+    <string name="path_hide_select_apps">앱 선택</string>
+    <string name="path_hide_no_apps_selected">선택된 앱 없음</string>
+    <string name="path_hide_app_removed">설치 제거된 %d개 앱의 설정을 제거했습니다</string>
+    <string name="path_hide_search_apps">앱 검색…</string>
+    <string name="path_hide_show_system">시스템 앱 표시</string>
 </resources>

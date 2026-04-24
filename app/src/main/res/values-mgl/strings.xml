@@ -1036,4 +1036,9 @@
     <string name="path_hide_uid_mode_enabled">UID гүйцэтгэх горим идэвхжсэн</string>
     <string name="path_hide_uid_mode_disabled">UID гүйцэтгэх горим идэвхгүй</string>
     <string name="path_hide_uid_applied">UID цагаан жагсаалт хэрэгжсэн</string>
+    <string name="path_hide_select_apps">Апп сонгох</string>
+    <string name="path_hide_no_apps_selected">Сонгогдсон апп байхгүй</string>
+    <string name="path_hide_app_removed">%d устгасан аппын тохиргоог устгалаа</string>
+    <string name="path_hide_search_apps">Апп хайх…</string>
+    <string name="path_hide_show_system">Системийн аппуудыг харах</string>
 </resources>

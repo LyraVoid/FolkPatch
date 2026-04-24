@@ -1036,4 +1036,9 @@
     <string name="path_hide_uid_mode_enabled">UID 精准火候模式已开火</string>
     <string name="path_hide_uid_mode_disabled">UID 精准火候模式已熄火</string>
     <string name="path_hide_uid_applied">UID 白名单已上菜</string>
+    <string name="path_hide_select_apps">点选应用</string>
+    <string name="path_hide_no_apps_selected">莫得应用被选中</string>
+    <string name="path_hide_app_removed">已铲掉 %d 个卸载了的应用的锅气</string>
+    <string name="path_hide_search_apps">找应用…</string>
+    <string name="path_hide_show_system">亮出系统应用</string>
 </resources>

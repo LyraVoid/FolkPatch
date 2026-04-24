@@ -1053,4 +1053,9 @@ Por ejemplo, los KPM que previenen la modificación de particiones solo pueden u
     <string name="path_hide_uid_mode_enabled">Modo de ejecución por UID activado</string>
     <string name="path_hide_uid_mode_disabled">Modo de ejecución por UID desactivado</string>
     <string name="path_hide_uid_applied">Lista blanca de UID aplicada</string>
+    <string name="path_hide_select_apps">Seleccionar aplicaciones</string>
+    <string name="path_hide_no_apps_selected">Ninguna aplicación seleccionada</string>
+    <string name="path_hide_app_removed">Se eliminaron %d entradas de aplicaciones desinstaladas</string>
+    <string name="path_hide_search_apps">Buscar aplicaciones…</string>
+    <string name="path_hide_show_system">Mostrar aplicaciones del sistema</string>
 </resources>

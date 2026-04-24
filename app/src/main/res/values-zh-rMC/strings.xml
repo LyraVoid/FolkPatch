@@ -1025,4 +1025,9 @@
     <string name="path_hide_uid_mode_enabled">UID 指定模式已启用（精准选择已激活）</string>
     <string name="path_hide_uid_mode_disabled">UID 指定模式已禁用（精准选择已关闭）</string>
     <string name="path_hide_uid_applied">UID 白名单已应用（选择列表已生效）</string>
+    <string name="path_hide_select_apps">挑选应用</string>
+    <string name="path_hide_no_apps_selected">冇选中任何应用</string>
+    <string name="path_hide_app_removed">已经清理咗 %d 个已卸载应用的配置</string>
+    <string name="path_hide_search_apps">搵应用…</string>
+    <string name="path_hide_show_system">显示系统应用</string>
 </resources>

@@ -1037,4 +1037,9 @@
     <string name="path_hide_uid_mode_enabled">UID 圣裁模式已开启</string>
     <string name="path_hide_uid_mode_disabled">UID 圣裁模式已关闭</string>
     <string name="path_hide_uid_applied">UID 圣选名录已降临生效</string>
+    <string name="path_hide_select_apps">遴选应用</string>
+    <string name="path_hide_no_apps_selected">未遴选任何应用</string>
+    <string name="path_hide_app_removed">已涤除 %d 个已废黜应用之旧制</string>
+    <string name="path_hide_search_apps">搜寻应用…</string>
+    <string name="path_hide_show_system">昭示系统应用</string>
 </resources>
