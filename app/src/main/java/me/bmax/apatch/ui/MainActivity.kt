@@ -1306,7 +1306,7 @@ private fun BottomBarContent(
                                 }
 
                                 navigator.navigate(destination.direction) {
-                                    popUpTo(NavGraphs.root.startRoute) {
+                                    popUpTo(NavGraphs.root) {
                                         saveState = true
                                     }
                                     launchSingleTop = true

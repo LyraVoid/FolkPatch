@@ -789,7 +789,7 @@ private fun CountCardsRow(
             count = superuserCount,
             onClick = {
                 navigator.navigate(BottomBarDestination.SuperUser.direction) {
-                    popUpTo(NavGraphs.root.startRoute) { saveState = true }
+                    popUpTo(NavGraphs.root) { saveState = true }
                     launchSingleTop = true
                     restoreState = true
                 }
@@ -802,7 +802,7 @@ private fun CountCardsRow(
             count = apmModuleCount,
             onClick = {
                 navigator.navigate(BottomBarDestination.AModule.direction) {
-                    popUpTo(NavGraphs.root.startRoute) { saveState = true }
+                    popUpTo(NavGraphs.root) { saveState = true }
                     launchSingleTop = true
                     restoreState = true
                 }
@@ -815,7 +815,7 @@ private fun CountCardsRow(
             count = kpmModuleCount,
             onClick = {
                 navigator.navigate(BottomBarDestination.KModule.direction) {
-                    popUpTo(NavGraphs.root.startRoute) { saveState = true }
+                    popUpTo(NavGraphs.root) { saveState = true }
                     launchSingleTop = true
                     restoreState = true
                 }
