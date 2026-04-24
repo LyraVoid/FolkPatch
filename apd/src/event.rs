@@ -324,6 +324,12 @@ fn run_uid_monitor() {
 pub fn on_boot_completed(superkey: Option<String>) -> Result<()> {
     info!("on_boot_completed triggered!");
 
+    // Clear UTS spoof boot safety flag — boot completed successfully
+    if Path::new(defs::UTS_SPOOF_BOOT_PENDING).exists() {
+        let _ = std::fs::remove_file(defs::UTS_SPOOF_BOOT_PENDING);
+        info!("UTS spoof boot safety flag cleared");
+    }
+
     run_stage("boot-completed", superkey, false);
 
     // Execute Umount Service if enabled

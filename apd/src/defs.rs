@@ -14,6 +14,7 @@ pub const UMOUNT_SERVICE_FILE: &str = concatcp!(ADB_DIR, ".umount_service_enable
 pub const UMOUNT_BINARY_PATH: &str = concatcp!(ADB_DIR, "fp/bin/fpd");
 pub const UTS_SPOOF_ENABLE_FILE: &str = concatcp!(ADB_DIR, ".uts_spoof_enable");
 pub const UTS_SPOOF_CONFIG_FILE: &str = concatcp!(ADB_DIR, ".uts_spoof_config");
+pub const UTS_SPOOF_BOOT_PENDING: &str = concatcp!(ADB_DIR, ".uts_spoof_boot_pending");
 pub const DAEMON_PATH: &str = concatcp!(ADB_DIR, "apd");
 
 pub const PATHHIDE_DIR: &str = concatcp!(ADB_DIR, "fp/pathhide/");

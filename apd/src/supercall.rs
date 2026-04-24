@@ -682,7 +682,16 @@ fn sc_uts_reset(key: &CStr) -> c_long {
 }
 
 pub fn apply_uts_spoof(superkey: &Option<String>) {
-    if !std::path::Path::new(crate::defs::UTS_SPOOF_ENABLE_FILE).exists() {
+    use std::path::Path;
+
+    // Boot safety: if pending flag exists, previous boot may have failed → skip spoof
+    if Path::new(crate::defs::UTS_SPOOF_BOOT_PENDING).exists() {
+        warn!("[uts_spoof] boot pending flag exists — previous boot may have failed, skipping spoof");
+        let _ = std::fs::remove_file(crate::defs::UTS_SPOOF_BOOT_PENDING);
+        return;
+    }
+
+    if !Path::new(crate::defs::UTS_SPOOF_ENABLE_FILE).exists() {
         info!("[uts_spoof] disabled, skipping");
         return;
     }
@@ -715,10 +724,13 @@ pub fn apply_uts_spoof(superkey: &Option<String>) {
         }
     };
 
-    // Reset first to ensure kernel has backed up originals
-    let reset_rc = sc_uts_reset(&key);
-    if reset_rc < 0 {
-        warn!("[uts_spoof] reset failed: {}", reset_rc);
+    // Reset first to ensure clean state (kernel call_uts_set also handles this internally)
+    let _ = sc_uts_reset(&key);
+
+    // Create boot safety flag before applying (defense-in-depth).
+    // Cleared by on_boot_completed. If boot fails, next boot will skip spoof.
+    if let Err(e) = std::fs::write(crate::defs::UTS_SPOOF_BOOT_PENDING, "1") {
+        warn!("[uts_spoof] failed to write boot pending flag: {}", e);
     }
 
     // Only set if we have values to spoof
