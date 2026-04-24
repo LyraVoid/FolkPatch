@@ -90,7 +90,9 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Surface
 import me.bmax.apatch.ui.component.ExpressiveSwitch
+import me.bmax.apatch.ui.component.LocalInsideSplicedGroup
 import me.bmax.apatch.ui.component.TwoColumnGrid
+import me.bmax.apatch.ui.component.splicedLazyColumnGroup
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.OutlinedTextField
@@ -743,82 +745,80 @@ private fun ModuleList(
                 },
                 beforeItems = {
                     if (showMountWarning) {
-                        item("mount_warning") {
-                            Surface(
-                                modifier = Modifier.fillMaxWidth(),
-                                color = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.3f),
-                                shape = RoundedCornerShape(16.dp),
-                                tonalElevation = 2.dp
+                        Surface(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 16.dp),
+                            color = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.3f),
+                            shape = RoundedCornerShape(16.dp),
+                            tonalElevation = 2.dp
+                        ) {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp)
                             ) {
-                                Column(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(16.dp)
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    modifier = Modifier.fillMaxWidth()
                                 ) {
-                                    Row(
-                                        verticalAlignment = Alignment.CenterVertically,
-                                        modifier = Modifier.fillMaxWidth()
-                                    ) {
-                                        Icon(
-                                            imageVector = Icons.Outlined.Delete,
-                                            contentDescription = null,
-                                            tint = MaterialTheme.colorScheme.error,
-                                            modifier = Modifier.size(24.dp)
-                                        )
-                                        Spacer(modifier = Modifier.width(12.dp))
-                                        Text(
-                                            text = stringResource(R.string.apm_mount_warning_title),
-                                            style = MaterialTheme.typography.titleSmall,
-                                            color = MaterialTheme.colorScheme.error,
-                                            fontWeight = FontWeight.Bold
-                                        )
-                                    }
-
-                                    Spacer(modifier = Modifier.height(12.dp))
-
-                                    Text(
-                                        text = stringResource(R.string.apm_mount_warning_message),
-                                        style = MaterialTheme.typography.bodyMedium,
-                                        color = MaterialTheme.colorScheme.onErrorContainer
+                                    Icon(
+                                        imageVector = Icons.Outlined.Delete,
+                                        contentDescription = null,
+                                        tint = MaterialTheme.colorScheme.error,
+                                        modifier = Modifier.size(24.dp)
                                     )
+                                    Spacer(modifier = Modifier.width(12.dp))
+                                    Text(
+                                        text = stringResource(R.string.apm_mount_warning_title),
+                                        style = MaterialTheme.typography.titleSmall,
+                                        color = MaterialTheme.colorScheme.error,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
 
-                                    Spacer(modifier = Modifier.height(12.dp))
+                                Spacer(modifier = Modifier.height(12.dp))
 
-                                    Row(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        horizontalArrangement = Arrangement.End
+                                Text(
+                                    text = stringResource(R.string.apm_mount_warning_message),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.onErrorContainer
+                                )
+
+                                Spacer(modifier = Modifier.height(12.dp))
+
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.End
+                                ) {
+                                    FilledTonalButton(
+                                        onClick = {
+                                            prefs.edit()
+                                                .putBoolean("apm_mount_warning_shown", true)
+                                                .apply()
+                                            showMountWarning = false
+                                        },
+                                        colors = ButtonDefaults.filledTonalButtonColors(
+                                            containerColor = MaterialTheme.colorScheme.error,
+                                            contentColor = MaterialTheme.colorScheme.onError
+                                        )
                                     ) {
-                                        FilledTonalButton(
-                                            onClick = {
-                                                prefs.edit()
-                                                    .putBoolean("apm_mount_warning_shown", true)
-                                                    .apply()
-                                                showMountWarning = false
-                                            },
-                                            colors = ButtonDefaults.filledTonalButtonColors(
-                                                containerColor = MaterialTheme.colorScheme.error,
-                                                contentColor = MaterialTheme.colorScheme.onError
-                                            )
-                                        ) {
-                                            Text(stringResource(R.string.apm_mount_warning_button))
-                                        }
+                                        Text(stringResource(R.string.apm_mount_warning_button))
                                     }
                                 }
                             }
                         }
                     }
                     if (modules.isEmpty()) {
-                        item("empty") {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .defaultMinSize(minHeight = 300.dp),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Text(
-                                    stringResource(R.string.apm_empty), textAlign = TextAlign.Center
-                                )
-                            }
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .defaultMinSize(minHeight = 300.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                stringResource(R.string.apm_empty), textAlign = TextAlign.Center
+                            )
                         }
                     }
                 },
@@ -891,12 +891,11 @@ private fun ModuleList(
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 state = state,
-                verticalArrangement = Arrangement.spacedBy(16.dp),
                 contentPadding = remember {
                     PaddingValues(
-                        start = 16.dp,
+                        start = 0.dp,
                         top = 16.dp,
-                        end = 16.dp,
+                        end = 0.dp,
                         bottom = 16.dp + 16.dp + 56.dp /*  Scaffold Fab Spacing + Fab container height */
                     )
                 },
@@ -985,7 +984,12 @@ private fun ModuleList(
                     }
 
                     else -> {
-                        itemsIndexed(modules, key = { _, module -> module.id }) { index, module ->
+                        item { Spacer(Modifier.height(8.dp)) }
+                        splicedLazyColumnGroup(
+                            items = modules,
+                            key = { _, module -> module.id },
+                            contentType = { _, _ -> "ModuleItem" },
+                        ) { _, module ->
                             var isChecked by rememberSaveable(module) { mutableStateOf(module.enabled) }
                             val scope = rememberCoroutineScope()
                             val updatedModule = viewModel.getCachedUpdate(module.id)
@@ -1048,9 +1052,8 @@ private fun ModuleList(
                                 onClick = { clickedModule ->
                                     onClickModule(clickedModule.id, clickedModule.name, clickedModule.hasWebUi)
                                 })
-                            // fix last item shadow incomplete in LazyColumn
-                            Spacer(Modifier.height(1.dp))
                         }
+                        item { Spacer(Modifier.height(88.dp)) }
                     }
                 }
             }
@@ -1510,6 +1513,8 @@ private fun ModuleItem(
         }
     }
 
+    val insideSplicedGroup = LocalInsideSplicedGroup.current
+
     val cardColor = if (isWallpaperMode) {
         MaterialTheme.colorScheme.surface.copy(alpha = opacity)
     } else {
@@ -1517,29 +1522,26 @@ private fun ModuleItem(
     }
 
     val cardShape = RoundedCornerShape(20.dp)
-    Surface(
-        modifier = modifier
-            .fillMaxWidth()
-            .animateContentSize()
-            .clip(cardShape)
-            .combinedClickable(
-                onClick = {
-                    if (foldSystemModule) {
-                        onExpandToggle()
-                    } else {
-                        onClick(module)
-                    }
-                },
-                onLongClick = {
-                    if (BackgroundConfig.isBannerEnabled && BackgroundConfig.isFolkBannerEnabled) {
-                        showFolkBannerDialog = true
-                    }
+
+    val clickModifier = Modifier
+        .fillMaxWidth()
+        .animateContentSize()
+        .combinedClickable(
+            onClick = {
+                if (foldSystemModule) {
+                    onExpandToggle()
+                } else {
+                    onClick(module)
                 }
-            ),
-        shape = cardShape,
-        color = cardColor,
-        tonalElevation = 0.dp
-    ) {
+            },
+            onLongClick = {
+                if (BackgroundConfig.isBannerEnabled && BackgroundConfig.isFolkBannerEnabled) {
+                    showFolkBannerDialog = true
+                }
+            }
+        )
+
+    val contentBlock: @Composable () -> Unit = {
         Box(modifier = Modifier.fillMaxWidth()) {
             val bannerUrl = bannerInfo?.url
             val bannerData = bannerInfo?.bytes
@@ -1789,6 +1791,22 @@ private fun ModuleItem(
                     )
                 }
             }
+        }
+    }
+
+    // Render: inside spliced group → no Surface wrapper; standalone → Surface card
+    if (insideSplicedGroup) {
+        Box(modifier = modifier.then(clickModifier)) {
+            contentBlock()
+        }
+    } else {
+        Surface(
+            modifier = modifier.then(clickModifier),
+            shape = cardShape,
+            color = cardColor,
+            tonalElevation = 0.dp
+        ) {
+            contentBlock()
         }
     }
 

@@ -114,6 +114,7 @@ import me.bmax.apatch.ui.component.ConfirmResult
 import me.bmax.apatch.ui.component.KpmAutoLoadManager
 import me.bmax.apatch.ui.component.LoadingDialogHandle
 import me.bmax.apatch.ui.component.TwoColumnGrid
+import me.bmax.apatch.ui.component.splicedLazyColumnGroup
 import me.bmax.apatch.ui.component.rememberConfirmDialog
 import me.bmax.apatch.ui.component.rememberLoadingDialog
 import me.bmax.apatch.ui.viewmodel.KPModel
@@ -723,17 +724,15 @@ private fun KPModuleList(
                 },
                 beforeItems = {
                     if (moduleList.isEmpty()) {
-                        item("empty") {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .defaultMinSize(minHeight = 300.dp),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Text(
-                                    stringResource(R.string.kpm_apm_empty), textAlign = TextAlign.Center
-                                )
-                            }
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .defaultMinSize(minHeight = 300.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                stringResource(R.string.kpm_apm_empty), textAlign = TextAlign.Center
+                            )
                         }
                     }
                 },
@@ -766,12 +765,11 @@ private fun KPModuleList(
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 state = state,
-                verticalArrangement = Arrangement.spacedBy(16.dp),
                 contentPadding = remember {
                     PaddingValues(
-                        start = 16.dp,
+                        start = 0.dp,
                         top = 16.dp,
-                        end = 16.dp,
+                        end = 0.dp,
                         bottom = 16.dp + 16.dp + 56.dp /*  Scaffold Fab Spacing + Fab container height */
                     )
                 },
@@ -793,7 +791,12 @@ private fun KPModuleList(
                     }
 
                     else -> {
-                        itemsIndexed(moduleList, key = { _, module -> module.name }) { index, module ->
+                        item { Spacer(Modifier.height(8.dp)) }
+                        splicedLazyColumnGroup(
+                            items = moduleList,
+                            key = { _, module -> module.name },
+                            contentType = { _, _ -> "KPModuleItem" },
+                        ) { _, module ->
                             val scope = rememberCoroutineScope()
                             KPModuleItem(
                                 module,
@@ -816,10 +819,8 @@ private fun KPModuleList(
                                     expandedModuleId = if (expandedModuleId == module.name) null else module.name
                                 }
                             )
-
-                            // fix last item shadow incomplete in LazyColumn
-                            Spacer(Modifier.height(1.dp))
                         }
+                        item { Spacer(Modifier.height(88.dp)) }
                     }
                 }
             }
@@ -1072,28 +1073,27 @@ private fun KPModuleItem(
         }
     }
 
+    val insideSplicedGroup = me.bmax.apatch.ui.component.LocalInsideSplicedGroup.current
+
     val cardShape = RoundedCornerShape(20.dp)
-    Surface(
-        modifier = modifier
-            .fillMaxWidth()
-            .animateContentSize()
-            .clip(cardShape)
-            .combinedClickable(
-                onClick = {
-                    if (foldSystemModule) {
-                        onExpandToggle()
-                    }
-                },
-                onLongClick = {
-                    if (BackgroundConfig.isBannerEnabled && BackgroundConfig.isFolkBannerEnabled) {
-                        showFolkBannerDialog = true
-                    }
+
+    val clickModifier = Modifier
+        .fillMaxWidth()
+        .animateContentSize()
+        .combinedClickable(
+            onClick = {
+                if (foldSystemModule) {
+                    onExpandToggle()
                 }
-            ),
-        shape = cardShape,
-        color = cardColor,
-        tonalElevation = 0.dp
-    ) {
+            },
+            onLongClick = {
+                if (BackgroundConfig.isBannerEnabled && BackgroundConfig.isFolkBannerEnabled) {
+                    showFolkBannerDialog = true
+                }
+            }
+        )
+
+    val contentBlock: @Composable () -> Unit = {
         Box(modifier = Modifier.fillMaxWidth()) {
             if (bannerData != null) {
                 val colorScheme = MaterialTheme.colorScheme
@@ -1269,6 +1269,22 @@ private fun KPModuleItem(
                     }
                 }
             }
+        }
+    }
+
+    // Render: inside spliced group → no Surface wrapper; standalone → Surface card
+    if (insideSplicedGroup) {
+        Box(modifier = modifier.then(clickModifier)) {
+            contentBlock()
+        }
+    } else {
+        Surface(
+            modifier = modifier.then(clickModifier),
+            shape = cardShape,
+            color = cardColor,
+            tonalElevation = 0.dp
+        ) {
+            contentBlock()
         }
     }
 
