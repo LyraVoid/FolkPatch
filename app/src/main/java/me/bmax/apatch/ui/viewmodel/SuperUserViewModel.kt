@@ -434,6 +434,8 @@ class SuperUserViewModel : ViewModel() {
                 apps = newApps
             }
         }
+
+        isRefreshing = false
     }
 
     fun launchApp(context: Context, packageName: String): Boolean {
