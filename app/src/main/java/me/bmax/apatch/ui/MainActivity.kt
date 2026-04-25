@@ -90,6 +90,7 @@ import com.ramcosta.composedestinations.generated.destinations.BackupSettingsScr
 import com.ramcosta.composedestinations.generated.destinations.BehaviorSettingsScreenDestination
 import com.ramcosta.composedestinations.generated.destinations.FunctionSettingsScreenDestination
 import com.ramcosta.composedestinations.generated.destinations.GeneralSettingsScreenDestination
+import com.ramcosta.composedestinations.generated.destinations.LanguagePickerScreenDestination
 import com.ramcosta.composedestinations.generated.destinations.ModuleSettingsScreenDestination
 import com.ramcosta.composedestinations.generated.destinations.MultimediaSettingsScreenDestination
 import com.ramcosta.composedestinations.generated.destinations.SecuritySettingsScreenDestination
@@ -470,6 +471,7 @@ class MainActivity : AppCompatActivity() {
                 setOf(
                     SettingScreenDestination.route,
                     GeneralSettingsScreenDestination.route,
+                    LanguagePickerScreenDestination.route,
                     AppearanceSettingsScreenDestination.route,
                     BehaviorSettingsScreenDestination.route,
                     SecuritySettingsScreenDestination.route,

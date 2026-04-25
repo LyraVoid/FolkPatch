@@ -37,6 +37,8 @@ import androidx.core.os.LocaleListCompat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.ramcosta.composedestinations.generated.destinations.LanguagePickerScreenDestination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.BuildConfig
 import me.bmax.apatch.Natives
@@ -62,6 +64,7 @@ fun GeneralSettingsContent(
     onMagicMountChange: (Boolean) -> Unit,
     snackBarHost: SnackbarHostState,
     flat: Boolean = false,
+    navigator: DestinationsNavigator,
 ) {
     val context = LocalContext.current
     val prefs = APApplication.sharedPreferences
@@ -144,7 +147,6 @@ fun GeneralSettingsContent(
     val blockApUpdateTitle = stringResource(id = R.string.settings_block_androidpatch_update)
     val blockApUpdateSummary = stringResource(id = R.string.settings_block_androidpatch_update_summary)
 
-    val showLanguageDialog = remember { mutableStateOf(false) }
     val showUpdateDialog = remember { mutableStateOf(false) }
     val showResetSuPathDialog = remember { mutableStateOf(false) }
     val showAppTitleDialog = remember { mutableStateOf(false) }
@@ -179,7 +181,7 @@ fun GeneralSettingsContent(
     SplicedColumnGroup(flat = flat) {
 
         item {
-            ExpressiveCard(flat = flat, onClick = { showLanguageDialog.value = true }) {
+            ExpressiveCard(flat = flat, onClick = { navigator.navigate(LanguagePickerScreenDestination) }) {
                 Row(
                     modifier = Modifier.fillMaxWidth().padding(16.dp),
                     verticalAlignment = Alignment.CenterVertically
@@ -655,8 +657,6 @@ fun GeneralSettingsContent(
         }
     }
 
-    LanguageDialog(showLanguageDialog)
-
     if (showUpdateDialog.value) {
         UpdateDialog(
             onDismiss = { showUpdateDialog.value = false },
@@ -796,54 +796,6 @@ fun NewAppProfileModeDialog(
             }
             val dialogWindowProvider = LocalView.current.parent as DialogWindowProvider
             APDialogBlurBehindUtils.setupWindowBlurListener(dialogWindowProvider.window)
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun LanguageDialog(showLanguageDialog: MutableState<Boolean>) {
-
-    val languages = stringArrayResource(id = R.array.languages)
-    val languagesValues = stringArrayResource(id = R.array.languages_values)
-
-    if (showLanguageDialog.value) {
-        BasicAlertDialog(
-            onDismissRequest = { showLanguageDialog.value = false }
-        ) {
-            Surface(
-                modifier = Modifier
-                    .width(150.dp)
-                    .wrapContentHeight(),
-                shape = RoundedCornerShape(28.dp),
-                tonalElevation = AlertDialogDefaults.TonalElevation,
-                color = AlertDialogDefaults.containerColor,
-            ) {
-                LazyColumn {
-                    itemsIndexed(languages) { index, item ->
-                        ListItem(
-                            headlineContent = { Text(item) },
-                            modifier = Modifier.clickable {
-                                showLanguageDialog.value = false
-                                if (index == 0) {
-                                    AppCompatDelegate.setApplicationLocales(
-                                        LocaleListCompat.getEmptyLocaleList()
-                                    )
-                                } else {
-                                    AppCompatDelegate.setApplicationLocales(
-                                        LocaleListCompat.forLanguageTags(
-                                            languagesValues[index]
-                                        )
-                                    )
-                                }
-                            }
-                        )
-                    }
-                }
-
-                val dialogWindowProvider = LocalView.current.parent as DialogWindowProvider
-                APDialogBlurBehindUtils.setupWindowBlurListener(dialogWindowProvider.window)
-            }
         }
     }
 }

@@ -101,6 +101,7 @@ fun GeneralSettingsScreen(navigator: DestinationsNavigator) {
                     onMagicMountChange = { isMagicMountEnabled = it },
                     snackBarHost = snackBarHost,
                     flat = flat,
+                    navigator = navigator,
                 )
             }
             item { Spacer(Modifier.height(8.dp)) }
