@@ -1067,6 +1067,12 @@
     <string name="path_hide_uid_save">UID 저장</string>
     <string name="path_hide_uid_mode_enabled">UID 실행 모드가 활성화되었습니다</string>
     <string name="path_hide_uid_mode_disabled">UID 실행 모드가 비활성화되었습니다</string>
+    <string name="path_hide_filter_system">시스템 UID 필터링</string>
+    <string name="path_hide_filter_system_summary">root 및 시스템 프로세스(UID &lt; 10000)에서도 경로 숨기기</string>
+    <string name="path_hide_filter_system_enabled">시스템 UID 필터링이 활성화되었습니다</string>
+    <string name="path_hide_filter_system_disabled">시스템 UID 필터링이 비활성화되었습니다</string>
+    <string name="path_hide_filter_system_warning_title">경고</string>
+    <string name="path_hide_filter_system_warning_message">활성화하면 root 및 시스템 프로세스(UID &lt; 10000)에서도 경로가 숨겨집니다. 일부 시스템 기능이 정상적으로 작동하지 않을 수 있습니다. 주의하여 진행하세요.</string>
     <string name="path_hide_uid_applied">UID 허용 목록이 적용되었습니다</string>
     <string name="path_hide_select_apps">앱 선택</string>
     <string name="path_hide_no_apps_selected">선택된 앱 없음</string>

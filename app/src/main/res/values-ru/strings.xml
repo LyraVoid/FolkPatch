@@ -1053,6 +1053,12 @@
     <string name="path_hide_uid_save">Сохранить UID</string>
     <string name="path_hide_uid_mode_enabled">Режим выполнения по UID включён</string>
     <string name="path_hide_uid_mode_disabled">Режим выполнения по UID отключён</string>
+    <string name="path_hide_filter_system">Фильтровать системные UID</string>
+    <string name="path_hide_filter_system_summary">Также скрывать пути от процессов root и системы (UID &lt; 10000)</string>
+    <string name="path_hide_filter_system_enabled">Фильтрация системных UID включена</string>
+    <string name="path_hide_filter_system_disabled">Фильтрация системных UID отключена</string>
+    <string name="path_hide_filter_system_warning_title">Предупреждение</string>
+    <string name="path_hide_filter_system_warning_message">Включение скроет пути также от процессов root и системы (UID &lt; 10000). Это может привести к нарушению работы некоторых системных функций. Действуйте с осторожностью.</string>
     <string name="path_hide_uid_applied">Белый список UID применён</string>
     <string name="path_hide_select_apps">Выбрать приложения</string>
     <string name="path_hide_no_apps_selected">Приложения не выбраны</string>

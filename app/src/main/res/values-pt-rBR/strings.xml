@@ -1054,6 +1054,12 @@ Por favor, certifique-se de fechar completamente o app e reabri-lo para que os c
     <string name="path_hide_uid_save">Salvar UIDs</string>
     <string name="path_hide_uid_mode_enabled">Modo de execução por UID ativado</string>
     <string name="path_hide_uid_mode_disabled">Modo de execução por UID desativado</string>
+    <string name="path_hide_filter_system">Filtrar UIDs do sistema</string>
+    <string name="path_hide_filter_system_summary">Também ocultar caminhos de processos root e do sistema (UID &lt; 10000)</string>
+    <string name="path_hide_filter_system_enabled">Filtragem de UIDs do sistema ativada</string>
+    <string name="path_hide_filter_system_disabled">Filtragem de UIDs do sistema desativada</string>
+    <string name="path_hide_filter_system_warning_title">Aviso</string>
+    <string name="path_hide_filter_system_warning_message">Ativar isso também ocultará caminhos de processos root e do sistema (UID &lt; 10000). Isso pode causar mau funcionamento de alguns recursos do sistema. Prossiga com cautela.</string>
     <string name="path_hide_uid_applied">Lista de permissão de UIDs aplicada</string>
     <string name="path_hide_select_apps">Selecionar apps</string>
     <string name="path_hide_no_apps_selected">Nenhum app selecionado</string>

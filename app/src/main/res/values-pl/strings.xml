@@ -971,6 +971,12 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="path_hide_uid_save">Zapisz UID</string>
     <string name="path_hide_uid_mode_enabled">Tryb wykonywania wg UID włączony</string>
     <string name="path_hide_uid_mode_disabled">Tryb wykonywania wg UID wyłączony</string>
+    <string name="path_hide_filter_system">Filtruj UID systemowe</string>
+    <string name="path_hide_filter_system_summary">Ukrywaj ścieżki również przed procesami root i systemowymi (UID &lt; 10000)</string>
+    <string name="path_hide_filter_system_enabled">Filtrowanie UID systemowych włączone</string>
+    <string name="path_hide_filter_system_disabled">Filtrowanie UID systemowych wyłączone</string>
+    <string name="path_hide_filter_system_warning_title">Ostrzeżenie</string>
+    <string name="path_hide_filter_system_warning_message">Włączenie tej opcji spowoduje ukrywanie ścieżek również przed procesami root i systemowymi (UID &lt; 10000). Może to spowodować nieprawidłowe działanie niektórych funkcji systemu. Postępuj ostrożnie.</string>
     <string name="path_hide_uid_applied">Biała lista UID zastosowana</string>
     <string name="path_hide_select_apps">Wybierz aplikacje</string>
     <string name="path_hide_no_apps_selected">Brak wybranych aplikacji</string>

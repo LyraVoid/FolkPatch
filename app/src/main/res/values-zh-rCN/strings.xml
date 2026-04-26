@@ -1045,6 +1045,12 @@
     <string name="path_hide_uid_save">保存 UID</string>
     <string name="path_hide_uid_mode_enabled">UID 执行模式已启用</string>
     <string name="path_hide_uid_mode_disabled">UID 执行模式已禁用</string>
+    <string name="path_hide_filter_system">过滤系统 UID</string>
+    <string name="path_hide_filter_system_summary">同时对 root 和系统进程（UID &lt; 10000）隐藏路径</string>
+    <string name="path_hide_filter_system_enabled">系统 UID 过滤已启用</string>
+    <string name="path_hide_filter_system_disabled">系统 UID 过滤已禁用</string>
+    <string name="path_hide_filter_system_warning_title">警告</string>
+    <string name="path_hide_filter_system_warning_message">启用后将同时对 root 和系统进程（UID &lt; 10000）隐藏路径。这可能导致部分系统功能异常，请谨慎操作。</string>
     <string name="path_hide_uid_applied">UID 白名单已应用</string>
     <string name="path_hide_select_apps">选择应用</string>
     <string name="path_hide_no_apps_selected">未选择应用</string>

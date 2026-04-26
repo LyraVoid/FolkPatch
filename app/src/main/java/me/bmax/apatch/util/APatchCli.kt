@@ -513,6 +513,13 @@ fun setPathHideUidMode(enable: Boolean) {
         .exec()
 }
 
+fun setPathHideFilterSystem(enable: Boolean) {
+    val shell = getRootShell()
+    shell.newJob().add("mkdir -p ${APApplication.PATHHIDE_DIR}").exec()
+    shell.newJob().add("${if (enable) "touch" else "rm -f"} ${APApplication.PATHHIDE_FILTER_SYSTEM_FILE}")
+        .exec()
+}
+
 fun executeHideBinary(): Boolean {
     val shell = getRootShell()
     val context = apApp.applicationContext

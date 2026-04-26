@@ -512,6 +512,12 @@ Here are some possible reasons for authentication failure—please check which o
     <string name="path_hide_uid_save">Save UIDs</string>
     <string name="path_hide_uid_mode_enabled">UID execution mode enabled</string>
     <string name="path_hide_uid_mode_disabled">UID execution mode disabled</string>
+    <string name="path_hide_filter_system">Filter System UIDs</string>
+    <string name="path_hide_filter_system_summary">Also hide paths from root and system processes (UID &lt; 10000)</string>
+    <string name="path_hide_filter_system_enabled">System UID filtering enabled</string>
+    <string name="path_hide_filter_system_disabled">System UID filtering disabled</string>
+    <string name="path_hide_filter_system_warning_title">Warning</string>
+    <string name="path_hide_filter_system_warning_message">Enabling this will also hide paths from root and system processes (UID &lt; 10000). This may cause some system features to malfunction. Proceed with caution.</string>
     <string name="path_hide_uid_applied">UID whitelist applied</string>
     <string name="path_hide_select_apps">Select Apps</string>
     <string name="path_hide_no_apps_selected">No apps selected</string>

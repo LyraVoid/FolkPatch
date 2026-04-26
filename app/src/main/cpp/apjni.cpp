@@ -424,6 +424,16 @@ jlong nativePathHideUidMode(JNIEnv *env, jobject /* this */, jstring super_key_j
     return rc;
 }
 
+jlong nativePathHideFilterSystem(JNIEnv *env, jobject /* this */, jstring super_key_jstr, jint enable) {
+    ensureSuperKeyNonNull(super_key_jstr);
+    const auto super_key = JUTFString(env, super_key_jstr);
+    long rc = sc_pathhide_filter_system(super_key.get(), (int)enable);
+    if (rc < 0) [[unlikely]] {
+        LOGE("nativePathHideFilterSystem error: %ld", rc);
+    }
+    return rc;
+}
+
 jstring nativeSuAuditList(JNIEnv *env, jobject /* this */, jstring super_key_jstr) {
     ensureSuperKeyNonNull(super_key_jstr);
 
@@ -527,6 +537,7 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void * /*reserved*/) {
         {"nativePathHideUidList", "(Ljava/lang/String;)Ljava/lang/String;", reinterpret_cast<void *>(&nativePathHideUidList)},
         {"nativePathHideUidClear", "(Ljava/lang/String;)J", reinterpret_cast<void *>(&nativePathHideUidClear)},
         {"nativePathHideUidMode", "(Ljava/lang/String;I)J", reinterpret_cast<void *>(&nativePathHideUidMode)},
+        {"nativePathHideFilterSystem", "(Ljava/lang/String;I)J", reinterpret_cast<void *>(&nativePathHideFilterSystem)},
         {"nativeSuAuditList", "(Ljava/lang/String;)Ljava/lang/String;", reinterpret_cast<void *>(&nativeSuAuditList)},
         {"nativeSuAuditClear", "(Ljava/lang/String;)J", reinterpret_cast<void *>(&nativeSuAuditClear)},
         {"nativeGetApiToken", "(Landroid/content/Context;)Ljava/lang/String;", reinterpret_cast<void *>(&nativeGetApiToken)},

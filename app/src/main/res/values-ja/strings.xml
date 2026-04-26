@@ -965,6 +965,12 @@
     <string name="path_hide_uid_save">UID を保存</string>
     <string name="path_hide_uid_mode_enabled">UID 実行モードが有効になりました</string>
     <string name="path_hide_uid_mode_disabled">UID 実行モードが無効になりました</string>
+    <string name="path_hide_filter_system">システム UID をフィルター</string>
+    <string name="path_hide_filter_system_summary">root およびシステムプロセス（UID &lt; 10000）からもパスを隠す</string>
+    <string name="path_hide_filter_system_enabled">システム UID フィルタリングが有効になりました</string>
+    <string name="path_hide_filter_system_disabled">システム UID フィルタリングが無効になりました</string>
+    <string name="path_hide_filter_system_warning_title">警告</string>
+    <string name="path_hide_filter_system_warning_message">有効にすると、root およびシステムプロセス（UID &lt; 10000）からもパスが隠されます。一部のシステム機能が正常に動作しなくなる可能性があります。慎重に操作してください。</string>
     <string name="path_hide_uid_applied">UID ホワイトリストが適用されました</string>
     <string name="path_hide_select_apps">アプリを選択</string>
     <string name="path_hide_no_apps_selected">アプリが選択されていません</string>

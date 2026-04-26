@@ -1035,6 +1035,12 @@ Pastikan aplikasi ditutup sepenuhnya dan dimulai ulang untuk menjalankan perinta
     <string name="path_hide_uid_save">Simpan UID</string>
     <string name="path_hide_uid_mode_enabled">Mode eksekusi UID diaktifkan</string>
     <string name="path_hide_uid_mode_disabled">Mode eksekusi UID dinonaktifkan</string>
+    <string name="path_hide_filter_system">Filter UID Sistem</string>
+    <string name="path_hide_filter_system_summary">Juga sembunyikan jalur dari proses root dan sistem (UID &lt; 10000)</string>
+    <string name="path_hide_filter_system_enabled">Filter UID sistem diaktifkan</string>
+    <string name="path_hide_filter_system_disabled">Filter UID sistem dinonaktifkan</string>
+    <string name="path_hide_filter_system_warning_title">Peringatan</string>
+    <string name="path_hide_filter_system_warning_message">Mengaktifkan ini juga akan menyembunyikan jalur dari proses root dan sistem (UID &lt; 10000). Ini dapat menyebabkan beberapa fungsi sistem tidak berfungsi normal. Harap berhati-hati.</string>
     <string name="path_hide_uid_applied">Daftar putih UID diterapkan</string>
     <string name="path_hide_select_apps">Pilih aplikasi</string>
     <string name="path_hide_no_apps_selected">Tidak ada aplikasi yang dipilih</string>

@@ -54,6 +54,7 @@ import me.bmax.apatch.util.writePathHidePaths
 import me.bmax.apatch.util.readPathHidePaths
 import me.bmax.apatch.util.writePathHideUids
 import me.bmax.apatch.util.setPathHideUidMode
+import me.bmax.apatch.util.setPathHideFilterSystem
 import me.bmax.apatch.util.ui.LocalSnackbarHost
 import me.bmax.apatch.util.ui.NavigationBarsSpacer
 import androidx.compose.ui.platform.LocalContext
@@ -76,6 +77,8 @@ fun FunctionSettingsScreen(navigator: DestinationsNavigator) {
     var isPathHideEnabled by rememberSaveable { mutableStateOf(false) }
     var pathHidePaths by rememberSaveable { mutableStateOf("") }
     var isPathHideUidMode by rememberSaveable { mutableStateOf(false) }
+    var isPathHideFilterSystem by rememberSaveable { mutableStateOf(false) }
+    val showFilterSystemWarningDialog = rememberSaveable { mutableStateOf(false) }
     var selectedUids by rememberSaveable { mutableStateOf(emptySet<Int>()) }
 
     val scope = rememberCoroutineScope()
@@ -104,6 +107,7 @@ fun FunctionSettingsScreen(navigator: DestinationsNavigator) {
                 }
                 // Load UID mode state
                 isPathHideUidMode = APApplication.sharedPreferences.getBoolean("pathhide_uid_mode", false)
+                isPathHideFilterSystem = APApplication.sharedPreferences.getBoolean("pathhide_filter_system", false)
                 val pm = context.packageManager
                 val uidSource = Natives.pathHideUidList().ifBlank {
                     me.bmax.apatch.util.readPathHideUids()
@@ -303,6 +307,24 @@ fun FunctionSettingsScreen(navigator: DestinationsNavigator) {
                             }
                         }
                     },
+                    isPathHideFilterSystem = isPathHideFilterSystem,
+                    onPathHideFilterSystemChange = { enabled ->
+                        if (enabled) {
+                            showFilterSystemWarningDialog.value = true
+                        } else {
+                            isPathHideFilterSystem = false
+                            scope.launch(Dispatchers.IO) {
+                                APApplication.sharedPreferences.edit().putBoolean("pathhide_filter_system", false).apply()
+                                setPathHideFilterSystem(false)
+                                Natives.pathHideFilterSystem(false)
+                                withContext(Dispatchers.Main) {
+                                    snackBarHost.showSnackbar(
+                                        context.getString(R.string.path_hide_filter_system_disabled)
+                                    )
+                                }
+                            }
+                        }
+                    },
                     selectedUids = selectedUids,
                     onUidToggle = { uid ->
                         scope.launch(Dispatchers.IO) {
@@ -358,5 +380,24 @@ fun FunctionSettingsScreen(navigator: DestinationsNavigator) {
             item { Spacer(Modifier.height(8.dp)) }
             item { NavigationBarsSpacer() }
         }
+    }
+
+    if (showFilterSystemWarningDialog.value) {
+        PathHideFilterSystemWarningDialog(
+            showDialog = showFilterSystemWarningDialog,
+            onConfirm = {
+                isPathHideFilterSystem = true
+                scope.launch(Dispatchers.IO) {
+                    APApplication.sharedPreferences.edit().putBoolean("pathhide_filter_system", true).apply()
+                    setPathHideFilterSystem(true)
+                    Natives.pathHideFilterSystem(true)
+                    withContext(Dispatchers.Main) {
+                        snackBarHost.showSnackbar(
+                            context.getString(R.string.path_hide_filter_system_enabled)
+                        )
+                    }
+                }
+            },
+        )
     }
 }

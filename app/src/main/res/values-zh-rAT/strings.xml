@@ -1040,6 +1040,12 @@
     <string name="path_hide_uid_save">圣光封存 UID</string>
     <string name="path_hide_uid_mode_enabled">UID 圣裁模式已开启</string>
     <string name="path_hide_uid_mode_disabled">UID 圣裁模式已关闭</string>
+    <string name="path_hide_filter_system">净化系统 UID</string>
+    <string name="path_hide_filter_system_summary">同时对 root 和系统进程（UID &lt; 10000）遮蔽路径</string>
+    <string name="path_hide_filter_system_enabled">系统 UID 净化已开启</string>
+    <string name="path_hide_filter_system_disabled">系统 UID 净化已关闭</string>
+    <string name="path_hide_filter_system_warning_title">神谕警示</string>
+    <string name="path_hide_filter_system_warning_message">开启后将同时对 root 和系统进程（UID &lt; 10000）遮蔽路径。这可能导致部分圣域功能异常，请谨慎施与神力。</string>
     <string name="path_hide_uid_applied">UID 圣选名录已降临生效</string>
     <string name="path_hide_select_apps">遴选应用</string>
     <string name="path_hide_no_apps_selected">未遴选任何应用</string>

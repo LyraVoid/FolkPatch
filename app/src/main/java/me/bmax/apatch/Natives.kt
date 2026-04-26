@@ -245,6 +245,12 @@ object Natives {
     }
 
     @FastNative
+    private external fun nativePathHideFilterSystem(superKey: String, enable: Int): Long
+    fun pathHideFilterSystem(enable: Boolean): Long {
+        return nativePathHideFilterSystem(APApplication.superKey, if (enable) 1 else 0)
+    }
+
+    @FastNative
     private external fun nativeSuAuditList(superKey: String): String
     fun suAuditList(): String {
         return nativeSuAuditList(APApplication.superKey)

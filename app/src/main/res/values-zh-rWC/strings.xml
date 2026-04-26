@@ -1038,6 +1038,12 @@
     <string name="path_hide_uid_save">封印 UID</string>
     <string name="path_hide_uid_mode_enabled">UID 锁定术已施展</string>
     <string name="path_hide_uid_mode_disabled">UID 锁定术已解除</string>
+    <string name="path_hide_filter_system">屏蔽系统 UID</string>
+    <string name="path_hide_filter_system_summary">同时对 root 和系统进程（UID &lt; 10000）隐匿路径</string>
+    <string name="path_hide_filter_system_enabled">系统 UID 屏蔽术已施展</string>
+    <string name="path_hide_filter_system_disabled">系统 UID 屏蔽术已解除</string>
+    <string name="path_hide_filter_system_warning_title">道法警示</string>
+    <string name="path_hide_filter_system_warning_message">施展后将同时对 root 和系统进程（UID &lt; 10000）隐匿路径。此术可能引致部分仙法功能异常，道友请三思而行。</string>
     <string name="path_hide_uid_applied">UID 锁定名录已布阵生效</string>
     <string name="path_hide_select_apps">拣选应用</string>
     <string name="path_hide_no_apps_selected">未拣到任何应用</string>

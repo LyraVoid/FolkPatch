@@ -40,6 +40,7 @@ const SUPERCALL_PATHHIDE_CLEAR: c_long = 0x1063;
 const SUPERCALL_PATHHIDE_UID_MODE: c_long = 0x106A;
 const SUPERCALL_PATHHIDE_UID_ADD: c_long = 0x1066;
 const SUPERCALL_PATHHIDE_UID_CLEAR: c_long = 0x1069;
+const SUPERCALL_PATHHIDE_FILTER_SYSTEM: c_long = 0x106B;
 
 const SUPERCALL_SCONTEXT_LEN: usize = 0x60;
 
@@ -566,6 +567,20 @@ fn sc_pathhide_uid_mode(key: &CStr, enable: bool) -> c_long {
     }
 }
 
+fn sc_pathhide_filter_system(key: &CStr, enable: bool) -> c_long {
+    if key.to_bytes().is_empty() {
+        return (-EINVAL).into();
+    }
+    unsafe {
+        syscall(
+            __NR_SUPERCALL,
+            key.as_ptr(),
+            ver_and_cmd(SUPERCALL_PATHHIDE_FILTER_SYSTEM),
+            if enable { 1i64 } else { 0i64 },
+        ) as c_long
+    }
+}
+
 fn sc_pathhide_uid_add(key: &CStr, uid: i32) -> c_long {
     if key.to_bytes().is_empty() {
         return (-EINVAL).into();
@@ -675,6 +690,14 @@ pub fn apply_pathhide(superkey: &Option<String>) {
         let rc = sc_pathhide_uid_mode(&key, true);
         if rc < 0 {
             warn!("[pathhide] uid mode enable failed: {}", rc);
+        }
+    }
+
+    // Step 2.5: Configure filter_system (allow hiding from system/root UIDs)
+    if std::path::Path::new(crate::defs::PATHHIDE_FILTER_SYSTEM_FILE).exists() {
+        let rc = sc_pathhide_filter_system(&key, true);
+        if rc < 0 {
+            warn!("[pathhide] filter_system enable failed: {}", rc);
         }
     }
 

@@ -1058,6 +1058,12 @@ Komutların çalışması için uygulamanın tamamen kapatılıp yeniden açıld
     <string name="path_hide_uid_save">UID\'leri Kaydet</string>
     <string name="path_hide_uid_mode_enabled">UID yürütme modu etkinleştirildi</string>
     <string name="path_hide_uid_mode_disabled">UID yürütme modu devre dışı bırakıldı</string>
+    <string name="path_hide_filter_system">Sistem UID\'lerini Filtrele</string>
+    <string name="path_hide_filter_system_summary">Yol ayrıca root ve sistem süreçlerinden (UID &lt; 10000) gizlensin</string>
+    <string name="path_hide_filter_system_enabled">Sistem UID filtreleme etkinleştirildi</string>
+    <string name="path_hide_filter_system_disabled">Sistem UID filtreleme devre dışı bırakıldı</string>
+    <string name="path_hide_filter_system_warning_title">Uyarı</string>
+    <string name="path_hide_filter_system_warning_message">Bunu etkinleştirmek, root ve sistem süreçlerinden (UID &lt; 10000) yolları da gizleyecektir. Bazı sistem özelliklerinin düzgün çalışmamasına neden olabilir. Dikkatli olun.</string>
     <string name="path_hide_uid_applied">UID beyaz liste uygulandı</string>
     <string name="path_hide_select_apps">Uygulama seç</string>
     <string name="path_hide_no_apps_selected">Hiçbir uygulama seçilmedi</string>

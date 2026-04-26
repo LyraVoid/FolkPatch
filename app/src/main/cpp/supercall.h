@@ -680,4 +680,10 @@ static inline long sc_pathhide_uid_mode(const char *key, int enable)
     return syscall(__NR_supercall, key, ver_and_cmd(key, SUPERCALL_PATHHIDE_UID_MODE), (long)enable);
 }
 
+static inline long sc_pathhide_filter_system(const char *key, int enable)
+{
+    if (!key || !key[0]) return -EINVAL;
+    return syscall(__NR_supercall, key, ver_and_cmd(key, SUPERCALL_PATHHIDE_FILTER_SYSTEM), (long)enable);
+}
+
 #endif

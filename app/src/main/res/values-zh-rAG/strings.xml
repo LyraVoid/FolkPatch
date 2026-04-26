@@ -1041,6 +1041,12 @@
     <string name="path_hide_uid_save">保存 UID 喵</string>
     <string name="path_hide_uid_mode_enabled">UID 执行模式已启用喵</string>
     <string name="path_hide_uid_mode_disabled">UID 执行模式已禁用喵</string>
+    <string name="path_hide_filter_system">过滤系统 UID 喵</string>
+    <string name="path_hide_filter_system_summary">同时对 root 和系统进程（UID &lt; 10000）隐藏路径喵</string>
+    <string name="path_hide_filter_system_enabled">系统 UID 过滤已启用喵</string>
+    <string name="path_hide_filter_system_disabled">系统 UID 过滤已禁用喵</string>
+    <string name="path_hide_filter_system_warning_title">警告喵！</string>
+    <string name="path_hide_filter_system_warning_message">启用后会同时对 root 和系统进程（UID &lt; 10000）隐藏路径喵。这可能导致部分系统功能出问题喵，要小心哦喵！</string>
     <string name="path_hide_uid_applied">UID 白名单已生效喵</string>
     <string name="path_hide_select_apps">挑选应用喵</string>
     <string name="path_hide_no_apps_selected">还没有选应用喵</string>

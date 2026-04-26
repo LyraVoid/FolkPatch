@@ -1039,6 +1039,12 @@
     <string name="path_hide_uid_save">保存 UID 配方</string>
     <string name="path_hide_uid_mode_enabled">UID 精准火候模式已开火</string>
     <string name="path_hide_uid_mode_disabled">UID 精准火候模式已熄火</string>
+    <string name="path_hide_filter_system">过滤系统 UID 菜品</string>
+    <string name="path_hide_filter_system_summary">同时对 root 和系统进程（UID &lt; 10000）隐藏食材路径</string>
+    <string name="path_hide_filter_system_enabled">系统 UID 过滤已开灶</string>
+    <string name="path_hide_filter_system_disabled">系统 UID 过滤已熄火</string>
+    <string name="path_hide_filter_system_warning_title">厨房警告</string>
+    <string name="path_hide_filter_system_warning_message">开灶后将同时对 root 和系统进程（UID &lt; 10000）隐藏食材路径。这可能导致部分厨房功能异常，请谨慎操作。</string>
     <string name="path_hide_uid_applied">UID 白名单已上菜</string>
     <string name="path_hide_select_apps">点选应用</string>
     <string name="path_hide_no_apps_selected">莫得应用被选中</string>
