@@ -531,7 +531,7 @@ class PatchesViewModel : ViewModel() {
                 val KPCheck = shell.newJob().add("truncate ${APApplication.superKey} -Z u:r:magisk:s0 -c whoami").exec()
 
                 if (KPCheck.isSuccess && !isSuExecutable()) {
-                    patchCommand.addAll(0, listOf("truncate", APApplication.superKey, "-Z", APApplication.MAGISK_SCONTEXT, "-c"))
+                    patchCommand.addAll(0, listOf(APApplication.SUPERCMD, APApplication.superKey, "-Z", APApplication.MAGISK_SCONTEXT, "-c"))
                     patchCommand.addAll(listOf(superkey, srcBoot.path, "true"))
                 } else {
                     patchCommand = mutableListOf("./busybox", "sh", "boot_patch.sh")
