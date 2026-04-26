@@ -29,6 +29,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.filled.HideSource
 import androidx.compose.material.icons.filled.PersonPin
+import androidx.compose.material.icons.filled.WifiOff
 import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Button
@@ -592,7 +593,7 @@ fun FunctionSettingsContent(
                             modifier = Modifier.weight(1f),
                         ) {
                             Icon(
-                                imageVector = Icons.Filled.VisibilityOff,
+                                imageVector = Icons.Filled.WifiOff,
                                 contentDescription = null,
                                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
                                 modifier = Modifier.size(24.dp),
