@@ -977,4 +977,10 @@
     <string name="path_hide_app_removed">アンインストール済みのアプリ %d 件の設定を削除しました</string>
     <string name="path_hide_search_apps">アプリを検索…</string>
     <string name="path_hide_show_system">システムアプリを表示</string>
+    <string name="netisolate_title">ネットワーク分離</string>
+    <string name="netisolate_enable">ネットワーク分離を有効にする</string>
+    <string name="netisolate_enable_summary">カーネルレベルで選択したアプリのネットワークアクセスをブロック</string>
+    <string name="netisolate_uids_label">ブロック済みアプリ</string>
+    <string name="netisolate_uids_hint">ブロックする UID を入力（1行に1つ）</string>
+    <string name="netisolate_no_uids">ブロックされたアプリはありません</string>
 </resources>

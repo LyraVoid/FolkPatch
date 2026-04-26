@@ -1070,4 +1070,10 @@ Komutların çalışması için uygulamanın tamamen kapatılıp yeniden açıld
     <string name="path_hide_app_removed">%d kaldırılan uygulamanın yapılandırması temizlendi</string>
     <string name="path_hide_search_apps">Uygulama ara…</string>
     <string name="path_hide_show_system">Sistem uygulamalarını göster</string>
+    <string name="netisolate_title">Ağ İzolasyonu</string>
+    <string name="netisolate_enable">Ağ İzolasyonunu Etkinleştir</string>
+    <string name="netisolate_enable_summary">Seçilen uygulamaların ağ erişimini çekirdek düzeyinde engelle</string>
+    <string name="netisolate_uids_label">Engellenen Uygulamalar</string>
+    <string name="netisolate_uids_hint">Engellenecek UID\'leri girin (satır başına bir)</string>
+    <string name="netisolate_no_uids">Engellenen uygulama yok</string>
 </resources>

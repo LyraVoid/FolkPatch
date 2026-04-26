@@ -1040,4 +1040,10 @@
     <string name="path_hide_app_removed">已经清理咗 %d 个已卸载应用的配置</string>
     <string name="path_hide_search_apps">搵应用…</string>
     <string name="path_hide_show_system">显示系统应用</string>
+    <string name="netisolate_title">网络隔离（切断连接）</string>
+    <string name="netisolate_enable">启用网络隔离</string>
+    <string name="netisolate_enable_summary">在核心层面阻止所选应用的网络访问（像拔掉网线一样）</string>
+    <string name="netisolate_uids_label">已隔离应用</string>
+    <string name="netisolate_uids_hint">输入要隔离的 UID（每行一个，像列清单）</string>
+    <string name="netisolate_no_uids">没有应用被隔离</string>
 </resources>

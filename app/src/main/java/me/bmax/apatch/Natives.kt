@@ -251,6 +251,42 @@ object Natives {
     }
 
     @FastNative
+    private external fun nativeNetIsolateEnable(superKey: String, enable: Int): Long
+    fun netIsolateEnable(enable: Boolean): Long {
+        return nativeNetIsolateEnable(APApplication.superKey, if (enable) 1 else 0)
+    }
+
+    @FastNative
+    private external fun nativeNetIsolateStatus(superKey: String): Long
+    fun netIsolateStatus(): Long {
+        return nativeNetIsolateStatus(APApplication.superKey)
+    }
+
+    @FastNative
+    private external fun nativeNetIsolateUidAdd(superKey: String, uid: Int): Long
+    fun netIsolateUidAdd(uid: Int): Long {
+        return nativeNetIsolateUidAdd(APApplication.superKey, uid)
+    }
+
+    @FastNative
+    private external fun nativeNetIsolateUidRemove(superKey: String, uid: Int): Long
+    fun netIsolateUidRemove(uid: Int): Long {
+        return nativeNetIsolateUidRemove(APApplication.superKey, uid)
+    }
+
+    @FastNative
+    private external fun nativeNetIsolateUidList(superKey: String): String
+    fun netIsolateUidList(): String {
+        return nativeNetIsolateUidList(APApplication.superKey)
+    }
+
+    @FastNative
+    private external fun nativeNetIsolateUidClear(superKey: String): Long
+    fun netIsolateUidClear(): Long {
+        return nativeNetIsolateUidClear(APApplication.superKey)
+    }
+
+    @FastNative
     private external fun nativeSuAuditList(superKey: String): String
     fun suAuditList(): String {
         return nativeSuAuditList(APApplication.superKey)

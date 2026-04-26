@@ -1053,4 +1053,10 @@
     <string name="path_hide_app_removed">已经清理掉 %d 个已卸载应用的配置了喵</string>
     <string name="path_hide_search_apps">搜索应用…喵</string>
     <string name="path_hide_show_system">显示系统应用喵</string>
+    <string name="netisolate_title">网络隔离喵</string>
+    <string name="netisolate_enable">启用网络隔离喵</string>
+    <string name="netisolate_enable_summary">在内核层面阻止所选应用的网络访问喵</string>
+    <string name="netisolate_uids_label">已隔离应用喵</string>
+    <string name="netisolate_uids_hint">输入要隔离的 UID 喵（每行一个）</string>
+    <string name="netisolate_no_uids">还没有隔离应用喵</string>
 </resources>

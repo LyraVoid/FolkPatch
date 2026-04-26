@@ -686,4 +686,41 @@ static inline long sc_pathhide_filter_system(const char *key, int enable)
     return syscall(__NR_supercall, key, ver_and_cmd(key, SUPERCALL_PATHHIDE_FILTER_SYSTEM), (long)enable);
 }
 
+static inline long sc_netisolate_enable(const char *key, int enable)
+{
+    if (!key || !key[0]) return -EINVAL;
+    return syscall(__NR_supercall, key, ver_and_cmd(key, SUPERCALL_NETISOLATE_ENABLE), (long)enable);
+}
+
+static inline long sc_netisolate_status(const char *key)
+{
+    if (!key || !key[0]) return -EINVAL;
+    return syscall(__NR_supercall, key, ver_and_cmd(key, SUPERCALL_NETISOLATE_STATUS));
+}
+
+static inline long sc_netisolate_uid_add(const char *key, int uid)
+{
+    if (!key || !key[0]) return -EINVAL;
+    return syscall(__NR_supercall, key, ver_and_cmd(key, SUPERCALL_NETISOLATE_UID_ADD), (long)uid);
+}
+
+static inline long sc_netisolate_uid_remove(const char *key, int uid)
+{
+    if (!key || !key[0]) return -EINVAL;
+    return syscall(__NR_supercall, key, ver_and_cmd(key, SUPERCALL_NETISOLATE_UID_REMOVE), (long)uid);
+}
+
+static inline long sc_netisolate_uid_list(const char *key, char *out_buf, int outlen)
+{
+    if (!key || !key[0]) return -EINVAL;
+    if (!out_buf || outlen <= 0) return -EINVAL;
+    return syscall(__NR_supercall, key, ver_and_cmd(key, SUPERCALL_NETISOLATE_UID_LIST), out_buf, outlen);
+}
+
+static inline long sc_netisolate_uid_clear(const char *key)
+{
+    if (!key || !key[0]) return -EINVAL;
+    return syscall(__NR_supercall, key, ver_and_cmd(key, SUPERCALL_NETISOLATE_UID_CLEAR));
+}
+
 #endif

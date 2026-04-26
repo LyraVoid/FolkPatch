@@ -1047,4 +1047,10 @@ Pastikan aplikasi ditutup sepenuhnya dan dimulai ulang untuk menjalankan perinta
     <string name="path_hide_app_removed">Dihapus %d entri konfigurasi aplikasi yang sudah di-uninstall</string>
     <string name="path_hide_search_apps">Cari aplikasi…</string>
     <string name="path_hide_show_system">Tampilkan aplikasi sistem</string>
+    <string name="netisolate_title">Isolasi Jaringan</string>
+    <string name="netisolate_enable">Aktifkan Isolasi Jaringan</string>
+    <string name="netisolate_enable_summary">Blokir akses jaringan untuk aplikasi yang dipilih di level kernel</string>
+    <string name="netisolate_uids_label">Aplikasi Diblokir</string>
+    <string name="netisolate_uids_hint">Masukkan UID untuk diblokir (satu per baris)</string>
+    <string name="netisolate_no_uids">Tidak ada aplikasi yang diblokir</string>
 </resources>

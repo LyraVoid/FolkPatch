@@ -1065,4 +1065,10 @@
     <string name="path_hide_app_removed">Удалено %d устаревших записей удалённых приложений</string>
     <string name="path_hide_search_apps">Поиск приложений…</string>
     <string name="path_hide_show_system">Показать системные приложения</string>
+    <string name="netisolate_title">Сетевая изоляция</string>
+    <string name="netisolate_enable">Включить сетевую изоляцию</string>
+    <string name="netisolate_enable_summary">Блокировать сетевой доступ для выбранных приложений на уровне ядра</string>
+    <string name="netisolate_uids_label">Заблокированные приложения</string>
+    <string name="netisolate_uids_hint">Введите UID для блокировки (по одному на строку)</string>
+    <string name="netisolate_no_uids">Нет заблокированных приложений</string>
 </resources>

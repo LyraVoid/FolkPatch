@@ -1054,4 +1054,10 @@
     <string name="path_hide_app_removed">已移除 %d 個已解除安裝應用的設定</string>
     <string name="path_hide_search_apps">搜尋應用…</string>
     <string name="path_hide_show_system">顯示系統應用</string>
+    <string name="netisolate_title">網路隔離</string>
+    <string name="netisolate_enable">啟用網路隔離</string>
+    <string name="netisolate_enable_summary">在核心層面阻止所選應用的網路存取</string>
+    <string name="netisolate_uids_label">已隔離應用</string>
+    <string name="netisolate_uids_hint">輸入要隔離的 UID（每行一個）</string>
+    <string name="netisolate_no_uids">暫無隔離應用</string>
 </resources>

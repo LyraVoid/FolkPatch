@@ -434,6 +434,68 @@ jlong nativePathHideFilterSystem(JNIEnv *env, jobject /* this */, jstring super_
     return rc;
 }
 
+jlong nativeNetIsolateEnable(JNIEnv *env, jobject /* this */, jstring super_key_jstr, jint enable) {
+    ensureSuperKeyNonNull(super_key_jstr);
+    const auto super_key = JUTFString(env, super_key_jstr);
+    long rc = sc_netisolate_enable(super_key.get(), (int)enable);
+    if (rc < 0) [[unlikely]] {
+        LOGE("nativeNetIsolateEnable error: %ld", rc);
+    }
+    return rc;
+}
+
+jlong nativeNetIsolateStatus(JNIEnv *env, jobject /* this */, jstring super_key_jstr) {
+    ensureSuperKeyNonNull(super_key_jstr);
+    const auto super_key = JUTFString(env, super_key_jstr);
+    long rc = sc_netisolate_status(super_key.get());
+    if (rc < 0) [[unlikely]] {
+        LOGE("nativeNetIsolateStatus error: %ld", rc);
+    }
+    return rc;
+}
+
+jlong nativeNetIsolateUidAdd(JNIEnv *env, jobject /* this */, jstring super_key_jstr, jint uid) {
+    ensureSuperKeyNonNull(super_key_jstr);
+    const auto super_key = JUTFString(env, super_key_jstr);
+    long rc = sc_netisolate_uid_add(super_key.get(), (int)uid);
+    if (rc < 0) [[unlikely]] {
+        LOGE("nativeNetIsolateUidAdd error: %ld", rc);
+    }
+    return rc;
+}
+
+jlong nativeNetIsolateUidRemove(JNIEnv *env, jobject /* this */, jstring super_key_jstr, jint uid) {
+    ensureSuperKeyNonNull(super_key_jstr);
+    const auto super_key = JUTFString(env, super_key_jstr);
+    long rc = sc_netisolate_uid_remove(super_key.get(), (int)uid);
+    if (rc < 0) [[unlikely]] {
+        LOGE("nativeNetIsolateUidRemove error: %ld", rc);
+    }
+    return rc;
+}
+
+jstring nativeNetIsolateUidList(JNIEnv *env, jobject /* this */, jstring super_key_jstr) {
+    ensureSuperKeyNonNull(super_key_jstr);
+    const auto super_key = JUTFString(env, super_key_jstr);
+    char buf[4096] = {0};
+    long rc = sc_netisolate_uid_list(super_key.get(), buf, sizeof(buf));
+    if (rc < 0) [[unlikely]] {
+        LOGE("nativeNetIsolateUidList error: %ld", rc);
+        return env->NewStringUTF("");
+    }
+    return env->NewStringUTF(buf);
+}
+
+jlong nativeNetIsolateUidClear(JNIEnv *env, jobject /* this */, jstring super_key_jstr) {
+    ensureSuperKeyNonNull(super_key_jstr);
+    const auto super_key = JUTFString(env, super_key_jstr);
+    long rc = sc_netisolate_uid_clear(super_key.get());
+    if (rc < 0) [[unlikely]] {
+        LOGE("nativeNetIsolateUidClear error: %ld", rc);
+    }
+    return rc;
+}
+
 jstring nativeSuAuditList(JNIEnv *env, jobject /* this */, jstring super_key_jstr) {
     ensureSuperKeyNonNull(super_key_jstr);
 
@@ -538,6 +600,12 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void * /*reserved*/) {
         {"nativePathHideUidClear", "(Ljava/lang/String;)J", reinterpret_cast<void *>(&nativePathHideUidClear)},
         {"nativePathHideUidMode", "(Ljava/lang/String;I)J", reinterpret_cast<void *>(&nativePathHideUidMode)},
         {"nativePathHideFilterSystem", "(Ljava/lang/String;I)J", reinterpret_cast<void *>(&nativePathHideFilterSystem)},
+        {"nativeNetIsolateEnable", "(Ljava/lang/String;I)J", reinterpret_cast<void *>(&nativeNetIsolateEnable)},
+        {"nativeNetIsolateStatus", "(Ljava/lang/String;)J", reinterpret_cast<void *>(&nativeNetIsolateStatus)},
+        {"nativeNetIsolateUidAdd", "(Ljava/lang/String;I)J", reinterpret_cast<void *>(&nativeNetIsolateUidAdd)},
+        {"nativeNetIsolateUidRemove", "(Ljava/lang/String;I)J", reinterpret_cast<void *>(&nativeNetIsolateUidRemove)},
+        {"nativeNetIsolateUidList", "(Ljava/lang/String;)Ljava/lang/String;", reinterpret_cast<void *>(&nativeNetIsolateUidList)},
+        {"nativeNetIsolateUidClear", "(Ljava/lang/String;)J", reinterpret_cast<void *>(&nativeNetIsolateUidClear)},
         {"nativeSuAuditList", "(Ljava/lang/String;)Ljava/lang/String;", reinterpret_cast<void *>(&nativeSuAuditList)},
         {"nativeSuAuditClear", "(Ljava/lang/String;)J", reinterpret_cast<void *>(&nativeSuAuditClear)},
         {"nativeGetApiToken", "(Landroid/content/Context;)Ljava/lang/String;", reinterpret_cast<void *>(&nativeGetApiToken)},

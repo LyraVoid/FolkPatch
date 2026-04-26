@@ -1066,4 +1066,10 @@ Por favor, certifique-se de fechar completamente o app e reabri-lo para que os c
     <string name="path_hide_app_removed">Removidas %d entradas de apps desinstalados</string>
     <string name="path_hide_search_apps">Pesquisar apps…</string>
     <string name="path_hide_show_system">Mostrar apps do sistema</string>
+    <string name="netisolate_title">Isolamento de rede</string>
+    <string name="netisolate_enable">Ativar isolamento de rede</string>
+    <string name="netisolate_enable_summary">Bloquear acesso à rede dos apps selecionados no nível do kernel</string>
+    <string name="netisolate_uids_label">Apps bloqueados</string>
+    <string name="netisolate_uids_hint">Insira os UIDs para bloquear (um por linha)</string>
+    <string name="netisolate_no_uids">Nenhum app bloqueado</string>
 </resources>

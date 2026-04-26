@@ -1053,4 +1053,10 @@
     <string name="path_hide_app_removed">تمت إزالة إعدادات %d تطبيق تم إلغاء تثبيته</string>
     <string name="path_hide_search_apps">البحث عن التطبيقات…</string>
     <string name="path_hide_show_system">عرض تطبيقات النظام</string>
+    <string name="netisolate_title">عزل الشبكة</string>
+    <string name="netisolate_enable">تفعيل عزل الشبكة</string>
+    <string name="netisolate_enable_summary">حظر الوصول إلى الشبكة للتطبيقات المحددة على مستوى النواة</string>
+    <string name="netisolate_uids_label">التطبيقات المحظورة</string>
+    <string name="netisolate_uids_hint">أدخل معرّفات UID للحظر (واحد لكل سطر)</string>
+    <string name="netisolate_no_uids">لا توجد تطبيقات محظورة</string>
 </resources>

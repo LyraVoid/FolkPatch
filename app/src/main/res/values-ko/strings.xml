@@ -1079,4 +1079,10 @@
     <string name="path_hide_app_removed">설치 제거된 %d개 앱의 설정을 제거했습니다</string>
     <string name="path_hide_search_apps">앱 검색…</string>
     <string name="path_hide_show_system">시스템 앱 표시</string>
+    <string name="netisolate_title">네트워크 격리</string>
+    <string name="netisolate_enable">네트워크 격리 활성화</string>
+    <string name="netisolate_enable_summary">커널 수준에서 선택한 앱의 네트워크 접근 차단</string>
+    <string name="netisolate_uids_label">차단된 앱</string>
+    <string name="netisolate_uids_hint">차단할 UID 입력 (한 줄에 하나)</string>
+    <string name="netisolate_no_uids">차단된 앱이 없습니다</string>
 </resources>

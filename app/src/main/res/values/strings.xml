@@ -524,6 +524,12 @@ Here are some possible reasons for authentication failure—please check which o
     <string name="path_hide_app_removed">Removed %d stale entry for uninstalled app(s)</string>
     <string name="path_hide_search_apps">Search apps…</string>
     <string name="path_hide_show_system">Show system apps</string>
+    <string name="netisolate_title">Network Isolation</string>
+    <string name="netisolate_enable">Enable Network Isolation</string>
+    <string name="netisolate_enable_summary">Block network access for selected apps at kernel level</string>
+    <string name="netisolate_uids_label">Blocked Apps</string>
+    <string name="netisolate_uids_hint">Enter UIDs to block (one per line)</string>
+    <string name="netisolate_no_uids">No apps blocked</string>
     <!-- Umount Service -->
     <string name="settings_umount_service">Umount Service</string>
     <string name="settings_umount_service_summary">Configure mount points to auto-unmount at boot</string>

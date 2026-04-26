@@ -134,6 +134,9 @@ pub fn on_post_data_fs(superkey: Option<String>) -> Result<()> {
     // Apply pathhide config if enabled
     supercall::apply_pathhide(&superkey);
 
+    // Apply netisolate config if enabled
+    supercall::apply_netisolate(&superkey);
+
     // Clear all temporary module configs early
     if let Err(e) = crate::module_config::clear_all_temp_configs() {
         warn!("clear temp configs failed: {e}");

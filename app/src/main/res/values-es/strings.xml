@@ -1068,4 +1068,10 @@ Por ejemplo, los KPM que previenen la modificación de particiones solo pueden u
     <string name="path_hide_app_removed">Se eliminaron %d entradas de aplicaciones desinstaladas</string>
     <string name="path_hide_search_apps">Buscar aplicaciones…</string>
     <string name="path_hide_show_system">Mostrar aplicaciones del sistema</string>
+    <string name="netisolate_title">Aislamiento de red</string>
+    <string name="netisolate_enable">Activar aislamiento de red</string>
+    <string name="netisolate_enable_summary">Bloquear el acceso a la red de las aplicaciones seleccionadas a nivel del kernel</string>
+    <string name="netisolate_uids_label">Aplicaciones bloqueadas</string>
+    <string name="netisolate_uids_hint">Ingrese los UIDs a bloquear (uno por línea)</string>
+    <string name="netisolate_no_uids">No hay aplicaciones bloqueadas</string>
 </resources>

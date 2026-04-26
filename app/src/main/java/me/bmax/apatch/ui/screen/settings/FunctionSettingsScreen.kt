@@ -52,6 +52,10 @@ import me.bmax.apatch.util.isPathHideEnabled as checkPathHideEnabled
 import me.bmax.apatch.util.setPathHideEnabled
 import me.bmax.apatch.util.writePathHidePaths
 import me.bmax.apatch.util.readPathHidePaths
+import me.bmax.apatch.util.isNetIsolateEnabled as checkNetIsolateEnabled
+import me.bmax.apatch.util.readNetIsolateUids
+import me.bmax.apatch.util.setNetIsolateEnabled
+import me.bmax.apatch.util.writeNetIsolateUids
 import me.bmax.apatch.util.writePathHideUids
 import me.bmax.apatch.util.setPathHideUidMode
 import me.bmax.apatch.util.setPathHideFilterSystem
@@ -74,6 +78,8 @@ fun FunctionSettingsScreen(navigator: DestinationsNavigator) {
     var kernelSpoofBuildTime by rememberSaveable { mutableStateOf("") }
     var isUmountEnabled by rememberSaveable { mutableStateOf(false) }
     var umountPaths by rememberSaveable { mutableStateOf("") }
+    var isNetIsolateEnabled by rememberSaveable { mutableStateOf(false) }
+    var netIsolateUids by rememberSaveable { mutableStateOf("") }
     var isPathHideEnabled by rememberSaveable { mutableStateOf(false) }
     var pathHidePaths by rememberSaveable { mutableStateOf("") }
     var isPathHideUidMode by rememberSaveable { mutableStateOf(false) }
@@ -96,6 +102,9 @@ fun FunctionSettingsScreen(navigator: DestinationsNavigator) {
                 val umountConfig = UmountConfigManager.loadConfig(context)
                 isUmountEnabled = umountConfig.enabled
                 umountPaths = umountConfig.paths
+                // Load netisolate state
+                isNetIsolateEnabled = checkNetIsolateEnabled()
+                netIsolateUids = readNetIsolateUids()
                 // Load pathhide state from kernel + config file
                 isPathHideEnabled = checkPathHideEnabled()
                 // Try to get paths from kernel first, fall back to config file
@@ -375,6 +384,41 @@ fun FunctionSettingsScreen(navigator: DestinationsNavigator) {
                         }
                     },
                     flat = flat,
+                    isNetIsolateEnabled = isNetIsolateEnabled,
+                    onNetIsolateChange = { enabled ->
+                        isNetIsolateEnabled = enabled
+                        scope.launch(Dispatchers.IO) {
+                            setNetIsolateEnabled(enabled)
+                            Natives.netIsolateEnable(enabled)
+                            withContext(Dispatchers.Main) {
+                                snackBarHost.showSnackbar(
+                                    context.getString(if (enabled) R.string.netisolate_enable else R.string.netisolate_enable)
+                                )
+                            }
+                        }
+                    },
+                    netIsolateUids = netIsolateUids,
+                    onNetIsolateUidsChange = { netIsolateUids = it },
+                    onNetIsolateSave = {
+                        val currentUids = netIsolateUids
+                        scope.launch(Dispatchers.IO) {
+                            writeNetIsolateUids(currentUids)
+                            Natives.netIsolateUidClear()
+                            if (currentUids.isNotBlank()) {
+                                currentUids.lines()
+                                    .map { it.trim() }
+                                    .filter { it.isNotBlank() }
+                                    .forEach { uidStr ->
+                                        uidStr.toIntOrNull()?.let { uid ->
+                                            Natives.netIsolateUidAdd(uid)
+                                        }
+                                    }
+                            }
+                            withContext(Dispatchers.Main) {
+                                snackBarHost.showSnackbar(context.getString(R.string.netisolate_enable))
+                            }
+                        }
+                    },
                 )
             }
             item { Spacer(Modifier.height(8.dp)) }

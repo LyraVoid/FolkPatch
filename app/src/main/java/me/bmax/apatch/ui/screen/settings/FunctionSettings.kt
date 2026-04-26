@@ -112,6 +112,11 @@ fun FunctionSettingsContent(
     umountPaths: String,
     onUmountPathsChange: (String) -> Unit,
     onUmountSave: () -> Unit,
+    isNetIsolateEnabled: Boolean,
+    onNetIsolateChange: (Boolean) -> Unit,
+    netIsolateUids: String,
+    onNetIsolateUidsChange: (String) -> Unit,
+    onNetIsolateSave: () -> Unit,
     flat: Boolean = false,
 ) {
     val context = LocalContext.current
@@ -560,6 +565,82 @@ fun FunctionSettingsContent(
                                         onUidToggle = onUidToggle,
                                     )
                                 }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        item(visible = kPatchReady && aPatchReady) {
+            val niTitle = stringResource(id = R.string.netisolate_title)
+            val niSummary = stringResource(id = R.string.netisolate_enable_summary)
+            val niUidsLabel = stringResource(id = R.string.netisolate_uids_label)
+            val niUidsHint = stringResource(id = R.string.netisolate_uids_hint)
+
+            ExpressiveCard(flat = flat) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                    ) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.weight(1f),
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.VisibilityOff,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                modifier = Modifier.size(24.dp),
+                            )
+                            Spacer(Modifier.width(16.dp))
+                            Column {
+                                Text(
+                                    text = niTitle,
+                                    style = MaterialTheme.typography.titleMedium,
+                                    color = MaterialTheme.colorScheme.onSurface,
+                                    fontWeight = FontWeight.SemiBold,
+                                )
+                                Spacer(modifier = Modifier.height(4.dp))
+                                Text(
+                                    text = niSummary,
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                )
+                            }
+                        }
+                        ExpressiveSwitch(
+                            checked = isNetIsolateEnabled,
+                            onCheckedChange = onNetIsolateChange,
+                        )
+                    }
+
+                    AnimatedVisibility(visible = isNetIsolateEnabled) {
+                        Column(modifier = Modifier.padding(top = 12.dp)) {
+                            OutlinedTextField(
+                                value = netIsolateUids,
+                                onValueChange = onNetIsolateUidsChange,
+                                modifier = Modifier.fillMaxWidth().height(120.dp),
+                                label = { Text(niUidsLabel) },
+                                placeholder = { Text(niUidsHint) },
+                                minLines = 3,
+                                maxLines = Int.MAX_VALUE,
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            )
+
+                            Spacer(modifier = Modifier.height(12.dp))
+
+                            Button(
+                                onClick = onNetIsolateSave,
+                                modifier = Modifier.fillMaxWidth(),
+                            ) {
+                                Text(stringResource(R.string.save))
                             }
                         }
                     }

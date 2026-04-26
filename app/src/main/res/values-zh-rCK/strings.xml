@@ -1051,4 +1051,10 @@
     <string name="path_hide_app_removed">已铲掉 %d 个卸载了的应用的锅气</string>
     <string name="path_hide_search_apps">找应用…</string>
     <string name="path_hide_show_system">亮出系统应用</string>
+    <string name="netisolate_title">断网隔离</string>
+    <string name="netisolate_enable">启用断网隔离</string>
+    <string name="netisolate_enable_summary">在内核层面断掉所选应用的网络连接</string>
+    <string name="netisolate_uids_label">已断网应用</string>
+    <string name="netisolate_uids_hint">输入要断网的 UID（每行一个）</string>
+    <string name="netisolate_no_uids">莫得断网应用</string>
 </resources>

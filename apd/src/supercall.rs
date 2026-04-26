@@ -42,6 +42,12 @@ const SUPERCALL_PATHHIDE_UID_ADD: c_long = 0x1066;
 const SUPERCALL_PATHHIDE_UID_CLEAR: c_long = 0x1069;
 const SUPERCALL_PATHHIDE_FILTER_SYSTEM: c_long = 0x106B;
 
+const SUPERCALL_NETISOLATE_ENABLE: c_long = 0x1070;
+const SUPERCALL_NETISOLATE_UID_ADD: c_long = 0x1072;
+const SUPERCALL_NETISOLATE_UID_REMOVE: c_long = 0x1073;
+const SUPERCALL_NETISOLATE_UID_LIST: c_long = 0x1074;
+const SUPERCALL_NETISOLATE_UID_CLEAR: c_long = 0x1075;
+
 const SUPERCALL_SCONTEXT_LEN: usize = 0x60;
 
 #[repr(C)]
@@ -606,6 +612,103 @@ fn sc_pathhide_uid_clear(key: &CStr) -> c_long {
             ver_and_cmd(SUPERCALL_PATHHIDE_UID_CLEAR),
         ) as c_long
     }
+}
+
+fn sc_netisolate_enable(key: &CStr, enable: bool) -> c_long {
+    if key.to_bytes().is_empty() {
+        return (-EINVAL).into();
+    }
+    unsafe {
+        syscall(
+            __NR_SUPERCALL,
+            key.as_ptr(),
+            ver_and_cmd(SUPERCALL_NETISOLATE_ENABLE),
+            if enable { 1i64 } else { 0i64 },
+        ) as c_long
+    }
+}
+
+fn sc_netisolate_uid_add(key: &CStr, uid: i32) -> c_long {
+    if key.to_bytes().is_empty() {
+        return (-EINVAL).into();
+    }
+    unsafe {
+        syscall(
+            __NR_SUPERCALL,
+            key.as_ptr(),
+            ver_and_cmd(SUPERCALL_NETISOLATE_UID_ADD),
+            uid,
+        ) as c_long
+    }
+}
+
+fn sc_netisolate_uid_clear(key: &CStr) -> c_long {
+    if key.to_bytes().is_empty() {
+        return (-EINVAL).into();
+    }
+    unsafe {
+        syscall(
+            __NR_SUPERCALL,
+            key.as_ptr(),
+            ver_and_cmd(SUPERCALL_NETISOLATE_UID_CLEAR),
+        ) as c_long
+    }
+}
+
+pub fn apply_netisolate(superkey: &Option<String>) {
+    if !std::path::Path::new(crate::defs::NETISOLATE_ENABLE_FILE).exists() {
+        info!("[netisolate] disabled, skipping");
+        return;
+    }
+
+    let key = convert_superkey(superkey);
+    let key = match key {
+        Some(k) => k,
+        None => {
+            warn!("[netisolate] no superkey available");
+            return;
+        }
+    };
+
+    // Step 1: Clear and populate UID blocklist (netisolate not yet enabled)
+    match std::fs::read_to_string(crate::defs::NETISOLATE_UIDS_FILE) {
+        Ok(uids) => {
+            sc_netisolate_uid_clear(&key);
+            let mut count = 0u32;
+            for uid_str in uids.lines() {
+                let uid_str = uid_str.trim();
+                if uid_str.is_empty() {
+                    continue;
+                }
+                match uid_str.parse::<i32>() {
+                    Ok(uid) => {
+                        let rc = sc_netisolate_uid_add(&key, uid);
+                        if rc < 0 {
+                            warn!("[netisolate] add uid {} failed: {}", uid, rc);
+                        } else {
+                            count += 1;
+                        }
+                    }
+                    Err(_) => {
+                        warn!("[netisolate] invalid uid: '{}'", uid_str);
+                    }
+                }
+            }
+            info!("[netisolate] {} uids restored", count);
+        }
+        Err(_) => {
+            info!("[netisolate] no uids file");
+        }
+    }
+
+    // Step 2: Enable netisolate LAST
+    let rc = sc_netisolate_enable(&key, true);
+    if rc < 0 {
+        warn!("[netisolate] enable failed: {}", rc);
+        return;
+    }
+
+    info!("[netisolate] auto-apply completed");
 }
 
 pub fn apply_pathhide(superkey: &Option<String>) {
