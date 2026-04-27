@@ -351,6 +351,7 @@ class SuperUserViewModel : ViewModel() {
 
     suspend fun fetchAppList() {
         isRefreshing = true
+        try {
 
         val prefs = APApplication.sharedPreferences
         val loadingScheme = prefs.getString("app_list_loading_scheme", "root_service")
@@ -435,7 +436,9 @@ class SuperUserViewModel : ViewModel() {
             }
         }
 
-        isRefreshing = false
+        } finally {
+            isRefreshing = false
+        }
     }
 
     fun launchApp(context: Context, packageName: String): Boolean {
