@@ -506,6 +506,18 @@ fun readPathHideUids(): String {
     return ShellUtils.fastCmd(shell, "cat ${APApplication.PATHHIDE_UIDS_FILE} 2>/dev/null") ?: ""
 }
 
+fun isPathHideUidModeEnabled(): Boolean {
+    val file = SuFile(APApplication.PATHHIDE_UID_MODE_FILE)
+    file.shell = getRootShell()
+    return file.exists()
+}
+
+fun isPathHideFilterSystemEnabled(): Boolean {
+    val file = SuFile(APApplication.PATHHIDE_FILTER_SYSTEM_FILE)
+    file.shell = getRootShell()
+    return file.exists()
+}
+
 fun setPathHideUidMode(enable: Boolean) {
     val shell = getRootShell()
     shell.newJob().add("mkdir -p ${APApplication.PATHHIDE_DIR}").exec()

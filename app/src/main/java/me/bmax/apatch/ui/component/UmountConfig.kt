@@ -36,27 +36,43 @@ object UmountConfigManager {
      */
     fun loadConfig(context: Context): UmountConfig {
         return try {
-            val configFile = File(context.filesDir, CONFIG_FILE_NAME)
-            if (!configFile.exists()) {
-                Log.d(TAG, "配置文件不存在，使用默认配置")
-                return UmountConfig()
+            val shell = me.bmax.apatch.util.getRootShell()
+
+            val enabledFlag = try {
+                val result = shell.newJob().add("test -f ${me.bmax.apatch.APApplication.UMOUNT_SERVICE_FILE}").exec()
+                result.isSuccess
+            } catch (_: Exception) { false }
+
+            val pathsContent = try {
+                val job = shell.newJob().add("cat $UMOUNT_PATH_FILE 2>/dev/null")
+                val list = mutableListOf<String>()
+                job.to(list, null).exec()
+                list.joinToString("\n")
+            } catch (_: Exception) { "" }
+
+            if (enabledFlag || pathsContent.isNotBlank()) {
+                isEnabled.value = enabledFlag
+                paths.value = pathsContent
+                Log.d(TAG, "配置从 /data/adb/ 加载: enabled=$enabledFlag, paths length=${pathsContent.length}")
+                UmountConfig(enabledFlag, pathsContent)
+            } else {
+                val configFile = File(context.filesDir, CONFIG_FILE_NAME)
+                if (configFile.exists()) {
+                    val reader = FileReader(configFile)
+                    val jsonContent = reader.readText()
+                    reader.close()
+                    val config = parseConfigFromJson(jsonContent) ?: UmountConfig()
+                    isEnabled.value = config.enabled
+                    paths.value = config.paths
+                    Log.d(TAG, "配置从应用私有目录加载: enabled=${config.enabled}")
+                    config
+                } else {
+                    UmountConfig()
+                }
             }
-
-            val reader = FileReader(configFile)
-            val jsonContent = reader.readText()
-            reader.close()
-
-            val config = parseConfigFromJson(jsonContent) ?: UmountConfig()
-            isEnabled.value = config.enabled
-            paths.value = config.paths
-            Log.d(TAG, "配置加载成功: enabled=${config.enabled}, paths length=${config.paths.length}")
-            config
         } catch (e: Exception) {
             Log.e(TAG, "加载配置失败: ${e.message}", e)
-            val defaultConfig = UmountConfig()
-            isEnabled.value = defaultConfig.enabled
-            paths.value = defaultConfig.paths
-            defaultConfig
+            UmountConfig()
         }
     }
 

@@ -853,12 +853,7 @@ fn sc_uts_reset(key: &CStr) -> c_long {
 pub fn apply_uts_spoof(superkey: &Option<String>) {
     use std::path::Path;
 
-    // Boot safety: if pending flag exists, previous boot may have failed → skip spoof
-    if Path::new(crate::defs::UTS_SPOOF_BOOT_PENDING).exists() {
-        warn!("[uts_spoof] boot pending flag exists — previous boot may have failed, skipping spoof");
-        let _ = std::fs::remove_file(crate::defs::UTS_SPOOF_BOOT_PENDING);
-        return;
-    }
+    const MAX_BOOT_RETRIES: u32 = 3;
 
     if !Path::new(crate::defs::UTS_SPOOF_ENABLE_FILE).exists() {
         info!("[uts_spoof] disabled, skipping");
@@ -893,12 +888,23 @@ pub fn apply_uts_spoof(superkey: &Option<String>) {
         }
     };
 
-    // Reset first to ensure clean state (kernel call_uts_set also handles this internally)
     let _ = sc_uts_reset(&key);
 
-    // Create boot safety flag before applying (defense-in-depth).
-    // Cleared by on_boot_completed. If boot fails, next boot will skip spoof.
-    if let Err(e) = std::fs::write(crate::defs::UTS_SPOOF_BOOT_PENDING, "1") {
+    let retries = match std::fs::read_to_string(crate::defs::UTS_SPOOF_BOOT_PENDING) {
+        Ok(s) => s.trim().parse::<u32>().unwrap_or(0),
+        Err(_) => 0,
+    };
+
+    if retries >= MAX_BOOT_RETRIES {
+        warn!(
+            "[uts_spoof] boot pending retries ({}) >= max ({}), skipping spoof to prevent bootloop",
+            retries, MAX_BOOT_RETRIES
+        );
+        let _ = std::fs::remove_file(crate::defs::UTS_SPOOF_BOOT_PENDING);
+        return;
+    }
+
+    if let Err(e) = std::fs::write(crate::defs::UTS_SPOOF_BOOT_PENDING, (retries + 1).to_string()) {
         warn!("[uts_spoof] failed to write boot pending flag: {}", e);
     }
 

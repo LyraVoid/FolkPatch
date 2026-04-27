@@ -24,6 +24,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -35,6 +36,8 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.bmax.apatch.APApplication
@@ -49,6 +52,8 @@ import me.bmax.apatch.util.setUtsSpoofEnabled
 import me.bmax.apatch.util.writeUtsSpoofConfig
 import me.bmax.apatch.util.removeUtsSpoofConfig
 import me.bmax.apatch.util.isPathHideEnabled as checkPathHideEnabled
+import me.bmax.apatch.util.isPathHideUidModeEnabled as checkPathHideUidMode
+import me.bmax.apatch.util.isPathHideFilterSystemEnabled as checkPathHideFilterSystem
 import me.bmax.apatch.util.setPathHideEnabled
 import me.bmax.apatch.util.writePathHidePaths
 import me.bmax.apatch.util.readPathHidePaths
@@ -63,9 +68,10 @@ import me.bmax.apatch.util.ui.LocalSnackbarHost
 import me.bmax.apatch.util.ui.NavigationBarsSpacer
 import androidx.compose.ui.platform.LocalContext
 import me.bmax.apatch.util.ui.showToast
+import kotlinx.coroutines.FlowPreview
 
+@OptIn(FlowPreview::class, ExperimentalMaterial3Api::class)
 @Destination<RootGraph>
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FunctionSettingsScreen(navigator: DestinationsNavigator) {
     val state by APApplication.apStateLiveData.observeAsState(APApplication.State.UNKNOWN_STATE)
@@ -122,8 +128,8 @@ fun FunctionSettingsScreen(navigator: DestinationsNavigator) {
                     pathHidePaths = readPathHidePaths()
                 }
                 // Load UID mode state
-                isPathHideUidMode = APApplication.sharedPreferences.getBoolean("pathhide_uid_mode", false)
-                isPathHideFilterSystem = APApplication.sharedPreferences.getBoolean("pathhide_filter_system", false)
+                isPathHideUidMode = checkPathHideUidMode()
+                isPathHideFilterSystem = checkPathHideFilterSystem()
                 val pm = context.packageManager
                 val uidSource = Natives.pathHideUidList().ifBlank {
                     me.bmax.apatch.util.readPathHideUids()
@@ -148,6 +154,49 @@ fun FunctionSettingsScreen(navigator: DestinationsNavigator) {
                     selectedUids = loaded.toSet()
                 }
             }
+        }
+
+        launch {
+            snapshotFlow { kernelSpoofVersion to kernelSpoofBuildTime }
+                .drop(1)
+                .debounce(1000L)
+                .collect { (version, buildTime) ->
+                    val prefs = APApplication.sharedPreferences
+                    prefs.edit()
+                        .putString(APApplication.PREF_UTS_SPOOF_RELEASE, version)
+                        .putString(APApplication.PREF_UTS_SPOOF_VERSION, buildTime)
+                        .apply()
+                    if (isKernelSpoofEnabled) {
+                        setUtsSpoofEnabled(true)
+                        writeUtsSpoofConfig(version, buildTime)
+                        Natives.utsSet(version.ifBlank { null }, buildTime.ifBlank { null })
+                    }
+                }
+        }
+
+        launch {
+            snapshotFlow { pathHidePaths }
+                .drop(1)
+                .debounce(1000L)
+                .collect { paths ->
+                    writePathHidePaths(paths)
+                    Natives.pathHideClear()
+                    if (paths.isNotBlank()) {
+                        paths.lines()
+                            .map { it.trim() }
+                            .filter { it.isNotBlank() }
+                            .forEach { path -> Natives.pathHideAdd(path) }
+                    }
+                }
+        }
+
+        launch {
+            snapshotFlow { umountPaths }
+                .drop(1)
+                .debounce(1000L)
+                .collect { paths ->
+                    UmountConfigManager.saveConfig(context, UmountConfig(enabled = isUmountEnabled, paths = paths))
+                }
         }
     }
 
@@ -313,7 +362,6 @@ fun FunctionSettingsScreen(navigator: DestinationsNavigator) {
                     onPathHideUidModeChange = { enabled ->
                         isPathHideUidMode = enabled
                         scope.launch(Dispatchers.IO) {
-                            APApplication.sharedPreferences.edit().putBoolean("pathhide_uid_mode", enabled).apply()
                             setPathHideUidMode(enabled)
                             Natives.pathHideUidMode(enabled)
                             withContext(Dispatchers.Main) {
@@ -330,7 +378,6 @@ fun FunctionSettingsScreen(navigator: DestinationsNavigator) {
                         } else {
                             isPathHideFilterSystem = false
                             scope.launch(Dispatchers.IO) {
-                                APApplication.sharedPreferences.edit().putBoolean("pathhide_filter_system", false).apply()
                                 setPathHideFilterSystem(false)
                                 Natives.pathHideFilterSystem(false)
                                 withContext(Dispatchers.Main) {
@@ -433,7 +480,6 @@ fun FunctionSettingsScreen(navigator: DestinationsNavigator) {
             onConfirm = {
                 isPathHideFilterSystem = true
                 scope.launch(Dispatchers.IO) {
-                    APApplication.sharedPreferences.edit().putBoolean("pathhide_filter_system", true).apply()
                     setPathHideFilterSystem(true)
                     Natives.pathHideFilterSystem(true)
                     withContext(Dispatchers.Main) {
