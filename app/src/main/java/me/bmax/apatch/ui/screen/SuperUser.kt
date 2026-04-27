@@ -360,7 +360,7 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
                             }
                         )
                     }
-                    item { Spacer(Modifier.height(88.dp)) }
+                    item { Spacer(Modifier.height(if (LocalIsFloatingNavMode.current) 88.dp else 8.dp)) }
                 }
             }
         }

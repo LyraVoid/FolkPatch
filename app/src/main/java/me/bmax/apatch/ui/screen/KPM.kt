@@ -719,13 +719,16 @@ private fun KPModuleList(
                 key = { module -> module.name },
                 verticalSpacing = 16.dp,
                 horizontalSpacing = 16.dp,
-                contentPadding = remember {
-                    PaddingValues(
-                        start = 16.dp,
-                        top = 16.dp,
-                        end = 16.dp,
-                        bottom = 16.dp + 16.dp + 56.dp
-                    )
+                contentPadding = run {
+                    val isFloating = LocalIsFloatingNavMode.current
+                    remember(isFloating) {
+                        PaddingValues(
+                            start = 16.dp,
+                            top = 16.dp,
+                            end = 16.dp,
+                            bottom = if (isFloating) 16.dp + 16.dp + 56.dp else 16.dp
+                        )
+                    }
                 },
                 beforeItems = {
                     if (moduleList.isEmpty()) {
@@ -770,13 +773,16 @@ private fun KPModuleList(
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 state = state,
-                contentPadding = remember {
-                    PaddingValues(
-                        start = 0.dp,
-                        top = 16.dp,
-                        end = 0.dp,
-                        bottom = 16.dp + 16.dp + 56.dp /*  Scaffold Fab Spacing + Fab container height */
-                    )
+                contentPadding = run {
+                    val isFloating = LocalIsFloatingNavMode.current
+                    remember(isFloating) {
+                        PaddingValues(
+                            start = 0.dp,
+                            top = 16.dp,
+                            end = 0.dp,
+                            bottom = if (isFloating) 16.dp + 16.dp + 56.dp else 16.dp
+                        )
+                    }
                 },
             ) {
                 when {
@@ -826,7 +832,7 @@ private fun KPModuleList(
                                     }
                                 )
                             }
-                            item { Spacer(Modifier.height(88.dp)) }
+                            item { Spacer(Modifier.height(if (LocalIsFloatingNavMode.current) 88.dp else 8.dp)) }
                         } else {
                             item { Spacer(Modifier.height(8.dp)) }
                             itemsIndexed(moduleList, key = { _, module -> module.name }) { _, module ->
@@ -855,7 +861,7 @@ private fun KPModuleList(
                                 )
                                 }
                             }
-                            item { Spacer(Modifier.height(88.dp)) }
+                            item { Spacer(Modifier.height(if (LocalIsFloatingNavMode.current) 88.dp else 8.dp)) }
                         }
                     }
                 }
