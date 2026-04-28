@@ -84,7 +84,7 @@ fun BackupSettingsContent(
             ExpressiveCard(
                 flat = flat,
                 onClick = {
-                    val backupDir = java.io.File(android.os.Environment.getExternalStoragePublicDirectory(android.os.Environment.DIRECTORY_DOWNLOADS), "FolkPatch/ModuleBackups")
+                    val backupDir = java.io.File(me.bmax.apatch.util.getSafeDownloadsDir(context), "FolkPatch/ModuleBackups")
                     if (!backupDir.exists()) backupDir.mkdirs()
 
                     try {

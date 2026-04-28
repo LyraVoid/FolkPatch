@@ -56,7 +56,7 @@ object ModuleBackupUtils {
             val localJob = async {
                 if (APApplication.sharedPreferences.getBoolean("auto_backup_module", false)) {
                     try {
-                        val baseBackupDir = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "FolkPatch/ModuleBackups")
+                        val baseBackupDir = File(getSafeDownloadsDir(me.bmax.apatch.apApp), "FolkPatch/ModuleBackups")
                         // Use subDir (APM/KPM) to separate backups
                         val backupDir = File(baseBackupDir, subDir)
                         

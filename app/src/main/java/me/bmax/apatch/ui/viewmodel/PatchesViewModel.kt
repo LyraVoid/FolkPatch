@@ -28,6 +28,7 @@ import me.bmax.apatch.BuildConfig
 import me.bmax.apatch.R
 import me.bmax.apatch.apApp
 import me.bmax.apatch.util.Version
+import me.bmax.apatch.util.getSafeDownloadsDir
 import me.bmax.apatch.util.copyAndClose
 import me.bmax.apatch.util.copyAndCloseOut
 import me.bmax.apatch.util.createRootShell
@@ -667,7 +668,7 @@ class PatchesViewModel : ViewModel() {
                 APApplication.markNeedReboot()
             } else if (mode == PatchMode.PATCH_ONLY) {
                 val newBootFile = patchDir.getChildFile("new-boot.img")
-                val outDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+                val outDir = getSafeDownloadsDir(apApp)
                 if (!outDir.exists()) outDir.mkdirs()
                 val outPath = File(outDir, outFilename)
                 val inputUri = newBootFile.getUri(apApp)

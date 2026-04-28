@@ -100,7 +100,7 @@ class ThemeDownloader(private val context: Context) {
      */
     private fun getExternalThemesDir(): File {
         val externalDir = File(
-            android.os.Environment.getExternalStoragePublicDirectory(android.os.Environment.DIRECTORY_DOWNLOADS),
+            getSafeDownloadsDir(context),
             "FolkPatch/Themes"
         )
         if (!externalDir.exists()) {

@@ -49,6 +49,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.KeyEventBlocker
+import me.bmax.apatch.util.getSafeDownloadsDir
 import me.bmax.apatch.util.installModule
 import me.bmax.apatch.util.BulkInstallManager
 import me.bmax.apatch.util.reboot
@@ -143,7 +144,7 @@ fun InstallScreen(navigator: DestinationsNavigator, uri: Uri, type: MODULE_TYPE)
                 val format = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale.getDefault())
                 val date = format.format(Date())
                 val file = File(
-                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                    getSafeDownloadsDir(context),
                     "APatch_install_${type}_log_${date}.log"
                 )
                 file.writeText(fullLogBuffer.toString())

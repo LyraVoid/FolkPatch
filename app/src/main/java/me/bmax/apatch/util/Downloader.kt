@@ -13,6 +13,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import me.bmax.apatch.apApp
 import androidx.core.content.ContextCompat
+import java.io.File
+
+fun getSafeDownloadsDir(context: Context): File {
+    return try {
+        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+    } catch (_: SecurityException) {
+        context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
+            ?: File(context.filesDir, "Download")
+    }
+}
 
 @SuppressLint("Range")
 fun download(

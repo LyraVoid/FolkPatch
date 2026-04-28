@@ -47,6 +47,7 @@ import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
 import me.bmax.apatch.apApp
 import me.bmax.apatch.data.ScriptInfo
+import me.bmax.apatch.util.getSafeDownloadsDir
 import me.bmax.apatch.util.ui.AnsiUtils
 import me.bmax.apatch.util.ui.LocalSnackbarHost
 import java.io.File
@@ -239,7 +240,7 @@ fun ScriptExecutionLogScreen(
                                     val format = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale.getDefault())
                                     val date = format.format(Date())
                                     val file = File(
-                                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                                        getSafeDownloadsDir(context),
                                         "FolkPatch/${scriptInfo.alias}_${date}.log"
                                     )
                                     file.writeText(fullLogBuffer.toString())
