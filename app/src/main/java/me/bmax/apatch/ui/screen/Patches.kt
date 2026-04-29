@@ -163,13 +163,8 @@ fun Patches(mode: PatchesViewModel.PatchMode) {
             KernelPatchImageView(viewModel.kpimgInfo)
             CustomKPImgView(viewModel)
 
-            if ((mode == PatchesViewModel.PatchMode.PATCH_ONLY || mode == PatchesViewModel.PatchMode.RESTORE) && selectedBootImage != null && viewModel.kimgInfo.banner.isEmpty()) {
+            if ((mode == PatchesViewModel.PatchMode.PATCH_ONLY || mode == PatchesViewModel.PatchMode.RESTORE) && selectedBootImage != null && viewModel.kimgInfo.banner.isEmpty() && !viewModel.running) {
                 viewModel.copyAndParseBootimg(selectedBootImage!!)
-                // Fix endless loop. It's not normal if (parse done && working thread is not working) but banner still null
-                // Leave user re-choose
-                if (!viewModel.running && viewModel.kimgInfo.banner.isEmpty()) {
-                    selectedBootImage = null
-                }
             }
 
             // select boot.img
@@ -269,7 +264,7 @@ fun Patches(mode: PatchesViewModel.PatchMode) {
                 // patch start
                 if (mode != PatchesViewModel.PatchMode.UNPATCH && mode != PatchesViewModel.PatchMode.RESTORE) {
                     val isKeyReady = !needKey || viewModel.superkey.isNotEmpty()
-                    if (isKeyReady) {
+                    if (isKeyReady && viewModel.kimgInfo.banner.isNotEmpty()) {
                         StartButton(stringResource(id = R.string.patch_start_patch_btn)) {
                             viewModel.doPatch(mode, needKey)
                         }
