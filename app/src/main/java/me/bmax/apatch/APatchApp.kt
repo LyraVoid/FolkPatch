@@ -355,6 +355,14 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
     override fun onCreate() {
         super.onCreate()
         apApp = this
+        sharedPreferences = getSharedPreferences(SP_NAME, Context.MODE_PRIVATE)
+        APatchKeyHelper.setSharedPreferences(sharedPreferences)
+        val earlySavedKey = try {
+            APatchKeyHelper.readSPSuperKey()
+        } catch (_: Exception) {
+            null
+        }
+        _superKey = earlySavedKey.takeUnless { it.isNullOrEmpty() } ?: "su"
         if (Application.getProcessName().endsWith(":root") || Application.getProcessName().endsWith(":webui")) {
             return
         }

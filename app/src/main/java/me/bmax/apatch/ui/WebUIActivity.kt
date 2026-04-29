@@ -64,7 +64,6 @@ class WebUIActivity : AppCompatActivity() {
         val prefs = APApplication.sharedPreferences
         val nightModeFollowSys = prefs.getBoolean("night_mode_follow_sys", false)
         val nightModeEnabled = prefs.getBoolean("night_mode_enabled", false)
-
         val mode = if (nightModeFollowSys) {
             AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
         } else if (nightModeEnabled) {
