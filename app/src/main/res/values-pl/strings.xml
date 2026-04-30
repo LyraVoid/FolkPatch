@@ -133,7 +133,6 @@
     <string name="patch_item_set_skey_label">SuperKey powinien mieć od 8 do 63 znaków i zawierać zarówno cyfry, jak i litery, ale bez znaków specjalnych.</string>
     <string name="patch_confirm_superkey">Potwierdź SuperKey</string>
     <string name="patch_skey_mismatch">SuperKey się nie zgadza</string>
-
     <string name="home_kernel">Wersja jądra</string>
     <string name="home_manager_version">Wersja menedżera</string>
     <string name="home_fingerprint">Odcisk palca</string>
@@ -192,7 +191,6 @@
     <string name="su_app_action_launch_success">Uruchamianie %s</string>
     <string name="su_app_action_force_stop_success">Wymuszono zatrzymanie %s</string>
     <string name="su_app_action_failed">Operacja nie powiodła się: %s</string>
-
     <!-- SU Audit Log -->
     <string name="su_audit_log_title">Dziennik autoryzacji</string>
     <string name="su_audit_log_empty">Brak rekordów autoryzacji</string>
@@ -203,7 +201,6 @@
     <string name="su_audit_action_exclude">Wykluczono</string>
     <string name="su_audit_tab_usage">Dziennik użycia</string>
     <string name="su_audit_tab_operations">Dziennik operacji</string>
-
     <string name="su_show_system_apps">Pokaż aplikacje systemowe</string>
     <string name="su_hide_system_apps">Ukryj aplikacje systemowe</string>
     <string name="su_refresh">Odśwież</string>
@@ -503,7 +500,11 @@
     <string name="kpm_autoload_add_kpm">Dodaj KPM</string>
     <string name="kpm_autoload_remove_kpm">Usuń</string>
     <string name="kpm_autoload_edit_kpm">Editar</string>
-    <string name="kpm_autoload_edit_dialog_title">Editar KPM</string>    <string name="kpm_autoload_event_label">Evento:</string>    <string name="kpm_autoload_args_label">Argumentos:</string>    <string name="kpm_autoload_event_service">service</string>    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
+    <string name="kpm_autoload_edit_dialog_title">Editar KPM</string>
+    <string name="kpm_autoload_event_label">Evento:</string>
+    <string name="kpm_autoload_args_label">Argumentos:</string>
+    <string name="kpm_autoload_event_service">service</string>
+    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
     <string name="kpm_autoload_kpm_list_title">Lista modułów KPM</string>
     <string name="kpm_autoload_no_kpm_added">Nie dodano żadnych modułów KPM</string>
     <string name="kpm_autoload_kpm_path">Ścieżka KPM</string>
@@ -927,7 +928,6 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="settings_custom_badge_text_n_gki">N-GKI</string>
     <string name="settings_custom_badge_text_oki">OKI</string>
     <string name="settings_custom_badge_text_built_in">Wbudowany</string>
-
     <string name="home_device_status_battery_charging">Ładowanie</string>
     <string name="home_device_status_cpu_temp">Temperatura CPU</string>
     <string name="home_device_status_memory_trend">Trend pamięci</string>
@@ -948,16 +948,13 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="settings_kernel_spoof_version">Wersja jądra</string>
     <string name="settings_kernel_spoof_build_time">Czas budowy jądra</string>
     <string name="settings_kernel_spoof_restore">Przywróć</string>
-
     <string name="kernel_spoof_enabled">Fałszowanie jądra włączone</string>
     <string name="kernel_spoof_disabled_restored">Fałszowanie jądra wyłączone i przywrócone</string>
     <string name="kernel_spoof_failed">Błąd fałszowania jądra: %d</string>
     <string name="kernel_spoof_applied">Fałszowanie jądra zastosowane</string>
-
     <string name="settings_path_hide">Ukrywanie ścieżek</string>
     <string name="settings_path_hide_summary">Ukrywaj pliki i katalogi przed aplikacjami na poziomie jądra</string>
     <string name="path_hide_paths_label">Ukryte ścieżki (po jednej w linii)</string>
-
     <string name="path_hide_paths_helper">Wprowadź jedną ścieżkę w każdej linii. Pasujące ścieżki zwrócą ENOENT.</string>
     <string name="path_hide_save">Zapisz</string>
     <string name="path_hide_enabled">Ukrywanie ścieżek włączone</string>
