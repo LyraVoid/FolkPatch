@@ -16,7 +16,7 @@
     <string name="settings_nav_scheme">Schemat nawigacji</string>
     <string name="settings_nav_mode">Tryb paska nawigacji</string>
     <string name="settings_nav_mode_summary">Wybierz sposób wyświetlania paska nawigacji</string>
-    <string name="settings_nav_mode_auto">Automatycznie Tradycyjny</string>
+    <string name="settings_nav_mode_auto">Tradycyjny (automatycznie)</string>
     <string name="settings_nav_mode_bottom">Zawsze dolny pasek</string>
     <string name="settings_nav_mode_rail">Zawsze boczny pasek</string>
     <string name="settings_nav_mode_floating">Pływający dolny pasek</string>
@@ -177,7 +177,7 @@
     <string name="su_pkg_excluded_setting_title">Wyklucz modyfikacje</string>
     <string name="su_pkg_excluded_setting_summary">Włączenie tej opcji umożliwi FolkPatch przywrócenie wszystkich plików zmodyfikowanych przez moduły tej aplikacji.</string>
     <string name="su_pkg_root_setting_title">Superuser</string>
-    <string name="su_pkg_root_setting_summary">Włączenie tej opcji przyzna dostęp do roota Twojej aplikacji, pozwalając na używanie poleceń SU</string>
+    <string name="su_pkg_root_setting_summary">Włączenie tej opcji przyznaje aplikacji dostęp do roota, umożliwiając korzystanie z poleceń SU.</string>
     <string name="su_pkg_normal_setting_title">Tryb normalny</string>
     <string name="su_pkg_normal_setting_summary">Stan domyślny, brak specjalnego traktowania.</string>
     <string name="su_batch_exclude_title">Masowe wykluczanie</string>
@@ -274,7 +274,7 @@
     <string name="settings_enable_module_shortcut_add_summary">Pokaż przycisk dodawania skrótu WebUI na stronie modułów systemowych</string>
     <string name="settings_module_sort_optimization">Optymalizacja sortowania modułów</string>
     <string name="settings_module_sort_optimization_summary">Umieść moduły systemowe z WebUI i Action na początku listy</string>
-    <string name="settings_fold_system_module">Zwiń Moduły Systemowe</string>
+    <string name="settings_fold_system_module">Zwiń moduły systemowe</string>
     <string name="settings_fold_system_module_summary">Kliknij kartę modułu, aby rozwinąć/zwinąć akcje</string>
     <string name="settings_simple_list_bottom_bar">Prosty dolny pasek listy</string>
     <string name="settings_simple_list_bottom_bar_summary">Użyj stylu przycisków tylko z ikonami dla akcji modułu, zainspirowane APatch</string>
@@ -290,12 +290,12 @@
     <string name="apm_enable_module_banner_summary">Wyświetl obraz banera dla modułów jeśli jest dostępny</string>
     <string name="apm_enable_folk_banner">Dostosuj baner modułu</string>
     <string name="apm_enable_folk_banner_summary">Naciśnij długo kartę modułu, aby wybrać obraz banera</string>
-    <string name="apm_folk_banner_title">FolkBanner</string>
+    <string name="apm_folk_banner_title">Baner Folk</string>
     <string name="apm_folk_banner_select">Wybierz obraz</string>
-    <string name="apm_folk_banner_clear">Wyczyść FolkBanner</string>
-    <string name="apm_folk_banner_saved">Wstrzyknięto FolkBanner dla %s.</string>
-    <string name="apm_folk_banner_cleared">Wyczyszczono FolkBanner dla %s.</string>
-    <string name="apm_folk_banner_failed">Nie udało się zaktualizować FolkBanner dla %s.</string>
+    <string name="apm_folk_banner_clear">Wyczyść baner Folk</string>
+    <string name="apm_folk_banner_saved">Wstrzyknięto baner Folk dla %s.</string>
+    <string name="apm_folk_banner_cleared">Wyczyszczono baner Folk dla %s.</string>
+    <string name="apm_folk_banner_failed">Nie udało się zaktualizować baneru Folk dla %s.</string>
     <string name="apm_banner_api_mode">Tryb API</string>
     <string name="apm_banner_api_mode_summary">Użyj API losowych obrazów lub katalogu lokalnego dla banerów modułów</string>
     <string name="apm_banner_api_source">Konfiguruj źródło API</string>
@@ -471,7 +471,7 @@
     <string name="settings_grid_working_card_hide_text_summary">Ukryj tekst "Działa" lub "Nie zainstalowano" na karcie roboczej</string>
     <string name="settings_grid_working_card_hide_mode">Ukryj tryb pracy</string>
     <string name="settings_grid_working_card_hide_mode_summary">Ukryj tekst \"W pełni\" lub \"Częściowo\" na karcie roboczej</string>
-    <string name="settings_list_card_hide_status_badge">Użyj Klasycznego Emoji</string>
+    <string name="settings_list_card_hide_status_badge">Użyj klasycznego Emoji</string>
     <string name="settings_list_card_hide_status_badge_summary">Odznaka stanu na stronie głównej zmienia się w klasyczny emoji</string>
     <string name="settings_custom_badge_text">Niestandardowy tekst odznaki</string>
     <string name="settings_custom_badge_text_summary">Zmodyfikuj wyświetlanie tekstu odznaki, tylko dla zabawy</string>
