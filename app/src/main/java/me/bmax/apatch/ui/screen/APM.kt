@@ -66,18 +66,14 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Delete
-import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Download
 import androidx.compose.material.icons.outlined.Restore
 import androidx.compose.material.icons.outlined.Terminal
 import androidx.compose.material.icons.automirrored.outlined.Wysiwyg
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
-
-import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonMenu
 import androidx.compose.material3.FloatingActionButtonMenuItem
@@ -95,6 +91,7 @@ import me.bmax.apatch.ui.component.ExpressiveCard
 import me.bmax.apatch.ui.component.LocalInsideSplicedGroup
 import me.bmax.apatch.ui.component.TwoColumnGrid
 import me.bmax.apatch.ui.component.splicedLazyColumnGroup
+import me.bmax.apatch.ui.component.WarningCard
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.OutlinedTextField
@@ -755,58 +752,23 @@ private fun ModuleList(
                 },
                 beforeItems = {
                     if (showMountWarning) {
-                        ExpressiveCard(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(bottom = 16.dp),
-                            flat = false,
+                        AnimatedVisibility(
+                            visible = true,
+                            enter = fadeIn() + expandVertically(),
+                            exit = fadeOut() + shrinkVertically()
                         ) {
-                            Column(
+                            WarningCard(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(16.dp)
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Outlined.Info,
-                                    contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.primary,
-                                    modifier = Modifier.size(24.dp)
-                                )
-
-                                Spacer(modifier = Modifier.height(12.dp))
-
-                                Text(
-                                    text = stringResource(R.string.apm_mount_warning_title),
-                                    style = MaterialTheme.typography.titleSmall,
-                                    fontWeight = FontWeight.Bold,
-                                )
-
-                                Spacer(modifier = Modifier.height(8.dp))
-
-                                Text(
-                                    text = stringResource(R.string.apm_mount_warning_message),
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                )
-
-                                Spacer(modifier = Modifier.height(16.dp))
-
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.End
-                                ) {
-                                    FilledTonalButton(
-                                        onClick = {
-                                            prefs.edit()
-                                                .putBoolean("apm_mount_warning_shown", true)
-                                                .apply()
-                                            showMountWarning = false
-                                        },
-                                    ) {
-                                        Text(stringResource(R.string.apm_mount_warning_button))
-                                    }
+                                    .padding(bottom = 16.dp),
+                                message = stringResource(R.string.apm_mount_warning_message),
+                                onClose = {
+                                    prefs.edit()
+                                        .putBoolean("apm_mount_warning_shown", true)
+                                        .apply()
+                                    showMountWarning = false
                                 }
-                            }
+                            )
                         }
                     }
                     if (modules.isEmpty()) {
@@ -906,56 +868,21 @@ private fun ModuleList(
                 // Warning Banner
                 if (showMountWarning) {
                     item {
-                        ExpressiveCard(
-                            modifier = Modifier.fillMaxWidth(),
-                            flat = false,
+                        AnimatedVisibility(
+                            visible = true,
+                            enter = fadeIn() + expandVertically(),
+                            exit = fadeOut() + shrinkVertically()
                         ) {
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(16.dp)
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Outlined.Info,
-                                    contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.primary,
-                                    modifier = Modifier.size(24.dp)
-                                )
-
-                                Spacer(modifier = Modifier.height(12.dp))
-
-                                Text(
-                                    text = stringResource(R.string.apm_mount_warning_title),
-                                    style = MaterialTheme.typography.titleSmall,
-                                    fontWeight = FontWeight.Bold,
-                                )
-
-                                Spacer(modifier = Modifier.height(8.dp))
-
-                                Text(
-                                    text = stringResource(R.string.apm_mount_warning_message),
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                )
-
-                                Spacer(modifier = Modifier.height(16.dp))
-
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.End
-                                ) {
-                                    FilledTonalButton(
-                                        onClick = {
-                                            prefs.edit()
-                                                .putBoolean("apm_mount_warning_shown", true)
-                                                .apply()
-                                            showMountWarning = false
-                                        },
-                                    ) {
-                                        Text(stringResource(R.string.apm_mount_warning_button))
-                                    }
+                            WarningCard(
+                                modifier = Modifier.padding(horizontal = 16.dp),
+                                message = stringResource(R.string.apm_mount_warning_message),
+                                onClose = {
+                                    prefs.edit()
+                                        .putBoolean("apm_mount_warning_shown", true)
+                                        .apply()
+                                    showMountWarning = false
                                 }
-                            }
+                            )
                         }
                     }
                 }
