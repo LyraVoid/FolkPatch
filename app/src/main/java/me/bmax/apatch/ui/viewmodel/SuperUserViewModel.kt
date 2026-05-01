@@ -436,10 +436,8 @@ class SuperUserViewModel : ViewModel() {
 
                 if (actProfile != null) {
                     config.allow = 1
-                    // Use scontext from kernel, but override with JSON profile if available
-                    kernelUids.contains(uid)
+                    // Override scontext from JSON profile if we have one
                     profileSctx[uid]?.let { config.profile.scontext = it }
-                    // If no custom scontext in JSON, keep kernel's value
                 }
                 AppInfo(
                     label = appInfo.loadLabel(apApp.packageManager).toString(),

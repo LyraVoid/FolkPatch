@@ -260,6 +260,9 @@ fun AppProfileScreen(
                                         config.exclude = 0
                                         config.profile.scontext = sctx
                                         PkgConfig.changeConfig(config)
+                                        // Sync to KP so su applies the correct context
+                                        Natives.grantSu(uid, 0, sctx)
+                                        Natives.setUidExclude(uid, 0)
                                     }
                                     withContext(Dispatchers.Main) {
                                         showToast(context, if (ok) "Saved" else "Failed")
