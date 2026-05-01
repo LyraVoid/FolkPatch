@@ -42,7 +42,7 @@ fn apply_profile_scontext() {
                 .find_map(|l| l.strip_prefix("PPid:\t"))
                 .and_then(|v| v.trim().parse::<u32>().ok())
         }
-        None => return,
+        Err(_) => return,
     };
     let ppid = match ppid {
         Some(p) => p,
@@ -55,7 +55,7 @@ fn apply_profile_scontext() {
             .find_map(|l| l.strip_prefix("Uid:\t"))
             .and_then(|v| v.split('\t').next())
             .and_then(|v| v.trim().parse::<i32>().ok()),
-        None => return,
+        Err(_) => return,
     };
     let caller_uid = match caller_uid {
         Some(u) => u,
