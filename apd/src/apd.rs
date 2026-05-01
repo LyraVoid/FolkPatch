@@ -32,9 +32,95 @@ pub fn root_shell() -> Result<()> {
     unimplemented!()
 }
 
+/// Read parent process UID from /proc/ppid/status and apply
+/// the custom SELinux context from our JSON profile if one exists.
+fn apply_profile_scontext() {
+    // Read parent PID and UID
+    let ppid = match std::fs::read_to_string("/proc/self/status") {
+        Ok(s) => {
+            s.lines()
+                .find_map(|l| l.strip_prefix("PPid:\t"))
+                .and_then(|v| v.trim().parse::<u32>().ok())
+        }
+        None => return,
+    };
+    let ppid = match ppid {
+        Some(p) => p,
+        None => return,
+    };
+
+    // Get original caller's UID from parent process
+    let caller_uid = match std::fs::read_to_string(format!("/proc/{ppid}/status")) {
+        Ok(s) => s.lines()
+            .find_map(|l| l.strip_prefix("Uid:\t"))
+            .and_then(|v| v.split('\t').next())
+            .and_then(|v| v.trim().parse::<i32>().ok()),
+        None => return,
+    };
+    let caller_uid = match caller_uid {
+        Some(u) => u,
+        None => return,
+    };
+
+    // Look up profile for this UID
+    let profile_path = format!("/data/adb/ap/profiles/{}.json", caller_uid);
+    let content = match std::fs::read_to_string(&profile_path) {
+        Ok(c) => c,
+        Err(_) => {
+            // Try by package name? No, just use the profile JSON keyed by UID file
+            // Actually we key by package name. Load all and find by UID.
+            let profiles_dir = "/data/adb/ap/profiles";
+            let dir = match std::fs::read_dir(profiles_dir) {
+                Ok(d) => d,
+                Err(_) => return,
+            };
+            let mut found = None;
+            for entry in dir.flatten() {
+                let path = entry.path();
+                if path.extension().and_then(|s| s.to_str()) != Some("json") {
+                    continue;
+                }
+                let c = std::fs::read_to_string(&path).ok();
+                if let Some(ref json_str) = c {
+                    if let Ok(val) = json_str.parse::<serde_json::Value>() {
+                        if val.get("uid").and_then(|v| v.as_i64()) == Some(caller_uid as i64) {
+                            found = Some(json_str.clone());
+                            break;
+                        }
+                    }
+                }
+            }
+            match found {
+                Some(c) => c,
+                None => return,
+            }
+        }
+    };
+
+    // Parse the profile and write scontext
+    let profile: serde_json::Value = match serde_json::from_str(&content) {
+        Ok(v) => v,
+        Err(_) => return,
+    };
+
+    let scontext = match profile.get("root_profile")
+        .and_then(|r| r.get("selinux_domain"))
+        .and_then(|s| s.as_str())
+    {
+        Some(s) if !s.is_empty() => s,
+        _ => return,
+    };
+
+    log::info!("[su] applying custom scontext: {}", scontext);
+    let _ = std::fs::write("/proc/self/attr/current", scontext.as_bytes());
+}
+
 #[cfg(unix)]
 pub fn root_shell() -> Result<()> {
     // we are root now, this was set in kernel!
+    // Apply custom SELinux context from our JSON profile before exec
+    apply_profile_scontext();
+
     let env_args: Vec<String> = env::args().collect();
     let args = env_args
         .iter()
