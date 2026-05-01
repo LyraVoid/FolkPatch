@@ -2,9 +2,11 @@ package me.bmax.apatch.ui.screen
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
@@ -14,15 +16,20 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.outlined.OpenInNew
+import androidx.compose.material.icons.filled.ExpandLess
+import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.RemoveCircle
 import androidx.compose.material.icons.filled.Security
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -30,6 +37,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
@@ -209,6 +217,54 @@ fun AppProfileScreen(
                     supportingContent = { Text(stringResource(id = R.string.su_pkg_excluded_setting_summary)) },
                     leadingContent = { Icon(Icons.Filled.RemoveCircle, contentDescription = null) }
                 )
+            }
+
+            // ── Full Profile (MD3 expandable card) ──
+            if (selectedIndex == 0) {
+                Spacer(Modifier.height(8.dp))
+                var expanded by remember { mutableStateOf(false) }
+                var sctx by remember { mutableStateOf(config.profile.scontext) }
+
+                ListItem(
+                    colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+                    headlineContent = { Text("SELinux context") },
+                    supportingContent = { Text(sctx) },
+                    leadingContent = { Icon(Icons.Filled.Settings, contentDescription = null) },
+                    trailingContent = {
+                        IconButton(onClick = { expanded = !expanded }) {
+                            Icon(
+                                if (expanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
+                                contentDescription = "toggle"
+                            )
+                        }
+                    }
+                )
+                AnimatedVisibility(visible = expanded) {
+                    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+                        OutlinedTextField(
+                            value = sctx,
+                            onValueChange = { sctx = it },
+                            label = { Text("SELinux domain") },
+                            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+                            singleLine = true
+                        )
+                        Button(
+                            onClick = {
+                                scope.launch {
+                                    val ok = Natives.setProfile(packageName, uid, "allow", sctx)
+                                    showToast(context, if (ok) "Saved" else "Failed")
+                                    if (ok) {
+                                        config.allow = 1
+                                        config.exclude = 0
+                                        config.profile.scontext = sctx
+                                        PkgConfig.changeConfig(config)
+                                    }
+                                }
+                            },
+                            modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp)
+                        ) { Text("Apply") }
+                    }
+                }
             }
         }
     }

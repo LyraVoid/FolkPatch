@@ -21,6 +21,31 @@ object Natives {
         var scontext: String = APApplication.DEFAULT_SCONTEXT,
     ) : Parcelable
 
+    @Immutable
+    @Parcelize
+    @Keep
+    data class FullProfile(
+        val pkg: String,
+        val uid: Int,
+        val allowSu: Boolean = false,
+        val selinuxDomain: String = APApplication.MAGISK_SCONTEXT,
+    ) : Parcelable
+
+    /** Set profile via apd CLI */
+    fun setProfile(pkg: String, uid: Int, mode: String, scontext: String = APApplication.MAGISK_SCONTEXT): Boolean {
+        val shell = me.bmax.apatch.util.getRootShell()
+        return shell.newJob().add(
+            "${APApplication.APD_PATH} profile set $pkg $uid $mode $scontext"
+        ).exec().isSuccess
+    }
+
+    /** Show profile JSON via apd CLI */
+    fun getProfileJson(pkg: String): String? {
+        val shell = me.bmax.apatch.util.getRootShell()
+        val result = shell.newJob().add("${APApplication.APD_PATH} profile show $pkg").exec()
+        return if (result.isSuccess && result.out.isNotEmpty()) result.out.joinToString("\n") else null
+    }
+
     @Keep
     class KPMCtlRes {
         var rc: Long = 0
