@@ -16,17 +16,17 @@
     <string name="settings_nav_scheme">Schemat nawigacji</string>
     <string name="settings_nav_mode">Tryb paska nawigacji</string>
     <string name="settings_nav_mode_summary">Wybierz sposób wyświetlania paska nawigacji</string>
-    <string name="settings_nav_mode_auto">Automatycznie Tradycyjny</string>
+    <string name="settings_nav_mode_auto">Tradycyjny (automatycznie)</string>
     <string name="settings_nav_mode_bottom">Zawsze dolny pasek</string>
     <string name="settings_nav_mode_rail">Zawsze boczny pasek</string>
     <string name="settings_nav_mode_floating">Pływający dolny pasek</string>
-    <string name="settings_show_apm">Pokaż moduły systemowe</string>
-    <string name="settings_show_kpm">Pokaż kartę KPM</string>
-    <string name="settings_show_superuser">Pokaż kartę Superuser</string>
+    <string name="settings_show_apm">Pokaż kartę \"Moduły systemowe\"</string>
+    <string name="settings_show_kpm">Pokaż kartę \"Moduły KP\"</string>
+    <string name="settings_show_superuser">Pokaż kartę \"Superuser\"</string>
     <string name="settings_floating_auto_hide">Automatyczne ukrywanie</string>
     <string name="settings_floating_auto_hide_summary">Automatycznie ukrywaj pływający pasek po 3 sekundach bezczynności</string>
     <string name="settings_floating_swipe_hide">Ukrywanie przy przewijaniu</string>
-    <string name="settings_floating_swipe_hide_summary">Ukrywaj pasek przy przewijaniu w dół, pokazuj przy przewijaniu w górę</string>
+    <string name="settings_floating_swipe_hide_summary">Ukrywaj pływający pasek przy przewijaniu w dół, pokazuj przy przewijaniu w górę</string>
     <string name="settings_navbar_glass_effect">Efekt matowego szkła</string>
     <string name="settings_navbar_glass_effect_summary">Zastosuj efekt matowego szkła do pływającego paska nawigacji</string>
     <string name="settings_navbar_glass_blur_strength">Siła rozmycia</string>
@@ -47,7 +47,7 @@
     <string name="settings_block_androidpatch_update">Zablokuj aktualizację łatki systemowej</string>
     <string name="settings_block_androidpatch_update_summary">Nie pokazuj powiadomień o aktualizacji łatki systemowej (APD)</string>
     <string name="settings_disable_module_update_check">Wyłącz sprawdzanie aktualizacji modułów</string>
-    <string name="settings_disable_module_update_check_summary">Wyłącz automatyczne sprawdzanie aktualizacji dla modułów systemowych</string>
+    <string name="settings_disable_module_update_check_summary">Wyłącz automatyczne sprawdzanie aktualizacji dla systemowych modułów</string>
     <string name="reboot">Uruchom ponownie</string>
     <string name="settings">Ustawienia</string>
     <string name="reboot_recovery">Restartuj do Recovery</string>
@@ -82,8 +82,8 @@
     <string name="home_patch_set_key_desc">Tylko dane uwierzytelniające dla KernelPatch</string>
     <string name="home_patch_next_step">Kolejny krok</string>
     <string name="home_not_installed">Nie zainstalowany</string>
-    <string name="home_install_unknown">Nie zainstalowano lub nie uwierzytelniono</string>
-    <string name="home_install_unknown_summary">Kliknij, aby zainstalować</string>
+    <string name="home_install_unknown">KernelPatch nie jest zainstalowany</string>
+    <string name="home_install_unknown_summary">Dostęp do roota nie jest dostępny. Jądro może nie być jeszcze zaktualizowane ani sflashowane.</string>
     <string name="home_click_to_install">Kliknij, aby zainstalować</string>
     <string name="home_working">Działa</string>
     <string name="home_kp_need_update">Dostępna nowa wersja</string>
@@ -133,7 +133,6 @@
     <string name="patch_item_set_skey_label">SuperKey powinien mieć od 8 do 63 znaków i zawierać zarówno cyfry, jak i litery, ale bez znaków specjalnych.</string>
     <string name="patch_confirm_superkey">Potwierdź SuperKey</string>
     <string name="patch_skey_mismatch">SuperKey się nie zgadza</string>
-
     <string name="home_kernel">Wersja jądra</string>
     <string name="home_manager_version">Wersja menedżera</string>
     <string name="home_fingerprint">Odcisk palca</string>
@@ -177,7 +176,7 @@
     <string name="su_pkg_excluded_setting_title">Wyklucz modyfikacje</string>
     <string name="su_pkg_excluded_setting_summary">Włączenie tej opcji umożliwi FolkPatch przywrócenie wszystkich plików zmodyfikowanych przez moduły tej aplikacji.</string>
     <string name="su_pkg_root_setting_title">Superuser</string>
-    <string name="su_pkg_root_setting_summary">Włączenie tej opcji przyzna dostęp do roota Twojej aplikacji, pozwalając na używanie poleceń SU</string>
+    <string name="su_pkg_root_setting_summary">Włączenie tej opcji przyznaje aplikacji dostęp do roota, umożliwiając korzystanie z poleceń SU.</string>
     <string name="su_pkg_normal_setting_title">Tryb normalny</string>
     <string name="su_pkg_normal_setting_summary">Stan domyślny, brak specjalnego traktowania.</string>
     <string name="su_batch_exclude_title">Masowe wykluczanie</string>
@@ -192,7 +191,6 @@
     <string name="su_app_action_launch_success">Uruchamianie %s</string>
     <string name="su_app_action_force_stop_success">Wymuszono zatrzymanie %s</string>
     <string name="su_app_action_failed">Operacja nie powiodła się: %s</string>
-
     <!-- SU Audit Log -->
     <string name="su_audit_log_title">Dziennik autoryzacji</string>
     <string name="su_audit_log_empty">Brak rekordów autoryzacji</string>
@@ -203,11 +201,10 @@
     <string name="su_audit_action_exclude">Wykluczono</string>
     <string name="su_audit_tab_usage">Dziennik użycia</string>
     <string name="su_audit_tab_operations">Dziennik operacji</string>
-
     <string name="su_show_system_apps">Pokaż aplikacje systemowe</string>
     <string name="su_hide_system_apps">Ukryj aplikacje systemowe</string>
     <string name="su_refresh">Odśwież</string>
-    <string name="apm">Moduły AP</string>
+    <string name="apm">Moduły systemowe</string>
     <string name="apm_not_installed">AndroidPatch nie jest zainstalowany</string>
     <string name="apm_failed_to_enable">Nie udało się włączyć modułu: %s</string>
     <string name="apm_failed_to_disable">Nie udało się wyłączyć modułu %s</string>
@@ -226,7 +223,7 @@
     <string name="apm_overlay_fs_not_available">Moduły są niedostępne, ponieważ OverlayFS jest wyłączony przez jądro!</string>
     <string name="apm_magisk_conflict">Moduły są niedostępne, ponieważ istnieje konflikt z Magiskiem!</string>
     <string name="apm_mount_warning_title">Ważne powiadomienie</string>
-    <string name="apm_mount_warning_message">Domyślnie moduły nie są montowane. Użyj wbudowanego systemu montowania lub metamodułów.</string>
+    <string name="apm_mount_warning_message">Domyślnie moduły nie są montowane. Użyj wbudowanego systemu montowania lub metamodułu.</string>
     <string name="apm_mount_warning_button">Rozumiem</string>
     <string name="apm_reboot_to_apply">Uruchom ponownie, aby zastosować</string>
     <string name="apm_changelog">Lista zmian</string>
@@ -258,7 +255,7 @@
     <string name="module_shortcut_updated">Zaktualizowano skrót.</string>
     <string name="module_shortcut_permission_tip_xiaomi">Proszę włączyć uprawnienie "Tworzenie skrótów pulpitu" dla tej aplikacji w ustawieniach Xiaomi.</string>
     <string name="module_shortcut_permission_tip_oppo">Proszę włączyć uprawnienie "Skrót pulpitu" dla tej aplikacji w ustawieniach OPPO.</string>
-    <string name="module_shortcut_permission_tip_default">Jeśli utworzenie skrótu nie powiedzie się, proszę włączyć uprawnienie skrótu pulpitu dla tej aplikacji w ustawieniach systemu.</string>
+    <string name="module_shortcut_permission_tip_default">Jeśli utworzenie skrótu się nie powiedzie, włącz w ustawieniach systemowych uprawnienie do tworzenia skrótów na pulpicie dla tej aplikacji.</string>
     <string name="module_shortcut_name">Nazwa skrótu</string>
     <string name="module_shortcut_icon">Ikona skrótu</string>
     <string name="module_shortcut_type">Typ skrótu</string>
@@ -271,15 +268,15 @@
     <string name="settings_apm_install_confirm">Potwierdź przed instalacją</string>
     <string name="settings_apm_install_confirm_summary">Pokaż okno dialogowe potwierdzenia przed instalacją modułów</string>
     <string name="settings_enable_module_shortcut_add">Włącz przycisk dodawania skrótu</string>
-    <string name="settings_enable_module_shortcut_add_summary">Pokaż przycisk dodawania skrótu WebUI na stronie modułów systemowych</string>
+    <string name="settings_enable_module_shortcut_add_summary">Pokaż przycisk dodawania skrótu do WebUI</string>
     <string name="settings_module_sort_optimization">Optymalizacja sortowania modułów</string>
-    <string name="settings_module_sort_optimization_summary">Umieść moduły systemowe z WebUI i Action na początku listy</string>
-    <string name="settings_fold_system_module">Zwiń Moduły Systemowe</string>
-    <string name="settings_fold_system_module_summary">Kliknij kartę modułu, aby rozwinąć/zwinąć akcje</string>
+    <string name="settings_module_sort_optimization_summary">Umieść systemowe moduły z WebUI i akcją na początku listy</string>
+    <string name="settings_fold_system_module">Zwiń systemowe moduły</string>
+    <string name="settings_fold_system_module_summary">Kliknij kartę modułu, aby pokazać lub ukryć akcje</string>
     <string name="settings_simple_list_bottom_bar">Prosty dolny pasek listy</string>
     <string name="settings_simple_list_bottom_bar_summary">Użyj stylu przycisków tylko z ikonami dla akcji modułu, zainspirowane APatch</string>
-    <string name="settings_spliced_card_group">Spliced Card Group</string>
-    <string name="settings_spliced_card_group_summary">Use M3E continuous card group style for module list</string>
+    <string name="settings_spliced_card_group">Grupa kart łączonych</string>
+    <string name="settings_spliced_card_group_summary">Użyj ciągłego stylu grupy kart M3E dla listy modułów</string>
     <string name="settings_show_more_module_info">Pokaż szczegóły modułu</string>
     <string name="settings_show_more_module_info_summary">Pokaż ID i rozmiar modułu na liście modułów</string>
     <string name="apm_install_confirm_title">Instalacja modułu</string>
@@ -290,12 +287,12 @@
     <string name="apm_enable_module_banner_summary">Wyświetl obraz banera dla modułów jeśli jest dostępny</string>
     <string name="apm_enable_folk_banner">Dostosuj baner modułu</string>
     <string name="apm_enable_folk_banner_summary">Naciśnij długo kartę modułu, aby wybrać obraz banera</string>
-    <string name="apm_folk_banner_title">FolkBanner</string>
+    <string name="apm_folk_banner_title">Baner Folk</string>
     <string name="apm_folk_banner_select">Wybierz obraz</string>
-    <string name="apm_folk_banner_clear">Wyczyść FolkBanner</string>
-    <string name="apm_folk_banner_saved">Wstrzyknięto FolkBanner dla %s.</string>
-    <string name="apm_folk_banner_cleared">Wyczyszczono FolkBanner dla %s.</string>
-    <string name="apm_folk_banner_failed">Nie udało się zaktualizować FolkBanner dla %s.</string>
+    <string name="apm_folk_banner_clear">Wyczyść baner Folk</string>
+    <string name="apm_folk_banner_saved">Wstrzyknięto baner Folk dla %s.</string>
+    <string name="apm_folk_banner_cleared">Wyczyszczono baner Folk dla %s.</string>
+    <string name="apm_folk_banner_failed">Nie udało się zaktualizować baneru Folk dla %s.</string>
     <string name="apm_banner_api_mode">Tryb API</string>
     <string name="apm_banner_api_mode_summary">Użyj API losowych obrazów lub katalogu lokalnego dla banerów modułów</string>
     <string name="apm_banner_api_source">Konfiguruj źródło API</string>
@@ -384,7 +381,7 @@
     <string name="about_powered_by">Zasilany przez %1$s</string>
     <string name="about_telegram_group">Grupa na Telegramie</string>
     <!-- Online Module Strings -->
-    <string name="online_module_title">Moduł systemu online</string>
+    <string name="online_module_title">Systemowy moduł online</string>
     <string name="online_module_download_start">Rozpocznij pobieranie: %s</string>
     <string name="online_module_download_complete">Pobieranie zakończone: %s</string>
     <string name="online_module_download_notification">Pobieranie %s. Sprawdź panel powiadomień o postępach i folder Pobrane dla ukończonego pliku.</string>
@@ -471,7 +468,7 @@
     <string name="settings_grid_working_card_hide_text_summary">Ukryj tekst "Działa" lub "Nie zainstalowano" na karcie roboczej</string>
     <string name="settings_grid_working_card_hide_mode">Ukryj tryb pracy</string>
     <string name="settings_grid_working_card_hide_mode_summary">Ukryj tekst \"W pełni\" lub \"Częściowo\" na karcie roboczej</string>
-    <string name="settings_list_card_hide_status_badge">Użyj Klasycznego Emoji</string>
+    <string name="settings_list_card_hide_status_badge">Użyj klasycznego Emoji</string>
     <string name="settings_list_card_hide_status_badge_summary">Odznaka stanu na stronie głównej zmienia się w klasyczny emoji</string>
     <string name="settings_custom_badge_text">Niestandardowy tekst odznaki</string>
     <string name="settings_custom_badge_text_summary">Zmodyfikuj wyświetlanie tekstu odznaki, tylko dla zabawy</string>
@@ -502,8 +499,12 @@
     <string name="kpm_autoload_json_mode">Tryb JSON</string>
     <string name="kpm_autoload_add_kpm">Dodaj KPM</string>
     <string name="kpm_autoload_remove_kpm">Usuń</string>
-    <string name="kpm_autoload_edit_kpm">Editar</string>
-    <string name="kpm_autoload_edit_dialog_title">Editar KPM</string>    <string name="kpm_autoload_event_label">Evento:</string>    <string name="kpm_autoload_args_label">Argumentos:</string>    <string name="kpm_autoload_event_service">service</string>    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
+    <string name="kpm_autoload_edit_kpm">Edytuj</string>
+    <string name="kpm_autoload_edit_dialog_title">Edytuj moduł</string>
+    <string name="kpm_autoload_event_label">Etykieta:</string>
+    <string name="kpm_autoload_args_label">Argumenty:</string>
+    <string name="kpm_autoload_event_service">service</string>
+    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
     <string name="kpm_autoload_kpm_list_title">Lista modułów KPM</string>
     <string name="kpm_autoload_no_kpm_added">Nie dodano żadnych modułów KPM</string>
     <string name="kpm_autoload_kpm_path">Ścieżka KPM</string>
@@ -518,7 +519,7 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="kpm_autoload_first_time_confirm">Rozumiem</string>
     <string name="kpm_autoload_do_not_show_again">Nie pokazuj ponownie</string>
     <!-- APM Bulk Install Strings -->
-    <string name="apm_bulk_install_title">Instalacja zbiorcza modułów systemowych</string>
+    <string name="apm_bulk_install_title">Instalacja zbiorcza systemowych modułów</string>
     <string name="apm_bulk_install_list_title">Lista modułów</string>
     <string name="apm_bulk_install_add">Dodaj moduły</string>
     <string name="apm_bulk_install_empty">Brak dodanych modułów</string>
@@ -527,7 +528,7 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="apm_bulk_install_log_start">Rozpoczynanie instalacji zbiorczej...</string>
     <string name="apm_bulk_install_log_installing">Instalowanie %1$s</string>
     <string name="apm_batch_install_full_process">Kompletny proces instalacji wsadowej</string>
-    <string name="apm_batch_install_full_process_summary">Instalacja wsadowa modułów systemowych jest wykonywana przy użyciu pełnego procesu</string>
+    <string name="apm_batch_install_full_process_summary">Instalacja wsadowa modułów systemowych odbywa się przy użyciu całego procesu</string>
     <string name="next_module">Następny moduł</string>
     <string name="apm_bulk_install_log_installed">Moduł %s zainstalowany.</string>
     <string name="apm_bulk_install_log_done">Wszystkie operacje zakończone.</string>
@@ -678,8 +679,8 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="settings_switch_icon_desc">Pokaż ikony stanu na przełącznikach</string>
     <string name="settings_category_behavior">Zachowanie</string>
     <string name="settings_category_function">Funkcje</string>
-    <string name="settings_use_legacy_su_page">Jednostronicowa autoryzacja superużytkownika</string>
-    <string name="settings_use_legacy_su_page_summary">Strona superużytkownika przełączona na projekt autoryzacji jednostronicowej</string>
+    <string name="settings_use_legacy_su_page">Pokazuj przełączniki na stronie Superuser</string>
+    <string name="settings_use_legacy_su_page_summary">Po aktywacji nowy styl nadawania uprawnień root zostanie wyłączony</string>
     <string name="settings_category_module">Moduły</string>
     <string name="settings_category_security">Bezpieczeństwo</string>
     <!-- Background Music Strings -->
@@ -700,7 +701,7 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="settings_category_multimedia">Multimedia</string>
     <string name="settings_category_general_summary">Język, aktualizacje, SELinux, dostosowania systemu</string>
     <string name="settings_category_appearance_summary">Motyw, kolory, układ, tło, czcionki</string>
-    <string name="settings_category_behavior_summary">Debugowanie WWW, zachowanie instalacji, ekran główny</string>
+    <string name="settings_category_behavior_summary">Debugowanie webui, zachowanie instalacji, wyświetlanie strony głównej</string>
     <string name="settings_category_security_summary">Biometria, zarządzanie superkluczami</string>
     <string name="settings_category_backup_summary">Lokalna kopia zapasowa, kopia w chmurze, WebDAV</string>
     <string name="settings_category_module_summary">Informacje o modułach, sortowanie, instalacja wsadowa</string>
@@ -857,7 +858,7 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="search_modules">Szukaj modułów...</string>
     <string name="search_scripts">Szukaj skryptów...</string>
     <!-- Umount Service -->
-    <string name="settings_umount_service">Odmontowanie Zig</string>
+    <string name="settings_umount_service">Usługa odmontowania</string>
     <string name="settings_umount_service_summary">Skonfiguruj punkty montowania do automatycznego odmontowania przy uruchamianiu</string>
     <string name="umount_config_title">Konfiguracja Umount</string>
     <string name="umount_config_enabled">Włącz Umount</string>
@@ -927,7 +928,6 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="settings_custom_badge_text_n_gki">N-GKI</string>
     <string name="settings_custom_badge_text_oki">OKI</string>
     <string name="settings_custom_badge_text_built_in">Wbudowany</string>
-
     <string name="home_device_status_battery_charging">Ładowanie</string>
     <string name="home_device_status_cpu_temp">Temperatura CPU</string>
     <string name="home_device_status_memory_trend">Trend pamięci</string>
@@ -942,22 +942,19 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="home_device_status_gpu_load">GPU</string>
     <string name="home_stats_kernel_modules">Moduły jądra</string>
     <string name="home_stats_apm_modules">Moduły systemowe</string>
-    <string name="home_stats_superusers">Superużytkownicy</string>
+    <string name="home_stats_superusers">Superuser</string>
     <string name="settings_kernel_spoof">Konfiguracja fałszowania jądra</string>
     <string name="settings_kernel_spoof_summary">Fałszuj wersję jądra i czas budowy</string>
     <string name="settings_kernel_spoof_version">Wersja jądra</string>
     <string name="settings_kernel_spoof_build_time">Czas budowy jądra</string>
     <string name="settings_kernel_spoof_restore">Przywróć</string>
-
     <string name="kernel_spoof_enabled">Fałszowanie jądra włączone</string>
     <string name="kernel_spoof_disabled_restored">Fałszowanie jądra wyłączone i przywrócone</string>
     <string name="kernel_spoof_failed">Błąd fałszowania jądra: %d</string>
     <string name="kernel_spoof_applied">Fałszowanie jądra zastosowane</string>
-
     <string name="settings_path_hide">Ukrywanie ścieżek</string>
     <string name="settings_path_hide_summary">Ukrywaj pliki i katalogi przed aplikacjami na poziomie jądra</string>
     <string name="path_hide_paths_label">Ukryte ścieżki (po jednej w linii)</string>
-
     <string name="path_hide_paths_helper">Wprowadź jedną ścieżkę w każdej linii. Pasujące ścieżki zwrócą ENOENT.</string>
     <string name="path_hide_save">Zapisz</string>
     <string name="path_hide_enabled">Ukrywanie ścieżek włączone</string>
@@ -990,4 +987,32 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="netisolate_uids_label">Zablokowane aplikacje</string>
     <string name="netisolate_uids_hint">Wprowadź UID do zablokowania (jedno na linię)</string>
     <string name="netisolate_no_uids">Brak zablokowanych aplikacji</string>
+    <string name="retry">Ponów</string>
+    <string name="path_hide_paths_placeholder">/storage/emulated/0/file.txt\n/storage/emulated/0/folder</string>
+    <string name="app_title_superroot">SuperRoot</string>
+    <string name="backup_failed">Nie udało się wykonać kopii zapasowej: %s</string>
+    <string name="delete_failed">Nie udało się usunąć: %s</string>
+    <string name="delete_remote_backup_confirm">Czy na pewno chcesz usunąć kopię zapasową w chmurze?</string>
+    <string name="delete_success">Pomyślnie usunięto</string>
+    <string name="restore_failed">Przywracanie nie powiodło się: %s</string>
+    <string name="settings_auto_backup">Auto. kopia zapasowa</string>
+    <string name="settings_auto_backup_summary">Automatyczne tworzenie kopii zapasowej raz dziennie</string>
+    <string name="settings_backup_now">Utwórz kopię zapasową teraz</string>
+    <string name="settings_backup_password">Hasło kopii zapasowej</string>
+    <string name="settings_backup_password_hint">Wprowadź hasło kopii zapasowej</string>
+    <string name="settings_delete_remote_backup">Usuń kopię zapasową w chmurze</string>
+    <string name="settings_encrypt_backup">Szyfruj kopię zapasową</string>
+    <string name="settings_encrypt_backup_summary">Zaszyfruj plik kopii zapasowej hasłem</string>
+    <string name="settings_launcher_icon">Ikona launchera</string>
+    <string name="settings_restore_backup">Przywróć kopię</string>
+    <string name="settings_show_disable_all_modules">Pokaż przycisk \"Wyłącz wszystkie moduły\"</string>
+    <string name="settings_show_disable_all_modules_summary">Pokaż przycisk umożliwiający jednoczesne wyłączenie wszystkich modułów na karcie Moduły</string>
+    <string name="settings_test_webdav">Test połączenia WebDAV</string>
+    <string name="settings_webdav_password">Hasło WebDAV</string>
+    <string name="settings_webdav_url">Adres URL WebDAV</string>
+    <string name="settings_webdav_username">Nazwa użytkownika WebDAV</string>
+    <string name="theme_download">Pobierz</string>
+    <string name="theme_install">Instaluj</string>
+    <string name="theme_install_failed">Instalacja nie powiodła się</string>
+    <string name="theme_install_success">Instalacja ukończona</string>
 </resources>
