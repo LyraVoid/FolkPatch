@@ -52,7 +52,9 @@ import coil.request.ImageRequest
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.Natives
 import me.bmax.apatch.R
@@ -250,14 +252,21 @@ fun AppProfileScreen(
                         )
                         Button(
                             onClick = {
-                                scope.launch {
+                                scope.launch(Dispatchers.IO) {
+                                    // 1. Save to apd profile JSON
                                     val ok = Natives.setProfile(packageName, uid, "allow", sctx)
-                                    showToast(context, if (ok) "Saved" else "Failed")
                                     if (ok) {
+                                        // 2. Save to CSV
                                         config.allow = 1
                                         config.exclude = 0
                                         config.profile.scontext = sctx
                                         PkgConfig.changeConfig(config)
+                                        // 3. Update kernel su table (so UI refresh reads correct value)
+                                        Natives.grantSu(uid, 0, sctx)
+                                        Natives.setUidExclude(uid, 0)
+                                    }
+                                    withContext(Dispatchers.Main) {
+                                        showToast(context, if (ok) "Saved" else "Failed")
                                     }
                                 }
                             },
