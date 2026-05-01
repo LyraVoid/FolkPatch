@@ -10,6 +10,7 @@ import android.os.Looper
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
@@ -318,7 +319,7 @@ class MainActivity : AppCompatActivity() {
                 android.util.Log.w("MainActivity", "Splash safety net triggered - force dismissing")
                 isLoading = false
             }
-        }, 15_000)
+        }, 5_000)
 
         enableEdgeToEdge()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -461,7 +462,15 @@ class MainActivity : AppCompatActivity() {
         setContent {
             val locked by remember { isLocked }
             if (locked) {
-                Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background))
+                Box(
+                    modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background),
+                    contentAlignment = Alignment.Center
+                ) {
+                    androidx.compose.material3.CircularProgressIndicator(
+                        modifier = Modifier.size(48.dp),
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
             } else {
             val prefs = APApplication.sharedPreferences
             var folkXEngineEnabled by remember {
@@ -910,9 +919,25 @@ class MainActivity : AppCompatActivity() {
                 .build()
         )
 
+        var splashDismissed = false
+        val dismissSplash = {
+            if (!splashDismissed) {
+                splashDismissed = true
+                isLoading = false
+            }
+        }
+        APApplication.kpStateLiveData.observeForever(object : Observer<APApplication.State> {
+            override fun onChanged(state: APApplication.State) {
+                if (state != APApplication.State.UNKNOWN_STATE) {
+                    APApplication.kpStateLiveData.removeObserver(this)
+                    dismissSplash()
+                }
+            }
+        })
         Handler(Looper.getMainLooper()).postDelayed({
-            isLoading = false
-        }, 500)
+            android.util.Log.w("MainActivity", "Splash timeout fallback triggered")
+            dismissSplash()
+        }, 3000)
     }
 }
 

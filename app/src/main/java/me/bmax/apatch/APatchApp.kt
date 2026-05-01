@@ -378,10 +378,6 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
             exitProcess(0)
         }
 
-        Log.d(TAG, "Initializing SharedPreferences...")
-        sharedPreferences = getSharedPreferences(SP_NAME, Context.MODE_PRIVATE)
-        
-        // 初始化默认主题设置 - 只在第一次安装时设置
         if (!sharedPreferences.contains("app_initialized")) {
             sharedPreferences.edit()
                 .putBoolean("app_initialized", true)
@@ -393,18 +389,9 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
                 .apply()
         }
         
-        APatchKeyHelper.setSharedPreferences(sharedPreferences)
         me.bmax.apatch.util.LauncherIconUtils.applySaved(this)
-        Log.d(TAG, "Reading superKey...")
-        val savedKey = try {
-            APatchKeyHelper.readSPSuperKey()
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to read superKey from SharedPreferences", e)
-            null
-        }
-        val key = savedKey.takeUnless { it.isNullOrEmpty() } ?: "su"
-        setSuperKeyAndRefresh(key)
-        Log.d(TAG, "superKey read completed, length=${superKey.length}")
+        Log.d(TAG, "superKey already initialized in early init, length=${_superKey.length}")
+        setSuperKeyAndRefresh(_superKey)
 
         Log.d(TAG, "Initializing OkHttpClient...")
         okhttpClient =
