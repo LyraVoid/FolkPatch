@@ -14,6 +14,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.activity.compose.setContent
@@ -50,6 +51,8 @@ import java.io.File
 @SuppressLint("SetJavaScriptEnabled")
 class WebUIActivity : AppCompatActivity() {
     private lateinit var webViewInterface: WebViewInterface
+    private var webView: WebView? = null
+    private var webCanGoBack = false
     private lateinit var fileChooserLauncher: ActivityResultLauncher<Intent>
     private var filePathCallback: ValueCallback<Array<Uri>>? = null
     private var isWebViewReady by mutableStateOf(false)
@@ -77,6 +80,17 @@ class WebUIActivity : AppCompatActivity() {
         
         setupActivityInfo()
 
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (webCanGoBack) {
+                    webView?.goBack()
+                    return
+                }
+                isEnabled = false
+                onBackPressedDispatcher.onBackPressed()
+            }
+        })
+
         setContent {
             APatchTheme(allowCustomBackground = false) {
                 val backgroundColor = MaterialTheme.colorScheme.background
@@ -93,6 +107,7 @@ class WebUIActivity : AppCompatActivity() {
                                         android.view.ViewGroup.LayoutParams.MATCH_PARENT,
                                         android.view.ViewGroup.LayoutParams.MATCH_PARENT
                                     )
+                                    this@WebUIActivity.webView = this
                                     configureWebView(this)
                                 }
                             },
@@ -184,6 +199,11 @@ class WebUIActivity : AppCompatActivity() {
                 }
 
                 return webViewAssetLoader.shouldInterceptRequest(request.url)
+            }
+
+            override fun doUpdateVisitedHistory(view: WebView?, url: String?, isReload: Boolean) {
+                webCanGoBack = view?.canGoBack() == true
+                super.doUpdateVisitedHistory(view, url, isReload)
             }
         }
 
