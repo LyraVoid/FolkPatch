@@ -1,6 +1,7 @@
 package me.bmax.apatch.ui.theme
 
 import android.content.Context
+import android.os.Build
 import android.graphics.Typeface
 import android.net.Uri
 import android.util.Log
@@ -133,6 +134,13 @@ object FontConfig {
     private var cachedFilename: String? = null
 
     fun getFontFamily(context: Context): FontFamily {
+        // Android 15 devices have reported crashes in the EmojiCompat/text layout pipeline
+        // when a user-supplied global font is active. Fall back to the system font there.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+            cachedFilename = null
+            cachedFontFamily = null
+            return FontFamily.Default
+        }
         if (isCustomFontEnabled && customFontFilename != null) {
             // Return cached font if filename hasn't changed
             if (customFontFilename == cachedFilename && cachedFontFamily != null) {
