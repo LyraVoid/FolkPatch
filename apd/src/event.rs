@@ -111,9 +111,13 @@ fn disable_all_modules_safe() {
 
 pub fn on_post_data_fs(superkey: Option<String>) -> Result<()> {
     utils::umask(0);
-    report_kernel(superkey.clone(), "post-fs-data", "before")?;
+    if let Err(e) = report_kernel(superkey.clone(), "post-fs-data", "before") {
+        warn!("report_kernel post-fs-data before failed: {e}");
+    }
 
-    setup_fp_directories()?;
+    if let Err(e) = setup_fp_directories() {
+        warn!("setup_fp_directories failed: {e}");
+    }
 
     supercall::autoload_kpm_modules(&superkey, "post-fs-data");
 
