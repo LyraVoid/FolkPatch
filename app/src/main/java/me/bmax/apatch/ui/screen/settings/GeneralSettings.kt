@@ -2,6 +2,7 @@ package me.bmax.apatch.ui.screen.settings
 
 import android.app.Activity
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Build
 import androidx.compose.animation.AnimatedVisibility
@@ -168,9 +169,7 @@ fun GeneralSettingsContent(
     val currentSpeed = remember { prefs.getFloat("folkx_animation_speed", 1.0f) }
     var predictiveBackEnabled by remember { mutableStateOf(prefs.getBoolean("predictive_back_enabled", true)) }
     var newAppProfileMode by remember {
-        mutableIntStateOf(
-            prefs.getInt(APApplication.PREF_AUTO_EXCLUDE_NEW_APPS, Natives.getNewAppProfileMode())
-        )
+        mutableIntStateOf(loadNewAppProfileMode(prefs))
     }
     val currentNewAppProfileLabel = when (newAppProfileMode) {
         1 -> stringResource(R.string.settings_new_app_profile_root)
@@ -710,7 +709,7 @@ fun GeneralSettingsContent(
     }
 
     if (showNewAppProfileModeDialog.value) {
-        NewAppProfileModeDialog(showNewAppProfileModeDialog) { mode ->
+        NewAppProfileModeDialog(showNewAppProfileModeDialog, newAppProfileMode) { mode ->
             newAppProfileMode = mode
             prefs.edit { putInt(APApplication.PREF_AUTO_EXCLUDE_NEW_APPS, mode) }
         }
@@ -721,10 +720,11 @@ fun GeneralSettingsContent(
 @Composable
 fun NewAppProfileModeDialog(
     showDialog: MutableState<Boolean>,
+    initialMode: Int,
     onModeChanged: (Int) -> Unit,
 ) {
     val context = LocalContext.current
-    val currentMode = remember { mutableIntStateOf(Natives.getNewAppProfileMode()) }
+    val currentMode = remember(initialMode) { mutableIntStateOf(initialMode) }
     val options = listOf(
         0 to R.string.settings_new_app_profile_normal,
         1 to R.string.settings_new_app_profile_root,
@@ -798,6 +798,19 @@ fun NewAppProfileModeDialog(
             APDialogBlurBehindUtils.setupWindowBlurListener(dialogWindowProvider.window)
         }
     }
+}
+
+private fun loadNewAppProfileMode(prefs: SharedPreferences): Int {
+    val fallback = runCatching {
+        prefs.getInt(APApplication.PREF_AUTO_EXCLUDE_NEW_APPS, 0)
+    }.getOrDefault(0)
+    val nativeMode = runCatching {
+        Natives.getNewAppProfileMode()
+    }.getOrDefault(fallback)
+    if (nativeMode != fallback) {
+        prefs.edit { putInt(APApplication.PREF_AUTO_EXCLUDE_NEW_APPS, nativeMode) }
+    }
+    return nativeMode
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
