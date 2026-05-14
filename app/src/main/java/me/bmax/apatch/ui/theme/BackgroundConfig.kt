@@ -623,7 +623,7 @@ object BackgroundConfig {
         val titleDim = prefs.getFloat(KEY_TITLE_IMAGE_DIM, 0.0f)
         val titleOffsetX = prefs.getFloat(KEY_TITLE_IMAGE_OFFSET_X, 0f)
 
-        val navBarGlassEnabled = prefs.getBoolean(KEY_NAVBAR_GLASS_ENABLED, true)
+        val navBarGlassEnabled = prefs.getBoolean(KEY_NAVBAR_GLASS_ENABLED, false)
         val prefsNavBarGlassBlurStrength = prefs.getFloat(KEY_NAVBAR_GLASS_BLUR_STRENGTH, 0.7f)
         val prefsNavBarGlassTransparency = prefs.getFloat(KEY_NAVBAR_GLASS_TRANSPARENCY, 0.3f)
         val prefsNavBarGlassHighlightStrength = prefs.getFloat(KEY_NAVBAR_GLASS_HIGHLIGHT_STRENGTH, 0.5f)
