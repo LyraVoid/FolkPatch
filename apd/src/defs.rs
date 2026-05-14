@@ -15,6 +15,7 @@ pub const UMOUNT_BINARY_PATH: &str = concatcp!(ADB_DIR, "fp/bin/fpd");
 pub const UTS_SPOOF_ENABLE_FILE: &str = concatcp!(ADB_DIR, ".uts_spoof_enable");
 pub const UTS_SPOOF_CONFIG_FILE: &str = concatcp!(ADB_DIR, ".uts_spoof_config");
 pub const UTS_SPOOF_BOOT_PENDING: &str = concatcp!(ADB_DIR, ".uts_spoof_boot_pending");
+pub const UTS_SPOOF_RETRY_FILE: &str = concatcp!(ADB_DIR, ".uts_spoof_retry");
 pub const DAEMON_PATH: &str = concatcp!(ADB_DIR, "apd");
 pub const AUTO_EXCLUDE_KNOWN_PACKAGES_FILE: &str = concatcp!(WORKING_DIR, "auto_exclude_known_packages");
 
@@ -24,6 +25,7 @@ pub const PATHHIDE_PATHS_FILE: &str = concatcp!(ADB_DIR, "fp/pathhide/paths");
 pub const PATHHIDE_UIDS_FILE: &str = concatcp!(ADB_DIR, "fp/pathhide/uids");
 pub const PATHHIDE_UID_MODE_FILE: &str = concatcp!(ADB_DIR, "fp/pathhide/uid_mode");
 pub const PATHHIDE_FILTER_SYSTEM_FILE: &str = concatcp!(ADB_DIR, "fp/pathhide/filter_system");
+pub const PATHHIDE_RETRY_FILE: &str = concatcp!(ADB_DIR, "fp/pathhide/retry");
 
 pub const NETISOLATE_DIR: &str = concatcp!(ADB_DIR, "fp/netisolate/");
 pub const NETISOLATE_ENABLE_FILE: &str = concatcp!(ADB_DIR, "fp/netisolate/enabled");

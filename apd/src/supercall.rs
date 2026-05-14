@@ -733,6 +733,7 @@ pub fn apply_netisolate(superkey: &Option<String>) {
 
 pub fn apply_pathhide(superkey: &Option<String>) {
     if !std::path::Path::new(crate::defs::PATHHIDE_ENABLE_FILE).exists() {
+        let _ = std::fs::remove_file(crate::defs::PATHHIDE_RETRY_FILE);
         info!("[pathhide] disabled, skipping");
         return;
     }
@@ -741,6 +742,7 @@ pub fn apply_pathhide(superkey: &Option<String>) {
     let key = match key {
         Some(k) => k,
         None => {
+            let _ = std::fs::write(crate::defs::PATHHIDE_RETRY_FILE, b"1");
             warn!("[pathhide] no superkey available");
             return;
         }
@@ -752,11 +754,10 @@ pub fn apply_pathhide(superkey: &Option<String>) {
             sc_pathhide_clear(&key);
             let mut count = 0u32;
             for path in paths.lines() {
-                let path = path.trim();
-                if path.is_empty() {
+                let Some(path) = normalize_pathhide_path(path) else {
                     continue;
-                }
-                match CString::new(path) {
+                };
+                match CString::new(path.as_str()) {
                     Ok(path_cstr) => {
                         let rc = sc_pathhide_add(&key, &path_cstr);
                         if rc < 0 {
@@ -831,6 +832,7 @@ pub fn apply_pathhide(superkey: &Option<String>) {
         return;
     }
 
+    let _ = std::fs::remove_file(crate::defs::PATHHIDE_RETRY_FILE);
     info!("[pathhide] auto-apply completed");
 }
 
@@ -870,12 +872,44 @@ fn sc_uts_reset(key: &CStr) -> c_long {
     }
 }
 
+fn normalize_pathhide_path(path: &str) -> Option<String> {
+    let trimmed = path.trim();
+    if trimmed.is_empty() || !trimmed.starts_with('/') {
+        return None;
+    }
+
+    let mut normalized = String::with_capacity(trimmed.len());
+    let mut prev_was_slash = false;
+    for ch in trimmed.chars() {
+        if ch == '/' {
+            if !prev_was_slash {
+                normalized.push(ch);
+            }
+            prev_was_slash = true;
+        } else {
+            normalized.push(ch);
+            prev_was_slash = false;
+        }
+    }
+
+    while normalized.len() > 1 && normalized.ends_with('/') {
+        normalized.pop();
+    }
+
+    if normalized.is_empty() {
+        None
+    } else {
+        Some(normalized)
+    }
+}
+
 pub fn apply_uts_spoof(superkey: &Option<String>) {
     use std::path::Path;
 
     const MAX_BOOT_RETRIES: u32 = 3;
 
     if !Path::new(crate::defs::UTS_SPOOF_ENABLE_FILE).exists() {
+        let _ = std::fs::remove_file(crate::defs::UTS_SPOOF_RETRY_FILE);
         info!("[uts_spoof] disabled, skipping");
         return;
     }
@@ -903,6 +937,7 @@ pub fn apply_uts_spoof(superkey: &Option<String>) {
     let key = match key {
         Some(k) => k,
         None => {
+            let _ = std::fs::write(crate::defs::UTS_SPOOF_RETRY_FILE, b"1");
             warn!("[uts_spoof] no superkey available");
             return;
         }
@@ -959,11 +994,13 @@ pub fn apply_uts_spoof(superkey: &Option<String>) {
             version_cstr.as_deref(),
         );
         if rc == 0 {
+            let _ = std::fs::remove_file(crate::defs::UTS_SPOOF_RETRY_FILE);
             info!("[uts_spoof] applied: release='{}' version='{}'", release, version);
         } else {
             warn!("[uts_spoof] set failed: {}", rc);
         }
     } else {
+        let _ = std::fs::remove_file(crate::defs::UTS_SPOOF_RETRY_FILE);
         info!("[uts_spoof] config has empty values, skipping set");
     }
 }

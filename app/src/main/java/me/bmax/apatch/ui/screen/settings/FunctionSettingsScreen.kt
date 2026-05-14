@@ -57,6 +57,7 @@ import me.bmax.apatch.util.isPathHideFilterSystemEnabled as checkPathHideFilterS
 import me.bmax.apatch.util.setPathHideEnabled
 import me.bmax.apatch.util.writePathHidePaths
 import me.bmax.apatch.util.readPathHidePaths
+import me.bmax.apatch.util.normalizePathHidePaths
 import me.bmax.apatch.util.isNetIsolateEnabled as checkNetIsolateEnabled
 import me.bmax.apatch.util.readNetIsolateUids
 import me.bmax.apatch.util.setNetIsolateEnabled
@@ -123,7 +124,7 @@ fun FunctionSettingsScreen(navigator: DestinationsNavigator) {
                 // Try to get paths from kernel first, fall back to config file
                 val kernelPaths = Natives.pathHideList()
                 if (kernelPaths.isNotBlank()) {
-                    pathHidePaths = kernelPaths.trimEnd('\n')
+                    pathHidePaths = normalizePathHidePaths(kernelPaths)
                 } else {
                     pathHidePaths = readPathHidePaths()
                 }
@@ -179,10 +180,16 @@ fun FunctionSettingsScreen(navigator: DestinationsNavigator) {
                 .drop(1)
                 .debounce(1000L)
                 .collect { paths ->
-                    writePathHidePaths(paths)
+                    val normalizedPaths = normalizePathHidePaths(paths)
+                    if (normalizedPaths != paths) {
+                        withContext(Dispatchers.Main) {
+                            pathHidePaths = normalizedPaths
+                        }
+                    }
+                    writePathHidePaths(normalizedPaths)
                     Natives.pathHideClear()
-                    if (paths.isNotBlank()) {
-                        paths.lines()
+                    if (normalizedPaths.isNotBlank()) {
+                        normalizedPaths.lines()
                             .map { it.trim() }
                             .filter { it.isNotBlank() }
                             .forEach { path -> Natives.pathHideAdd(path) }
@@ -339,7 +346,7 @@ fun FunctionSettingsScreen(navigator: DestinationsNavigator) {
                     pathHidePaths = pathHidePaths,
                     onPathHidePathsChange = { pathHidePaths = it },
                     onPathHideSave = {
-                        val currentPaths = pathHidePaths
+                        val currentPaths = normalizePathHidePaths(pathHidePaths)
                         scope.launch(Dispatchers.IO) {
                             // Save to config file for persistence
                             writePathHidePaths(currentPaths)

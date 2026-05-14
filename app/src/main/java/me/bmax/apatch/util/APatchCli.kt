@@ -483,14 +483,36 @@ fun setPathHideEnabled(enable: Boolean) {
 fun writePathHidePaths(paths: String) {
     val shell = getRootShell()
     shell.newJob().add("mkdir -p ${APApplication.PATHHIDE_DIR}").exec()
-    val escapedPaths = paths.replace("'", "'\\''")
+    val escapedPaths = normalizePathHidePaths(paths).replace("'", "'\\''")
     shell.newJob().add("echo -n '$escapedPaths' > ${APApplication.PATHHIDE_PATHS_FILE}")
         .exec()
 }
 
 fun readPathHidePaths(): String {
     val shell = getRootShell()
-    return ShellUtils.fastCmd(shell, "cat ${APApplication.PATHHIDE_PATHS_FILE} 2>/dev/null") ?: ""
+    val raw = ShellUtils.fastCmd(shell, "cat ${APApplication.PATHHIDE_PATHS_FILE} 2>/dev/null") ?: ""
+    return normalizePathHidePaths(raw)
+}
+
+fun normalizePathHidePaths(paths: String): String {
+    return paths.lines()
+        .mapNotNull { normalizePathHidePath(it) }
+        .distinct()
+        .joinToString("\n")
+}
+
+private fun normalizePathHidePath(path: String): String? {
+    val trimmed = path.trim()
+    if (trimmed.isEmpty() || !trimmed.startsWith("/")) {
+        return null
+    }
+
+    var normalized = trimmed.replace(Regex("/+"), "/")
+    while (normalized.length > 1 && normalized.endsWith("/")) {
+        normalized = normalized.dropLast(1)
+    }
+
+    return normalized.ifEmpty { null }
 }
 
 fun writePathHideUids(uids: String) {

@@ -295,6 +295,16 @@ fn run_stage(stage: &str, superkey: Option<String>, block: bool) {
 pub fn on_services(superkey: Option<String>) -> Result<()> {
     info!("on_services triggered!");
 
+    if Path::new(defs::UTS_SPOOF_RETRY_FILE).exists() {
+        info!("Retrying deferred UTS spoof apply from services stage");
+        supercall::apply_uts_spoof(&superkey);
+    }
+
+    if Path::new(defs::PATHHIDE_RETRY_FILE).exists() {
+        info!("Retrying deferred pathhide apply from services stage");
+        supercall::apply_pathhide(&superkey);
+    }
+
     supercall::autoload_kpm_modules(&superkey, "service");
 
     run_stage("service", superkey, false);
