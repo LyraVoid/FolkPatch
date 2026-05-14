@@ -67,16 +67,8 @@ fun HomeScreenStats(
     }
 
     val showUninstallDialog = remember { mutableStateOf(false) }
-    val showAuthFailedTipDialog = remember { mutableStateOf(false) }
-    val showAuthKeyDialog = remember { mutableStateOf(false) }
     if (showUninstallDialog.value) {
         UninstallDialog(showDialog = showUninstallDialog, navigator)
-    }
-    if (showAuthFailedTipDialog.value) {
-        AuthFailedTipDialog(showDialog = showAuthFailedTipDialog)
-    }
-    if (showAuthKeyDialog.value) {
-        AuthSuperKey(showDialog = showAuthKeyDialog, showFailedDialog = showAuthFailedTipDialog)
     }
 
     val hideApatchCard = APApplication.sharedPreferences.getBoolean("hide_apatch_card", false)
@@ -122,9 +114,9 @@ fun HomeScreenStats(
             if (isWallpaperMode) { Spacer(Modifier.height(8.dp)) }
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 if (useGridTop) {
-                    StatsGridTopSection(kpState, apState, navigator, showUninstallDialog, showAuthKeyDialog)
+                    StatsGridTopSection(kpState, apState, navigator, showUninstallDialog)
                 } else {
-                    StatusCardCircle(kpState, apState, navigator, showUninstallDialog, showAuthKeyDialog)
+                    StatusCardCircle(kpState, apState, navigator, showUninstallDialog)
                     if (kpState != APApplication.State.UNKNOWN_STATE && apState != APApplication.State.UNKNOWN_STATE && apState != APApplication.State.ANDROIDPATCH_INSTALLED) {
                         AStatusCardCircle(apState)
                     }
@@ -153,9 +145,9 @@ fun HomeScreenStats(
         ) {
             if (isWallpaperMode) { Spacer(Modifier.height(8.dp)) }
             if (useGridTop) {
-                StatsGridTopSection(kpState, apState, navigator, showUninstallDialog, showAuthKeyDialog)
+                StatsGridTopSection(kpState, apState, navigator, showUninstallDialog)
             } else {
-                StatusCardCircle(kpState, apState, navigator, showUninstallDialog, showAuthKeyDialog)
+                StatusCardCircle(kpState, apState, navigator, showUninstallDialog)
                 if (kpState != APApplication.State.UNKNOWN_STATE && apState != APApplication.State.UNKNOWN_STATE && apState != APApplication.State.ANDROIDPATCH_INSTALLED) {
                     AStatusCardCircle(apState)
                 }
@@ -654,8 +646,7 @@ private fun StatsGridTopSection(
     kpState: APApplication.State,
     apState: APApplication.State,
     navigator: DestinationsNavigator,
-    showUninstallDialog: MutableState<Boolean>,
-    showAuthKeyDialog: MutableState<Boolean>
+    showUninstallDialog: MutableState<Boolean>
 ) {
     val managerVersion = Version.getManagerVersion()
 
@@ -673,7 +664,7 @@ private fun StatsGridTopSection(
             apState = apState,
             onClick = {
                 when (kpState) {
-                    APApplication.State.UNKNOWN_STATE -> showAuthKeyDialog.value = true
+                    APApplication.State.UNKNOWN_STATE -> Unit
                     APApplication.State.KERNELPATCH_NEED_UPDATE -> navigator.navigate(InstallModeSelectScreenDestination)
                     APApplication.State.KERNELPATCH_INSTALLED -> {}
                     else -> navigator.navigate(InstallModeSelectScreenDestination)

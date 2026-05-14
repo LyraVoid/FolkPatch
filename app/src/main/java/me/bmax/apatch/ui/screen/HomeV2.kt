@@ -65,16 +65,8 @@ fun HomeScreenV2(
         apState
     }
     
-    val showAuthKeyDialog = remember { mutableStateOf(false) }
     val showUninstallDialog = remember { mutableStateOf(false) }
-    val showAuthFailedTipDialog = remember { mutableStateOf(false) }
 
-    if (showAuthFailedTipDialog.value) {
-        AuthFailedTipDialog(showDialog = showAuthFailedTipDialog)
-    }
-    if (showAuthKeyDialog.value) {
-        AuthSuperKey(showDialog = showAuthKeyDialog, showFailedDialog = showAuthFailedTipDialog)
-    }
     if (showUninstallDialog.value) {
         UninstallDialog(showDialog = showUninstallDialog, navigator)
     }
@@ -104,7 +96,7 @@ fun HomeScreenV2(
                 apState = apState,
                 onClick = {
                     when (kpState) {
-                        APApplication.State.UNKNOWN_STATE -> showAuthKeyDialog.value = true
+                        APApplication.State.UNKNOWN_STATE -> Unit
                         APApplication.State.KERNELPATCH_NEED_UPDATE -> navigator.navigate(InstallModeSelectScreenDestination)
                         APApplication.State.KERNELPATCH_INSTALLED -> {} 
                         else -> navigator.navigate(InstallModeSelectScreenDestination)

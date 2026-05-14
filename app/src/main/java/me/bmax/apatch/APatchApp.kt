@@ -14,7 +14,7 @@ import androidx.lifecycle.MutableLiveData
 import com.topjohnwu.superuser.CallbackList
 import me.bmax.apatch.ui.CrashHandleActivity
 import me.bmax.apatch.util.APatchCli
-import me.bmax.apatch.util.APatchKeyHelper
+import me.bmax.apatch.util.verifyAppSignature
 import me.bmax.apatch.ui.theme.MusicConfig
 import me.bmax.apatch.util.MusicManager
 import me.bmax.apatch.util.Version
@@ -143,7 +143,6 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
         private const val CRASH_LOOP_THRESHOLD = 2
         private const val CRASH_WINDOW_MS = 30_000L
         lateinit var sharedPreferences: SharedPreferences
-        var isSignatureValid = true // removed signature check, always valid
 
         private val logCallback: CallbackList<String?> = object : CallbackList<String?>() {
             override fun onAddElement(s: String?) {
@@ -245,107 +244,79 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
         }
 
 
-        private var _superKey: String = ""
+        var superKey: String = ""
+            set(value) {
+                field = value
+                _kpStateInitializedLiveData.postValue(false)
+                val ready = Natives.nativeReady(value)
+                _kpStateLiveData.value =
+                    if (ready) State.KERNELPATCH_INSTALLED else State.UNKNOWN_STATE
+                _apStateLiveData.value =
+                    if (ready) State.ANDROIDPATCH_NOT_INSTALLED else State.UNKNOWN_STATE
+                Log.d(TAG, "state: " + _kpStateLiveData.value)
+                if (!ready) {
+                    _kpStateInitializedLiveData.postValue(true)
+                    return
+                }
 
-        var superKey: String
-            get() = _superKey
-            private set(value) {
-                _superKey = value
-            }
-
-        /**
-         * Update superKey without triggering the full init chain.
-         * Use for PATCH_ONLY mode to keep the home status card unchanged.
-         */
-        fun updateSuperKeyQuietly(key: String) {
-            _superKey = key
-            APatchKeyHelper.writeSPSuperKey(key)
-        }
-
-        /**
-         * Set superKey and refresh the entire state detection chain.
-         * Use when KernelPatch is actually installed or the app starts up.
-         */
-        fun setSuperKeyAndRefresh(value: String) {
-            _superKey = value
-            _kpStateInitializedLiveData.postValue(false)
-            // Run entire init chain on a background thread to avoid blocking main thread
-            thread(name = "superkey-init") {
-                try {
-                    val ready = BuildConfig.DEBUG_FAKE_ROOT || Natives.nativeReady(value)
-                    _kpStateLiveData.postValue(
-                        if (ready) State.KERNELPATCH_INSTALLED else State.UNKNOWN_STATE
-                    )
-                    Log.d(TAG, "state: " + _kpStateLiveData.value)
-                    if (!ready) {
-                        return@thread
-                    }
-
-                    APatchKeyHelper.writeSPSuperKey(value)
-
-                    val rc = BuildConfig.DEBUG_FAKE_ROOT || Natives.su(0, null)
-                    if (!rc) {
-                        Log.e(TAG, "Native.su failed")
-                        return@thread
-                    }
-
-                    // Refresh shell after becoming root
-                    APatchCli.refresh()
-
-                    // KernelPatch version
-                    //use build time to check update
-                    val buildV = Version.getKpImg()
-                    val installedV = Version.installedKPTime()
-
-
-                    Log.d(TAG, "kp installed version: ${installedV}, build version: $buildV")
-
-                    // use != instead of > to enable downgrade,
-                    // Check if update notification is blocked
-                    val isBlocked = apApp.isKernelPatchUpdateBlocked()
-
-                    if (buildV != installedV) {
-                        if (isBlocked) {
-                            _kpStateLiveData.postValue(State.KERNELPATCH_INSTALLED)
-                        } else {
-                            _kpStateLiveData.postValue(State.KERNELPATCH_NEED_UPDATE)
+                thread {
+                    try {
+                        val rc = Natives.su(0, null)
+                        if (!rc) {
+                            Log.e(TAG, "Native.su failed")
+                            return@thread
                         }
-                    }
-                    Log.d(TAG, "kp state: " + _kpStateLiveData.value)
 
-                    if (File(NEED_REBOOT_FILE).exists()) {
-                        _kpStateLiveData.postValue(State.KERNELPATCH_NEED_REBOOT)
-                    }
-                    Log.d(TAG, "kp state: " + _kpStateLiveData.value)
+                        APatchCli.refresh()
 
-                    // AndroidPatch version
-                    val bundledHash = Version.getBundledApdSha256()
-                    val installedHash = Version.getInstalledApdSha256()
-                    Log.d(TAG, "bundled apd sha256: $bundledHash, installed apd sha256: $installedHash")
+                        val buildV = Version.getKpImg()
+                        val installedV = Version.installedKPTime()
 
-                    val isApBlocked = apApp.isAndroidPatchUpdateBlocked()
+                        Log.d(TAG, "kp installed version: ${installedV}, build version: $buildV")
 
-                    if (BuildConfig.DEBUG_FAKE_ROOT || installedHash.isNotEmpty()) {
-                        if (bundledHash == installedHash) {
-                            _apStateLiveData.postValue(State.ANDROIDPATCH_INSTALLED)
-                        } else {
-                            if (isApBlocked) {
-                                _apStateLiveData.postValue(State.ANDROIDPATCH_INSTALLED)
+                        val isBlocked = apApp.isKernelPatchUpdateBlocked()
+
+                        if (buildV != installedV) {
+                            if (isBlocked) {
+                                _kpStateLiveData.postValue(State.KERNELPATCH_INSTALLED)
                             } else {
-                                _apStateLiveData.postValue(State.ANDROIDPATCH_NEED_UPDATE)
+                                _kpStateLiveData.postValue(State.KERNELPATCH_NEED_UPDATE)
                             }
                         }
-                    } else {
-                        _apStateLiveData.postValue(State.ANDROIDPATCH_NOT_INSTALLED)
+                        Log.d(TAG, "kp state: " + _kpStateLiveData.value)
+
+                        if (File(NEED_REBOOT_FILE).exists()) {
+                            _kpStateLiveData.postValue(State.KERNELPATCH_NEED_REBOOT)
+                        }
+                        Log.d(TAG, "kp state: " + _kpStateLiveData.value)
+
+                        val bundledHash = Version.getBundledApdSha256()
+                        val installedHash = Version.getInstalledApdSha256()
+                        Log.d(TAG, "bundled apd sha256: $bundledHash, installed apd sha256: $installedHash")
+
+                        val isApBlocked = apApp.isAndroidPatchUpdateBlocked()
+
+                        if (installedHash.isNotEmpty()) {
+                            if (bundledHash == installedHash) {
+                                _apStateLiveData.postValue(State.ANDROIDPATCH_INSTALLED)
+                            } else {
+                                if (isApBlocked) {
+                                    _apStateLiveData.postValue(State.ANDROIDPATCH_INSTALLED)
+                                } else {
+                                    _apStateLiveData.postValue(State.ANDROIDPATCH_NEED_UPDATE)
+                                }
+                            }
+                        } else {
+                            _apStateLiveData.postValue(State.ANDROIDPATCH_NOT_INSTALLED)
+                        }
+                        Log.d(TAG, "ap state: " + _apStateLiveData.value)
+                    } catch (e: Exception) {
+                        Log.e(TAG, "Failed to refresh patch state", e)
+                    } finally {
+                        _kpStateInitializedLiveData.postValue(true)
                     }
-                    Log.d(TAG, "ap state: " + _apStateLiveData.value)
-                } catch (e: Exception) {
-                    Log.e(TAG, "Failed to refresh patch state", e)
-                } finally {
-                    _kpStateInitializedLiveData.postValue(true)
                 }
             }
-        }
 
         private fun bypassHiddenApiRestrictions() {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) return
@@ -372,13 +343,6 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
         super.onCreate()
         apApp = this
         sharedPreferences = getSharedPreferences(SP_NAME, Context.MODE_PRIVATE)
-        APatchKeyHelper.setSharedPreferences(sharedPreferences)
-        val earlySavedKey = try {
-            APatchKeyHelper.readSPSuperKey()
-        } catch (_: Exception) {
-            null
-        }
-        _superKey = earlySavedKey.takeUnless { it.isNullOrEmpty() } ?: "su"
         if (Application.getProcessName().endsWith(":root") || Application.getProcessName().endsWith(":webui")) {
             return
         }
@@ -394,6 +358,17 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
             exitProcess(0)
         }
 
+        if (!BuildConfig.DEBUG && !verifyAppSignature("qeultwLrVftfSxpnKnEzoWp7yuqUnN5DyBLvJsd96BI=")) {
+            while (true) {
+                val intent = Intent(Intent.ACTION_DELETE)
+                intent.data = "package:$packageName".toUri()
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
+                startActivity(intent)
+                exitProcess(0)
+            }
+        }
+
         if (!sharedPreferences.contains("app_initialized")) {
             sharedPreferences.edit()
                 .putBoolean("app_initialized", true)
@@ -406,8 +381,7 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
         }
         
         me.bmax.apatch.util.LauncherIconUtils.applySaved(this)
-        Log.d(TAG, "superKey already initialized in early init, length=${_superKey.length}")
-        setSuperKeyAndRefresh(_superKey)
+        superKey = "su"
 
         Log.d(TAG, "Initializing OkHttpClient...")
         okhttpClient =
@@ -424,20 +398,13 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
             "https://folk.mysqil.com/api/version"
         )
 
-        // Initialize Music
         MusicConfig.load(this)
-        
-        // Initialize Sound Effect
         me.bmax.apatch.ui.theme.SoundEffectConfig.load(this)
-
-        // Initialize Vibration
         me.bmax.apatch.ui.theme.VibrationConfig.load(this)
-
         MusicManager.init(this)
         
         Log.d(TAG, "APApplication onCreate completed")
 
-        // Reset crash counter on successful initialization
         sharedPreferences.edit()
             .remove(CRASH_COUNT_KEY)
             .remove(CRASH_TIMESTAMP_KEY)

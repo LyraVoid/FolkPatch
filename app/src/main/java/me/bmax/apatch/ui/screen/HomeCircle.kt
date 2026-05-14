@@ -70,16 +70,8 @@ fun HomeScreenCircle(
     }
 
     val showUninstallDialog = remember { mutableStateOf(false) }
-    val showAuthFailedTipDialog = remember { mutableStateOf(false) }
-    val showAuthKeyDialog = remember { mutableStateOf(false) }
     if (showUninstallDialog.value) {
         UninstallDialog(showDialog = showUninstallDialog, navigator)
-    }
-    if (showAuthFailedTipDialog.value) {
-        AuthFailedTipDialog(showDialog = showAuthFailedTipDialog)
-    }
-    if (showAuthKeyDialog.value) {
-        AuthSuperKey(showDialog = showAuthKeyDialog, showFailedDialog = showAuthFailedTipDialog)
     }
 
     Column(
@@ -96,7 +88,7 @@ fun HomeScreenCircle(
         }
         
         // Status Card
-        StatusCardCircle(kpState, apState, navigator, showUninstallDialog, showAuthKeyDialog)
+        StatusCardCircle(kpState, apState, navigator, showUninstallDialog)
 
         // Superuser and Module Cards
         val showCoreCards = kpState != APApplication.State.UNKNOWN_STATE
@@ -217,8 +209,7 @@ fun StatusCardCircle(
     kpState: APApplication.State,
     apState: APApplication.State,
     navigator: DestinationsNavigator,
-    showUninstallDialog: MutableState<Boolean>,
-    showAuthKeyDialog: MutableState<Boolean>
+    showUninstallDialog: MutableState<Boolean>
 ) {
     val isWorking = kpState == APApplication.State.KERNELPATCH_INSTALLED
     val isUpdate = kpState == APApplication.State.KERNELPATCH_NEED_UPDATE || kpState == APApplication.State.KERNELPATCH_NEED_REBOOT
@@ -247,9 +238,7 @@ fun StatusCardCircle(
                         if (apState == APApplication.State.ANDROIDPATCH_INSTALLED) {
                             showUninstallDialog.value = true
                         }
-                    } else if (kpState == APApplication.State.UNKNOWN_STATE) {
-                        showAuthKeyDialog.value = true
-                    } else {
+                    } else if (kpState != APApplication.State.UNKNOWN_STATE) {
                         navigator.navigate(com.ramcosta.composedestinations.generated.destinations.InstallModeSelectScreenDestination)
                     }
                 }

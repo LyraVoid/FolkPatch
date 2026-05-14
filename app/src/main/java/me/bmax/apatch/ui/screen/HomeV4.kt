@@ -158,19 +158,11 @@ fun HomeScreenV4(
 
     // 对话框状态
     val showUninstallDialog = remember { mutableStateOf(false) }
-    val showAuthFailedTipDialog = remember { mutableStateOf(false) }
-    val showAuthKeyDialog = remember { mutableStateOf(false) }
     val showInstallDialog = remember { mutableStateOf(false) }
 
     // 对话框显示
     if (showUninstallDialog.value) {
         UninstallDialog(showDialog = showUninstallDialog, navigator)
-    }
-    if (showAuthFailedTipDialog.value) {
-        AuthFailedTipDialog(showDialog = showAuthFailedTipDialog)
-    }
-    if (showAuthKeyDialog.value) {
-        AuthSuperKey(showDialog = showAuthKeyDialog, showFailedDialog = showAuthFailedTipDialog)
     }
     if (showInstallDialog.value) {
         InstallProgressDialog(
@@ -240,7 +232,6 @@ fun HomeScreenV4(
             kpState = kpStateResolved,
             apState = apStateResolved,
             navigator = navigator,
-            showAuthKeyDialog = showAuthKeyDialog,
             showUninstallDialog = showUninstallDialog,
             showInstallDialog = showInstallDialog,
             isWallpaperMode = isWallpaperMode
@@ -328,7 +319,6 @@ private fun HeroStatusCard(
     kpState: APApplication.State,
     apState: APApplication.State,
     navigator: DestinationsNavigator,
-    showAuthKeyDialog: MutableState<Boolean>,
     showUninstallDialog: MutableState<Boolean>,
     showInstallDialog: MutableState<Boolean>,
     isWallpaperMode: Boolean
@@ -500,9 +490,7 @@ private fun HeroStatusCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable {
-                    if (isUnknown) {
-                        showAuthKeyDialog.value = true
-                    } else {
+                    if (!isUnknown) {
                         navigator.navigate(InstallModeSelectScreenDestination)
                     }
                 },

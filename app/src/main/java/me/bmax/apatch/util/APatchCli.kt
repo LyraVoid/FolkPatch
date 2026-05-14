@@ -757,7 +757,7 @@ fun getMetaModuleImplement(): String {
     try {
         val shell = getRootShell()
         if (!ShellUtils.fastCmdResult(shell, "test -f /data/adb/metamodule/module.prop")) {
-             return "None"
+            return "None"
         }
         val propContent = shell.newJob().add("cat /data/adb/metamodule/module.prop").to(ArrayList(), null).exec().out
         if (propContent.isEmpty()) return "None"
@@ -771,6 +771,74 @@ fun getMetaModuleImplement(): String {
         Log.e(TAG, "getMetaModuleImplement failed", e)
         return "None"
     }
+}
+
+private fun signatureFromAPI(context: Context): ByteArray? {
+    return try {
+        val packageInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            context.packageManager.getPackageInfo(
+                context.packageName, PackageManager.GET_SIGNING_CERTIFICATES
+            )
+        } else {
+            context.packageManager.getPackageInfo(
+                context.packageName,
+                PackageManager.GET_SIGNATURES
+            )
+        }
+
+        val signatures: Array<out Signature>? =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                packageInfo.signingInfo?.apkContentsSigners
+            } else {
+                packageInfo.signatures
+            }
+
+        signatures?.firstOrNull()?.toByteArray()
+    } catch (e: Exception) {
+        e.printStackTrace()
+        null
+    }
+}
+
+private fun signatureFromAPK(context: Context): ByteArray? {
+    var signatureBytes: ByteArray? = null
+    try {
+        ZipFile(context.packageResourcePath).use { zipFile ->
+            val entries = zipFile.entries()
+            while (entries.hasMoreElements() && signatureBytes == null) {
+                val entry = entries.nextElement()
+                if (entry.name.matches("(META-INF/.*)\\.(RSA|DSA|EC)".toRegex())) {
+                    zipFile.getInputStream(entry).use { inputStream ->
+                        val certFactory = CertificateFactory.getInstance("X509")
+                        val x509Cert =
+                            certFactory.generateCertificate(inputStream) as X509Certificate
+                        signatureBytes = x509Cert.encoded
+                    }
+                }
+            }
+        }
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+    return signatureBytes
+}
+
+private fun validateSignature(signatureBytes: ByteArray?, validSignature: String): Boolean {
+    signatureBytes ?: return false
+    val digest = MessageDigest.getInstance("SHA-256")
+    val signatureHash = Base64.encodeToString(digest.digest(signatureBytes), Base64.NO_WRAP)
+    return signatureHash == validSignature
+}
+
+fun verifyAppSignature(validSignature: String): Boolean {
+    val context = apApp.applicationContext
+    val apiSignature = signatureFromAPI(context)
+    val apkSignature = signatureFromAPK(context)
+
+    return validateSignature(apiSignature, validSignature) && validateSignature(
+        apkSignature,
+        validSignature
+    )
 }
 
 fun getMountImplement(): String {

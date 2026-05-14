@@ -70,9 +70,7 @@ fun HomeScreenV3(
     // Only enable wallpaper mode (no card shadow) if custom background is actually enabled
     val isWallpaperMode = BackgroundConfig.isCustomBackgroundEnabled && (BackgroundConfig.customBackgroundUri != null || BackgroundConfig.isMultiBackgroundEnabled)
     
-    val showAuthKeyDialog = remember { mutableStateOf(false) }
     val showUninstallDialog = remember { mutableStateOf(false) }
-    val showAuthFailedTipDialog = remember { mutableStateOf(false) }
 
     val defaultSlot = stringResource(R.string.home_info_auth_na)
     var deviceSlot by remember { mutableStateOf(defaultSlot) }
@@ -98,12 +96,6 @@ fun HomeScreenV3(
         }
     }
 
-    if (showAuthFailedTipDialog.value) {
-        AuthFailedTipDialog(showDialog = showAuthFailedTipDialog)
-    }
-    if (showAuthKeyDialog.value) {
-        AuthSuperKey(showDialog = showAuthKeyDialog, showFailedDialog = showAuthFailedTipDialog)
-    }
     if (showUninstallDialog.value) {
         UninstallDialog(showDialog = showUninstallDialog, navigator)
     }
@@ -128,7 +120,6 @@ fun HomeScreenV3(
                     KernelPatchCard(
                         kpState = kpState,
                         navigator = navigator,
-                        showAuthKeyDialog = showAuthKeyDialog,
                         isWallpaperMode = isWallpaperMode,
                         zygiskImplement = zygiskImplement,
                         mountImplement = mountImplement,
@@ -163,7 +154,6 @@ fun HomeScreenV3(
                 KernelPatchCard(
                     kpState = kpState,
                     navigator = navigator,
-                    showAuthKeyDialog = showAuthKeyDialog,
                     isWallpaperMode = isWallpaperMode,
                     zygiskImplement = zygiskImplement,
                     mountImplement = mountImplement
@@ -188,7 +178,6 @@ fun HomeScreenV3(
 private fun KernelPatchCard(
     kpState: APApplication.State,
     navigator: DestinationsNavigator,
-    showAuthKeyDialog: MutableState<Boolean>,
     isWallpaperMode: Boolean,
     zygiskImplement: String,
     mountImplement: String,
@@ -205,9 +194,7 @@ private fun KernelPatchCard(
         showAction = kpState != APApplication.State.KERNELPATCH_INSTALLED,
         isWallpaperMode = isWallpaperMode,
         onActionClick = {
-            if (kpState == APApplication.State.UNKNOWN_STATE) {
-                showAuthKeyDialog.value = true
-            } else {
+            if (kpState != APApplication.State.UNKNOWN_STATE) {
                 navigator.navigate(InstallModeSelectScreenDestination)
             }
         },
