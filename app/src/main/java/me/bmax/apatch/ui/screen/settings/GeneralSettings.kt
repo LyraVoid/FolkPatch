@@ -169,7 +169,10 @@ fun GeneralSettingsContent(
     val currentSpeed = remember { prefs.getFloat("folkx_animation_speed", 1.0f) }
     var predictiveBackEnabled by remember { mutableStateOf(prefs.getBoolean("predictive_back_enabled", true)) }
     var newAppProfileMode by remember {
-        mutableIntStateOf(loadNewAppProfileMode(prefs))
+        mutableIntStateOf(prefs.getInt(APApplication.PREF_AUTO_EXCLUDE_NEW_APPS, 0))
+    }
+    LaunchedEffect(Unit) {
+        newAppProfileMode = loadNewAppProfileMode(prefs)
     }
     val currentNewAppProfileLabel = when (newAppProfileMode) {
         1 -> stringResource(R.string.settings_new_app_profile_root)
@@ -800,7 +803,7 @@ fun NewAppProfileModeDialog(
     }
 }
 
-private fun loadNewAppProfileMode(prefs: SharedPreferences): Int {
+private suspend fun loadNewAppProfileMode(prefs: SharedPreferences): Int = withContext(Dispatchers.IO) {
     val fallback = runCatching {
         prefs.getInt(APApplication.PREF_AUTO_EXCLUDE_NEW_APPS, 0)
     }.getOrDefault(0)
@@ -810,7 +813,7 @@ private fun loadNewAppProfileMode(prefs: SharedPreferences): Int {
     if (nativeMode != fallback) {
         prefs.edit { putInt(APApplication.PREF_AUTO_EXCLUDE_NEW_APPS, nativeMode) }
     }
-    return nativeMode
+    nativeMode
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -1437,7 +1440,13 @@ fun AppListLoadingSchemeDialog(showDialog: MutableState<Boolean>) {
 @Composable
 fun ResetSUPathDialog(showDialog: MutableState<Boolean>) {
     val context = LocalContext.current
-    var suPath by remember { mutableStateOf(me.bmax.apatch.Natives.suPath()) }
+    val scope = rememberCoroutineScope()
+    var suPath by remember { mutableStateOf("/system/bin/su") }
+    LaunchedEffect(Unit) {
+        suPath = withContext(Dispatchers.IO) {
+            runCatching { me.bmax.apatch.Natives.suPath() }.getOrDefault("/system/bin/su")
+        }
+    }
     BasicAlertDialog(
         onDismissRequest = { showDialog.value = false }, properties = DialogProperties(
             decorFitsSystemWindows = true,
@@ -1489,9 +1498,21 @@ fun ResetSUPathDialog(showDialog: MutableState<Boolean>) {
 
                     Button(enabled = suPath.startsWith("/") && suPath.trim().length > 1, onClick = {
                         showDialog.value = false
-                        val success = me.bmax.apatch.Natives.resetSuPath(suPath)
-                        showToast(context, if (success) R.string.success else R.string.failure)
-                        rootShellForResult("echo $suPath > ${APApplication.SU_PATH_FILE}")
+                        val newPath = suPath.trim()
+                        scope.launch {
+                            val success = withContext(Dispatchers.IO) {
+                                runCatching {
+                                    val reset = me.bmax.apatch.Natives.resetSuPath(newPath)
+                                    if (reset) {
+                                        rootShellForResult(
+                                            "printf %s ${newPath.shellSingleQuoted()} > ${APApplication.SU_PATH_FILE}"
+                                        )
+                                    }
+                                    reset
+                                }.getOrDefault(false)
+                            }
+                            showToast(context, if (success) R.string.success else R.string.failure)
+                        }
                     }) {
                         Text(stringResource(id = android.R.string.ok))
                     }
@@ -1501,6 +1522,10 @@ fun ResetSUPathDialog(showDialog: MutableState<Boolean>) {
             APDialogBlurBehindUtils.setupWindowBlurListener(dialogWindowProvider.window)
         }
     }
+}
+
+private fun String.shellSingleQuoted(): String {
+    return "'" + replace("'", "'\\''") + "'"
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

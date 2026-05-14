@@ -34,6 +34,8 @@ import coil.memory.MemoryCache
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
 import coil.util.DebugLogger
+import me.zhanghai.android.appiconloader.coil.AppIconFetcher
+import me.zhanghai.android.appiconloader.coil.AppIconKeyer
 
 lateinit var apApp: APApplication
 
@@ -47,8 +49,11 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
     }
 
     override fun newImageLoader(): ImageLoader {
+        val iconSize = resources.getDimensionPixelSize(android.R.dimen.app_icon_size)
         return ImageLoader.Builder(this)
             .components {
+                add(AppIconKeyer())
+                add(AppIconFetcher.Factory(iconSize, false, this@APApplication))
                 if (Build.VERSION.SDK_INT >= 28) {
                     add(ImageDecoderDecoder.Factory())
                 } else {
@@ -67,7 +72,7 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
                     .build()
             )
             .crossfade(true)
-            .logger(DebugLogger())
+            .logger(if (BuildConfig.DEBUG) DebugLogger() else null)
             .build()
     }
 

@@ -96,10 +96,6 @@ import com.ramcosta.composedestinations.generated.destinations.ModuleSettingsScr
 import com.ramcosta.composedestinations.generated.destinations.MultimediaSettingsScreenDestination
 import com.ramcosta.composedestinations.generated.destinations.SecuritySettingsScreenDestination
 import com.ramcosta.composedestinations.generated.destinations.SettingScreenDestination
-import coil.Coil
-import coil.ImageLoader
-import coil.disk.DiskCache
-import coil.memory.MemoryCache
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.animations.NavHostAnimatedDestinationStyle
 import com.ramcosta.composedestinations.generated.NavGraphs
@@ -118,7 +114,6 @@ import androidx.compose.material3.MaterialTheme
 import me.bmax.apatch.util.PermissionRequestHandler
 import me.bmax.apatch.util.PermissionUtils
 import me.bmax.apatch.util.ui.LocalSnackbarHost
-import me.zhanghai.android.appiconloader.coil.AppIconFetcher
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.LocalContext
@@ -157,7 +152,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.coroutineScope
 import kotlin.system.exitProcess
-import me.zhanghai.android.appiconloader.coil.AppIconKeyer
 import me.bmax.apatch.util.UpdateChecker
 import me.bmax.apatch.ui.component.UpdateDialog
 
@@ -891,55 +885,20 @@ class MainActivity : AppCompatActivity() {
         }
         }
 
-        // Initialize Coil
-        val iconSize = resources.getDimensionPixelSize(android.R.dimen.app_icon_size)
-        Coil.setImageLoader(
-            ImageLoader.Builder(this)
-                .components {
-                    add(AppIconKeyer())
-                    add(AppIconFetcher.Factory(iconSize, false, this@MainActivity))
-                    if (Build.VERSION.SDK_INT >= 28) {
-                        add(coil.decode.ImageDecoderDecoder.Factory())
-                    } else {
-                        add(coil.decode.GifDecoder.Factory())
-                    }
-                }
-                .diskCache(
-                    DiskCache.Builder()
-                        .directory(cacheDir.resolve("image_cache"))
-                        .maxSizeBytes(100L * 1024 * 1024)
-                        .build()
-                )
-                .memoryCache(
-                    MemoryCache.Builder(this@MainActivity)
-                        .maxSizePercent(0.20)
-                        .build()
-                )
-                .crossfade(true)
-                .build()
-        )
-
         var splashDismissed = false
-        var initializationObserver: Observer<Boolean>? = null
         val dismissSplash = {
             if (!splashDismissed) {
                 splashDismissed = true
-                initializationObserver?.let { APApplication.kpStateInitializedLiveData.removeObserver(it) }
-                initializationObserver = null
                 isLoading = false
             }
         }
-        initializationObserver = object : Observer<Boolean> {
-            override fun onChanged(initialized: Boolean) {
-                if (initialized) {
+        APApplication.kpStateInitializedLiveData.observe(this, object : Observer<Boolean> {
+            override fun onChanged(value: Boolean) {
+                if (value) {
                     dismissSplash()
                 }
             }
-        }
-        val observer = initializationObserver
-        if (observer != null) {
-            APApplication.kpStateInitializedLiveData.observeForever(observer)
-        }
+        })
         Handler(Looper.getMainLooper()).postDelayed({
             android.util.Log.w("MainActivity", "Splash timeout fallback triggered")
             dismissSplash()
