@@ -410,6 +410,8 @@ pub fn autoload_kpm_modules(superkey: &Option<String>, event_filter: &str) {
         enabled: bool,
         #[serde(default, rename = "kpmEntries")]
         kpm_entries: Vec<KpmAutoLoadEntry>,
+        #[serde(default, rename = "kpmPaths")]
+        legacy_kpm_paths: Vec<String>,
     }
 
     let config_path = crate::defs::KPM_AUTOLOAD_CONFIG;
@@ -429,7 +431,25 @@ pub fn autoload_kpm_modules(superkey: &Option<String>, event_filter: &str) {
         }
     };
 
-    if !config.enabled || config.kpm_entries.is_empty() {
+    let KpmAutoLoadConfig {
+        enabled,
+        mut kpm_entries,
+        legacy_kpm_paths,
+    } = config;
+
+    if kpm_entries.is_empty() && !legacy_kpm_paths.is_empty() {
+        info!("[kpm_autoload] using legacy kpmPaths config");
+        kpm_entries = legacy_kpm_paths
+            .into_iter()
+            .map(|path| KpmAutoLoadEntry {
+                path,
+                event: default_event(),
+                args: String::new(),
+            })
+            .collect();
+    }
+
+    if !enabled || kpm_entries.is_empty() {
         info!("[kpm_autoload] disabled or no entries configured, skipping");
         return;
     }
@@ -445,17 +465,17 @@ pub fn autoload_kpm_modules(superkey: &Option<String>, event_filter: &str) {
 
     const MAX_KPM_MODULES: usize = 64;
 
-    if config.kpm_entries.len() > MAX_KPM_MODULES {
+    if kpm_entries.len() > MAX_KPM_MODULES {
         warn!(
             "[kpm_autoload] too many entries ({}), truncating to {}",
-            config.kpm_entries.len(),
+            kpm_entries.len(),
             MAX_KPM_MODULES
         );
     }
 
     let mut success = 0u32;
     let mut fail = 0u32;
-    for entry in config.kpm_entries.iter().take(MAX_KPM_MODULES) {
+    for entry in kpm_entries.iter().take(MAX_KPM_MODULES) {
         if entry.event != event_filter {
             info!("[kpm_autoload] skipping '{}' (event='{}', expected='{}')", entry.path, entry.event, event_filter);
             continue;

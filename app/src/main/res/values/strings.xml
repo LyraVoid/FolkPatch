@@ -626,13 +626,16 @@ Here are some possible reasons for authentication failure—please check which o
     <string name="kpm_autoload_json_label">Configuration JSON</string>
     <string name="kpm_autoload_json_placeholder">{
   "enabled": true,
-  "kpmPaths": [
-    "/path/to/module1.kpm",
-    "/path/to/module2.kpm"
+  "kpmEntries": [
+    {
+      "path": "/data/adb/fp/kpms/autoload/module1.kpm",
+      "event": "service",
+      "args": ""
+    }
   ]
 }</string>
     <string name="kpm_autoload_json_error">Invalid JSON format</string>
-    <string name="kpm_autoload_json_helper">Enter valid JSON with array of KPM file paths</string>
+    <string name="kpm_autoload_json_helper">Enter valid JSON using kpmEntries; paths must point to imported files in /data/adb/fp/kpms/autoload</string>
     <string name="kpm_autoload_save">Save Configuration</string>
     <string name="kpm_autoload_save_confirm">Save auto-load configuration?</string>
     <string name="kpm_autoload_save_success">Configuration saved successfully</string>

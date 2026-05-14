@@ -216,7 +216,7 @@ object KpmAutoLoadManager {
             val kpmEntries = mutableListOf<KpmAutoLoadEntry>()
 
             val entriesArray = jsonObject.optJSONArray("kpmEntries")
-            if (entriesArray != null) {
+            if (entriesArray != null && entriesArray.length() > 0) {
                 for (i in 0 until entriesArray.length()) {
                     val item = entriesArray.optJSONObject(i) ?: continue
                     val path = item.optString("path", "")
@@ -226,6 +226,16 @@ object KpmAutoLoadManager {
                             event = item.optString("event", "service"),
                             args = item.optString("args", "")
                         ))
+                    }
+                }
+            } else {
+                val pathsArray = jsonObject.optJSONArray("kpmPaths")
+                if (pathsArray != null) {
+                    for (i in 0 until pathsArray.length()) {
+                        val path = pathsArray.optString(i, "")
+                        if (path.isNotEmpty()) {
+                            kpmEntries.add(KpmAutoLoadEntry(path = path))
+                        }
                     }
                 }
             }

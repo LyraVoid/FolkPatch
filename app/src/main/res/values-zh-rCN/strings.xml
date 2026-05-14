@@ -565,13 +565,16 @@
     <string name="kpm_autoload_json_label">JSON配置</string>
     <string name="kpm_autoload_json_placeholder">{
   "enabled": true,
-  "kpmPaths": [
-    "/path/to/module1.kpm",
-    "/path/to/module2.kpm"
+  "kpmEntries": [
+    {
+      "path": "/data/adb/fp/kpms/autoload/module1.kpm",
+      "event": "service",
+      "args": ""
+    }
   ]
 }</string>
     <string name="kpm_autoload_json_error">无效的JSON格式</string>
-    <string name="kpm_autoload_json_helper">输入有效的JSON，包含KPM文件路径数组</string>
+    <string name="kpm_autoload_json_helper">输入有效的 kpmEntries JSON，路径必须指向 /data/adb/fp/kpms/autoload 下已导入的文件</string>
     <string name="kpm_autoload_save">保存配置</string>
     <string name="kpm_autoload_save_confirm">保存自动加载配置？</string>
     <string name="kpm_autoload_save_success">配置保存成功</string>
