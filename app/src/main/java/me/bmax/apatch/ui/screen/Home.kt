@@ -204,6 +204,7 @@ fun HomeScreenV1(
         if (kpState != APApplication.State.UNKNOWN_STATE && apState != APApplication.State.UNKNOWN_STATE && apState != APApplication.State.ANDROIDPATCH_INSTALLED) {
             AStatusCard(apState)
         }
+        ListInfoCard(kpState, apState)
         val hideApatchCard = APApplication.sharedPreferences.getBoolean("hide_apatch_card", false)
         if (!hideApatchCard) {
             LearnMoreCard()
@@ -1166,6 +1167,92 @@ fun InfoCard(kpState: APApplication.State, apState: APApplication.State) {
 
             InfoCardItem(stringResource(R.string.home_selinux_status), getSELinuxStatus())
 
+        }
+    }
+}
+
+@Composable
+fun ListInfoCard(kpState: APApplication.State, apState: APApplication.State) {
+    val hideSuPath = remember { mutableStateOf(APApplication.sharedPreferences.getBoolean("hide_su_path", false)) }
+    val hideKpatchVersion = remember { mutableStateOf(APApplication.sharedPreferences.getBoolean("hide_kpatch_version", false)) }
+    val hideFingerprint = remember { mutableStateOf(APApplication.sharedPreferences.getBoolean("hide_fingerprint", false)) }
+    val hideZygisk = remember { mutableStateOf(APApplication.sharedPreferences.getBoolean("hide_zygisk", false)) }
+    val hideMount = remember { mutableStateOf(APApplication.sharedPreferences.getBoolean("hide_mount", false)) }
+
+    var zygiskImplement by remember { mutableStateOf("None") }
+    var mountImplement by remember { mutableStateOf("None") }
+    LaunchedEffect(Unit) {
+        withContext(kotlinx.coroutines.Dispatchers.IO) {
+            try {
+                zygiskImplement = me.bmax.apatch.util.getZygiskImplement()
+                mountImplement = me.bmax.apatch.util.getMountImplement()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    Card(
+        shape = RoundedCornerShape(20.dp),
+        colors = CardDefaults.cardColors(containerColor = if (BackgroundConfig.isCustomBackgroundEnabled) {
+            MaterialTheme.colorScheme.surface
+        } else {
+            MaterialTheme.colorScheme.surfaceColorAtElevation(1.dp)
+        })
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 24.dp, top = 24.dp, end = 24.dp, bottom = 16.dp)
+        ) {
+            val uname = Os.uname()
+
+            @Composable
+            fun InfoCardItem(label: String, content: String) {
+                Text(text = label, style = MaterialTheme.typography.bodyLarge)
+                Text(text = content, style = MaterialTheme.typography.bodyMedium)
+            }
+
+            if (kpState != APApplication.State.UNKNOWN_STATE && !hideKpatchVersion.value) {
+                InfoCardItem(stringResource(R.string.home_kpatch_version), Version.installedKPVString())
+                Spacer(Modifier.height(16.dp))
+            }
+
+            if (kpState != APApplication.State.UNKNOWN_STATE && !hideSuPath.value) {
+                InfoCardItem(stringResource(R.string.home_su_path), Natives.suPath())
+                Spacer(Modifier.height(16.dp))
+            }
+
+            if (apState != APApplication.State.UNKNOWN_STATE && apState != APApplication.State.ANDROIDPATCH_NOT_INSTALLED) {
+                InfoCardItem(stringResource(R.string.home_apatch_version), managerVersion.second.toString())
+                Spacer(Modifier.height(16.dp))
+            }
+
+            InfoCardItem(stringResource(R.string.home_device_info), getDeviceInfo())
+            Spacer(Modifier.height(16.dp))
+
+            InfoCardItem(stringResource(R.string.home_kernel), uname.release)
+            Spacer(Modifier.height(16.dp))
+
+            InfoCardItem(stringResource(R.string.home_system_version), getSystemVersion())
+            Spacer(Modifier.height(16.dp))
+
+            if (!hideFingerprint.value) {
+                InfoCardItem(stringResource(R.string.home_fingerprint), Build.FINGERPRINT)
+                Spacer(Modifier.height(16.dp))
+            }
+
+            if (kpState != APApplication.State.UNKNOWN_STATE && zygiskImplement != "None" && !hideZygisk.value) {
+                InfoCardItem(stringResource(R.string.home_zygisk_implement), zygiskImplement)
+                Spacer(Modifier.height(16.dp))
+            }
+
+            if (kpState != APApplication.State.UNKNOWN_STATE && mountImplement != "None" && !hideMount.value) {
+                InfoCardItem(stringResource(R.string.home_mount_implement), mountImplement)
+                Spacer(Modifier.height(16.dp))
+            }
+
+            InfoCardItem(stringResource(R.string.home_selinux_status), getSELinuxStatus())
         }
     }
 }
