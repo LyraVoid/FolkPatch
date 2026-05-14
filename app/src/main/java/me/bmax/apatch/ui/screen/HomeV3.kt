@@ -194,9 +194,7 @@ private fun KernelPatchCard(
         showAction = kpState != APApplication.State.KERNELPATCH_INSTALLED,
         isWallpaperMode = isWallpaperMode,
         onActionClick = {
-            if (kpState != APApplication.State.UNKNOWN_STATE) {
-                navigator.navigate(InstallModeSelectScreenDestination)
-            }
+            navigator.navigate(InstallModeSelectScreenDestination)
         },
         modifier = modifier
     ) {

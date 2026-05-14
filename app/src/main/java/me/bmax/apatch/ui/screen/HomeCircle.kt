@@ -238,7 +238,7 @@ fun StatusCardCircle(
                         if (apState == APApplication.State.ANDROIDPATCH_INSTALLED) {
                             showUninstallDialog.value = true
                         }
-                    } else if (kpState != APApplication.State.UNKNOWN_STATE) {
+                    } else {
                         navigator.navigate(com.ramcosta.composedestinations.generated.destinations.InstallModeSelectScreenDestination)
                     }
                 }

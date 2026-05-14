@@ -490,9 +490,7 @@ private fun HeroStatusCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable {
-                    if (!isUnknown) {
-                        navigator.navigate(InstallModeSelectScreenDestination)
-                    }
+                    navigator.navigate(InstallModeSelectScreenDestination)
                 },
             shape = RoundedCornerShape(20.dp),
             colors = CardDefaults.cardColors(

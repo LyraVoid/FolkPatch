@@ -96,7 +96,7 @@ fun HomeScreenV2(
                 apState = apState,
                 onClick = {
                     when (kpState) {
-                        APApplication.State.UNKNOWN_STATE -> Unit
+                        APApplication.State.UNKNOWN_STATE -> navigator.navigate(InstallModeSelectScreenDestination)
                         APApplication.State.KERNELPATCH_NEED_UPDATE -> navigator.navigate(InstallModeSelectScreenDestination)
                         APApplication.State.KERNELPATCH_INSTALLED -> {} 
                         else -> navigator.navigate(InstallModeSelectScreenDestination)
