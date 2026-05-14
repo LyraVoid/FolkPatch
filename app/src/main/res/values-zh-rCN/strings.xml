@@ -105,7 +105,7 @@
 
     <string name="home_not_installed">未安装</string>
     <string name="home_install_unknown">内核补丁未安装</string>
-    <string name="home_install_unknown_summary">当前无法获取 Root，可能尚未修补或未刷入内核。</string>
+    <string name="home_install_unknown_summary">当前无法获取 Root\n可能尚未修补或未刷入内核</string>
     <string name="home_click_to_install">点击安装</string>
     <string name="home_working">工作中</string>
     <string name="home_version">版本: %s</string>

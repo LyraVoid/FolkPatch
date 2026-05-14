@@ -111,7 +111,7 @@
 
     <string name="home_not_installed">Not installed</string>
     <string name="home_install_unknown">KernelPatch not installed</string>
-    <string name="home_install_unknown_summary">Root is unavailable. The kernel may not be patched or flashed yet.</string>
+    <string name="home_install_unknown_summary">Root is unavailable\nThe kernel may not be patched or flashed yet</string>
     <string name="home_click_to_install">Click to install</string>
     <string name="home_working">Working</string>
     <string name="home_version">Version: %s</string>
