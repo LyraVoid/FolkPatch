@@ -148,6 +148,8 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
 
         private val _kpStateLiveData = MutableLiveData(State.UNKNOWN_STATE)
         val kpStateLiveData: LiveData<State> = _kpStateLiveData
+        private val _kpStateInitializedLiveData = MutableLiveData(false)
+        val kpStateInitializedLiveData: LiveData<Boolean> = _kpStateInitializedLiveData
 
         private val _apStateLiveData = MutableLiveData(State.UNKNOWN_STATE)
         val apStateLiveData: LiveData<State> = _apStateLiveData
@@ -261,6 +263,7 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
          */
         fun setSuperKeyAndRefresh(value: String) {
             _superKey = value
+            _kpStateInitializedLiveData.postValue(false)
             // Run entire init chain on a background thread to avoid blocking main thread
             thread(name = "superkey-init") {
                 val ready = BuildConfig.DEBUG_FAKE_ROOT || Natives.nativeReady(value)
@@ -268,7 +271,10 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
                     if (ready) State.KERNELPATCH_INSTALLED else State.UNKNOWN_STATE
                 )
                 Log.d(TAG, "state: " + _kpStateLiveData.value)
-                if (!ready) return@thread
+                if (!ready) {
+                    _kpStateInitializedLiveData.postValue(true)
+                    return@thread
+                }
 
                 APatchKeyHelper.writeSPSuperKey(value)
 
@@ -328,6 +334,7 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
                     _apStateLiveData.postValue(State.ANDROIDPATCH_NOT_INSTALLED)
                 }
                 Log.d(TAG, "ap state: " + _apStateLiveData.value)
+                _kpStateInitializedLiveData.postValue(true)
             }
         }
 

@@ -920,20 +920,26 @@ class MainActivity : AppCompatActivity() {
         )
 
         var splashDismissed = false
+        var initializationObserver: Observer<Boolean>? = null
         val dismissSplash = {
             if (!splashDismissed) {
                 splashDismissed = true
+                initializationObserver?.let { APApplication.kpStateInitializedLiveData.removeObserver(it) }
+                initializationObserver = null
                 isLoading = false
             }
         }
-        APApplication.kpStateLiveData.observeForever(object : Observer<APApplication.State> {
-            override fun onChanged(state: APApplication.State) {
-                if (state != APApplication.State.UNKNOWN_STATE) {
-                    APApplication.kpStateLiveData.removeObserver(this)
+        initializationObserver = object : Observer<Boolean> {
+            override fun onChanged(initialized: Boolean) {
+                if (initialized) {
                     dismissSplash()
                 }
             }
-        })
+        }
+        val observer = initializationObserver
+        if (observer != null) {
+            APApplication.kpStateInitializedLiveData.observeForever(observer)
+        }
         Handler(Looper.getMainLooper()).postDelayed({
             android.util.Log.w("MainActivity", "Splash timeout fallback triggered")
             dismissSplash()
