@@ -132,12 +132,35 @@ fun createRootShell(globalMnt: Boolean = false): Shell {
 }
 
 object APatchCli {
-    var SHELL: Shell = createRootShell()
-    val GLOBAL_MNT_SHELL: Shell = createRootShell(true)
+    @Volatile
+    private var _shell: Shell? = null
+    @Volatile
+    private var _globalMntShell: Shell? = null
+
+    val SHELL: Shell
+        get() = _shell ?: createRootShellSafe(false).also { _shell = it }
+
+    val GLOBAL_MNT_SHELL: Shell
+        get() = _globalMntShell ?: createRootShellSafe(true).also { _globalMntShell = it }
+
     fun refresh() {
-        val tmp = SHELL
-        SHELL = createRootShell()
-        tmp.close()
+        val old = _shell
+        _shell = createRootShellSafe(false)
+        try { old?.close() } catch (_: Throwable) {}
+    }
+}
+
+private fun createRootShellSafe(globalMnt: Boolean = false): Shell {
+    return try {
+        createRootShell(globalMnt)
+    } catch (e: Throwable) {
+        Log.e(TAG, "Root shell creation failed, falling back to sh", e)
+        try {
+            Shell.Builder.create().setInitializers(RootShellInitializer::class.java).build("sh")
+        } catch (e2: Throwable) {
+            Log.e(TAG, "Even sh fallback failed, returning non-root shell", e2)
+            Shell.Builder.create().build("sh")
+        }
     }
 }
 
