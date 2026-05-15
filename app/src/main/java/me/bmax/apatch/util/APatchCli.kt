@@ -150,7 +150,7 @@ object APatchCli {
     }
 }
 
-private fun createRootShellSafe(globalMnt: Boolean = false): Shell {
+internal fun createRootShellSafe(globalMnt: Boolean = false): Shell {
     return try {
         createRootShell(globalMnt)
     } catch (e: Throwable) {
