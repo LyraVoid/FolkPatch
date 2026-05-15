@@ -87,6 +87,19 @@ pub fn run_command(
     let child = command_builder.spawn()?;
     Ok(child)
 }
+
+pub fn write_stdout_line(line: &str) -> Result<()> {
+    let mut stdout = std::io::stdout();
+    match writeln!(stdout, "{line}") {
+        Ok(()) => Ok(()),
+        Err(err) if err.kind() == std::io::ErrorKind::BrokenPipe => {
+            warn!("stdout closed while writing output, suppressing BrokenPipe");
+            Ok(())
+        }
+        Err(err) => Err(Error::from(err)),
+    }
+}
+
 pub fn is_safe_mode(superkey: Option<String>) -> bool {
     let safemode = getprop("persist.sys.safemode")
         .filter(|prop| prop == "1")

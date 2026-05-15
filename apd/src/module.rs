@@ -827,6 +827,6 @@ fn _list_modules(path: &str) -> Vec<HashMap<String, String>> {
 
 pub fn list_modules() -> Result<()> {
     let modules = _list_modules(defs::MODULE_DIR);
-    println!("{}", serde_json::to_string_pretty(&modules)?);
+    crate::utils::write_stdout_line(&serde_json::to_string_pretty(&modules)?)?;
     Ok(())
 }
