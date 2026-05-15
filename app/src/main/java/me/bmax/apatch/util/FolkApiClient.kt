@@ -86,10 +86,12 @@ object FolkApiClient {
                     throw IOException("HTTP ${response.code}")
                 }
                 lastException = IOException("HTTP ${response.code}")
-            } catch (e: UnknownHostException) {
-                throw e
             } catch (e: SocketTimeoutException) {
+                Log.w(TAG, "Socket timeout for $url (attempt ${attempt + 1}/${maxRetries + 1})")
                 lastException = e
+            } catch (e: UnknownHostException) {
+                Log.w(TAG, "Unknown host for $url: ${e.message}")
+                throw e
             } catch (e: SocketException) {
                 lastException = e
             } catch (e: IOException) {
