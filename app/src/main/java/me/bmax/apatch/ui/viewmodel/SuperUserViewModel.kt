@@ -35,9 +35,9 @@ import java.text.Collator
 import java.util.Locale
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.concurrent.thread
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
 
 
 import android.net.Uri
@@ -98,7 +98,7 @@ class SuperUserViewModel : ViewModel() {
 
     private suspend inline fun connectRootService(
         crossinline onDisconnect: () -> Unit = {}
-    ): Pair<IBinder, ServiceConnection> = suspendCoroutine { continuation ->
+    ): Pair<IBinder, ServiceConnection> = suspendCancellableCoroutine { continuation ->
         val resumed = AtomicBoolean(false)
 
         val connection = object : ServiceConnection {
@@ -117,8 +117,6 @@ class SuperUserViewModel : ViewModel() {
                     }
                 } else {
                     Log.e(TAG, "Service connected but binder is null")
-                    // If binder is null, we can't really resume successfully, but we should unblock.
-                    // However, normally binder is not null.
                 }
             }
         }
@@ -126,6 +124,16 @@ class SuperUserViewModel : ViewModel() {
 
         Log.d(TAG, "Attempting to bind RootService. Shell isRoot: ${APatchCli.SHELL.isRoot}")
         Log.d(TAG, "Shell info: ${APatchCli.SHELL}")
+
+        continuation.invokeOnCancellation {
+            Log.w(TAG, "connectRootService coroutine cancelled, unbinding service")
+            resumed.set(true)
+            try {
+                apApp.unbindService(connection)
+            } catch (e: Exception) {
+                Log.w(TAG, "Failed to unbind service on cancellation", e)
+            }
+        }
 
         val task = RootServices.bindOrTask(
             intent,
@@ -135,12 +143,12 @@ class SuperUserViewModel : ViewModel() {
 
         if (task == null) {
             Log.e(TAG, "RootServices.bindOrTask returned null")
-            continuation.resumeWithException(IllegalStateException("bindOrTask returned null"))
+            if (resumed.compareAndSet(false, true)) {
+                continuation.resumeWithException(IllegalStateException("bindOrTask returned null"))
+            }
         } else {
             val shell = APatchCli.SHELL
             Log.d(TAG, "Executing bind task...")
-            // Running the root bind task on the main thread can freeze the refresh animation
-            // when libsu/root service initialization stalls.
             viewModelScope.launch(Dispatchers.IO) {
                 try {
                     shell.execTask(task)
