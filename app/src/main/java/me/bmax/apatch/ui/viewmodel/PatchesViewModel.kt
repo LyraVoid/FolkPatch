@@ -83,12 +83,16 @@ class PatchesViewModel : ViewModel() {
 
     private val patchDir: ExtendedFile = FileSystemManager.getLocal().getFile(apApp.filesDir.parent, "patch")
     private var srcBoot: ExtendedFile = patchDir.getChildFile("boot.img")
-    private var shell: Shell = createRootShell()
+    private var shell: Shell? = null
     private var prepared: Boolean = false
 
+    private fun getShell(): Shell {
+        return shell ?: createRootShellSafe(false).also { shell = it }
+    }
+
     private fun prepare() {
-        // Force clean with root to avoid permission issues from previous root operations
-        shell.newJob().add("rm -rf ${patchDir.path}").exec()
+        val sh = getShell()
+        sh.newJob().add("rm -rf ${patchDir.path}").exec()
         
         patchDir.deleteRecursively()
         patchDir.mkdirs()
@@ -123,7 +127,7 @@ class PatchesViewModel : ViewModel() {
 
     private fun parseKpimg() {
         val result = shellForResult(
-            shell, "cd $patchDir", "./kptools -l -k kpimg"
+            getShell(), "cd $patchDir", "./kptools -l -k kpimg"
         )
 
         if (result.isSuccess) {
@@ -152,7 +156,7 @@ class PatchesViewModel : ViewModel() {
 
     private fun parseBootimg(bootimg: String) {
         val result = shellForResult(
-            shell,
+            getShell(),
             "cd $patchDir",
             "./kptools unpacknolog $bootimg",
             "./kptools -l -i kernel",
@@ -243,7 +247,7 @@ class PatchesViewModel : ViewModel() {
         }
 
         val result = shellForResult(
-            shell,
+            getShell(),
             "export ASH_STANDALONE=1",
             "cd $patchDir",
             "./busybox sh $cmdBuilder",
@@ -360,7 +364,7 @@ class PatchesViewModel : ViewModel() {
             }
 
             val result = shellForResult(
-                shell, "cd $patchDir", "./kptools -l -M ${kpmFile.path}"
+                getShell(), "cd $patchDir", "./kptools -l -M ${kpmFile.path}"
             )
 
             if (result.isSuccess) {
@@ -433,7 +437,7 @@ class PatchesViewModel : ViewModel() {
                 }
             }
 
-            val result = shell.newJob().add(
+            val result = getShell().newJob().add(
                 "export ASH_STANDALONE=1",
                 "cd $patchDir",
                 "cp /data/adb/ap/ori.img new-boot.img",
@@ -504,7 +508,7 @@ class PatchesViewModel : ViewModel() {
                 logs.add(" Restoring boot image...")
                 val restoreCommand = mutableListOf("./busybox", "sh", "boot_flash.sh", bootDev, srcBoot.path)
                 
-                val result = shell.newJob().add(
+                val result = getShell().newJob().add(
                     "export ASH_STANDALONE=1",
                     "cd $patchDir",
                     restoreCommand.joinToString(" "),
@@ -537,7 +541,7 @@ class PatchesViewModel : ViewModel() {
 
             if (mode == PatchMode.PATCH_AND_INSTALL || mode == PatchMode.INSTALL_TO_NEXT_SLOT) {
 
-                val KPCheck = shell.newJob().add("truncate ${APApplication.superKey} -Z u:r:magisk:s0 -c whoami").exec()
+                val KPCheck = getShell().newJob().add("truncate ${APApplication.superKey} -Z u:r:magisk:s0 -c whoami").exec()
 
                 if (KPCheck.isSuccess && !isSuExecutable()) {
                     patchCommand.addAll(0, listOf(APApplication.SUPERCMD, APApplication.superKey, "-Z", APApplication.MAGISK_SCONTEXT, "-c"))
@@ -585,7 +589,7 @@ class PatchesViewModel : ViewModel() {
 
             if (isKpOld) {
                 val resultString = "\"" + patchCommand.joinToString(separator = "\" \"") + "\""
-                val result = shell.newJob().add(
+                val result = getShell().newJob().add(
                     "export ASH_STANDALONE=1",
                     "cd $patchDir",
                     resultString,
@@ -627,14 +631,14 @@ class PatchesViewModel : ViewModel() {
                 APApplication.markNeedReboot()
             } else if (mode == PatchMode.INSTALL_TO_NEXT_SLOT) {
                 logs.add("- Connecting boot hal...")
-                val bootctlStatus = shell.newJob().add(
+                val bootctlStatus = getShell().newJob().add(
                     "cd $patchDir", "chmod 0777 $patchDir/bootctl", "./bootctl hal-info"
                 ).to(logs, logs).exec()
                 if (!bootctlStatus.isSuccess) {
                     logs.add("[X] Failed to connect to boot hal, you may need switch slot manually")
                 } else {
                     val currSlot = shellForResult(
-                        shell, "cd $patchDir", "./bootctl get-current-slot"
+                        getShell(), "cd $patchDir", "./bootctl get-current-slot"
                     ).out.toString()
                     val targetSlot = if (currSlot.contains("0")) {
                         1
@@ -642,13 +646,13 @@ class PatchesViewModel : ViewModel() {
                         0
                     }
                     logs.add("- Switching to next slot: $targetSlot...")
-                    val setNextActiveSlot = shell.newJob().add(
+                    val setNextActiveSlot = getShell().newJob().add(
                         "cd $patchDir", "./bootctl set-active-boot-slot $targetSlot"
                     ).exec()
                     if (setNextActiveSlot.isSuccess) {
                         logs.add("- Switch done")
                         logs.add("- Writing boot marker script...")
-                        val markBootableScript = shell.newJob().add(
+                        val markBootableScript = getShell().newJob().add(
                             "mkdir -p /data/adb/post-fs-data.d && rm -rf /data/adb/post-fs-data.d/post_ota.sh && touch /data/adb/post-fs-data.d/post_ota.sh",
                             "echo \"chmod 0777 $patchDir/bootctl\" > /data/adb/post-fs-data.d/post_ota.sh",
                             "echo \"chown root:root 0777 $patchDir/bootctl\" > /data/adb/post-fs-data.d/post_ota.sh",
