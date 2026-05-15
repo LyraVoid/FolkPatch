@@ -343,6 +343,7 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
         super.onCreate()
         apApp = this
         sharedPreferences = getSharedPreferences(SP_NAME, Context.MODE_PRIVATE)
+        superKey = "su"
         if (Application.getProcessName().endsWith(":root") || Application.getProcessName().endsWith(":webui")) {
             return
         }
@@ -381,7 +382,6 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
         }
         
         me.bmax.apatch.util.LauncherIconUtils.applySaved(this)
-        superKey = "su"
 
         Log.d(TAG, "Initializing OkHttpClient...")
         okhttpClient =

@@ -131,6 +131,19 @@ fun createRootShell(globalMnt: Boolean = false): Shell {
     }
 }
 
+private fun closeQuietly(shell: Shell?) {
+    try {
+        shell?.close()
+    } catch (_: Throwable) {
+    }
+}
+
+private fun ensureRootShell(shell: Shell, reason: String): Shell {
+    if (shell.isRoot) return shell
+    closeQuietly(shell)
+    throw IOException("Expected root shell for $reason, but received a non-root shell")
+}
+
 object APatchCli {
     @Volatile
     private var _shell: Shell? = null
@@ -161,6 +174,19 @@ internal fun createRootShellSafe(globalMnt: Boolean = false): Shell {
             Log.e(TAG, "Even sh fallback failed, returning non-root shell", e2)
             Shell.Builder.create().build("sh")
         }
+    }
+}
+
+internal fun createRootShellStrict(
+    globalMnt: Boolean = false,
+    reason: String = "unknown"
+): Shell {
+    return try {
+        ensureRootShell(createRootShell(globalMnt), reason)
+    } catch (primaryError: Throwable) {
+        Log.e(TAG, "Strict root shell creation failed for $reason", primaryError)
+        val fallback = createRootShellSafe(globalMnt)
+        ensureRootShell(fallback, reason)
     }
 }
 
