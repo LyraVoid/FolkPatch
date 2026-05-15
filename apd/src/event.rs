@@ -424,6 +424,11 @@ pub fn on_boot_completed(superkey: Option<String>) -> Result<()> {
 }
 
 pub fn on_manager_boot_completed(superkey: Option<String>) -> Result<()> {
+    let superkey = superkey.or_else(|| {
+        info!("Manager boot fallback invoked without explicit superkey, defaulting to trusted-manager key 'su'");
+        Some("su".to_string())
+    });
+
     info!("on_manager_boot_completed triggered!");
 
     if Path::new(defs::UTS_SPOOF_BOOT_PENDING).exists() {

@@ -28,6 +28,7 @@ import java.io.IOException
 import java.security.MessageDigest
 import java.security.cert.CertificateFactory
 import java.security.cert.X509Certificate
+import java.util.concurrent.TimeUnit
 import java.util.zip.ZipFile
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -39,6 +40,14 @@ import kotlinx.coroutines.withTimeout
 
 private const val TAG = "APatchCli"
 private const val SHELL_TIMEOUT_MS = 10_000L
+
+data class ApdExecResult(
+    val success: Boolean,
+    val commandLabel: String,
+    val exitCode: Int? = null,
+    val output: String = "",
+    val errorMessage: String? = null,
+)
 
 private fun getKPatchPath(): String {
     return apApp.applicationInfo.nativeLibraryDir + File.separator + "libkpatch.so"
@@ -191,12 +200,82 @@ fun rootShellForResult(vararg cmds: String): Shell.Result {
 }
 
 fun execApd(args: String, newShell: Boolean = false): Boolean {
-    return if (newShell) {
-        withNewRootShell {
-            ShellUtils.fastCmdResult(this, "${APApplication.APD_PATH} $args")
+    return try {
+        if (newShell) {
+            withNewRootShell {
+                ShellUtils.fastCmdResult(this, "${APApplication.APD_PATH} $args")
+            }
+        } else {
+            ShellUtils.fastCmdResult(getRootShell(), "${APApplication.APD_PATH} $args")
         }
-    } else {
-        ShellUtils.fastCmdResult(getRootShell(), "${APApplication.APD_PATH} $args")
+    } catch (t: Throwable) {
+        Log.e(TAG, "execApd failed: args='$args', newShell=$newShell", t)
+        false
+    }
+}
+
+private fun configureRootProcessEnv(builder: ProcessBuilder) {
+    val basePath = System.getenv("PATH").orEmpty()
+    builder.environment().apply {
+        this["PATH"] = "$basePath:/system_ext/bin:/vendor/bin:${APApplication.APATCH_FOLDER}bin"
+        this["BUSYBOX"] = "${APApplication.APATCH_FOLDER}bin/busybox"
+    }
+}
+
+fun execApdBootFallback(vararg args: String, timeoutMs: Long = SHELL_TIMEOUT_MS): ApdExecResult {
+    val effectiveSuperKey = APApplication.superKey.ifBlank { "su" }
+    val command = mutableListOf(
+        APApplication.SUPERCMD,
+        "su",
+        "-Z",
+        APApplication.MAGISK_SCONTEXT,
+        "exec",
+        APApplication.APD_PATH,
+        "-s",
+        effectiveSuperKey,
+    ).apply {
+        addAll(args)
+    }
+    val commandLabel =
+        "${File(APApplication.SUPERCMD).name} su -Z ${APApplication.MAGISK_SCONTEXT} exec ${APApplication.APD_PATH} -s <superkey> ${args.joinToString(" ")}"
+
+    return try {
+        val builder = ProcessBuilder(command).redirectErrorStream(true)
+        configureRootProcessEnv(builder)
+
+        val process = builder.start()
+        val finished = process.waitFor(timeoutMs, TimeUnit.MILLISECONDS)
+        if (!finished) {
+            process.destroy()
+            if (!process.waitFor(500, TimeUnit.MILLISECONDS)) {
+                process.destroyForcibly()
+            }
+            val output = runCatching {
+                process.inputStream.bufferedReader().use { it.readText().trim() }
+            }.getOrDefault("")
+            ApdExecResult(
+                success = false,
+                commandLabel = commandLabel,
+                output = output,
+                errorMessage = "timed out after ${timeoutMs}ms",
+            )
+        } else {
+            val exitCode = process.exitValue()
+            val output = process.inputStream.bufferedReader().use { it.readText().trim() }
+            ApdExecResult(
+                success = exitCode == 0,
+                commandLabel = commandLabel,
+                exitCode = exitCode,
+                output = output,
+                errorMessage = if (exitCode == 0) null else "exit code $exitCode",
+            )
+        }
+    } catch (t: Throwable) {
+        ApdExecResult(
+            success = false,
+            commandLabel = commandLabel,
+            errorMessage = t.message ?: t.javaClass.simpleName,
+        )
     }
 }
 
