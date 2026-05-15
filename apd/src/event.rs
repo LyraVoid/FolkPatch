@@ -28,7 +28,7 @@ use crate::{
 
 pub fn report_kernel(superkey: Option<String>, event: &str, state: &str) -> Result<()> {
     let args = vec![
-        superkey.unwrap_or_default(),
+        superkey.unwrap_or_else(|| "su".to_string()),
         "event".to_string(),
         event.to_string(),
         state.to_string(),
@@ -83,8 +83,17 @@ fn setup_logging() -> Result<()> {
                 Ok(())
             })
             .args(vec![
-                "-s", "9", "45s", "logcat", "-b", "main,system,crash",
-                "DrmLibFs:S", "-f", &logcat_path, "logcatcher-bootlog:S", "&",
+                "-s",
+                "9",
+                "45s",
+                "logcat",
+                "-b",
+                "main,system,crash",
+                "DrmLibFs:S",
+                "-f",
+                &logcat_path,
+                "logcatcher-bootlog:S",
+                "&",
             ])
             .spawn()
     };
@@ -134,9 +143,6 @@ pub fn on_post_data_fs(superkey: Option<String>) -> Result<()> {
 
     // Apply UTS namespace spoofing if configured
     supercall::apply_uts_spoof(&superkey);
-
-    // Apply pathhide config if enabled
-    supercall::apply_pathhide(&superkey);
 
     // Apply netisolate config if enabled
     supercall::apply_netisolate(&superkey);
@@ -304,9 +310,9 @@ pub fn on_services(superkey: Option<String>) -> Result<()> {
         supercall::apply_uts_spoof(&superkey);
     }
 
-    if Path::new(defs::PATHHIDE_RETRY_FILE).exists() {
-        info!("Retrying deferred pathhide apply from services stage");
-        supercall::apply_pathhide(&superkey);
+    if Path::new(defs::KPM_AUTOLOAD_RETRY_FILE).exists() {
+        info!("Retrying deferred KPM auto-load from services stage");
+        supercall::autoload_kpm_modules(&superkey, "post-fs-data");
     }
 
     supercall::autoload_kpm_modules(&superkey, "service");
@@ -347,7 +353,23 @@ pub fn on_boot_completed(superkey: Option<String>) -> Result<()> {
         info!("UTS spoof boot safety flag cleared");
     }
 
-    run_stage("boot-completed", superkey, false);
+    run_stage("boot-completed", superkey.clone(), false);
+
+    if Path::new(defs::PATHHIDE_ENABLE_FILE).exists() {
+        info!("Applying pathhide from boot-completed stage");
+        supercall::apply_pathhide(&superkey);
+    }
+
+    if Path::new(defs::UTS_SPOOF_RETRY_FILE).exists() {
+        info!("Retrying deferred UTS spoof apply from boot-completed stage");
+        supercall::apply_uts_spoof(&superkey);
+    }
+
+    if Path::new(defs::KPM_AUTOLOAD_RETRY_FILE).exists() {
+        info!("Retrying deferred KPM auto-load from boot-completed stage");
+        supercall::autoload_kpm_modules(&superkey, "post-fs-data");
+        supercall::autoload_kpm_modules(&superkey, "service");
+    }
 
     // Execute Umount Service if enabled
     // Run at boot-completed (latest possible stage) to ensure all mount

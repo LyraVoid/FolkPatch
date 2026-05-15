@@ -17,7 +17,8 @@ pub const UTS_SPOOF_CONFIG_FILE: &str = concatcp!(ADB_DIR, ".uts_spoof_config");
 pub const UTS_SPOOF_BOOT_PENDING: &str = concatcp!(ADB_DIR, ".uts_spoof_boot_pending");
 pub const UTS_SPOOF_RETRY_FILE: &str = concatcp!(ADB_DIR, ".uts_spoof_retry");
 pub const DAEMON_PATH: &str = concatcp!(ADB_DIR, "apd");
-pub const AUTO_EXCLUDE_KNOWN_PACKAGES_FILE: &str = concatcp!(WORKING_DIR, "auto_exclude_known_packages");
+pub const AUTO_EXCLUDE_KNOWN_PACKAGES_FILE: &str =
+    concatcp!(WORKING_DIR, "auto_exclude_known_packages");
 
 pub const PATHHIDE_DIR: &str = concatcp!(ADB_DIR, "fp/pathhide/");
 pub const PATHHIDE_ENABLE_FILE: &str = concatcp!(ADB_DIR, "fp/pathhide/enabled");
@@ -56,6 +57,7 @@ pub const METAMODULE_DIR: &str = concatcp!(ADB_DIR, "metamodule/");
 pub const FP_KPMS_DIR: &str = concatcp!(ADB_DIR, "fp/kpms/");
 pub const FP_KPMS_AUTOLOAD_DIR: &str = concatcp!(ADB_DIR, "fp/kpms/autoload/");
 pub const KPM_AUTOLOAD_CONFIG: &str = concatcp!(ADB_DIR, "fp/kpms/kpm_autoload_config.json");
+pub const KPM_AUTOLOAD_RETRY_FILE: &str = concatcp!(ADB_DIR, "fp/kpms/kpm_autoload_retry");
 
 // Module config
 pub const MODULE_CONFIG_DIR: &str = concatcp!(WORKING_DIR, "module_configs/");
