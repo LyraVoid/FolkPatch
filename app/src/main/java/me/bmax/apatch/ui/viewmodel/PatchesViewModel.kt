@@ -29,7 +29,7 @@ import me.bmax.apatch.util.Version
 import me.bmax.apatch.util.getSafeDownloadsDir
 import me.bmax.apatch.util.copyAndClose
 import me.bmax.apatch.util.copyAndCloseOut
-import me.bmax.apatch.util.createRootShell
+import me.bmax.apatch.util.createRootShellSafe
 import me.bmax.apatch.util.inputStream
 import me.bmax.apatch.util.shellForResult
 import me.bmax.apatch.util.writeTo
