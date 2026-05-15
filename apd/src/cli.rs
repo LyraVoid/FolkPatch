@@ -38,6 +38,9 @@ enum Commands {
     /// Trigger `boot-complete` event
     BootCompleted,
 
+    /// Apply boot-time patch features from manager boot fallback
+    ManagerBootCompleted,
+
     /// Start uid listener for synchronizing root list
     UidListener,
 
@@ -190,6 +193,8 @@ pub fn run() -> Result<()> {
         Commands::PostFsData => event::on_post_data_fs(cli.superkey),
 
         Commands::BootCompleted => event::on_boot_completed(cli.superkey),
+
+        Commands::ManagerBootCompleted => event::on_manager_boot_completed(cli.superkey),
 
         Commands::UidListener => event::start_uid_listener(),
 

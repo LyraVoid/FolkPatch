@@ -423,6 +423,40 @@ pub fn on_boot_completed(superkey: Option<String>) -> Result<()> {
     Ok(())
 }
 
+pub fn on_manager_boot_completed(superkey: Option<String>) -> Result<()> {
+    info!("on_manager_boot_completed triggered!");
+
+    if Path::new(defs::UTS_SPOOF_BOOT_PENDING).exists() {
+        let _ = std::fs::remove_file(defs::UTS_SPOOF_BOOT_PENDING);
+        info!("UTS spoof boot safety flag cleared by manager boot fallback");
+    }
+
+    if Path::new(defs::PATHHIDE_ENABLE_FILE).exists() {
+        info!("Manager boot fallback: applying pathhide");
+        supercall::apply_pathhide(&superkey);
+    }
+
+    if Path::new(defs::UTS_SPOOF_ENABLE_FILE).exists() || Path::new(defs::UTS_SPOOF_RETRY_FILE).exists() {
+        info!("Manager boot fallback: applying UTS spoof");
+        supercall::apply_uts_spoof(&superkey);
+        if Path::new(defs::UTS_SPOOF_BOOT_PENDING).exists() {
+            let _ = std::fs::remove_file(defs::UTS_SPOOF_BOOT_PENDING);
+            info!("UTS spoof boot safety flag cleared after manager boot fallback apply");
+        }
+    }
+
+    if Path::new(defs::NETISOLATE_ENABLE_FILE).exists() {
+        info!("Manager boot fallback: applying netisolate");
+        supercall::apply_netisolate(&superkey);
+    }
+
+    info!("Manager boot fallback: retrying KPM auto-load");
+    supercall::autoload_kpm_modules(&superkey, "post-fs-data");
+    supercall::autoload_kpm_modules(&superkey, "service");
+
+    Ok(())
+}
+
 pub fn start_uid_listener() -> Result<()> {
     info!("start_uid_listener triggered!");
     println!("[start_uid_listener] Registering...");
