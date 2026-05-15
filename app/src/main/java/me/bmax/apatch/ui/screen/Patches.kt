@@ -204,14 +204,12 @@ fun Patches(mode: PatchesViewModel.PatchMode) {
             if (!viewModel.patching && !viewModel.patchdone) {
                 // patch start
                 if (mode != PatchesViewModel.PatchMode.UNPATCH && mode != PatchesViewModel.PatchMode.RESTORE) {
-                    if (viewModel.kimgInfo.banner.isNotEmpty()) {
-                        StartButton(stringResource(id = R.string.patch_start_patch_btn)) {
-                            viewModel.doPatch(mode, false)
-                        }
+                    StartButton(stringResource(id = R.string.patch_start_patch_btn)) {
+                        viewModel.doPatch(mode, false)
                     }
                 }
                 // unpatch
-                if (mode == PatchesViewModel.PatchMode.UNPATCH && viewModel.kimgInfo.banner.isNotEmpty()) {
+                if (mode == PatchesViewModel.PatchMode.UNPATCH) {
                     StartButton(stringResource(id = R.string.patch_start_unpatch_btn)) { viewModel.doUnpatch() }
                 }
             }
