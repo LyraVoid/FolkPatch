@@ -118,6 +118,74 @@ fn disable_all_modules_safe() {
     }
 }
 
+fn exec_fpd_hide() {
+    if !Path::new(defs::HIDE_SERVICE_FILE).exists() {
+        info!("Hide Service disabled");
+        return;
+    }
+    info!("Hide Service enabled, executing fpd -hide...");
+    if !Path::new(defs::HIDE_BINARY_PATH).exists() {
+        warn!("fpd binary not found at {}, please copy it manually", defs::HIDE_BINARY_PATH);
+        return;
+    }
+    let result = Command::new(defs::HIDE_BINARY_PATH).arg("-hide").status();
+    match result {
+        Ok(status) => {
+            if status.success() {
+                info!("fpd -hide executed successfully");
+            } else {
+                warn!("fpd -hide exited with status: {:?}", status.code());
+            }
+        }
+        Err(e) => {
+            warn!("Failed to execute fpd -hide: {}", e);
+        }
+    }
+}
+
+fn exec_fpd_umount() {
+    if !Path::new(defs::UMOUNT_SERVICE_FILE).exists() {
+        info!("Umount Service disabled");
+        return;
+    }
+    info!("Umount Service enabled, executing fpd -umount...");
+    if !Path::new(defs::UMOUNT_BINARY_PATH).exists() {
+        warn!("fpd binary not found at {}, please copy it manually", defs::UMOUNT_BINARY_PATH);
+        return;
+    }
+    let result = unsafe {
+        Command::new(defs::UMOUNT_BINARY_PATH)
+            .arg("-umount")
+            .stdout(Stdio::piped())
+            .stderr(Stdio::piped())
+            .pre_exec(|| {
+                let _ = utils::switch_mnt_ns(1);
+                Ok(())
+            })
+            .output()
+    };
+    match result {
+        Ok(output) => {
+            let stdout = String::from_utf8_lossy(&output.stdout);
+            let stderr = String::from_utf8_lossy(&output.stderr);
+            if output.status.success() {
+                info!("fpd -umount executed successfully");
+            } else {
+                warn!("fpd -umount exited with status: {:?}", output.status.code());
+            }
+            if !stdout.trim().is_empty() {
+                info!("fpd -umount stdout: {}", stdout.trim());
+            }
+            if !stderr.trim().is_empty() {
+                info!("fpd -umount stderr: {}", stderr.trim());
+            }
+        }
+        Err(e) => {
+            warn!("Failed to execute fpd -umount: {}", e);
+        }
+    }
+}
+
 pub fn on_post_data_fs(superkey: Option<String>) -> Result<()> {
     let key_len = superkey.as_ref().map(|s| s.len()).unwrap_or(0);
     let key_preview = superkey.as_ref().map(|s| {
@@ -226,32 +294,7 @@ pub fn on_post_data_fs(superkey: Option<String>) -> Result<()> {
         }
     }
 
-    // Execute Hide Service if enabled
-    if Path::new(defs::HIDE_SERVICE_FILE).exists() {
-        info!("Hide Service enabled, executing fpd -hide...");
-        if Path::new(defs::HIDE_BINARY_PATH).exists() {
-            let result = Command::new(defs::HIDE_BINARY_PATH).arg("-hide").status();
-            match result {
-                Ok(status) => {
-                    if status.success() {
-                        info!("fpd -hide executed successfully");
-                    } else {
-                        warn!("fpd -hide exited with status: {:?}", status.code());
-                    }
-                }
-                Err(e) => {
-                    warn!("Failed to execute fpd -hide: {}", e);
-                }
-            }
-        } else {
-            warn!(
-                "fpd binary not found at {}, please copy it manually",
-                defs::HIDE_BINARY_PATH
-            );
-        }
-    } else {
-        info!("Hide Service disabled");
-    }
+    exec_fpd_hide();
 
     // exec modules post-fs-data scripts
     // TODO: Add timeout
@@ -379,53 +422,7 @@ pub fn on_boot_completed(superkey: Option<String>) -> Result<()> {
         supercall::autoload_kpm_modules(&superkey, "service");
     }
 
-    // Execute Umount Service if enabled
-    // Run at boot-completed (latest possible stage) to ensure all mount
-    // points — including those created by system_server and Zygote hooks
-    // (e.g. ReZygisk module.prop bind mounts) — are fully established.
-    if Path::new(defs::UMOUNT_SERVICE_FILE).exists() {
-        info!("Umount Service enabled, executing fpd -umount...");
-        if Path::new(defs::UMOUNT_BINARY_PATH).exists() {
-            let result = unsafe {
-                Command::new(defs::UMOUNT_BINARY_PATH)
-                    .arg("-umount")
-                    .stdout(Stdio::piped())
-                    .stderr(Stdio::piped())
-                    .pre_exec(|| {
-                        let _ = utils::switch_mnt_ns(1);
-                        Ok(())
-                    })
-                    .output()
-            };
-            match result {
-                Ok(output) => {
-                    let stdout = String::from_utf8_lossy(&output.stdout);
-                    let stderr = String::from_utf8_lossy(&output.stderr);
-                    if output.status.success() {
-                        info!("fpd -umount executed successfully");
-                    } else {
-                        warn!("fpd -umount exited with status: {:?}", output.status.code());
-                    }
-                    if !stdout.trim().is_empty() {
-                        info!("fpd -umount stdout: {}", stdout.trim());
-                    }
-                    if !stderr.trim().is_empty() {
-                        info!("fpd -umount stderr: {}", stderr.trim());
-                    }
-                }
-                Err(e) => {
-                    warn!("Failed to execute fpd -umount: {}", e);
-                }
-            }
-        } else {
-            warn!(
-                "fpd binary not found at {}, please copy it manually",
-                defs::UMOUNT_BINARY_PATH
-            );
-        }
-    } else {
-        info!("Umount Service disabled");
-    }
+    exec_fpd_umount();
 
     run_uid_monitor();
     Ok(())
@@ -469,6 +466,16 @@ pub fn on_manager_boot_completed(superkey: Option<String>) -> Result<()> {
     info!("Manager boot fallback: retrying KPM auto-load");
     supercall::autoload_kpm_modules(&superkey, "post-fs-data");
     supercall::autoload_kpm_modules(&superkey, "service");
+
+    if Path::new(defs::HIDE_SERVICE_FILE).exists() {
+        info!("Manager boot fallback: retrying fpd -hide");
+        exec_fpd_hide();
+    }
+
+    if Path::new(defs::UMOUNT_SERVICE_FILE).exists() {
+        info!("Manager boot fallback: retrying fpd -umount");
+        exec_fpd_umount();
+    }
 
     Ok(())
 }
