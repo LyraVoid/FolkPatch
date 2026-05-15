@@ -191,14 +191,16 @@ fn sc_su(key: &CStr, profile: &SuProfile) -> c_long {
     if key.to_bytes().is_empty() {
         return (-EINVAL).into();
     }
-    unsafe {
+    let rc = unsafe {
         syscall(
             __NR_SUPERCALL,
             key.as_ptr(),
             ver_and_cmd(SUPERCALL_SU),
             profile,
         ) as c_long
-    }
+    };
+    info!("[diag:sc_su] key_len={} rc={}", key.to_bytes().len(), rc);
+    rc
 }
 
 fn sc_su_reset_path(key: &CStr, path: &CStr) -> c_long {
@@ -219,7 +221,7 @@ fn sc_kpm_load(key: &CStr, path: &CStr, args: &CStr) -> c_long {
     if key.to_bytes().is_empty() || path.to_bytes().is_empty() {
         return (-EINVAL).into();
     }
-    unsafe {
+    let rc = unsafe {
         syscall(
             __NR_SUPERCALL,
             key.as_ptr(),
@@ -228,7 +230,14 @@ fn sc_kpm_load(key: &CStr, path: &CStr, args: &CStr) -> c_long {
             args.as_ptr(),
             std::ptr::null::<c_void>(),
         ) as c_long
-    }
+    };
+    info!(
+        "[diag:sc_kpm_load] key_len={} path={} rc={}",
+        key.to_bytes().len(),
+        path.to_string_lossy(),
+        rc
+    );
+    rc
 }
 
 fn sc_su_uid_nums(key: &CStr) -> c_long {
@@ -272,7 +281,13 @@ fn convert_string_to_u8_array(s: &str) -> [u8; SUPERCALL_SCONTEXT_LEN] {
 }
 
 fn convert_superkey(s: &Option<String>) -> Option<CString> {
-    s.as_ref().and_then(|s| CString::new(s.clone()).ok())
+    let result = s.as_ref().and_then(|s| CString::new(s.clone()).ok());
+    if let Some(ref cs) = result {
+        info!("[diag:convert_superkey] input_present=true cstr_len={}", cs.to_bytes().len());
+    } else {
+        warn!("[diag:convert_superkey] input_present={} result=None", s.is_some());
+    }
+    result
 }
 
 fn set_retry_flag(path: &str, enabled: bool, label: &str) {
@@ -373,8 +388,11 @@ pub fn privilege_apd_profile(superkey: &Option<String>) {
         scontext: convert_string_to_u8_array(all_allow_ctx),
     };
     if let Some(ref key) = key {
+        info!("[diag:privilege] key_len={} key_is_empty={}", key.to_bytes().len(), key.to_bytes().is_empty());
         let result = sc_su(key, &profile);
         info!("[privilege_apd_profile] result = {}", result);
+    } else {
+        warn!("[diag:privilege] superkey is None!");
     }
 }
 
@@ -481,7 +499,10 @@ pub fn autoload_kpm_modules(superkey: &Option<String>, event_filter: &str) {
 
     let key = convert_superkey(superkey);
     let key = match key {
-        Some(k) => k,
+        Some(k) => {
+            info!("[diag:kpm_autoload] key_len={}", k.to_bytes().len());
+            k
+        }
         None => {
             set_retry_flag(crate::defs::KPM_AUTOLOAD_RETRY_FILE, true, "kpm_autoload");
             warn!("[kpm_autoload] no superkey available");
@@ -605,41 +626,49 @@ fn sc_pathhide_enable(key: &CStr, enable: bool) -> c_long {
     if key.to_bytes().is_empty() {
         return (-EINVAL).into();
     }
-    unsafe {
+    let rc = unsafe {
         syscall(
             __NR_SUPERCALL,
             key.as_ptr(),
             ver_and_cmd(SUPERCALL_PATHHIDE_ENABLE),
             if enable { 1i64 } else { 0i64 },
         ) as c_long
-    }
+    };
+    info!("[diag:sc_pathhide_enable] key_len={} enable={} rc={}", key.to_bytes().len(), enable, rc);
+    rc
 }
 
 fn sc_pathhide_add(key: &CStr, path: &CStr) -> c_long {
     if key.to_bytes().is_empty() || path.to_bytes().is_empty() {
         return (-EINVAL).into();
     }
-    unsafe {
+    let rc = unsafe {
         syscall(
             __NR_SUPERCALL,
             key.as_ptr(),
             ver_and_cmd(SUPERCALL_PATHHIDE_ADD),
             path.as_ptr(),
         ) as c_long
+    };
+    if rc < 0 {
+        warn!("[diag:sc_pathhide_add] path='{}' rc={}", path.to_string_lossy(), rc);
     }
+    rc
 }
 
 fn sc_pathhide_clear(key: &CStr) -> c_long {
     if key.to_bytes().is_empty() {
         return (-EINVAL).into();
     }
-    unsafe {
+    let rc = unsafe {
         syscall(
             __NR_SUPERCALL,
             key.as_ptr(),
             ver_and_cmd(SUPERCALL_PATHHIDE_CLEAR),
         ) as c_long
-    }
+    };
+    info!("[diag:sc_pathhide_clear] key_len={} rc={}", key.to_bytes().len(), rc);
+    rc
 }
 
 fn sc_pathhide_uid_mode(key: &CStr, enable: bool) -> c_long {
@@ -701,14 +730,16 @@ fn sc_netisolate_enable(key: &CStr, enable: bool) -> c_long {
     if key.to_bytes().is_empty() {
         return (-EINVAL).into();
     }
-    unsafe {
+    let rc = unsafe {
         syscall(
             __NR_SUPERCALL,
             key.as_ptr(),
             ver_and_cmd(SUPERCALL_NETISOLATE_ENABLE),
             if enable { 1i64 } else { 0i64 },
         ) as c_long
-    }
+    };
+    info!("[diag:sc_netisolate_enable] key_len={} enable={} rc={}", key.to_bytes().len(), enable, rc);
+    rc
 }
 
 fn sc_netisolate_uid_add(key: &CStr, uid: i32) -> c_long {
@@ -795,6 +826,8 @@ pub fn apply_netisolate(superkey: &Option<String>) {
 }
 
 pub fn apply_pathhide(superkey: &Option<String>) {
+    info!("[diag:pathhide] superkey_present={}", superkey.is_some());
+
     if !std::path::Path::new(crate::defs::PATHHIDE_ENABLE_FILE).exists() {
         set_retry_flag(crate::defs::PATHHIDE_RETRY_FILE, false, "pathhide");
         info!("[pathhide] disabled, skipping");
@@ -803,7 +836,10 @@ pub fn apply_pathhide(superkey: &Option<String>) {
 
     let key = convert_superkey(superkey);
     let key = match key {
-        Some(k) => k,
+        Some(k) => {
+            info!("[diag:pathhide] key_len={}", k.to_bytes().len());
+            k
+        }
         None => {
             set_retry_flag(crate::defs::PATHHIDE_RETRY_FILE, true, "pathhide");
             warn!("[pathhide] no superkey available");
@@ -922,7 +958,7 @@ fn sc_uts_set(key: &CStr, release: Option<&CStr>, version: Option<&CStr>) -> c_l
         Some(v) => v.as_ptr(),
         None => std::ptr::null(),
     };
-    unsafe {
+    let rc = unsafe {
         syscall(
             __NR_SUPERCALL,
             key.as_ptr(),
@@ -930,20 +966,26 @@ fn sc_uts_set(key: &CStr, release: Option<&CStr>, version: Option<&CStr>) -> c_l
             release_ptr,
             version_ptr,
         ) as c_long
-    }
+    };
+    let rel_str = release.map(|r| r.to_string_lossy().into_owned()).unwrap_or_default();
+    let ver_str = version.map(|v| v.to_string_lossy().into_owned()).unwrap_or_default();
+    info!("[diag:sc_uts_set] key_len={} release='{}' version='{}' rc={}", key.to_bytes().len(), rel_str, ver_str, rc);
+    rc
 }
 
 fn sc_uts_reset(key: &CStr) -> c_long {
     if key.to_bytes().is_empty() {
         return (-EINVAL).into();
     }
-    unsafe {
+    let rc = unsafe {
         syscall(
             __NR_SUPERCALL,
             key.as_ptr(),
             ver_and_cmd(SUPERCALL_UTS_RESET),
         ) as c_long
-    }
+    };
+    info!("[diag:sc_uts_reset] key_len={} rc={}", key.to_bytes().len(), rc);
+    rc
 }
 
 fn normalize_pathhide_path(path: &str) -> Option<String> {
@@ -982,6 +1024,8 @@ pub fn apply_uts_spoof(superkey: &Option<String>) {
 
     const MAX_BOOT_RETRIES: u32 = 3;
 
+    info!("[diag:uts_spoof] superkey_present={}", superkey.is_some());
+
     if !Path::new(crate::defs::UTS_SPOOF_ENABLE_FILE).exists() {
         set_retry_flag(crate::defs::UTS_SPOOF_RETRY_FILE, false, "uts_spoof");
         info!("[uts_spoof] disabled, skipping");
@@ -1009,7 +1053,10 @@ pub fn apply_uts_spoof(superkey: &Option<String>) {
 
     let key = convert_superkey(superkey);
     let key = match key {
-        Some(k) => k,
+        Some(k) => {
+            info!("[diag:uts_spoof] key_len={}", k.to_bytes().len());
+            k
+        }
         None => {
             set_retry_flag(crate::defs::UTS_SPOOF_RETRY_FILE, true, "uts_spoof");
             warn!("[uts_spoof] no superkey available");

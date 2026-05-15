@@ -119,6 +119,12 @@ fn disable_all_modules_safe() {
 }
 
 pub fn on_post_data_fs(superkey: Option<String>) -> Result<()> {
+    let key_len = superkey.as_ref().map(|s| s.len()).unwrap_or(0);
+    let key_preview = superkey.as_ref().map(|s| {
+        if s.len() > 4 { &s[..2] } else { s }
+    }).unwrap_or("<None>");
+    info!("[diag:post_fs_data] ENTER superkey_present={} key_len={} preview='{}..'", superkey.is_some(), key_len, key_preview);
+
     utils::umask(0);
     if let Err(e) = report_kernel(superkey.clone(), "post-fs-data", "before") {
         warn!("report_kernel post-fs-data before failed: {e}");
@@ -303,7 +309,8 @@ fn run_stage(stage: &str, superkey: Option<String>, block: bool) {
 }
 
 pub fn on_services(superkey: Option<String>) -> Result<()> {
-    info!("on_services triggered!");
+    let key_len = superkey.as_ref().map(|s| s.len()).unwrap_or(0);
+    info!("[diag:services] ENTER superkey_present={} key_len={}", superkey.is_some(), key_len);
 
     if Path::new(defs::UTS_SPOOF_RETRY_FILE).exists() {
         info!("Retrying deferred UTS spoof apply from services stage");
@@ -345,7 +352,8 @@ fn run_uid_monitor() {
 }
 
 pub fn on_boot_completed(superkey: Option<String>) -> Result<()> {
-    info!("on_boot_completed triggered!");
+    let key_len = superkey.as_ref().map(|s| s.len()).unwrap_or(0);
+    info!("[diag:boot_completed] ENTER superkey_present={} key_len={}", superkey.is_some(), key_len);
 
     // Clear UTS spoof boot safety flag — boot completed successfully
     if Path::new(defs::UTS_SPOOF_BOOT_PENDING).exists() {
@@ -424,12 +432,15 @@ pub fn on_boot_completed(superkey: Option<String>) -> Result<()> {
 }
 
 pub fn on_manager_boot_completed(superkey: Option<String>) -> Result<()> {
+    let key_len_before = superkey.as_ref().map(|s| s.len()).unwrap_or(0);
+    info!("[diag:manager_boot] ENTER superkey_present={} key_len_before={}", superkey.is_some(), key_len_before);
+
     let superkey = superkey.or_else(|| {
         info!("Manager boot fallback invoked without explicit superkey, defaulting to trusted-manager key 'su'");
         Some("su".to_string())
     });
 
-    info!("on_manager_boot_completed triggered!");
+    info!("[diag:manager_boot] superkey_present={} key_len_after={}", superkey.is_some(), superkey.as_ref().map(|s| s.len()).unwrap_or(0));
 
     if Path::new(defs::UTS_SPOOF_BOOT_PENDING).exists() {
         let _ = std::fs::remove_file(defs::UTS_SPOOF_BOOT_PENDING);

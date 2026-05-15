@@ -10,7 +10,7 @@ use std::{
     process::{Command, Stdio},
 };
 
-use anyhow::{Context, Error, Ok, Result, bail};
+use anyhow::{Context, Error, Result, bail};
 use log::{info, warn};
 
 use crate::{defs, supercall::sc_su_get_safemode};
