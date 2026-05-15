@@ -48,6 +48,7 @@ import me.bmax.apatch.util.getFileNameFromUri
 import me.bmax.apatch.util.ModuleBackupUtils
 import me.bmax.apatch.util.SafeUriResolver
 import me.bmax.apatch.ui.screen.selectedKPImg
+import me.bmax.apatch.ui.screen.selectedBootImage
 
 private const val TAG = "PatchViewModel"
 
@@ -291,10 +292,24 @@ class PatchesViewModel : ViewModel() {
                     }
                 }
 
+                if (selectedBootImage != null && (mode == PatchMode.PATCH_ONLY || mode == PatchMode.RESTORE)) {
+                    try {
+                        selectedBootImage!!.inputStream().buffered().use { src ->
+                            srcBoot.also {
+                                src.copyAndCloseOut(it.newOutputStream())
+                            }
+                        }
+                        parseBootimg(srcBoot.path)
+                    } catch (e: IOException) {
+                        Log.e(TAG, "Copy selected boot image error: $e")
+                        error += "Copy selected boot image error: ${e.message}\n"
+                    }
+                }
+
                 if (mode != PatchMode.UNPATCH) {
                     parseKpimg()
                 }
-                if (mode == PatchMode.PATCH_AND_INSTALL || mode == PatchMode.UNPATCH || mode == PatchMode.INSTALL_TO_NEXT_SLOT || mode == PatchMode.RESTORE) {
+                if (mode == PatchMode.PATCH_AND_INSTALL || mode == PatchMode.UNPATCH || mode == PatchMode.INSTALL_TO_NEXT_SLOT) {
                     extractAndParseBootimg(mode)
                 }
             } catch (e: Exception) {
