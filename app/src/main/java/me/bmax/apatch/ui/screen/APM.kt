@@ -1793,7 +1793,9 @@ private fun ModuleItem(
         }
     } else {
         Surface(
-            modifier = modifier.then(clickModifier),
+            modifier = modifier
+                .clip(cardShape)
+                .then(clickModifier),
             shape = cardShape,
             color = cardColor,
             tonalElevation = 0.dp
