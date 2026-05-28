@@ -1,10 +1,12 @@
 package me.bmax.apatch
 
+import android.app.ActivityManager
 import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
+import android.os.Process
 import android.util.Log
 import me.bmax.apatch.util.ui.showToast
 import androidx.core.content.edit
@@ -344,7 +346,8 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
         apApp = this
         sharedPreferences = getSharedPreferences(SP_NAME, Context.MODE_PRIVATE)
         superKey = "su"
-        if (Application.getProcessName().endsWith(":root") || Application.getProcessName().endsWith(":webui")) {
+        val processName = getProcessNameCompat()
+        if (processName.endsWith(":root") || processName.endsWith(":webui")) {
             return
         }
         bypassHiddenApiRestrictions()
@@ -429,6 +432,21 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
 
     fun updateBackupWarningState(state: Boolean) {
         sharedPreferences.edit { putBoolean(SHOW_BACKUP_WARN, state) }
+    }
+
+    /**
+     * Compatibility helper to get the current process name.
+     * Application.getProcessName() is only available from API 28 (Android P).
+     * On API 26-27, fall back to ActivityManager.getRunningAppProcesses().
+     */
+    private fun getProcessNameCompat(): String {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            return Application.getProcessName()
+        }
+        // Fallback for API 26-27
+        val am = getSystemService(Context.ACTIVITY_SERVICE) as? ActivityManager ?: return packageName
+        val pid = Process.myPid()
+        return am.runningAppProcesses?.find { it.pid == pid }?.processName ?: packageName
     }
 
     override fun uncaughtException(t: Thread, e: Throwable) {
