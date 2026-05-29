@@ -8,7 +8,9 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.view.ViewGroup.MarginLayoutParams
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
@@ -16,35 +18,49 @@ import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.ime
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updateLayoutParams
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.webkit.WebViewAssetLoader
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.ui.theme.APatchTheme
 import me.bmax.apatch.ui.viewmodel.SuperUserViewModel
 import me.bmax.apatch.ui.webui.AppIconUtil
+import me.bmax.apatch.ui.webui.Insets
 import me.bmax.apatch.ui.webui.SuFilePathHandler
 import me.bmax.apatch.ui.webui.WebViewInterface
 import java.io.ByteArrayInputStream
@@ -58,7 +74,10 @@ class WebUIActivity : AppCompatActivity() {
     private var webCanGoBack = false
     private lateinit var fileChooserLauncher: ActivityResultLauncher<Intent>
     private var filePathCallback: ValueCallback<Array<Uri>>? = null
+    private var isUrlLoaded = false
     private var isWebViewReady by mutableStateOf(false)
+    private var isInsetsEnabled by mutableStateOf(false)
+    private var currentInsets by mutableStateOf(Insets(0, 0, 0, 0))
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -66,6 +85,7 @@ class WebUIActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             window.isNavigationBarContrastEnforced = false
         }
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
 
         val prefs = APApplication.sharedPreferences
         val nightModeFollowSys = prefs.getBoolean("night_mode_follow_sys", false)
@@ -80,7 +100,7 @@ class WebUIActivity : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(mode)
 
         super.onCreate(savedInstanceState)
-        
+
         setupActivityInfo()
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
@@ -97,31 +117,83 @@ class WebUIActivity : AppCompatActivity() {
         setContent {
             APatchTheme(allowCustomBackground = false) {
                 val backgroundColor = MaterialTheme.colorScheme.background
+                val density = LocalDensity.current
+                val layoutDirection = LocalLayoutDirection.current
+                val drawingInsets = WindowInsets.safeDrawing
+                val systemBarsInsets = WindowInsets.systemBars
+                val imeInsets = WindowInsets.ime
+                val innerPadding = if (isInsetsEnabled) {
+                    imeInsets.asPaddingValues()
+                } else {
+                    drawingInsets.asPaddingValues()
+                }
+
+                LaunchedEffect(density, layoutDirection, systemBarsInsets, isInsetsEnabled) {
+                    if (!isInsetsEnabled) return@LaunchedEffect
+                    snapshotFlow {
+                        val top = (systemBarsInsets.getTop(density) / density.density).toInt()
+                        val bottom = (systemBarsInsets.getBottom(density) / density.density).toInt()
+                        val left = (systemBarsInsets.getLeft(density, layoutDirection) / density.density).toInt()
+                        val right = (systemBarsInsets.getRight(density, layoutDirection) / density.density).toInt()
+                        Insets(top, bottom, left, right)
+                    }.collect { newInsets ->
+                        if (currentInsets != newInsets) {
+                            currentInsets = newInsets
+                            webView?.evaluateJavascript(newInsets.js, null)
+                        }
+                    }
+                }
+
                 Box(
-                    modifier = Modifier.fillMaxSize().background(backgroundColor),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(backgroundColor)
+                        .padding(innerPadding),
                     contentAlignment = Alignment.Center
                 ) {
                     if (isWebViewReady) {
                         AndroidView(
-                            modifier = Modifier.fillMaxSize().systemBarsPadding(),
-                            factory = { context ->
-                                WebView(context).apply {
-                                    layoutParams = android.view.ViewGroup.LayoutParams(
-                                        android.view.ViewGroup.LayoutParams.MATCH_PARENT,
-                                        android.view.ViewGroup.LayoutParams.MATCH_PARENT
+                            modifier = Modifier.fillMaxSize(),
+                            factory = { _ ->
+                                webView!!.apply {
+                                    layoutParams = ViewGroup.LayoutParams(
+                                        ViewGroup.LayoutParams.MATCH_PARENT,
+                                        ViewGroup.LayoutParams.MATCH_PARENT
                                     )
-                                    this@WebUIActivity.webView = this
-                                    configureWebView(this)
+                                    if (!isUrlLoaded) {
+                                        val homePage = "https://mui.kernelsu.org/index.html"
+                                        if (width > 0 && height > 0) {
+                                            loadUrl(homePage)
+                                            isUrlLoaded = true
+                                        } else {
+                                            val listener = object : View.OnLayoutChangeListener {
+                                                override fun onLayoutChange(
+                                                    v: View, left: Int, top: Int, right: Int, bottom: Int,
+                                                    oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int
+                                                ) {
+                                                    if (v.width > 0 && v.height > 0) {
+                                                        (v as WebView).loadUrl(homePage)
+                                                        isUrlLoaded = true
+                                                        v.removeOnLayoutChangeListener(this)
+                                                    }
+                                                }
+                                            }
+                                            addOnLayoutChangeListener(listener)
+                                        }
+                                    }
                                 }
                             },
                             update = { view ->
-                                view.setBackgroundColor(backgroundColor.toArgb())
+                                view.requestLayout()
                             }
                         )
                     } else {
                         CircularProgressIndicator()
                     }
                 }
+
+                HandleWebViewLifecycle()
+                HandleConfigurationChanges()
             }
         }
 
@@ -129,7 +201,7 @@ class WebUIActivity : AppCompatActivity() {
             if (SuperUserViewModel.apps.isEmpty()) {
                 SuperUserViewModel().fetchAppList()
             }
-            isWebViewReady = true
+            prepareWebView()
         }
 
         fileChooserLauncher = registerForActivityResult(
@@ -165,84 +237,128 @@ class WebUIActivity : AppCompatActivity() {
         }
     }
 
-    private fun configureWebView(webView: WebView) {
+    @Composable
+    private fun HandleWebViewLifecycle() {
+        val lifecycleOwner = LocalLifecycleOwner.current
+        DisposableEffect(lifecycleOwner, webView) {
+            val observer = LifecycleEventObserver { _, event ->
+                when (event) {
+                    Lifecycle.Event.ON_RESUME -> webView?.onResume()
+                    Lifecycle.Event.ON_PAUSE -> webView?.onPause()
+                    else -> {}
+                }
+            }
+            lifecycleOwner.lifecycle.addObserver(observer)
+            onDispose {
+                lifecycleOwner.lifecycle.removeObserver(observer)
+            }
+        }
+    }
+
+    @Composable
+    private fun HandleConfigurationChanges() {
+        val configuration = LocalConfiguration.current
+        LaunchedEffect(configuration.fontScale, webView) {
+            webView?.settings?.textZoom = (configuration.fontScale * 100).toInt()
+        }
+    }
+
+    private suspend fun prepareWebView() {
         val moduleId = intent.getStringExtra("id")!!
 
-        val prefs = APApplication.sharedPreferences
-        WebView.setWebContentsDebuggingEnabled(prefs.getBoolean("enable_web_debugging", false))
-
-        val webRoot = File("/data/adb/modules/${moduleId}/webroot")
-        val webViewAssetLoader = WebViewAssetLoader.Builder()
-            .setDomain("mui.kernelsu.org")
-            .addPathHandler(
-                "/",
-                SuFilePathHandler(this, webRoot)
-            )
-            .build()
-
-        val webViewClient = object : WebViewClient() {
-            override fun shouldInterceptRequest(
-                view: WebView,
-                request: WebResourceRequest
-            ): WebResourceResponse? {
-                val url = request.url
-
-                // Handle ksu://icon/[packageName] to serve app icon via WebView
-                if (url.scheme.equals("ksu", ignoreCase = true) && url.host.equals("icon", ignoreCase = true)) {
-                    val packageName = url.path?.substring(1)
-                    if (!packageName.isNullOrEmpty()) {
-                        val icon = AppIconUtil.loadAppIconSync(this@WebUIActivity, packageName, 512)
-                        if (icon != null) {
-                            val stream = ByteArrayOutputStream()
-                            icon.compress(Bitmap.CompressFormat.PNG, 100, stream)
-                            return WebResourceResponse(
-                                "image/png", null, 200, "OK",
-                                mapOf("Access-Control-Allow-Origin" to "*"),
-                                ByteArrayInputStream(stream.toByteArray())
-                            )
-                        }
-                    }
-                }
-
-                return webViewAssetLoader.shouldInterceptRequest(request.url)
-            }
-
-            override fun doUpdateVisitedHistory(view: WebView?, url: String?, isReload: Boolean) {
-                webCanGoBack = view?.canGoBack() == true
-                super.doUpdateVisitedHistory(view, url, isReload)
+        withContext(Dispatchers.IO) {
+            if (SuperUserViewModel.apps.isEmpty()) {
+                SuperUserViewModel().fetchAppList()
             }
         }
 
-        webView.apply {
-            settings.javaScriptEnabled = true
-            settings.domStorageEnabled = true
-            settings.allowFileAccess = false
-            webViewInterface = WebViewInterface(this@WebUIActivity, this)
-            addJavascriptInterface(webViewInterface, "ksu")
-            setWebViewClient(webViewClient)
-            webChromeClient = object : WebChromeClient() {
-                override fun onShowFileChooser(
-                    webView: WebView?,
-                    filePathCallback: ValueCallback<Array<Uri>>?,
-                    fileChooserParams: FileChooserParams?
-                ): Boolean {
-                    this@WebUIActivity.filePathCallback?.onReceiveValue(null)
-                    this@WebUIActivity.filePathCallback = filePathCallback
-                    val intent = fileChooserParams?.createIntent() ?: Intent(Intent.ACTION_GET_CONTENT).apply { type = "*/*" }
-                    if (fileChooserParams?.mode == FileChooserParams.MODE_OPEN_MULTIPLE) {
-                        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        withContext(Dispatchers.Main) {
+            val prefs = APApplication.sharedPreferences
+            WebView.setWebContentsDebuggingEnabled(prefs.getBoolean("enable_web_debugging", false))
+
+            val webRoot = File("/data/adb/modules/${moduleId}/webroot")
+
+            val newWebView = WebView(this@WebUIActivity).apply {
+                setBackgroundColor(android.graphics.Color.TRANSPARENT)
+
+                settings.javaScriptEnabled = true
+                settings.domStorageEnabled = true
+                settings.allowFileAccess = false
+
+                val webViewAssetLoader = WebViewAssetLoader.Builder()
+                    .setDomain("mui.kernelsu.org")
+                    .addPathHandler(
+                        "/",
+                        SuFilePathHandler(
+                            this@WebUIActivity,
+                            webRoot,
+                            { currentInsets },
+                            { enable -> isInsetsEnabled = enable }
+                        )
+                    )
+                    .build()
+
+                webViewClient = object : WebViewClient() {
+                    override fun shouldInterceptRequest(
+                        view: WebView,
+                        request: WebResourceRequest
+                    ): WebResourceResponse? {
+                        val url = request.url
+
+                        if (url.scheme.equals("ksu", ignoreCase = true) && url.host.equals("icon", ignoreCase = true)) {
+                            val packageName = url.path?.substring(1)
+                            if (!packageName.isNullOrEmpty()) {
+                                val icon = AppIconUtil.loadAppIconSync(this@WebUIActivity, packageName, 512)
+                                if (icon != null) {
+                                    val stream = ByteArrayOutputStream()
+                                    icon.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                                    return WebResourceResponse(
+                                        "image/png", null, 200, "OK",
+                                        mapOf("Access-Control-Allow-Origin" to "*"),
+                                        ByteArrayInputStream(stream.toByteArray())
+                                    )
+                                }
+                            }
+                        }
+
+                        return webViewAssetLoader.shouldInterceptRequest(url)
                     }
-                    try {
-                        fileChooserLauncher.launch(intent)
-                    } catch (_: ActivityNotFoundException) {
-                        filePathCallback?.onReceiveValue(null)
-                        this@WebUIActivity.filePathCallback = null
-                        return false
+
+                    override fun doUpdateVisitedHistory(view: WebView?, url: String?, isReload: Boolean) {
+                        webCanGoBack = view?.canGoBack() == true
+                        if (isInsetsEnabled) webView?.evaluateJavascript(currentInsets.js, null)
+                        super.doUpdateVisitedHistory(view, url, isReload)
                     }
-                    return true
+                }
+
+                webChromeClient = object : WebChromeClient() {
+                    override fun onShowFileChooser(
+                        webView: WebView?,
+                        filePathCallback: ValueCallback<Array<Uri>>?,
+                        fileChooserParams: FileChooserParams?
+                    ): Boolean {
+                        this@WebUIActivity.filePathCallback?.onReceiveValue(null)
+                        this@WebUIActivity.filePathCallback = filePathCallback
+                        val intent = fileChooserParams?.createIntent() ?: Intent(Intent.ACTION_GET_CONTENT).apply { type = "*/*" }
+                        if (fileChooserParams?.mode == FileChooserParams.MODE_OPEN_MULTIPLE) {
+                            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+                        }
+                        try {
+                            fileChooserLauncher.launch(intent)
+                        } catch (_: ActivityNotFoundException) {
+                            filePathCallback?.onReceiveValue(null)
+                            this@WebUIActivity.filePathCallback = null
+                            return false
+                        }
+                        return true
+                    }
                 }
             }
-            loadUrl("https://mui.kernelsu.org/index.html")
+
+            webViewInterface = WebViewInterface(this@WebUIActivity, newWebView) { enable -> isInsetsEnabled = enable }
+            newWebView.addJavascriptInterface(webViewInterface, "ksu")
+            this@WebUIActivity.webView = newWebView
+            isWebViewReady = true
         }
     }
 }

@@ -22,7 +22,11 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.util.concurrent.CompletableFuture
 
-class WebViewInterface(val context: Context, private val webView: WebView) {
+class WebViewInterface(
+    val context: Context,
+    private val webView: WebView,
+    private val onInsetsEnabledChanged: ((Boolean) -> Unit)? = null
+) {
     @JavascriptInterface
     fun exec(cmd: String): String {
         val shell = createRootShellStrict(reason = "WebUI exec")
@@ -154,15 +158,22 @@ class WebViewInterface(val context: Context, private val webView: WebView) {
 
     @JavascriptInterface
     fun fullScreen(enable: Boolean) {
-        if (context is Activity) {
+        val ctx = webView.context
+        if (ctx is Activity) {
             Handler(Looper.getMainLooper()).post {
                 if (enable) {
-                    hideSystemUI(context.window)
+                    hideSystemUI(ctx.window)
                 } else {
-                    showSystemUI(context.window)
+                    showSystemUI(ctx.window)
                 }
             }
         }
+        enableEdgeToEdge(enable)
+    }
+
+    @JavascriptInterface
+    fun enableEdgeToEdge(enable: Boolean = true) {
+        onInsetsEnabledChanged?.invoke(enable)
     }
 
     @JavascriptInterface
