@@ -48,7 +48,7 @@ patch_rc=$?
 set +x
   if [ $patch_rc -ne 0 ]; then
     >&2 echo "- Unpack error: $patch_rc"
-    exit $?
+    exit $patch_rc
   fi
 fi
 
@@ -75,11 +75,12 @@ set +x
 
 if [ $patch_rc -ne 0 ]; then
   >&2 echo "- Patch kernel error: $patch_rc"
-  exit $?
+  exit $patch_rc
 fi
 
 echo "- Repacking boot image"
 ./kptools repack "$BOOTIMAGE"
+repack_rc=$?
 
 if [ ! $(./kptools -i kernel.ori -f | grep CONFIG_KALLSYMS_ALL=y) ]; then
 	echo "- Detected CONFIG_KALLSYMS_ALL is not set!"
@@ -87,19 +88,32 @@ if [ ! $(./kptools -i kernel.ori -f | grep CONFIG_KALLSYMS_ALL=y) ]; then
 	echo "- Make sure you have original boot image backup."
 fi
 
-if [ $? -ne 0 ]; then
-  >&2 echo "- Repack error: $?"
-  exit $?
+if [ "$repack_rc" -ne 0 ]; then
+  >&2 echo "- Repack error: $repack_rc"
+  exit $repack_rc
 fi
 
 if [ "$FLASH_TO_DEVICE" = "true" ]; then
   # flash
-  if [ -b "$BOOTIMAGE" ] || [ -c "$BOOTIMAGE" ] && [ -f "new-boot.img" ]; then
-    echo "- Flashing new boot image"
-    flash_image new-boot.img "$BOOTIMAGE"
-    if [ $? -ne 0 ]; then
-      >&2 echo "- Flash error: $?"
-      exit $?
+  # Note: `[ -b X ] || [ -c X ] && [ -f Y ]` is parsed as
+  #   `[ -b X ] || ( [ -c X ] && [ -f Y ] )`
+  # by every POSIX sh on Android (ash, mksh, toybox). When BOOTIMAGE
+  # was a block device the `[ -f "new-boot.img" ]` check was therefore
+  # never evaluated, and the script would attempt to flash even when
+  # the repack step had silently failed and new-boot.img was missing.
+  # The nested if makes both conditions required and produces a clear
+  # error when the output file is absent.
+  if [ -b "$BOOTIMAGE" ] || [ -c "$BOOTIMAGE" ]; then
+    if [ -f "new-boot.img" ]; then
+      echo "- Flashing new boot image"
+      flash_image new-boot.img "$BOOTIMAGE"
+      if [ $? -ne 0 ]; then
+        >&2 echo "- Flash error: $?"
+        exit $?
+      fi
+    else
+      >&2 echo "- new-boot.img missing - refusing to flash"
+      exit 1
     fi
   fi
 
