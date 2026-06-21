@@ -435,6 +435,16 @@ install_module() {
   $BOOTMODE || recovery_cleanup
   rm -rf $TMPDIR
 
+  # Hot install: run the module's hot install script if requested
+  if [ "$MODULE_HOT_INSTALL_REQUEST" = "true" ] && [ -n "$MODULE_HOT_RUN_SCRIPT" ]; then
+    if [ -f "$MODPATH/$MODULE_HOT_RUN_SCRIPT" ]; then
+      ui_print "- Running hot install: $MODULE_HOT_RUN_SCRIPT"
+      sh "$MODPATH/$MODULE_HOT_RUN_SCRIPT"
+    else
+      ui_print "- Hot install script not found: $MODULE_HOT_RUN_SCRIPT"
+    fi
+  fi
+
   ui_print "- Done"
 }
 

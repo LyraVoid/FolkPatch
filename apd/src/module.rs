@@ -43,6 +43,50 @@ pub enum ModuleType {
     Updated,
 }
 
+/// Extract customize.sh from a ZIP and parse MODULE_HOT_INSTALL_REQUEST / MODULE_HOT_RUN_SCRIPT
+fn extract_hot_install_vars(zip_path: &Path) -> (Option<String>, Option<String>) {
+    let file = match fs::File::open(zip_path) {
+        Ok(f) => f,
+        Err(_) => return (None, None),
+    };
+    let mut archive = match zip::ZipArchive::new(file) {
+        Ok(a) => a,
+        Err(_) => return (None, None),
+    };
+    let mut content = String::new();
+    if let Ok(mut entry) = archive.by_name("customize.sh") {
+        use std::io::Read;
+        let _ = entry.read_to_string(&mut content);
+    } else {
+        return (None, None);
+    }
+
+    let mut hot_request = None;
+    let mut hot_script = None;
+    for line in content.lines() {
+        let trimmed = line.trim();
+        if trimmed.starts_with("export MODULE_HOT_INSTALL_REQUEST=") {
+            let val = trimmed["export MODULE_HOT_INSTALL_REQUEST=".len()..]
+                .trim_matches('"')
+                .trim_matches('\'')
+                .to_string();
+            if !val.is_empty() {
+                hot_request = Some(val);
+            }
+        }
+        if trimmed.starts_with("export MODULE_HOT_RUN_SCRIPT=") {
+            let val = trimmed["export MODULE_HOT_RUN_SCRIPT=".len()..]
+                .trim_matches('"')
+                .trim_matches('\'')
+                .to_string();
+            if !val.is_empty() {
+                hot_script = Some(val);
+            }
+        }
+    }
+    (hot_request, hot_script)
+}
+
 fn exec_install_script(module_file: &str, is_metamodule: bool, module_id: &str) -> Result<()> {
     let realpath = std::fs::canonicalize(module_file)
         .with_context(|| format!("realpath: {module_file} failed"))?;
@@ -51,12 +95,25 @@ fn exec_install_script(module_file: &str, is_metamodule: bool, module_id: &str) 
     let install_script =
         metamodule::get_install_script(is_metamodule, INSTALLER_CONTENT, INSTALL_MODULE_SCRIPT)?;
 
-    let result = Command::new(assets::BUSYBOX_PATH)
-        .args(["sh", "-c", &install_script])
+    // Check if the module requests hot install
+    let zip_path = PathBuf::from(module_file);
+    let (hot_request, hot_script) = extract_hot_install_vars(&zip_path);
+
+    let mut cmd = Command::new(assets::BUSYBOX_PATH);
+    cmd.args(["sh", "-c", &install_script])
         .envs(get_common_script_envs(Some(module_id)))
         .env("OUTFD", "1")
-        .env("ZIPFILE", realpath)
-        .status()?;
+        .env("ZIPFILE", realpath);
+
+    // Pass hot install variables to the shell script if present
+    if let Some(ref val) = hot_request {
+        cmd.env("MODULE_HOT_INSTALL_REQUEST", val);
+    }
+    if let Some(ref val) = hot_script {
+        cmd.env("MODULE_HOT_RUN_SCRIPT", val);
+    }
+
+    let result = cmd.status()?;
     ensure!(result.success(), "Failed to install module script");
     Ok(())
 }
