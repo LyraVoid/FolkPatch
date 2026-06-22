@@ -600,6 +600,11 @@ Here are some possible reasons for authentication failure—please check which o
     <string name="settings_custom_background_summary">Set a custom background image</string>
     <string name="settings_custom_background_saved">Background saved successfully</string>
     <string name="settings_custom_background_error">Failed to save background</string>
+    <string name="settings_crop_not_supported">Crop not supported on this device, saving original image</string>
+    <string name="settings_crop_dialog_title">Crop wallpaper</string>
+    <string name="settings_crop_dialog_message">Crop the image?</string>
+    <string name="settings_crop_dialog_crop">Yes</string>
+    <string name="settings_crop_dialog_direct">No</string>
     <string name="settings_background_selected">Background selected</string>
     <string name="settings_background_image_cleared">Background image cleared</string>
     <string name="settings_clear_background">Clear Background</string>

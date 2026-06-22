@@ -2,11 +2,17 @@ package me.bmax.apatch.ui.screen.settings
 
 import android.app.Activity
 import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import android.provider.MediaStore
 import me.bmax.apatch.util.ui.showToast
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.FileProvider
+import java.io.File
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
@@ -81,9 +87,56 @@ fun AppearanceSettingsContent(
     val loadingDialog = rememberLoadingDialog()
 
     var pickingType by remember { mutableStateOf<String?>(null) }
+    var pendingCropUri by remember { mutableStateOf<Uri?>(null) }
+    var showCropOptionDialog by remember { mutableStateOf(false) }
 
-    val pickImageLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.GetContent()
+    // 裁剪 launcher：将选取的图片交给系统裁剪界面，返回裁剪后的 URI
+    val cropImageLauncher = rememberLauncherForActivityResult(
+        object : ActivityResultContract<Uri, Uri?>() {
+            override fun createIntent(context: Context, input: Uri): Intent {
+                val tempFile = File(context.cacheDir, "background_crop_cache").apply {
+                    parentFile?.mkdirs()
+                    delete()
+                    createNewFile()
+                    deleteOnExit()
+                }
+
+                context.contentResolver.openInputStream(input)?.use { inputStream ->
+                    tempFile.outputStream().use { outputStream ->
+                        inputStream.copyTo(outputStream)
+                    }
+                }
+
+                val tempUri = FileProvider.getUriForFile(
+                    context,
+                    "${context.packageName}.fileprovider",
+                    tempFile
+                )
+
+                return Intent("com.android.camera.action.CROP").apply {
+                    setDataAndType(tempUri, "image/*")
+                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+                    putExtra("crop", "true")
+
+                    val displayMetrics = context.resources.displayMetrics
+                    val screenWidth = displayMetrics.widthPixels
+                    val screenHeight = displayMetrics.heightPixels
+
+                    putExtra("aspectX", screenWidth)
+                    putExtra("aspectY", screenHeight)
+                    putExtra("outputX", screenWidth)
+                    putExtra("outputY", screenHeight)
+
+                    putExtra("return-data", false)
+                    putExtra(MediaStore.EXTRA_OUTPUT, tempUri)
+                }
+            }
+
+            override fun parseResult(resultCode: Int, intent: Intent?): Uri? {
+                return if (resultCode == Activity.RESULT_OK) intent?.data else null
+            }
+        }
     ) { uri: Uri? ->
         uri?.let {
             scope.launch {
@@ -106,6 +159,86 @@ fun AppearanceSettingsContent(
                 pickingType = null
             }
         }
+    }
+
+    val pickImageLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let {
+            // 所有壁纸模式都弹窗让用户选裁剪或直接使用
+            pendingCropUri = it
+            showCropOptionDialog = true
+        }
+    }
+
+    // 裁剪选项对话框
+    if (showCropOptionDialog && pendingCropUri != null) {
+        AlertDialog(
+            onDismissRequest = {
+                showCropOptionDialog = false
+                pendingCropUri = null
+            },
+            title = { Text(text = stringResource(R.string.settings_crop_dialog_title)) },
+            text = { Text(text = stringResource(R.string.settings_crop_dialog_message)) },
+            confirmButton = {
+                TextButton(onClick = {
+                    showCropOptionDialog = false
+                    val uri = pendingCropUri!!
+                    pendingCropUri = null
+                    try {
+                        cropImageLauncher.launch(uri)
+                    } catch (e: ActivityNotFoundException) {
+                        showToast(context, context.getString(R.string.settings_crop_not_supported))
+                        scope.launch {
+                            loadingDialog.show()
+                            val success = when (pickingType) {
+                                "home" -> BackgroundManager.saveAndApplyHomeBackground(context, uri)
+                                "kernel" -> BackgroundManager.saveAndApplyKernelBackground(context, uri)
+                                "superuser" -> BackgroundManager.saveAndApplySuperuserBackground(context, uri)
+                                "system" -> BackgroundManager.saveAndApplySystemModuleBackground(context, uri)
+                                "settings" -> BackgroundManager.saveAndApplySettingsBackground(context, uri)
+                                else -> BackgroundManager.saveAndApplyCustomBackground(context, uri)
+                            }
+                            loadingDialog.hide()
+                            if (success) {
+                                refreshTheme.value = true
+                            }
+                            pickingType = null
+                        }
+                    }
+                }) {
+                    Text(text = stringResource(R.string.settings_crop_dialog_crop))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = {
+                    showCropOptionDialog = false
+                    val uri = pendingCropUri!!
+                    pendingCropUri = null
+                    scope.launch {
+                        loadingDialog.show()
+                        val success = when (pickingType) {
+                            "home" -> BackgroundManager.saveAndApplyHomeBackground(context, uri)
+                            "kernel" -> BackgroundManager.saveAndApplyKernelBackground(context, uri)
+                            "superuser" -> BackgroundManager.saveAndApplySuperuserBackground(context, uri)
+                            "system" -> BackgroundManager.saveAndApplySystemModuleBackground(context, uri)
+                            "settings" -> BackgroundManager.saveAndApplySettingsBackground(context, uri)
+                            else -> BackgroundManager.saveAndApplyCustomBackground(context, uri)
+                        }
+                        loadingDialog.hide()
+                        if (success) {
+                            snackBarHost.showSnackbar(message = context.getString(R.string.settings_custom_background_saved))
+                            refreshTheme.value = true
+                        } else {
+                            snackBarHost.showSnackbar(message = context.getString(R.string.settings_custom_background_error))
+                        }
+                        pickingType = null
+                    }
+                }) {
+                    Text(text = stringResource(R.string.settings_crop_dialog_direct))
+                }
+            }
+        )
     }
 
     val pickVideoLauncher = rememberLauncherForActivityResult(
