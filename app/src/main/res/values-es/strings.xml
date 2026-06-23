@@ -544,6 +544,11 @@ Aquí hay algunas posibles razones para el fallo de autenticación—por favor v
     <string name="settings_custom_background_summary">Establecer una imagen de fondo personalizada</string>
     <string name="settings_custom_background_saved">Fondo guardado con éxito</string>
     <string name="settings_custom_background_error">Error al guardar fondo</string>
+    <string name="settings_crop_not_supported">Recorte no compatible en este dispositivo, guardando imagen original</string>
+    <string name="settings_crop_dialog_title">Recortar fondo</string>
+    <string name="settings_crop_dialog_message">¿Recortar la imagen?</string>
+    <string name="settings_crop_dialog_crop">Sí</string>
+    <string name="settings_crop_dialog_direct">No</string>
     <string name="settings_background_selected">Fondo seleccionado</string>
     <string name="settings_background_image_cleared">Imagen de fondo borrada</string>
     <string name="settings_clear_background">Borrar Fondo</string>

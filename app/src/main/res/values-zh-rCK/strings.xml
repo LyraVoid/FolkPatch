@@ -520,6 +520,11 @@
     <string name="settings_custom_background_summary">设背景图</string>
     <string name="settings_custom_background_saved">背景存好了</string>
     <string name="settings_custom_background_error">存背景失败</string>
+    <string name="settings_crop_not_supported">设备不支持裁剪，原图已存</string>
+    <string name="settings_crop_dialog_title">裁壁纸</string>
+    <string name="settings_crop_dialog_message">要裁图吗？</string>
+    <string name="settings_crop_dialog_crop">裁</string>
+    <string name="settings_crop_dialog_direct">不裁</string>
     <string name="settings_background_selected">背景已选好</string>
     <string name="settings_background_image_cleared">背景已撤了</string>
     <string name="settings_clear_background">撤背景</string>

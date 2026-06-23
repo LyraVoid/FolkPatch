@@ -512,6 +512,11 @@ Dưới đây là một số nguyên nhân có thể gây ra thất bại xác t
     <string name="settings_custom_background_summary">Đặt hình ảnh nền tùy chỉnh</string>
     <string name="settings_custom_background_saved">Lưu nền thành công</string>
     <string name="settings_custom_background_error">Lưu nền thất bại</string>
+    <string name="settings_crop_not_supported">Thiết bị này không hỗ trợ cắt, đang lưu ảnh gốc</string>
+    <string name="settings_crop_dialog_title">Cắt hình nền</string>
+    <string name="settings_crop_dialog_message">Cắt hình ảnh?</string>
+    <string name="settings_crop_dialog_crop">Có</string>
+    <string name="settings_crop_dialog_direct">Không</string>
     <string name="settings_background_selected">Đã chọn nền</string>
     <string name="settings_background_image_cleared">Hình ảnh nền đã được xóa</string>
     <string name="settings_clear_background">Xóa nền</string>

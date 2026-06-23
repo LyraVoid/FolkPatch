@@ -436,6 +436,11 @@
     <string name="settings_custom_background_summary">Ustaw niestandardowy obraz tła</string>
     <string name="settings_custom_background_saved">Tło zapisane pomyślnie</string>
     <string name="settings_custom_background_error">Nie udało się zapisać tła</string>
+    <string name="settings_crop_not_supported">Kadrowanie nie jest obsługiwane na tym urządzeniu, zapisywanie oryginalnego obrazu</string>
+    <string name="settings_crop_dialog_title">Kadruj tło</string>
+    <string name="settings_crop_dialog_message">Kadrować obraz?</string>
+    <string name="settings_crop_dialog_crop">Tak</string>
+    <string name="settings_crop_dialog_direct">Nie</string>
     <string name="settings_background_selected">Wybrano tło</string>
     <string name="settings_background_image_cleared">Usunięto obraz tła</string>
     <string name="settings_clear_background">Wyczyść tło</string>

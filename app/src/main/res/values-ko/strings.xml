@@ -554,6 +554,11 @@
     <string name="settings_custom_background_summary">사용자 지정 배경 이미지를 설정합니다.</string>
     <string name="settings_custom_background_saved">배경 저장됨</string>
     <string name="settings_custom_background_error">배경 저장 실패</string>
+    <string name="settings_crop_not_supported">이 기기에서 자르기를 지원하지 않음, 원본 이미지 저장 중</string>
+    <string name="settings_crop_dialog_title">배경화면 자르기</string>
+    <string name="settings_crop_dialog_message">이미지를 자르시겠습니까?</string>
+    <string name="settings_crop_dialog_crop">예</string>
+    <string name="settings_crop_dialog_direct">아니오</string>
     <string name="settings_background_selected">배경 선택됨</string>
     <string name="settings_background_image_cleared">배경 이미지 삭제됨</string>
     <string name="settings_clear_background">배경 지우기</string>

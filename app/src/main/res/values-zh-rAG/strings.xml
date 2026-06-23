@@ -545,6 +545,11 @@
     <string name="settings_custom_background_summary">设自定义背景图喵！</string>
     <string name="settings_custom_background_saved">背景存好了喵！</string>
     <string name="settings_custom_background_error">存背景失败了喵...</string>
+    <string name="settings_crop_not_supported">这台设备不支持裁剪喵，原图已存好喵！</string>
+    <string name="settings_crop_dialog_title">裁剪壁纸喵</string>
+    <string name="settings_crop_dialog_message">要裁剪图片吗喵？</string>
+    <string name="settings_crop_dialog_crop">要喵</string>
+    <string name="settings_crop_dialog_direct">不要喵</string>
     <string name="settings_background_selected">选好背景了喵！</string>
     <string name="settings_background_image_cleared">背景删了喵！</string>
     <string name="settings_clear_background">清背景喵</string>

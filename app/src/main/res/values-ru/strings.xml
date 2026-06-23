@@ -503,6 +503,11 @@
     <string name="settings_custom_background_summary">Установить пользовательское фоновое изображение</string>
     <string name="settings_custom_background_saved">Фон успешно сохранён</string>
     <string name="settings_custom_background_error">Не удалось сохранить фон</string>
+    <string name="settings_crop_not_supported">Кадрирование не поддерживается на этом устройстве, сохраняется исходное изображение</string>
+    <string name="settings_crop_dialog_title">Кадрировать фон</string>
+    <string name="settings_crop_dialog_message">Кадрировать изображение?</string>
+    <string name="settings_crop_dialog_crop">Да</string>
+    <string name="settings_crop_dialog_direct">Нет</string>
     <string name="settings_background_selected">Фон выбран</string>
     <string name="settings_background_image_cleared">Фоновое изображение очищено</string>
     <string name="settings_clear_background">Очистить фон</string>

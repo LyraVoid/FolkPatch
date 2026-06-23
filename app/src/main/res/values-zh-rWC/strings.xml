@@ -495,6 +495,11 @@
     <string name="settings_alt_icon">備用圖標</string>
     <string name="alt_icon_summary">用備選啟動器圖標</string>
     <string name="settings_custom_background_error">存仙府背景败陨</string>
+    <string name="settings_crop_not_supported">此器不允裁炼，原图已存</string>
+    <string name="settings_crop_dialog_title">裁炼仙府景图</string>
+    <string name="settings_crop_dialog_message">可要裁炼此图？</string>
+    <string name="settings_crop_dialog_crop">裁</string>
+    <string name="settings_crop_dialog_direct">不裁</string>
     <string name="settings_background_selected">已择仙府背景</string>
     <string name="settings_background_image_cleared">仙府背景图已涤</string>
     <string name="settings_clear_background">涤仙府背景</string>

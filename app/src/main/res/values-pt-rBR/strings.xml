@@ -542,6 +542,11 @@ Aqui estão algumas possíveis razões para a falha de autenticação—verifiqu
     <string name="settings_custom_background_summary">Definir uma imagem de fundo personalizada</string>
     <string name="settings_custom_background_saved">Fundo salvo com sucesso</string>
     <string name="settings_custom_background_error">Falha ao salvar fundo</string>
+    <string name="settings_crop_not_supported">Recorte não suportado neste dispositivo, salvando imagem original</string>
+    <string name="settings_crop_dialog_title">Recortar fundo</string>
+    <string name="settings_crop_dialog_message">Recortar a imagem?</string>
+    <string name="settings_crop_dialog_crop">Sim</string>
+    <string name="settings_crop_dialog_direct">Não</string>
     <string name="settings_background_selected">Fundo selecionado</string>
     <string name="settings_background_image_cleared">Imagem de fundo limpa</string>
     <string name="settings_clear_background">Limpar Fundo</string>

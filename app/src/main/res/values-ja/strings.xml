@@ -498,6 +498,11 @@
     <string name="settings_custom_background_summary">カスタム背景画像を設定します</string>
     <string name="settings_custom_background_saved">背景の保存が成功しました。</string>
     <string name="settings_custom_background_error">背景の保存に失敗しました。</string>
+    <string name="settings_crop_not_supported">このデバイスでは切り抜きに対応していません、元の画像を保存しました。</string>
+    <string name="settings_crop_dialog_title">壁紙を切り抜く</string>
+    <string name="settings_crop_dialog_message">画像を切り抜きますか？</string>
+    <string name="settings_crop_dialog_crop">はい</string>
+    <string name="settings_crop_dialog_direct">いいえ</string>
     <string name="settings_background_selected">背景が選択されました。</string>
     <string name="settings_background_image_cleared">背景画像を消去しました</string>
     <string name="settings_clear_background">背景を消去</string>

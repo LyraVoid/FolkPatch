@@ -546,6 +546,11 @@
     <string name="settings_custom_background_summary">تعيين صورة خلفية مخصصة</string>
     <string name="settings_custom_background_saved">تم حفظ الخلفية بنجاح</string>
     <string name="settings_custom_background_error">فشل حفظ الخلفية</string>
+    <string name="settings_crop_not_supported">القص غير مدعوم على هذا الجهاز، يتم حفظ الصورة الأصلية</string>
+    <string name="settings_crop_dialog_title">قص الخلفية</string>
+    <string name="settings_crop_dialog_message">هل تريد قص الصورة؟</string>
+    <string name="settings_crop_dialog_crop">نعم</string>
+    <string name="settings_crop_dialog_direct">لا</string>
     <string name="settings_background_selected">تم تحديد الخلفية</string>
     <string name="settings_background_image_cleared">تم مسح صورة الخلفية</string>
     <string name="settings_clear_background">مسح الخلفية</string>

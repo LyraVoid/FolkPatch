@@ -540,6 +540,11 @@ Bol şans! Ayrıca, aşağıdaki belge butonuna tıklamak kesinlikle doğru!</st
     <string name="settings_custom_background_summary">Özel bir arka plan görseli ayarla</string>
     <string name="settings_custom_background_saved">Arka plan başarıyla kaydedildi</string>
     <string name="settings_custom_background_error">Arka plan kaydedilemedi</string>
+    <string name="settings_crop_not_supported">Bu cihazda kırpma desteklenmiyor, orijinal görsel kaydediliyor</string>
+    <string name="settings_crop_dialog_title">Arka planı kırp</string>
+    <string name="settings_crop_dialog_message">Görsel kırpılsın mı?</string>
+    <string name="settings_crop_dialog_crop">Evet</string>
+    <string name="settings_crop_dialog_direct">Hayır</string>
     <string name="settings_background_selected">Arka plan seçildi</string>
     <string name="settings_background_image_cleared">Arka plan görseli temizlendi</string>
     <string name="settings_clear_background">Arka Planı Temizle</string>

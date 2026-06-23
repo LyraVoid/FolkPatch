@@ -496,6 +496,11 @@ Berikut adalah beberapa kemungkinan penyebab kegagalan autentikasi—silakan cek
     <string name="settings_custom_background_summary">Atur gambar latar belakang kustom</string>
     <string name="settings_custom_background_saved">Latar belakang berhasil disimpan</string>
     <string name="settings_custom_background_error">Gagal menyimpan latar belakang</string>
+    <string name="settings_crop_not_supported">Pemotongan tidak didukung di perangkat ini, menyimpan gambar asli</string>
+    <string name="settings_crop_dialog_title">Potong latar belakang</string>
+    <string name="settings_crop_dialog_message">Potong gambar?</string>
+    <string name="settings_crop_dialog_crop">Ya</string>
+    <string name="settings_crop_dialog_direct">Tidak</string>
     <string name="settings_alt_icon">Ikon Alternatif</string>
     <string name="alt_icon_summary">Gunakan ikon peluncur alternatif</string>
     <string name="settings_background_selected">Latar belakang dipilih</string>

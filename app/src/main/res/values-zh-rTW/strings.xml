@@ -498,6 +498,11 @@
     <string name="settings_custom_background_summary">設定自訂背景圖片</string>
     <string name="settings_custom_background_saved">背景儲存成功</string>
     <string name="settings_custom_background_error">背景儲存失敗</string>
+    <string name="settings_crop_not_supported">目前裝置不支援裁剪，已儲存原圖</string>
+    <string name="settings_crop_dialog_title">裁剪桌布</string>
+    <string name="settings_crop_dialog_message">是否裁剪圖片？</string>
+    <string name="settings_crop_dialog_crop">是</string>
+    <string name="settings_crop_dialog_direct">否</string>
     <string name="settings_background_selected">背景已選擇</string>
     <string name="settings_background_image_cleared">背景圖片已清除</string>
     <string name="settings_clear_background">清除背景</string>
