@@ -63,6 +63,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -200,7 +201,7 @@ fun FunctionSettingsContent(
                                 supportingText = { Text(umountPathsHelper) },
                                 minLines = 4,
                                 maxLines = Int.MAX_VALUE,
-                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.None),
                             )
 
                             Spacer(modifier = Modifier.height(12.dp))
@@ -372,7 +373,7 @@ fun FunctionSettingsContent(
                                 supportingText = { Text(pathsHelper) },
                                 minLines = 4,
                                 maxLines = Int.MAX_VALUE,
-                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.None),
                             )
 
                             Spacer(modifier = Modifier.height(12.dp))

@@ -181,11 +181,6 @@ fun FunctionSettingsScreen(navigator: DestinationsNavigator, highlightKey: Strin
                 .debounce(1000L)
                 .collect { paths ->
                     val normalizedPaths = normalizePathHidePaths(paths)
-                    if (normalizedPaths != paths) {
-                        withContext(Dispatchers.Main) {
-                            pathHidePaths = normalizedPaths
-                        }
-                    }
                     writePathHidePaths(normalizedPaths)
                     Natives.pathHideClear()
                     if (normalizedPaths.isNotBlank()) {
