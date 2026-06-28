@@ -20,6 +20,7 @@ import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
+import android.os.SystemClock
 import kotlinx.parcelize.Parcelize
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.IAPRootService
@@ -73,6 +74,9 @@ class SuperUserViewModel : ViewModel() {
     var showSystemApps by mutableStateOf(false)
     var isRefreshing by mutableStateOf(false)
         private set
+
+    private var bindJob: kotlinx.coroutines.Job? = null
+    private val fetchInFlight = AtomicBoolean(false)
 
     private val sortedList by derivedStateOf {
         val comparator = compareBy<AppInfo> {
@@ -128,6 +132,7 @@ class SuperUserViewModel : ViewModel() {
         continuation.invokeOnCancellation {
             Log.w(TAG, "connectRootService coroutine cancelled, unbinding service")
             resumed.set(true)
+            bindJob?.cancel()
             try {
                 apApp.unbindService(connection)
             } catch (e: Exception) {
@@ -149,7 +154,7 @@ class SuperUserViewModel : ViewModel() {
         } else {
             val shell = APatchCli.SHELL
             Log.d(TAG, "Executing bind task...")
-            viewModelScope.launch(Dispatchers.IO) {
+            bindJob = viewModelScope.launch(Dispatchers.IO) {
                 try {
                     shell.execTask(task)
                 } catch (e: Exception) {
@@ -368,6 +373,11 @@ class SuperUserViewModel : ViewModel() {
     }
 
     suspend fun fetchAppList() {
+        if (!fetchInFlight.compareAndSet(false, true)) {
+            Log.d(TAG, "fetchAppList skipped: a fetch is already in progress")
+            return
+        }
+        val startedAt = SystemClock.elapsedRealtime()
         isRefreshing = true
         try {
 
@@ -455,7 +465,12 @@ class SuperUserViewModel : ViewModel() {
         }
 
         } finally {
+            val elapsed = SystemClock.elapsedRealtime() - startedAt
+            if (elapsed > 15_000L) {
+                Log.w(TAG, "fetchAppList took ${elapsed}ms, suspiciously long")
+            }
             isRefreshing = false
+            fetchInFlight.set(false)
         }
     }
 

@@ -83,6 +83,9 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.DialogWindowProvider
 import androidx.compose.ui.window.SecureFlagPolicy
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -218,6 +221,14 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
 
     LaunchedEffect(Unit) {
         if (viewModel.appList.isEmpty()) {
+            viewModel.fetchAppList()
+        }
+    }
+
+    // Re-fetch on every resume so the list stays fresh and the indicator resets.
+    val lifecycleOwner = LocalLifecycleOwner.current
+    LaunchedEffect(lifecycleOwner) {
+        lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
             viewModel.fetchAppList()
         }
     }
