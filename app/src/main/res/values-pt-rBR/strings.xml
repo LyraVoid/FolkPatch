@@ -992,13 +992,15 @@ Por favor, certifique-se de fechar completamente o app e reabri-lo para que os c
     <string name="my_themes_delete_confirm">Tem certeza de que deseja excluir este tema?</string>
     <string name="my_themes_deleted">Tema excluído</string>
     <string name="my_themes_applied">Tema aplicado</string>
-    <string name="my_themes_apply_failed">Falha ao aplicar tema</string>
+    <string name="my_themes_apply_failed">Falha ao aplicar tema — pressione longamente para excluir e baixar novamente</string>
     <string name="my_themes_details">Detalhes do Tema</string>
 
     <!-- Diálogo de Download -->
     <string name="theme_download_title">Baixando Tema</string>
     <string name="theme_download_completed">Download concluído</string>
     <string name="theme_download_failed">Download falhou</string>
+    <string name="theme_file_corrupt">Arquivo do tema corrompido, faça o download novamente</string>
+    <string name="theme_file_incomplete">Arquivo do tema incompleto, faça o download novamente</string>
     <string name="theme_download_progress">Progresso</string>
     <string name="theme_download_file">Arquivo do Tema</string>
     <string name="theme_download_image">Imagem de Visualização</string>

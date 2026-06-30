@@ -294,8 +294,12 @@ class ThemeDownloader(private val context: Context) {
 
         while (retryCount < MAX_RETRIES) {
             try {
-                downloadOnce(url, file, taskId, onProgress)
+                val expectedSize = downloadOnce(url, file, taskId, onProgress)
                 Log.d(TAG, "Download completed: ${file.absolutePath}")
+
+                // 下载后完整性校验：避免残缺/被 CDN 替换的文件被标记为成功
+                validateDownloadedFile(file, isThemeFile, expectedSize)
+
                 return@withContext DownloadFileResult(true)
             } catch (e: Exception) {
                 lastError = describeException(e)
@@ -317,13 +321,14 @@ class ThemeDownloader(private val context: Context) {
 
     /**
      * 执行一次下载尝试。正确处理 206 续传 / 200 全量覆盖两种情形。
+     * @return 整个文件的期望总大小（字节），未知时为 -1
      */
     private fun downloadOnce(
         url: String,
         file: File,
         taskId: String,
         onProgress: (Float) -> Unit
-    ) {
+    ): Long {
         // 已下载字节数（断点续传起点）
         val downloadedBytes = if (file.exists()) file.length() else 0L
 
@@ -335,6 +340,9 @@ class ThemeDownloader(private val context: Context) {
                 }
             }
             .build()
+
+        // 捕获期望总大小以便返回给调用方做完整性校验
+        var expectedSize = -1L
 
         client.newCall(request).execute().use { response ->
             // 处理响应
@@ -355,6 +363,7 @@ class ThemeDownloader(private val context: Context) {
             } else {
                 -1L // 未知总大小
             }
+            expectedSize = totalBytes
 
             // 写文件：续传用 append，全量用 truncate（覆盖）
             FileOutputStream(file, resumeFromPartial).use { output ->
@@ -383,6 +392,61 @@ class ThemeDownloader(private val context: Context) {
                         }
                     }
                 }
+            }
+        }
+
+        return expectedSize
+    }
+
+    /**
+     * 下载完成后校验文件完整性。
+     * 防止以下情况被误标记为"下载完成"：
+     * - CDN/代理返回 200 但内容是 HTML 错误页
+     * - 传输中途连接断开但 InputStream 未抛异常
+     * - Content-Length 与实际大小不匹配
+     *
+     * @throws IOException 若校验不通过，触发重试
+     */
+    @Throws(IOException::class)
+    private fun validateDownloadedFile(file: File, isThemeFile: Boolean, expectedSize: Long) {
+        if (!file.exists() || file.length() <= 0L) {
+            throw IOException("Downloaded file is empty or missing")
+        }
+
+        // 如果知道期望大小，比对实际大小
+        if (expectedSize > 0L && file.length() != expectedSize) {
+            throw IOException(
+                "File size mismatch: expected ${expectedSize}, got ${file.length()}"
+            )
+        }
+
+        // 对 .fpt 主题文件做额外检查
+        if (isThemeFile) {
+            val fileSize = file.length()
+
+            // .fpt 至少需要 16 字节 IV + 最小加密块（16 字节 AES 块）
+            if (fileSize < 32L) {
+                throw IOException("Theme file too small (${fileSize} bytes), minimum is 32")
+            }
+
+            // 读文件首部，检测是否被 CDN/代理替换为 HTML/JSON 错误页
+            val header = ByteArray(16)
+            runCatching {
+                file.inputStream().use { it.read(header) }
+            }.onFailure {
+                throw IOException("Cannot read theme file header", it)
+            }
+
+            // 检查 HTML/JSON/纯零 签名
+            // HTML 通常以 '<' 开头，JSON 以 '{' 开头，全零表示传输失败
+            val firstByte = header[0].toInt() and 0xFF
+            if (firstByte == '<'.code || firstByte == '{'.code) {
+                val preview = String(header, 0, minOf(header.size, 60), Charsets.UTF_8)
+                    .replace(0x00.toChar(), '.')
+                throw IOException("Theme file appears to be a web error page, not encrypted data: $preview")
+            }
+            if (header.all { it == 0.toByte() }) {
+                throw IOException("Theme file header is all zeros — transfer likely incomplete")
             }
         }
     }

@@ -975,13 +975,15 @@
     <string name="my_themes_delete_confirm">确定要舍弃此主题仙卷吗？</string>
     <string name="my_themes_deleted">主题已舍弃</string>
     <string name="my_themes_applied">主题已施展</string>
-    <string name="my_themes_apply_failed">施展主题失败</string>
+    <string name="my_themes_apply_failed">施展仙府色章败陨，色章灵材或有损。长按色章令其消散后重引吧</string>
     <string name="my_themes_details">主题仙卷详情</string>
 
     <!-- 下载对话 -->
     <string name="theme_download_title">正在纳符主题</string>
     <string name="theme_download_completed">纳符圆满</string>
     <string name="theme_download_failed">纳符受阻</string>
+    <string name="theme_file_corrupt">仙府色章灵材已损，请重新引入</string>
+    <string name="theme_file_incomplete">仙府色章灵材不全，请重新引入</string>
     <string name="theme_download_progress">仙途进度</string>
     <string name="theme_download_file">主题仙卷</string>
     <string name="theme_download_image">仙图预览</string>

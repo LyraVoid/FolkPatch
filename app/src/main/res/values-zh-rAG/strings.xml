@@ -979,13 +979,15 @@
     <string name="my_themes_delete_confirm">真的要删掉这个主题喵？</string>
     <string name="my_themes_deleted">主题删掉了喵</string>
     <string name="my_themes_applied">主题应用了喵</string>
-    <string name="my_themes_apply_failed">应用主题失败了喵</string>
+    <string name="my_themes_apply_failed">施展主题失败了喵，文件可能已经坏了。长按主题删除再重新下载吧喵！</string>
     <string name="my_themes_details">主题详情喵</string>
 
     <!-- 下载对话喵 -->
     <string name="theme_download_title">正在下载主题喵</string>
     <string name="theme_download_completed">下载完成了喵</string>
     <string name="theme_download_failed">下载失败了喵</string>
+    <string name="theme_file_corrupt">主题文件坏掉了喵，请重新下载喵</string>
+    <string name="theme_file_incomplete">主题文件不完整喵，请重新下载喵</string>
     <string name="theme_download_progress">进度喵</string>
     <string name="theme_download_file">主题文件喵</string>
     <string name="theme_download_image">预览图片喵</string>

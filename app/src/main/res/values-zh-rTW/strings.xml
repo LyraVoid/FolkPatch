@@ -980,13 +980,15 @@
     <string name="my_themes_delete_confirm">確定要刪除此主題嗎？</string>
     <string name="my_themes_deleted">主題已刪除</string>
     <string name="my_themes_applied">主題已應用</string>
-    <string name="my_themes_apply_failed">應用主題失敗</string>
+    <string name="my_themes_apply_failed">應用主題失敗，檔案可能已損毀。長按主題刪除後重新下載</string>
     <string name="my_themes_details">主題詳情</string>
 
     <!-- 下載對話框 -->
     <string name="theme_download_title">正在下載主題</string>
     <string name="theme_download_completed">下載完成</string>
     <string name="theme_download_failed">下載失敗</string>
+    <string name="theme_file_corrupt">主題檔案已損毀，請重新下載</string>
+    <string name="theme_file_incomplete">主題檔案不完整，請重新下載</string>
     <string name="theme_download_progress">進度</string>
     <string name="theme_download_file">主題檔案</string>
     <string name="theme_download_image">預覽圖片</string>

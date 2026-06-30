@@ -996,13 +996,15 @@ Komutların çalışması için uygulamanın tamamen kapatılıp yeniden açıld
     <string name="my_themes_delete_confirm">Bu temayı silmek istediğinizden emin misiniz?</string>
     <string name="my_themes_deleted">Tema silindi</string>
     <string name="my_themes_applied">Tema uygulandı</string>
-    <string name="my_themes_apply_failed">Tema uygulanamadı</string>
+    <string name="my_themes_apply_failed">Tema uygulanamadı — silmek ve yeniden indirmek için uzun basın</string>
     <string name="my_themes_details">Tema Detayları</string>
 
     <!-- İndirme Diyaloğu -->
     <string name="theme_download_title">Tema İndiriliyor</string>
     <string name="theme_download_completed">İndirme tamamlandı</string>
     <string name="theme_download_failed">İndirme başarısız</string>
+    <string name="theme_file_corrupt">Tema dosyası bozuk, lütfen yeniden indirin</string>
+    <string name="theme_file_incomplete">Tema dosyası eksik, lütfen yeniden indirin</string>
     <string name="theme_download_progress">İlerleme</string>
     <string name="theme_download_file">Tema Dosyası</string>
     <string name="theme_download_image">Önizleme Resmi</string>

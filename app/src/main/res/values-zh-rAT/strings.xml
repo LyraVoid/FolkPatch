@@ -978,13 +978,15 @@
     <string name="my_themes_delete_confirm">确定要净化此主题圣物吗？</string>
     <string name="my_themes_deleted">主题已净化</string>
     <string name="my_themes_applied">主题已施展</string>
-    <string name="my_themes_apply_failed">施展主题失败</string>
+    <string name="my_themes_apply_failed">施展魔法主题失败，圣典可能已受损。长按主题将其遗忘后重新召唤吧</string>
     <string name="my_themes_details">主题圣物详情</string>
 
     <!-- 下载圣光阵 -->
     <string name="theme_download_title">正在祈召主题</string>
     <string name="theme_download_completed">祈召完成</string>
     <string name="theme_download_failed">祈召失败</string>
+    <string name="theme_file_corrupt">魔法主题圣典已受损，请重新召唤</string>
+    <string name="theme_file_incomplete">魔法主题圣典不完整，请重新召唤</string>
     <string name="theme_download_progress">圣光进度</string>
     <string name="theme_download_file">主题圣物</string>
     <string name="theme_download_image">圣光预览</string>

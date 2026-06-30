@@ -440,6 +440,12 @@ class ThemeStoreViewModel(private val context: Context) : ViewModel() {
                 Log.e(TAG, "Theme file not found: ${localTheme.localPath}")
                 return@withContext false
             }
+
+            // 应用前快速预检：避免明显残缺/损坏的文件进入完整解密流程
+            if (!validateThemeFileQuick(themeFile)) {
+                Log.e(TAG, "Theme file failed pre-check, skipping import: ${localTheme.localPath}")
+                return@withContext false
+            }
             
             val uri = Uri.fromFile(themeFile)
             val success = ThemeManager.importTheme(context, uri)
@@ -455,6 +461,30 @@ class ThemeStoreViewModel(private val context: Context) : ViewModel() {
             Log.e(TAG, "Error applying theme", e)
             false
         }
+    }
+
+    /**
+     * 应用前的快速完整性检查：验证 .fpt 文件基本结构。
+     * 不执行完整解密，仅检查文件大小和首字节签名，避免浪费资源在明显损坏的文件上。
+     */
+    private fun validateThemeFileQuick(file: File): Boolean {
+        if (file.length() < 32L) {
+            Log.w(TAG, "Theme file too small (${file.length()} bytes), may be incomplete")
+            return false
+        }
+        // 检查首字节：加密数据应该是随机字节，不应该是 HTML/JSON 文本
+        return runCatching {
+            file.inputStream().use { input ->
+                val firstByte = input.read()
+                if (firstByte == -1) return@runCatching false
+                // HTML 通常 '<', JSON 通常 '{', 纯文本错误页
+                if (firstByte == '<'.code || firstByte == '{'.code) {
+                    Log.w(TAG, "Theme file starts with text character (0x${firstByte.toString(16)}), may be a web error page")
+                    return@runCatching false
+                }
+                true
+            }
+        }.getOrDefault(false)
     }
 
     /**

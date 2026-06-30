@@ -890,13 +890,15 @@ Please ensure the app is completely closed and reopened for the commands to exec
     <string name="my_themes_delete_confirm">Are you sure you want to delete this theme?</string>
     <string name="my_themes_deleted">Theme deleted</string>
     <string name="my_themes_applied">Theme applied</string>
-    <string name="my_themes_apply_failed">Failed to apply theme</string>
+    <string name="my_themes_apply_failed">Failed to apply theme — long-press to delete and re-download</string>
     <string name="my_themes_details">Theme Details</string>
 
     <!-- Download Dialog -->
     <string name="theme_download_title">Downloading Theme</string>
     <string name="theme_download_completed">Download completed</string>
     <string name="theme_download_failed">Download failed</string>
+    <string name="theme_file_corrupt">Theme file corrupted, please re-download</string>
+    <string name="theme_file_incomplete">Theme file incomplete, please re-download</string>
     <string name="theme_download_progress">Progress</string>
     <string name="theme_download_file">Theme File</string>
     <string name="theme_download_image">Preview Image</string>

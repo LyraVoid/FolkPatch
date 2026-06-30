@@ -753,12 +753,14 @@
     <string name="my_themes_delete_confirm">このテーマを削除してもよろしいですか？</string>
     <string name="my_themes_deleted">テーマを削除しました。</string>
     <string name="my_themes_applied">テーマを適用しました。</string>
-    <string name="my_themes_apply_failed">テーマの適用に失敗しました。</string>
+    <string name="my_themes_apply_failed">テーマの適用に失敗しました — 長押しで削除して再ダウンロードしてください</string>
     <string name="my_themes_details">テーマの詳細</string>
     <!-- Download Dialog -->
     <string name="theme_download_title">テーマをダウンロード中</string>
     <string name="theme_download_completed">ダウンロード完了</string>
     <string name="theme_download_failed">ダウンロード失敗</string>
+    <string name="theme_file_corrupt">テーマファイルが破損しています。再ダウンロードしてください</string>
+    <string name="theme_file_incomplete">テーマファイルが不完全です。再ダウンロードしてください</string>
     <string name="theme_download_progress">進捗</string>
     <string name="theme_download_file">テーマファイル</string>
     <string name="theme_download_image">画像のプレビュー</string>

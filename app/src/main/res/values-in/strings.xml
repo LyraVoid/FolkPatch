@@ -973,13 +973,15 @@ Pastikan aplikasi ditutup sepenuhnya dan dimulai ulang untuk menjalankan perinta
     <string name="my_themes_delete_confirm">Apakah Anda yakin ingin menghapus tema ini?</string>
     <string name="my_themes_deleted">Tema dihapus</string>
     <string name="my_themes_applied">Tema diterapkan</string>
-    <string name="my_themes_apply_failed">Gagal menerapkan tema</string>
+    <string name="my_themes_apply_failed">Gagal menerapkan tema — tekan lama untuk hapus dan unduh ulang</string>
     <string name="my_themes_details">Detail Tema</string>
 
     <!-- Dialog Unduh -->
     <string name="theme_download_title">Mengunduh Tema</string>
     <string name="theme_download_completed">Unduhan selesai</string>
     <string name="theme_download_failed">Unduhan gagal</string>
+    <string name="theme_file_corrupt">Berkas tema rusak, silakan unduh ulang</string>
+    <string name="theme_file_incomplete">Berkas tema tidak lengkap, silakan unduh ulang</string>
     <string name="theme_download_progress">Progres</string>
     <string name="theme_download_file">File Tema</string>
     <string name="theme_download_image">Gambar Pratinjau</string>

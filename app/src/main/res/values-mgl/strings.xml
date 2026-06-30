@@ -977,13 +977,15 @@
     <string name="my_themes_delete_confirm">确定要遗忘这个主题魔法吗？</string>
     <string name="my_themes_deleted">主题已遗忘</string>
     <string name="my_themes_applied">主题已施展</string>
-    <string name="my_themes_apply_failed">施展主题失败</string>
+    <string name="my_themes_apply_failed">施展主题失败 — 长按遗忘后重新召唤吧</string>
     <string name="my_themes_details">主题魔法详情</string>
 
     <!-- 下载对话框 -->
     <string name="theme_download_title">正在召唤主题</string>
     <string name="theme_download_completed">召唤完成</string>
     <string name="theme_download_failed">召唤失败</string>
+    <string name="theme_file_corrupt">主题魔法已失谐，请重新召唤</string>
+    <string name="theme_file_incomplete">主题魔法不完整，请重新召唤</string>
     <string name="theme_download_progress">召唤进度</string>
     <string name="theme_download_file">主题魔法书</string>
     <string name="theme_download_image">魔法预览</string>

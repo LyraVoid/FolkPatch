@@ -806,13 +806,15 @@
     <string name="my_themes_delete_confirm">确定要删除此资源包吗？</string>
     <string name="my_themes_deleted">资源包已删除</string>
     <string name="my_themes_applied">资源包已应用</string>
-    <string name="my_themes_apply_failed">应用资源包失败</string>
+    <string name="my_themes_apply_failed">应用资源包失败，文件可能已损坏。长按资源包删除后重新下载</string>
     <string name="my_themes_details">资源包详情</string>
 
     <!-- 下载对话框 -->
     <string name="theme_download_title">正在下载资源包</string>
     <string name="theme_download_completed">下载完成</string>
     <string name="theme_download_failed">下载失败</string>
+    <string name="theme_file_corrupt">资源包文件已损坏，请重新下载</string>
+    <string name="theme_file_incomplete">资源包文件不完整，请重新下载</string>
     <string name="theme_download_progress">进度</string>
     <string name="theme_download_file">资源包文件</string>
     <string name="theme_download_image">预览图片</string>

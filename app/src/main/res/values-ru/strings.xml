@@ -991,13 +991,15 @@
     <string name="my_themes_delete_confirm">Вы уверены, что хотите удалить эту тему?</string>
     <string name="my_themes_deleted">Тема удалена</string>
     <string name="my_themes_applied">Тема применена</string>
-    <string name="my_themes_apply_failed">Не удалось применить тему</string>
+    <string name="my_themes_apply_failed">Не удалось применить тему — долгое нажатие для удаления и повторной загрузки</string>
     <string name="my_themes_details">Детали темы</string>
 
     <!-- Диалог Загрузки -->
     <string name="theme_download_title">Загрузка темы</string>
     <string name="theme_download_completed">Загрузка завершена</string>
     <string name="theme_download_failed">Ошибка загрузки</string>
+    <string name="theme_file_corrupt">Файл темы повреждён, пожалуйста, перезагрузите</string>
+    <string name="theme_file_incomplete">Файл темы неполный, пожалуйста, перезагрузите</string>
     <string name="theme_download_progress">Прогресс</string>
     <string name="theme_download_file">Файл темы</string>
     <string name="theme_download_image">Изображение предпросмотра</string>

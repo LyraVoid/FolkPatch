@@ -840,13 +840,15 @@
     <string name="my_themes_delete_confirm">이 테마를 삭제할까요?</string>
     <string name="my_themes_deleted">테마 삭제됨</string>
     <string name="my_themes_applied">테마 적용됨</string>
-    <string name="my_themes_apply_failed">테마 적용 실패</string>
+    <string name="my_themes_apply_failed">테마 적용 실패 — 길게 눌러 삭제하고 다시 다운로드하세요</string>
     <string name="my_themes_details">테마 세부정보</string>
 
     <!-- Download Dialog -->
     <string name="theme_download_title">테마 다운로드 중</string>
     <string name="theme_download_completed">다운로드 완료</string>
     <string name="theme_download_failed">다운로드 실패</string>
+    <string name="theme_file_corrupt">테마 파일이 손상되었습니다. 다시 다운로드하세요</string>
+    <string name="theme_file_incomplete">테마 파일이 불완전합니다. 다시 다운로드하세요</string>
     <string name="theme_download_progress">진행률</string>
     <string name="theme_download_file">테마 파일</string>
     <string name="theme_download_image">미리보기 이미지</string>

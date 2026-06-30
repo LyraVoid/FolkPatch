@@ -425,35 +425,57 @@ object ThemeManager {
             try {
                 // 1. Decrypt and Unzip
                 SafeUriResolver.openInputStream(context, uri)?.use { `is` ->
-                    // Read IV
+                    // Read IV (first 16 bytes of the encrypted file)
                     val iv = ByteArray(16)
-                    if (`is`.read(iv) != 16) throw Exception("Invalid theme file")
+                    val ivBytesRead = `is`.read(iv)
+                    if (ivBytesRead != 16) {
+                        val msg = if (ivBytesRead <= 0) {
+                            "Theme file is empty or unreadable"
+                        } else {
+                            "Theme file incomplete: only read $ivBytesRead of 16 IV bytes"
+                        }
+                        throw Exception(msg)
+                    }
 
                     val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
                     cipher.init(Cipher.DECRYPT_MODE, getSecretKey(), IvParameterSpec(iv))
 
-                    CipherInputStream(`is`, cipher).use { cis ->
-                        ZipInputStream(BufferedInputStream(cis)).use { zis ->
-                            var entry: ZipEntry?
-                            while (zis.nextEntry.also { entry = it } != null) {
-                                val file = File(cacheDir, entry!!.name)
-                                // Prevent path traversal
-                                if (!file.canonicalPath.startsWith(cacheDir.canonicalPath)) {
-                                    continue
-                                }
-                                FileOutputStream(file).use { fos ->
-                                    zis.copyTo(fos)
+                    try {
+                        CipherInputStream(`is`, cipher).use { cis ->
+                            ZipInputStream(BufferedInputStream(cis)).use { zis ->
+                                var entry: ZipEntry?
+                                while (zis.nextEntry.also { entry = it } != null) {
+                                    val file = File(cacheDir, entry!!.name)
+                                    // Prevent path traversal
+                                    if (!file.canonicalPath.startsWith(cacheDir.canonicalPath)) {
+                                        continue
+                                    }
+                                    FileOutputStream(file).use { fos ->
+                                        zis.copyTo(fos)
+                                    }
                                 }
                             }
                         }
+                    } catch (e: java.util.zip.ZipException) {
+                        throw Exception("Theme file corrupted: decrypted data is not a valid ZIP — the file may be incomplete or damaged", e)
+                    } catch (e: javax.crypto.BadPaddingException) {
+                        throw Exception("Theme file corrupted: decryption failed (bad padding) — the file may be incomplete or damaged", e)
                     }
                 }
 
                 // 2. Read Config
                 val configFile = File(cacheDir, THEME_CONFIG_FILENAME)
-                if (!configFile.exists()) return@withContext false
+                if (!configFile.exists()) {
+                    Log.e(TAG, "theme.json missing from theme package — archive may be incomplete")
+                    return@withContext false
+                }
                 
-                val json = JSONObject(configFile.readText())
+                val json = try {
+                    JSONObject(configFile.readText())
+                } catch (e: Exception) {
+                    Log.e(TAG, "theme.json is malformed", e)
+                    return@withContext false
+                }
                 val isBackgroundEnabled = json.optBoolean("isBackgroundEnabled", false)
                 val backgroundOpacity = json.optDouble("backgroundOpacity", 0.5).toFloat()
                 val backgroundBlur = json.optDouble("backgroundBlur", 0.0).toFloat()
@@ -782,7 +804,7 @@ object ThemeManager {
                 
                 true
             } catch (e: Exception) {
-                Log.e(TAG, "Import failed", e)
+                Log.e(TAG, "Import failed: ${e.message ?: e.javaClass.simpleName}", e)
                 false
             } finally {
                 cacheDir.deleteRecursively()

@@ -976,13 +976,15 @@
     <string name="my_themes_delete_confirm">确定要删除这个主题吗？</string>
     <string name="my_themes_deleted">主题已删除</string>
     <string name="my_themes_applied">主题已应用</string>
-    <string name="my_themes_apply_failed">应用主题失败</string>
+    <string name="my_themes_apply_failed">装修失败，食材可能不新鲜了。长按这个菜谱删了重新下单吧</string>
     <string name="my_themes_details">主题详情</string>
 
     <!-- 下载对话 -->
     <string name="theme_download_title">正在采购主题</string>
     <string name="theme_download_completed">采购完成</string>
     <string name="theme_download_failed">采购失败</string>
+    <string name="theme_file_corrupt">菜谱文件坏掉了，请重新下单</string>
+    <string name="theme_file_incomplete">菜谱文件不完整，请重新下单</string>
     <string name="theme_download_progress">采购进度</string>
     <string name="theme_download_file">主题菜谱</string>
     <string name="theme_download_image">菜品预览</string>

@@ -994,13 +994,15 @@ Por ejemplo, los KPM que previenen la modificación de particiones solo pueden u
     <string name="my_themes_delete_confirm">¿Estás seguro de que quieres eliminar este tema?</string>
     <string name="my_themes_deleted">Tema eliminado</string>
     <string name="my_themes_applied">Tema aplicado</string>
-    <string name="my_themes_apply_failed">Error al aplicar el tema</string>
+    <string name="my_themes_apply_failed">Error al aplicar el tema — mantén pulsado para eliminar y volver a descargar</string>
     <string name="my_themes_details">Detalles del Tema</string>
 
     <!-- Diálogo de Descarga -->
     <string name="theme_download_title">Descargando Tema</string>
     <string name="theme_download_completed">Descarga completada</string>
     <string name="theme_download_failed">Descarga fallida</string>
+    <string name="theme_file_corrupt">El archivo del tema está dañado, vuelve a descargarlo</string>
+    <string name="theme_file_incomplete">El archivo del tema está incompleto, vuelve a descargarlo</string>
     <string name="theme_download_progress">Progreso</string>
     <string name="theme_download_file">Archivo de Tema</string>
     <string name="theme_download_image">Imagen de Vista Previa</string>
