@@ -805,16 +805,28 @@ fun NewAppProfileModeDialog(
 }
 
 private suspend fun loadNewAppProfileMode(prefs: SharedPreferences): Int = withContext(Dispatchers.IO) {
-    val fallback = runCatching {
+    val prefsValue = runCatching {
         prefs.getInt(APApplication.PREF_AUTO_EXCLUDE_NEW_APPS, 0)
     }.getOrDefault(0)
     val nativeMode = runCatching {
         Natives.getNewAppProfileMode()
-    }.getOrDefault(fallback)
-    if (nativeMode != fallback) {
-        prefs.edit { putInt(APApplication.PREF_AUTO_EXCLUDE_NEW_APPS, nativeMode) }
+    }.getOrDefault(prefsValue)
+    when {
+        // Native has an explicit non-zero value — trust it as authoritative
+        nativeMode != 0 -> {
+            if (nativeMode != prefsValue) {
+                prefs.edit { putInt(APApplication.PREF_AUTO_EXCLUDE_NEW_APPS, nativeMode) }
+            }
+            nativeMode
+        }
+        // Native returned 0 (default or read failure), but prefs has a saved preference — restore native
+        prefsValue != 0 -> {
+            runCatching { Natives.setNewAppProfileMode(prefsValue) }
+            prefsValue
+        }
+        // Both are 0 — true default
+        else -> 0
     }
-    nativeMode
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
