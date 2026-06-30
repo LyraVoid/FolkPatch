@@ -175,7 +175,6 @@ fun HomeScreen(navigator: DestinationsNavigator) {
     }
     if (showWelcomeGuide) {
         WelcomeGuideDialog(
-            showDialog = showWelcomeGuide,
             onDismiss = {
                 APApplication.sharedPreferences.edit()
                     .putBoolean("welcome_guide_shown", true)

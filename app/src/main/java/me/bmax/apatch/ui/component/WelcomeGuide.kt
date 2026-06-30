@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.DialogWindowProvider
 import me.bmax.apatch.R
+import me.bmax.apatch.util.ui.APDialogBlurBehindUtils
 
 /**
  * 首次启动欢迎引导对话框 —— 4 页分布式指导。
@@ -36,7 +37,6 @@ import me.bmax.apatch.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WelcomeGuideDialog(
-    showDialog: MutableState<Boolean>,
     onDismiss: () -> Unit
 ) {
     var currentPage by remember { mutableIntStateOf(0) }
@@ -193,7 +193,6 @@ fun WelcomeGuideDialog(
 
                     // 中间：跳过（所有页都显示）
                     TextButton(onClick = {
-                        showDialog.value = false
                         onDismiss()
                     }) {
                         Text(
@@ -215,7 +214,6 @@ fun WelcomeGuideDialog(
                         }
                     } else {
                         Button(onClick = {
-                            showDialog.value = false
                             onDismiss()
                         }) {
                             Text(stringResource(R.string.welcome_got_it))
