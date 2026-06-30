@@ -625,6 +625,21 @@
     <string name="apm_first_use_title">مرحبًا بك في وحدات النظام</string>
     <string name="apm_first_use_text">مرحبًا بك في وحدات النظام، يستخدم هذا وحدات متوافقة مع نظام Magisk البيئي. انقر فوق الزر في الزاوية اليمنى السفلية لتثبيت الوحدات. يمكنك أيضًا استخدام المثبت في الأعلى لتثبيت الوحدات بشكل مجمع. يتم توفير ميزة لنسخ احتياطي لجميع الوحدات بنقرة واحدة أيضًا، ولكن لاحظ أن هذا الحل قد لا يكون مناسبًا لجميع الوحدات، لذلك يجب عليك عمل نسخ احتياطية خاصة بك.</string>
 
+    <!-- Welcome Guide -->
+    <string name="welcome_title_1">مرحباً بك في FolkPatch</string>
+    <string name="welcome_desc_1">مدير Root عالي التخصيص وسهل الاستخدام مبني على KernelPatch. اجعل جهازك ملكك حقاً.</string>
+    <string name="welcome_title_2">تخصيص كامل</string>
+    <string name="welcome_desc_2">خصص كل شيء — الألوان والخلفيات والخطوط والأصوات وحتى الاهتزازات. تصفح متجر السمات لاكتشاف المزيد!</string>
+    <string name="welcome_title_3">التحكم في النواة</string>
+    <string name="welcome_desc_3">الوصول إلى ميزات النواة المتقدمة بنقرة واحدة. افتح الإعدادات وانقر على أيقونة الضبط لفتح FolkPatch Hide و Umount و Path Hide.</string>
+    <string name="welcome_title_4">جاهز للانطلاق</string>
+    <string name="welcome_desc_4">أنت جاهز! ابدأ في استكشاف أكثر تجارب Root مرونة. استمتع!</string>
+    <string name="welcome_prev">السابق</string>
+    <string name="welcome_next">التالي</string>
+    <string name="welcome_skip">تخطي</string>
+    <string name="welcome_got_it">ابدأ</string>
+
+
     <string name="kpm_autoload_kpm_list_title">وحدات KPM</string>
     <string name="kpm_autoload_no_kpm_added">لم تتم إضافة أي وحدات KPM</string>
     <string name="kpm_autoload_kpm_path">مسار KPM</string>

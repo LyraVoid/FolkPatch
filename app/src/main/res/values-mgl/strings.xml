@@ -606,6 +606,21 @@
     <string name="apm_bulk_install_remove">移除</string>
     <string name="apm_first_use_title">欢迎使用星之魔法阵</string>
     <string name="apm_first_use_text">欢迎使用星之魔法阵，这里使用的是兼容Magisk生态的魔法阵，点击右下角的按钮可以施展魔法阵，你也可以使用顶部的施法器批量施展魔法阵，还提供了一个功能一键备份全部魔法阵，但是注意这种方案不一定适用全部魔法阵，还是自己多加备份</string>
+
+    <!-- Welcome Guide -->
+    <string name="welcome_title_1">欢迎来到 FolkPatch 魔法领域</string>
+    <string name="welcome_desc_1">FolkPatch 是拥有高度自定义与便携魔力的 Root 管理器，以 KernelPatch 为魔法基石。</string>
+    <string name="welcome_title_2">自由塑形</string>
+    <string name="welcome_desc_2">主题色彩、背景、字体、音乐、震动……一切皆可随你心意重塑。前往绮幻衣装魔盒，探索更多可能！</string>
+    <string name="welcome_title_3">内核魔法</string>
+    <string name="welcome_desc_3">在设置页面点击右上角的调律印记，即可进入内核魔法控制。</string>
+    <string name="welcome_title_4">准备好了吗？</string>
+    <string name="welcome_desc_4">你已经掌握了基础魔法。开始享受完全自由的 Root 体验吧！</string>
+    <string name="welcome_prev">回顾</string>
+    <string name="welcome_next">继续</string>
+    <string name="welcome_skip">跳过</string>
+    <string name="welcome_got_it">开始</string>
+
     <string name="kpm_autoload_add_kpm">添加心之结晶</string>
     <string name="kpm_autoload_remove_kpm">解除</string>
     <string name="kpm_autoload_edit_kpm">编辑魔法咒语</string>

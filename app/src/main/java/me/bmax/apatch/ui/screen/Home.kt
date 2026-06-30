@@ -121,6 +121,7 @@ import me.bmax.apatch.R
 import me.bmax.apatch.apApp
 import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenu
 import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenuItem
+import me.bmax.apatch.ui.component.WelcomeGuideDialog
 import me.bmax.apatch.ui.viewmodel.PatchesViewModel
 import me.bmax.apatch.util.Version
 import me.bmax.apatch.util.Version.getManagerVersion
@@ -166,6 +167,22 @@ fun HomeScreen(navigator: DestinationsNavigator) {
     val homeRefreshObserver by refreshTheme.observeAsState(false)
     if (homeRefreshObserver) {
         homeLayout = APApplication.sharedPreferences.getString("home_layout_style", "circle")
+    }
+
+    // 首次启动欢迎引导
+    var showWelcomeGuide by remember {
+        mutableStateOf(!APApplication.sharedPreferences.getBoolean("welcome_guide_shown", false))
+    }
+    if (showWelcomeGuide) {
+        WelcomeGuideDialog(
+            showDialog = showWelcomeGuide,
+            onDismiss = {
+                APApplication.sharedPreferences.edit()
+                    .putBoolean("welcome_guide_shown", true)
+                    .apply()
+                showWelcomeGuide = false
+            }
+        )
     }
 
     Scaffold(topBar = {

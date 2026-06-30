@@ -597,6 +597,21 @@
     <string name="apm_bulk_install_remove">从背包扔掉</string>
     <string name="apm_first_use_title">欢迎来到模组世界</string>
     <string name="apm_first_use_text">欢迎来到模组世界！这里用的是兼容Magisk生态的模组，右下角按钮可以安装单个模组，顶部有批量安装器。还有一键备份全部模组到末影箱的功能，不过不是所有模组都能用这个方式备份，建议自己多留几份</string>
+
+    <!-- Welcome Guide -->
+    <string name="welcome_title_1">欢迎来到 FolkPatch 服务器</string>
+    <string name="welcome_desc_1">FolkPatch 是一个主打高度自定义和便捷操作的 Root 管理器，基于 KernelPatch 核心构建。让你的世界，由你做主。</string>
+    <string name="welcome_title_2">自由创造</string>
+    <string name="welcome_desc_2">从资源包颜色、背景、字体到音效、震动，一切都可以自由定制。前往资源包商店探索更多风格！</string>
+    <string name="welcome_title_3">内核控制台</string>
+    <string name="welcome_desc_3">在设置页面点击右上角的调音图标，即可进入内核控制台：FolkPatch Hide、Umount、Path Hide 等高级功能。</string>
+    <string name="welcome_title_4">准备好了吗？</string>
+    <string name="welcome_desc_4">现在你已经了解了基本功能。开始享受高度自由的 Root 管理体验吧！</string>
+    <string name="welcome_prev">上一步</string>
+    <string name="welcome_next">下一步</string>
+    <string name="welcome_skip">跳过</string>
+    <string name="welcome_got_it">开始游戏</string>
+
     <string name="kpm_autoload_add_kpm">添加红石组件</string>
     <string name="kpm_autoload_remove_kpm">删除</string>
     <string name="kpm_autoload_edit_kpm">编辑</string>

@@ -597,6 +597,21 @@
     <string name="apm_bulk_install_remove">撤菜</string>
     <string name="apm_first_use_title">欢迎使用招牌菜</string>
     <string name="apm_first_use_text">欢迎使用招牌菜，这里使用的是兼容 Magisk 生态的招牌菜，点击右下角的按钮可以烹饪招牌菜，你也可以使用顶部的烹饪器批量烹饪招牌菜，还提供了一个功能一键备份全部招牌菜，但是注意这种方案不一定适用全部招牌菜，还是自己多加备份</string>
+
+    <!-- Welcome Guide -->
+    <string name="welcome_title_1">欢迎光临 FolkPatch 餐厅</string>
+    <string name="welcome_desc_1">FolkPatch 是一家主打高度自定义和便捷操作的 Root 餐厅，基于 KernelPatch 秘方烹制。让您的厨房，由您掌勺。</string>
+    <string name="welcome_title_2">随心装修</string>
+    <string name="welcome_desc_2">从店面颜色、背景、招牌字体到背景音乐、震动反馈，一切都能按您的口味来。去主题商店逛逛，找到心仪的装修风格！</string>
+    <string name="welcome_title_3">后厨秘方</string>
+    <string name="welcome_desc_3">在设置菜单点右上角的调音图标，就能进入后厨秘方控制：FolkPatch Hide、Umount、Path Hide……高级厨艺都在这里！</string>
+    <string name="welcome_title_4">准备上菜？</string>
+    <string name="welcome_desc_4">现在您已经了解了基本操作。开始享受最自由的 Root 烹饪体验吧！</string>
+    <string name="welcome_prev">上一步</string>
+    <string name="welcome_next">下一步</string>
+    <string name="welcome_skip">跳过</string>
+    <string name="welcome_got_it">开饭！</string>
+
     <string name="kpm_autoload_add_kpm">添加酱料</string>
     <string name="kpm_autoload_remove_kpm">删除</string>
     <string name="kpm_autoload_edit_kpm">编辑</string>

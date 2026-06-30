@@ -634,6 +634,21 @@
     <string name="apm_first_use_title">시스템 모듈 시작하기</string>
     <string name="apm_first_use_text">시스템 모듈에 오신 것을 환영합니다. 여기서는 Magisk 생태계와 호환되는 모듈을 사용합니다. 모듈을 설치하려면 우측 하단의 버튼을 누르세요. 상단의 설치 프로그램을 사용하여 모듈을 일괄 설치할 수도 있습니다. 한 번의 클릭으로 모든 모듈을 백업하는 기능도 제공되지만, 이 방법이 모든 모듈에 적합하지 않을 수 있으므로 개별적으로 백업하는 것을 권장합니다.</string>
 
+    <!-- Welcome Guide -->
+    <string name="welcome_title_1">FolkPatch에 오신 것을 환영합니다</string>
+    <string name="welcome_desc_1">KernelPatch 기반의 높은 사용자 정의와 휴대성을 갖춘 Root 관리자입니다. 당신의 기기를 진정한 당신의 것으로 만드세요.</string>
+    <string name="welcome_title_2">자유로운 커스터마이징</string>
+    <string name="welcome_desc_2">색상, 배경, 글꼴, 사운드, 진동까지 모든 것을 자유롭게 설정하세요. 테마 스토어에서 더 많은 스타일을 찾아보세요!</string>
+    <string name="welcome_title_3">커널 제어</string>
+    <string name="welcome_desc_3">고급 커널 기능에 한 번의 탭으로 접근하세요. 설정을 열고 우측 상단의 튜닝 아이콘을 탭하여 FolkPatch Hide, Umount, Path Hide 등을 이용하세요.</string>
+    <string name="welcome_title_4">준비되셨나요?</string>
+    <string name="welcome_desc_4">이제 기본 기능을 이해하셨습니다. 가장 유연한 Root 관리 경험을 즐겨보세요!</string>
+    <string name="welcome_prev">이전</string>
+    <string name="welcome_next">다음</string>
+    <string name="welcome_skip">건너뛰기</string>
+    <string name="welcome_got_it">시작하기</string>
+
+
     <string name="kpm_autoload_kpm_list_title">KPM 모듈</string>
     <string name="kpm_autoload_no_kpm_added">추가된 KPM 모듈 없음</string>
     <string name="kpm_autoload_kpm_path">KPM 경로</string>

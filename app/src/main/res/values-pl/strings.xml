@@ -540,6 +540,21 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="apm_bulk_install_remove">Usuń</string>
     <string name="apm_first_use_title">Witaj w modułach systemowych</string>
     <string name="apm_first_use_text">Witaj w modułach systemowych, tutaj używane są moduły kompatybilne z ekosystemem Magisk. Kliknij przycisk w prawym dolnym rogu, aby zainstalować moduły. Możesz również użyć instalatora na górze, aby zainstalować moduły hurtowo. Dostępna jest również funkcja tworzenia kopii zapasowej wszystkich modułów jednym kliknięciem, ale pamiętaj, że to rozwiązanie może nie być odpowiednie dla wszystkich modułów, więc warto robić własne kopie zapasowe.</string>
+
+    <!-- Welcome Guide -->
+    <string name="welcome_title_1">Witamy w FolkPatch</string>
+    <string name="welcome_desc_1">Wysoce konfigurowalny i przenosny menedzer Root oparty na KernelPatch. Uczyn swoje urzadzenie naprawde swoim.</string>
+    <string name="welcome_title_2">Pelna personalizacja</string>
+    <string name="welcome_desc_2">Dostosuj wszystko — kolory, tla, czcionki, dzwieki, a nawet wibracje. Przegladaj Sklep motywow!</string>
+    <string name="welcome_title_3">Kontrola jadra</string>
+    <string name="welcome_desc_3">Zaawansowane funkcje jadra na wyciagniecie reki. Otworz Ustawienia i dotknij ikony strojenia, aby uzyskac dostep do FolkPatch Hide, Umount, Path Hide i wiecej.</string>
+    <string name="welcome_title_4">Gotowy do dzialania</string>
+    <string name="welcome_desc_4">Wszystko gotowe! Zacznij odkrywac najbardziej elastyczne doswiadczenie Root. Milej zabawy!</string>
+    <string name="welcome_prev">Poprzedni</string>
+    <string name="welcome_next">Nastepny</string>
+    <string name="welcome_skip">Pomin</string>
+    <string name="welcome_got_it">Zaczynamy</string>
+
     <!-- Hide Settings Strings -->
     <string name="home_hide_su_path">Ukryj ścieżkę pliku wykonywalnego su</string>
     <string name="home_hide_kpatch_version">Ukryj wersję poprawki jądra</string>

@@ -566,6 +566,21 @@
     <string name="apm_bulk_install_remove">削除</string>
     <string name="apm_first_use_title">システムモジュールへようこそ</string>
     <string name="apm_first_use_text">システムモジュールへようこそ。Magisk エコシステムとの互換性のあるモジュールを使用しています。右下のボタンをタップしてモジュールをインストールしてください。また、上部のインストーラーを使用してモジュールを一括でインストールすることもできます。ワンタップですべてのモジュールをバックアップする機能も提供されていますが、このソリューションはすべてのモジュールに適しているわけではないため、ご自身でバックアップを作成してください。</string>
+
+    <!-- Welcome Guide -->
+    <string name="welcome_title_1">FolkPatch へようこそ</string>
+    <string name="welcome_desc_1">FolkPatch は、高度なカスタマイズ性と使いやすさを両立した Root 管理ツールです。KernelPatch ベースで構築されています。</string>
+    <string name="welcome_title_2">自由なカスタマイズ</string>
+    <string name="welcome_desc_2">色、背景、フォント、サウンド、振動まですべてを自由にカスタマイズ。テーマストアでさらに多くのスタイルを探しましょう！</string>
+    <string name="welcome_title_3">カーネル制御</string>
+    <string name="welcome_desc_3">高度なカーネル機能はワンタップでアクセス。設定を開き、右上のチューニングアイコンをタップして FolkPatch Hide、Umount、Path Hide などを使用できます。</string>
+    <string name="welcome_title_4">準備はいいですか？</string>
+    <string name="welcome_desc_4">基本機能を理解しました。最も柔軟な Root 管理体験をお楽しみください！</string>
+    <string name="welcome_prev">前へ</string>
+    <string name="welcome_next">次へ</string>
+    <string name="welcome_skip">スキップ</string>
+    <string name="welcome_got_it">始める</string>
+
     <string name="kpm_autoload_kpm_list_title">KP モジュール</string>
     <string name="kpm_autoload_no_kpm_added">KP モジュールが追加されていません</string>
     <string name="kpm_autoload_kpm_path">KPM のパス</string>

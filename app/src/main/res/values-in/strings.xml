@@ -606,6 +606,21 @@ Pastikan aplikasi ditutup sepenuhnya dan dimulai ulang untuk menjalankan perinta
     <string name="apm_first_use_title">Selamat datang di Modul Sistem</string>
     <string name="apm_first_use_text">Selamat datang di Modul Sistem, yang menggunakan modul yang kompatibel dengan ekosistem Magisk. Klik tombol di kanan bawah untuk menginstal modul. Anda juga dapat menggunakan penginstal di bagian atas untuk instalasi modul secara massal. Fungsi pencadangan semua modul dengan sekali klik juga disediakan, tetapi perhatikan bahwa solusi ini mungkin tidak cocok untuk semua modul, jadi buatlah cadangan Anda sendiri.</string>
 
+    <!-- Welcome Guide -->
+    <string name="welcome_title_1">Selamat datang di FolkPatch</string>
+    <string name="welcome_desc_1">Manajer Root yang sangat dapat disesuaikan dan portabel berbasis KernelPatch. Jadikan perangkat Anda benar-benar milik Anda.</string>
+    <string name="welcome_title_2">Kustomisasi Penuh</string>
+    <string name="welcome_desc_2">Sesuaikan semuanya — warna, latar, font, suara, bahkan getaran. Jelajahi Toko Tema untuk gaya lainnya!</string>
+    <string name="welcome_title_3">Kontrol Kernel</string>
+    <string name="welcome_desc_3">Fitur kernel lanjutan dalam satu ketukan. Buka Pengaturan dan ketuk ikon tuning untuk mengakses FolkPatch Hide, Umount, Path Hide, dan lainnya.</string>
+    <string name="welcome_title_4">Siap Digunakan</string>
+    <string name="welcome_desc_4">Anda sudah siap! Mulailah menjelajahi pengalaman Root paling fleksibel. Selamat mencoba!</string>
+    <string name="welcome_prev">Sebelumnya</string>
+    <string name="welcome_next">Berikutnya</string>
+    <string name="welcome_skip">Lewati</string>
+    <string name="welcome_got_it">Mulai</string>
+
+
     <string name="home_hide_su_path">Sembunyikan jalur file yang dapat dieksekusi su</string>
     <string name="home_hide_kpatch_version">Sembunyikan versi patch kernel</string>
     <string name="home_hide_fingerprint">Sembunyikan sidik jari</string>

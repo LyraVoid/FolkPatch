@@ -613,6 +613,21 @@
     <string name="apm_first_use_title">Добро пожаловать в системные модули</string>
     <string name="apm_first_use_text">Добро пожаловать в системные модули, здесь используются модули, совместимые с экосистемой Magisk. Нажмите кнопку в правом нижнем углу, чтобы установить модули. Вы также можете использовать установщик вверху для массовой установки модулей. Также предоставляется функция резервного копирования всех модулей одним нажатием, но обратите внимание, что это решение может не подходить для всех модулей, поэтому делайте свои резервные копии.</string>
 
+    <!-- Welcome Guide -->
+    <string name="welcome_title_1">Добро пожаловать в FolkPatch</string>
+    <string name="welcome_desc_1">Настраиваемый и портативный Root-менеджер на базе KernelPatch. Сделайте устройство по-настоящему своим.</string>
+    <string name="welcome_title_2">Полная настройка</string>
+    <string name="welcome_desc_2">Настройте всё — цвета, фоны, шрифты, звуки и даже вибрацию. Загляните в Магазин тем!</string>
+    <string name="welcome_title_3">Управление ядром</string>
+    <string name="welcome_desc_3">Расширенные функции ядра в одном касании. Откройте Настройки и нажмите значок настройки для доступа к FolkPatch Hide, Umount, Path Hide и другим.</string>
+    <string name="welcome_title_4">Готовы к работе</string>
+    <string name="welcome_desc_4">Всё готово! Начните исследовать самый гибкий Root-менеджер. Удачи!</string>
+    <string name="welcome_prev">Назад</string>
+    <string name="welcome_next">Далее</string>
+    <string name="welcome_skip">Пропустить</string>
+    <string name="welcome_got_it">Начать</string>
+
+
     <!-- Hide Settings Strings -->
     <string name="home_hide_su_path">Скрыть путь исполняемого файла su</string>
     <string name="home_hide_kpatch_version">Скрыть версию патча ядра</string>

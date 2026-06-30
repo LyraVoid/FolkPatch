@@ -615,6 +615,21 @@
     <string name="apm_first_use_title">欢迎使用星之魔法阵</string>
     <string name="apm_first_use_text">欢迎使用星之魔法阵，这里使用的是兼容Magisk生态的魔法阵，点击右下角的按钮可以施展魔法阵，你也可以使用顶部的施法器批量施展魔法阵，还提供了一个功能一键备份全部魔法阵，但是注意这种方案不一定适用全部魔法阵，还是自己多加备份</string>
 
+    <!-- Welcome Guide -->
+    <string name="welcome_title_1">欢迎来到 FolkPatch 圣域</string>
+    <string name="welcome_desc_1">FolkPatch 是拥有高度自定义与便携神力的 Root 管理器，以 KernelPatch 为基石构筑。令你的圣器真正归你掌控。</string>
+    <string name="welcome_title_2">万象之形</string>
+    <string name="welcome_desc_2">主题颜色、圣光背景、神谕字体、天界乐章、圣器震动……一切皆可定制。前往绮幻衣装魔盒，探索更多形态！</string>
+    <string name="welcome_title_3">内核法则</string>
+    <string name="welcome_desc_3">在神谕面板点击右上角的调律圣徽，即可进入内核法则控制：FolkPatch Hide、Umount、Path Hide 等至高权能。</string>
+    <string name="welcome_title_4">准备启程？</string>
+    <string name="welcome_desc_4">你已领悟基础法则。开始享受完全自由的 Root 魔力吧！</string>
+    <string name="welcome_prev">返回圣页</string>
+    <string name="welcome_next">前行圣页</string>
+    <string name="welcome_skip">跳过</string>
+    <string name="welcome_got_it">启程</string>
+
+
     <string name="kpm_page_first_time_title">魔法警告</string>
     <string name="kpm_page_first_time_message">心之结晶是直接修改心之核心的实现，它不像星之魔法阵一样有很好的恢复机制，出问题只能进入天使之门去修复。建议先激活结晶没有问题再融合到心之核心。如果是只能激活使用的结晶，可以尝试使用自动心之结晶激活功能。如果你不了解心之结晶，请不要使用本功能！</string>
     

@@ -620,6 +620,21 @@ Bol şans! Ayrıca, aşağıdaki belge butonuna tıklamak kesinlikle doğru!</st
     <string name="apm_first_use_title">Sistem Modüllerine Hoş Geldiniz</string>
     <string name="apm_first_use_text">Sistem Modüllerine hoş geldiniz. Bu bölüm, Magisk ekosistemiyle uyumlu modülleri kullanır. Modül yüklemek için sağ alt köşedeki düğmeye tıklayın. Üst kısımdaki yükleyiciyi kullanarak modülleri toplu olarak da kurabilirsiniz. Tek tıkla tüm modülleri yedekleme özelliği de sunulmaktadır; ancak bu yöntemin tüm modüller için uygun olmayabileceğini unutmayın, bu yüzden kendi yedeklerinizi almanız önerilir.</string>
 
+    <!-- Welcome Guide -->
+    <string name="welcome_title_1">FolkPatch'e Hos Geldiniz</string>
+    <string name="welcome_desc_1">KernelPatch tabanli, yuksek duzeyde ozellestirilebilir ve tasinabilir bir Root yoneticisi. Cihazinizi gercekten size ait yapin.</string>
+    <string name="welcome_title_2">Tam Ozellestirme</string>
+    <string name="welcome_desc_2">Her seyi ozellestirin — renkler, arka planlar, yazi tipleri, sesler ve hatta titresimler. Tema Magazasi'ni kesfedin!</string>
+    <string name="welcome_title_3">Kernel Kontrolleri</string>
+    <string name="welcome_desc_3">Gelismis kernel ozellikleri tek dokunusla. Ayarlar'i acin ve FolkPatch Hide, Umount, Path Hide gibi ozelliklere erismek icin ayar simgesine dokunun.</string>
+    <string name="welcome_title_4">Kullanima Hazir</string>
+    <string name="welcome_desc_4">Her sey hazir! En esnek Root deneyimini kesfetmeye baslayin. Iyi eglenceler!</string>
+    <string name="welcome_prev">Onceki</string>
+    <string name="welcome_next">Sonraki</string>
+    <string name="welcome_skip">Atla</string>
+    <string name="welcome_got_it">Basla</string>
+
+
     <string name="kpm_autoload_kpm_list_title">KPM Modülleri</string>
     <string name="kpm_autoload_no_kpm_added">Eklenmiş KPM modülü yok</string>
     <string name="kpm_autoload_kpm_path">KPM Yolu</string>

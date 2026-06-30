@@ -683,6 +683,20 @@ Here are some possible reasons for authentication failure—please check which o
     <string name="apm_first_use_title">Welcome to System Modules</string>
     <string name="apm_first_use_text">Welcome to System Modules, this uses modules compatible with the Magisk ecosystem. Click the button in the bottom right corner to install modules. You can also use the installer at the top to batch install modules. A feature to backup all modules with one click is also provided, but note that this solution may not be suitable for all modules, so you should make your own backups.</string>
 
+    <!-- Welcome Guide -->
+    <string name="welcome_title_1">Welcome to FolkPatch</string>
+    <string name="welcome_desc_1">A highly customizable and portable Root manager based on KernelPatch. Make your device truly yours.</string>
+    <string name="welcome_title_2">Full Customization</string>
+    <string name="welcome_desc_2">Customize everything — colors, backgrounds, fonts, sounds, and even haptic feedback. Browse the Theme Store to discover more styles!</string>
+    <string name="welcome_title_3">Kernel Controls</string>
+    <string name="welcome_desc_3">Advanced kernel features are one tap away. Open Settings and tap the tune icon in the top-right corner to access FolkPatch Hide, Umount, Path Hide, and more.</string>
+    <string name="welcome_title_4">Ready to Go</string>
+    <string name="welcome_desc_4">You\'re all set! Start exploring the most flexible Root management experience. Happy hacking!</string>
+    <string name="welcome_prev">Previous</string>
+    <string name="welcome_next">Next</string>
+    <string name="welcome_skip">Skip</string>
+    <string name="welcome_got_it">Get Started</string>
+
     <string name="kpm_autoload_kpm_list_title">KPM Modules</string>
     <string name="kpm_autoload_no_kpm_added">No KPM modules added</string>
     <string name="kpm_autoload_kpm_path">KPM Path</string>

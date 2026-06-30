@@ -623,6 +623,21 @@ Aquí hay algunas posibles razones para el fallo de autenticación—por favor v
     <string name="apm_first_use_title">Bienvenido a Módulos del Sistema</string>
     <string name="apm_first_use_text">Bienvenido a Módulos del Sistema, esto usa módulos compatibles con el ecosistema Magisk. Pulsa el botón en la esquina inferior derecha para instalar módulos. También puedes usar el instalador en la parte superior para instalar módulos por lotes. Se proporciona una función para respaldar todos los módulos con un clic, pero ten en cuenta que esta solución puede no ser adecuada para todos los módulos, así que deberías hacer tus propios respaldos.</string>
 
+    <!-- Welcome Guide -->
+    <string name="welcome_title_1">Bienvenido a FolkPatch</string>
+    <string name="welcome_desc_1">Un gestor Root altamente personalizable y portatil basado en KernelPatch. Haz que tu dispositivo sea realmente tuyo.</string>
+    <string name="welcome_title_2">Personalizacion total</string>
+    <string name="welcome_desc_2">Personaliza todo: colores, fondos, fuentes, sonidos e incluso la vibracion. !Explora la Tienda de Temas!</string>
+    <string name="welcome_title_3">Controles del Kernel</string>
+    <string name="welcome_desc_3">Las funciones avanzadas del kernel estan a un toque. Abre Ajustes y toca el icono de afinacion para acceder a FolkPatch Hide, Umount, Path Hide y mas.</string>
+    <string name="welcome_title_4">Todo listo</string>
+    <string name="welcome_desc_4">!Ya estas preparado! Empieza a explorar la experiencia Root mas flexible. !A disfrutar!</string>
+    <string name="welcome_prev">Anterior</string>
+    <string name="welcome_next">Siguiente</string>
+    <string name="welcome_skip">Saltar</string>
+    <string name="welcome_got_it">Empezar</string>
+
+
     <string name="kpm_autoload_kpm_list_title">Módulos KPM</string>
     <string name="kpm_autoload_no_kpm_added">No se añadieron módulos KPM</string>
     <string name="kpm_autoload_kpm_path">Ruta KPM</string>

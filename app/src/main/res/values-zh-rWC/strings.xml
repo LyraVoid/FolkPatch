@@ -619,6 +619,21 @@
     <string name="apm_first_use_title">欢迎使用天道仙符</string>
     <string name="apm_first_use_text">欢迎使用天道仙符，此地所用乃Magisk仙阵兼容之仙符，右下之钮可引仙符，亦可引顶部之仙器批量引符，又有一键备份所有仙符之能，然此法未必适所有仙符，汝当多加备份</string>
 
+    <!-- Welcome Guide -->
+    <string name="welcome_title_1">恭迎道友入仙府</string>
+    <string name="welcome_desc_1">FolkPatch 乃集万般变化与便携神通于一体的 Root 仙器，以 KernelPatch 为基筑就。令你的法宝，由你掌控。</string>
+    <string name="welcome_title_2">万象随心</string>
+    <string name="welcome_desc_2">仙府色章、灵境背景、道纹字体、仙乐、法器震动……万物皆可随心而化。前往仙府色章阁，寻觅心仪之形。</string>
+    <string name="welcome_title_3">内核天机</string>
+    <string name="welcome_desc_3">于天道面板轻触右上角调律玄印，即可窥探内核天机：FolkPatch Hide、Umount、Path Hide 等至高术法尽在其中。</string>
+    <string name="welcome_title_4">道友可备？</string>
+    <string name="welcome_desc_4">汝已洞悉根基之法。且去享受这无边自在的 Root 道途吧！</string>
+    <string name="welcome_prev">回观前页</string>
+    <string name="welcome_next">前往后页</string>
+    <string name="welcome_skip">跳过</string>
+    <string name="welcome_got_it">步入仙途</string>
+
+
     <string name="kpm_page_first_time_title">渡劫警言</string>
     <string name="kpm_page_first_time_message">道核仙符者，直改仙躯Boot之法也，不若天道仙符有救砖之策，有天劫则唯入Fastboot仙台修之。宜先引符入道，无天劫再嵌于仙躯Boot。若仙符唯可引符用之，可试自动道核仙符引符之能。若未谙道核仙符，毋用此渡劫之能！</string>
     <!-- Module Backup/Restore Strings -->

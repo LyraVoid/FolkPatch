@@ -618,6 +618,21 @@ Dưới đây là một số nguyên nhân có thể gây ra thất bại xác t
     <string name="apm_bulk_install_remove">Xóa</string>
     <string name="apm_first_use_title">Chào mừng bạn sử dụng module hệ thống</string>
     <string name="apm_first_use_text">Chào mừng bạn sử dụng module hệ thống, nơi này sử dụng module tương thích với hệ sinh thái Magisk, nhấn nút góc dưới bên phải để cài đặt module, bạn cũng có thể sử dụng trình cài đặt ở đầu trang để cài đặt module hàng loạt, cũng cung cấp một chức năng sao lưu tất cả module một nút, nhưng lưu ý phương án này có thể không áp dụng cho tất cả module, vẫn hãy tự sao lưu thêm</string>
+
+    <!-- Welcome Guide -->
+    <string name="welcome_title_1">Chao mung den voi FolkPatch</string>
+    <string name="welcome_desc_1">Trinh quan ly Root co kha nang tuy chinh cao va tien loi dua tren KernelPatch. Bien thiet bi cua ban thuc su la cua ban.</string>
+    <string name="welcome_title_2">Tuy chinh toan dien</string>
+    <string name="welcome_desc_2">Tuy chinh moi thu — mau sac, hinh nen, phong chu, am thanh va ca rung. Kham pha Cua hang chu de!</string>
+    <string name="welcome_title_3">Dieu khien Kernel</string>
+    <string name="welcome_desc_3">Truy cap cac tinh nang kernel nang cao chi voi mot cham. Mo Cai dat va cham vao bieu tuong dieu chinh de vao FolkPatch Hide, Umount, Path Hide va hon the nua.</string>
+    <string name="welcome_title_4">San sang kham pha</string>
+    <string name="welcome_desc_4">Ban da san sang! Bat dau kham pha trai nghiem Root linh hoat nhat. Chuc vui ve!</string>
+    <string name="welcome_prev">Truoc</string>
+    <string name="welcome_next">Tiep</string>
+    <string name="welcome_skip">Bo qua</string>
+    <string name="welcome_got_it">Bat dau</string>
+
     <string name="kpm_autoload_add_kpm">Thêm KPM</string>
     <string name="kpm_autoload_remove_kpm">Xóa</string>
     <string name="kpm_autoload_edit_kpm">Editar</string>
