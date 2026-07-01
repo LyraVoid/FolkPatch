@@ -159,9 +159,32 @@ impl Node {
     }
 }
 
+const MODULE_PARTITIONS: &[(&str, bool)] = &[
+    ("system", false),
+    ("vendor", true),
+    ("system_ext", true),
+    ("product", true),
+    ("odm", false),
+    ("oem", false),
+    ("apex", true),
+    ("mi_ext", true),
+    ("my_bigball", true),
+    ("my_carrier", true),
+    ("my_company", true),
+    ("my_engineering", true),
+    ("my_heytap", true),
+    ("my_manifest", true),
+    ("my_preload", true),
+    ("my_product", true),
+    ("my_region", true),
+    ("my_reserve", true),
+    ("my_stock", true),
+    ("optics", true),
+    ("prism", true),
+];
+
 fn collect_module_files() -> Result<Option<Node>> {
     let mut root = Node::new_root("");
-    let mut system = Node::new_root("system");
     let module_root = Path::new(MODULE_DIR);
     let mut has_file = false;
 
@@ -189,38 +212,39 @@ fn collect_module_files() -> Result<Option<Node>> {
             continue;
         }
 
-        let mod_system = entry.path().join("system");
-
-        if !mod_system.is_dir() {
-            continue;
-        }
-
         log::debug!("collecting {}", entry.path().display());
 
-        has_file |= system.collect_module_files(mod_system)?;
+        for &(partition, require_symlink) in MODULE_PARTITIONS {
+            let module_partition_dir = entry.path().join(partition);
+
+            if !module_partition_dir.is_dir() {
+                continue;
+            }
+
+            if require_symlink {
+                let path_of_root = Path::new("/").join(partition);
+                let path_of_system = Path::new("/system").join(partition);
+                if !path_of_root.is_dir() || !path_of_system.is_symlink() {
+                    continue;
+                }
+            } else {
+                let path_of_root = Path::new("/").join(partition);
+                if !path_of_root.is_dir() {
+                    continue;
+                }
+            }
+
+            let partition_node = root
+                .children
+                .entry(partition.to_string())
+                .or_insert_with(|| Node::new_root(partition));
+
+            let collected = partition_node.collect_module_files(&module_partition_dir)?;
+            has_file |= collected;
+        }
     }
 
     if has_file {
-        const BUILTIN_PARTITIONS: [(&str, bool); 5] = [
-            ("vendor", true),
-            ("system_ext", true),
-            ("product", true),
-            ("odm", false),
-            ("oem", false),
-        ];
-
-        for (partition, require_symlink) in BUILTIN_PARTITIONS {
-            let path_of_root = Path::new("/").join(partition);
-            let path_of_system = Path::new("/system").join(partition);
-            if path_of_root.is_dir() && (!require_symlink || path_of_system.is_symlink()) {
-                let name = partition.to_string();
-                if let Some(node) = system.children.remove(&name) {
-                    root.children.insert(name, node);
-                }
-            }
-        }
-
-        root.children.insert("system".to_string(), system);
         Ok(Some(root))
     } else {
         Ok(None)
