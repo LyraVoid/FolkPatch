@@ -144,6 +144,9 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
         private const val CRASH_TIMESTAMP_KEY = "fp_crash_timestamp"
         private const val CRASH_LOOP_THRESHOLD = 2
         private const val CRASH_WINDOW_MS = 30_000L
+        
+        private const val PREF_SUPER_KEY = "super_key"
+        
         lateinit var sharedPreferences: SharedPreferences
 
         private val logCallback: CallbackList<String?> = object : CallbackList<String?>() {
@@ -159,6 +162,25 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
 
         private val _apStateLiveData = MutableLiveData(State.UNKNOWN_STATE)
         val apStateLiveData: LiveData<State> = _apStateLiveData
+
+        private fun generateRandomSuperKey(): String {
+            val chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+            return (1..16)
+                .map { chars.random() }
+                .joinToString("")
+        }
+
+        private fun getOrCreateSuperKey(): String {
+            var key = sharedPreferences.getString(PREF_SUPER_KEY, null)
+            if (key.isNullOrEmpty()) {
+                key = generateRandomSuperKey()
+                sharedPreferences.edit().putString(PREF_SUPER_KEY, key).apply()
+                Log.d(TAG, "Generated and saved new superKey: $key")
+            } else {
+                Log.d(TAG, "Loaded existing superKey: $key")
+            }
+            return key
+        }
 
         @Suppress("DEPRECATION")
         fun uninstallApatch() {
@@ -345,7 +367,9 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
         super.onCreate()
         apApp = this
         sharedPreferences = getSharedPreferences(SP_NAME, Context.MODE_PRIVATE)
-        superKey = "su"
+        
+        superKey = getOrCreateSuperKey()
+        
         val processName = getProcessNameCompat()
         if (processName.endsWith(":root") || processName.endsWith(":webui")) {
             return

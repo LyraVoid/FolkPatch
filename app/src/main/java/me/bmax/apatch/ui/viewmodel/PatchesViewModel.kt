@@ -536,7 +536,7 @@ class PatchesViewModel : ViewModel() {
             val superkey = if (useKey && this@PatchesViewModel.superkey.isNotEmpty()) {
                 this@PatchesViewModel.superkey
             } else {
-                "su"
+                APApplication.superKey
             }
 
             if (mode == PatchMode.PATCH_AND_INSTALL || mode == PatchMode.INSTALL_TO_NEXT_SLOT) {
