@@ -165,19 +165,24 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
 
         private fun generateRandomSuperKey(): String {
             val chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+            val secureRandom = java.security.SecureRandom()
             return (1..16)
-                .map { chars.random() }
+                .map { chars[secureRandom.nextInt(chars.length)] }
                 .joinToString("")
         }
 
         private fun getOrCreateSuperKey(): String {
             var key = sharedPreferences.getString(PREF_SUPER_KEY, null)
+
             if (key.isNullOrEmpty()) {
-                key = generateRandomSuperKey()
+                val isFirstLaunch = !sharedPreferences.contains("app_initialized")
+
+                key = if (isFirstLaunch) {
+                    generateRandomSuperKey()
+                } else {
+                    "su"
+                }
                 sharedPreferences.edit().putString(PREF_SUPER_KEY, key).apply()
-                Log.d(TAG, "Generated and saved new superKey: $key")
-            } else {
-                Log.d(TAG, "Loaded existing superKey: $key")
             }
             return key
         }
