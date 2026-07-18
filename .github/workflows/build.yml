@@ -3,10 +3,10 @@ name: Build FolkPatch
 on:
   push:
     branches: [ main, develop ]
-    paths: [ 'app/**', 'fpd/**', '.github/workflows/build.yml' ]
+    paths: [ 'app/**', 'fpd/**', 'apd/**', '.github/workflows/build.yml' ]
   pull_request:
     branches: [ main, develop ]
-    paths: [ 'app/**', 'fpd/**', '.github/workflows/build.yml' ]
+    paths: [ 'app/**', 'fpd/**', 'apd/**', '.github/workflows/build.yml' ]
   workflow_dispatch:
     inputs:
       build_type:
