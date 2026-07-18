@@ -1,6 +1,5 @@
 use std::{
-    collections::{BTreeMap, HashSet},
-    ffi::CString,
+    collections::BTreeMap,
     fs,
     fs::{DirEntry, FileType, create_dir, create_dir_all, read_dir, read_link},
     os::unix::fs::{FileTypeExt, symlink},
@@ -10,6 +9,7 @@ use std::{
 
 use anyhow::{Context, Result, bail};
 use extattr::lgetxattr;
+use libc;
 use rustix::{
     fd::AsFd,
     fs::{CWD, Gid, MetadataExt, Mode, Uid, chmod, chown},
@@ -492,13 +492,18 @@ fn create_whiteout(upper_dir: &Path, name: &str) -> Result<()> {
     log::debug!("creating whiteout: {}", whiteout_path.display());
     #[cfg(any(target_os = "linux", target_os = "android"))]
     {
-        use rustix::fs::{mknod, Mode, Dev};
-        mknod(
-            &whiteout_path,
-            Mode::from_raw_mode(libc::S_IFCHR | 0o600),
-            Dev::from_raw(0),
-        )
-        .with_context(|| format!("create whiteout {}", whiteout_path.display()))?;
+        let c_path = CString::new(whiteout_path.to_string_lossy().as_bytes())?;
+        let result = unsafe {
+            libc::mknod(
+                c_path.as_ptr(),
+                libc::S_IFCHR | 0o600,
+                libc::makedev(0, 0),
+            )
+        };
+        if result != 0 {
+            let err = std::io::Error::last_os_error();
+            bail!("create whiteout {}: {}", whiteout_path.display(), err);
+        }
     }
     #[cfg(not(any(target_os = "linux", target_os = "android")))]
     {

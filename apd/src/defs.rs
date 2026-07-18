@@ -48,6 +48,9 @@ pub const SKIP_MOUNT_FILE_NAME: &str = "skip_mount";
 pub const UPDATE_FILE_NAME: &str = "update";
 pub const REMOVE_FILE_NAME: &str = "remove";
 
+pub const REPLACE_DIR_FILE_NAME: &str = ".replace";
+pub const REPLACE_DIR_XATTR: &str = "trusted.overlay.opaque";
+
 // Metamodule support
 pub const METAMODULE_MOUNT_SCRIPT: &str = "metamount.sh";
 pub const METAMODULE_METAINSTALL_SCRIPT: &str = "metainstall.sh";
