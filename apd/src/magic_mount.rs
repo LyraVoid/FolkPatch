@@ -15,9 +15,9 @@ use rustix::{
     fd::AsFd,
     fs::{CWD, Gid, MetadataExt, Mode, Uid, chmod, chown},
     mount::{
-        FsMountFlags, FsOpenFlags, MountAttrFlags, MountFlags, MountPropagationFlags, UnmountFlags,
-        fsconfig_create, fsconfig_set_string, fsmount, fsopen,
-        mount, mount_bind, mount_change, unmount,
+        FsMountFlags, FsOpenFlags, MountAttrFlags, MountFlags, MountPropagationFlags, MoveMountFlags,
+        UnmountFlags, fsconfig_create, fsconfig_set_string, fsmount, fsopen,
+        mount, mount_bind, mount_change, move_mount, unmount,
     },
 };
 
