@@ -1,5 +1,6 @@
 use std::{
     collections::BTreeMap,
+    ffi::CString,
     fs,
     fs::{DirEntry, FileType, create_dir, create_dir_all, read_dir, read_link},
     os::unix::fs::{FileTypeExt, symlink},
@@ -14,9 +15,9 @@ use rustix::{
     fd::AsFd,
     fs::{CWD, Gid, MetadataExt, Mode, Uid, chmod, chown},
     mount::{
-        FsMountFlags, FsOpenFlags, MountAttrFlags, MountFlags, MountPropagationFlags, MoveMountFlags,
-        OpenTreeFlags, UnmountFlags, fsconfig_create, fsconfig_set_string, fsmount, fsopen,
-        mount, mount_bind, mount_change, mount_move, move_mount, open_tree, unmount,
+        FsMountFlags, FsOpenFlags, MountAttrFlags, MountFlags, MountPropagationFlags, UnmountFlags,
+        fsconfig_create, fsconfig_set_string, fsmount, fsopen,
+        mount, mount_bind, mount_change, unmount,
     },
 };
 
