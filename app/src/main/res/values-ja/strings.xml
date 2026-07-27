@@ -705,6 +705,35 @@
     <string name="settings_appearance_font_summary">カスタムフォントの設定</string>
     <string name="settings_appearance_theme">テーマ設定</string>
     <string name="settings_appearance_theme_summary">テーマストア、保存、インポート、リセット</string>
+
+    <string name="settings_nav_custom_icons">カスタムナビアイコン</string>
+    <string name="settings_nav_custom_icons_summary">下部バーのアイコンをカスタム画像に置き換えます</string>
+    <string name="nav_icon_home">ホームアイコン</string>
+    <string name="nav_icon_kpm">KPMアイコン</string>
+    <string name="nav_icon_superuser">SuperUserアイコン</string>
+    <string name="nav_icon_apm">システムモジュールアイコン</string>
+    <string name="nav_icon_settings">設定アイコン</string>
+    <string name="nav_icon_select_image">画像を選択</string>
+    <string name="nav_icon_clear">デフォルトに戻す</string>
+    <string name="nav_icon_custom_selected">カスタム</string>
+    <string name="nav_icon_default">デフォルト</string>
+    <string name="nav_icon_cleared">アイコンをデフォルトに戻しました</string>
+    <string name="nav_icon_set">アイコンを更新しました</string>
+
+    <string name="settings_theme_mode">モード設定</string>
+    <string name="settings_theme_mode_summary">内蔵ストアとブラウザ互換モードを切り替えます</string>
+    <string name="theme_mode_builtin">ビルトインモード</string>
+    <string name="theme_mode_builtin_desc">内蔵テーマストアでテーマの閲覧、ダウンロード、適用を行う</string>
+    <string name="theme_mode_compat">互換モード</string>
+    <string name="theme_mode_compat_desc">ブラウザでテーマを直接ダウンロード（インポートに問題がある端末向け）</string>
+    <string name="theme_mode_onboarding_title">テーマモードを選択</string>
+    <string name="theme_mode_onboarding_msg">テーマの閲覧とインストール方法を選択してください。後で設定から変更できます。</string>
+    <string name="theme_mode_builtin_label">内蔵ストア</string>
+    <string name="theme_mode_compat_label">ブラウザモード</string>
+    <string name="theme_mode_switched">テーマモードを %s に変更しました</string>
+    <string name="theme_mode_current">現在: %s</string>
+    <string name="theme_mode_switch_title">テーマモード切替</string>
+    <string name="theme_mode_switch_msg">モードを変更すると、テーマの閲覧とインストール方法が変わります。続行しますか？</string>
     <string name="settings_appearance_banner">バナー設定</string>
     <string name="settings_appearance_banner_summary">モジュールバナーの設定</string>
     <string name="settings_appearance_layout">レイアウト設定</string>

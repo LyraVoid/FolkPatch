@@ -70,6 +70,9 @@ import me.bmax.apatch.util.PermissionUtils
 import me.bmax.apatch.util.ui.APDialogBlurBehindUtils
 import me.bmax.apatch.util.ui.NavigationBarsSpacer
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import coil.compose.AsyncImage
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -80,6 +83,8 @@ fun AppearanceSettingsContent(
     onNavigateToApiMarketplace: () -> Unit,
     flat: Boolean = false,
     highlightKey: String? = null,
+    themeStoreMode: String? = null,
+    onThemeStoreModeChanged: ((String) -> Unit)? = null,
 ) {
     val prefs = APApplication.sharedPreferences
     val context = LocalContext.current
@@ -832,6 +837,107 @@ fun AppearanceSettingsContent(
                             prefs.edit().putBoolean("floating_swipe_hide", it).apply()
                         },
                     )
+                }
+            }
+
+            item(key = "appearance_nav_custom_icons") {
+                val customNavIconsEnabled = remember { mutableStateOf(prefs.getBoolean("nav_icon_custom_enabled", false)) }
+                var editingDestName by remember { mutableStateOf<String?>(null) }
+                val iconPickerLauncher = rememberLauncherForActivityResult(
+                    contract = ActivityResultContracts.GetContent()
+                ) { uri ->
+                    val dest = editingDestName ?: return@rememberLauncherForActivityResult
+                    if (uri != null) {
+                        prefs.edit().putString("nav_icon_$dest", uri.toString()).apply()
+                        scope.launch {
+                            snackBarHost.showSnackbar(context.getString(R.string.nav_icon_set))
+                        }
+                    }
+                    editingDestName = null
+                }
+
+                ToggleSettingCard(
+                    flat = flat,
+                    icon = Icons.Filled.Image,
+                    title = stringResource(R.string.settings_nav_custom_icons),
+                    description = stringResource(R.string.settings_nav_custom_icons_summary),
+                    checked = customNavIconsEnabled.value,
+                    onCheckedChange = {
+                        customNavIconsEnabled.value = it
+                        prefs.edit().putBoolean("nav_icon_custom_enabled", it).apply()
+                    }
+                )
+
+                if (customNavIconsEnabled.value) {
+                    Spacer(Modifier.height(8.dp))
+                    val navDestinations = listOf(
+                        Triple("Home", R.string.nav_icon_home, Icons.Filled.Home),
+                        Triple("KModule", R.string.nav_icon_kpm, Icons.Filled.Archive),
+                        Triple("SuperUser", R.string.nav_icon_superuser, Icons.Filled.AdminPanelSettings),
+                        Triple("AModule", R.string.nav_icon_apm, Icons.Filled.Extension),
+                        Triple("Settings", R.string.nav_icon_settings, Icons.Filled.Settings),
+                    )
+
+                    Column {
+                        navDestinations.forEach { (destName, labelRes, defaultIcon) ->
+                            val customUri = prefs.getString("nav_icon_$destName", null)
+                            ExpressiveCard(
+                                flat = flat,
+                                onClick = {
+                                    editingDestName = destName
+                                    try { iconPickerLauncher.launch("image/*") } catch (_: Throwable) {}
+                                }
+                            ) {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth().padding(16.dp),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                ) {
+                                    if (customUri != null) {
+                                        AsyncImage(
+                                            model = customUri,
+                                            contentDescription = null,
+                                            modifier = Modifier.size(36.dp).clip(RoundedCornerShape(6.dp)),
+                                            contentScale = ContentScale.Crop
+                                        )
+                                    } else {
+                                        Icon(
+                                            imageVector = defaultIcon,
+                                            contentDescription = null,
+                                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                            modifier = Modifier.size(36.dp)
+                                        )
+                                    }
+                                    Spacer(Modifier.width(16.dp))
+                                    Column(modifier = Modifier.weight(1f)) {
+                                        Text(
+                                            stringResource(labelRes),
+                                            style = MaterialTheme.typography.titleMedium,
+                                            color = MaterialTheme.colorScheme.onSurface
+                                        )
+                                        Text(
+                                            if (customUri != null) stringResource(R.string.nav_icon_custom_selected)
+                                            else stringResource(R.string.nav_icon_default),
+                                            style = MaterialTheme.typography.bodySmall,
+                                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                                        )
+                                    }
+                                    if (customUri != null) {
+                                        IconButton(
+                                            onClick = {
+                                                prefs.edit().remove("nav_icon_$destName").apply()
+                                                scope.launch {
+                                                    snackBarHost.showSnackbar(context.getString(R.string.nav_icon_cleared))
+                                                }
+                                            }
+                                        ) {
+                                            Icon(Icons.Filled.Close, stringResource(R.string.nav_icon_clear), tint = MaterialTheme.colorScheme.error)
+                                        }
+                                    }
+                                }
+                            }
+                            Spacer(Modifier.height(4.dp))
+                        }
+                    }
                 }
             }
 
@@ -1915,7 +2021,124 @@ fun AppearanceSettingsContent(
                     ) {
                         Icon(imageVector = Icons.Filled.Store, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(24.dp))
                         Spacer(Modifier.width(16.dp))
-                        Text(text = stringResource(id = R.string.theme_store_title), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(text = stringResource(id = R.string.theme_store_title), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
+                            if (themeStoreMode == "compat") {
+                                Text(
+                                    text = stringResource(R.string.theme_mode_compat_desc),
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+
+            item(key = "appearance_theme_store_mode") {
+                val modeName = when (themeStoreMode) {
+                    "compat" -> stringResource(R.string.theme_mode_compat)
+                    else -> stringResource(R.string.theme_mode_builtin)
+                }
+                val showModeSwitchDialog = remember { mutableStateOf(false) }
+                ExpressiveCard(flat = flat, onClick = { showModeSwitchDialog.value = true }) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(16.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Icon(imageVector = Icons.Filled.Tune, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(24.dp))
+                        Spacer(Modifier.width(16.dp))
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(
+                                text = stringResource(R.string.settings_theme_mode),
+                                style = MaterialTheme.typography.titleMedium,
+                                color = MaterialTheme.colorScheme.onSurface
+                            )
+                            Text(
+                                text = stringResource(R.string.theme_mode_current, modeName),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    }
+                }
+
+                if (showModeSwitchDialog.value) {
+                    BasicAlertDialog(
+                        onDismissRequest = { showModeSwitchDialog.value = false },
+                        properties = DialogProperties(usePlatformDefaultWidth = false)
+                    ) {
+                        Surface(
+                            shape = RoundedCornerShape(30.dp),
+                            color = AlertDialogDefaults.containerColor,
+                            tonalElevation = AlertDialogDefaults.TonalElevation,
+                            modifier = Modifier.width(320.dp)
+                        ) {
+                            Column(modifier = Modifier.padding(24.dp)) {
+                                Text(
+                                    text = stringResource(R.string.theme_mode_switch_title),
+                                    style = MaterialTheme.typography.titleLarge,
+                                    modifier = Modifier.padding(bottom = 8.dp)
+                                )
+                                Text(
+                                    text = stringResource(R.string.theme_mode_switch_msg),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    modifier = Modifier.padding(bottom = 16.dp)
+                                )
+
+                                val builtinLabel = stringResource(R.string.theme_mode_builtin_label)
+                                val compatLabel = stringResource(R.string.theme_mode_compat_label)
+                                listOf("builtin" to builtinLabel, "compat" to compatLabel).forEach { (mode, label) ->
+                                    Surface(
+                                        onClick = {
+                                            prefs.edit { putString("theme_mode", mode) }
+                                            onThemeStoreModeChanged?.invoke(mode)
+                                            showModeSwitchDialog.value = false
+                                            scope.launch {
+                                                snackBarHost.showSnackbar(
+                                                    context.getString(R.string.theme_mode_switched, label)
+                                                )
+                                            }
+                                        },
+                                        shape = RoundedCornerShape(12.dp),
+                                        color = if (themeStoreMode == mode) MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.3f) else Color.Transparent,
+                                        modifier = Modifier.fillMaxWidth()
+                                    ) {
+                                        Row(
+                                            modifier = Modifier.padding(12.dp),
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            RadioButton(
+                                                selected = themeStoreMode == mode,
+                                                onClick = null
+                                            )
+                                            Spacer(Modifier.width(12.dp))
+                                            Column(modifier = Modifier.weight(1f)) {
+                                                Text(
+                                                    label,
+                                                    style = MaterialTheme.typography.titleMedium
+                                                )
+                                                Text(
+                                                    if (mode == "compat") stringResource(R.string.theme_mode_compat_desc)
+                                                    else stringResource(R.string.theme_mode_builtin_desc),
+                                                    style = MaterialTheme.typography.bodySmall,
+                                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                                )
+                                            }
+                                        }
+                                    }
+                                    Spacer(Modifier.height(8.dp))
+                                }
+
+                                TextButton(
+                                    onClick = { showModeSwitchDialog.value = false },
+                                    modifier = Modifier.align(Alignment.End)
+                                ) {
+                                    Text(stringResource(android.R.string.cancel))
+                                }
+                            }
+                        }
                     }
                 }
             }

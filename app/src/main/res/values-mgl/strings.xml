@@ -766,6 +766,35 @@
     <string name="settings_appearance_font_summary">自定义字体魔法配置</string>
     <string name="settings_appearance_theme">星之主题</string>
     <string name="settings_appearance_theme_summary">主题商店、保存、导入和重置</string>
+
+    <string name="settings_nav_custom_icons">星之导航魔法印记</string>
+    <string name="settings_nav_custom_icons_summary">用自定义魔法印记替换底部导航栏图标</string>
+    <string name="nav_icon_home">星之印记</string>
+    <string name="nav_icon_kpm">KPM印记</string>
+    <string name="nav_icon_superuser">超魔印记</string>
+    <string name="nav_icon_apm">魔法模块印记</string>
+    <string name="nav_icon_settings">魔法设置印记</string>
+    <string name="nav_icon_select_image">选择魔法印记</string>
+    <string name="nav_icon_clear">重置为默认</string>
+    <string name="nav_icon_custom_selected">自定义</string>
+    <string name="nav_icon_default">默认</string>
+    <string name="nav_icon_cleared">印记已重置</string>
+    <string name="nav_icon_set">印记已更新</string>
+
+    <string name="settings_theme_mode">魔法模式配置</string>
+    <string name="settings_theme_mode_summary">在星之主题商店和凡间浏览器模式之间切换</string>
+    <string name="theme_mode_builtin">星之模式</string>
+    <string name="theme_mode_builtin_desc">使用星之主题商店浏览、下载和施展主题魔法</string>
+    <string name="theme_mode_compat">凡间模式</string>
+    <string name="theme_mode_compat_desc">使用凡间浏览器直接下载主题（适用于导入魔法失效的魔导器）</string>
+    <string name="theme_mode_onboarding_title">选择星之模式</string>
+    <string name="theme_mode_onboarding_msg">您希望如何浏览和施展主题魔法？可以在星之设置中随时更改。</string>
+    <string name="theme_mode_builtin_label">星之商店</string>
+    <string name="theme_mode_compat_label">凡间浏览器</string>
+    <string name="theme_mode_switched">主题魔法已切换为%s</string>
+    <string name="theme_mode_current">当前：%s</string>
+    <string name="theme_mode_switch_title">切换星之模式</string>
+    <string name="theme_mode_switch_msg">更改模式将影响主题魔法的浏览和施展方式。是否继续？</string>
     <string name="settings_appearance_banner">魔法横幅</string>
     <string name="settings_appearance_banner_summary">模块横幅配置</string>
     <string name="settings_appearance_layout">星之布局</string>

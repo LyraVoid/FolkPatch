@@ -775,6 +775,35 @@
     <string name="settings_appearance_font_summary">自定义字体配置喵</string>
     <string name="settings_appearance_theme">主题设置喵</string>
     <string name="settings_appearance_theme_summary">主题商店、保存、导入和重置喵</string>
+
+    <string name="settings_nav_custom_icons">自定义导航图标喵</string>
+    <string name="settings_nav_custom_icons_summary">用自定义图片替换底部导航栏图标喵</string>
+    <string name="nav_icon_home">首页图标喵</string>
+    <string name="nav_icon_kpm">KPM图标喵</string>
+    <string name="nav_icon_superuser">超级用户图标喵</string>
+    <string name="nav_icon_apm">系统模块图标喵</string>
+    <string name="nav_icon_settings">设置图标喵</string>
+    <string name="nav_icon_select_image">选择图片喵</string>
+    <string name="nav_icon_clear">重置为默认喵</string>
+    <string name="nav_icon_custom_selected">自定义喵</string>
+    <string name="nav_icon_default">默认喵</string>
+    <string name="nav_icon_cleared">图标已重置为默认喵</string>
+    <string name="nav_icon_set">图标已更新喵</string>
+
+    <string name="settings_theme_mode">模式配置喵</string>
+    <string name="settings_theme_mode_summary">在内置主题商店和浏览器兼容模式之间切换喵</string>
+    <string name="theme_mode_builtin">内置模式</string>
+    <string name="theme_mode_builtin_desc">使用内置主题商店浏览、下载和应用主题喵</string>
+    <string name="theme_mode_compat">兼容模式</string>
+    <string name="theme_mode_compat_desc">使用浏览器直接下载主题喵（适用于导入有问题的设备）</string>
+    <string name="theme_mode_onboarding_title">选择主题模式喵</string>
+    <string name="theme_mode_onboarding_msg">您希望如何浏览和安装主题呢喵？可以在设置中随时更改哒</string>
+    <string name="theme_mode_builtin_label">内置商店喵</string>
+    <string name="theme_mode_compat_label">浏览器模式喵</string>
+    <string name="theme_mode_switched">主题模式已切换为%s喵</string>
+    <string name="theme_mode_current">当前：%s</string>
+    <string name="theme_mode_switch_title">切换主题模式喵</string>
+    <string name="theme_mode_switch_msg">更改模式会影响您浏览和安装主题的方式喵，确定继续吗？</string>
     <string name="settings_appearance_banner">横幅设置喵</string>
     <string name="settings_appearance_banner_summary">模块横幅配置喵</string>
     <string name="settings_appearance_layout">布局设置喵</string>

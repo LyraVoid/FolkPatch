@@ -763,6 +763,35 @@ Por favor, certifique-se de fechar completamente o app e reabri-lo para que os c
     <string name="settings_appearance_font_summary">Configuração de fonte personalizada</string>
     <string name="settings_appearance_theme">Configuração de tema</string>
     <string name="settings_appearance_theme_summary">Loja de temas, salvar, importar e redefinir</string>
+
+    <string name="settings_nav_custom_icons">Ícones de navegação personalizados</string>
+    <string name="settings_nav_custom_icons_summary">Substituir ícones da barra inferior por imagens personalizadas</string>
+    <string name="nav_icon_home">Ícone de início</string>
+    <string name="nav_icon_kpm">Ícone de KPM</string>
+    <string name="nav_icon_superuser">Ícone de SuperUser</string>
+    <string name="nav_icon_apm">Ícone de módulo do sistema</string>
+    <string name="nav_icon_settings">Ícone de configurações</string>
+    <string name="nav_icon_select_image">Selecionar imagem</string>
+    <string name="nav_icon_clear">Redefinir para padrão</string>
+    <string name="nav_icon_custom_selected">Personalizado</string>
+    <string name="nav_icon_default">Padrão</string>
+    <string name="nav_icon_cleared">Ícone redefinido</string>
+    <string name="nav_icon_set">Ícone atualizado</string>
+
+    <string name="settings_theme_mode">Configuração de modo</string>
+    <string name="settings_theme_mode_summary">Alternar entre a loja integrada e o modo de compatibilidade do navegador</string>
+    <string name="theme_mode_builtin">Modo Integrado</string>
+    <string name="theme_mode_builtin_desc">Use a loja de temas integrada para navegar, baixar e aplicar temas</string>
+    <string name="theme_mode_compat">Modo de Compatibilidade</string>
+    <string name="theme_mode_compat_desc">Usar o navegador para baixar temas diretamente (para dispositivos com problemas de importação)</string>
+    <string name="theme_mode_onboarding_title">Escolher modo de tema</string>
+    <string name="theme_mode_onboarding_msg">Como você gostaria de navegar e instalar temas? Você pode alterar isso depois nas configurações.</string>
+    <string name="theme_mode_builtin_label">Loja Integrada</string>
+    <string name="theme_mode_compat_label">Modo Navegador</string>
+    <string name="theme_mode_switched">Modo de tema alterado para %s</string>
+    <string name="theme_mode_current">Atual: %s</string>
+    <string name="theme_mode_switch_title">Alternar modo de tema</string>
+    <string name="theme_mode_switch_msg">Alterar o modo afetará como você navega e instala temas. Continuar?</string>
     <string name="settings_appearance_banner">Configuração de banner</string>
     <string name="settings_appearance_banner_summary">Configuração de banner do módulo</string>
     <string name="settings_appearance_layout">Configuração de layout</string>

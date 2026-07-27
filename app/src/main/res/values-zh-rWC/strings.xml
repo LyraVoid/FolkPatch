@@ -763,6 +763,35 @@
     <string name="settings_appearance_font_summary">自定义字体配置</string>
     <string name="settings_appearance_theme">洞府主题</string>
     <string name="settings_appearance_theme_summary">主题商店、保存、导入和重置</string>
+
+    <string name="settings_nav_custom_icons">洞府导航道印</string>
+    <string name="settings_nav_custom_icons_summary">用自定义道印替换底部导航栏图标</string>
+    <string name="nav_icon_home">洞府道印</string>
+    <string name="nav_icon_kpm">KPM道印</string>
+    <string name="nav_icon_superuser">超神道印</string>
+    <string name="nav_icon_apm">功法道印</string>
+    <string name="nav_icon_settings">设置道印</string>
+    <string name="nav_icon_select_image">选择道印</string>
+    <string name="nav_icon_clear">重置为默认</string>
+    <string name="nav_icon_custom_selected">自定义</string>
+    <string name="nav_icon_default">默认</string>
+    <string name="nav_icon_cleared">道印已重置</string>
+    <string name="nav_icon_set">道印已更新</string>
+
+    <string name="settings_theme_mode">道法配置</string>
+    <string name="settings_theme_mode_summary">在洞府藏经阁和凡间浏览器之间切换</string>
+    <string name="theme_mode_builtin">洞府模式</string>
+    <string name="theme_mode_builtin_desc">使用洞府藏经阁浏览、下载和修炼主题功法</string>
+    <string name="theme_mode_compat">凡间模式</string>
+    <string name="theme_mode_compat_desc">使用凡间浏览器直接下载主题功法（适用于传承有问题的道侣）</string>
+    <string name="theme_mode_onboarding_title">选择道法模式</string>
+    <string name="theme_mode_onboarding_msg">道友想如何获取主题功法？可在洞府设置中随时更改。</string>
+    <string name="theme_mode_builtin_label">洞府藏经阁</string>
+    <string name="theme_mode_compat_label">凡间浏览器</string>
+    <string name="theme_mode_switched">道法已切换为%s</string>
+    <string name="theme_mode_current">当前道法：%s</string>
+    <string name="theme_mode_switch_title">切换道法模式</string>
+    <string name="theme_mode_switch_msg">更改道法将影响功法浏览和传承的方式。道友是否继续？</string>
     <string name="settings_appearance_banner">仙门横幅</string>
     <string name="settings_appearance_banner_summary">模块横幅配置</string>
     <string name="settings_appearance_layout">仙府布局</string>

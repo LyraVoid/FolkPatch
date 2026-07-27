@@ -747,6 +747,35 @@ Pastikan aplikasi ditutup sepenuhnya dan dimulai ulang untuk menjalankan perinta
     <string name="settings_appearance_font_summary">Konfigurasi font kustom</string>
     <string name="settings_appearance_theme">Pengaturan tema</string>
     <string name="settings_appearance_theme_summary">Toko tema, simpan, impor, dan reset</string>
+
+    <string name="settings_nav_custom_icons">Ikon Navigasi Kustom</string>
+    <string name="settings_nav_custom_icons_summary">Ganti ikon bilah bawah dengan gambar kustom</string>
+    <string name="nav_icon_home">Ikon Beranda</string>
+    <string name="nav_icon_kpm">Ikon KPM</string>
+    <string name="nav_icon_superuser">Ikon SuperUser</string>
+    <string name="nav_icon_apm">Ikon Modul Sistem</string>
+    <string name="nav_icon_settings">Ikon Pengaturan</string>
+    <string name="nav_icon_select_image">Pilih Gambar</string>
+    <string name="nav_icon_clear">Reset ke Default</string>
+    <string name="nav_icon_custom_selected">Kustom</string>
+    <string name="nav_icon_default">Default</string>
+    <string name="nav_icon_cleared">Ikon direset ke default</string>
+    <string name="nav_icon_set">Ikon diperbarui</string>
+
+    <string name="settings_theme_mode">Konfigurasi Mode</string>
+    <string name="settings_theme_mode_summary">Beralih antara mode toko bawaan dan mode kompatibilitas browser</string>
+    <string name="theme_mode_builtin">Mode Bawaan</string>
+    <string name="theme_mode_builtin_desc">Gunakan toko tema bawaan untuk menjelajah, mengunduh, dan menerapkan tema</string>
+    <string name="theme_mode_compat">Mode Kompatibilitas</string>
+    <string name="theme_mode_compat_desc">Gunakan browser untuk mengunduh tema secara langsung (untuk perangkat dengan masalah impor)</string>
+    <string name="theme_mode_onboarding_title">Pilih Mode Tema</string>
+    <string name="theme_mode_onboarding_msg">Bagaimana Anda ingin menjelajah dan memasang tema? Anda dapat mengubahnya nanti di pengaturan.</string>
+    <string name="theme_mode_builtin_label">Toko Bawaan</string>
+    <string name="theme_mode_compat_label">Mode Browser</string>
+    <string name="theme_mode_switched">Mode tema diubah ke %s</string>
+    <string name="theme_mode_current">Saat ini: %s</string>
+    <string name="theme_mode_switch_title">Ganti Mode Tema</string>
+    <string name="theme_mode_switch_msg">Mengganti mode akan memengaruhi cara Anda menjelajah dan memasang tema. Lanjutkan?</string>
     <string name="settings_appearance_banner">Pengaturan banner</string>
     <string name="settings_appearance_banner_summary">Konfigurasi banner modul</string>
     <string name="settings_appearance_layout">Pengaturan tata letak</string>

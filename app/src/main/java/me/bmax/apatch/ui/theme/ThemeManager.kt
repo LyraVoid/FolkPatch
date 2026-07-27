@@ -221,6 +221,27 @@ object ThemeManager {
                     put("meta_version", metadata.version)
                     put("meta_author", metadata.author)
                     put("meta_description", metadata.description)
+
+                    // Nav Icons
+                    val navIconsJson = JSONObject()
+                    val navDestNames = listOf("Home", "KModule", "SuperUser", "AModule", "Settings")
+                    navDestNames.forEach { destName ->
+                        val prefKey = "nav_icon_$destName"
+                        val uri = prefs.getString(prefKey, null)
+                        if (uri != null) {
+                            try {
+                                SafeUriResolver.openInputStream(context, Uri.parse(uri))?.use { input ->
+                                    val iconFile = File(cacheDir, "nav_icon_$destName.png")
+                                    iconFile.outputStream().use { output -> input.copyTo(output) }
+                                    navIconsJson.put(destName, "nav_icon_$destName.png")
+                                }
+                            } catch (_: Throwable) { }
+                        }
+                    }
+                    if (navIconsJson.length() > 0) {
+                        put("navIcons", navIconsJson)
+                    }
+                    put("navIconCustomEnabled", prefs.getBoolean("nav_icon_custom_enabled", false))
                 }
                 File(cacheDir, THEME_CONFIG_FILENAME).writeText(json.toString())
 
@@ -764,6 +785,30 @@ object ThemeManager {
                 }
                 SoundEffectConfig.save(context)
 
+                // Apply Nav Icons
+                val navIconsEnabled = json.optBoolean("navIconCustomEnabled", false)
+                val navIconsImportJson = if (json.has("navIcons")) json.getJSONObject("navIcons") else null
+                APApplication.sharedPreferences.edit()
+                    .putBoolean("nav_icon_custom_enabled", navIconsEnabled)
+                    .apply()
+                if (navIconsEnabled && navIconsImportJson != null) {
+                    val navDestNames = listOf("Home", "KModule", "SuperUser", "AModule", "Settings")
+                    navDestNames.forEach { destName ->
+                        val filename = navIconsImportJson.optString(destName, "")
+                        if (filename.isNotEmpty()) {
+                            val iconFile = File(cacheDir, filename)
+                            if (iconFile.exists()) {
+                                val destFile = File(context.filesDir, filename)
+                                iconFile.copyTo(destFile, overwrite = true)
+                                val fileUri = Uri.fromFile(destFile).toString()
+                                APApplication.sharedPreferences.edit()
+                                    .putString("nav_icon_$destName", fileUri)
+                                    .apply()
+                            }
+                        }
+                    }
+                }
+
                 // 4. Apply Font
                 if (isFontEnabled) {
                      val fontFile = File(cacheDir, FONT_FILENAME)
@@ -903,7 +948,18 @@ object ThemeManager {
                 SoundEffectConfig.clearStartupSound(context)
                 SoundEffectConfig.save(context)
 
-        
+                // Reset Nav Icons
+                val navDestNames = listOf("Home", "KModule", "SuperUser", "AModule", "Settings")
+                prefs.edit()
+                    .putBoolean("nav_icon_custom_enabled", false)
+                    .also { edit ->
+                        navDestNames.forEach { destName ->
+                            edit.remove("nav_icon_$destName")
+                            File(filesDir, "nav_icon_$destName.png").takeIf { it.exists() }?.delete()
+                        }
+                    }
+                    .apply()
+
                 withContext(Dispatchers.Main) {
                     AppCompatDelegate.setApplicationLocales(LocaleListCompat.getEmptyLocaleList())
                 }

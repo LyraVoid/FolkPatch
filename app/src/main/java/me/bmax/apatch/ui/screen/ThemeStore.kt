@@ -24,8 +24,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.content.edit
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.request.CachePolicy
@@ -36,6 +38,7 @@ import com.ramcosta.composedestinations.generated.destinations.MyThemesScreenDes
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.AppLoadingIndicator
 import me.bmax.apatch.ui.viewmodel.ThemeStoreViewModel
@@ -56,12 +59,90 @@ fun ThemeStoreScreen(
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
+    val uriHandler = LocalUriHandler.current
+    val prefs = APApplication.sharedPreferences
+    
+    // Theme mode
+    val themeModeKey = "theme_mode"
+    var themeMode by remember { mutableStateOf(prefs.getString(themeModeKey, null)) }
+    val isCompatMode = themeMode == "compat"
+    var showOnboardingDialog by remember { mutableStateOf(false) }
+
+    // First-run: check if onboarding needed
+    LaunchedEffect(Unit) {
+        if (themeMode == null) {
+            showOnboardingDialog = true
+        }
+    }
     
     var selectedTheme by remember { mutableStateOf<ThemeStoreViewModel.RemoteTheme?>(null) }
     var downloadingTheme by remember { mutableStateOf<ThemeStoreViewModel.RemoteTheme?>(null) }
     var downloadCompletedTheme by remember { mutableStateOf<ThemeStoreViewModel.RemoteTheme?>(null) }
     var isSearchActive by remember { mutableStateOf(false) }
     var showFilterSheet by remember { mutableStateOf(false) }
+
+    // Onboarding dialog for first-time theme store entry
+    if (showOnboardingDialog) {
+        AlertDialog(
+            onDismissRequest = { showOnboardingDialog = false },
+            title = { Text(stringResource(R.string.theme_mode_onboarding_title)) },
+            text = {
+                Column {
+                    Text(stringResource(R.string.theme_mode_onboarding_msg))
+                    Spacer(Modifier.height(16.dp))
+                    // Built-in option
+                    OutlinedButton(
+                        onClick = {
+                            prefs.edit { putString(themeModeKey, "builtin") }
+                            themeMode = "builtin"
+                            showOnboardingDialog = false
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Column(modifier = Modifier.padding(8.dp)) {
+                            Text(
+                                stringResource(R.string.theme_mode_builtin_label),
+                                style = MaterialTheme.typography.titleMedium
+                            )
+                            Text(
+                                stringResource(R.string.theme_mode_builtin_desc),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    }
+                    Spacer(Modifier.height(12.dp))
+                    // Compat option
+                    OutlinedButton(
+                        onClick = {
+                            prefs.edit { putString(themeModeKey, "compat") }
+                            themeMode = "compat"
+                            showOnboardingDialog = false
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Column(modifier = Modifier.padding(8.dp)) {
+                            Text(
+                                stringResource(R.string.theme_mode_compat_label),
+                                style = MaterialTheme.typography.titleMedium
+                            )
+                            Text(
+                                stringResource(R.string.theme_mode_compat_desc),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    }
+                }
+            },
+            confirmButton = {},
+            dismissButton = {
+                TextButton(onClick = { showOnboardingDialog = false }) {
+                    Text(stringResource(android.R.string.cancel))
+                }
+            }
+        )
+    }
 
     // 监听下载进度
     val downloadProgressFlow = remember { viewModel.getDownloadProgressFlow() }
@@ -227,8 +308,21 @@ fun ThemeStoreScreen(
                 } else {
                     Button(
                         onClick = {
-                            downloadingTheme = theme
-                            viewModel.startDownload(theme)
+                            if (isCompatMode) {
+                                // Compat mode: open download URL in browser
+                                try {
+                                    uriHandler.openUri(theme.downloadUrl)
+                                } catch (_: Exception) {
+                                    scope.launch {
+                                        snackbarHostState.showSnackbar(
+                                            context.getString(R.string.theme_download_failed)
+                                        )
+                                    }
+                                }
+                            } else {
+                                downloadingTheme = theme
+                                viewModel.startDownload(theme)
+                            }
                             selectedTheme = null
                         }
                     ) {
@@ -315,9 +409,11 @@ fun ThemeStoreScreen(
                     }
                 },
                 actions = {
-                    // "我的主题"按钮
-                    IconButton(onClick = { navigator.navigate(MyThemesScreenDestination) }) {
-                        Icon(Icons.Filled.ColorLens, contentDescription = "My Themes")
+                    // "我的主题"按钮 — hidden in compat mode
+                    if (!isCompatMode) {
+                        IconButton(onClick = { navigator.navigate(MyThemesScreenDestination) }) {
+                            Icon(Icons.Filled.ColorLens, contentDescription = "My Themes")
+                        }
                     }
                     if (isSearchActive) {
                         if (viewModel.searchQuery.isNotEmpty()) {

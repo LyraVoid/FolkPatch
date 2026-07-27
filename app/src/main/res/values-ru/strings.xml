@@ -766,6 +766,35 @@
     <string name="settings_appearance_font_summary">Настройка пользовательского шрифта</string>
     <string name="settings_appearance_theme">Настройки темы</string>
     <string name="settings_appearance_theme_summary">Магазин тем, сохранение, импорт и сброс</string>
+
+    <string name="settings_nav_custom_icons">Пользовательские иконки навигации</string>
+    <string name="settings_nav_custom_icons_summary">Замена иконок нижней панели пользовательскими изображениями</string>
+    <string name="nav_icon_home">Иконка главной</string>
+    <string name="nav_icon_kpm">Иконка KPM</string>
+    <string name="nav_icon_superuser">Иконка SuperUser</string>
+    <string name="nav_icon_apm">Иконка системного модуля</string>
+    <string name="nav_icon_settings">Иконка настроек</string>
+    <string name="nav_icon_select_image">Выбрать изображение</string>
+    <string name="nav_icon_clear">Сбросить на стандартную</string>
+    <string name="nav_icon_custom_selected">Пользовательская</string>
+    <string name="nav_icon_default">Стандартная</string>
+    <string name="nav_icon_cleared">Иконка сброшена</string>
+    <string name="nav_icon_set">Иконка обновлена</string>
+
+    <string name="settings_theme_mode">Режим настройки</string>
+    <string name="settings_theme_mode_summary">Переключение между встроенным магазином и режимом совместимости браузера</string>
+    <string name="theme_mode_builtin">Встроенный режим</string>
+    <string name="theme_mode_builtin_desc">Используйте встроенный магазин тем для просмотра, загрузки и применения тем</string>
+    <string name="theme_mode_compat">Режим совместимости</string>
+    <string name="theme_mode_compat_desc">Использовать браузер для прямой загрузки тем (для устройств с проблемами импорта)</string>
+    <string name="theme_mode_onboarding_title">Выберите режим темы</string>
+    <string name="theme_mode_onboarding_msg">Как вы хотите просматривать и устанавливать темы? Вы можете изменить это позже в настройках.</string>
+    <string name="theme_mode_builtin_label">Встроенный магазин</string>
+    <string name="theme_mode_compat_label">Режим браузера</string>
+    <string name="theme_mode_switched">Режим темы изменён на %s</string>
+    <string name="theme_mode_current">Текущий: %s</string>
+    <string name="theme_mode_switch_title">Переключить режим темы</string>
+    <string name="theme_mode_switch_msg">Изменение режима повлияет на то, как вы просматриваете и устанавливаете темы. Продолжить?</string>
     <string name="settings_appearance_banner">Настройки баннера</string>
     <string name="settings_appearance_banner_summary">Настройка баннера модуля</string>
     <string name="settings_appearance_layout">Настройки макета</string>

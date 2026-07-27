@@ -756,6 +756,35 @@
     <string name="settings_appearance_font_summary">自定义字体配置</string>
     <string name="settings_appearance_theme">资源包主题</string>
     <string name="settings_appearance_theme_summary">资源包商店、保存、导入和重置</string>
+
+    <string name="settings_nav_custom_icons">自定义导航图标</string>
+    <string name="settings_nav_custom_icons_summary">用自定义资源包图标替换底部导航栏图标</string>
+    <string name="nav_icon_home">主界面图标</string>
+    <string name="nav_icon_kpm">KPM图标</string>
+    <string name="nav_icon_superuser">管理员图标</string>
+    <string name="nav_icon_apm">资源包模块图标</string>
+    <string name="nav_icon_settings">设置图标</string>
+    <string name="nav_icon_select_image">选择图片</string>
+    <string name="nav_icon_clear">重置为默认</string>
+    <string name="nav_icon_custom_selected">自定义</string>
+    <string name="nav_icon_default">默认</string>
+    <string name="nav_icon_cleared">图标已重置</string>
+    <string name="nav_icon_set">图标已更新</string>
+
+    <string name="settings_theme_mode">模式配置</string>
+    <string name="settings_theme_mode_summary">在资源包商店和浏览器兼容模式之间切换</string>
+    <string name="theme_mode_builtin">资源包模式</string>
+    <string name="theme_mode_builtin_desc">使用资源包商店浏览、下载和应用资源包</string>
+    <string name="theme_mode_compat">浏览器模式</string>
+    <string name="theme_mode_compat_desc">使用浏览器直接下载资源包（适用于导入有问题的设备）</string>
+    <string name="theme_mode_onboarding_title">选择资源包模式</string>
+    <string name="theme_mode_onboarding_msg">您希望如何浏览和安装资源包？可以在设置中随时更改。</string>
+    <string name="theme_mode_builtin_label">资源包商店</string>
+    <string name="theme_mode_compat_label">浏览器模式</string>
+    <string name="theme_mode_switched">资源包模式已切换为%s</string>
+    <string name="theme_mode_current">当前：%s</string>
+    <string name="theme_mode_switch_title">切换资源包模式</string>
+    <string name="theme_mode_switch_msg">更改模式将影响资源包浏览和安装的方式。是否继续？</string>
     <string name="settings_appearance_banner">横幅设置</string>
     <string name="settings_appearance_banner_summary">模组横幅配置</string>
     <string name="settings_appearance_layout">布局设置</string>

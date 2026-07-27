@@ -774,6 +774,35 @@
     <string name="settings_appearance_font_summary">تكوين الخط المخصص</string>
     <string name="settings_appearance_theme">إعدادات المظهر</string>
     <string name="settings_appearance_theme_summary">متجر المواضيع وحفظ واستيراد وإعادة تعيين</string>
+
+    <string name="settings_nav_custom_icons">أيقونات التنقل المخصصة</string>
+    <string name="settings_nav_custom_icons_summary">استبدال أيقونات الشريط السفلي بصور مخصصة</string>
+    <string name="nav_icon_home">أيقونة الرئيسية</string>
+    <string name="nav_icon_kpm">أيقونة KPM</string>
+    <string name="nav_icon_superuser">أيقونة SuperUser</string>
+    <string name="nav_icon_apm">أيقونة وحدة النظام</string>
+    <string name="nav_icon_settings">أيقونة الإعدادات</string>
+    <string name="nav_icon_select_image">اختيار صورة</string>
+    <string name="nav_icon_clear">إعادة تعيين إلى الافتراضي</string>
+    <string name="nav_icon_custom_selected">مخصص</string>
+    <string name="nav_icon_default">افتراضي</string>
+    <string name="nav_icon_cleared">تم إعادة تعيين الأيقونة</string>
+    <string name="nav_icon_set">تم تحديث الأيقونة</string>
+
+    <string name="settings_theme_mode">وضع التكوين</string>
+    <string name="settings_theme_mode_summary">التبديل بين المتجر المدمج ووضع توافق المتصفح</string>
+    <string name="theme_mode_builtin">الوضع المدمج</string>
+    <string name="theme_mode_builtin_desc">استخدم متجر السمات المدمج لتصفح وتنزيل وتطبيق السمات</string>
+    <string name="theme_mode_compat">وضع التوافق</string>
+    <string name="theme_mode_compat_desc">استخدم المتصفح لتنزيل السمات مباشرة (للأجهزة التي تواجه مشكلات في الاستيراد)</string>
+    <string name="theme_mode_onboarding_title">اختيار وضع السمة</string>
+    <string name="theme_mode_onboarding_msg">كيف تريد تصفح وتثبيت السمات؟ يمكنك تغيير هذا لاحقًا في الإعدادات.</string>
+    <string name="theme_mode_builtin_label">المتجر المدمج</string>
+    <string name="theme_mode_compat_label">وضع المتصفح</string>
+    <string name="theme_mode_switched">تم تغيير وضع السمة إلى %s</string>
+    <string name="theme_mode_current">الحالي: %s</string>
+    <string name="theme_mode_switch_title">تبديل وضع السمة</string>
+    <string name="theme_mode_switch_msg">سيؤدي تغيير الوضع إلى التأثير على كيفية تصفحك وتثبيت السمات. هل تريد المتابعة؟</string>
     <string name="settings_appearance_banner">إعدادات اللافتة</string>
     <string name="settings_appearance_banner_summary">تكوين لافتة الوحدة</string>
     <string name="settings_appearance_layout">إعدادات التخطيط</string>

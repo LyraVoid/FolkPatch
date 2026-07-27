@@ -91,6 +91,7 @@ object SettingsRegistry {
             add(SettingEntry("appearance_banner_opacity", R.string.settings_banner_custom_opacity, R.string.settings_banner_custom_opacity_summary, SettingCategory.APPEARANCE))
             add(SettingEntry("appearance_custom_font", R.string.settings_custom_font, R.string.settings_custom_font_summary, SettingCategory.APPEARANCE))
             add(SettingEntry("appearance_theme_store", R.string.theme_store_title, category = SettingCategory.APPEARANCE))
+            add(SettingEntry("appearance_theme_mode", R.string.settings_theme_mode, R.string.settings_theme_mode_summary, SettingCategory.APPEARANCE))
             add(SettingEntry("appearance_save_theme", R.string.settings_save_theme, category = SettingCategory.APPEARANCE))
             add(SettingEntry("appearance_import_theme", R.string.settings_import_theme, category = SettingCategory.APPEARANCE))
             add(SettingEntry("appearance_reset_theme", R.string.settings_reset_theme, category = SettingCategory.APPEARANCE))

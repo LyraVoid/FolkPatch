@@ -765,6 +765,35 @@ Cần đảm bảo phần mềm thoát hoàn toàn vào mới sẽ thực thi l�
     <string name="settings_appearance_font_summary">Cấu hình phông chữ tùy chỉnh</string>
     <string name="settings_appearance_theme">Cài đặt主题</string>
     <string name="settings_appearance_theme_summary">Cửa hàng theme, lưu, nhập và đặt lại</string>
+
+    <string name="settings_nav_custom_icons">Biểu tượng điều hướng tùy chỉnh</string>
+    <string name="settings_nav_custom_icons_summary">Thay thế biểu tượng thanh dưới bằng hình ảnh tùy chỉnh</string>
+    <string name="nav_icon_home">Biểu tượng trang chủ</string>
+    <string name="nav_icon_kpm">Biểu tượng KPM</string>
+    <string name="nav_icon_superuser">Biểu tượng SuperUser</string>
+    <string name="nav_icon_apm">Biểu tượng mô-đun hệ thống</string>
+    <string name="nav_icon_settings">Biểu tượng cài đặt</string>
+    <string name="nav_icon_select_image">Chọn hình ảnh</string>
+    <string name="nav_icon_clear">Đặt lại mặc định</string>
+    <string name="nav_icon_custom_selected">Tùy chỉnh</string>
+    <string name="nav_icon_default">Mặc định</string>
+    <string name="nav_icon_cleared">Đã đặt lại biểu tượng</string>
+    <string name="nav_icon_set">Đã cập nhật biểu tượng</string>
+
+    <string name="settings_theme_mode">Cấu hình chế độ</string>
+    <string name="settings_theme_mode_summary">Chuyển đổi giữa chế độ cửa hàng tích hợp và chế độ tương thích trình duyệt</string>
+    <string name="theme_mode_builtin">Chế độ tích hợp</string>
+    <string name="theme_mode_builtin_desc">Sử dụng cửa hàng theme tích hợp để duyệt, tải xuống và áp dụng theme</string>
+    <string name="theme_mode_compat">Chế độ tương thích</string>
+    <string name="theme_mode_compat_desc">Sử dụng trình duyệt để tải xuống theme trực tiếp (dành cho thiết bị gặp sự cố nhập)</string>
+    <string name="theme_mode_onboarding_title">Chọn chế độ theme</string>
+    <string name="theme_mode_onboarding_msg">Bạn muốn duyệt và cài đặt theme như thế nào? Bạn có thể thay đổi sau trong cài đặt.</string>
+    <string name="theme_mode_builtin_label">Cửa hàng tích hợp</string>
+    <string name="theme_mode_compat_label">Chế độ trình duyệt</string>
+    <string name="theme_mode_switched">Đã chuyển chế độ theme sang %s</string>
+    <string name="theme_mode_current">Hiện tại: %s</string>
+    <string name="theme_mode_switch_title">Chuyển chế độ theme</string>
+    <string name="theme_mode_switch_msg">Thay đổi chế độ sẽ ảnh hưởng đến cách bạn duyệt và cài đặt theme. Tiếp tục?</string>
     <string name="settings_appearance_banner">Cài đặt banner</string>
     <string name="settings_appearance_banner_summary">Cấu hình banner module</string>
     <string name="settings_appearance_layout">Cài đặt layout</string>

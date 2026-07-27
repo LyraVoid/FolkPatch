@@ -771,6 +771,35 @@ Komutların çalışması için uygulamanın tamamen kapatılıp yeniden açıld
     <string name="settings_appearance_font_summary">Özel yazı tipi yapılandırması</string>
     <string name="settings_appearance_theme">Tema Ayarları</string>
     <string name="settings_appearance_theme_summary">Tema mağazası, kaydetme, içe aktarma ve sıfırlama</string>
+
+    <string name="settings_nav_custom_icons">Özel Navigasyon Simgeleri</string>
+    <string name="settings_nav_custom_icons_summary">Alt çubuk simgelerini özel görüntülerle değiştirin</string>
+    <string name="nav_icon_home">Ana Sayfa Simgesi</string>
+    <string name="nav_icon_kpm">KPM Simgesi</string>
+    <string name="nav_icon_superuser">SuperUser Simgesi</string>
+    <string name="nav_icon_apm">Sistem Modülü Simgesi</string>
+    <string name="nav_icon_settings">Ayarlar Simgesi</string>
+    <string name="nav_icon_select_image">Görüntü Seç</string>
+    <string name="nav_icon_clear">Varsayılana Sıfırla</string>
+    <string name="nav_icon_custom_selected">Özel</string>
+    <string name="nav_icon_default">Varsayılan</string>
+    <string name="nav_icon_cleared">Simge varsayılana sıfırlandı</string>
+    <string name="nav_icon_set">Simge güncellendi</string>
+
+    <string name="settings_theme_mode">Mod Yapılandırması</string>
+    <string name="settings_theme_mode_summary">Yerleşik mağaza ile tarayıcı uyumluluk modu arasında geçiş yapın</string>
+    <string name="theme_mode_builtin">Yerleşik Mod</string>
+    <string name="theme_mode_builtin_desc">Temalara göz atmak, indirmek ve uygulamak için yerleşik tema mağazasını kullanın</string>
+    <string name="theme_mode_compat">Uyumluluk Modu</string>
+    <string name="theme_mode_compat_desc">Temaları doğrudan tarayıcıda indirin (içe aktarma sorunu olan cihazlar için)</string>
+    <string name="theme_mode_onboarding_title">Tema Modu Seç</string>
+    <string name="theme_mode_onboarding_msg">Temalara nasıl göz atmak ve yüklemek istersiniz? Bunu daha sonra ayarlardan değiştirebilirsiniz.</string>
+    <string name="theme_mode_builtin_label">Yerleşik Mağaza</string>
+    <string name="theme_mode_compat_label">Tarayıcı Modu</string>
+    <string name="theme_mode_switched">Tema modu %s olarak değiştirildi</string>
+    <string name="theme_mode_current">Geçerli: %s</string>
+    <string name="theme_mode_switch_title">Tema Modunu Değiştir</string>
+    <string name="theme_mode_switch_msg">Modu değiştirmek, temalara göz atma ve yükleme şeklinizi etkileyecektir. Devam etmek istiyor musunuz?</string>
     <string name="settings_appearance_banner">Banner Ayarları</string>
     <string name="settings_appearance_banner_summary">Modül banner yapılandırması</string>
     <string name="settings_appearance_layout">Düzen Ayarları</string>

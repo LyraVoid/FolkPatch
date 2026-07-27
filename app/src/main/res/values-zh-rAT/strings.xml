@@ -763,6 +763,35 @@
     <string name="settings_appearance_font_summary">自定义圣域文字样式</string>
     <string name="settings_appearance_theme">圣殿主题设置</string>
     <string name="settings_appearance_theme_summary">主题商店、保存、导入和重置</string>
+
+    <string name="settings_nav_custom_icons">圣域导航圣印</string>
+    <string name="settings_nav_custom_icons_summary">用自定义圣印替换底部导航栏图标</string>
+    <string name="nav_icon_home">圣殿圣印</string>
+    <string name="nav_icon_kpm">KPM圣印</string>
+    <string name="nav_icon_superuser">超神圣印</string>
+    <string name="nav_icon_apm">系统模块圣印</string>
+    <string name="nav_icon_settings">设置圣印</string>
+    <string name="nav_icon_select_image">选择圣印</string>
+    <string name="nav_icon_clear">重置为默认</string>
+    <string name="nav_icon_custom_selected">自定义</string>
+    <string name="nav_icon_default">默认</string>
+    <string name="nav_icon_cleared">圣印已重置</string>
+    <string name="nav_icon_set">圣印已更新</string>
+
+    <string name="settings_theme_mode">圣域模式配置</string>
+    <string name="settings_theme_mode_summary">在圣域主题商店和青铜浏览器模式之间切换</string>
+    <string name="theme_mode_builtin">圣域模式</string>
+    <string name="theme_mode_builtin_desc">使用圣域主题商店浏览、下载和应用主题</string>
+    <string name="theme_mode_compat">青铜模式</string>
+    <string name="theme_mode_compat_desc">使用青铜浏览器直接下载主题（适用于导入有问题的圣器）</string>
+    <string name="theme_mode_onboarding_title">选择主题模式</string>
+    <string name="theme_mode_onboarding_msg">您希望以何种方式浏览和安装主题？可在圣域设置中随时更改。</string>
+    <string name="theme_mode_builtin_label">圣域商店</string>
+    <string name="theme_mode_compat_label">青铜浏览器</string>
+    <string name="theme_mode_switched">主题模式已切换为%s</string>
+    <string name="theme_mode_current">当前：%s</string>
+    <string name="theme_mode_switch_title">切换主题模式</string>
+    <string name="theme_mode_switch_msg">更改小宇宙模式将影响主题浏览和安装方式。是否继续？</string>
     <string name="settings_appearance_banner">圣光横幅设置</string>
     <string name="settings_appearance_banner_summary">模块横幅配置</string>
     <string name="settings_appearance_layout">圣所布局设置</string>

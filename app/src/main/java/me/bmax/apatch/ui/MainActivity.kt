@@ -31,6 +31,7 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
@@ -170,6 +171,9 @@ import me.bmax.apatch.util.ui.navBarLiquefiable
 import me.bmax.apatch.util.ui.rememberNavBarGlassLiquidState
 import me.bmax.apatch.util.ui.isRealTimeBlurAvailable
 import me.bmax.apatch.util.ui.showToast
+import me.bmax.apatch.util.BottomBarIconConfig
+import coil.compose.AsyncImage
+import coil.request.CachePolicy
 
 data class ScrollState(
     val isScrollingDown: MutableState<Boolean>,
@@ -1181,9 +1185,9 @@ private fun BottomBar(
                                     }
                                 ) {
                                     if (isSelected) {
-                                        Icon(destination.iconSelected, stringResource(destination.label))
+                                        NavBarIcon(destination, isSelected = true)
                                     } else {
-                                        Icon(destination.iconNotSelected, stringResource(destination.label))
+                                        NavBarIcon(destination, isSelected = false)
                                     }
                                 }
                             },
@@ -1394,9 +1398,9 @@ private fun BottomBarContent(
                                 }
                             }
                         ) {
-                            Icon(
-                                if (isSelected) destination.iconSelected else destination.iconNotSelected,
-                                stringResource(destination.label),
+                            NavBarIcon(
+                                destination = destination,
+                                isSelected = isSelected,
                                 tint = if (isSelected) {
                                     MaterialTheme.colorScheme.primary
                                 } else {
@@ -1530,9 +1534,9 @@ private fun NavigationRailBar(navController: NavHostController) {
                                 }
                             ) {
                                 if (isSelected) {
-                                    Icon(destination.iconSelected, stringResource(destination.label))
+                                    NavBarIcon(destination, isSelected = true)
                                 } else {
-                                    Icon(destination.iconNotSelected, stringResource(destination.label))
+                                    NavBarIcon(destination, isSelected = false)
                                 }
                             }
                         },
@@ -1712,5 +1716,36 @@ private fun createNavTransitions(
                 fadeOut(animationSpec = tween(340))
             }
         }
+    }
+}
+
+/**
+ * Renders a nav bar icon — uses custom image when set, otherwise falls back to the default Material icon.
+ */
+@Composable
+private fun NavBarIcon(
+    destination: BottomBarDestination,
+    isSelected: Boolean,
+    tint: Color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+    modifier: Modifier = Modifier,
+) {
+    val destinationName = destination.name
+    val customUri = BottomBarIconConfig.getCustomIconUri(destinationName)
+    val isCustomEnabled = BottomBarIconConfig.isEnabled
+
+    if (isCustomEnabled && customUri != null) {
+        AsyncImage(
+            model = customUri,
+            contentDescription = stringResource(destination.label),
+            modifier = modifier.size(24.dp),
+            contentScale = androidx.compose.ui.layout.ContentScale.Fit,
+        )
+    } else {
+        Icon(
+            imageVector = if (isSelected) destination.iconSelected else destination.iconNotSelected,
+            contentDescription = stringResource(destination.label),
+            tint = tint,
+            modifier = modifier,
+        )
     }
 }

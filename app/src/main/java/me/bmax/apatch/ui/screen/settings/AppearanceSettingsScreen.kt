@@ -19,12 +19,16 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.core.content.edit
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -46,6 +50,10 @@ fun AppearanceSettingsScreen(navigator: DestinationsNavigator, highlightKey: Str
     val snackBarHost = LocalSnackbarHost.current
     val flat = BackgroundConfig.isCustomBackgroundEnabled || BackgroundConfig.settingsBackgroundUri != null
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+    val prefs = APApplication.sharedPreferences
+
+    val themeModeKey = "theme_mode"
+    var themeMode by remember { mutableStateOf(prefs.getString(themeModeKey, null)) }
 
     Scaffold(
         topBar = {
@@ -75,6 +83,10 @@ fun AppearanceSettingsScreen(navigator: DestinationsNavigator, highlightKey: Str
                     onNavigateToApiMarketplace = { navigator.navigate(ApiMarketplaceScreenDestination) },
                     flat = flat,
                     highlightKey = highlightKey,
+                    themeStoreMode = themeMode,
+                    onThemeStoreModeChanged = { newMode ->
+                        themeMode = newMode
+                    },
                 )
             }
             item { Spacer(Modifier.height(8.dp)) }

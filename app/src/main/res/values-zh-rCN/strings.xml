@@ -764,6 +764,35 @@
     <string name="settings_appearance_font_summary">自定义字体配置</string>
     <string name="settings_appearance_theme">主题设置</string>
     <string name="settings_appearance_theme_summary">主题商店、保存、导入和重置</string>
+
+    <string name="settings_nav_custom_icons">自定义导航图标</string>
+    <string name="settings_nav_custom_icons_summary">用自定义图片替换底部导航栏图标</string>
+    <string name="nav_icon_home">首页图标</string>
+    <string name="nav_icon_kpm">KPM图标</string>
+    <string name="nav_icon_superuser">超级用户图标</string>
+    <string name="nav_icon_apm">系统模块图标</string>
+    <string name="nav_icon_settings">设置图标</string>
+    <string name="nav_icon_select_image">选择图片</string>
+    <string name="nav_icon_clear">重置为默认</string>
+    <string name="nav_icon_custom_selected">自定义</string>
+    <string name="nav_icon_default">默认</string>
+    <string name="nav_icon_cleared">图标已重置为默认</string>
+    <string name="nav_icon_set">图标已更新</string>
+
+    <string name="settings_theme_mode">模式配置</string>
+    <string name="settings_theme_mode_summary">在内置主题商店和浏览器兼容模式之间切换</string>
+    <string name="theme_mode_builtin">内置模式</string>
+    <string name="theme_mode_builtin_desc">使用内置主题商店浏览、下载和应用主题</string>
+    <string name="theme_mode_compat">兼容模式</string>
+    <string name="theme_mode_compat_desc">使用浏览器直接下载主题（适用于导入有问题的设备）</string>
+    <string name="theme_mode_onboarding_title">选择主题模式</string>
+    <string name="theme_mode_onboarding_msg">您希望如何浏览和安装主题？您可以在设置中随时更改。</string>
+    <string name="theme_mode_builtin_label">内置商店</string>
+    <string name="theme_mode_compat_label">浏览器模式</string>
+    <string name="theme_mode_switched">主题模式已切换为%s</string>
+    <string name="theme_mode_current">当前：%s</string>
+    <string name="theme_mode_switch_title">切换主题模式</string>
+    <string name="theme_mode_switch_msg">更改模式将影响您浏览和安装主题的方式。是否继续？</string>
     <string name="settings_appearance_banner">横幅设置</string>
     <string name="settings_appearance_banner_summary">模块横幅配置</string>
     <string name="settings_appearance_layout">布局设置</string>
