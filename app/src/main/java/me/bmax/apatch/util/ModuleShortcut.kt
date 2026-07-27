@@ -180,8 +180,8 @@ object ModuleShortcut {
         val manufacturer = Build.MANUFACTURER.lowercase(Locale.ROOT)
         val initialState = getShortcutPermissionState(context)
         Log.d(TAG, "$logPrefix: initial permission state=$initialState")
-        if (manufacturer.contains("xiaomi") && initialState != ShortcutPermissionState.Granted) {
-            Log.d(TAG, "$logPrefix: device is Xiaomi, trying to grant via root shell")
+        if (manufacturer.contains("xiaomi") && (initialState == ShortcutPermissionState.Denied || initialState == ShortcutPermissionState.Ask)) {
+            Log.d(TAG, "$logPrefix: device is Xiaomi (MIUI/HyperOS), trying to grant via root shell")
             val rootSuccess = tryGrantMiuiShortcutPermissionByRoot(context)
             Log.d(TAG, "$logPrefix: root grant attempt success=$rootSuccess")
             val afterState = getShortcutPermissionState(context)
