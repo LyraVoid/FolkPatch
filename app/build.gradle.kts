@@ -399,7 +399,6 @@ dependencies {
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.material3)
 
-    implementation("androidx.compose.material3:material3-android:1.5.0-alpha17")
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.runtime.livedata)
@@ -410,7 +409,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
-    implementation("androidx.lifecycle:lifecycle-process:2.8.7")
+    implementation(libs.androidx.lifecycle.process)
 
     implementation(libs.compose.destinations.core)
     ksp(libs.compose.destinations.ksp)
