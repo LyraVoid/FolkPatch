@@ -121,6 +121,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
+import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
@@ -284,7 +285,7 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
 
     val moduleListState = rememberLazyListState()
 
-    var searchQuery by remember { mutableStateOf("") }
+    var searchQuery by rememberSaveable { mutableStateOf("") }
     val filteredModuleList = remember(viewModel.moduleList, searchQuery) {
         if (searchQuery.isEmpty()) {
             viewModel.moduleList
@@ -397,7 +398,7 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
                 ) {
                     // 批量刷入 (Bulk Install)
                     FloatingActionButtonMenuItem(
-                        onClick = {
+                        onClick = dropUnlessResumed {
                             fabExpanded = false
                             navigator.navigate(ApmBulkInstallScreenDestination())
                         },

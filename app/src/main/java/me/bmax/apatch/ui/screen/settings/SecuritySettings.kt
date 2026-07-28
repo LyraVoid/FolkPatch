@@ -4,7 +4,10 @@ import androidx.biometric.BiometricPrompt
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Fingerprint
 import androidx.compose.material.icons.filled.Shield
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -27,6 +30,7 @@ fun SecuritySettingsContent(
     val activity = context as? FragmentActivity
 
     var biometricLogin by remember { mutableStateOf(prefs.getBoolean("biometric_login", false)) }
+    var showEnableBiometricDialog by remember { mutableStateOf(false) }
 
     val biometricManager = androidx.biometric.BiometricManager.from(context)
     val canAuthenticate = biometricManager.canAuthenticate(
@@ -71,8 +75,7 @@ fun SecuritySettingsContent(
                             prefs.edit().putBoolean("biometric_login", false).apply()
                         }
                     } else {
-                        biometricLogin = true
-                        prefs.edit().putBoolean("biometric_login", true).apply()
+                        showEnableBiometricDialog = true
                     }
                 }
             )
@@ -92,5 +95,31 @@ fun SecuritySettingsContent(
                 }
             )
         }
+    }
+
+    if (showEnableBiometricDialog) {
+        AlertDialog(
+            onDismissRequest = { showEnableBiometricDialog = false },
+            title = { Text(stringResource(id = R.string.settings_biometric_login)) },
+            text = { Text(stringResource(id = R.string.msg_enable_biometric)) },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        biometricLogin = true
+                        prefs.edit().putBoolean("biometric_login", true).apply()
+                        showEnableBiometricDialog = false
+                    }
+                ) {
+                    Text(stringResource(id = android.R.string.ok))
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = { showEnableBiometricDialog = false }
+                ) {
+                    Text(stringResource(id = android.R.string.cancel))
+                }
+            }
+        )
     }
 }

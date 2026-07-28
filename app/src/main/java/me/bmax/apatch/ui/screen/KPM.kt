@@ -64,6 +64,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.produceState
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -251,7 +253,7 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
 
     val kpModuleListState = rememberLazyListState()
 
-    var searchQuery by remember { mutableStateOf("") }
+    var searchQuery by rememberSaveable { mutableStateOf("") }
     val filteredModuleList = remember(viewModel.moduleList, searchQuery) {
         if (searchQuery.isEmpty()) {
             viewModel.moduleList
@@ -362,7 +364,7 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
                 ) {
                     // 自动配置 (Auto Config) — top
                     FloatingActionButtonMenuItem(
-                        onClick = {
+                        onClick = dropUnlessResumed {
                             expanded = false
                             navigator.navigate(KpmAutoLoadConfigScreenDestination)
                         },
@@ -1021,9 +1023,7 @@ private fun TopBar(
                         )
                     }
                     // 下载按钮
-                    IconButton(onClick = {
-                        navigator.navigate(OnlineKPMScreenDestination)
-                    }) {
+                    IconButton(onClick = dropUnlessResumed { navigator.navigate(OnlineKPMScreenDestination) }) {
                         Icon(
                             imageVector = Icons.Filled.Download,
                             contentDescription = "Online KPM"

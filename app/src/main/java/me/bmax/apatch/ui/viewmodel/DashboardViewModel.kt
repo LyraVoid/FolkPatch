@@ -15,6 +15,7 @@ import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
@@ -76,8 +77,8 @@ class DashboardViewModel : ViewModel() {
 
     companion object {
         private const val TAG = "DashboardViewModel"
-        private const val CPU_POLL_INTERVAL_MS = 3_000L
-        private const val GPU_POLL_INTERVAL_MS = 1_000L
+        private const val CPU_TEMP_POLL_INTERVAL_MS = 3_000L
+        private const val GPU_POLL_INTERVAL_MS = 2_000L
         private const val MEMORY_POLL_INTERVAL_MS = 5_000L
         private const val STORAGE_BATTERY_POLL_INTERVAL_MS = 10_000L
         private const val TIME_SERIES_MAX_SIZE = 30
@@ -89,11 +90,10 @@ class DashboardViewModel : ViewModel() {
     private val _timeSeriesData = MutableStateFlow(TimeSeriesData())
     val timeSeriesData: StateFlow<TimeSeriesData> = _timeSeriesData.asStateFlow()
 
-    private var cpuGpuJob: Job? = null
-    private var gpuOnlyJob: Job? = null
+    private var cpuAndTempJob: Job? = null
+    private var gpuJob: Job? = null
     private var memoryJob: Job? = null
     private var storageBatteryJob: Job? = null
-    private var cpuTempJob: Job? = null
     private var storagePartitionsJob: Job? = null
 
     private val liveDataObservers = mutableListOf<Observer<*>>()
@@ -190,83 +190,64 @@ class DashboardViewModel : ViewModel() {
     }
 
     fun startPeriodicPolling() {
-        cpuGpuJob = viewModelScope.launch(Dispatchers.IO) {
+        cpuAndTempJob = viewModelScope.launch(Dispatchers.IO) {
             while (true) {
                 kotlin.runCatching {
                     val cpu = HardwareMonitor.getCpuUsage()
                     val cpuFreqs = HardwareMonitor.getCpuFrequencies()
+                    val temp = HardwareMonitor.getCpuTemperature()
 
                     withContext(Dispatchers.Main) {
-                        val current = _dashboardUiState.value
-                        _dashboardUiState.value = current.copy(
-                            systemMonitor = current.systemMonitor.copy(
-                                cpuUsage = cpu,
-                                cpuFrequencies = cpuFreqs
+                        _dashboardUiState.update { current ->
+                            current.copy(
+                                systemMonitor = current.systemMonitor.copy(
+                                    cpuUsage = cpu,
+                                    cpuFrequencies = cpuFreqs,
+                                    cpuTemp = temp
+                                )
                             )
-                        )
+                        }
 
-                        val ts = _timeSeriesData.value
-                        _timeSeriesData.value = ts.copy(
-                            cpuHistory = (ts.cpuHistory + cpu.toFloat()).takeLast(TIME_SERIES_MAX_SIZE)
-                        )
+                        _timeSeriesData.update { ts ->
+                            ts.copy(
+                                cpuHistory = (ts.cpuHistory + cpu.toFloat()).takeLast(TIME_SERIES_MAX_SIZE),
+                                cpuTempHistory = (ts.cpuTempHistory + temp).takeLast(TIME_SERIES_MAX_SIZE)
+                            )
+                        }
                     }
                 }.onFailure { e ->
-                    Log.e(TAG, "Error polling CPU", e)
+                    Log.e(TAG, "Error polling CPU and temperature", e)
                 }
 
-                kotlinx.coroutines.delay(CPU_POLL_INTERVAL_MS)
+                kotlinx.coroutines.delay(CPU_TEMP_POLL_INTERVAL_MS)
             }
         }
 
-        gpuOnlyJob = viewModelScope.launch(Dispatchers.IO) {
+        gpuJob = viewModelScope.launch(Dispatchers.IO) {
             while (true) {
                 kotlin.runCatching {
                     val gpu = HardwareMonitor.getGpuUsage()
 
                     withContext(Dispatchers.Main) {
-                        val current = _dashboardUiState.value
-                        _dashboardUiState.value = current.copy(
-                            systemMonitor = current.systemMonitor.copy(
-                                gpuUsage = gpu
+                        _dashboardUiState.update { current ->
+                            current.copy(
+                                systemMonitor = current.systemMonitor.copy(
+                                    gpuUsage = gpu
+                                )
                             )
-                        )
+                        }
 
-                        val ts = _timeSeriesData.value
-                        _timeSeriesData.value = ts.copy(
-                            gpuHistory = (ts.gpuHistory + gpu.toFloat()).takeLast(TIME_SERIES_MAX_SIZE)
-                        )
+                        _timeSeriesData.update { ts ->
+                            ts.copy(
+                                gpuHistory = (ts.gpuHistory + gpu.toFloat()).takeLast(TIME_SERIES_MAX_SIZE)
+                            )
+                        }
                     }
                 }.onFailure { e ->
                     Log.e(TAG, "Error polling GPU", e)
                 }
 
                 kotlinx.coroutines.delay(GPU_POLL_INTERVAL_MS)
-            }
-        }
-
-        cpuTempJob = viewModelScope.launch(Dispatchers.IO) {
-            kotlinx.coroutines.delay(1_000L)
-
-            while (true) {
-                kotlin.runCatching {
-                    val temp = HardwareMonitor.getCpuTemperature()
-
-                    withContext(Dispatchers.Main) {
-                        val current = _dashboardUiState.value
-                        _dashboardUiState.value = current.copy(
-                            systemMonitor = current.systemMonitor.copy(cpuTemp = temp)
-                        )
-
-                        val ts = _timeSeriesData.value
-                        _timeSeriesData.value = ts.copy(
-                            cpuTempHistory = (ts.cpuTempHistory + temp).takeLast(TIME_SERIES_MAX_SIZE)
-                        )
-                    }
-                }.onFailure { e ->
-                    Log.e(TAG, "Error polling CPU temp", e)
-                }
-
-                kotlinx.coroutines.delay(MEMORY_POLL_INTERVAL_MS)
             }
         }
 
@@ -278,20 +259,22 @@ class DashboardViewModel : ViewModel() {
                     val memInfo = HardwareMonitor.getMemoryInfo()
 
                     withContext(Dispatchers.Main) {
-                        val current = _dashboardUiState.value
-                        _dashboardUiState.value = current.copy(
-                            systemMonitor = current.systemMonitor.copy(
-                                memoryInfo = memInfo
+                        _dashboardUiState.update { current ->
+                            current.copy(
+                                systemMonitor = current.systemMonitor.copy(
+                                    memoryInfo = memInfo
+                                )
                             )
-                        )
+                        }
 
                         val ramPercent = if (memInfo.ramTotal > 0) {
                             (memInfo.ramUsed.toFloat() / memInfo.ramTotal.toFloat() * 100f)
                         } else 0f
-                        val ts = _timeSeriesData.value
-                        _timeSeriesData.value = ts.copy(
-                            ramHistory = (ts.ramHistory + ramPercent).takeLast(TIME_SERIES_MAX_SIZE)
-                        )
+                        _timeSeriesData.update { ts ->
+                            ts.copy(
+                                ramHistory = (ts.ramHistory + ramPercent).takeLast(TIME_SERIES_MAX_SIZE)
+                            )
+                        }
                     }
                 }.onFailure { e ->
                     Log.e(TAG, "Error polling Memory", e)
@@ -314,17 +297,18 @@ class DashboardViewModel : ViewModel() {
                     val networkTx = TrafficStats.getTotalTxBytes()
 
                     withContext(Dispatchers.Main) {
-                        val current = _dashboardUiState.value
-                        _dashboardUiState.value = current.copy(
-                            systemMonitor = current.systemMonitor.copy(
-                                storageUsedPercent = storagePercent,
-                                batteryLevel = batteryLevel,
-                                batteryTemp = batteryTemp,
-                                batteryCharging = batteryCharging,
-                                networkRxBytes = networkRx,
-                                networkTxBytes = networkTx
+                        _dashboardUiState.update { current ->
+                            current.copy(
+                                systemMonitor = current.systemMonitor.copy(
+                                    storageUsedPercent = storagePercent,
+                                    batteryLevel = batteryLevel,
+                                    batteryTemp = batteryTemp,
+                                    batteryCharging = batteryCharging,
+                                    networkRxBytes = networkRx,
+                                    networkTxBytes = networkTx
+                                )
                             )
-                        )
+                        }
                     }
                 }.onFailure { e ->
                     Log.e(TAG, "Error polling Storage/Battery/Network", e)
@@ -342,12 +326,13 @@ class DashboardViewModel : ViewModel() {
                     val partitions = HardwareMonitor.getStoragePartitions()
 
                     withContext(Dispatchers.Main) {
-                        val current = _dashboardUiState.value
-                        _dashboardUiState.value = current.copy(
-                            systemMonitor = current.systemMonitor.copy(
-                                storagePartitions = partitions
+                        _dashboardUiState.update { current ->
+                            current.copy(
+                                systemMonitor = current.systemMonitor.copy(
+                                    storagePartitions = partitions
+                                )
                             )
-                        )
+                        }
                     }
                 }.onFailure { e ->
                     Log.e(TAG, "Error polling Storage Partitions", e)
@@ -389,17 +374,15 @@ class DashboardViewModel : ViewModel() {
     }
 
     fun stopPeriodicPolling() {
-        cpuGpuJob?.cancel()
-        gpuOnlyJob?.cancel()
+        cpuAndTempJob?.cancel()
+        gpuJob?.cancel()
         memoryJob?.cancel()
         storageBatteryJob?.cancel()
-        cpuTempJob?.cancel()
         storagePartitionsJob?.cancel()
-        cpuGpuJob = null
-        gpuOnlyJob = null
+        cpuAndTempJob = null
+        gpuJob = null
         memoryJob = null
         storageBatteryJob = null
-        cpuTempJob = null
         storagePartitionsJob = null
         Log.d(TAG, "Periodic polling stopped")
     }

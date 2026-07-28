@@ -346,6 +346,17 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
         super.onCreate()
         apApp = this
         sharedPreferences = getSharedPreferences(SP_NAME, Context.MODE_PRIVATE)
+
+        // Load all configs synchronously before superKey assignment
+        // (superKey setter triggers a thread that reads config-dependent state)
+        MusicConfig.load(this)
+        me.bmax.apatch.ui.theme.SoundEffectConfig.load(this)
+        me.bmax.apatch.ui.theme.VibrationConfig.load(this)
+        me.bmax.apatch.ui.theme.BackgroundConfig.load(this)
+        me.bmax.apatch.ui.theme.FontConfig.load(this)
+        me.bmax.apatch.util.ui.FloatingBarConfig.load(this)
+        MusicManager.init(this)
+
         superKey = "su"
         val processName = getProcessNameCompat()
         if (processName.endsWith(":root") || processName.endsWith(":webui")) {
@@ -359,8 +370,10 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
         if (!isArm64) {
             Log.e(TAG, "Unsupported architecture!")
             showToast(applicationContext, "Unsupported architecture!")
-            Thread.sleep(5000)
-            exitProcess(0)
+            android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
+                exitProcess(0)
+            }, 5000)
+            return
         }
 
         if (!BuildConfig.DEBUG && !verifyAppSignature("qeultwLrVftfSxpnKnEzoWp7yuqUnN5DyBLvJsd96BI=")) {
@@ -406,14 +419,6 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
             "https://folk.mysqil.com/api/version"
         )
 
-        MusicConfig.load(this)
-        me.bmax.apatch.ui.theme.SoundEffectConfig.load(this)
-        me.bmax.apatch.ui.theme.VibrationConfig.load(this)
-        me.bmax.apatch.ui.theme.BackgroundConfig.load(this)
-        me.bmax.apatch.ui.theme.FontConfig.load(this)
-        me.bmax.apatch.util.ui.FloatingBarConfig.load(this)
-        MusicManager.init(this)
-        
         Log.d(TAG, "APApplication onCreate completed")
 
         sharedPreferences.edit()

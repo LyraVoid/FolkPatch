@@ -451,8 +451,8 @@ fun installModule(
             val cmd = "${APApplication.APD_PATH} module install ${file.absolutePath}"
             // Add timeout to prevent hanging installations
             result = try {
-                runBlocking {
-                    withTimeout(300000L) { // 5 minute timeout
+                kotlinx.coroutines.runBlocking(kotlinx.coroutines.Dispatchers.IO) {
+                    kotlinx.coroutines.withTimeout(300000L) { // 5 minute timeout
                         shell.newJob()
                             .add(cmd)
                             .to(stdoutCallback, stderrCallback)

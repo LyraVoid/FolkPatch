@@ -193,6 +193,8 @@
     <string name="settings_selinux_current_mode">Current: %s</string>
     <string name="settings_selinux_mode_enforcing_summary">SELinux fully enforces access rules</string>
     <string name="settings_selinux_mode_permissive_summary">SELinux only logs violations, does not deny</string>
+    <string name="msg_selinux_permissive_warning">Switching to Permissive mode will disable SELinux enforcement. This reduces security as access violations will only be logged, not denied. Continue?</string>
+    <string name="msg_selinux_enforcing_confirm">Switch to Enforcing mode? SELinux will fully enforce all access rules and deny unauthorized access attempts.</string>
 
     <string name="home_device_info">Device</string>
     <string name="home_system_version">System version</string>
@@ -796,6 +798,7 @@ Please ensure the app is completely closed and reopened for the commands to exec
     <!-- Biometric Strings -->
     <string name="action_biometric">Biometric Authentication</string>
     <string name="msg_biometric">Please verify your biometric identity</string>
+    <string name="msg_enable_biometric">Enable biometric authentication to require verification when opening the app?</string>
     <string name="settings_biometric_login">Biometric Authentication</string>
     <string name="settings_biometric_login_summary">Require biometric authentication when opening the app</string>
     <string name="settings_strong_biometric">Strong Biometric Authentication</string>
