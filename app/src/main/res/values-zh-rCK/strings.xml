@@ -1111,4 +1111,26 @@
     <string name="settings_search_hint">检索菜谱…</string>
     <string name="settings_search_empty_hint">输入以检索所有菜谱配方…</string>
     <string name="settings_no_results">莫得这个菜谱</string>
+
+    <!-- 色彩生成 -->
+    <string name="color_generation_classic">经典配方</string>
+    <string name="color_generation_custom">自选配方</string>
+    <string name="color_generation_label">色彩火候</string>
+
+    <!-- 色彩标准 -->
+    <string name="color_standard_md3_2021">MD3 2021</string>
+    <string name="color_standard_m3e_2025">M3e 2025</string>
+    <string name="color_standard_label">色彩菜谱标准</string>
+
+    <!-- 色彩风格 -->
+    <string name="color_style_label">色彩风味</string>
+    <string name="color_style_tonal_spot">火候</string>
+    <string name="color_style_vibrant">爆炒</string>
+    <string name="color_style_content">食材</string>
+    <string name="color_style_expressive">鲜香</string>
+    <string name="color_style_rainbow">五彩拼盘</string>
+    <string name="color_style_fruit_salad">水果拼盘</string>
+    <string name="color_style_monochrome">单味</string>
+    <string name="color_style_neutral">原味</string>
+    <string name="color_style_fidelity">本味</string>
 </resources>

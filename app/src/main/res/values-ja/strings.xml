@@ -524,7 +524,13 @@
     <string name="kpm_autoload_enabled_summary">端末の起動時に KP モジュールを自動で読み込みます。</string>
     <string name="kpm_autoload_json_config">JSON を構成</string>
     <string name="kpm_autoload_json_label">JSON を構成します</string>
-    <string name="kpm_autoload_json_placeholder">{\n  \"enabled\": true,\n  \"kpmPaths\": [\n    \"/path/to/module1.kpm\",\n    \"/path/to/module2.kpm\"\n  ]\n}</string>
+    <string name="kpm_autoload_json_placeholder">{
+  \"enabled\": true,
+  \"kpmPaths\": [
+    \"/path/to/module1.kpm\",
+    \"/path/to/module2.kpm\"
+  ]
+}</string>
     <string name="kpm_autoload_json_error">無効な JSON 形式</string>
     <string name="kpm_autoload_json_helper">KPM ファイルパスの配列を含む有効な JSON ファイルを入力してください</string>
     <string name="kpm_autoload_save">構成を保存</string>
@@ -587,7 +593,11 @@
     <string name="kpm_autoload_file_not_found">ファイルがありません</string>
     <string name="kpm_autoload_select_kpm_file">KPM ファイルを選択</string>
     <string name="kpm_autoload_first_time_title">KPM の自動読み込みについて</string>
-    <string name="kpm_autoload_first_time_message">この機能を使用すると、設定済みのすべての KPM を起動時に自動で一時的に読み込めます。この方法は、カーネルに直接埋め込むよりも便利です。\n\n例えば、パーティションの変更を禁止する KPM は、埋め込みによって起動に失敗する可能性があるため、一時的にしか使用できません。または、boot パーティションを変更したくない場合は、この設定を使用してモジュールを迅速に読み込めます。\n\nコマンドを実行するには、アプリを完全に閉じて再起動してください。起動時で通常に読み込まれます。マネージャーの画面が一時的に暗転するのは正常です！これは純粋なバックグラウンドでの読み込み方式を使用しているため、手動で下にスワイプして更新してモジュールが正しく読み込まれているか確認してください！</string>
+    <string name="kpm_autoload_first_time_message">この機能を使用すると、設定済みのすべての KPM を起動時に自動で一時的に読み込めます。この方法は、カーネルに直接埋め込むよりも便利です。
+
+例えば、パーティションの変更を禁止する KPM は、埋め込みによって起動に失敗する可能性があるため、一時的にしか使用できません。または、boot パーティションを変更したくない場合は、この設定を使用してモジュールを迅速に読み込めます。
+
+コマンドを実行するには、アプリを完全に閉じて再起動してください。起動時で通常に読み込まれます。マネージャーの画面が一時的に暗転するのは正常です！これは純粋なバックグラウンドでの読み込み方式を使用しているため、手動で下にスワイプして更新してモジュールが正しく読み込まれているか確認してください！</string>
     <string name="kpm_autoload_first_time_confirm">理解しました</string>
     <string name="kpm_autoload_do_not_show_again">再度表示しない</string>
     <!-- Hide Settings Strings -->
@@ -1039,4 +1049,26 @@
     <string name="settings_search_hint">設定を検索…</string>
     <string name="settings_search_empty_hint">すべての設定を検索するには入力してください…</string>
     <string name="settings_no_results">結果が見つかりません</string>
+
+    <!-- Color Generation -->
+    <string name="color_generation_classic">クラシック</string>
+    <string name="color_generation_custom">カスタム</string>
+    <string name="color_generation_label">カラーモード</string>
+
+    <!-- Color Standard -->
+    <string name="color_standard_md3_2021">MD3 2021</string>
+    <string name="color_standard_m3e_2025">M3e 2025</string>
+    <string name="color_standard_label">カラースタンダード</string>
+
+    <!-- Color Style -->
+    <string name="color_style_label">カラースタイル</string>
+    <string name="color_style_tonal_spot">トナルスポット</string>
+    <string name="color_style_vibrant">ビビッド</string>
+    <string name="color_style_content">コンテンツ</string>
+    <string name="color_style_expressive">エクスプレッシブ</string>
+    <string name="color_style_rainbow">レインボー</string>
+    <string name="color_style_fruit_salad">フルーツサラダ</string>
+    <string name="color_style_monochrome">モノクローム</string>
+    <string name="color_style_neutral">ニュートラル</string>
+    <string name="color_style_fidelity">フィデリティ</string>
 </resources>

@@ -1173,4 +1173,26 @@ Please ensure the app is completely closed and reopened for the commands to exec
     <string name="settings_search_hint">Search settings…</string>
     <string name="settings_search_empty_hint">Type to search all settings…</string>
     <string name="settings_no_results">No results found</string>
+
+    <!-- Color Generation -->
+    <string name="color_generation_classic">Classic</string>
+    <string name="color_generation_custom">Custom</string>
+    <string name="color_generation_label">Color Mode</string>
+
+    <!-- Color Standard -->
+    <string name="color_standard_md3_2021">MD3 2021</string>
+    <string name="color_standard_m3e_2025">M3e 2025</string>
+    <string name="color_standard_label">Color Standard</string>
+
+    <!-- Color Style -->
+    <string name="color_style_label">Color Style</string>
+    <string name="color_style_tonal_spot">Tonal Spot</string>
+    <string name="color_style_vibrant">Vibrant</string>
+    <string name="color_style_content">Content</string>
+    <string name="color_style_expressive">Expressive</string>
+    <string name="color_style_rainbow">Rainbow</string>
+    <string name="color_style_fruit_salad">Fruit Salad</string>
+    <string name="color_style_monochrome">Monochrome</string>
+    <string name="color_style_neutral">Neutral</string>
+    <string name="color_style_fidelity">Fidelity</string>
 </resources>

@@ -1130,4 +1130,26 @@ Por ejemplo, los KPM que previenen la modificación de particiones solo pueden u
     <string name="settings_search_hint">Buscar ajustes…</string>
     <string name="settings_search_empty_hint">Escribe para buscar todos los ajustes…</string>
     <string name="settings_no_results">Sin resultados</string>
+
+    <!-- Color Generation -->
+    <string name="color_generation_classic">Clásico</string>
+    <string name="color_generation_custom">Personalizado</string>
+    <string name="color_generation_label">Modo de color</string>
+
+    <!-- Color Standard -->
+    <string name="color_standard_md3_2021">MD3 2021</string>
+    <string name="color_standard_m3e_2025">M3e 2025</string>
+    <string name="color_standard_label">Estándar de color</string>
+
+    <!-- Color Style -->
+    <string name="color_style_label">Estilo de color</string>
+    <string name="color_style_tonal_spot">Tono</string>
+    <string name="color_style_vibrant">Vibrante</string>
+    <string name="color_style_content">Contenido</string>
+    <string name="color_style_expressive">Expresivo</string>
+    <string name="color_style_rainbow">Arcoíris</string>
+    <string name="color_style_fruit_salad">Ensalada de frutas</string>
+    <string name="color_style_monochrome">Monocromo</string>
+    <string name="color_style_neutral">Neutro</string>
+    <string name="color_style_fidelity">Fidelidad</string>
 </resources>

@@ -1122,4 +1122,26 @@
     <string name="settings_search_hint">搜索设置…</string>
     <string name="settings_search_empty_hint">输入以搜索所有设置项…</string>
     <string name="settings_no_results">未找到结果</string>
+
+    <!-- 色彩生成 -->
+    <string name="color_generation_classic">经典</string>
+    <string name="color_generation_custom">自定义</string>
+    <string name="color_generation_label">色彩模式</string>
+
+    <!-- 色彩标准 -->
+    <string name="color_standard_md3_2021">MD3 2021</string>
+    <string name="color_standard_m3e_2025">M3e 2025</string>
+    <string name="color_standard_label">色彩标准</string>
+
+    <!-- 色彩风格 -->
+    <string name="color_style_label">色彩风格</string>
+    <string name="color_style_tonal_spot">色调</string>
+    <string name="color_style_vibrant">活力</string>
+    <string name="color_style_content">内容</string>
+    <string name="color_style_expressive">表现</string>
+    <string name="color_style_rainbow">彩虹</string>
+    <string name="color_style_fruit_salad">果盘</string>
+    <string name="color_style_monochrome">单色</string>
+    <string name="color_style_neutral">中性</string>
+    <string name="color_style_fidelity">保真</string>
 </resources>

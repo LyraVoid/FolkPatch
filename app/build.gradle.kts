@@ -440,5 +440,7 @@ dependencies {
 
     implementation(libs.liquid)
 
+    implementation(libs.materialKolor)
+
     compileOnly(libs.cxx)
 }

@@ -1132,4 +1132,26 @@ Komutların çalışması için uygulamanın tamamen kapatılıp yeniden açıld
     <string name="settings_search_hint">Ayar ara…</string>
     <string name="settings_search_empty_hint">Tüm ayarları aramak için yazın…</string>
     <string name="settings_no_results">Sonuç bulunamadı</string>
+
+    <!-- Color Generation -->
+    <string name="color_generation_classic">Klasik</string>
+    <string name="color_generation_custom">Özel</string>
+    <string name="color_generation_label">Renk Modu</string>
+
+    <!-- Color Standard -->
+    <string name="color_standard_md3_2021">MD3 2021</string>
+    <string name="color_standard_m3e_2025">M3e 2025</string>
+    <string name="color_standard_label">Renk Standardı</string>
+
+    <!-- Color Style -->
+    <string name="color_style_label">Renk Stili</string>
+    <string name="color_style_tonal_spot">Tonal Nokta</string>
+    <string name="color_style_vibrant">Canlı</string>
+    <string name="color_style_content">İçerik</string>
+    <string name="color_style_expressive">Anlatımcı</string>
+    <string name="color_style_rainbow">Gökkuşağı</string>
+    <string name="color_style_fruit_salad">Meyve Salatası</string>
+    <string name="color_style_monochrome">Tek Renk</string>
+    <string name="color_style_neutral">Nötr</string>
+    <string name="color_style_fidelity">Sadakat</string>
 </resources>

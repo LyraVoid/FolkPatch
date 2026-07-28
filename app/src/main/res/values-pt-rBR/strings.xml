@@ -1128,4 +1128,26 @@ Por favor, certifique-se de fechar completamente o app e reabri-lo para que os c
     <string name="settings_search_hint">Pesquisar configurações…</string>
     <string name="settings_search_empty_hint">Digite para pesquisar todas as configurações…</string>
     <string name="settings_no_results">Nenhum resultado</string>
+
+    <!-- Color Generation -->
+    <string name="color_generation_classic">Clássico</string>
+    <string name="color_generation_custom">Personalizado</string>
+    <string name="color_generation_label">Modo de cor</string>
+
+    <!-- Color Standard -->
+    <string name="color_standard_md3_2021">MD3 2021</string>
+    <string name="color_standard_m3e_2025">M3e 2025</string>
+    <string name="color_standard_label">Padrão de cor</string>
+
+    <!-- Color Style -->
+    <string name="color_style_label">Estilo de cor</string>
+    <string name="color_style_tonal_spot">Tonal</string>
+    <string name="color_style_vibrant">Vibrante</string>
+    <string name="color_style_content">Conteúdo</string>
+    <string name="color_style_expressive">Expressivo</string>
+    <string name="color_style_rainbow">Arco-íris</string>
+    <string name="color_style_fruit_salad">Salada de frutas</string>
+    <string name="color_style_monochrome">Monocromático</string>
+    <string name="color_style_neutral">Neutro</string>
+    <string name="color_style_fidelity">Fidelidade</string>
 </resources>

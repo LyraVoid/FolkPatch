@@ -1114,4 +1114,26 @@
     <string name="settings_search_hint">搜寻神谕指引…</string>
     <string name="settings_search_empty_hint">输入以搜寻所有天使法则…</string>
     <string name="settings_no_results">未寻得神谕</string>
+
+    <!-- 色彩生成 -->
+    <string name="color_generation_classic">经典</string>
+    <string name="color_generation_custom">自定义</string>
+    <string name="color_generation_label">色彩圣域</string>
+
+    <!-- 色彩标准 -->
+    <string name="color_standard_md3_2021">MD3 2021</string>
+    <string name="color_standard_m3e_2025">M3e 2025</string>
+    <string name="color_standard_label">色彩圣典</string>
+
+    <!-- 色彩风格 -->
+    <string name="color_style_label">色彩圣仪</string>
+    <string name="color_style_tonal_spot">圣光色调</string>
+    <string name="color_style_vibrant">圣辉</string>
+    <string name="color_style_content">圣蕴</string>
+    <string name="color_style_expressive">圣显</string>
+    <string name="color_style_rainbow">圣虹</string>
+    <string name="color_style_fruit_salad">圣果盘</string>
+    <string name="color_style_monochrome">归一</string>
+    <string name="color_style_neutral">中庸</string>
+    <string name="color_style_fidelity">返璞</string>
 </resources>

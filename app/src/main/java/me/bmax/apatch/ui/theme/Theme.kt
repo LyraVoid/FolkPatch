@@ -44,6 +44,7 @@ import com.ramcosta.composedestinations.generated.destinations.HomeScreenDestina
 import com.ramcosta.composedestinations.generated.destinations.KPModuleScreenDestination
 import com.ramcosta.composedestinations.generated.destinations.SuperUserScreenDestination
 import com.ramcosta.composedestinations.generated.destinations.APModuleScreenDestination
+import me.bmax.apatch.ui.component.themeColorOptions
 
 @Composable
 private fun SystemBarStyle(
@@ -124,6 +125,9 @@ fun APatchTheme(
     }
     var customColorScheme by remember { mutableStateOf(prefs.getString("custom_color", "indigo")) }
     var amoledTheme by remember { mutableStateOf(prefs.getBoolean("amoled_theme", false)) }
+    var colorGenerationMode by remember { mutableStateOf(prefs.getString("color_generation_mode", "classic")) }
+    var colorStandard by remember { mutableStateOf(prefs.getString("color_standard", "MD3_2021")) }
+    var colorStyle by remember { mutableStateOf(prefs.getString("color_style", "TONAL_SPOT")) }
 
     val refreshThemeObserver by refreshTheme.observeAsState(false)
     LaunchedEffect(refreshThemeObserver) {
@@ -136,6 +140,9 @@ fun APatchTheme(
             ) else false
             customColorScheme = prefs.getString("custom_color", "indigo")
             amoledTheme = prefs.getBoolean("amoled_theme", false)
+            colorGenerationMode = prefs.getString("color_generation_mode", "classic")
+            colorStandard = prefs.getString("color_standard", "MD3_2021")
+            colorStyle = prefs.getString("color_style", "TONAL_SPOT")
             refreshTheme.postValue(false)
         }
     }
@@ -146,64 +153,97 @@ fun APatchTheme(
         nightModeEnabled
     }
 
-    val baseColorScheme = if (!dynamicColor) {
-        if (darkTheme) {
-            when (customColorScheme) {
-                "amber" -> DarkAmberTheme
-                "blue_grey" -> DarkBlueGreyTheme
-                "blue" -> DarkBlueTheme
-                "brown" -> DarkBrownTheme
-                "cyan" -> DarkCyanTheme
-                "deep_orange" -> DarkDeepOrangeTheme
-                "deep_purple" -> DarkDeepPurpleTheme
-                "green" -> DarkGreenTheme
-                "indigo" -> DarkIndigoTheme
-                "light_blue" -> DarkLightBlueTheme
-                "light_green" -> DarkLightGreenTheme
-                "lime" -> DarkLimeTheme
-                "orange" -> DarkOrangeTheme
-                "pink" -> DarkPinkTheme
-                "purple" -> DarkPurpleTheme
-                "red" -> DarkRedTheme
-                "sakura" -> DarkSakuraTheme
-                "teal" -> DarkTealTheme
-                "yellow" -> DarkYellowTheme
-                "ink_wash" -> DarkInkWashTheme
-                else -> DarkBlueTheme
+    val baseColorScheme = when {
+        // Custom dynamic generation (MaterialKolor) with system wallpaper seed
+        colorGenerationMode == "custom" && dynamicColor -> {
+            val standard = ColorStandard.fromName(colorStandard)
+            val style = ColorStyle.fromName(colorStyle)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                ColorSchemeGenerator.generateFromContext(context, darkTheme, style.paletteStyle, standard.specVersion)
+            } else {
+                // Fallback: system dynamic color not available, use selected color as seed
+                val seedOption = themeColorOptions.find { it.key == (customColorScheme ?: "indigo") }
+                val seedColor = if (darkTheme) {
+                    seedOption?.darkPrimary ?: Color(0xFFBAC3FF)
+                } else {
+                    seedOption?.lightPrimary ?: Color(0xFF4355B9)
+                }
+                ColorSchemeGenerator.generate(seedColor, darkTheme, style.paletteStyle, standard.specVersion)
             }
-        } else {
-            when (customColorScheme) {
-                "amber" -> LightAmberTheme
-                "blue_grey" -> LightBlueGreyTheme
-                "blue" -> LightBlueTheme
-                "brown" -> LightBrownTheme
-                "cyan" -> LightCyanTheme
-                "deep_orange" -> LightDeepOrangeTheme
-                "deep_purple" -> LightDeepPurpleTheme
-                "green" -> LightGreenTheme
-                "indigo" -> LightIndigoTheme
-                "light_blue" -> LightLightBlueTheme
-                "light_green" -> LightLightGreenTheme
-                "lime" -> LightLimeTheme
-                "orange" -> LightOrangeTheme
-                "pink" -> LightPinkTheme
-                "purple" -> LightPurpleTheme
-                "red" -> LightRedTheme
-                "sakura" -> LightSakuraTheme
-                "teal" -> LightTealTheme
-                "yellow" -> LightYellowTheme
-                "ink_wash" -> LightInkWashTheme
+        }
+        // Custom dynamic generation (MaterialKolor) with selected color seed
+        colorGenerationMode == "custom" -> {
+            val seedOption = themeColorOptions.find { it.key == (customColorScheme ?: "indigo") }
+            val seedColor = if (darkTheme) {
+                seedOption?.darkPrimary ?: Color(0xFFBAC3FF)
+            } else {
+                seedOption?.lightPrimary ?: Color(0xFF4355B9)
+            }
+            val standard = ColorStandard.fromName(colorStandard)
+            val style = ColorStyle.fromName(colorStyle)
+            ColorSchemeGenerator.generate(seedColor, darkTheme, style.paletteStyle, standard.specVersion)
+        }
+        // System dynamic color (standard Material3 wallpaper extraction)
+        dynamicColor -> {
+            when {
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+                    if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+                }
+                darkTheme -> DarkBlueTheme
                 else -> LightBlueTheme
             }
         }
-    } else {
-        when {
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-                if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+        // Classic hardcoded themes
+        else -> {
+            if (darkTheme) {
+                when (customColorScheme) {
+                    "amber" -> DarkAmberTheme
+                    "blue_grey" -> DarkBlueGreyTheme
+                    "blue" -> DarkBlueTheme
+                    "brown" -> DarkBrownTheme
+                    "cyan" -> DarkCyanTheme
+                    "deep_orange" -> DarkDeepOrangeTheme
+                    "deep_purple" -> DarkDeepPurpleTheme
+                    "green" -> DarkGreenTheme
+                    "indigo" -> DarkIndigoTheme
+                    "light_blue" -> DarkLightBlueTheme
+                    "light_green" -> DarkLightGreenTheme
+                    "lime" -> DarkLimeTheme
+                    "orange" -> DarkOrangeTheme
+                    "pink" -> DarkPinkTheme
+                    "purple" -> DarkPurpleTheme
+                    "red" -> DarkRedTheme
+                    "sakura" -> DarkSakuraTheme
+                    "teal" -> DarkTealTheme
+                    "yellow" -> DarkYellowTheme
+                    "ink_wash" -> DarkInkWashTheme
+                    else -> DarkBlueTheme
+                }
+            } else {
+                when (customColorScheme) {
+                    "amber" -> LightAmberTheme
+                    "blue_grey" -> LightBlueGreyTheme
+                    "blue" -> LightBlueTheme
+                    "brown" -> LightBrownTheme
+                    "cyan" -> LightCyanTheme
+                    "deep_orange" -> LightDeepOrangeTheme
+                    "deep_purple" -> LightDeepPurpleTheme
+                    "green" -> LightGreenTheme
+                    "indigo" -> LightIndigoTheme
+                    "light_blue" -> LightLightBlueTheme
+                    "light_green" -> LightLightGreenTheme
+                    "lime" -> LightLimeTheme
+                    "orange" -> LightOrangeTheme
+                    "pink" -> LightPinkTheme
+                    "purple" -> LightPurpleTheme
+                    "red" -> LightRedTheme
+                    "sakura" -> LightSakuraTheme
+                    "teal" -> LightTealTheme
+                    "yellow" -> LightYellowTheme
+                    "ink_wash" -> LightInkWashTheme
+                    else -> LightBlueTheme
+                }
             }
-
-            darkTheme -> DarkBlueTheme
-            else -> LightBlueTheme
         }
     }
     

@@ -1115,4 +1115,26 @@
     <string name="settings_search_hint">البحث في الإعدادات…</string>
     <string name="settings_search_empty_hint">اكتب للبحث في جميع الإعدادات…</string>
     <string name="settings_no_results">لا توجد نتائج</string>
+
+    <!-- Color Generation -->
+    <string name="color_generation_classic">كلاسيكي</string>
+    <string name="color_generation_custom">مخصص</string>
+    <string name="color_generation_label">وضع الألوان</string>
+
+    <!-- Color Standard -->
+    <string name="color_standard_md3_2021">MD3 2021</string>
+    <string name="color_standard_m3e_2025">M3e 2025</string>
+    <string name="color_standard_label">معيار الألوان</string>
+
+    <!-- Color Style -->
+    <string name="color_style_label">نمط الألوان</string>
+    <string name="color_style_tonal_spot">بقعة نغمية</string>
+    <string name="color_style_vibrant">نابض بالحياة</string>
+    <string name="color_style_content">المحتوى</string>
+    <string name="color_style_expressive">تعبيري</string>
+    <string name="color_style_rainbow">قوس قزح</string>
+    <string name="color_style_fruit_salad">سلطة فواكه</string>
+    <string name="color_style_monochrome">أحادي اللون</string>
+    <string name="color_style_neutral">محايد</string>
+    <string name="color_style_fidelity">دقة</string>
 </resources>

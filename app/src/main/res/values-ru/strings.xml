@@ -1127,4 +1127,26 @@
     <string name="settings_search_hint">Поиск настроек…</string>
     <string name="settings_search_empty_hint">Введите для поиска всех настроек…</string>
     <string name="settings_no_results">Ничего не найдено</string>
+
+    <!-- Color Generation -->
+    <string name="color_generation_classic">Классический</string>
+    <string name="color_generation_custom">Пользовательский</string>
+    <string name="color_generation_label">Режим цвета</string>
+
+    <!-- Color Standard -->
+    <string name="color_standard_md3_2021">MD3 2021</string>
+    <string name="color_standard_m3e_2025">M3e 2025</string>
+    <string name="color_standard_label">Стандарт цвета</string>
+
+    <!-- Color Style -->
+    <string name="color_style_label">Стиль цвета</string>
+    <string name="color_style_tonal_spot">Тональный акцент</string>
+    <string name="color_style_vibrant">Яркий</string>
+    <string name="color_style_content">Контент</string>
+    <string name="color_style_expressive">Экспрессивный</string>
+    <string name="color_style_rainbow">Радуга</string>
+    <string name="color_style_fruit_salad">Фруктовый салат</string>
+    <string name="color_style_monochrome">Монохромный</string>
+    <string name="color_style_neutral">Нейтральный</string>
+    <string name="color_style_fidelity">Точность</string>
 </resources>

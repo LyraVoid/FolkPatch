@@ -1115,4 +1115,26 @@
     <string name="settings_search_hint">搜索设置喵…</string>
     <string name="settings_search_empty_hint">输入以搜索所有设置项喵…</string>
     <string name="settings_no_results">未找到结果喵</string>
+
+    <!-- 色彩生成 -->
+    <string name="color_generation_classic">经典喵</string>
+    <string name="color_generation_custom">自定义喵</string>
+    <string name="color_generation_label">色彩模式喵</string>
+
+    <!-- 色彩标准 -->
+    <string name="color_standard_md3_2021">MD3 2021</string>
+    <string name="color_standard_m3e_2025">M3e 2025</string>
+    <string name="color_standard_label">色彩标准喵</string>
+
+    <!-- 色彩风格 -->
+    <string name="color_style_label">色彩风格喵</string>
+    <string name="color_style_tonal_spot">色调喵</string>
+    <string name="color_style_vibrant">活力喵</string>
+    <string name="color_style_content">内容喵</string>
+    <string name="color_style_expressive">表现喵</string>
+    <string name="color_style_rainbow">彩虹喵</string>
+    <string name="color_style_fruit_salad">果盘喵</string>
+    <string name="color_style_monochrome">单色喵</string>
+    <string name="color_style_neutral">中性喵</string>
+    <string name="color_style_fidelity">保真喵</string>
 </resources>

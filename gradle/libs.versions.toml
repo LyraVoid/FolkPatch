@@ -12,6 +12,7 @@ gson = "2.14.0"
 vico = "2.0.0-alpha.13"
 liquid = "1.1.1"
 material3 = "1.5.0-alpha17"
+materialKolor = "4.1.1"
 
 [plugins]
 agp-app = { id = "com.android.application", version.ref = "agp" }
@@ -77,3 +78,5 @@ vico-compose = { group = "com.patrykandpatrick.vico", name = "compose-m3", versi
 cxx = { module = "org.lsposed.libcxx:libcxx", version = "29.0.14206865" }
 
 liquid = { group = "io.github.fletchmckee.liquid", name = "liquid-android", version.ref = "liquid" }
+
+materialKolor = { group = "com.materialkolor", name = "material-kolor", version.ref = "materialKolor" }

@@ -1109,4 +1109,26 @@ Pastikan aplikasi ditutup sepenuhnya dan dimulai ulang untuk menjalankan perinta
     <string name="settings_search_hint">Cari pengaturan…</string>
     <string name="settings_search_empty_hint">Ketik untuk mencari semua pengaturan…</string>
     <string name="settings_no_results">Tidak ada hasil</string>
+
+    <!-- Color Generation -->
+    <string name="color_generation_classic">Klasik</string>
+    <string name="color_generation_custom">Kustom</string>
+    <string name="color_generation_label">Mode Warna</string>
+
+    <!-- Color Standard -->
+    <string name="color_standard_md3_2021">MD3 2021</string>
+    <string name="color_standard_m3e_2025">M3e 2025</string>
+    <string name="color_standard_label">Standar Warna</string>
+
+    <!-- Color Style -->
+    <string name="color_style_label">Gaya Warna</string>
+    <string name="color_style_tonal_spot">Tonal</string>
+    <string name="color_style_vibrant">Vibrant</string>
+    <string name="color_style_content">Konten</string>
+    <string name="color_style_expressive">Ekspresif</string>
+    <string name="color_style_rainbow">Pelangi</string>
+    <string name="color_style_fruit_salad">Rujak Buah</string>
+    <string name="color_style_monochrome">Monokrom</string>
+    <string name="color_style_neutral">Netral</string>
+    <string name="color_style_fidelity">Fidelitas</string>
 </resources>

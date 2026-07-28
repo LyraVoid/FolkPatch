@@ -7,6 +7,12 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import me.bmax.apatch.ui.component.ColorGenerationModeSelector
+import me.bmax.apatch.ui.component.ColorStandardSelector
+import me.bmax.apatch.ui.component.ColorStylePicker
+import me.bmax.apatch.ui.theme.ColorGenerationMode
+import me.bmax.apatch.ui.theme.ColorStandard
+import me.bmax.apatch.ui.theme.ColorStyle
 import me.bmax.apatch.util.ui.showToast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContract
@@ -72,6 +78,7 @@ import me.bmax.apatch.util.ui.APDialogBlurBehindUtils
 import me.bmax.apatch.util.ui.NavigationBarsSpacer
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import coil.compose.AsyncImage
 
@@ -360,6 +367,9 @@ fun AppearanceSettingsContent(
 
     var customColorScheme by remember { mutableStateOf(prefs.getString("custom_color", "indigo")) }
     var amoledTheme by remember { mutableStateOf(prefs.getBoolean("amoled_theme", false)) }
+    var colorGenerationMode by remember { mutableStateOf(ColorGenerationMode.fromKey(prefs.getString("color_generation_mode", "classic"))) }
+    var colorStandard by remember { mutableStateOf(ColorStandard.fromName(prefs.getString("color_standard", "MD3_2021"))) }
+    var colorStyle by remember { mutableStateOf(ColorStyle.fromName(prefs.getString("color_style", "TONAL_SPOT"))) }
 
     var currentStyle by remember { mutableStateOf(prefs.getString("home_layout_style", "circle")) }
 
@@ -370,6 +380,9 @@ fun AppearanceSettingsContent(
         customFontEnabled = FontConfig.isCustomFontEnabled
         customColorScheme = prefs.getString("custom_color", "indigo")
         amoledTheme = prefs.getBoolean("amoled_theme", false)
+        colorGenerationMode = ColorGenerationMode.fromKey(prefs.getString("color_generation_mode", "classic"))
+        colorStandard = ColorStandard.fromName(prefs.getString("color_standard", "MD3_2021"))
+        colorStyle = ColorStyle.fromName(prefs.getString("color_style", "TONAL_SPOT"))
         currentStyle = prefs.getString("home_layout_style", "circle")
     }
 
@@ -469,6 +482,48 @@ fun AppearanceSettingsContent(
                     },
                     bare = true,
                 )
+            }
+
+            // Color generation mode & style pickers
+            item(key = "appearance_color_generation_mode") {
+                ColorGenerationModeSelector(
+                    selectedMode = colorGenerationMode,
+                    onModeSelected = { mode ->
+                        colorGenerationMode = mode
+                        prefs.edit().putString("color_generation_mode", mode.key).apply()
+                        refreshTheme.value = true
+                    },
+                    flat = flat,
+                    bare = true,
+                )
+            }
+
+            if (colorGenerationMode == ColorGenerationMode.CUSTOM) {
+                item(key = "appearance_color_standard") {
+                    ColorStandardSelector(
+                        selectedStandard = colorStandard,
+                        onStandardSelected = { standard ->
+                            colorStandard = standard
+                            prefs.edit().putString("color_standard", standard.name).apply()
+                            refreshTheme.value = true
+                        },
+                        flat = flat,
+                        bare = true,
+                    )
+                }
+
+                item(key = "appearance_color_style") {
+                    ColorStylePicker(
+                        selectedStyle = colorStyle,
+                        onStyleSelected = { style ->
+                            colorStyle = style
+                            prefs.edit().putString("color_style", style.name).apply()
+                            refreshTheme.value = true
+                        },
+                        flat = flat,
+                        bare = true,
+                    )
+                }
             }
 
             if (isDarkTheme) {

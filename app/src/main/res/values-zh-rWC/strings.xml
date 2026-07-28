@@ -1110,4 +1110,26 @@
     <string name="settings_search_hint">推演天机…</string>
     <string name="settings_search_empty_hint">输入以推演所有凡尘法则…</string>
     <string name="settings_no_results">天机未显</string>
+
+    <!-- 色彩生成 -->
+    <string name="color_generation_classic">经典</string>
+    <string name="color_generation_custom">自创</string>
+    <string name="color_generation_label">色彩道法</string>
+
+    <!-- 色彩标准 -->
+    <string name="color_standard_md3_2021">MD3 2021</string>
+    <string name="color_standard_m3e_2025">M3e 2025</string>
+    <string name="color_standard_label">色彩道标</string>
+
+    <!-- 色彩风格 -->
+    <string name="color_style_label">色彩道韵</string>
+    <string name="color_style_tonal_spot">气韵</string>
+    <string name="color_style_vibrant">生机</string>
+    <string name="color_style_content">本真</string>
+    <string name="color_style_expressive">意境</string>
+    <string name="color_style_rainbow">虹霞</string>
+    <string name="color_style_fruit_salad">灵果盘</string>
+    <string name="color_style_monochrome">归一</string>
+    <string name="color_style_neutral">无为</string>
+    <string name="color_style_fidelity">返璞</string>
 </resources>

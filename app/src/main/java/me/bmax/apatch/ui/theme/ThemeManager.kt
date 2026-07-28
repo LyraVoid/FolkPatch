@@ -63,6 +63,9 @@ object ThemeManager {
         val nightModeEnabled: Boolean,
         val nightModeFollowSys: Boolean,
         val useSystemDynamicColor: Boolean,
+        val colorGenerationMode: String = "classic",
+        val colorStandard: String = "MD3_2021",
+        val colorStyle: String = "TONAL_SPOT",
         val appLanguage: String?,
         // Grid Working Card Background
         val isGridWorkingCardBackgroundEnabled: Boolean = false,
@@ -130,6 +133,9 @@ object ThemeManager {
                     nightModeEnabled = prefs.getBoolean("night_mode_enabled", true),
                     nightModeFollowSys = prefs.getBoolean("night_mode_follow_sys", false),
                     useSystemDynamicColor = prefs.getBoolean("use_system_color_theme", false),
+                    colorGenerationMode = prefs.getString("color_generation_mode", "classic") ?: "classic",
+                    colorStandard = prefs.getString("color_standard", "MD3_2021") ?: "MD3_2021",
+                    colorStyle = prefs.getString("color_style", "TONAL_SPOT") ?: "TONAL_SPOT",
                     appLanguage = AppCompatDelegate.getApplicationLocales().toLanguageTags(),
                     isGridWorkingCardBackgroundEnabled = BackgroundConfig.isGridWorkingCardBackgroundEnabled,
                     gridWorkingCardBackgroundOpacity = BackgroundConfig.gridWorkingCardBackgroundOpacity,
@@ -176,6 +182,9 @@ object ThemeManager {
                     put("nightModeEnabled", config.nightModeEnabled)
                     put("nightModeFollowSys", config.nightModeFollowSys)
                     put("useSystemDynamicColor", config.useSystemDynamicColor)
+                    put("colorGenerationMode", config.colorGenerationMode)
+                    put("colorStandard", config.colorStandard)
+                    put("colorStyle", config.colorStyle)
                     put("appLanguage", config.appLanguage)
                     
                     // Grid Working Card Background
@@ -512,6 +521,9 @@ object ThemeManager {
                 val nightModeEnabled = json.optBoolean("nightModeEnabled", true)
                 val nightModeFollowSys = json.optBoolean("nightModeFollowSys", true)
                 val useSystemDynamicColor = json.optBoolean("useSystemDynamicColor", true)
+                val colorGenerationMode = json.optString("colorGenerationMode", "classic")
+                val colorStandard = json.optString("colorStandard", "MD3_2021")
+                val colorStyle = json.optString("colorStyle", "TONAL_SPOT")
                 val appLanguage = json.optString("appLanguage", "")
                 
                 // Grid Working Card Background
@@ -845,6 +857,9 @@ object ThemeManager {
                     .putBoolean("night_mode_enabled", nightModeEnabled)
                     .putBoolean("night_mode_follow_sys", nightModeFollowSys)
                     .putBoolean("use_system_color_theme", useSystemDynamicColor)
+                    .putString("color_generation_mode", colorGenerationMode)
+                    .putString("color_standard", colorStandard)
+                    .putString("color_style", colorStyle)
                     .apply()
                 
                 // 6. Refresh Theme
@@ -887,6 +902,9 @@ object ThemeManager {
                     .putString("custom_color", "indigo")
                     .putString("home_layout_style", "circle")
                     .putString("stats_top_layout", "list")
+                    .putString("color_generation_mode", "classic")
+                    .putString("color_standard", "MD3_2021")
+                    .putString("color_style", "TONAL_SPOT")
                     .remove("appLanguage")
                     .apply()
 

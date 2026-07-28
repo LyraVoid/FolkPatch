@@ -1141,4 +1141,26 @@
     <string name="settings_search_hint">설정 검색…</string>
     <string name="settings_search_empty_hint">모든 설정을 검색하려면 입력하세요…</string>
     <string name="settings_no_results">결과 없음</string>
+
+    <!-- Color Generation -->
+    <string name="color_generation_classic">클래식</string>
+    <string name="color_generation_custom">사용자 정의</string>
+    <string name="color_generation_label">색상 모드</string>
+
+    <!-- Color Standard -->
+    <string name="color_standard_md3_2021">MD3 2021</string>
+    <string name="color_standard_m3e_2025">M3e 2025</string>
+    <string name="color_standard_label">색상 표준</string>
+
+    <!-- Color Style -->
+    <string name="color_style_label">색상 스타일</string>
+    <string name="color_style_tonal_spot">토널 스팟</string>
+    <string name="color_style_vibrant">선명한</string>
+    <string name="color_style_content">콘텐츠</string>
+    <string name="color_style_expressive">표현적</string>
+    <string name="color_style_rainbow">무지개</string>
+    <string name="color_style_fruit_salad">프루트 샐러드</string>
+    <string name="color_style_monochrome">모노크롬</string>
+    <string name="color_style_neutral">중립</string>
+    <string name="color_style_fidelity">충실도</string>
 </resources>
