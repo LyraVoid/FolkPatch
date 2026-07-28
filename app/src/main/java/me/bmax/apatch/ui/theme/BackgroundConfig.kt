@@ -123,6 +123,8 @@ object BackgroundConfig {
         private set
     var focusCardStorageBgUri: String? by mutableStateOf(null)
         private set
+    var isFocusCardBackgroundEnabled: Boolean by mutableStateOf(false)
+        private set
     var focusCardBgDim: Float by mutableStateOf(0.3f)
         private set
     var isFocusCardDualDimEnabled: Boolean by mutableStateOf(false)
@@ -212,6 +214,7 @@ object BackgroundConfig {
     private const val KEY_FOCUS_CARD_APP_BG_URI = "focus_card_app_bg_uri"
     private const val KEY_FOCUS_CARD_DEVICE_BG_URI = "focus_card_device_bg_uri"
     private const val KEY_FOCUS_CARD_STORAGE_BG_URI = "focus_card_storage_bg_uri"
+    private const val KEY_FOCUS_CARD_BACKGROUND_ENABLED = "focus_card_background_enabled"
     private const val KEY_FOCUS_CARD_BG_DIM = "focus_card_bg_dim"
     private const val KEY_FOCUS_CARD_DUAL_DIM_ENABLED = "focus_card_dual_dim_enabled"
     private const val KEY_FOCUS_CARD_DAY_DIM = "focus_card_day_dim"
@@ -523,6 +526,10 @@ object BackgroundConfig {
         }
     }
 
+    fun setFocusCardBackgroundEnabledState(enabled: Boolean) {
+        isFocusCardBackgroundEnabled = enabled
+    }
+
     /**
      * 获取指定FocusUI卡片的壁纸URI
      */
@@ -658,6 +665,7 @@ object BackgroundConfig {
             putString(KEY_FOCUS_CARD_APP_BG_URI, focusCardAppBgUri)
             putString(KEY_FOCUS_CARD_DEVICE_BG_URI, focusCardDeviceBgUri)
             putString(KEY_FOCUS_CARD_STORAGE_BG_URI, focusCardStorageBgUri)
+            putBoolean(KEY_FOCUS_CARD_BACKGROUND_ENABLED, isFocusCardBackgroundEnabled)
             putFloat(KEY_FOCUS_CARD_BG_DIM, focusCardBgDim)
             putBoolean(KEY_FOCUS_CARD_DUAL_DIM_ENABLED, isFocusCardDualDimEnabled)
             putFloat(KEY_FOCUS_CARD_DAY_DIM, focusCardBgDayDim)
@@ -740,6 +748,9 @@ object BackgroundConfig {
         val focusCardAppBg = prefs.getString(KEY_FOCUS_CARD_APP_BG_URI, null)
         val focusCardDeviceBg = prefs.getString(KEY_FOCUS_CARD_DEVICE_BG_URI, null)
         val focusCardStorageBg = prefs.getString(KEY_FOCUS_CARD_STORAGE_BG_URI, null)
+        val hasFocusCardWallpaper = focusCardKernelBg != null || focusCardAppBg != null ||
+            focusCardDeviceBg != null || focusCardStorageBg != null
+        val focusCardBackgroundEnabled = prefs.getBoolean(KEY_FOCUS_CARD_BACKGROUND_ENABLED, hasFocusCardWallpaper)
         val focusCardDim = prefs.getFloat(KEY_FOCUS_CARD_BG_DIM, 0.3f)
         val focusCardDualDim = prefs.getBoolean(KEY_FOCUS_CARD_DUAL_DIM_ENABLED, false)
         val focusCardDayDim = prefs.getFloat(KEY_FOCUS_CARD_DAY_DIM, focusCardDim)
@@ -812,6 +823,7 @@ object BackgroundConfig {
         focusCardAppBgUri = focusCardAppBg
         focusCardDeviceBgUri = focusCardDeviceBg
         focusCardStorageBgUri = focusCardStorageBg
+        isFocusCardBackgroundEnabled = focusCardBackgroundEnabled
         focusCardBgDim = focusCardDim
         isFocusCardDualDimEnabled = focusCardDualDim
         focusCardBgDayDim = focusCardDayDim
@@ -888,6 +900,7 @@ object BackgroundConfig {
         focusCardAppBgUri = null
         focusCardDeviceBgUri = null
         focusCardStorageBgUri = null
+        isFocusCardBackgroundEnabled = false
         focusCardBgDim = 0.3f
         isFocusCardDualDimEnabled = false
         focusCardBgDayDim = 0.3f

@@ -738,6 +738,9 @@
     <string name="focus_card_background_error">卡片桌布儲存失敗</string>
     <string name="focus_card_background_cleared">卡片桌布已清除</string>
     <string name="focus_card_permission_required">請先授予儲存權限才能選擇桌布</string>
+    <string name="settings_focus_card_background">FocusUI 卡片桌布</string>
+    <string name="settings_focus_card_background_enabled">FocusUI 卡片桌布已開啟，長按卡片管理桌布</string>
+    <string name="settings_focus_card_background_summary">啟用 FocusUI 卡片桌布及長按桌布管理</string>
     <string name="settings_focus_card_dim">卡片桌布暗度</string>
     <string name="settings_focus_card_dual_dim">啟用晝夜雙暗度</string>
     <string name="settings_focus_card_dual_dim_desc">自動根據明暗主題調整卡片桌布暗度</string>

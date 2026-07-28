@@ -1166,6 +1166,9 @@
     <string name="color_style_monochrome">모노크롬</string>
     <string name="color_style_neutral">중립</string>
     <string name="color_style_fidelity">충실도</string>
+    <string name="settings_focus_card_background">FocusUI 카드 배경</string>
+    <string name="settings_focus_card_background_enabled">FocusUI 카드 배경 활성화됨; 카드를 길게 눌러 배경 관리</string>
+    <string name="settings_focus_card_background_summary">FocusUI 카드 배경 및 길게 눌러 배경 관리 활성화</string>
     <string name="settings_focus_card_dim">카드 배경 어둡게</string>
     <string name="settings_focus_card_dual_dim">주/야 이중 어두움 활성화</string>
     <string name="settings_focus_card_dual_dim_desc">밝은 테마와 어두운 테마에 따라 카드 배경 어두움 자동 조정</string>

@@ -1140,6 +1140,9 @@
     <string name="color_style_monochrome">أحادي اللون</string>
     <string name="color_style_neutral">محايد</string>
     <string name="color_style_fidelity">دقة</string>
+    <string name="settings_focus_card_background">خلفية بطاقة FocusUI</string>
+    <string name="settings_focus_card_background_enabled">تم تمكين خلفيات بطاقة FocusUI؛ اضغط مطولاً على بطاقة لإدارة خلفيتها</string>
+    <string name="settings_focus_card_background_summary">تمكين خلفيات بطاقة FocusUI وإدارة الخلفية بالضغط المطول</string>
     <string name="settings_focus_card_dim">تعتيم خلفية البطاقة</string>
     <string name="settings_focus_card_dual_dim">تمكين التعتيم المزدوج للنهار/الليل</string>
     <string name="settings_focus_card_dual_dim_desc">ضبط تعتيم خلفية البطاقة تلقائياً للسمات الفاتحة والداكنة</string>

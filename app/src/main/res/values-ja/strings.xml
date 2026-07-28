@@ -1074,6 +1074,9 @@
     <string name="color_style_monochrome">モノクローム</string>
     <string name="color_style_neutral">ニュートラル</string>
     <string name="color_style_fidelity">フィデリティ</string>
+    <string name="settings_focus_card_background">FocusUI カード壁紙</string>
+    <string name="settings_focus_card_background_enabled">FocusUI カード壁紙が有効になりました。カードを長押しして壁紙を管理</string>
+    <string name="settings_focus_card_background_summary">FocusUI カード壁紙と長押し壁紙管理を有効化</string>
     <string name="settings_focus_card_dim">カード壁紙の暗さ</string>
     <string name="settings_focus_card_dual_dim">昼/夜デュアル調光を有効化</string>
     <string name="settings_focus_card_dual_dim_desc">ライトテーマとダークテーマに応じてカード壁紙の暗さを自動調整</string>

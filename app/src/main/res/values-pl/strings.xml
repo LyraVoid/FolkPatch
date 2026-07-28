@@ -1075,6 +1075,9 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="color_style_monochrome">Monochromatyczny</string>
     <string name="color_style_neutral">Neutralny</string>
     <string name="color_style_fidelity">Wierność</string>
+    <string name="settings_focus_card_background">Tapeta karty FocusUI</string>
+    <string name="settings_focus_card_background_enabled">Tapety kart FocusUI włączone; przytrzymaj kartę, aby zarządzać jej tapetą</string>
+    <string name="settings_focus_card_background_summary">Włącz tapety kart FocusUI i zarządzanie tapetą przez przytrzymanie</string>
     <string name="settings_focus_card_dim">Przyciemnienie tapety karty</string>
     <string name="settings_focus_card_dual_dim">Włącz podwójne przyciemnianie dzień/noc</string>
     <string name="settings_focus_card_dual_dim_desc">Automatycznie dostosuj przyciemnienie tapety karty do jasnych i ciemnych motywów</string>

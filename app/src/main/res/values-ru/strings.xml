@@ -1152,6 +1152,9 @@
     <string name="color_style_monochrome">Монохромный</string>
     <string name="color_style_neutral">Нейтральный</string>
     <string name="color_style_fidelity">Точность</string>
+    <string name="settings_focus_card_background">Обои карточки FocusUI</string>
+    <string name="settings_focus_card_background_enabled">Обои карточки FocusUI включены; удерживайте карточку для управления обоями</string>
+    <string name="settings_focus_card_background_summary">Включить обои карточки FocusUI и управление обоями через удержание</string>
     <string name="settings_focus_card_dim">Затемнение обоев карточки</string>
     <string name="settings_focus_card_dual_dim">Включить двойное затемнение день/ночь</string>
     <string name="settings_focus_card_dual_dim_desc">Автоматически регулировать затемнение обоев карточки для светлой и тёмной темы</string>

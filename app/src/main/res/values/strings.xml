@@ -797,6 +797,9 @@ Please ensure the app is completely closed and reopened for the commands to exec
 
     <!-- FocusUI Card Wallpaper Strings -->
     <string name="focus_card_background_title">Card Wallpaper</string>
+    <string name="settings_focus_card_background">FocusUI Card Wallpaper</string>
+    <string name="settings_focus_card_background_enabled">FocusUI card wallpapers enabled; long press a card to manage its wallpaper</string>
+    <string name="settings_focus_card_background_summary">Enable FocusUI card wallpapers and long-press wallpaper management</string>
     <string name="focus_card_background_clear">Clear Card Wallpaper</string>
     <string name="focus_card_background_clear_confirm">Are you sure you want to clear this card\'s wallpaper?</string>
     <string name="focus_card_background_saved">Card wallpaper saved successfully</string>

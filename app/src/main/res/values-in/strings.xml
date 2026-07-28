@@ -1134,6 +1134,9 @@ Pastikan aplikasi ditutup sepenuhnya dan dimulai ulang untuk menjalankan perinta
     <string name="color_style_monochrome">Monokrom</string>
     <string name="color_style_neutral">Netral</string>
     <string name="color_style_fidelity">Fidelitas</string>
+    <string name="settings_focus_card_background">Latar Kartu FocusUI</string>
+    <string name="settings_focus_card_background_enabled">Latar kartu FocusUI diaktifkan; tekan lama kartu untuk mengelola latarnya</string>
+    <string name="settings_focus_card_background_summary">Aktifkan latar kartu FocusUI dan kelola latar dengan tekan lama</string>
     <string name="settings_focus_card_dim">Keredupan latar kartu</string>
     <string name="settings_focus_card_dual_dim">Aktifkan peredupan ganda siang/malam</string>
     <string name="settings_focus_card_dual_dim_desc">Sesuaikan keredupan latar kartu secara otomatis untuk tema terang dan gelap</string>

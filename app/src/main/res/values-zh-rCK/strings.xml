@@ -1136,6 +1136,9 @@
     <string name="color_style_monochrome">单味</string>
     <string name="color_style_neutral">原味</string>
     <string name="color_style_fidelity">本味</string>
+    <string name="settings_focus_card_background">FocusUI 卡片壁纸</string>
+    <string name="settings_focus_card_background_enabled">FocusUI 卡片壁纸已开启，长按卡片管理壁纸</string>
+    <string name="settings_focus_card_background_summary">启用 FocusUI 卡片壁纸及长按壁纸管理</string>
     <string name="settings_focus_card_dim">卡片壁纸暗度</string>
     <string name="settings_focus_card_dual_dim">启用昼夜双暗度</string>
     <string name="settings_focus_card_dual_dim_desc">自动根据明暗主题调整卡片壁纸暗度</string>

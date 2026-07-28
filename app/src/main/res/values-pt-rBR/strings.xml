@@ -1153,6 +1153,9 @@ Por favor, certifique-se de fechar completamente o app e reabri-lo para que os c
     <string name="color_style_monochrome">Monocromático</string>
     <string name="color_style_neutral">Neutro</string>
     <string name="color_style_fidelity">Fidelidade</string>
+    <string name="settings_focus_card_background">Papel de parede do cartão FocusUI</string>
+    <string name="settings_focus_card_background_enabled">Papéis de parede do cartão FocusUI ativados; pressione longamente um cartão para gerenciar seu papel de parede</string>
+    <string name="settings_focus_card_background_summary">Ativar papéis de parede do cartão FocusUI e gerenciamento por pressão longa</string>
     <string name="settings_focus_card_dim">Escurecimento do papel de parede do cartão</string>
     <string name="settings_focus_card_dual_dim">Ativar escurecimento duplo dia/noite</string>
     <string name="settings_focus_card_dual_dim_desc">Ajustar automaticamente o escurecimento do papel de parede para temas claro e escuro</string>

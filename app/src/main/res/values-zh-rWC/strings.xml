@@ -1135,6 +1135,9 @@
     <string name="color_style_monochrome">归一</string>
     <string name="color_style_neutral">无为</string>
     <string name="color_style_fidelity">返璞</string>
+    <string name="settings_focus_card_background">FocusUI 卡片法相</string>
+    <string name="settings_focus_card_background_enabled">FocusUI 卡片法相已启，长按卡片管理法相</string>
+    <string name="settings_focus_card_background_summary">启用 FocusUI 卡片法相及长按法相管理</string>
     <string name="settings_focus_card_dim">卡片法相暗度</string>
     <string name="settings_focus_card_dual_dim">启用昼夜双法相暗度</string>
     <string name="settings_focus_card_dual_dim_desc">自动根据明暗主题调整卡片法相暗度</string>

@@ -1151,6 +1151,9 @@ Cần đảm bảo phần mềm thoát hoàn toàn vào mới sẽ thực thi l�
     <string name="color_style_monochrome">Đơn sắc</string>
     <string name="color_style_neutral">Trung tính</string>
     <string name="color_style_fidelity">Trung thực</string>
+    <string name="settings_focus_card_background">Hình nền thẻ FocusUI</string>
+    <string name="settings_focus_card_background_enabled">Hình nền thẻ FocusUI đã bật; nhấn giữ thẻ để quản lý hình nền</string>
+    <string name="settings_focus_card_background_summary">Bật hình nền thẻ FocusUI và quản lý hình nền bằng nhấn giữ</string>
     <string name="settings_focus_card_dim">Độ mờ nền thẻ</string>
     <string name="settings_focus_card_dual_dim">Bật điều chỉnh độ mờ kép ngày/đêm</string>
     <string name="settings_focus_card_dual_dim_desc">Tự động điều chỉnh độ mờ nền thẻ cho chủ đề sáng và tối</string>

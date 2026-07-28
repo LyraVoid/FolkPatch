@@ -570,7 +570,9 @@ private fun MagiskStyleCard(
     val scope = rememberCoroutineScope()
 
     // FocusUI卡片壁纸状态
-    val cardBgUri = if (cardId != null) BackgroundConfig.getFocusCardBgUri(cardId) else null
+    val cardBgUri = if (cardId != null && BackgroundConfig.isFocusCardBackgroundEnabled) {
+        BackgroundConfig.getFocusCardBgUri(cardId)
+    } else null
     val hasCardWallpaper = !cardBgUri.isNullOrEmpty()
     // Match APatchTheme: manual light/dark mode must not be replaced by the
     // device configuration when the app is not following the system.
@@ -624,7 +626,7 @@ private fun MagiskStyleCard(
         modifier = modifier
             .fillMaxWidth()
             .then(
-                if (cardId != null) {
+                if (cardId != null && BackgroundConfig.isFocusCardBackgroundEnabled) {
                     Modifier.pointerInput(cardId) {
                         detectTapGestures(
                             onLongPress = { showBgOptionsDialog = true }
@@ -736,7 +738,7 @@ private fun MagiskStyleCard(
     }
 
     // 长按背景选项对话框
-    if (cardId != null) {
+    if (cardId != null && BackgroundConfig.isFocusCardBackgroundEnabled) {
         BackgroundOptionsDialog(
             showDialog = showBgOptionsDialog,
             onDismiss = { showBgOptionsDialog = false },

@@ -1155,6 +1155,9 @@ Por ejemplo, los KPM que previenen la modificación de particiones solo pueden u
     <string name="color_style_monochrome">Monocromo</string>
     <string name="color_style_neutral">Neutro</string>
     <string name="color_style_fidelity">Fidelidad</string>
+    <string name="settings_focus_card_background">Fondo de tarjeta FocusUI</string>
+    <string name="settings_focus_card_background_enabled">Fondos de tarjeta FocusUI activados; mantén pulsada una tarjeta para gestionar su fondo</string>
+    <string name="settings_focus_card_background_summary">Activar fondos de tarjeta FocusUI y gestión de fondo con pulsación larga</string>
     <string name="settings_focus_card_dim">Oscurecimiento del fondo de la tarjeta</string>
     <string name="settings_focus_card_dual_dim">Activar atenuación dual día/noche</string>
     <string name="settings_focus_card_dual_dim_desc">Ajustar automáticamente el oscurecimiento del fondo según el tema claro u oscuro</string>

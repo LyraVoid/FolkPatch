@@ -1157,6 +1157,9 @@ Komutların çalışması için uygulamanın tamamen kapatılıp yeniden açıld
     <string name="color_style_monochrome">Tek Renk</string>
     <string name="color_style_neutral">Nötr</string>
     <string name="color_style_fidelity">Sadakat</string>
+    <string name="settings_focus_card_background">FocusUI Kart Duvar Kağıdı</string>
+    <string name="settings_focus_card_background_enabled">FocusUI kart duvar kağıtları etkin; bir kartı yönetmek için uzun basın</string>
+    <string name="settings_focus_card_background_summary">FocusUI kart duvar kağıtlarını ve uzun basarak duvar kağıdı yönetimini etkinleştir</string>
     <string name="settings_focus_card_dim">Kart duvar kağıdı karartması</string>
     <string name="settings_focus_card_dual_dim">Çift gün/gece karartmayı etkinleştir</string>
     <string name="settings_focus_card_dual_dim_desc">Açık ve koyu temalar için kart duvar kağıdı karartmasını otomatik ayarla</string>

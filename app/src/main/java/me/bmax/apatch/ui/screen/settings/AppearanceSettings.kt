@@ -1712,6 +1712,25 @@ fun AppearanceSettingsContent(
                 flat = flat,
                 highlightKey = highlightKey,
             ) {
+                item(key = "appearance_focus_card_background_enabled") {
+                    ToggleSettingCard(
+                        flat = flat,
+                        icon = Icons.Filled.Wallpaper,
+                        title = stringResource(R.string.settings_focus_card_background),
+                        description = if (BackgroundConfig.isFocusCardBackgroundEnabled) {
+                            stringResource(R.string.settings_focus_card_background_enabled)
+                        } else {
+                            stringResource(R.string.settings_focus_card_background_summary)
+                        },
+                        checked = BackgroundConfig.isFocusCardBackgroundEnabled,
+                        onCheckedChange = {
+                            BackgroundConfig.setFocusCardBackgroundEnabledState(it)
+                            BackgroundConfig.save(context)
+                        },
+                    )
+                }
+
+                if (BackgroundConfig.isFocusCardBackgroundEnabled) {
                 item(key = "appearance_focus_card_dual_background") {
                     DualBackgroundSettings(
                         flat = flat,
@@ -1822,6 +1841,7 @@ fun AppearanceSettingsContent(
                             }
                         }
                     }
+                }
                 }
             }
         }
