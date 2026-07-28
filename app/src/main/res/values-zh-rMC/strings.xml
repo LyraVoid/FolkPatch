@@ -77,7 +77,6 @@
     <string name="settings_grid_working_card_hide_check">藏起状态图标</string>
     <string name="settings_grid_working_card_hide_check_summary">把合成台面板上的对勾和苦力怕脸藏起来</string>
     <string name="settings_grid_working_card_hide_text">藏起状态文字</string>
-    <string name="home_grid_working_card_hide_text_summary">把合成台面板上的"世界正常运行中"或"这片世界还是空的"文字藏起来</string>
     <string name="settings_grid_working_card_hide_mode">藏起游戏模式</string>
     <string name="settings_grid_working_card_hide_mode_summary">把合成台面板上的模式标识藏起来</string>
 
@@ -297,6 +296,9 @@
     <string name="settings_enable_module_shortcut_add_summary">显示 WebUI 快捷方式添加按钮</string>
     <string name="settings_module_sort_optimization">模组排序</string>
     <string name="settings_module_sort_optimization_summary">带WebUI和Action的模组排到前面去</string>
+    <string name="apm_custom_order">自定义模组顺序</string>
+    <string name="apm_drag_to_reorder">拖动调整顺序</string>
+    <string name="apm_reset_order">恢复自动排序</string>
     <string name="settings_fold_system_module">折叠模组卡片</string>
     <string name="settings_fold_system_module_summary">点模组卡片来展开/收起操作按钮</string>
     <string name="settings_simple_list_bottom_bar">简约模组底栏</string>

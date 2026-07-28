@@ -296,6 +296,9 @@
     <string name="settings_disable_module_update_check_summary">Sistem modülleri için otomatik güncelleme kontrolünü kapat</string>
     <string name="settings_module_sort_optimization">Modül Sıralama Optimizasyonu</string>
     <string name="settings_module_sort_optimization_summary">WebUI ve Eylem içeren sistem modüllerini en üste taşı</string>
+    <string name="apm_custom_order">Özel modül sırası</string>
+    <string name="apm_drag_to_reorder">Sürükleyerek yeniden sırala</string>
+    <string name="apm_reset_order">Otomatik sıralamayı geri yükle</string>
     <string name="settings_fold_system_module">Sistem Modüllerini Katla</string>
     <string name="settings_fold_system_module_summary">Eylemleri genişletmek/daraltmak için modül kartına tıkla</string>
     <string name="settings_simple_list_bottom_bar">Basit Liste Alt Çubuğu</string>

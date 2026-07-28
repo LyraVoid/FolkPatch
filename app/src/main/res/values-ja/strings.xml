@@ -262,6 +262,9 @@
     <string name="settings_disable_module_update_check_summary">システムモジュールの自動更新の確認を無効化します。</string>
     <string name="settings_module_sort_optimization">モジュールの並べ替えを最適化</string>
     <string name="settings_module_sort_optimization_summary">WebUI とアクションを備えたシステムモジュールを上部に表示します。</string>
+    <string name="apm_custom_order">カスタムモジュール順序</string>
+    <string name="apm_drag_to_reorder">ドラッグして並べ替え</string>
+    <string name="apm_reset_order">自動順序に戻す</string>
     <string name="settings_fold_system_module">システムモジュールを折りたたむ</string>
     <string name="settings_fold_system_module_summary">モジュールカードをタップで展開/折りたたみのアクションをします。</string>
     <string name="settings_simple_list_bottom_bar">シンプルリストボトムバー</string>

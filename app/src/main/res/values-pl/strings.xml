@@ -281,6 +281,9 @@
     <string name="settings_enable_module_shortcut_add_summary">Pokaż przycisk dodawania skrótu WebUI na stronie modułów systemowych</string>
     <string name="settings_module_sort_optimization">Optymalizacja sortowania modułów</string>
     <string name="settings_module_sort_optimization_summary">Umieść moduły systemowe z WebUI i Action na początku listy</string>
+    <string name="apm_custom_order">Niestandardowa kolejność modułów</string>
+    <string name="apm_drag_to_reorder">Przeciągnij, aby zmienić kolejność</string>
+    <string name="apm_reset_order">Przywróć automatyczne sortowanie</string>
     <string name="settings_fold_system_module">Zwiń Moduły Systemowe</string>
     <string name="settings_fold_system_module_summary">Kliknij kartę modułu, aby rozwinąć/zwinąć akcje</string>
     <string name="settings_simple_list_bottom_bar">Prosty dolny pasek listy</string>

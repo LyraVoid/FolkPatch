@@ -297,6 +297,9 @@
     <string name="settings_disable_module_update_check_summary">Disable automatic update checks for system modules</string>
     <string name="settings_module_sort_optimization">Module Sorting Optimization</string>
     <string name="settings_module_sort_optimization_summary">Make system modules with WebUI and Action appear at the top</string>
+    <string name="apm_custom_order">Custom module order</string>
+    <string name="apm_drag_to_reorder">Drag to reorder</string>
+    <string name="apm_reset_order">Use automatic order</string>
     <string name="settings_fold_system_module">Fold System Modules</string>
     <string name="settings_fold_system_module_summary">Click module card to expand/collapse actions</string>
     <string name="settings_simple_list_bottom_bar">Simple List Bottom Bar</string>

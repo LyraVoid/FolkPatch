@@ -309,6 +309,9 @@
     <string name="settings_enable_module_shortcut_add_summary">在系统魔法阵页面显示 WebUI 魔法传送门添加按钮</string>
     <string name="settings_module_sort_optimization">魔法阵排序优化</string>
     <string name="settings_module_sort_optimization_summary">让系统魔法阵带有WebUI和Action的魔法阵排在前面</string>
+    <string name="apm_custom_order">自定义魔法阵顺序</string>
+    <string name="apm_drag_to_reorder">拖动调整顺序</string>
+    <string name="apm_reset_order">恢复自动排序</string>
     <string name="settings_fold_system_module">折叠系统魔法阵</string>
     <string name="settings_fold_system_module_summary">点击魔法阵卡片展开/折叠操作按钮</string>
     <string name="settings_simple_list_bottom_bar">简约魔法底栏</string>

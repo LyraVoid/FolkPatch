@@ -313,6 +313,9 @@
     <string name="settings_enable_module_shortcut_add_summary">Tampilkan tombol tambah pintasan WebUI di halaman modul sistem</string>
     <string name="settings_module_sort_optimization">Optimasi Pengurutan Modul</string>
     <string name="settings_module_sort_optimization_summary">Jadikan modul sistem dengan WebUI dan Action muncul di bagian atas</string>
+    <string name="apm_custom_order">Urutan modul kustom</string>
+    <string name="apm_drag_to_reorder">Seret untuk mengatur ulang</string>
+    <string name="apm_reset_order">Kembalikan urutan otomatis</string>
     <string name="settings_fold_system_module">Lipat Modul Sistem</string>
     <string name="settings_fold_system_module_summary">Klik kartu modul untuk memperluas/menyembunyikan tindakan</string>
     <string name="settings_simple_list_bottom_bar">Bar Bawah Daftar Sederhana</string>

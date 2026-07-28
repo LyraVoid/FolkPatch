@@ -290,6 +290,9 @@
     <string name="settings_disable_module_update_check">禁用模块更新检查</string>
     <string name="settings_disable_module_update_check_summary">禁用系统模块的自动更新检查</string>
     <string name="settings_module_sort_optimization">模块排序优化</string>
+    <string name="apm_custom_order">自定义模块顺序</string>
+    <string name="apm_drag_to_reorder">拖动调整顺序</string>
+    <string name="apm_reset_order">恢复自动排序</string>
     <string name="module_shortcut_name">快捷方式名称</string>
     <string name="module_shortcut_icon">快捷方式图标</string>
     <string name="module_shortcut_type">快捷方式类型</string>

@@ -32,6 +32,8 @@ import kotlin.math.pow
 class APModuleViewModel : ViewModel() {
     companion object {
         private const val TAG = "ModuleViewModel"
+        private const val CUSTOM_ORDER_ENABLED_KEY = "module_custom_order_enabled"
+        private const val CUSTOM_ORDER_KEY = "module_custom_order"
         private var modules by mutableStateOf<List<ModuleInfo>>(emptyList())
         private val zygiskModuleIds = listOf(
             "zygisksu",
@@ -82,6 +84,8 @@ class APModuleViewModel : ViewModel() {
 
     private val prefs = APApplication.sharedPreferences
     var sortOptimizationEnabled by mutableStateOf(prefs.getBoolean("module_sort_optimization", true))
+    private var customOrderEnabled by mutableStateOf(prefs.getBoolean(CUSTOM_ORDER_ENABLED_KEY, false))
+    private var customOrder by mutableStateOf(readCustomOrder())
     private val bannerCache = mutableStateMapOf<String, BannerInfo>()
     private val moduleSizeCache = mutableStateMapOf<String, Long>()
     private val updateSemaphore = Semaphore(3)
@@ -105,7 +109,10 @@ class APModuleViewModel : ViewModel() {
     private val collator = Collator.getInstance(Locale.getDefault())
 
     val moduleList by derivedStateOf {
-        if (sortOptimizationEnabled) {
+        if (customOrderEnabled) {
+            val positions = customOrder.withIndex().associate { it.value to it.index }
+            modules.sortedBy { positions[it.id] ?: Int.MAX_VALUE }
+        } else if (sortOptimizationEnabled) {
             modules.sortedWith(
                 compareByDescending<ModuleInfo> { it.isMetamodule }
                     .thenByDescending { it.isZygisk }
@@ -125,6 +132,46 @@ class APModuleViewModel : ViewModel() {
 
     fun markNeedRefresh() {
         isNeedRefresh = true
+    }
+
+    fun setCustomModuleOrder(ids: List<String>) {
+        val validIds = modules.mapTo(hashSetOf()) { it.id }
+        customOrder = ids.distinct().filter { it in validIds } +
+                modules.map { it.id }.filter { it !in ids }
+        customOrderEnabled = true
+        persistCustomOrder()
+    }
+
+    fun resetCustomModuleOrder() {
+        customOrderEnabled = false
+        customOrder = emptyList()
+        prefs.edit()
+            .putBoolean(CUSTOM_ORDER_ENABLED_KEY, false)
+            .remove(CUSTOM_ORDER_KEY)
+            .apply()
+    }
+
+    private fun readCustomOrder(): List<String> = runCatching {
+        val array = JSONArray(prefs.getString(CUSTOM_ORDER_KEY, "[]"))
+        (0 until array.length()).map { array.getString(it) }.distinct()
+    }.getOrDefault(emptyList())
+
+    private fun persistCustomOrder() {
+        prefs.edit()
+            .putBoolean(CUSTOM_ORDER_ENABLED_KEY, customOrderEnabled)
+            .putString(CUSTOM_ORDER_KEY, JSONArray(customOrder).toString())
+            .apply()
+    }
+
+    private fun reconcileCustomOrder() {
+        if (!customOrderEnabled) return
+        val moduleIds = modules.map { it.id }
+        val validIds = moduleIds.toHashSet()
+        val reconciled = customOrder.filter { it in validIds } + moduleIds.filter { it !in customOrder }
+        if (reconciled != customOrder) {
+            customOrder = reconciled
+            persistCustomOrder()
+        }
     }
 
     fun disableAllModules() {
@@ -203,6 +250,9 @@ class APModuleViewModel : ViewModel() {
                             obj.optString("name").contains("LSPosed", ignoreCase = true)
                         )
                     }.toList()
+
+                // Keep newly installed modules at the end and forget modules that no longer exist.
+                reconcileCustomOrder()
 
                 val ids = modules.map { it.id }
 

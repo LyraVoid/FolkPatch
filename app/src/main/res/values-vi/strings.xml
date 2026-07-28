@@ -309,6 +309,9 @@
     <string name="settings_enable_module_shortcut_add_summary">Hiển thị nút thêm lối tắt WebUI trên trang module hệ thống</string>
     <string name="settings_module_sort_optimization">Tối ưu hóa sắp xếp module</string>
     <string name="settings_module_sort_optimization_summary">Đưa các module hệ thống có WebUI và Action lên đầu danh sách</string>
+    <string name="apm_custom_order">Thứ tự module tùy chỉnh</string>
+    <string name="apm_drag_to_reorder">Kéo để sắp xếp lại</string>
+    <string name="apm_reset_order">Khôi phục sắp xếp tự động</string>
     <string name="settings_fold_system_module">Gấp gọn module hệ thống</string>
     <string name="settings_fold_system_module_summary">Nhấp vào thẻ module để mở rộng/gộp lại các hành động</string>
     <string name="settings_simple_list_bottom_bar">Thanh dưới đơn giản</string>

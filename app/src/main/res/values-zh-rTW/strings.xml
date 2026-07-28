@@ -306,6 +306,9 @@
     <string name="settings_enable_module_shortcut_add_summary">在系統模組頁面顯示 WebUI 捷徑新增按鈕</string>
     <string name="settings_module_sort_optimization">模組卡片排序優化</string>
     <string name="settings_module_sort_optimization_summary">前置系統模組中帶有「WebUI」和「操作」的模組</string>
+    <string name="apm_custom_order">自訂模組順序</string>
+    <string name="apm_drag_to_reorder">拖動調整順序</string>
+    <string name="apm_reset_order">恢復自動排序</string>
     <string name="settings_fold_system_module">折疊系統模組</string>
     <string name="settings_fold_system_module_summary">點擊模組卡片展開/折疊操作按鈕</string>
     <string name="settings_simple_list_bottom_bar">簡約列表底欄</string>

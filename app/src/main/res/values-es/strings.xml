@@ -320,6 +320,9 @@
     <string name="settings_enable_module_shortcut_add_summary">Mostrar botón de agregar acceso directo WebUI</string>
     <string name="settings_module_sort_optimization">Optimización de orden de módulos</string>
     <string name="settings_module_sort_optimization_summary">Hacer que los módulos del sistema con WebUI y Acción aparezcan arriba</string>
+    <string name="apm_custom_order">Orden personalizado de módulos</string>
+    <string name="apm_drag_to_reorder">Arrastrar para reordenar</string>
+    <string name="apm_reset_order">Restaurar orden automático</string>
     <string name="settings_fold_system_module">Plegar Módulos del Sistema</string>
     <string name="settings_fold_system_module_summary">Haz clic en la tarjeta del módulo para expandir/contraer acciones</string>
     <string name="settings_simple_list_bottom_bar">Barra Inferior Simple</string>

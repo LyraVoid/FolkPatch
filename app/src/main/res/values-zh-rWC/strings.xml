@@ -311,6 +311,9 @@
     <string name="settings_show_more_module_info_summary">仙符录中显仙符号与大小</string>
     <string name="settings_module_sort_optimization">仙符排序优化</string>
     <string name="settings_module_sort_optimization_summary">使天界仙符中具WebUI与符法者排于前列</string>
+    <string name="apm_custom_order">自定义仙符顺序</string>
+    <string name="apm_drag_to_reorder">拖动调整仙符顺序</string>
+    <string name="apm_reset_order">恢复自动排序</string>
     <string name="settings_fold_system_module">折叠天界仙符</string>
     <string name="settings_fold_system_module_summary">点击仙符画卷展开/折叠符法按钮</string>
         <string name="settings_simple_list_bottom_bar">简约仙符底栏</string>

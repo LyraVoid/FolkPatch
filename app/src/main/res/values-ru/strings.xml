@@ -313,6 +313,9 @@
     <string name="settings_enable_module_shortcut_add_summary">Показать кнопку добавления ярлыка WebUI на странице системных модулей</string>
     <string name="settings_module_sort_optimization">Оптимизация сортировки модулей</string>
     <string name="settings_module_sort_optimization_summary">Разместить системные модули с WebUI и Action в начале списка</string>
+    <string name="apm_custom_order">Пользовательский порядок модулей</string>
+    <string name="apm_drag_to_reorder">Перетащите, чтобы изменить порядок</string>
+    <string name="apm_reset_order">Восстановить автоматическую сортировку</string>
     <string name="settings_fold_system_module">Свернуть системные модули</string>
     <string name="settings_fold_system_module_summary">Нажмите на карточку модуля, чтобы развернуть/свернуть действия</string>
         <string name="settings_simple_list_bottom_bar">Простая нижняя панель списка</string>

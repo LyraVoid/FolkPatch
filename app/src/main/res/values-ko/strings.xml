@@ -294,6 +294,9 @@
     <string name="settings_disable_module_update_check_summary">시스템 모듈의 자동 업데이트 확인을 비활성화합니다.</string>
     <string name="settings_module_sort_optimization">모듈 정렬 최적화</string>
     <string name="settings_module_sort_optimization_summary">WebUI 및 Action이 있는 시스템 모듈을 최상단에 표시합니다.</string>
+    <string name="apm_custom_order">사용자 지정 모듈 순서</string>
+    <string name="apm_drag_to_reorder">끌어서 순서 변경</string>
+    <string name="apm_reset_order">자동 정렬 복원</string>
     <string name="settings_fold_system_module">시스템 모듈 접기</string>
     <string name="settings_fold_system_module_summary">모듈 카드를 눌러 작업을 확장하거나 접습니다.</string>
     <string name="settings_simple_list_bottom_bar">간결한 목록 하단 바</string>
