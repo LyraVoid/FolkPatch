@@ -57,12 +57,10 @@ import androidx.compose.material.icons.outlined.InstallMobile
 import androidx.compose.material.icons.outlined.Layers
 import androidx.compose.material.icons.outlined.PhoneAndroid
 import androidx.compose.material.icons.outlined.SdStorage
-import androidx.compose.material.icons.outlined.Security
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Shield
 import androidx.compose.material.icons.outlined.SystemUpdate
 import androidx.compose.material.icons.outlined.Warning
-import androidx.compose.material.icons.outlined.Widgets
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
@@ -85,7 +83,6 @@ import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableLongStateOf
@@ -129,7 +126,6 @@ import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.ui.theme.BackgroundManager
 import me.bmax.apatch.ui.component.BackgroundOptionsDialog
 import me.bmax.apatch.ui.component.rememberConfirmDialog
-import me.bmax.apatch.util.AppData
 import me.bmax.apatch.util.HardwareMonitor
 import me.bmax.apatch.util.PermissionUtils
 import me.bmax.apatch.util.Version
@@ -220,17 +216,6 @@ fun HomeScreenV4(
         }
     }
 
-    // 加载计数数据
-    val showCoreCards = kpStateResolved != APApplication.State.UNKNOWN_STATE
-    if (showCoreCards) {
-        LaunchedEffect(Unit) {
-            AppData.DataRefreshManager.ensureCountsLoaded()
-        }
-    }
-    val superuserCount by AppData.DataRefreshManager.superuserCount.collectAsStateWithLifecycle()
-    val apmModuleCount by AppData.DataRefreshManager.apmModuleCount.collectAsStateWithLifecycle()
-    val kpmModuleCount by AppData.DataRefreshManager.kernelModuleCount.collectAsStateWithLifecycle()
-
     // 响应式布局
     val configuration = LocalConfiguration.current
     val isWide = configuration.screenWidthDp >= 600
@@ -254,20 +239,6 @@ fun HomeScreenV4(
             showInstallDialog = showInstallDialog,
             isWallpaperMode = isWallpaperMode
         )
-
-        // 计数卡片组
-        AnimatedVisibility(
-            visible = showCoreCards,
-            enter = fadeIn() + slideInVertically(),
-            exit = fadeOut() + slideOutVertically()
-        ) {
-            CountCardsRow(
-                superuserCount = superuserCount,
-                apmModuleCount = apmModuleCount,
-                kpmModuleCount = kpmModuleCount,
-                navigator = navigator
-            )
-        }
 
         // Android补丁状态卡片（Half模式时显示）
         AnimatedVisibility(
@@ -851,115 +822,6 @@ private fun VersionInfoColumn(
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )
-    }
-}
-
-/**
- * 计数卡片组 - 超级用户、APM模块、内核补丁模块
- */
-@Composable
-private fun CountCardsRow(
-    superuserCount: Int,
-    apmModuleCount: Int,
-    kpmModuleCount: Int,
-    navigator: DestinationsNavigator
-) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-        CountCard(
-            modifier = Modifier.weight(1f),
-            icon = Icons.Outlined.Security,
-            label = stringResource(R.string.superuser),
-            count = superuserCount,
-            onClick = {
-                navigator.navigate(BottomBarDestination.SuperUser.direction) {
-                    popUpTo(NavGraphs.root) { saveState = true }
-                    launchSingleTop = true
-                    restoreState = true
-                }
-            }
-        )
-        CountCard(
-            modifier = Modifier.weight(1f),
-            icon = Icons.Outlined.Widgets,
-            label = stringResource(R.string.module),
-            count = apmModuleCount,
-            onClick = {
-                navigator.navigate(BottomBarDestination.AModule.direction) {
-                    popUpTo(NavGraphs.root) { saveState = true }
-                    launchSingleTop = true
-                    restoreState = true
-                }
-            }
-        )
-        CountCard(
-            modifier = Modifier.weight(1f),
-            icon = Icons.Outlined.Extension,
-            label = stringResource(R.string.kpm),
-            count = kpmModuleCount,
-            onClick = {
-                navigator.navigate(BottomBarDestination.KModule.direction) {
-                    popUpTo(NavGraphs.root) { saveState = true }
-                    launchSingleTop = true
-                    restoreState = true
-                }
-            }
-        )
-    }
-}
-
-/**
- * 单个计数卡片
- */
-@Composable
-private fun CountCard(
-    modifier: Modifier = Modifier,
-    icon: ImageVector,
-    label: String,
-    count: Int,
-    onClick: () -> Unit
-) {
-    val containerColor = if (BackgroundConfig.isCustomBackgroundEnabled) {
-        MaterialTheme.colorScheme.surface.copy(alpha = BackgroundConfig.customBackgroundOpacity)
-    } else {
-        MaterialTheme.colorScheme.surfaceColorAtElevation(2.dp)
-    }
-    Card(
-        modifier = modifier,
-        shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = containerColor),
-        onClick = onClick
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = null,
-                modifier = Modifier.size(24.dp),
-                tint = MaterialTheme.colorScheme.primary
-            )
-            Spacer(Modifier.height(8.dp))
-            Text(
-                text = count.toString(),
-                style = MaterialTheme.typography.headlineMedium,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onSurface
-            )
-            Spacer(Modifier.height(4.dp))
-            Text(
-                text = label,
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-        }
     }
 }
 
