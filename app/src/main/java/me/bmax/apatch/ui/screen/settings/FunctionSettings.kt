@@ -449,9 +449,8 @@ fun FunctionSettingsContent(
                                     Column {
                                         Text(
                                             text = uidModeTitle,
-                                            style = MaterialTheme.typography.titleSmall,
+                                            style = MaterialTheme.typography.bodyLarge,
                                             color = MaterialTheme.colorScheme.onSurface,
-                                            fontWeight = FontWeight.SemiBold,
                                         )
                                         Text(
                                             text = uidModeSummary,
@@ -489,9 +488,8 @@ fun FunctionSettingsContent(
                                     Column {
                                         Text(
                                             text = filterSystemTitle,
-                                            style = MaterialTheme.typography.titleSmall,
+                                            style = MaterialTheme.typography.bodyLarge,
                                             color = MaterialTheme.colorScheme.onSurface,
-                                            fontWeight = FontWeight.SemiBold,
                                         )
                                         Text(
                                             text = filterSystemSummary,
@@ -726,7 +724,6 @@ private fun SelectedPathHideAppItem(
                 Text(
                     text = label,
                     style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.colorScheme.onSurface,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
@@ -957,7 +954,7 @@ private fun AppPickerSheet(
                         Column(modifier = Modifier.weight(1f)) {
                             Text(
                                 app.label,
-                                style = MaterialTheme.typography.bodyMedium,
+                                style = MaterialTheme.typography.bodySmall,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
                             )

@@ -1096,7 +1096,7 @@ fun SELinuxModeDialog(
                             supportingContent = {
                                 Text(
                                     text = stringResource(R.string.settings_selinux_mode_enforcing_summary),
-                                    style = MaterialTheme.typography.bodyMedium,
+                                    style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.outline
                                 )
                             },
@@ -1114,7 +1114,7 @@ fun SELinuxModeDialog(
                             supportingContent = {
                                 Text(
                                     text = stringResource(R.string.settings_selinux_mode_permissive_summary),
-                                    style = MaterialTheme.typography.bodyMedium,
+                                    style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.outline
                                 )
                             },
@@ -1619,7 +1619,7 @@ fun CleanStorageDialog(showDialog: MutableState<Boolean>) {
                 )
                 Text(
                     text = stringResource(id = R.string.settings_clean_storage_confirm),
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.bodySmall,
                     modifier = Modifier.padding(bottom = 12.dp)
                 )
 

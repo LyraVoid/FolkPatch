@@ -92,9 +92,8 @@ fun ThemeColorPicker(
         ) {
             Text(
                 text = stringResource(R.string.theme_color),
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurface,
-                fontWeight = FontWeight.SemiBold,
             )
 
             Spacer(Modifier.height(12.dp))

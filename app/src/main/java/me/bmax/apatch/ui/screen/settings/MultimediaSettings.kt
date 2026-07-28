@@ -19,7 +19,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.DialogWindowProvider
@@ -674,15 +673,14 @@ fun MultimediaSettingsContent(
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
                             text = selectStartupSoundTitle,
-                            style = MaterialTheme.typography.titleMedium,
+                            style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.onSurface,
-                            fontWeight = FontWeight.SemiBold,
                         )
                         if (SoundEffectConfig.startupSoundFilename != null) {
                             Spacer(Modifier.height(4.dp))
                             Text(
                                 text = startupSoundSelectedText,
-                                style = MaterialTheme.typography.bodyMedium,
+                                style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
                         }
@@ -712,9 +710,8 @@ fun MultimediaSettingsContent(
                     Spacer(Modifier.width(16.dp))
                     Text(
                         text = clearStartupSoundTitle,
-                        style = MaterialTheme.typography.titleMedium,
+                        style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurface,
-                        fontWeight = FontWeight.SemiBold,
                     )
                 }
             }
@@ -737,14 +734,13 @@ fun MultimediaSettingsContent(
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
                             text = startupPresetTitle,
-                            style = MaterialTheme.typography.titleMedium,
+                            style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.onSurface,
-                            fontWeight = FontWeight.SemiBold,
                         )
                         Spacer(Modifier.height(4.dp))
                         Text(
                             text = SoundEffectConfig.startupPresetName,
-                            style = MaterialTheme.typography.bodyMedium,
+                            style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
@@ -786,9 +782,8 @@ fun MultimediaSettingsContent(
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
                             text = vibrationScopeTitle,
-                            style = MaterialTheme.typography.titleMedium,
+                            style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.onSurface,
-                            fontWeight = FontWeight.SemiBold,
                         )
                         Spacer(Modifier.height(4.dp))
                         Text(
@@ -796,7 +791,7 @@ fun MultimediaSettingsContent(
                                 stringResource(R.string.settings_vibration_scope_global)
                             else
                                 stringResource(R.string.settings_vibration_scope_bottom_bar),
-                            style = MaterialTheme.typography.bodyMedium,
+                            style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }

@@ -51,7 +51,7 @@ fun CheckboxItem(
             {
                 Text(
                     text = summary,
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.outline
                 )
             }
@@ -96,7 +96,7 @@ fun SwitchItem(
             {
                 Text(
                     text = summary,
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.outline
                 )
             }
@@ -156,7 +156,7 @@ fun SettingsCategory(
                 {
                     Text(
                         text = summary,
-                        style = MaterialTheme.typography.bodyMedium,
+                        style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.outline
                     )
                 }

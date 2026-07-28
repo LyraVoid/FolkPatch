@@ -49,7 +49,6 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.DialogWindowProvider
@@ -1118,9 +1117,9 @@ fun AppearanceSettingsContent(
                             Icon(imageVector = Icons.Filled.Image, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(24.dp))
                             Spacer(Modifier.width(16.dp))
                             Column(modifier = Modifier.weight(1f)) {
-                                Text(text = stringResource(id = R.string.settings_select_title_image), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
+                                Text(text = stringResource(id = R.string.settings_select_title_image), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
                                 if (!BackgroundConfig.titleImageUri.isNullOrEmpty()) {
-                                    Text(text = stringResource(id = R.string.settings_title_image_selected), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.outline)
+                                    Text(text = stringResource(id = R.string.settings_title_image_selected), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.outline)
                                 }
                             }
                         }
@@ -1156,7 +1155,7 @@ fun AppearanceSettingsContent(
                             ) {
                                 Icon(imageVector = Icons.Filled.Delete, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(24.dp))
                                 Spacer(Modifier.width(16.dp))
-                                Text(text = stringResource(id = R.string.settings_clear_title_image), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
+                                Text(text = stringResource(id = R.string.settings_clear_title_image), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
                             }
                         }
                     }
@@ -1287,9 +1286,9 @@ fun AppearanceSettingsContent(
                                 Icon(imageVector = Icons.Filled.VideoFile, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(24.dp))
                                 Spacer(Modifier.width(16.dp))
                                 Column(modifier = Modifier.weight(1f)) {
-                                    Text(text = stringResource(id = R.string.settings_select_video), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
+                                    Text(text = stringResource(id = R.string.settings_select_video), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
                                     if (!BackgroundConfig.videoBackgroundUri.isNullOrEmpty()) {
-                                        Text(text = stringResource(id = R.string.settings_video_selected), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.outline)
+                                        Text(text = stringResource(id = R.string.settings_video_selected), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.outline)
                                     }
                                 }
                             }
@@ -1327,7 +1326,7 @@ fun AppearanceSettingsContent(
                                 ) {
                                     Icon(imageVector = Icons.Filled.Delete, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(24.dp))
                                     Spacer(Modifier.width(16.dp))
-                                    Text(text = clearVideoTitle, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
+                                    Text(text = clearVideoTitle, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
                                 }
                             }
                         }
@@ -1393,9 +1392,9 @@ fun AppearanceSettingsContent(
                                             Icon(imageVector = Icons.Filled.Image, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(24.dp))
                                             Spacer(Modifier.width(16.dp))
                                             Column(modifier = Modifier.weight(1f)) {
-                                                Text(text = stringResource(id = titleRes), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
+                                                Text(text = stringResource(id = titleRes), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
                                                 if (!uri.isNullOrEmpty()) {
-                                                    Text(text = stringResource(id = R.string.settings_background_selected), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.outline)
+                                                    Text(text = stringResource(id = R.string.settings_background_selected), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.outline)
                                                 }
                                             }
                                         }
@@ -1429,9 +1428,9 @@ fun AppearanceSettingsContent(
                                     Icon(imageVector = Icons.Filled.Image, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(24.dp))
                                     Spacer(Modifier.width(16.dp))
                                     Column(modifier = Modifier.weight(1f)) {
-                                        Text(text = stringResource(id = R.string.settings_select_background_image), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
+                                        Text(text = stringResource(id = R.string.settings_select_background_image), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
                                         if (!BackgroundConfig.customBackgroundUri.isNullOrEmpty()) {
-                                            Text(text = stringResource(id = R.string.settings_background_selected), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.outline)
+                                            Text(text = stringResource(id = R.string.settings_background_selected), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.outline)
                                         }
                                     }
                                 }
@@ -1469,7 +1468,7 @@ fun AppearanceSettingsContent(
                                     ) {
                                         Icon(imageVector = Icons.Filled.Delete, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(24.dp))
                                         Spacer(Modifier.width(16.dp))
-                                        Text(text = clearBgTitle, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
+                                        Text(text = clearBgTitle, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
                                     }
                                 }
                             }
@@ -1573,9 +1572,9 @@ fun AppearanceSettingsContent(
                                 Icon(imageVector = Icons.Filled.Image, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(24.dp))
                                 Spacer(Modifier.width(16.dp))
                                 Column(modifier = Modifier.weight(1f)) {
-                                    Text(text = stringResource(id = R.string.settings_select_background_image), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
+                                    Text(text = stringResource(id = R.string.settings_select_background_image), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
                                     if (!BackgroundConfig.gridWorkingCardBackgroundUri.isNullOrEmpty()) {
-                                        Text(text = stringResource(id = R.string.settings_grid_working_card_background_selected), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.outline)
+                                        Text(text = stringResource(id = R.string.settings_grid_working_card_background_selected), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.outline)
                                     }
                                 }
                             }
@@ -1609,7 +1608,7 @@ fun AppearanceSettingsContent(
                             ) {
                                 Icon(imageVector = Icons.Filled.Delete, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(24.dp))
                                 Spacer(Modifier.width(16.dp))
-                                Text(text = stringResource(id = R.string.settings_clear_grid_working_card_background), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
+                                Text(text = stringResource(id = R.string.settings_clear_grid_working_card_background), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
                             }
                         }
                     }
@@ -1669,12 +1668,12 @@ fun AppearanceSettingsContent(
                             Column(modifier = Modifier.weight(1f)) {
                                 Text(
                                     text = stringResource(id = R.string.settings_custom_badge_text),
-                                    style = MaterialTheme.typography.titleMedium,
+                                    style = MaterialTheme.typography.bodyLarge,
                                     color = MaterialTheme.colorScheme.onSurface,
                                 )
                                 Text(
                                     text = currentBadgeTextMode,
-                                    style = MaterialTheme.typography.bodyMedium,
+                                    style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.outline,
                                 )
                             }
@@ -1692,7 +1691,7 @@ fun AppearanceSettingsContent(
                     Column {
                         Text(
                             stringResource(id = R.string.settings_custom_badge_text_summary),
-                            style = MaterialTheme.typography.bodyMedium,
+                            style = MaterialTheme.typography.bodySmall,
                             modifier = Modifier.padding(bottom = 16.dp),
                         )
                         badgeTextModes.forEachIndexed { index, mode ->
@@ -1795,12 +1794,12 @@ fun AppearanceSettingsContent(
                                         Column(modifier = Modifier.weight(1f)) {
                                             Text(
                                                 text = stringResource(id = R.string.apm_banner_api_source),
-                                                style = MaterialTheme.typography.titleMedium,
+                                                style = MaterialTheme.typography.bodyLarge,
                                                 color = MaterialTheme.colorScheme.onSurface,
                                             )
                                             Text(
                                                 text = apiSourceSummary,
-                                                style = MaterialTheme.typography.bodyMedium,
+                                                style = MaterialTheme.typography.bodySmall,
                                                 color = MaterialTheme.colorScheme.outline,
                                             )
                                         }
@@ -1835,7 +1834,7 @@ fun AppearanceSettingsContent(
                                         Spacer(Modifier.width(16.dp))
                                         Text(
                                             text = stringResource(id = R.string.apm_api_marketplace_title),
-                                            style = MaterialTheme.typography.titleMedium,
+                                            style = MaterialTheme.typography.bodyLarge,
                                             color = MaterialTheme.colorScheme.onSurface,
                                         )
                                     }
@@ -1912,7 +1911,7 @@ fun AppearanceSettingsContent(
                         ) {
                             Icon(imageVector = Icons.Filled.FontDownload, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(24.dp))
                             Spacer(Modifier.width(16.dp))
-                            Text(text = stringResource(id = R.string.settings_select_font_file), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
+                            Text(text = stringResource(id = R.string.settings_select_font_file), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
                         }
                     }
                 }
@@ -1945,7 +1944,7 @@ fun AppearanceSettingsContent(
                             ) {
                                 Icon(imageVector = Icons.Filled.Delete, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(24.dp))
                                 Spacer(Modifier.width(16.dp))
-                                Text(text = clearFontTitle, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
+                                Text(text = clearFontTitle, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
                             }
                         }
                     }
@@ -1963,7 +1962,7 @@ fun AppearanceSettingsContent(
                         Icon(imageVector = Icons.Filled.Store, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(24.dp))
                         Spacer(Modifier.width(16.dp))
                         Column(modifier = Modifier.weight(1f)) {
-                            Text(text = stringResource(id = R.string.theme_store_title), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
+                            Text(text = stringResource(id = R.string.theme_store_title), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
                             if (themeStoreMode == "compat") {
                                 Text(
                                     text = stringResource(R.string.theme_mode_compat_desc),
@@ -1992,7 +1991,7 @@ fun AppearanceSettingsContent(
                         Column(modifier = Modifier.weight(1f)) {
                             Text(
                                 text = stringResource(R.string.settings_theme_mode),
-                                style = MaterialTheme.typography.titleMedium,
+                                style = MaterialTheme.typography.bodyLarge,
                                 color = MaterialTheme.colorScheme.onSurface
                             )
                             Text(
@@ -2023,7 +2022,7 @@ fun AppearanceSettingsContent(
                                 )
                                 Text(
                                     text = stringResource(R.string.theme_mode_switch_msg),
-                                    style = MaterialTheme.typography.bodyMedium,
+                                    style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                     modifier = Modifier.padding(bottom = 16.dp)
                                 )
@@ -2092,7 +2091,7 @@ fun AppearanceSettingsContent(
                     ) {
                         Icon(imageVector = Icons.Filled.FileDownload, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(24.dp))
                         Spacer(Modifier.width(16.dp))
-                        Text(text = stringResource(id = R.string.settings_save_theme), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
+                        Text(text = stringResource(id = R.string.settings_save_theme), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
                     }
                 }
             }
@@ -2105,7 +2104,7 @@ fun AppearanceSettingsContent(
                     ) {
                         Icon(imageVector = Icons.Filled.FileUpload, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(24.dp))
                         Spacer(Modifier.width(16.dp))
-                        Text(text = stringResource(id = R.string.settings_import_theme), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
+                        Text(text = stringResource(id = R.string.settings_import_theme), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
                     }
                 }
             }
@@ -2140,7 +2139,7 @@ fun AppearanceSettingsContent(
                     ) {
                         Icon(imageVector = Icons.Filled.RestartAlt, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(24.dp))
                         Spacer(Modifier.width(16.dp))
-                        Text(text = resetThemeTitle, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
+                        Text(text = resetThemeTitle, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
                     }
                 }
             }
@@ -2547,7 +2546,7 @@ fun ThemeExportDialog(
 
                 Text(
                     text = stringResource(R.string.theme_type),
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.bodySmall,
                     modifier = Modifier.padding(bottom = 4.dp, top = 4.dp)
                 )
                 Row(modifier = Modifier.fillMaxWidth()) {
@@ -2561,7 +2560,7 @@ fun ThemeExportDialog(
                         )
                         Text(
                             text = stringResource(R.string.theme_type_phone),
-                            style = MaterialTheme.typography.bodyMedium,
+                            style = MaterialTheme.typography.bodySmall,
                             modifier = Modifier.padding(start = 8.dp)
                         )
                     }
@@ -2577,7 +2576,7 @@ fun ThemeExportDialog(
                         )
                         Text(
                             text = stringResource(R.string.theme_type_tablet),
-                            style = MaterialTheme.typography.bodyMedium,
+                            style = MaterialTheme.typography.bodySmall,
                             modifier = Modifier.padding(start = 8.dp)
                         )
                     }
@@ -2686,7 +2685,7 @@ fun ThemeImportDialog(
                     Column(modifier = Modifier.padding(16.dp)) {
                         Text(
                             text = stringResource(R.string.theme_info),
-                            style = MaterialTheme.typography.titleMedium,
+                            style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.padding(bottom = 8.dp)
                         )
@@ -2936,7 +2935,7 @@ fun BannerApiConfigDialog(
 
                 Text(
                     text = stringResource(R.string.apm_banner_api_config_desc),
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
