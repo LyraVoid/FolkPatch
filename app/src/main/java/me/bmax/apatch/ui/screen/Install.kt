@@ -5,6 +5,7 @@ import android.os.Environment
 import android.content.Intent
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -207,7 +208,7 @@ fun InstallScreen(navigator: DestinationsNavigator, uri: Uri, type: MODULE_TYPE)
                 .verticalScroll(scrollState),
         ) {
             LaunchedEffect(text) {
-                scrollState.animateScrollTo(scrollState.maxValue)
+                scrollState.animateScrollTo(scrollState.maxValue, animationSpec = tween(durationMillis = 80))
             }
             Text(
                 modifier = Modifier.padding(8.dp),
@@ -226,7 +227,7 @@ private fun TopBar(onBack: () -> Unit = {}, onSave: () -> Unit = {}) {
     TopAppBar(title = { Text(stringResource(R.string.apm_install)) }, navigationIcon = {
         IconButton(
             onClick = onBack
-        ) { Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null) }
+        ) { Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back") }
     }, actions = {
         IconButton(onClick = onSave) {
             Icon(

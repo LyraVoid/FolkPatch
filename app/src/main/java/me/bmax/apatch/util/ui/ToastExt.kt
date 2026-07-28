@@ -59,6 +59,7 @@ private fun showFallbackToast(context: Context, message: String) {
                 text = message
                 setPadding(48, 24, 48, 24)
                 setTextColor(Color.WHITE)
+                setBackgroundColor(Color.argb(200, 48, 48, 48))
                 textSize = 14f
             }
 

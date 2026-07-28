@@ -135,7 +135,7 @@ fun OnlineScriptScreen(navigator: DestinationsNavigator) {
                     contentPadding = PaddingValues(16.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    items(viewModel.modules) { script ->
+                    items(viewModel.modules, key = { it.name }) { script ->
                         OnlineScriptItem(
                             script = script,
                             context = context

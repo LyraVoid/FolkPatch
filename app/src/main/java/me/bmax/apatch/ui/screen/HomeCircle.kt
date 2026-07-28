@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -97,8 +98,8 @@ fun HomeScreenCircle(
                 AppData.DataRefreshManager.ensureCountsLoaded()
             }
             
-            val superuserCount by AppData.DataRefreshManager.superuserCount.collectAsState()
-            val moduleCount by AppData.DataRefreshManager.apmModuleCount.collectAsState()
+            val superuserCount by AppData.DataRefreshManager.superuserCount.collectAsStateWithLifecycle()
+            val moduleCount by AppData.DataRefreshManager.apmModuleCount.collectAsStateWithLifecycle()
             
             Row(
                 modifier = Modifier.fillMaxWidth(),

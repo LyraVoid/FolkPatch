@@ -1228,7 +1228,7 @@ fun AppTitleChooseDialog(showDialog: MutableState<Boolean>, onTitleChanged: (Str
             color = AlertDialogDefaults.containerColor,
         ) {
             LazyColumn {
-                items(titles.size) { index ->
+                items(titles.size, key = { it }) { index ->
                     val (key, displayName) = titles[index]
                     ListItem(
                         headlineContent = { Text(text = displayName) },

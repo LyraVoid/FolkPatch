@@ -81,7 +81,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -545,7 +545,7 @@ private fun TopBar(
         }
     }, actions = {
         if (MusicConfig.isMusicEnabled) {
-            val isPlaying by MusicManager.isPlaying.collectAsState()
+            val isPlaying by MusicManager.isPlaying.collectAsStateWithLifecycle()
             IconButton(onClick = { MusicManager.toggle() }) {
                 Icon(
                     imageVector = if (isPlaying) Icons.Filled.Pause else Icons.Filled.PlayArrow,

@@ -8,6 +8,7 @@ import android.net.Uri
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -228,7 +229,7 @@ fun Patches(mode: PatchesViewModel.PatchMode) {
                     )
                 }
                 LaunchedEffect(viewModel.patchLog) {
-                    scrollState.animateScrollTo(scrollState.maxValue)
+                    scrollState.animateScrollTo(scrollState.maxValue, animationSpec = tween(durationMillis = 80))
                 }
             }
 

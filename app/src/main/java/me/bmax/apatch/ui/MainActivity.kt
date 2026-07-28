@@ -62,7 +62,7 @@ import androidx.compose.runtime.key
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.compositionLocalOf
 import android.content.SharedPreferences
@@ -935,9 +935,9 @@ private fun BottomBar(
     var enableKernelBadge by remember { mutableStateOf(prefs.getBoolean("badge_kernel", true)) }
 
     // Collect badge counts from AppData
-    val superuserCount by me.bmax.apatch.util.AppData.DataRefreshManager.superuserCount.collectAsState()
-    val apmModuleCount by me.bmax.apatch.util.AppData.DataRefreshManager.apmModuleCount.collectAsState()
-    val kernelModuleCount by me.bmax.apatch.util.AppData.DataRefreshManager.kernelModuleCount.collectAsState()
+    val superuserCount by me.bmax.apatch.util.AppData.DataRefreshManager.superuserCount.collectAsStateWithLifecycle()
+    val apmModuleCount by me.bmax.apatch.util.AppData.DataRefreshManager.apmModuleCount.collectAsStateWithLifecycle()
+    val kernelModuleCount by me.bmax.apatch.util.AppData.DataRefreshManager.kernelModuleCount.collectAsStateWithLifecycle()
 
     DisposableEffect(Unit) {
         val listener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPrefs, key ->
@@ -1441,9 +1441,9 @@ private fun NavigationRailBar(navController: NavHostController) {
     var enableApmBadge by remember { mutableStateOf(prefs.getBoolean("badge_apm", true)) }
     var enableKernelBadge by remember { mutableStateOf(prefs.getBoolean("badge_kernel", true)) }
 
-    val superuserCount by me.bmax.apatch.util.AppData.DataRefreshManager.superuserCount.collectAsState()
-    val apmModuleCount by me.bmax.apatch.util.AppData.DataRefreshManager.apmModuleCount.collectAsState()
-    val kernelModuleCount by me.bmax.apatch.util.AppData.DataRefreshManager.kernelModuleCount.collectAsState()
+    val superuserCount by me.bmax.apatch.util.AppData.DataRefreshManager.superuserCount.collectAsStateWithLifecycle()
+    val apmModuleCount by me.bmax.apatch.util.AppData.DataRefreshManager.apmModuleCount.collectAsStateWithLifecycle()
+    val kernelModuleCount by me.bmax.apatch.util.AppData.DataRefreshManager.kernelModuleCount.collectAsStateWithLifecycle()
 
     DisposableEffect(Unit) {
         val listener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPrefs, key ->
@@ -1743,7 +1743,7 @@ private fun NavBarIcon(
     val destinationName = destination.name
     // Observe config revision so the icon recomposes immediately when the user
     // picks/clears a custom icon or toggles custom icons, without needing an app restart.
-    val revision by BottomBarIconConfig.revision.collectAsState()
+    val revision by BottomBarIconConfig.revision.collectAsStateWithLifecycle()
     val customUri = remember(revision, destinationName) { BottomBarIconConfig.getCustomIconUri(destinationName) }
     val isCustomEnabled = remember(revision) { BottomBarIconConfig.isEnabled }
 

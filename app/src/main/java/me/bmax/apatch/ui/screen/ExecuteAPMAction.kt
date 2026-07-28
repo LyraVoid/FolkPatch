@@ -1,6 +1,7 @@
 package me.bmax.apatch.ui.screen
 
 import android.os.Environment
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -159,7 +160,7 @@ fun ExecuteAPMActionScreen(navigator: DestinationsNavigator, moduleId: String) {
                 .verticalScroll(scrollState),
         ) {
             LaunchedEffect(text) {
-                scrollState.animateScrollTo(scrollState.maxValue)
+                scrollState.animateScrollTo(scrollState.maxValue, animationSpec = tween(durationMillis = 80))
             }
             Text(
                 modifier = Modifier.padding(8.dp),
@@ -180,7 +181,7 @@ private fun TopBar(onBack: () -> Unit = {}, onSave: () -> Unit = {}) {
         navigationIcon = {
             IconButton(
                 onClick = onBack
-            ) { Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null) }
+            ) { Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back") }
         },
         actions = {
             IconButton(onClick = onSave) {

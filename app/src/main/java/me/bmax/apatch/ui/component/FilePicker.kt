@@ -197,7 +197,7 @@ fun FilePickerDialog(
                                 }
                             }
                         } else {
-                            items(files) { file ->
+                            items(files, key = { it.absolutePath }) { file ->
                                 if (file.isDirectory) {
                                     ListItem(
                                         headlineContent = { Text(file.name) },

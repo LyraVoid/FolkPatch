@@ -19,6 +19,7 @@ import androidx.compose.material.icons.outlined.PlayArrow
 import androidx.compose.material3.*
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -64,8 +65,8 @@ fun ScriptLibraryScreen(navigator: DestinationsNavigator) {
     val context = LocalContext.current
     val prefs = remember { APApplication.sharedPreferences }
 
-    val scripts by viewModel.scripts.collectAsState()
-    val isLoading by viewModel.isLoading.collectAsState()
+    val scripts by viewModel.scripts.collectAsStateWithLifecycle()
+    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
 
     var showAddDialog by remember { mutableStateOf(false) }
     var selectedFile by remember { mutableStateOf<File?>(null) }
@@ -140,7 +141,7 @@ fun ScriptLibraryScreen(navigator: DestinationsNavigator) {
                     contentPadding = PaddingValues(16.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    items(scripts) { script ->
+                    items(scripts, key = { it.path }) { script ->
                         ScriptItem(
                             script = script,
                             enableShortcut = enableModuleShortcutAdd,

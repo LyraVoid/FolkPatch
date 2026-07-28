@@ -24,6 +24,7 @@ import java.io.File
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -926,7 +927,7 @@ fun AppearanceSettingsContent(
                 val customNavIconsEnabled = remember { mutableStateOf(prefs.getBoolean("nav_icon_custom_enabled", false)) }
                 var editingDestName by remember { mutableStateOf<String?>(null) }
                 // Observe config revision so the previews below refresh immediately after pick/clear.
-                val iconRevision by BottomBarIconConfig.revision.collectAsState()
+                val iconRevision by BottomBarIconConfig.revision.collectAsStateWithLifecycle()
                 val iconPickerLauncher = rememberLauncherForActivityResult(
                     contract = ActivityResultContracts.GetContent()
                 ) { uri ->
@@ -2352,7 +2353,7 @@ fun ThemeChooseDialog(showDialog: MutableState<Boolean>) {
             color = AlertDialogDefaults.containerColor,
         ) {
             LazyColumn {
-                items(colorsList()) {
+                items(colorsList(), key = { it.name }) {
                     ListItem(
                         headlineContent = { Text(text = stringResource(it.nameId)) },
                         modifier = Modifier.clickable {

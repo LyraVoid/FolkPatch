@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -229,7 +229,7 @@ fun ScriptExecutionLogScreen(
                     IconButton(
                         onClick = { navigator.popBackStack() }
                     ) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
                 },
                 actions = {
@@ -302,7 +302,7 @@ fun ScriptExecutionLogScreen(
                 .padding(innerPadding),
             state = listState
         ) {
-            items(logLines) { line ->
+            itemsIndexed(logLines, key = { index, _ -> index }) { _, line ->
                 Text(
                     text = line,
                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp),

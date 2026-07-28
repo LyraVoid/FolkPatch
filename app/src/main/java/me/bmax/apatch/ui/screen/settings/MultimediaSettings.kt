@@ -13,6 +13,7 @@ import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -156,9 +157,9 @@ fun MultimediaSettingsContent(
     // --- State variables for dialogs (must be declared before SplicedColumnGroup) ---
 
     // Music playback state
-    val currentPosition by MusicManager.currentPosition.collectAsState(initial = 0)
-    val duration by MusicManager.duration.collectAsState(initial = 0)
-    val isPlaying by MusicManager.isPlaying.collectAsState(initial = false)
+    val currentPosition by MusicManager.currentPosition.collectAsStateWithLifecycle(initialValue = 0)
+    val duration by MusicManager.duration.collectAsStateWithLifecycle(initialValue = 0)
+    val isPlaying by MusicManager.isPlaying.collectAsStateWithLifecycle(initialValue = false)
 
     // Clear music dialog
     val clearMusicDialog = rememberConfirmDialog(
@@ -925,7 +926,7 @@ fun MultimediaSettingsContent(
                         modifier = Modifier.heightIn(max = 400.dp)
                     ) {
                         androidx.compose.foundation.lazy.LazyColumn {
-                            items(SoundEffectConfig.PRESETS.size) { index ->
+                            items(SoundEffectConfig.PRESETS.size, key = { it }) { index ->
                                 val preset = SoundEffectConfig.PRESETS[index]
                                 ListItem(
                                     headlineContent = { Text(preset) },
@@ -1151,7 +1152,7 @@ fun MultimediaSettingsContent(
                         modifier = Modifier.heightIn(max = 400.dp)
                     ) {
                         androidx.compose.foundation.lazy.LazyColumn {
-                            items(SoundEffectConfig.STARTUP_PRESETS.size) { index ->
+                            items(SoundEffectConfig.STARTUP_PRESETS.size, key = { it }) { index ->
                                 val preset = SoundEffectConfig.STARTUP_PRESETS[index]
                                 ListItem(
                                     headlineContent = { Text(preset) },

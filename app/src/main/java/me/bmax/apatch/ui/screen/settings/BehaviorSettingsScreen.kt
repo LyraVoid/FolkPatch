@@ -52,7 +52,7 @@ fun BehaviorSettingsScreen(navigator: DestinationsNavigator, highlightKey: Strin
                 title = { Text(stringResource(R.string.settings_category_behavior), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold) },
                 navigationIcon = {
                     IconButton(onClick = { navigator.popBackStack() }) {
-                        Icon(Icons.AutoMirrored.Outlined.ArrowBack, contentDescription = null)
+                        Icon(Icons.AutoMirrored.Outlined.ArrowBack, contentDescription = "Back")
                     }
                 },
                 scrollBehavior = scrollBehavior,

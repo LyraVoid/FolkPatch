@@ -298,7 +298,7 @@ fun ApmBulkInstallScreen(navigator: DestinationsNavigator, initialUris: ArrayLis
                         LazyColumn(
                             modifier = Modifier.weight(1f)
                         ) {
-                            items(moduleUris) { uri ->
+                            items(moduleUris, key = { it }) { uri ->
                                 ListItem(
                                     headlineContent = { 
                                         Text(

@@ -61,7 +61,7 @@ fun AppearanceSettingsScreen(navigator: DestinationsNavigator, highlightKey: Str
                 title = { Text(stringResource(R.string.settings_category_appearance), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold) },
                 navigationIcon = {
                     IconButton(onClick = { navigator.popBackStack() }) {
-                        Icon(Icons.AutoMirrored.Outlined.ArrowBack, contentDescription = null)
+                        Icon(Icons.AutoMirrored.Outlined.ArrowBack, contentDescription = "Back")
                     }
                 },
                 scrollBehavior = scrollBehavior,

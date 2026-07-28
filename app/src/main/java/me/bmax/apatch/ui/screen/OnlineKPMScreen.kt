@@ -147,7 +147,7 @@ fun OnlineKPMScreen(navigator: DestinationsNavigator) {
                         contentPadding = PaddingValues(16.dp),
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        items(viewModel.modules) { module ->
+                        items(viewModel.modules, key = { it.name }) { module ->
                             OnlineKPMItem(module, context)
                         }
                     }

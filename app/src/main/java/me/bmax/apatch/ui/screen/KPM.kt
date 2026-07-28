@@ -350,12 +350,12 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
                                 if (isExpanded) {
                                     Icon(
                                         Icons.Filled.Close,
-                                        contentDescription = null,
+                                        contentDescription = "Close",
                                     )
                                 } else {
                                     Icon(
                                         painter = painterResource(id = R.drawable.package_import),
-                                        contentDescription = null,
+                                        contentDescription = "Install module",
                                     )
                                 }
                             }
@@ -994,7 +994,7 @@ private fun TopBar(
                                     keyboardController?.hide()
                                     onSearchQueryChange("")
                                 },
-                                content = { Icon(Icons.Filled.Close, null) }
+                                content = { Icon(Icons.Filled.Close, "Close") }
                             )
                         },
                         maxLines = 1,

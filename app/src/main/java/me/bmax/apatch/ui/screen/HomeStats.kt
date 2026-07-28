@@ -8,6 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -46,8 +47,8 @@ fun HomeScreenStats(
     apState: APApplication.State
 ) {
     val viewModel: DashboardViewModel = viewModel()
-    val uiState by viewModel.dashboardUiState.collectAsState()
-    val timeSeries by viewModel.timeSeriesData.collectAsState()
+    val uiState by viewModel.dashboardUiState.collectAsStateWithLifecycle()
+    val timeSeries by viewModel.timeSeriesData.collectAsStateWithLifecycle()
 
     val showCoreCards = kpState != APApplication.State.UNKNOWN_STATE
     if (showCoreCards) {
@@ -55,9 +56,9 @@ fun HomeScreenStats(
             AppData.DataRefreshManager.ensureCountsLoaded()
         }
     }
-    val superuserCount by AppData.DataRefreshManager.superuserCount.collectAsState()
-    val apmModuleCount by AppData.DataRefreshManager.apmModuleCount.collectAsState()
-    val kernelModuleCount by AppData.DataRefreshManager.kernelModuleCount.collectAsState()
+    val superuserCount by AppData.DataRefreshManager.superuserCount.collectAsStateWithLifecycle()
+    val apmModuleCount by AppData.DataRefreshManager.apmModuleCount.collectAsStateWithLifecycle()
+    val kernelModuleCount by AppData.DataRefreshManager.kernelModuleCount.collectAsStateWithLifecycle()
 
     LifecycleStartEffect(Unit) {
         viewModel.startPeriodicPolling()

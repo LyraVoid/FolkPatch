@@ -147,7 +147,7 @@ fun OnlineModuleScreen(navigator: DestinationsNavigator) {
                         contentPadding = PaddingValues(16.dp),
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        items(viewModel.modules) { module ->
+                        items(viewModel.modules, key = { it.name }) { module ->
                             OnlineModuleItem(module, context)
                         }
                     }

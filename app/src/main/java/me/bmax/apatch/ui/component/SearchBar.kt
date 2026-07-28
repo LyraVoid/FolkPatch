@@ -118,7 +118,7 @@ fun SearchAppBar(
                                     keyboardController?.hide()
                                     onClearClick()
                                 },
-                                content = { Icon(Icons.Filled.Close, null) }
+                                content = { Icon(Icons.Filled.Close, "Clear search") }
                             )
                         },
                         maxLines = 1,
@@ -140,7 +140,7 @@ fun SearchAppBar(
             if (onBackClick != null) {
                 IconButton(
                     onClick = onBackClick,
-                    content = { Icon(Icons.AutoMirrored.Outlined.ArrowBack, null) }
+                    content = { Icon(Icons.AutoMirrored.Outlined.ArrowBack, "Back") }
                 )
             }
         },
@@ -154,7 +154,7 @@ fun SearchAppBar(
                     leadingActions?.invoke()
                     IconButton(
                         onClick = { onSearch = true },
-                        content = { Icon(Icons.Filled.Search, null) }
+                        content = { Icon(Icons.Filled.Search, "Search") }
                     )
                 }
             }

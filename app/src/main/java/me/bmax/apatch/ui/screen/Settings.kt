@@ -118,13 +118,13 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                 },
                 actions = {
                     IconButton(onClick = dropUnlessResumed { navigator.navigate(SettingsSearchScreenDestination) }) {
-                        Icon(Icons.Filled.Search, contentDescription = null)
+                        Icon(Icons.Filled.Search, contentDescription = "Search")
                     }
                     IconButton(onClick = { showDevDialog = true }) {
-                        Icon(Icons.Outlined.Info, contentDescription = null)
+                        Icon(Icons.Outlined.Info, contentDescription = stringResource(R.string.about))
                     }
                     IconButton(onClick = dropUnlessResumed { navigator.navigate(FunctionSettingsScreenDestination(null)) }) {
-                        Icon(Icons.Filled.Tune, contentDescription = null)
+                        Icon(Icons.Filled.Tune, contentDescription = stringResource(R.string.settings_category_function))
                     }
                 },
                 scrollBehavior = scrollBehavior,

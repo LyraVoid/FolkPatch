@@ -80,7 +80,7 @@ import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableLongStateOf
@@ -209,9 +209,9 @@ fun HomeScreenV4(
             AppData.DataRefreshManager.ensureCountsLoaded()
         }
     }
-    val superuserCount by AppData.DataRefreshManager.superuserCount.collectAsState()
-    val apmModuleCount by AppData.DataRefreshManager.apmModuleCount.collectAsState()
-    val kpmModuleCount by AppData.DataRefreshManager.kernelModuleCount.collectAsState()
+    val superuserCount by AppData.DataRefreshManager.superuserCount.collectAsStateWithLifecycle()
+    val apmModuleCount by AppData.DataRefreshManager.apmModuleCount.collectAsStateWithLifecycle()
+    val kpmModuleCount by AppData.DataRefreshManager.kernelModuleCount.collectAsStateWithLifecycle()
 
     // 响应式布局
     val configuration = LocalConfiguration.current
