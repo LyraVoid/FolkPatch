@@ -114,6 +114,18 @@ object BackgroundConfig {
     var titleImageOffsetX: Float by mutableStateOf(0f)
         private set
 
+    // FocusUI Card Wallpapers (4 cards: KernelPatch, App, DeviceStatus, Storage)
+    var focusCardKernelBgUri: String? by mutableStateOf(null)
+        private set
+    var focusCardAppBgUri: String? by mutableStateOf(null)
+        private set
+    var focusCardDeviceBgUri: String? by mutableStateOf(null)
+        private set
+    var focusCardStorageBgUri: String? by mutableStateOf(null)
+        private set
+    var focusCardBgDim: Float by mutableStateOf(0.3f)
+        private set
+
     // NavBar Glass Effect (Floating mode only)
     var isNavBarGlassEnabled: Boolean by mutableStateOf(true)
         private set
@@ -181,6 +193,12 @@ object BackgroundConfig {
     private const val KEY_TITLE_IMAGE_NIGHT_OPACITY = "title_image_night_opacity"
     private const val KEY_TITLE_IMAGE_DIM = "title_image_dim"
     private const val KEY_TITLE_IMAGE_OFFSET_X = "title_image_offset_x"
+
+    private const val KEY_FOCUS_CARD_KERNEL_BG_URI = "focus_card_kernel_bg_uri"
+    private const val KEY_FOCUS_CARD_APP_BG_URI = "focus_card_app_bg_uri"
+    private const val KEY_FOCUS_CARD_DEVICE_BG_URI = "focus_card_device_bg_uri"
+    private const val KEY_FOCUS_CARD_STORAGE_BG_URI = "focus_card_storage_bg_uri"
+    private const val KEY_FOCUS_CARD_BG_DIM = "focus_card_bg_dim"
 
     private const val KEY_NAVBAR_GLASS_ENABLED = "navbar_glass_enabled"
     private const val KEY_NAVBAR_GLASS_BLUR_STRENGTH = "navbar_glass_blur_strength"
@@ -469,6 +487,55 @@ object BackgroundConfig {
         titleImageOffsetX = offset
     }
 
+    // ==================== FocusUI Card Wallpaper ====================
+
+    /**
+     * 更新FocusUI卡片壁纸URI
+     * @param cardId 卡片标识: kernel / app / device / storage
+     */
+    fun updateFocusCardBgUri(cardId: String, uri: String?) {
+        when (cardId) {
+            FOCUS_CARD_KERNEL -> focusCardKernelBgUri = uri
+            FOCUS_CARD_APP -> focusCardAppBgUri = uri
+            FOCUS_CARD_DEVICE -> focusCardDeviceBgUri = uri
+            FOCUS_CARD_STORAGE -> focusCardStorageBgUri = uri
+        }
+    }
+
+    /**
+     * 获取指定FocusUI卡片的壁纸URI
+     */
+    fun getFocusCardBgUri(cardId: String): String? {
+        return when (cardId) {
+            FOCUS_CARD_KERNEL -> focusCardKernelBgUri
+            FOCUS_CARD_APP -> focusCardAppBgUri
+            FOCUS_CARD_DEVICE -> focusCardDeviceBgUri
+            FOCUS_CARD_STORAGE -> focusCardStorageBgUri
+            else -> null
+        }
+    }
+
+    /**
+     * 设置FocusUI卡片壁纸暗度
+     */
+    fun setFocusCardBgDimValue(dim: Float) {
+        focusCardBgDim = dim
+    }
+
+    /**
+     * 判断任意FocusUI卡片是否设置了壁纸
+     */
+    fun hasAnyFocusCardBg(): Boolean {
+        return focusCardKernelBgUri != null || focusCardAppBgUri != null ||
+            focusCardDeviceBgUri != null || focusCardStorageBgUri != null
+    }
+
+    // FocusUI卡片ID常量
+    const val FOCUS_CARD_KERNEL = "kernel"
+    const val FOCUS_CARD_APP = "app"
+    const val FOCUS_CARD_DEVICE = "device"
+    const val FOCUS_CARD_STORAGE = "storage"
+
     fun setNavBarGlassEnabledState(enabled: Boolean) {
         isNavBarGlassEnabled = enabled
     }
@@ -554,6 +621,12 @@ object BackgroundConfig {
             putFloat(KEY_TITLE_IMAGE_DIM, titleImageDim)
             putFloat(KEY_TITLE_IMAGE_OFFSET_X, titleImageOffsetX)
 
+            putString(KEY_FOCUS_CARD_KERNEL_BG_URI, focusCardKernelBgUri)
+            putString(KEY_FOCUS_CARD_APP_BG_URI, focusCardAppBgUri)
+            putString(KEY_FOCUS_CARD_DEVICE_BG_URI, focusCardDeviceBgUri)
+            putString(KEY_FOCUS_CARD_STORAGE_BG_URI, focusCardStorageBgUri)
+            putFloat(KEY_FOCUS_CARD_BG_DIM, focusCardBgDim)
+
             putBoolean(KEY_NAVBAR_GLASS_ENABLED, isNavBarGlassEnabled)
             putFloat(KEY_NAVBAR_GLASS_BLUR_STRENGTH, navBarGlassBlurStrength)
             putFloat(KEY_NAVBAR_GLASS_TRANSPARENCY, navBarGlassTransparency)
@@ -623,6 +696,12 @@ object BackgroundConfig {
         val titleDim = prefs.getFloat(KEY_TITLE_IMAGE_DIM, 0.0f)
         val titleOffsetX = prefs.getFloat(KEY_TITLE_IMAGE_OFFSET_X, 0f)
 
+        val focusCardKernelBg = prefs.getString(KEY_FOCUS_CARD_KERNEL_BG_URI, null)
+        val focusCardAppBg = prefs.getString(KEY_FOCUS_CARD_APP_BG_URI, null)
+        val focusCardDeviceBg = prefs.getString(KEY_FOCUS_CARD_DEVICE_BG_URI, null)
+        val focusCardStorageBg = prefs.getString(KEY_FOCUS_CARD_STORAGE_BG_URI, null)
+        val focusCardDim = prefs.getFloat(KEY_FOCUS_CARD_BG_DIM, 0.3f)
+
         val navBarGlassEnabled = prefs.getBoolean(KEY_NAVBAR_GLASS_ENABLED, false)
         val prefsNavBarGlassBlurStrength = prefs.getFloat(KEY_NAVBAR_GLASS_BLUR_STRENGTH, 0.7f)
         val prefsNavBarGlassTransparency = prefs.getFloat(KEY_NAVBAR_GLASS_TRANSPARENCY, 0.3f)
@@ -681,6 +760,12 @@ object BackgroundConfig {
         titleImageNightOpacity = titleNightOpacity
         titleImageDim = titleDim
         titleImageOffsetX = titleOffsetX
+
+        focusCardKernelBgUri = focusCardKernelBg
+        focusCardAppBgUri = focusCardAppBg
+        focusCardDeviceBgUri = focusCardDeviceBg
+        focusCardStorageBgUri = focusCardStorageBg
+        focusCardBgDim = focusCardDim
 
         isNavBarGlassEnabled = navBarGlassEnabled
         navBarGlassBlurStrength = prefsNavBarGlassBlurStrength
@@ -744,6 +829,12 @@ object BackgroundConfig {
         titleImageNightOpacity = 1.0f
         titleImageDim = 0.0f
         titleImageOffsetX = 0f
+
+        focusCardKernelBgUri = null
+        focusCardAppBgUri = null
+        focusCardDeviceBgUri = null
+        focusCardStorageBgUri = null
+        focusCardBgDim = 0.3f
 
         isNavBarGlassEnabled = true
         navBarGlassBlurStrength = 0.7f
@@ -1036,6 +1127,59 @@ object BackgroundManager {
     
     fun clearSettingsBackground(context: Context) = 
         clearGenericBackground(context, SETTINGS_BACKGROUND_FILENAME) { BackgroundConfig.updateSettingsBackgroundUri(it) }
+
+    // ==================== FocusUI Card Wallpapers ====================
+
+    // FocusUI卡片壁纸文件名前缀
+    private const val FOCUS_CARD_KERNEL_BG_FILENAME = "focus_card_kernel_bg"
+    private const val FOCUS_CARD_APP_BG_FILENAME = "focus_card_app_bg"
+    private const val FOCUS_CARD_DEVICE_BG_FILENAME = "focus_card_device_bg"
+    private const val FOCUS_CARD_STORAGE_BG_FILENAME = "focus_card_storage_bg"
+
+    /**
+     * 根据卡片ID获取对应的文件名前缀
+     */
+    private fun getFocusCardFilenameBase(cardId: String): String {
+        return when (cardId) {
+            BackgroundConfig.FOCUS_CARD_KERNEL -> FOCUS_CARD_KERNEL_BG_FILENAME
+            BackgroundConfig.FOCUS_CARD_APP -> FOCUS_CARD_APP_BG_FILENAME
+            BackgroundConfig.FOCUS_CARD_DEVICE -> FOCUS_CARD_DEVICE_BG_FILENAME
+            BackgroundConfig.FOCUS_CARD_STORAGE -> FOCUS_CARD_STORAGE_BG_FILENAME
+            else -> FOCUS_CARD_KERNEL_BG_FILENAME
+        }
+    }
+
+    /**
+     * 保存并应用FocusUI卡片壁纸
+     * @param cardId 卡片标识: kernel / app / device / storage
+     */
+    suspend fun saveAndApplyFocusCardBackground(context: Context, cardId: String, uri: Uri): Boolean =
+        saveAndApplyGenericBackground(context, uri, getFocusCardFilenameBase(cardId)) {
+            BackgroundConfig.updateFocusCardBgUri(cardId, it)
+        }
+
+    /**
+     * 清除FocusUI卡片壁纸
+     * @param cardId 卡片标识: kernel / app / device / storage
+     */
+    fun clearFocusCardBackground(context: Context, cardId: String) =
+        clearGenericBackground(context, getFocusCardFilenameBase(cardId)) {
+            BackgroundConfig.updateFocusCardBgUri(cardId, it)
+        }
+
+    /**
+     * 清除所有FocusUI卡片壁纸
+     */
+    fun clearAllFocusCardBackgrounds(context: Context) {
+        listOf(
+            BackgroundConfig.FOCUS_CARD_KERNEL,
+            BackgroundConfig.FOCUS_CARD_APP,
+            BackgroundConfig.FOCUS_CARD_DEVICE,
+            BackgroundConfig.FOCUS_CARD_STORAGE
+        ).forEach { cardId ->
+            clearFocusCardBackground(context, cardId)
+        }
+    }
 
     // Title Image
     suspend fun saveAndApplyTitleImage(context: Context, uri: Uri): Boolean {

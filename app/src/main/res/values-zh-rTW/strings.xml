@@ -730,6 +730,21 @@
     <string name="settings_grid_working_card_background_error">卡片背景圖片儲存失敗</string>
     <string name="settings_grid_working_card_background_cleared">卡片背景圖片已清除</string>
 
+    <!-- FocusUI卡片桌布 -->
+    <string name="focus_card_background_title">卡片桌布</string>
+    <string name="focus_card_background_clear">清除卡片桌布</string>
+    <string name="focus_card_background_clear_confirm">確定要清除該卡片的桌布嗎？</string>
+    <string name="focus_card_background_saved">卡片桌布儲存成功</string>
+    <string name="focus_card_background_error">卡片桌布儲存失敗</string>
+    <string name="focus_card_background_cleared">卡片桌布已清除</string>
+    <string name="focus_card_permission_required">請先授予儲存權限才能選擇桌布</string>
+    <string name="settings_focus_card_dim">卡片桌布暗度</string>
+    <string name="settings_focus_card_kernel">核心卡片</string>
+    <string name="settings_focus_card_app">應用卡片</string>
+    <string name="settings_focus_card_device">裝置狀態卡片</string>
+    <string name="settings_focus_card_storage">儲存卡片</string>
+    <string name="settings_focus_card_wallpaper_selected">已設定桌布</string>
+
     <!-- Biometric Strings -->
     <string name="action_biometric">生物識別認證</string>
     <string name="msg_biometric">請驗證您的生物識別身分</string>

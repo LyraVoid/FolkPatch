@@ -1140,4 +1140,10 @@
     <string name="color_style_monochrome">单色喵</string>
     <string name="color_style_neutral">中性喵</string>
     <string name="color_style_fidelity">保真喵</string>
+    <string name="settings_focus_card_dim">卡片壁纸暗度喵</string>
+    <string name="settings_focus_card_kernel">内核卡片喵</string>
+    <string name="settings_focus_card_app">应用卡片喵</string>
+    <string name="settings_focus_card_device">设备状态卡片喵</string>
+    <string name="settings_focus_card_storage">存储卡片喵</string>
+    <string name="settings_focus_card_wallpaper_selected">已设置壁纸喵</string>
 </resources>

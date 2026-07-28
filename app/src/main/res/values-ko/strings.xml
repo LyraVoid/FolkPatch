@@ -1166,4 +1166,10 @@
     <string name="color_style_monochrome">모노크롬</string>
     <string name="color_style_neutral">중립</string>
     <string name="color_style_fidelity">충실도</string>
+    <string name="settings_focus_card_dim">카드 배경 어둡게</string>
+    <string name="settings_focus_card_kernel">커널 카드</string>
+    <string name="settings_focus_card_app">앱 카드</string>
+    <string name="settings_focus_card_device">기기 상태 카드</string>
+    <string name="settings_focus_card_storage">저장공간 카드</string>
+    <string name="settings_focus_card_wallpaper_selected">배경 설정됨</string>
 </resources>

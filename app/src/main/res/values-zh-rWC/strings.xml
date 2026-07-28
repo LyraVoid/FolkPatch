@@ -1135,4 +1135,10 @@
     <string name="color_style_monochrome">归一</string>
     <string name="color_style_neutral">无为</string>
     <string name="color_style_fidelity">返璞</string>
+    <string name="settings_focus_card_dim">卡片法相暗度</string>
+    <string name="settings_focus_card_kernel">内核卡片</string>
+    <string name="settings_focus_card_app">应用卡片</string>
+    <string name="settings_focus_card_device">设备状态卡片</string>
+    <string name="settings_focus_card_storage">存储卡片</string>
+    <string name="settings_focus_card_wallpaper_selected">已设法相</string>
 </resources>

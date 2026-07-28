@@ -1074,4 +1074,10 @@
     <string name="color_style_monochrome">モノクローム</string>
     <string name="color_style_neutral">ニュートラル</string>
     <string name="color_style_fidelity">フィデリティ</string>
+    <string name="settings_focus_card_dim">カード壁紙の暗さ</string>
+    <string name="settings_focus_card_kernel">カーネルカード</string>
+    <string name="settings_focus_card_app">アプリカード</string>
+    <string name="settings_focus_card_device">デバイス状態カード</string>
+    <string name="settings_focus_card_storage">ストレージカード</string>
+    <string name="settings_focus_card_wallpaper_selected">壁紙を設定済み</string>
 </resources>

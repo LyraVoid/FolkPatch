@@ -98,7 +98,13 @@ object ThemeManager {
         val titleImageDayOpacity: Float = 1.0f,
         val titleImageNightOpacity: Float = 1.0f,
         val titleImageDim: Float = 0.0f,
-        val titleImageOffsetX: Float = 0f
+        val titleImageOffsetX: Float = 0f,
+        // FocusUI Card Wallpapers
+        val focusCardBgDim: Float = 0.3f,
+        val hasFocusCardKernelBg: Boolean = false,
+        val hasFocusCardAppBg: Boolean = false,
+        val hasFocusCardDeviceBg: Boolean = false,
+        val hasFocusCardStorageBg: Boolean = false
     )
 
     data class ThemeMetadata(
@@ -163,7 +169,13 @@ object ThemeManager {
                     titleImageDayOpacity = BackgroundConfig.titleImageDayOpacity,
                     titleImageNightOpacity = BackgroundConfig.titleImageNightOpacity,
                     titleImageDim = BackgroundConfig.titleImageDim,
-                    titleImageOffsetX = BackgroundConfig.titleImageOffsetX
+                    titleImageOffsetX = BackgroundConfig.titleImageOffsetX,
+                    // FocusUI Card Wallpapers
+                    focusCardBgDim = BackgroundConfig.focusCardBgDim,
+                    hasFocusCardKernelBg = BackgroundConfig.focusCardKernelBgUri != null,
+                    hasFocusCardAppBg = BackgroundConfig.focusCardAppBgUri != null,
+                    hasFocusCardDeviceBg = BackgroundConfig.focusCardDeviceBgUri != null,
+                    hasFocusCardStorageBg = BackgroundConfig.focusCardStorageBgUri != null
                 )
 
                 // 2. Write Config JSON
@@ -224,6 +236,13 @@ object ThemeManager {
                     put("titleImageNightOpacity", config.titleImageNightOpacity.toDouble())
                     put("titleImageDim", config.titleImageDim.toDouble())
                     put("titleImageOffsetX", config.titleImageOffsetX.toDouble())
+
+                    // FocusUI Card Wallpapers
+                    put("focusCardBgDim", config.focusCardBgDim.toDouble())
+                    put("hasFocusCardKernelBg", config.hasFocusCardKernelBg)
+                    put("hasFocusCardAppBg", config.hasFocusCardAppBg)
+                    put("hasFocusCardDeviceBg", config.hasFocusCardDeviceBg)
+                    put("hasFocusCardStorageBg", config.hasFocusCardStorageBg)
 
                     // Add metadata
                     put("meta_name", metadata.name)
@@ -359,7 +378,27 @@ object ThemeManager {
                     }
                 }
 
-                // 9. Encrypt and Zip to Uri
+                // 9. Copy FocusUI Card Wallpapers
+                val focusCardBgNames = listOf(
+                    "focus_card_kernel_bg" to config.hasFocusCardKernelBg,
+                    "focus_card_app_bg" to config.hasFocusCardAppBg,
+                    "focus_card_device_bg" to config.hasFocusCardDeviceBg,
+                    "focus_card_storage_bg" to config.hasFocusCardStorageBg
+                )
+                val focusExtensions = listOf(".jpg", ".png", ".gif", ".webp")
+                for ((bgName, hasBg) in focusCardBgNames) {
+                    if (hasBg) {
+                        for (ext in focusExtensions) {
+                            val bgFile = File(context.filesDir, "$bgName$ext")
+                            if (bgFile.exists()) {
+                                bgFile.copyTo(File(cacheDir, "$bgName$ext"))
+                                break
+                            }
+                        }
+                    }
+                }
+
+                // 10. Encrypt and Zip to Uri
                 context.contentResolver.openOutputStream(uri)?.use { os ->
                     // Init Cipher
                     val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
@@ -562,6 +601,13 @@ object ThemeManager {
                 val titleImageNightOpacity = json.optDouble("titleImageNightOpacity", 1.0).toFloat()
                 val titleImageDim = json.optDouble("titleImageDim", 0.0).toFloat()
                 val titleImageOffsetX = json.optDouble("titleImageOffsetX", 0.0).toFloat()
+
+                // FocusUI Card Wallpapers
+                val focusCardBgDim = json.optDouble("focusCardBgDim", 0.3).toFloat()
+                val hasFocusCardKernelBg = json.optBoolean("hasFocusCardKernelBg", false)
+                val hasFocusCardAppBg = json.optBoolean("hasFocusCardAppBg", false)
+                val hasFocusCardDeviceBg = json.optBoolean("hasFocusCardDeviceBg", false)
+                val hasFocusCardStorageBg = json.optBoolean("hasFocusCardStorageBg", false)
 
                 // Multi-Background Mode
                 val isMultiBackgroundEnabled = json.optBoolean("isMultiBackgroundEnabled", false)
@@ -768,6 +814,59 @@ object ThemeManager {
                     BackgroundConfig.updateTitleImageUri(null)
                 }
 
+                // Apply FocusUI Card Wallpapers
+                BackgroundConfig.setFocusCardBgDimValue(focusCardBgDim)
+
+                val focusCardImports = listOf(
+                    "focus_card_kernel_bg" to (BackgroundConfig.FOCUS_CARD_KERNEL to hasFocusCardKernelBg),
+                    "focus_card_app_bg" to (BackgroundConfig.FOCUS_CARD_APP to hasFocusCardAppBg),
+                    "focus_card_device_bg" to (BackgroundConfig.FOCUS_CARD_DEVICE to hasFocusCardDeviceBg),
+                    "focus_card_storage_bg" to (BackgroundConfig.FOCUS_CARD_STORAGE to hasFocusCardStorageBg)
+                )
+                val focusImportExtensions = listOf(".jpg", ".png", ".gif", ".webp")
+
+                for ((bgName, cardInfo) in focusCardImports) {
+                    val (cardId, hasBg) = cardInfo
+                    if (hasBg) {
+                        var bgFound = false
+                        for (ext in focusImportExtensions) {
+                            val bgFile = File(cacheDir, "$bgName$ext")
+                            if (bgFile.exists()) {
+                                // Clear old files
+                                for (oldExt in focusImportExtensions) {
+                                    val oldFile = File(context.filesDir, "$bgName$oldExt")
+                                    if (oldFile.exists()) oldFile.delete()
+                                }
+
+                                val destFile = File(context.filesDir, "$bgName$ext")
+                                bgFile.copyTo(destFile, overwrite = true)
+
+                                val fileUri = Uri.fromFile(destFile).buildUpon()
+                                    .appendQueryParameter("t", System.currentTimeMillis().toString())
+                                    .build()
+                                BackgroundConfig.updateFocusCardBgUri(cardId, fileUri.toString())
+                                bgFound = true
+                                break
+                            }
+                        }
+                        if (!bgFound) {
+                            // Theme declares wallpaper but file missing: clear stale state
+                            for (oldExt in focusImportExtensions) {
+                                val oldFile = File(context.filesDir, "$bgName$oldExt")
+                                if (oldFile.exists()) oldFile.delete()
+                            }
+                            BackgroundConfig.updateFocusCardBgUri(cardId, null)
+                        }
+                    } else {
+                        // Theme has no wallpaper for this card: clear existing
+                        for (oldExt in focusImportExtensions) {
+                            val oldFile = File(context.filesDir, "$bgName$oldExt")
+                            if (oldFile.exists()) oldFile.delete()
+                        }
+                        BackgroundConfig.updateFocusCardBgUri(cardId, null)
+                    }
+                }
+
                 BackgroundConfig.save(context)
 
                 // Apply Music Config
@@ -965,7 +1064,23 @@ object ThemeManager {
                     "title_image.jpg",
                     "title_image.png",
                     "title_image.gif",
-                    "title_image.webp"
+                    "title_image.webp",
+                    "focus_card_kernel_bg.jpg",
+                    "focus_card_kernel_bg.png",
+                    "focus_card_kernel_bg.gif",
+                    "focus_card_kernel_bg.webp",
+                    "focus_card_app_bg.jpg",
+                    "focus_card_app_bg.png",
+                    "focus_card_app_bg.gif",
+                    "focus_card_app_bg.webp",
+                    "focus_card_device_bg.jpg",
+                    "focus_card_device_bg.png",
+                    "focus_card_device_bg.gif",
+                    "focus_card_device_bg.webp",
+                    "focus_card_storage_bg.jpg",
+                    "focus_card_storage_bg.png",
+                    "focus_card_storage_bg.gif",
+                    "focus_card_storage_bg.webp"
                 )
 
                 for (filename in backgroundFiles) {

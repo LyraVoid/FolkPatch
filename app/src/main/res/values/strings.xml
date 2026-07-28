@@ -795,6 +795,21 @@ Please ensure the app is completely closed and reopened for the commands to exec
     <string name="settings_grid_working_card_background_error">Failed to save card background</string>
     <string name="settings_grid_working_card_background_cleared">Card background cleared</string>
 
+    <!-- FocusUI Card Wallpaper Strings -->
+    <string name="focus_card_background_title">Card Wallpaper</string>
+    <string name="focus_card_background_clear">Clear Card Wallpaper</string>
+    <string name="focus_card_background_clear_confirm">Are you sure you want to clear this card\'s wallpaper?</string>
+    <string name="focus_card_background_saved">Card wallpaper saved successfully</string>
+    <string name="focus_card_background_error">Failed to save card wallpaper</string>
+    <string name="focus_card_background_cleared">Card wallpaper cleared</string>
+    <string name="focus_card_permission_required">Please grant storage permission to select a wallpaper</string>
+    <string name="settings_focus_card_dim">Card Wallpaper Dim</string>
+    <string name="settings_focus_card_kernel">Kernel Card</string>
+    <string name="settings_focus_card_app">App Card</string>
+    <string name="settings_focus_card_device">Device Status Card</string>
+    <string name="settings_focus_card_storage">Storage Card</string>
+    <string name="settings_focus_card_wallpaper_selected">Wallpaper set</string>
+
     <!-- Biometric Strings -->
     <string name="action_biometric">Biometric Authentication</string>
     <string name="msg_biometric">Please verify your biometric identity</string>

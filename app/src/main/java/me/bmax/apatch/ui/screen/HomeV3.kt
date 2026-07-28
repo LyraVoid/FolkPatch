@@ -1,6 +1,13 @@
 package me.bmax.apatch.ui.screen
 
+import android.content.ActivityNotFoundException
+import android.net.Uri
 import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -14,11 +21,14 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
@@ -26,21 +36,32 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
+import coil.ImageLoader
+import coil.compose.rememberAsyncImagePainter
+import coil.decode.GifDecoder
+import coil.decode.ImageDecoderDecoder
+import coil.request.ImageRequest
 import com.ramcosta.composedestinations.generated.destinations.InstallModeSelectScreenDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.apApp
 import me.bmax.apatch.Natives
 import me.bmax.apatch.R
+import me.bmax.apatch.ui.component.BackgroundOptionsDialog
+import me.bmax.apatch.ui.component.rememberConfirmDialog
 import me.bmax.apatch.ui.theme.BackgroundConfig
+import me.bmax.apatch.ui.theme.BackgroundManager
 import me.bmax.apatch.util.HardwareMonitor
+import me.bmax.apatch.util.PermissionUtils
 import me.bmax.apatch.util.Version
 import me.bmax.apatch.util.Version.getManagerVersion
 import me.bmax.apatch.util.getSELinuxStatus
 import me.bmax.apatch.util.rootShellForResult
 import me.bmax.apatch.util.ui.HomeBottomSpacer
+import me.bmax.apatch.util.ui.showToast
 
 private val managerVersion = getManagerVersion()
 
@@ -196,7 +217,8 @@ private fun KernelPatchCard(
         onActionClick = {
             navigator.navigate(InstallModeSelectScreenDestination)
         },
-        modifier = modifier
+        modifier = modifier,
+        cardId = BackgroundConfig.FOCUS_CARD_KERNEL
     ) {
         InfoRow(
             label = stringResource(R.string.home_kpatch_version),
@@ -250,7 +272,8 @@ private fun AppCard(
                 APApplication.installApatch()
             }
         },
-        modifier = modifier
+        modifier = modifier,
+        cardId = BackgroundConfig.FOCUS_CARD_APP
     ) {
         InfoRow(
             label = stringResource(R.string.home_apatch_version),
@@ -320,7 +343,8 @@ private fun DeviceStatusCard(isWallpaperMode: Boolean, modifier: Modifier = Modi
         showAction = false,
         isWallpaperMode = isWallpaperMode,
         onActionClick = {},
-        modifier = modifier
+        modifier = modifier,
+        cardId = BackgroundConfig.FOCUS_CARD_DEVICE
     ) {
         Row(
             modifier = Modifier
@@ -400,7 +424,8 @@ private fun StorageCard(isWallpaperMode: Boolean, modifier: Modifier = Modifier)
         showAction = false,
         isWallpaperMode = isWallpaperMode,
         onActionClick = {},
-        modifier = modifier
+        modifier = modifier,
+        cardId = BackgroundConfig.FOCUS_CARD_STORAGE
     ) {
         StorageRow(
             label = stringResource(R.string.home_storage_internal),
@@ -446,6 +471,10 @@ private fun StorageRow(
     val progress = if (total > 0) used.toFloat() / total.toFloat() else 0f
     val usedStr = android.text.format.Formatter.formatFileSize(LocalContext.current, used)
     val totalStr = android.text.format.Formatter.formatFileSize(LocalContext.current, total)
+    val isWallpaper = LocalFocusCardWallpaper.current
+    val subColor = LocalFocusCardSubColor.current
+    val primaryColor = if (isWallpaper) Color.White else MaterialTheme.colorScheme.onSurface
+    val secondaryColor = if (isWallpaper && subColor != Color.Unspecified) subColor else MaterialTheme.colorScheme.onSurfaceVariant
     
     Column(modifier = Modifier.fillMaxWidth()) {
         Row(
@@ -455,12 +484,12 @@ private fun StorageRow(
             Text(
                 text = label,
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface
+                color = primaryColor
             )
             Text(
                 text = "$usedStr / $totalStr",
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = secondaryColor
             )
         }
         Spacer(modifier = Modifier.height(8.dp))
@@ -470,8 +499,8 @@ private fun StorageRow(
                 .fillMaxWidth()
                 .height(8.dp)
                 .clip(MaterialTheme.shapes.small),
-            color = color,
-            trackColor = color.copy(alpha = 0.2f),
+            color = if (isWallpaper) Color.White else color,
+            trackColor = (if (isWallpaper) Color.White else color).copy(alpha = 0.2f),
         )
     }
 }
@@ -483,6 +512,11 @@ private fun StatusCircle(
     progress: Float,
     color: androidx.compose.ui.graphics.Color
 ) {
+    val isWallpaper = LocalFocusCardWallpaper.current
+    val subColor = LocalFocusCardSubColor.current
+    val effectiveColor = if (isWallpaper) Color.White else color
+    val labelColor = if (isWallpaper && subColor != Color.Unspecified) subColor else MaterialTheme.colorScheme.onSurfaceVariant
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -494,25 +528,26 @@ private fun StatusCircle(
             CircularProgressIndicator(
                 progress = { 1f },
                 modifier = Modifier.fillMaxSize(),
-                color = color.copy(alpha = 0.2f),
+                color = effectiveColor.copy(alpha = 0.2f),
                 strokeWidth = 8.dp,
             )
             CircularProgressIndicator(
                 progress = { progress },
                 modifier = Modifier.fillMaxSize(),
-                color = color,
+                color = effectiveColor,
                 strokeWidth = 8.dp,
             )
             Text(
                 text = value,
                 style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                color = if (isWallpaper) Color.White else MaterialTheme.colorScheme.onSurface
             )
         }
         Text(
             text = label,
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
+            color = labelColor
         )
     }
 }
@@ -527,82 +562,231 @@ private fun MagiskStyleCard(
     isWallpaperMode: Boolean,
     onActionClick: () -> Unit,
     modifier: Modifier = Modifier,
+    cardId: String? = null,
     content: @Composable ColumnScope.() -> Unit
 ) {
-    Card(
-        modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(20.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(1.dp),
-            contentColor = MaterialTheme.colorScheme.onSurface
-        )
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp)
-        ) {
-            // Header Row
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = null,
-                    modifier = Modifier.size(32.dp),
-                    tint = MaterialTheme.colorScheme.primary
-                )
-                Spacer(modifier = Modifier.width(16.dp))
-                Text(
-                    text = title,
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.weight(1f)
-                )
-                
-                if (showAction) {
-                    Button(
-                        onClick = onActionClick,
-                        enabled = actionEnabled,
-                        contentPadding = PaddingValues(horizontal = 24.dp)
-                    ) {
-                        Text(text = actionText)
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+
+    // FocusUI卡片壁纸状态
+    val cardBgUri = if (cardId != null) BackgroundConfig.getFocusCardBgUri(cardId) else null
+    val hasCardWallpaper = !cardBgUri.isNullOrEmpty()
+
+    // 长按对话框状态
+    var showBgOptionsDialog by remember { mutableStateOf(false) }
+
+    // 图片选择器
+    val pickImageLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let {
+            if (cardId != null) {
+                scope.launch {
+                    val success = BackgroundManager.saveAndApplyFocusCardBackground(context, cardId, it)
+                    if (success) {
+                        showToast(context, R.string.focus_card_background_saved)
+                    } else {
+                        showToast(context, R.string.focus_card_background_error)
                     }
                 }
             }
-            
-            HorizontalDivider(
-                modifier = Modifier.padding(vertical = 16.dp),
-                color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
-            )
-            
-            // Content Info
+        }
+    }
+
+    // 清除确认对话框
+    val clearBgConfirmDialog = rememberConfirmDialog(
+        onConfirm = {
+            if (cardId != null) {
+                scope.launch {
+                    BackgroundManager.clearFocusCardBackground(context, cardId)
+                    showToast(context, context.getString(R.string.focus_card_background_cleared))
+                }
+            }
+        }
+    )
+
+    // 卡片壁纸模式下的内容颜色
+    val contentColor = if (hasCardWallpaper) Color.White else MaterialTheme.colorScheme.onSurface
+    val subContentColor = if (hasCardWallpaper) Color.White.copy(alpha = 0.8f) else MaterialTheme.colorScheme.onSurfaceVariant
+
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .then(
+                if (cardId != null) {
+                    Modifier.pointerInput(cardId) {
+                        detectTapGestures(
+                            onLongPress = { showBgOptionsDialog = true }
+                        )
+                    }
+                } else {
+                    Modifier
+                }
+            ),
+        shape = RoundedCornerShape(20.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = if (hasCardWallpaper) Color.Transparent
+                else MaterialTheme.colorScheme.surfaceColorAtElevation(1.dp),
+            contentColor = contentColor
+        )
+    ) {
+        // 外层Box包裹内容，壁纸层通过 matchParentSize 精确填充内容尺寸
+        // 注意：不能使用 fillMaxSize，因为卡片是 wrap-content 的，fillMaxSize 会导致尺寸堙缩为0
+        Box {
+            // 卡片壁纸层（作为背景，匹配内容尺寸）
+            if (hasCardWallpaper) {
+                // 配置支持GIF/动图的ImageLoader
+                val imageLoader = ImageLoader.Builder(context)
+                    .components {
+                        if (Build.VERSION.SDK_INT >= 28) {
+                            add(ImageDecoderDecoder.Factory())
+                        } else {
+                            add(GifDecoder.Factory())
+                        }
+                    }
+                    .build()
+
+                // 壁纸图片：matchParentSize 使其精确填充卡片内容区域
+                Image(
+                    painter = rememberAsyncImagePainter(
+                        model = ImageRequest.Builder(context)
+                            .data(cardBgUri)
+                            .crossfade(true)
+                            .build(),
+                        imageLoader = imageLoader
+                    ),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.matchParentSize()
+                )
+                // 暗度层，保证文字在壁纸上的可读性
+                Box(
+                    modifier = Modifier
+                        .matchParentSize()
+                        .background(Color.Black.copy(alpha = BackgroundConfig.focusCardBgDim))
+                )
+            }
+
+            // 卡片内容层（决定卡片的实际尺寸）
             Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                modifier = Modifier.padding(16.dp)
             ) {
-                content()
+                // Header Row
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Icon(
+                        imageVector = icon,
+                        contentDescription = null,
+                        modifier = Modifier.size(32.dp),
+                        tint = if (hasCardWallpaper) Color.White else MaterialTheme.colorScheme.primary
+                    )
+                    Spacer(modifier = Modifier.width(16.dp))
+                    Text(
+                        text = title,
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = contentColor,
+                        modifier = Modifier.weight(1f)
+                    )
+
+                    if (showAction) {
+                        Button(
+                            onClick = onActionClick,
+                            enabled = actionEnabled,
+                            contentPadding = PaddingValues(horizontal = 24.dp)
+                        ) {
+                            Text(text = actionText)
+                        }
+                    }
+                }
+
+                HorizontalDivider(
+                    modifier = Modifier.padding(vertical = 16.dp),
+                    color = if (hasCardWallpaper) Color.White.copy(alpha = 0.3f)
+                        else MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
+                )
+
+                // Content Info
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    CompositionLocalProvider(
+                        LocalFocusCardWallpaper provides hasCardWallpaper,
+                        LocalFocusCardSubColor provides subContentColor
+                    ) {
+                        content()
+                    }
+                }
             }
         }
     }
+
+    // 长按背景选项对话框
+    if (cardId != null) {
+        BackgroundOptionsDialog(
+            showDialog = showBgOptionsDialog,
+            onDismiss = { showBgOptionsDialog = false },
+            title = stringResource(R.string.focus_card_background_title),
+            selectLabel = stringResource(R.string.settings_select_background_image),
+            clearLabel = stringResource(R.string.focus_card_background_clear),
+            hasExisting = hasCardWallpaper,
+            onSelectImage = {
+                if (PermissionUtils.hasExternalStoragePermission(context)) {
+                    try {
+                        pickImageLauncher.launch("image/*")
+                    } catch (e: ActivityNotFoundException) {
+                        showToast(context, e.message ?: "")
+                    }
+                } else {
+                    showToast(context, context.getString(R.string.focus_card_permission_required))
+                }
+            },
+            onClearImage = {
+                clearBgConfirmDialog.showConfirm(
+                    title = context.getString(R.string.focus_card_background_clear),
+                    content = context.getString(R.string.focus_card_background_clear_confirm),
+                    markdown = false,
+                )
+            },
+        )
+    }
 }
+
+/**
+ * CompositionLocal: 当前卡片是否启用了壁纸模式
+ */
+private val LocalFocusCardWallpaper = compositionLocalOf { false }
+
+/**
+ * CompositionLocal: 壁纸模式下的次要文字颜色
+ */
+private val LocalFocusCardSubColor = compositionLocalOf { Color.Unspecified }
 
 @Composable
 private fun InfoRow(
     label: String,
     value: String
 ) {
+    val isWallpaper = LocalFocusCardWallpaper.current
+    val subColor = LocalFocusCardSubColor.current
+    val labelColor = if (isWallpaper && subColor != Color.Unspecified) subColor else MaterialTheme.colorScheme.onSurfaceVariant
+    val valueColor = if (isWallpaper) Color.White else MaterialTheme.colorScheme.onSurface
+
     Row(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
             text = "$label: ",
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
+            color = labelColor
         )
         Text(
             text = value,
             style = MaterialTheme.typography.bodyMedium,
             fontWeight = FontWeight.Medium,
-            color = MaterialTheme.colorScheme.onSurface
+            color = valueColor
         )
     }
 }

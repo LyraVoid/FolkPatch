@@ -1134,4 +1134,10 @@ Pastikan aplikasi ditutup sepenuhnya dan dimulai ulang untuk menjalankan perinta
     <string name="color_style_monochrome">Monokrom</string>
     <string name="color_style_neutral">Netral</string>
     <string name="color_style_fidelity">Fidelitas</string>
+    <string name="settings_focus_card_dim">Keredupan latar kartu</string>
+    <string name="settings_focus_card_kernel">Kartu kernel</string>
+    <string name="settings_focus_card_app">Kartu aplikasi</string>
+    <string name="settings_focus_card_device">Kartu status perangkat</string>
+    <string name="settings_focus_card_storage">Kartu penyimpanan</string>
+    <string name="settings_focus_card_wallpaper_selected">Latar diatur</string>
 </resources>

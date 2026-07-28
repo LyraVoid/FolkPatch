@@ -1075,4 +1075,10 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="color_style_monochrome">Monochromatyczny</string>
     <string name="color_style_neutral">Neutralny</string>
     <string name="color_style_fidelity">Wierność</string>
+    <string name="settings_focus_card_dim">Przyciemnienie tapety karty</string>
+    <string name="settings_focus_card_kernel">Karta jądra</string>
+    <string name="settings_focus_card_app">Karta aplikacji</string>
+    <string name="settings_focus_card_device">Karta stanu urządzenia</string>
+    <string name="settings_focus_card_storage">Karta pamięci</string>
+    <string name="settings_focus_card_wallpaper_selected">Tapeta ustawiona</string>
 </resources>

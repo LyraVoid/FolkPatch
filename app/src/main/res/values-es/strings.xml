@@ -1155,4 +1155,10 @@ Por ejemplo, los KPM que previenen la modificación de particiones solo pueden u
     <string name="color_style_monochrome">Monocromo</string>
     <string name="color_style_neutral">Neutro</string>
     <string name="color_style_fidelity">Fidelidad</string>
+    <string name="settings_focus_card_dim">Oscurecimiento del fondo de la tarjeta</string>
+    <string name="settings_focus_card_kernel">Tarjeta del kernel</string>
+    <string name="settings_focus_card_app">Tarjeta de aplicaciones</string>
+    <string name="settings_focus_card_device">Tarjeta de estado del dispositivo</string>
+    <string name="settings_focus_card_storage">Tarjeta de almacenamiento</string>
+    <string name="settings_focus_card_wallpaper_selected">Fondo establecido</string>
 </resources>

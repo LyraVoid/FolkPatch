@@ -1151,4 +1151,10 @@ Cần đảm bảo phần mềm thoát hoàn toàn vào mới sẽ thực thi l�
     <string name="color_style_monochrome">Đơn sắc</string>
     <string name="color_style_neutral">Trung tính</string>
     <string name="color_style_fidelity">Trung thực</string>
+    <string name="settings_focus_card_dim">Độ mờ nền thẻ</string>
+    <string name="settings_focus_card_kernel">Thẻ nhân</string>
+    <string name="settings_focus_card_app">Thẻ ứng dụng</string>
+    <string name="settings_focus_card_device">Thẻ trạng thái thiết bị</string>
+    <string name="settings_focus_card_storage">Thẻ bộ nhớ</string>
+    <string name="settings_focus_card_wallpaper_selected">Đã đặt nền</string>
 </resources>

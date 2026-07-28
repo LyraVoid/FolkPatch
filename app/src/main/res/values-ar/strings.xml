@@ -1140,4 +1140,10 @@
     <string name="color_style_monochrome">أحادي اللون</string>
     <string name="color_style_neutral">محايد</string>
     <string name="color_style_fidelity">دقة</string>
+    <string name="settings_focus_card_dim">تعتيم خلفية البطاقة</string>
+    <string name="settings_focus_card_kernel">بطاقة النواة</string>
+    <string name="settings_focus_card_app">بطاقة التطبيقات</string>
+    <string name="settings_focus_card_device">بطاقة حالة الجهاز</string>
+    <string name="settings_focus_card_storage">بطاقة التخزين</string>
+    <string name="settings_focus_card_wallpaper_selected">تم تعيين الخلفية</string>
 </resources>

@@ -292,6 +292,27 @@ fun AppearanceSettingsContent(
         }
     }
 
+    // 当前正在选择壁纸的Focus卡片ID（用于区分选中的图片应保存到哪个卡片）
+    var pickingFocusCardId by remember { mutableStateOf<String?>(null) }
+
+    // FocusUI卡片壁纸选择器：根据 pickingFocusCardId 将选中的图片保存到对应卡片
+    val pickFocusCardImageLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        val cardId = pickingFocusCardId
+        if (uri != null && cardId != null) {
+            scope.launch {
+                loadingDialog.show()
+                val success = BackgroundManager.saveAndApplyFocusCardBackground(context, cardId, uri)
+                loadingDialog.hide()
+                snackBarHost.showSnackbar(
+                    message = if (success) context.getString(R.string.focus_card_background_saved)
+                        else context.getString(R.string.focus_card_background_error)
+                )
+            }
+        }
+    }
+
     val pickFontLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
@@ -445,6 +466,8 @@ fun AppearanceSettingsContent(
     val isKernelSuStyle = currentStyle == "kernelsu"
     val showGridCardSettings = isKernelSuStyle || (isStatsLayout && statsTopLayout == "grid")
     val isListStyle = currentStyle != "kernelsu" && currentStyle != "focus" && !(isStatsLayout && statsTopLayout == "grid")
+    // Focus布局样式（FocusUI），该样式下4个卡片支持独立壁纸
+    val isFocusStyle = currentStyle == "focus"
 
     val badgeTextModes = listOf(
         stringResource(R.string.settings_custom_badge_text_full_half),
@@ -1704,6 +1727,100 @@ fun AppearanceSettingsContent(
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.outline,
                                 )
+                            }
+                        }
+                    }
+                }
+            }
+
+            // ==================== FocusUI卡片壁纸设置 ====================
+            // 仅在Focus布局样式下显示，支持为4个卡片（内核/应用/设备/存储）各自设置独立壁纸
+            if (isFocusStyle) {
+                // 卡片壁纸暗度调节（保证壁纸上文字的可读性）
+                item(key = "appearance_focus_card_dim") {
+                    SliderSettingCard(
+                        flat = flat,
+                        title = stringResource(id = R.string.settings_focus_card_dim),
+                        value = BackgroundConfig.focusCardBgDim,
+                        onValueChange = { BackgroundConfig.setFocusCardBgDimValue(it) },
+                        onValueChangeFinished = { BackgroundConfig.save(context) },
+                    )
+                }
+
+                // 4个卡片的配置清单：卡片ID -> 名称字符串资源
+                val focusCards = listOf(
+                    BackgroundConfig.FOCUS_CARD_KERNEL to R.string.settings_focus_card_kernel,
+                    BackgroundConfig.FOCUS_CARD_APP to R.string.settings_focus_card_app,
+                    BackgroundConfig.FOCUS_CARD_DEVICE to R.string.settings_focus_card_device,
+                    BackgroundConfig.FOCUS_CARD_STORAGE to R.string.settings_focus_card_storage,
+                )
+
+                focusCards.forEach { (cardId, nameRes) ->
+                    // 当前卡片是否已设置壁纸
+                    val hasWallpaper = BackgroundConfig.getFocusCardBgUri(cardId) != null
+
+                    // 每个卡片一个设置项：点击卡片主体选择壁纸，右侧叉叉图标清除已有壁纸
+                    item(key = "appearance_focus_card_$cardId") {
+                        // 清除壁纸确认对话框（点击叉叉后弹出）
+                        val clearFocusBgDialog = rememberConfirmDialog(
+                            onConfirm = {
+                                scope.launch {
+                                    loadingDialog.show()
+                                    BackgroundManager.clearFocusCardBackground(context, cardId)
+                                    loadingDialog.hide()
+                                    snackBarHost.showSnackbar(message = context.getString(R.string.focus_card_background_cleared))
+                                }
+                            }
+                        )
+                        ExpressiveCard(
+                            flat = flat,
+                            // 点击卡片主体：调起系统图片选择器，保存到对应卡片
+                            onClick = {
+                                if (PermissionUtils.hasExternalStoragePermission(context)) {
+                                    try {
+                                        pickingFocusCardId = cardId
+                                        pickFocusCardImageLauncher.launch("image/*")
+                                    } catch (e: ActivityNotFoundException) {
+                                        showToast(context, e.message ?: "")
+                                    }
+                                } else {
+                                    showToast(context, context.getString(R.string.focus_card_permission_required))
+                                }
+                            }
+                        ) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth().padding(16.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                Icon(imageVector = Icons.Filled.Image, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(24.dp))
+                                Spacer(Modifier.width(16.dp))
+                                Column(modifier = Modifier.weight(1f)) {
+                                    Text(text = stringResource(id = nameRes), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+                                    Text(
+                                        text = if (hasWallpaper) stringResource(id = R.string.settings_focus_card_wallpaper_selected) else stringResource(id = R.string.settings_select_background_image),
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.outline,
+                                    )
+                                }
+                                // 右侧叉叉清除按钮：仅在已设置壁纸时显示，点击弹出确认对话框
+                                // （嵌套clickable会消费点击事件，不会触发卡片的选图onClick）
+                                if (hasWallpaper) {
+                                    Spacer(Modifier.width(8.dp))
+                                    Icon(
+                                        imageVector = Icons.Filled.Close,
+                                        contentDescription = stringResource(id = R.string.focus_card_background_clear),
+                                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        modifier = Modifier
+                                            .size(24.dp)
+                                            .clickable {
+                                                clearFocusBgDialog.showConfirm(
+                                                    title = context.getString(R.string.focus_card_background_clear),
+                                                    content = context.getString(R.string.focus_card_background_clear_confirm),
+                                                    markdown = false,
+                                                )
+                                            }
+                                    )
+                                }
                             }
                         }
                     }

@@ -1157,4 +1157,10 @@ Komutların çalışması için uygulamanın tamamen kapatılıp yeniden açıld
     <string name="color_style_monochrome">Tek Renk</string>
     <string name="color_style_neutral">Nötr</string>
     <string name="color_style_fidelity">Sadakat</string>
+    <string name="settings_focus_card_dim">Kart duvar kağıdı karartması</string>
+    <string name="settings_focus_card_kernel">Çekirdek kartı</string>
+    <string name="settings_focus_card_app">Uygulama kartı</string>
+    <string name="settings_focus_card_device">Cihaz durumu kartı</string>
+    <string name="settings_focus_card_storage">Depolama kartı</string>
+    <string name="settings_focus_card_wallpaper_selected">Duvar kağıdı ayarlandı</string>
 </resources>

@@ -1152,4 +1152,10 @@
     <string name="color_style_monochrome">Монохромный</string>
     <string name="color_style_neutral">Нейтральный</string>
     <string name="color_style_fidelity">Точность</string>
+    <string name="settings_focus_card_dim">Затемнение обоев карточки</string>
+    <string name="settings_focus_card_kernel">Карточка ядра</string>
+    <string name="settings_focus_card_app">Карточка приложений</string>
+    <string name="settings_focus_card_device">Карточка состояния устройства</string>
+    <string name="settings_focus_card_storage">Карточка хранилища</string>
+    <string name="settings_focus_card_wallpaper_selected">Обои установлены</string>
 </resources>
