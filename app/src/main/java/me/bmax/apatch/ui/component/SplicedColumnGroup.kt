@@ -74,7 +74,7 @@ fun SplicedColumnGroup(
     if (allItems.isEmpty()) return
 
     CompositionLocalProvider(LocalInsideSplicedGroup provides true) {
-        Column(modifier = modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
+        Column(modifier = modifier.padding(horizontal = 16.dp).padding(top = 0.dp, bottom = 8.dp)) {
             if (title.isNotEmpty()) {
                 Text(
                     text = title,

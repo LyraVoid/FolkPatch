@@ -74,7 +74,6 @@ fun AppearanceSettingsScreen(navigator: DestinationsNavigator, highlightKey: Str
             modifier = Modifier.padding(paddingValues).nestedScroll(scrollBehavior.nestedScrollConnection),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            item { Spacer(Modifier.height(8.dp)) }
             item {
                 AppearanceSettingsContent(
                     snackBarHost = snackBarHost,

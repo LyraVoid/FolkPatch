@@ -227,7 +227,6 @@ fun FunctionSettingsScreen(navigator: DestinationsNavigator, highlightKey: Strin
             modifier = Modifier.padding(paddingValues).nestedScroll(scrollBehavior.nestedScrollConnection),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            item { Spacer(Modifier.height(8.dp)) }
             item {
                 FunctionSettingsContent(
                     kPatchReady = kPatchReady,
