@@ -67,6 +67,7 @@ import me.bmax.apatch.ui.theme.FontConfig
 import me.bmax.apatch.ui.theme.ThemeManager
 import me.bmax.apatch.ui.theme.refreshTheme
 import me.bmax.apatch.util.PermissionUtils
+import me.bmax.apatch.util.BottomBarIconConfig
 import me.bmax.apatch.util.ui.APDialogBlurBehindUtils
 import me.bmax.apatch.util.ui.NavigationBarsSpacer
 import androidx.compose.ui.draw.rotate
@@ -843,12 +844,14 @@ fun AppearanceSettingsContent(
             item(key = "appearance_nav_custom_icons") {
                 val customNavIconsEnabled = remember { mutableStateOf(prefs.getBoolean("nav_icon_custom_enabled", false)) }
                 var editingDestName by remember { mutableStateOf<String?>(null) }
+                // Observe config revision so the previews below refresh immediately after pick/clear.
+                val iconRevision by BottomBarIconConfig.revision.collectAsState()
                 val iconPickerLauncher = rememberLauncherForActivityResult(
                     contract = ActivityResultContracts.GetContent()
                 ) { uri ->
                     val dest = editingDestName ?: return@rememberLauncherForActivityResult
                     if (uri != null) {
-                        prefs.edit().putString("nav_icon_$dest", uri.toString()).apply()
+                        BottomBarIconConfig.setCustomIconUri(dest, uri.toString())
                         scope.launch {
                             snackBarHost.showSnackbar(context.getString(R.string.nav_icon_set))
                         }
@@ -864,7 +867,7 @@ fun AppearanceSettingsContent(
                     checked = customNavIconsEnabled.value,
                     onCheckedChange = {
                         customNavIconsEnabled.value = it
-                        prefs.edit().putBoolean("nav_icon_custom_enabled", it).apply()
+                        BottomBarIconConfig.isEnabled = it
                     }
                 )
 
@@ -880,7 +883,7 @@ fun AppearanceSettingsContent(
 
                     Column {
                         navDestinations.forEach { (destName, labelRes, defaultIcon) ->
-                            val customUri = prefs.getString("nav_icon_$destName", null)
+                            val customUri = remember(iconRevision, destName) { prefs.getString("nav_icon_$destName", null) }
                             ExpressiveCard(
                                 flat = flat,
                                 onClick = {
@@ -924,7 +927,7 @@ fun AppearanceSettingsContent(
                                     if (customUri != null) {
                                         IconButton(
                                             onClick = {
-                                                prefs.edit().remove("nav_icon_$destName").apply()
+                                                BottomBarIconConfig.setCustomIconUri(destName, null)
                                                 scope.launch {
                                                     snackBarHost.showSnackbar(context.getString(R.string.nav_icon_cleared))
                                                 }

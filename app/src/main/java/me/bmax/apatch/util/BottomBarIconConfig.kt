@@ -5,6 +5,9 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.core.content.edit
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.util.SafeUriResolver
 import java.io.File
@@ -22,11 +25,26 @@ object BottomBarIconConfig {
     /** Target size for nav bar icons (px at highest density) */
     private const val ICON_SIZE = 128
 
+    /**
+     * Reactive revision counter. Incremented whenever any icon config changes so that
+     * observers (e.g. the nav bar composables) can recompose immediately without an app restart.
+     */
+    private val _revision = MutableStateFlow(0)
+    val revision: StateFlow<Int> = _revision.asStateFlow()
+
+    /** Notify observers that the icon configuration changed. */
+    fun notifyChanged() {
+        _revision.value++
+    }
+
     /** Whether custom nav icons are enabled at all */
     var isEnabled: Boolean
         get() = APApplication.sharedPreferences.getBoolean("nav_icon_custom_enabled", false)
-        set(value) = APApplication.sharedPreferences.edit {
-            putBoolean("nav_icon_custom_enabled", value)
+        set(value) {
+            APApplication.sharedPreferences.edit {
+                putBoolean("nav_icon_custom_enabled", value)
+            }
+            notifyChanged()
         }
 
     /**
@@ -48,6 +66,7 @@ object BottomBarIconConfig {
                 remove(PREF_PREFIX + destinationName)
             }
         }
+        notifyChanged()
     }
 
     /**
@@ -105,5 +124,6 @@ object BottomBarIconConfig {
             remove(PREF_PREFIX + "Settings")
             putBoolean("nav_icon_custom_enabled", false)
         }
+        notifyChanged()
     }
 }

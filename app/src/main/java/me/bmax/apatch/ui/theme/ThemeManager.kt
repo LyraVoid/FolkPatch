@@ -14,6 +14,7 @@ import androidx.core.os.LocaleListCompat
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.util.MusicManager
 import me.bmax.apatch.util.SafeUriResolver
+import me.bmax.apatch.util.BottomBarIconConfig
 import org.json.JSONObject
 import java.io.BufferedInputStream
 import java.io.BufferedOutputStream
@@ -808,6 +809,8 @@ object ThemeManager {
                         }
                     }
                 }
+                // Notify observers so nav bar icons refresh live after theme import.
+                BottomBarIconConfig.notifyChanged()
 
                 // 4. Apply Font
                 if (isFontEnabled) {
@@ -959,6 +962,8 @@ object ThemeManager {
                         }
                     }
                     .apply()
+                // Notify observers so nav bar icons refresh live after theme reset.
+                BottomBarIconConfig.notifyChanged()
 
                 withContext(Dispatchers.Main) {
                     AppCompatDelegate.setApplicationLocales(LocaleListCompat.getEmptyLocaleList())

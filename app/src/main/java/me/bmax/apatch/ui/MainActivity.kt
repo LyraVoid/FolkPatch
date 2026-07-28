@@ -1730,8 +1730,11 @@ private fun NavBarIcon(
     modifier: Modifier = Modifier,
 ) {
     val destinationName = destination.name
-    val customUri = BottomBarIconConfig.getCustomIconUri(destinationName)
-    val isCustomEnabled = BottomBarIconConfig.isEnabled
+    // Observe config revision so the icon recomposes immediately when the user
+    // picks/clears a custom icon or toggles custom icons, without needing an app restart.
+    val revision by BottomBarIconConfig.revision.collectAsState()
+    val customUri = remember(revision, destinationName) { BottomBarIconConfig.getCustomIconUri(destinationName) }
+    val isCustomEnabled = remember(revision) { BottomBarIconConfig.isEnabled }
 
     if (isCustomEnabled && customUri != null) {
         AsyncImage(
