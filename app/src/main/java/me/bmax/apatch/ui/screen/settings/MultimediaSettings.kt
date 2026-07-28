@@ -269,15 +269,14 @@ fun MultimediaSettingsContent(
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
                             text = selectMusicTitle,
-                            style = MaterialTheme.typography.titleMedium,
+                            style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.onSurface,
-                            fontWeight = FontWeight.SemiBold,
                         )
                         if (MusicConfig.musicFilename != null) {
                             Spacer(Modifier.height(4.dp))
                             Text(
                                 text = musicSelectedText,
-                                style = MaterialTheme.typography.bodyMedium,
+                                style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
                         }
@@ -341,9 +340,8 @@ fun MultimediaSettingsContent(
                 ) {
                     Text(
                         text = playbackControlTitle,
-                        style = MaterialTheme.typography.titleMedium,
+                        style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurface,
-                        fontWeight = FontWeight.SemiBold,
                     )
                     Spacer(Modifier.height(8.dp))
                     Slider(
@@ -404,9 +402,8 @@ fun MultimediaSettingsContent(
                     Spacer(Modifier.width(16.dp))
                     Text(
                         text = clearMusicTitle,
-                        style = MaterialTheme.typography.titleMedium,
+                        style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurface,
-                        fontWeight = FontWeight.SemiBold,
                     )
                 }
             }
@@ -452,14 +449,13 @@ fun MultimediaSettingsContent(
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
                             text = soundEffectSourceTitle,
-                            style = MaterialTheme.typography.titleMedium,
+                            style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.onSurface,
-                            fontWeight = FontWeight.SemiBold,
                         )
                         Spacer(Modifier.height(4.dp))
                         Text(
                             text = if (SoundEffectConfig.sourceType == SoundEffectConfig.SOURCE_TYPE_LOCAL) soundEffectSourceLocal else soundEffectSourcePreset,
-                            style = MaterialTheme.typography.bodyMedium,
+                            style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
@@ -490,15 +486,14 @@ fun MultimediaSettingsContent(
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
                             text = selectSoundEffectTitle,
-                            style = MaterialTheme.typography.titleMedium,
+                            style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.onSurface,
-                            fontWeight = FontWeight.SemiBold,
                         )
                         if (SoundEffectConfig.soundEffectFilename != null) {
                             Spacer(Modifier.height(4.dp))
                             Text(
                                 text = soundEffectSelectedText,
-                                style = MaterialTheme.typography.bodyMedium,
+                                style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
                         }
@@ -528,9 +523,8 @@ fun MultimediaSettingsContent(
                     Spacer(Modifier.width(16.dp))
                     Text(
                         text = clearSoundEffectTitle,
-                        style = MaterialTheme.typography.titleMedium,
+                        style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurface,
-                        fontWeight = FontWeight.SemiBold,
                     )
                 }
             }
@@ -553,14 +547,13 @@ fun MultimediaSettingsContent(
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
                             text = soundEffectPresetTitle,
-                            style = MaterialTheme.typography.titleMedium,
+                            style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.onSurface,
-                            fontWeight = FontWeight.SemiBold,
                         )
                         Spacer(Modifier.height(4.dp))
                         Text(
                             text = SoundEffectConfig.presetName,
-                            style = MaterialTheme.typography.bodyMedium,
+                            style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
@@ -587,9 +580,8 @@ fun MultimediaSettingsContent(
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
                             text = soundEffectScopeTitle,
-                            style = MaterialTheme.typography.titleMedium,
+                            style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.onSurface,
-                            fontWeight = FontWeight.SemiBold,
                         )
                         Spacer(Modifier.height(4.dp))
                         Text(
@@ -597,7 +589,7 @@ fun MultimediaSettingsContent(
                                 stringResource(R.string.settings_sound_effect_scope_global)
                             else
                                 stringResource(R.string.settings_sound_effect_scope_bottom_bar),
-                            style = MaterialTheme.typography.bodyMedium,
+                            style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
@@ -645,14 +637,13 @@ fun MultimediaSettingsContent(
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
                             text = startupSourceTitle,
-                            style = MaterialTheme.typography.titleMedium,
+                            style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.onSurface,
-                            fontWeight = FontWeight.SemiBold,
                         )
                         Spacer(Modifier.height(4.dp))
                         Text(
                             text = if (SoundEffectConfig.startupSourceType == SoundEffectConfig.SOURCE_TYPE_LOCAL) startupSourceLocal else startupSourcePreset,
-                            style = MaterialTheme.typography.bodyMedium,
+                            style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }

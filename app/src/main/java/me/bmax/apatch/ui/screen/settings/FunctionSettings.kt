@@ -172,14 +172,13 @@ fun FunctionSettingsContent(
                             Column {
                                 Text(
                                     text = umountServiceTitle,
-                                    style = MaterialTheme.typography.titleMedium,
+                                    style = MaterialTheme.typography.bodyLarge,
                                     color = MaterialTheme.colorScheme.onSurface,
-                                    fontWeight = FontWeight.SemiBold,
                                 )
                                 Spacer(modifier = Modifier.height(4.dp))
                                 Text(
                                     text = umountServiceSummary,
-                                    style = MaterialTheme.typography.bodyMedium,
+                                    style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 )
                             }
@@ -249,14 +248,13 @@ fun FunctionSettingsContent(
                             Column {
                                 Text(
                                     text = kernelSpoofTitle,
-                                    style = MaterialTheme.typography.titleMedium,
+                                    style = MaterialTheme.typography.bodyLarge,
                                     color = MaterialTheme.colorScheme.onSurface,
-                                    fontWeight = FontWeight.SemiBold,
                                 )
                                 Spacer(modifier = Modifier.height(4.dp))
                                 Text(
                                     text = kernelSpoofSummary,
-                                    style = MaterialTheme.typography.bodyMedium,
+                                    style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 )
                             }
@@ -344,14 +342,13 @@ fun FunctionSettingsContent(
                             Column {
                                 Text(
                                     text = pathHideTitle,
-                                    style = MaterialTheme.typography.titleMedium,
+                                    style = MaterialTheme.typography.bodyLarge,
                                     color = MaterialTheme.colorScheme.onSurface,
-                                    fontWeight = FontWeight.SemiBold,
                                 )
                                 Spacer(modifier = Modifier.height(4.dp))
                                 Text(
                                     text = pathHideSummary,
-                                    style = MaterialTheme.typography.bodyMedium,
+                                    style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 )
                             }
@@ -604,14 +601,13 @@ fun FunctionSettingsContent(
                             Column {
                                 Text(
                                     text = niTitle,
-                                    style = MaterialTheme.typography.titleMedium,
+                                    style = MaterialTheme.typography.bodyLarge,
                                     color = MaterialTheme.colorScheme.onSurface,
-                                    fontWeight = FontWeight.SemiBold,
                                 )
                                 Spacer(modifier = Modifier.height(4.dp))
                                 Text(
                                     text = niSummary,
-                                    style = MaterialTheme.typography.bodyMedium,
+                                    style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 )
                             }

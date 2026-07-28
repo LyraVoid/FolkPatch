@@ -558,15 +558,14 @@ fun AppearanceSettingsContent(
                         Column(modifier = Modifier.weight(1f).padding(end = 16.dp)) {
                             Text(
                                 text = stringResource(R.string.settings_amoled_theme),
-                                style = MaterialTheme.typography.titleMedium,
+                                style = MaterialTheme.typography.bodyLarge,
                                 color = if (!isWallpaperEnabled) MaterialTheme.colorScheme.onSurface
                                 else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f),
-                                fontWeight = FontWeight.SemiBold,
                             )
                             Spacer(Modifier.height(4.dp))
                             Text(
                                 text = stringResource(R.string.settings_amoled_theme_desc),
-                                style = MaterialTheme.typography.bodyMedium,
+                                style = MaterialTheme.typography.bodySmall,
                                 color = if (!isWallpaperEnabled) MaterialTheme.colorScheme.onSurfaceVariant
                                 else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.38f),
                             )
@@ -626,12 +625,12 @@ fun AppearanceSettingsContent(
                         Column(modifier = Modifier.weight(1f)) {
                             Text(
                                 text = stringResource(id = R.string.settings_home_layout_style),
-                                style = MaterialTheme.typography.titleMedium,
+                                style = MaterialTheme.typography.bodyLarge,
                                 color = MaterialTheme.colorScheme.onSurface,
                             )
                             Text(
                                 text = stringResource(homeLayoutStyleToString(currentStyle.toString())),
-                                style = MaterialTheme.typography.bodyMedium,
+                                style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.outline,
                             )
                         }
@@ -651,12 +650,12 @@ fun AppearanceSettingsContent(
                         Column(modifier = Modifier.weight(1f)) {
                             Text(
                                 text = stringResource(id = R.string.settings_stats_top_layout),
-                                style = MaterialTheme.typography.titleMedium,
+                                style = MaterialTheme.typography.bodyLarge,
                                 color = MaterialTheme.colorScheme.onSurface,
                             )
                             Text(
                                 text = statsTopLayoutValue,
-                                style = MaterialTheme.typography.bodyMedium,
+                                style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.outline,
                             )
                         }
@@ -682,12 +681,12 @@ fun AppearanceSettingsContent(
                             Column(modifier = Modifier.weight(1f)) {
                                 Text(
                                     text = stringResource(id = R.string.settings_nav_layout_title),
-                                    style = MaterialTheme.typography.titleMedium,
+                                    style = MaterialTheme.typography.bodyLarge,
                                     color = MaterialTheme.colorScheme.onSurface,
                                 )
                                 Text(
                                     text = stringResource(id = R.string.settings_nav_layout_summary),
-                                    style = MaterialTheme.typography.bodyMedium,
+                                    style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.outline,
                                 )
                             }
@@ -748,12 +747,12 @@ fun AppearanceSettingsContent(
                         Column(modifier = Modifier.weight(1f)) {
                             Text(
                                 text = stringResource(id = R.string.settings_nav_scheme),
-                                style = MaterialTheme.typography.titleMedium,
+                                style = MaterialTheme.typography.bodyLarge,
                                 color = MaterialTheme.colorScheme.onSurface,
                             )
                             Text(
                                 text = navSchemeLabel,
-                                style = MaterialTheme.typography.bodyMedium,
+                                style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.outline,
                             )
                         }
@@ -970,7 +969,7 @@ fun AppearanceSettingsContent(
                                     Column(modifier = Modifier.weight(1f)) {
                                         Text(
                                             stringResource(labelRes),
-                                            style = MaterialTheme.typography.titleMedium,
+                                            style = MaterialTheme.typography.bodyLarge,
                                             color = MaterialTheme.colorScheme.onSurface
                                         )
                                         Text(
@@ -1026,12 +1025,12 @@ fun AppearanceSettingsContent(
                         Column(modifier = Modifier.weight(1f)) {
                             Text(
                                 text = stringResource(id = R.string.settings_custom_badge_text),
-                                style = MaterialTheme.typography.titleMedium,
+                                style = MaterialTheme.typography.bodyLarge,
                                 color = MaterialTheme.colorScheme.onSurface,
                             )
                             Text(
                                 text = currentBadgeTextMode,
-                                style = MaterialTheme.typography.bodyMedium,
+                                style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.outline,
                             )
                         }

@@ -130,9 +130,8 @@ fun BackupSettingsContent(
                     Column {
                         Text(
                             text = openBackupDirTitle,
-                            style = MaterialTheme.typography.titleMedium,
+                            style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.onSurface,
-                            fontWeight = FontWeight.SemiBold,
                         )
                     }
                 }
@@ -177,9 +176,8 @@ fun BackupSettingsContent(
                     Column {
                         Text(
                             text = configureWebDavTitle,
-                            style = MaterialTheme.typography.titleMedium,
+                            style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.onSurface,
-                            fontWeight = FontWeight.SemiBold,
                         )
                     }
                 }
