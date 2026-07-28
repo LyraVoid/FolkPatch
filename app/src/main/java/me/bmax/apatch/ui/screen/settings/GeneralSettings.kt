@@ -51,6 +51,7 @@ import me.bmax.apatch.ui.component.UpdateDialog
 import me.bmax.apatch.ui.component.rememberLoadingDialog
 import me.bmax.apatch.util.*
 import me.bmax.apatch.util.ui.APDialogBlurBehindUtils
+import java.io.File
 import java.util.Locale
 
 @Composable
@@ -132,6 +133,9 @@ fun GeneralSettingsContent(
 
     val logTitle = stringResource(id = R.string.send_log)
 
+    val cleanStorageTitle = stringResource(id = R.string.settings_clean_storage)
+    val cleanStorageSummary = stringResource(id = R.string.settings_clean_storage_summary)
+
     val folkXEngineTitle = stringResource(id = R.string.settings_folkx_engine_title)
     val folkXEngineSummary = stringResource(id = R.string.settings_folkx_engine_summary)
 
@@ -151,6 +155,7 @@ fun GeneralSettingsContent(
 
     val showUpdateDialog = remember { mutableStateOf(false) }
     val showResetSuPathDialog = remember { mutableStateOf(false) }
+    val showCleanStorageDialog = remember { mutableStateOf(false) }
     val showAppTitleDialog = remember { mutableStateOf(false) }
     val showCustomAppTitleDialog = remember { mutableStateOf(false) }
     val showDesktopAppNameDialog = remember { mutableStateOf(false) }
@@ -687,6 +692,32 @@ fun GeneralSettingsContent(
                 }
             }
         }
+
+        item(key = "general_clean_storage") {
+            ExpressiveCard(flat = flat, onClick = { showCleanStorageDialog.value = true }) {
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(16.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(imageVector = Icons.Filled.CleaningServices, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(24.dp))
+                    Spacer(Modifier.width(16.dp))
+                    Column {
+                        Text(
+                            text = cleanStorageTitle,
+                            style = MaterialTheme.typography.titleMedium,
+                            color = MaterialTheme.colorScheme.onSurface,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                        Spacer(Modifier.height(4.dp))
+                        Text(
+                            text = cleanStorageSummary,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                }
+            }
+        }
     }
 
     if (showUpdateDialog.value) {
@@ -701,6 +732,10 @@ fun GeneralSettingsContent(
 
     if (showResetSuPathDialog.value) {
         ResetSUPathDialog(showResetSuPathDialog)
+    }
+
+    if (showCleanStorageDialog.value) {
+        CleanStorageDialog(showCleanStorageDialog)
     }
 
     if (showSELinuxModeDialog.value) {
@@ -1568,6 +1603,72 @@ fun ResetSUPathDialog(showDialog: MutableState<Boolean>) {
 
 private fun String.shellSingleQuoted(): String {
     return "'" + replace("'", "'\\''") + "'"
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CleanStorageDialog(showDialog: MutableState<Boolean>) {
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+
+    BasicAlertDialog(
+        onDismissRequest = { showDialog.value = false }, properties = DialogProperties(
+            decorFitsSystemWindows = true,
+            usePlatformDefaultWidth = false,
+        )
+    ) {
+        Surface(
+            modifier = Modifier
+                .width(310.dp)
+                .wrapContentHeight(),
+            shape = RoundedCornerShape(30.dp),
+            tonalElevation = AlertDialogDefaults.TonalElevation,
+            color = AlertDialogDefaults.containerColor,
+        ) {
+            Column(modifier = Modifier.padding(PaddingValues(all = 24.dp))) {
+                Text(
+                    text = stringResource(id = R.string.settings_clean_storage),
+                    style = MaterialTheme.typography.headlineSmall,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+                Text(
+                    text = stringResource(id = R.string.settings_clean_storage_confirm),
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(bottom = 12.dp)
+                )
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End
+                ) {
+                    TextButton(onClick = { showDialog.value = false }) {
+                        Text(stringResource(id = android.R.string.cancel))
+                    }
+
+                    Button(onClick = {
+                        showDialog.value = false
+                        scope.launch {
+                            val success = withContext(Dispatchers.IO) {
+                                runCatching {
+                                    // 删除容易因残留/占位文件导致下载或应用失败的目录，随后重建空目录
+                                    listOf("themes", "music", "sound_effects").forEach { name ->
+                                        val dir = File(context.filesDir, name)
+                                        if (dir.exists()) dir.deleteRecursively()
+                                        dir.mkdirs()
+                                    }
+                                    context.cacheDir?.listFiles()?.forEach { it.deleteRecursively() }
+                                }.isSuccess
+                            }
+                            showToast(context, if (success) R.string.settings_clean_storage_done else R.string.failure)
+                        }
+                    }) {
+                        Text(stringResource(id = android.R.string.ok))
+                    }
+                }
+            }
+            val dialogWindowProvider = LocalView.current.parent as DialogWindowProvider
+            APDialogBlurBehindUtils.setupWindowBlurListener(dialogWindowProvider.window)
+        }
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

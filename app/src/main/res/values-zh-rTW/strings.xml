@@ -80,6 +80,10 @@
     <string name="settings_hide_apatch_card_summary">控制首頁是否顯示「深入了解 FolkPatch」卡片</string>
 
     <string name="send_log">傳送日誌</string>
+    <string name="settings_clean_storage">清理應用數據</string>
+    <string name="settings_clean_storage_summary">修復殘留檔案導致的下載或應用失敗</string>
+    <string name="settings_clean_storage_confirm">將刪除已下載的主題、導入的音樂、音效和全部緩存檔案，並重建相關目錄。設置項會保留。是否繼續？</string>
+    <string name="settings_clean_storage_done">清理完成</string>
     <string name="save_log">儲存日誌</string>
     <string name="log_saved">日誌已儲存</string>
     <string name="safe_mode">安全模式</string>

@@ -121,6 +121,10 @@
 
     <string name="about_source_code"><![CDATA[<p>عرض الكود المصدري على %1$s<p/>انضم إلى قناتنا على %2$s<p/>انضم إلى مجموعتنا على %3$s]]></string>
     <string name="send_log">إرسال السجلات</string>
+    <string name="settings_clean_storage">تنظيف بيانات التطبيق</string>
+    <string name="settings_clean_storage_summary">إصلاح فشل التنزيل أو التطبيق الناتج عن الملفات المتبقية</string>
+    <string name="settings_clean_storage_confirm">سيؤدي هذا إلى حذف السمات التي تم تنزيلها والموسيقى المستوردة والمؤثرات الصوتية وجميع ملفات التخزين المؤقت، ثم إعادة إنشاء المجلدات. سيتم الاحتفاظ بالإعدادات. هل تريد المتابعة؟</string>
+    <string name="settings_clean_storage_done">اكتمل التنظيف</string>
     <string name="save_log">حفظ السجلات</string>
     <string name="log_saved">تم حفظ السجلات</string>
     <string name="safe_mode">الوضع الآمن</string>

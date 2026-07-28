@@ -84,6 +84,10 @@
 
     <string name="about_source_code"><![CDATA[<p>Lihat kode sumber di %1$s<p/>Bergabunglah dengan saluran %2$s kami<p/>Bergabunglah dengan grup %3$s kami]]></string>
     <string name="send_log">Kirim Log</string>
+    <string name="settings_clean_storage">Bersihkan data aplikasi</string>
+    <string name="settings_clean_storage_summary">Perbaiki kegagalan unduhan atau penerapan akibat file sisa</string>
+    <string name="settings_clean_storage_confirm">Ini akan menghapus tema yang diunduh, musik yang diimpor, efek suara, dan semua cache, lalu membuat ulang direktori. Pengaturan akan dipertahankan. Lanjutkan?</string>
+    <string name="settings_clean_storage_done">Pembersihan selesai</string>
     <string name="save_log">Simpan Log</string>
     <string name="log_saved">Log tersimpan</string>
     <string name="safe_mode">Mode Aman</string>

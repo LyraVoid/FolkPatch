@@ -121,6 +121,10 @@
 
     <string name="about_source_code"><![CDATA[<p>Ver código fuente en %1$s<p/>Únete a nuestro canal de %2$s<p/>Únete a nuestro grupo de %3$s]]></string>
     <string name="send_log">Enviar registros</string>
+    <string name="settings_clean_storage">Limpiar datos de la aplicación</string>
+    <string name="settings_clean_storage_summary">Corrige fallos de descarga o aplicación causados por archivos residuales</string>
+    <string name="settings_clean_storage_confirm">Se eliminarán los temas descargados, la música importada, los efectos de sonido y toda la caché, y se recrearán los directorios. La configuración se conservará. ¿Continuar?</string>
+    <string name="settings_clean_storage_done">Limpieza completada</string>
     <string name="save_log">Guardar registros</string>
     <string name="log_saved">Registros guardados</string>
     <string name="safe_mode">Modo seguro</string>

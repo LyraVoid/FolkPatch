@@ -77,6 +77,10 @@
 
     <string name="about_source_code"><![CDATA[<p>于%1$s观仙法源典<p/>入吾%2$s仙音频道<p/>赴吾%3$s仙友寮阁]]></string>
     <string name="send_log">呈渡劫日志</string>
+    <string name="settings_clean_storage">涤荡仙府尘垢</string>
+    <string name="settings_clean_storage_summary">涤除残留旧物，以解下载施法之厄</string>
+    <string name="settings_clean_storage_confirm">将尽除已纳之主题、所引仙乐、音效与诸般缓存，重筑洞府诸室。道友设置无损。可要继续？</string>
+    <string name="settings_clean_storage_done">涤荡功成</string>
     <string name="save_log">藏渡劫日志</string>
     <string name="log_saved">渡劫日志已存入乾坤戒</string>
     <string name="safe_mode">避劫之境</string>

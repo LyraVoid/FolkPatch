@@ -87,6 +87,10 @@
     <string name="settings_hide_apatch_card_summary">「APatch について学習する」のカードを非表示にします。</string>
     <string name="about_source_code"><![CDATA[<p>%1$s でソースコードを表示<p/>%2$s のチャンネルに参加<p/>%3$s のグループに参加]]></string>
     <string name="send_log">ログを送信</string>
+    <string name="settings_clean_storage">アプリデータをクリーンアップ</string>
+    <string name="settings_clean_storage_summary">残留ファイルによるダウンロード・適用失敗を修復</string>
+    <string name="settings_clean_storage_confirm">ダウンロードしたテーマ、インポートした音楽、サウンド効果とすべてのキャッシュを削除し、ディレクトリを再作成します。設定は保持されます。続行しますか？</string>
+    <string name="settings_clean_storage_done">クリーンアップ完了</string>
     <string name="save_log">ログを保存</string>
     <string name="log_saved">ログを保存しました。</string>
     <string name="safe_mode">セーフモード</string>

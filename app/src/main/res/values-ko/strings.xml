@@ -100,6 +100,10 @@
 
     <string name="about_source_code"><![CDATA[<p>%1$s에서 소스 코드를 확인하세요<p/>%2$s 채널에 가입하세요<p/>%3$s 그룹에 가입하세요]]></string>
     <string name="send_log">로그 보내기</string>
+    <string name="settings_clean_storage">앱 데이터 정리</string>
+    <string name="settings_clean_storage_summary">잔여 파일로 인한 다운로드·적용 실패 복구</string>
+    <string name="settings_clean_storage_confirm">다운로드한 테마, 가져온 음악, 음향 효과와 모든 캐시 파일을 삭제하고 디렉터리를 다시 만듭니다. 설정은 유지됩니다. 계속할까요?</string>
+    <string name="settings_clean_storage_done">정리 완료</string>
     <string name="save_log">로그 저장</string>
     <string name="log_saved">로그 저장됨</string>
     <string name="safe_mode">안전 모드</string>

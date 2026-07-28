@@ -78,6 +78,10 @@
 
     <string name="about_source_code"><![CDATA[<p>Xem mã nguồn tại %1$s<p/>Tham gia kênh %2$s của chúng tôi<p/>Tham gia nhóm %3$s của chúng tôi]]></string>
     <string name="send_log">Gửi nhật ký</string>
+    <string name="settings_clean_storage">Dọn dẹp dữ liệu ứng dụng</string>
+    <string name="settings_clean_storage_summary">Khắc phục lỗi tải xuống hoặc áp dụng do tệp còn sót lại</string>
+    <string name="settings_clean_storage_confirm">Thao tác này sẽ xóa các chủ đề đã tải xuống, nhạc đã nhập, hiệu ứng âm thanh và toàn bộ bộ nhớ đệm, sau đó tạo lại thư mục. Cài đặt sẽ được giữ nguyên. Tiếp tục?</string>
+    <string name="settings_clean_storage_done">Dọn dẹp hoàn tất</string>
     <string name="save_log">Lưu nhật ký</string>
     <string name="log_saved">Nhật ký đã được lưu</string>
     <string name="safe_mode">Chế độ an toàn</string>

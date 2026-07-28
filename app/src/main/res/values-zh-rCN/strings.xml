@@ -92,6 +92,10 @@
 
     <string name="about_source_code"><![CDATA[<p>在 %1$s 查看源代码<p/>加入我们的 %2$s 频道<p/>加入我们的 %3$s 群组]]></string>
     <string name="send_log">发送日志</string>
+    <string name="settings_clean_storage">清理应用数据</string>
+    <string name="settings_clean_storage_summary">修复残留文件导致的下载或应用失败</string>
+    <string name="settings_clean_storage_confirm">将删除已下载的主题、导入的音乐、音效和全部缓存文件，并重建相关目录。设置项会保留。是否继续？</string>
+    <string name="settings_clean_storage_done">清理完成</string>
     <string name="save_log">保存日志</string>
     <string name="log_saved">日志已保存</string>
     <string name="safe_mode">安全模式</string>

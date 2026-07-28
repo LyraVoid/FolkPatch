@@ -78,6 +78,10 @@
 
     <string name="about_source_code"><![CDATA[<p>在 %1$s 查看魔法书<p/>加入我们的 %2$s 魔法学院<p/>加入我们的 %3$s 魔法少女公会]]></string>
     <string name="send_log">发送魔法记录</string>
+    <string name="settings_clean_storage">净化魔法数据</string>
+    <string name="settings_clean_storage_summary">消除残留魔力，避免下载或应用失败</string>
+    <string name="settings_clean_storage_confirm">将消除已下载的魔法主题、导入的乐曲、音效与全部缓存，并重构相关结界。契约设定将被保留。要继续吗？</string>
+    <string name="settings_clean_storage_done">净化完成</string>
     <string name="save_log">保存魔法记录</string>
     <string name="log_saved">魔法记录已保存</string>
     <string name="safe_mode">安全变身模式</string>

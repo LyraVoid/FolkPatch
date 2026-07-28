@@ -84,6 +84,10 @@
 
     <string name="about_source_code"><![CDATA[<p>Просмотреть исходный код на %1$s<p/>Присоединяйтесь к нашему %2$s каналу<p/>Присоединяйтесь к нашей %3$s группе]]></string>
     <string name="send_log">Отправить логи</string>
+    <string name="settings_clean_storage">Очистка данных приложения</string>
+    <string name="settings_clean_storage_summary">Исправляет сбои загрузки и применения из-за остаточных файлов</string>
+    <string name="settings_clean_storage_confirm">Будут удалены загруженные темы, импортированная музыка, звуковые эффекты и весь кэш, каталоги будут созданы заново. Настройки сохранятся. Продолжить?</string>
+    <string name="settings_clean_storage_done">Очистка завершена</string>
     <string name="save_log">Сохранить логи</string>
     <string name="log_saved">Логи сохранены</string>
     <string name="safe_mode">Безопасный режим</string>

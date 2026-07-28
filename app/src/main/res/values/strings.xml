@@ -100,6 +100,10 @@
 
     <string name="about_source_code"><![CDATA[<p>View source code at %1$s<p/>Join our %2$s channel<p/>Join our %3$s group]]></string>
     <string name="send_log">Send logs</string>
+    <string name="settings_clean_storage">Clean app data</string>
+    <string name="settings_clean_storage_summary">Fix download or apply failures caused by residual files</string>
+    <string name="settings_clean_storage_confirm">This will delete downloaded themes, imported music, sound effects and all cache files, then rebuild the directories. Your settings will be kept. Continue?</string>
+    <string name="settings_clean_storage_done">Cleanup complete</string>
     <string name="save_log">Save logs</string>
     <string name="log_saved">Logs saved</string>
     <string name="safe_mode">Safe mode</string>

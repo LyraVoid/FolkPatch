@@ -78,6 +78,10 @@
 
     <string name="about_source_code"><![CDATA[<p>在 %1$s 查看圣域神典<p/>加入我们的 %2$s 圣光殿堂<p/>加入我们的 %3$s 天使之国]]></string>
     <string name="send_log">发送神谕日志</string>
+    <string name="settings_clean_storage">净化圣所数据</string>
+    <string name="settings_clean_storage_summary">涤除残留遗物引发的下载或应用失败</string>
+    <string name="settings_clean_storage_confirm">将涤除已降临的主题、引入的乐章、圣音与全部缓存，并重筑相关圣所。圣典设定将被保留。是否继续？</string>
+    <string name="settings_clean_storage_done">净化完成</string>
     <string name="save_log">保存神谕日志</string>
     <string name="log_saved">神谕日志已保存</string>
     <string name="safe_mode">圣域守护模式</string>

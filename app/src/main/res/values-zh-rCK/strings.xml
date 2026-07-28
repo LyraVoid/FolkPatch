@@ -92,6 +92,10 @@
 
     <string name="about_source_code"><![CDATA[<p>在 %1$s 查看菜谱源码<p/>加入我们的 %2$s 频道<p/>加入我们的 %3$s 群组]]></string>
     <string name="send_log">发送烹饪日志</string>
+    <string name="settings_clean_storage">清理后厨存货</string>
+    <string name="settings_clean_storage_summary">清掉残渣，免得下载或应用翻车</string>
+    <string name="settings_clean_storage_confirm">会把下载的主题、导入的音乐、厨房声响和全部缓存统统倒掉，重新备好台面。设置不会动。要开工吗？</string>
+    <string name="settings_clean_storage_done">打扫完毕</string>
     <string name="save_log">保存烹饪日志</string>
     <string name="log_saved">烹饪日志已保存</string>
     <string name="safe_mode">安全烹饪模式</string>

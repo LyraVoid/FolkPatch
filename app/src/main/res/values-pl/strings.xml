@@ -72,6 +72,10 @@
     <string name="settings_hide_apatch_card_summary">Ukryj kartę "Dowiedz się o FolkPatch" na stronie głównej</string>
     <string name="about_source_code"><![CDATA[<p>Zobacz kod źródłowy na %1$s<p/>Dołącz do naszego kanału %2$s <p/>Dołącz do naszej grupy %3$s]]></string>
     <string name="send_log">Prześlij logi</string>
+    <string name="settings_clean_storage">Wyczyść dane aplikacji</string>
+    <string name="settings_clean_storage_summary">Naprawia błędy pobierania lub stosowania spowodowane pozostałymi plikami</string>
+    <string name="settings_clean_storage_confirm">Spowoduje to usunięcie pobranych motywów, zaimportowanej muzyki, efektów dźwiękowych i całej pamięci podręcznej oraz odtworzenie katalogów. Ustawienia zostaną zachowane. Kontynuować?</string>
+    <string name="settings_clean_storage_done">Czyszczenie zakończone</string>
     <string name="save_log">Zapisz logi</string>
     <string name="log_saved">Zapisano logi</string>
     <string name="safe_mode">Tryb awaryjny</string>

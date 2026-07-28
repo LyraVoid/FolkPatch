@@ -100,6 +100,10 @@
 
     <string name="about_source_code"><![CDATA[<p>Kaynak kodunu görüntüle: %1$s<p/>%2$s kanalımıza katıl<p/>%3$s grubumuza katıl]]></string>
     <string name="send_log">Günlükleri gönder</string>
+    <string name="settings_clean_storage">Uygulama verilerini temizle</string>
+    <string name="settings_clean_storage_summary">Kalıntı dosyaların neden olduğu indirme veya uygulama hatalarını düzeltir</string>
+    <string name="settings_clean_storage_confirm">Bu işlem indirilen temaları, içe aktarılan müzikleri, ses efektlerini ve tüm önbelleği siler, ardından dizinleri yeniden oluşturur. Ayarlar korunur. Devam edilsin mi?</string>
+    <string name="settings_clean_storage_done">Temizlik tamamlandı</string>
     <string name="save_log">Günlükleri kaydet</string>
     <string name="log_saved">Günlükler kaydedildi</string>
     <string name="safe_mode">Güvenli mod</string>

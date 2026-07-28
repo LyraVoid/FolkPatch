@@ -93,6 +93,10 @@
 
     <string name="about_source_code"><![CDATA[<p>在 %1$s 查看源代码<p/>加入我们的 %2$s 频道<p/>加入我们的 %3$s 服务器群组]]></string>
     <string name="send_log">发送崩溃报告</string>
+    <string name="settings_clean_storage">清理存档数据</string>
+    <string name="settings_clean_storage_summary">清除残留文件，避免资源包下载或加载失败</string>
+    <string name="settings_clean_storage_confirm">将删除已下载的资源包、导入的唱片、方块音效和全部缓存，并重新生成目录。游戏设置会保留。确定继续？</string>
+    <string name="settings_clean_storage_done">清理完成</string>
     <string name="save_log">保存崩溃报告</string>
     <string name="log_saved">崩溃报告已存入末影箱</string>
     <string name="safe_mode">和平难度</string>
