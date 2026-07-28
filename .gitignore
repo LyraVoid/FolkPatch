@@ -20,6 +20,7 @@ app/src/main/resources/
 private
 .claude/
 .opencode
+.qoder
 
 # Built native binaries
 app/src/main/assets/Service/
