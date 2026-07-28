@@ -27,6 +27,7 @@ import kotlinx.coroutines.launch
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.ExpressiveCard
+import me.bmax.apatch.ui.component.SliderSettingCard
 import me.bmax.apatch.ui.component.SplicedColumnGroup
 import me.bmax.apatch.ui.component.ToggleSettingCard
 import me.bmax.apatch.ui.component.rememberConfirmDialog
@@ -318,34 +319,16 @@ fun MultimediaSettingsContent(
 
         // --- Music: Volume Slider ---
         item(key = "multimedia_music_volume", visible = MusicConfig.isMusicEnabled) {
-            ExpressiveCard(flat = flat) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                ) {
-                    Text(
-                        text = musicVolumeTitle,
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.onSurface,
-                        fontWeight = FontWeight.SemiBold,
-                    )
-                    Spacer(Modifier.height(8.dp))
-                    Slider(
-                        value = MusicConfig.volume,
-                        onValueChange = {
-                            MusicConfig.setVolumeValue(it)
-                            MusicManager.updateVolume(it)
-                        },
-                        onValueChangeFinished = { MusicConfig.save(context) },
-                        valueRange = 0f..1f,
-                        colors = SliderDefaults.colors(
-                            thumbColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                            activeTrackColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f)
-                        )
-                    )
-                }
-            }
+            SliderSettingCard(
+                flat = flat,
+                title = musicVolumeTitle,
+                value = MusicConfig.volume,
+                onValueChange = {
+                    MusicConfig.setVolumeValue(it)
+                    MusicManager.updateVolume(it)
+                },
+                onValueChangeFinished = { MusicConfig.save(context) },
+            )
         }
 
         // --- Music: Playback Control ---
@@ -832,33 +815,15 @@ fun MultimediaSettingsContent(
 
         // --- Vibration: Intensity Slider ---
         item(key = "multimedia_vibration_intensity", visible = VibrationConfig.isVibrationEnabled) {
-            ExpressiveCard(flat = flat) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                ) {
-                    Text(
-                        text = vibrationIntensityTitle,
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.onSurface,
-                        fontWeight = FontWeight.SemiBold,
-                    )
-                    Spacer(Modifier.height(8.dp))
-                    Slider(
-                        value = VibrationConfig.vibrationIntensity,
-                        onValueChange = {
-                            VibrationConfig.setIntensityValue(it)
-                        },
-                        onValueChangeFinished = { VibrationConfig.save(context) },
-                        valueRange = 0f..1f,
-                        colors = SliderDefaults.colors(
-                            thumbColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                            activeTrackColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f)
-                        )
-                    )
-                }
-            }
+            SliderSettingCard(
+                flat = flat,
+                title = vibrationIntensityTitle,
+                value = VibrationConfig.vibrationIntensity,
+                onValueChange = {
+                    VibrationConfig.setIntensityValue(it)
+                },
+                onValueChangeFinished = { VibrationConfig.save(context) },
+            )
         }
     }
 

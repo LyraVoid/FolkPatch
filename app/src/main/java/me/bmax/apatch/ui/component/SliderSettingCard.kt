@@ -1,0 +1,64 @@
+package me.bmax.apatch.ui.component
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderDefaults
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+
+@Composable
+fun SliderSettingCard(
+    flat: Boolean = false,
+    title: String,
+    value: Float,
+    valueRange: ClosedFloatingPointRange<Float> = 0f..1f,
+    steps: Int = 19,
+    valueFormat: (Float) -> String = { "${(it * 100).toInt()}%" },
+    onValueChange: (Float) -> Unit,
+    onValueChangeFinished: () -> Unit = {},
+) {
+    ExpressiveCard(flat = flat) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+                Text(
+                    text = valueFormat(value),
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+            Slider(
+                value = value,
+                onValueChange = onValueChange,
+                onValueChangeFinished = onValueChangeFinished,
+                valueRange = valueRange,
+                steps = steps,
+                colors = SliderDefaults.colors(
+                    thumbColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
+                    activeTrackColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
+                ),
+                modifier = Modifier.fillMaxWidth(),
+            )
+        }
+    }
+}

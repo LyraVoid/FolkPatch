@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import me.bmax.apatch.ui.component.ColorGenerationModeSelector
+import me.bmax.apatch.ui.component.SliderSettingCard
 import me.bmax.apatch.ui.component.ColorStandardSelector
 import me.bmax.apatch.ui.component.ColorStylePicker
 import me.bmax.apatch.ui.theme.ColorGenerationMode
@@ -760,69 +761,33 @@ fun AppearanceSettingsContent(
 
                 if (BackgroundConfig.isNavBarGlassEnabled) {
                     item(key = "appearance_navbar_glass_blur") {
-                        ExpressiveCard(flat = flat) {
-                            Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
-                                Text(
-                                    text = stringResource(id = R.string.settings_navbar_glass_blur_strength),
-                                    style = MaterialTheme.typography.titleMedium,
-                                    color = MaterialTheme.colorScheme.onSurface,
-                                )
-                                Slider(
-                                    value = BackgroundConfig.navBarGlassBlurStrength,
-                                    onValueChange = { BackgroundConfig.setNavBarGlassBlurStrengthValue(it) },
-                                    onValueChangeFinished = { BackgroundConfig.save(context) },
-                                    valueRange = 0f..1f,
-                                    colors = SliderDefaults.colors(
-                                        thumbColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                                        activeTrackColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                                    ),
-                                )
-                            }
-                        }
+                        SliderSettingCard(
+                            flat = flat,
+                            title = stringResource(id = R.string.settings_navbar_glass_blur_strength),
+                            value = BackgroundConfig.navBarGlassBlurStrength,
+                            onValueChange = { BackgroundConfig.setNavBarGlassBlurStrengthValue(it) },
+                            onValueChangeFinished = { BackgroundConfig.save(context) },
+                        )
                     }
 
                     item(key = "appearance_navbar_glass_transparency") {
-                        ExpressiveCard(flat = flat) {
-                            Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
-                                Text(
-                                    text = stringResource(id = R.string.settings_navbar_glass_transparency),
-                                    style = MaterialTheme.typography.titleMedium,
-                                    color = MaterialTheme.colorScheme.onSurface,
-                                )
-                                Slider(
-                                    value = BackgroundConfig.navBarGlassTransparency,
-                                    onValueChange = { BackgroundConfig.setNavBarGlassTransparencyValue(it) },
-                                    onValueChangeFinished = { BackgroundConfig.save(context) },
-                                    valueRange = 0f..1f,
-                                    colors = SliderDefaults.colors(
-                                        thumbColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                                        activeTrackColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                                    ),
-                                )
-                            }
-                        }
+                        SliderSettingCard(
+                            flat = flat,
+                            title = stringResource(id = R.string.settings_navbar_glass_transparency),
+                            value = BackgroundConfig.navBarGlassTransparency,
+                            onValueChange = { BackgroundConfig.setNavBarGlassTransparencyValue(it) },
+                            onValueChangeFinished = { BackgroundConfig.save(context) },
+                        )
                     }
 
                     item(key = "appearance_navbar_glass_highlight") {
-                        ExpressiveCard(flat = flat) {
-                            Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
-                                Text(
-                                    text = stringResource(id = R.string.settings_navbar_glass_highlight_strength),
-                                    style = MaterialTheme.typography.titleMedium,
-                                    color = MaterialTheme.colorScheme.onSurface,
-                                )
-                                Slider(
-                                    value = BackgroundConfig.navBarGlassHighlightStrength,
-                                    onValueChange = { BackgroundConfig.setNavBarGlassHighlightStrengthValue(it) },
-                                    onValueChangeFinished = { BackgroundConfig.save(context) },
-                                    valueRange = 0f..1f,
-                                    colors = SliderDefaults.colors(
-                                        thumbColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                                        activeTrackColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                                    ),
-                                )
-                            }
-                        }
+                        SliderSettingCard(
+                            flat = flat,
+                            title = stringResource(id = R.string.settings_navbar_glass_highlight_strength),
+                            value = BackgroundConfig.navBarGlassHighlightStrength,
+                            onValueChange = { BackgroundConfig.setNavBarGlassHighlightStrengthValue(it) },
+                            onValueChangeFinished = { BackgroundConfig.save(context) },
+                        )
                     }
 
                     item(key = "appearance_navbar_glass_specular") {
@@ -1074,75 +1039,44 @@ fun AppearanceSettingsContent(
 
             if (BackgroundConfig.isAdvancedTitleStyleEnabled) {
                 item(key = "appearance_title_day_opacity") {
-                    ExpressiveCard(flat = flat) {
-                        Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
-                            Text(text = stringResource(id = R.string.settings_title_image_day_opacity), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
-                            Slider(
-                                value = BackgroundConfig.titleImageDayOpacity,
-                                onValueChange = { BackgroundConfig.setTitleImageDayOpacityValue(it) },
-                                onValueChangeFinished = { BackgroundConfig.save(context) },
-                                valueRange = 0f..1f,
-                                colors = SliderDefaults.colors(
-                                    thumbColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                                    activeTrackColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                                ),
-                            )
-                        }
-                    }
+                    SliderSettingCard(
+                        flat = flat,
+                        title = stringResource(id = R.string.settings_title_image_day_opacity),
+                        value = BackgroundConfig.titleImageDayOpacity,
+                        onValueChange = { BackgroundConfig.setTitleImageDayOpacityValue(it) },
+                        onValueChangeFinished = { BackgroundConfig.save(context) },
+                    )
                 }
 
                 item(key = "appearance_title_night_opacity") {
-                    ExpressiveCard(flat = flat) {
-                        Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
-                            Text(text = stringResource(id = R.string.settings_title_image_night_opacity), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
-                            Slider(
-                                value = BackgroundConfig.titleImageNightOpacity,
-                                onValueChange = { BackgroundConfig.setTitleImageNightOpacityValue(it) },
-                                onValueChangeFinished = { BackgroundConfig.save(context) },
-                                valueRange = 0f..1f,
-                                colors = SliderDefaults.colors(
-                                    thumbColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                                    activeTrackColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                                ),
-                            )
-                        }
-                    }
+                    SliderSettingCard(
+                        flat = flat,
+                        title = stringResource(id = R.string.settings_title_image_night_opacity),
+                        value = BackgroundConfig.titleImageNightOpacity,
+                        onValueChange = { BackgroundConfig.setTitleImageNightOpacityValue(it) },
+                        onValueChangeFinished = { BackgroundConfig.save(context) },
+                    )
                 }
 
                 item(key = "appearance_title_image_dim") {
-                    ExpressiveCard(flat = flat) {
-                        Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
-                            Text(text = stringResource(id = R.string.settings_title_image_dim), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
-                            Slider(
-                                value = BackgroundConfig.titleImageDim,
-                                onValueChange = { BackgroundConfig.setTitleImageDimValue(it) },
-                                onValueChangeFinished = { BackgroundConfig.save(context) },
-                                valueRange = 0f..1f,
-                                colors = SliderDefaults.colors(
-                                    thumbColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                                    activeTrackColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                                ),
-                            )
-                        }
-                    }
+                    SliderSettingCard(
+                        flat = flat,
+                        title = stringResource(id = R.string.settings_title_image_dim),
+                        value = BackgroundConfig.titleImageDim,
+                        onValueChange = { BackgroundConfig.setTitleImageDimValue(it) },
+                        onValueChangeFinished = { BackgroundConfig.save(context) },
+                    )
                 }
 
                 item(key = "appearance_title_image_offset_x") {
-                    ExpressiveCard(flat = flat) {
-                        Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
-                            Text(text = stringResource(id = R.string.settings_title_image_offset_x), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
-                            Slider(
-                                value = BackgroundConfig.titleImageOffsetX,
-                                onValueChange = { BackgroundConfig.setTitleImageOffsetXValue(it) },
-                                onValueChangeFinished = { BackgroundConfig.save(context) },
-                                valueRange = -1f..1f,
-                                colors = SliderDefaults.colors(
-                                    thumbColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                                    activeTrackColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                                ),
-                            )
-                        }
-                    }
+                    SliderSettingCard(
+                        flat = flat,
+                        title = stringResource(id = R.string.settings_title_image_offset_x),
+                        value = BackgroundConfig.titleImageOffsetX,
+                        valueRange = -1f..1f,
+                        onValueChange = { BackgroundConfig.setTitleImageOffsetXValue(it) },
+                        onValueChangeFinished = { BackgroundConfig.save(context) },
+                    )
                 }
 
                 item(key = "appearance_select_title_image") {
@@ -1248,94 +1182,56 @@ fun AppearanceSettingsContent(
                     }
 
                     item(key = "appearance_bg_opacity") {
-                        ExpressiveCard(flat = flat) {
-                            Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
-                                Text(text = stringResource(id = R.string.settings_custom_background_opacity), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
-                                Slider(
-                                    value = BackgroundConfig.customBackgroundOpacity,
-                                    onValueChange = { BackgroundConfig.setCustomBackgroundOpacityValue(it) },
-                                    onValueChangeFinished = { BackgroundConfig.save(context) },
-                                    valueRange = 0f..1f,
-                                    colors = SliderDefaults.colors(
-                                        thumbColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                                        activeTrackColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                                    ),
-                                )
-                            }
-                        }
+                        SliderSettingCard(
+                            flat = flat,
+                            title = stringResource(id = R.string.settings_custom_background_opacity),
+                            value = BackgroundConfig.customBackgroundOpacity,
+                            onValueChange = { BackgroundConfig.setCustomBackgroundOpacityValue(it) },
+                            onValueChangeFinished = { BackgroundConfig.save(context) },
+                        )
                     }
 
                     item(key = "appearance_bg_blur") {
-                        ExpressiveCard(flat = flat) {
-                            Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
-                                Text(text = stringResource(id = R.string.settings_custom_background_blur), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
-                                Slider(
-                                    value = BackgroundConfig.customBackgroundBlur,
-                                    onValueChange = { BackgroundConfig.setCustomBackgroundBlurValue(it) },
-                                    onValueChangeFinished = { BackgroundConfig.save(context) },
-                                    valueRange = 0f..50f,
-                                    colors = SliderDefaults.colors(
-                                        thumbColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                                        activeTrackColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                                    ),
-                                )
-                            }
-                        }
+                        SliderSettingCard(
+                            flat = flat,
+                            title = stringResource(id = R.string.settings_custom_background_blur),
+                            value = BackgroundConfig.customBackgroundBlur,
+                            valueRange = 0f..50f,
+                            valueFormat = { "${it.toInt()}" },
+                            onValueChange = { BackgroundConfig.setCustomBackgroundBlurValue(it) },
+                            onValueChangeFinished = { BackgroundConfig.save(context) },
+                        )
                     }
 
                     if (!BackgroundConfig.isDualBackgroundDimEnabled) {
                         item(key = "appearance_bg_dim") {
-                            ExpressiveCard(flat = flat) {
-                                Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
-                                    Text(text = stringResource(id = R.string.settings_custom_background_dim), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
-                                    Slider(
-                                        value = BackgroundConfig.customBackgroundDim,
-                                        onValueChange = { BackgroundConfig.setCustomBackgroundDimValue(it) },
-                                        onValueChangeFinished = { BackgroundConfig.save(context) },
-                                        valueRange = 0f..1f,
-                                        colors = SliderDefaults.colors(
-                                            thumbColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                                            activeTrackColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                                        ),
-                                    )
-                                }
-                            }
+                            SliderSettingCard(
+                                flat = flat,
+                                title = stringResource(id = R.string.settings_custom_background_dim),
+                                value = BackgroundConfig.customBackgroundDim,
+                                onValueChange = { BackgroundConfig.setCustomBackgroundDimValue(it) },
+                                onValueChangeFinished = { BackgroundConfig.save(context) },
+                            )
                         }
                     } else {
                         item(key = "appearance_bg_day_dim") {
-                            ExpressiveCard(flat = flat) {
-                                Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
-                                    Text(text = stringResource(id = R.string.settings_custom_background_day_dim), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
-                                    Slider(
-                                        value = BackgroundConfig.customBackgroundDayDim,
-                                        onValueChange = { BackgroundConfig.setCustomBackgroundDayDimValue(it) },
-                                        onValueChangeFinished = { BackgroundConfig.save(context) },
-                                        valueRange = 0f..1f,
-                                        colors = SliderDefaults.colors(
-                                            thumbColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                                            activeTrackColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                                        ),
-                                    )
-                                }
-                            }
+                            SliderSettingCard(
+                                flat = flat,
+                                title = stringResource(id = R.string.settings_custom_background_day_dim),
+                                value = BackgroundConfig.customBackgroundDayDim,
+                                onValueChange = { BackgroundConfig.setCustomBackgroundDayDimValue(it) },
+                                onValueChangeFinished = { BackgroundConfig.save(context) },
+                            )
                         }
 
                         item(key = "appearance_bg_night_dim") {
-                            ExpressiveCard(flat = flat) {
-                                Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
-                                    Text(text = stringResource(id = R.string.settings_custom_background_night_dim), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
-                                    Slider(
-                                        value = BackgroundConfig.customBackgroundNightDim,
-                                        onValueChange = { BackgroundConfig.setCustomBackgroundNightDimValue(it) },
-                                        onValueChangeFinished = { BackgroundConfig.save(context) },
-                                        valueRange = 0f..1f,
-                                        colors = SliderDefaults.colors(
-                                            thumbColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                                            activeTrackColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                                        ),
-                                    )
-                                }
-                            }
+                            SliderSettingCard(
+                                flat = flat,
+                                title = stringResource(id = R.string.settings_custom_background_night_dim),
+                                value = BackgroundConfig.customBackgroundNightDim,
+                                onValueChange = { BackgroundConfig.setCustomBackgroundNightDimValue(it) },
+                                onValueChangeFinished = { BackgroundConfig.save(context) },
+                            )
                         }
                     }
                 }
@@ -1422,21 +1318,13 @@ fun AppearanceSettingsContent(
                     }
 
                     item(key = "appearance_video_volume") {
-                        ExpressiveCard(flat = flat) {
-                            Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
-                                Text(text = stringResource(id = R.string.settings_video_volume), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
-                                Slider(
-                                    value = BackgroundConfig.videoVolume,
-                                    onValueChange = { BackgroundConfig.setVideoVolumeValue(it) },
-                                    onValueChangeFinished = { BackgroundConfig.save(context) },
-                                    valueRange = 0f..1f,
-                                    colors = SliderDefaults.colors(
-                                        thumbColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                                        activeTrackColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                                    ),
-                                )
-                            }
-                        }
+                        SliderSettingCard(
+                            flat = flat,
+                            title = stringResource(id = R.string.settings_video_volume),
+                            value = BackgroundConfig.videoVolume,
+                            onValueChange = { BackgroundConfig.setVideoVolumeValue(it) },
+                            onValueChangeFinished = { BackgroundConfig.save(context) },
+                        )
                     }
                 } else {
                     item(key = "appearance_multi_background") {
@@ -1606,76 +1494,44 @@ fun AppearanceSettingsContent(
 
                     if (!BackgroundConfig.isGridDualOpacityEnabled) {
                         item(key = "appearance_grid_opacity") {
-                            ExpressiveCard(flat = flat) {
-                                Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
-                                    Text(text = stringResource(id = R.string.settings_custom_background_opacity), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
-                                    Slider(
-                                        value = BackgroundConfig.gridWorkingCardBackgroundOpacity,
-                                        onValueChange = { BackgroundConfig.setGridWorkingCardBackgroundOpacityValue(it) },
-                                        onValueChangeFinished = { BackgroundConfig.save(context) },
-                                        valueRange = 0f..1f,
-                                        colors = SliderDefaults.colors(
-                                            thumbColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                                            activeTrackColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                                        ),
-                                    )
-                                }
-                            }
+                            SliderSettingCard(
+                                flat = flat,
+                                title = stringResource(id = R.string.settings_custom_background_opacity),
+                                value = BackgroundConfig.gridWorkingCardBackgroundOpacity,
+                                onValueChange = { BackgroundConfig.setGridWorkingCardBackgroundOpacityValue(it) },
+                                onValueChangeFinished = { BackgroundConfig.save(context) },
+                            )
                         }
                     } else {
                         item(key = "appearance_grid_day_opacity") {
-                            ExpressiveCard(flat = flat) {
-                                Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
-                                    Text(text = stringResource(id = R.string.settings_grid_working_card_day_opacity), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
-                                    Slider(
-                                        value = BackgroundConfig.gridWorkingCardBackgroundDayOpacity,
-                                        onValueChange = { BackgroundConfig.setGridWorkingCardBackgroundDayOpacityValue(it) },
-                                        onValueChangeFinished = { BackgroundConfig.save(context) },
-                                        valueRange = 0f..1f,
-                                        colors = SliderDefaults.colors(
-                                            thumbColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                                            activeTrackColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                                        ),
-                                    )
-                                }
-                            }
+                            SliderSettingCard(
+                                flat = flat,
+                                title = stringResource(id = R.string.settings_grid_working_card_day_opacity),
+                                value = BackgroundConfig.gridWorkingCardBackgroundDayOpacity,
+                                onValueChange = { BackgroundConfig.setGridWorkingCardBackgroundDayOpacityValue(it) },
+                                onValueChangeFinished = { BackgroundConfig.save(context) },
+                            )
                         }
 
                         item(key = "appearance_grid_night_opacity") {
-                            ExpressiveCard(flat = flat) {
-                                Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
-                                    Text(text = stringResource(id = R.string.settings_grid_working_card_night_opacity), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
-                                    Slider(
-                                        value = BackgroundConfig.gridWorkingCardBackgroundNightOpacity,
-                                        onValueChange = { BackgroundConfig.setGridWorkingCardBackgroundNightOpacityValue(it) },
-                                        onValueChangeFinished = { BackgroundConfig.save(context) },
-                                        valueRange = 0f..1f,
-                                        colors = SliderDefaults.colors(
-                                            thumbColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                                            activeTrackColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                                        ),
-                                    )
-                                }
-                            }
+                            SliderSettingCard(
+                                flat = flat,
+                                title = stringResource(id = R.string.settings_grid_working_card_night_opacity),
+                                value = BackgroundConfig.gridWorkingCardBackgroundNightOpacity,
+                                onValueChange = { BackgroundConfig.setGridWorkingCardBackgroundNightOpacityValue(it) },
+                                onValueChangeFinished = { BackgroundConfig.save(context) },
+                            )
                         }
                     }
 
                     item(key = "appearance_grid_dim") {
-                        ExpressiveCard(flat = flat) {
-                            Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
-                                Text(text = stringResource(id = R.string.settings_custom_background_dim), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
-                                Slider(
-                                    value = BackgroundConfig.gridWorkingCardBackgroundDim,
-                                    onValueChange = { BackgroundConfig.setGridWorkingCardBackgroundDimValue(it) },
-                                    onValueChangeFinished = { BackgroundConfig.save(context) },
-                                    valueRange = 0f..1f,
-                                    colors = SliderDefaults.colors(
-                                        thumbColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                                        activeTrackColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                                    ),
-                                )
-                            }
-                        }
+                        SliderSettingCard(
+                            flat = flat,
+                            title = stringResource(id = R.string.settings_custom_background_dim),
+                            value = BackgroundConfig.gridWorkingCardBackgroundDim,
+                            onValueChange = { BackgroundConfig.setGridWorkingCardBackgroundDimValue(it) },
+                            onValueChangeFinished = { BackgroundConfig.save(context) },
+                        )
                     }
 
                     item(key = "appearance_grid_select_image") {
@@ -1989,21 +1845,13 @@ fun AppearanceSettingsContent(
 
                 if (BackgroundConfig.isBannerCustomOpacityEnabled) {
                     item(key = "appearance_banner_opacity_slider") {
-                        ExpressiveCard(flat = flat) {
-                            Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
-                                Text(text = stringResource(id = R.string.settings_banner_opacity), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
-                                Slider(
-                                    value = BackgroundConfig.bannerCustomOpacity,
-                                    onValueChange = { BackgroundConfig.setBannerCustomOpacityValue(it) },
-                                    onValueChangeFinished = { BackgroundConfig.save(context) },
-                                    valueRange = 0f..1f,
-                                    colors = SliderDefaults.colors(
-                                        thumbColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                                        activeTrackColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                                    ),
-                                )
-                            }
-                        }
+                        SliderSettingCard(
+                            flat = flat,
+                            title = stringResource(id = R.string.settings_banner_opacity),
+                            value = BackgroundConfig.bannerCustomOpacity,
+                            onValueChange = { BackgroundConfig.setBannerCustomOpacityValue(it) },
+                            onValueChangeFinished = { BackgroundConfig.save(context) },
+                        )
                     }
                 }
             }
