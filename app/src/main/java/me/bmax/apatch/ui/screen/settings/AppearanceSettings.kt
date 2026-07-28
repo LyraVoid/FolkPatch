@@ -1703,9 +1703,15 @@ fun AppearanceSettingsContent(
                 }
             }
 
-            // ==================== FocusUI卡片壁纸设置 ====================
-            // 仅在Focus布局样式下显示，支持为4个卡片（内核/应用/设备/存储）各自设置独立壁纸
-            if (isFocusStyle) {
+        }
+
+        // FocusUI card wallpapers are separate from page-level and multi-background settings.
+        if (isFocusStyle) {
+            SplicedColumnGroup(
+                title = stringResource(R.string.focus_card_background_title),
+                flat = flat,
+                highlightKey = highlightKey,
+            ) {
                 item(key = "appearance_focus_card_dual_background") {
                     DualBackgroundSettings(
                         flat = flat,
