@@ -43,6 +43,8 @@
     <string name="settings_navbar_glass_inner_glow_summary">在导航栏底部启用微光效果</string>
     <string name="settings_navbar_glass_border">玻璃边框</string>
     <string name="settings_navbar_glass_border_summary">在导航栏周围启用微妙的边框描边</string>
+    <string name="settings_compact_rounded_bar">紧凑圆角风格</string>
+    <string name="settings_compact_rounded_bar_summary">使用圆角紧凑间距的胶囊形悬浮底栏</string>
     <string name="settings_stats_top_layout">顶部布局</string>
     <string name="settings_stats_top_layout_summary">选择顶部信息卡片样式</string>
     <string name="settings_stats_top_layout_list">列表样式</string>

@@ -43,6 +43,8 @@
     <string name="settings_navbar_glass_inner_glow_summary">تفعيل تأثير توهج خفيف في أسفل شريط التنقل</string>
     <string name="settings_navbar_glass_border">إطار زجاجي</string>
     <string name="settings_navbar_glass_border_summary">تفعيل إطار خفيف حول شريط التنقل</string>
+    <string name="settings_compact_rounded_bar">نمط دائري مدمج</string>
+    <string name="settings_compact_rounded_bar_summary">استخدام شريط عائم مدمج مع زوايا دائرية وتباعد أقل</string>
     <string name="settings_stats_top_layout">تخطيط علوي</string>
     <string name="settings_stats_top_layout_summary">اختيار نمط بطاقة المعلومات العلوية</string>
     <string name="settings_stats_top_layout_list">قائمة</string>

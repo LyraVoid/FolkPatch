@@ -43,6 +43,8 @@
     <string name="settings_navbar_glass_inner_glow_summary">Gezinme çubuğunun alt kısmında hafif parıltı efektini etkinleştir</string>
     <string name="settings_navbar_glass_border">Cam kenarlık</string>
     <string name="settings_navbar_glass_border_summary">Gezinme çubuğu çevresinde hafif kenarlık çizgisini etkinleştir</string>
+    <string name="settings_compact_rounded_bar">Kompakt yuvarlak stil</string>
+    <string name="settings_compact_rounded_bar_summary">Yuvarlak köşeli ve daha sıkı aralıklı kompakt yüzer çubuk kullan</string>
     <string name="settings_stats_top_layout">Üst Yerleşim</string>
     <string name="settings_stats_top_layout_summary">Üst bilgi kartı stilini seçin</string>
     <string name="settings_stats_top_layout_list">Liste</string>

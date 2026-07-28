@@ -42,6 +42,8 @@
     <string name="settings_navbar_glass_inner_glow_summary">在仙法导航栏底部启用琉璃微光效果</string>
     <string name="settings_navbar_glass_border">琉璃边框</string>
     <string name="settings_navbar_glass_border_summary">在仙法导航栏周围启用琉璃边框描边</string>
+    <string name="settings_compact_rounded_bar">紧凑圆角风格</string>
+    <string name="settings_compact_rounded_bar_summary">使用圆角紧凑间距的仙法浮动底栏</string>
     <string name="settings_stats_top_layout">顶部仙法阵</string>
     <string name="settings_stats_top_layout_summary">选择顶部信息仙卡样式</string>
     <string name="settings_stats_top_layout_list">列表仙卡</string>

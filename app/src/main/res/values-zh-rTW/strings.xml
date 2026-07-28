@@ -46,6 +46,8 @@
     <string name="settings_navbar_glass_inner_glow_summary">在導航列底部啟用微光效果</string>
     <string name="settings_navbar_glass_border">玻璃邊框</string>
     <string name="settings_navbar_glass_border_summary">在導航列周圍啟用微妙的邊框描邊</string>
+    <string name="settings_compact_rounded_bar">緊湊圓角風格</string>
+    <string name="settings_compact_rounded_bar_summary">使用圓角緊湊間距的膠囊形懸浮底欄</string>
     <string name="settings_stats_top_layout">頂部佈局</string>
     <string name="settings_stats_top_layout_summary">選擇頂部資訊卡片樣式</string>
     <string name="settings_stats_top_layout_list">列表樣式</string>

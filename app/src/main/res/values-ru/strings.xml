@@ -46,6 +46,8 @@
     <string name="settings_navbar_glass_inner_glow_summary">Включить мягкое свечение в нижней части панели навигации</string>
     <string name="settings_navbar_glass_border">Стеклянная рамка</string>
     <string name="settings_navbar_glass_border_summary">Включить тонкую рамку вокруг панели навигации</string>
+    <string name="settings_compact_rounded_bar">Компактный скругленный стиль</string>
+    <string name="settings_compact_rounded_bar_summary">Использовать компактную плавающую панель со скругленными углами</string>
     <string name="settings_stats_top_layout">Верхняя карточка</string>
     <string name="settings_stats_top_layout_summary">Выберите стиль верхней информационной карточки</string>
     <string name="settings_stats_top_layout_list">Список</string>

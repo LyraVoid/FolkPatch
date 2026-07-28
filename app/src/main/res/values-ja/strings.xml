@@ -36,6 +36,8 @@
     <string name="settings_navbar_glass_inner_glow_summary">ナビゲーションバーの下部にさりげない発光効果を有効にする</string>
     <string name="settings_navbar_glass_border">ガラスボーダー</string>
     <string name="settings_navbar_glass_border_summary">ナビゲーションバーの周囲にさりげないボーダーを有効にする</string>
+    <string name="settings_compact_rounded_bar">コンパクト丸角スタイル</string>
+    <string name="settings_compact_rounded_bar_summary">丸みを帯びたコンパクトなフローティングバーを使用</string>
     <string name="settings_stats_top_layout">上部レイアウト</string>
     <string name="settings_stats_top_layout_summary">上部情報カードのスタイルを選択</string>
     <string name="settings_stats_top_layout_list">リスト</string>

@@ -112,6 +112,7 @@ import me.bmax.apatch.ui.theme.APatchThemeWithBackground
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.MaterialTheme
+import me.bmax.apatch.util.ui.FloatingBarConfig
 import me.bmax.apatch.util.PermissionRequestHandler
 import me.bmax.apatch.util.PermissionUtils
 import me.bmax.apatch.util.ui.LocalSnackbarHost
@@ -1071,16 +1072,20 @@ private fun BottomBar(
                 ) {
                     val isCustomBg = BackgroundConfig.isCustomBackgroundEnabled
                     if (isGlassEnabled) {
-                        val glassShape = CircleShape
+                        val barShape = if (FloatingBarConfig.isCompactRoundedStyle) {
+                            FloatingBarConfig.getCompactRoundedShape()
+                        } else {
+                            CircleShape
+                        }
                         Surface(
                             modifier = Modifier
                                 .wrapContentWidth()
-                                .clip(glassShape)
+                                .clip(barShape)
                                 .navBarGlassEffect(
-                                    shape = glassShape,
+                                    shape = barShape,
                                     liquidState = liquidState,
                                 ),
-                            shape = glassShape,
+                            shape = barShape,
                             color = Color.Transparent,
                             tonalElevation = 0.dp,
                             shadowElevation = 0.dp
@@ -1106,7 +1111,11 @@ private fun BottomBar(
                     } else {
                         Surface(
                             modifier = Modifier.wrapContentWidth(),
-                            shape = MaterialTheme.shapes.large,
+                            shape = if (FloatingBarConfig.isCompactRoundedStyle) {
+                                FloatingBarConfig.getCompactRoundedShape()
+                            } else {
+                                MaterialTheme.shapes.large
+                            },
                             color = containerColor,
                             tonalElevation = if (isCustomBg) 0.dp else 3.dp,
                             shadowElevation = if (isCustomBg) 0.dp else 8.dp
@@ -1227,11 +1236,13 @@ private fun BottomBarContent(
     onUserInteraction: (() -> Unit)? = null
 ) {
     val navigator = navController.rememberDestinationsNavigator()
-    val itemSize = 56.dp
-    val itemSpacing = 4.dp
-    val containerPadding = 7.dp
-    val itemShape = if (BackgroundConfig.isNavBarGlassEnabled) CircleShape else MaterialTheme.shapes.large
+    val isCompactRounded = FloatingBarConfig.isCompactRoundedStyle
+    val itemSize = if (isCompactRounded) 52.dp else 56.dp
+    val itemSpacing = if (isCompactRounded) 6.dp else 4.dp
+    val containerPadding = if (isCompactRounded) 8.dp else 7.dp
+    val barHeight = if (isCompactRounded) 68.dp else 72.dp
     val isGlassEnabled = BackgroundConfig.isNavBarGlassEnabled
+    val itemShape = if (isCompactRounded || isGlassEnabled) CircleShape else MaterialTheme.shapes.large
     val indicatorHorizontalPadding by animateDpAsState(
         targetValue = if (isGlassEnabled) 3.dp else 0.dp,
         animationSpec = spring(
@@ -1267,7 +1278,7 @@ private fun BottomBarContent(
     Box(
         modifier = Modifier
             .width(navBarWidth)
-            .height(72.dp)
+            .height(barHeight)
     ) {
         Box(
             modifier = Modifier

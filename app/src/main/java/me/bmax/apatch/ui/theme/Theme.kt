@@ -314,6 +314,7 @@ fun APatchThemeWithBackground(
     if (!isConfigLoaded) {
         BackgroundManager.loadCustomBackground(context)
         FontConfig.load(context)
+        me.bmax.apatch.util.ui.FloatingBarConfig.load(context)
         isConfigLoaded = true
     }
 

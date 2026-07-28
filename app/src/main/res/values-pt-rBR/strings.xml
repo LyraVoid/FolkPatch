@@ -43,6 +43,8 @@
     <string name="settings_navbar_glass_inner_glow_summary">Ativar sutil efeito de brilho na parte inferior da barra de navegação</string>
     <string name="settings_navbar_glass_border">Borda de vidro</string>
     <string name="settings_navbar_glass_border_summary">Ativar sutil borda ao redor da barra de navegação</string>
+    <string name="settings_compact_rounded_bar">Estilo compacto arredondado</string>
+    <string name="settings_compact_rounded_bar_summary">Usar barra flutuante compacta com cantos arredondados e menor espaçamento</string>
     <string name="settings_stats_top_layout">Layout Superior</string>
     <string name="settings_stats_top_layout_summary">Escolha o estilo do cartão de informações superior</string>
     <string name="settings_stats_top_layout_list">Lista</string>

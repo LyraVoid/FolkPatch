@@ -43,6 +43,8 @@
     <string name="settings_navbar_glass_inner_glow_summary">Bật hiệu ứng phát sáng nhẹ ở phần dưới thanh điều hướng</string>
     <string name="settings_navbar_glass_border">Viền kính</string>
     <string name="settings_navbar_glass_border_summary">Bật viền tinh tế xung quanh thanh điều hướng</string>
+    <string name="settings_compact_rounded_bar">Kiểu bo tròn nhỏ gọn</string>
+    <string name="settings_compact_rounded_bar_summary">Dùng thanh nổi nhỏ gọn với góc bo tròn và khoảng cách hẹp hơn</string>
     <string name="settings_stats_top_layout">Bố cục trên</string>
     <string name="settings_stats_top_layout_summary">Chọn kiểu thẻ thông tin trên</string>
     <string name="settings_stats_top_layout_list">Danh sách</string>

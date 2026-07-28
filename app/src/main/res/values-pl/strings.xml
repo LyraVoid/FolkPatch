@@ -38,6 +38,8 @@
     <string name="settings_navbar_glass_inner_glow_summary">Włącz delikatny efekt poświaty na dole paska nawigacji</string>
     <string name="settings_navbar_glass_border">Ramka szklana</string>
     <string name="settings_navbar_glass_border_summary">Włącz delikatną ramkę wokół paska nawigacji</string>
+    <string name="settings_compact_rounded_bar">Kompaktowy zaokrąglony styl</string>
+    <string name="settings_compact_rounded_bar_summary">Używaj kompaktowego pływającego paska z zaokrąglonymi rogami</string>
     <string name="settings_stats_top_layout">Górny układ</string>
     <string name="settings_stats_top_layout_summary">Wybierz styl górnej karty informacyjnej</string>
     <string name="settings_stats_top_layout_list">Lista</string>

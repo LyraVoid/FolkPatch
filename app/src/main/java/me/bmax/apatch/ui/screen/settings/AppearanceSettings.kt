@@ -74,6 +74,7 @@ import me.bmax.apatch.ui.theme.ThemeManager
 import me.bmax.apatch.ui.theme.refreshTheme
 import me.bmax.apatch.util.PermissionUtils
 import me.bmax.apatch.util.BottomBarIconConfig
+import me.bmax.apatch.util.ui.FloatingBarConfig
 import me.bmax.apatch.util.ui.APDialogBlurBehindUtils
 import me.bmax.apatch.util.ui.NavigationBarsSpacer
 import androidx.compose.ui.draw.rotate
@@ -862,6 +863,24 @@ fun AppearanceSettingsContent(
                             onCheckedChange = {
                                 BackgroundConfig.setNavBarGlassBorderEnabledState(it)
                                 BackgroundConfig.save(context)
+                            },
+                        )
+                    }
+                }
+
+                // ---- 紧凑圆角风格 ----
+                // 仅非毛玻璃模式显示（毛玻璃已有独立的外观控制）
+                if (!BackgroundConfig.isNavBarGlassEnabled) {
+                    item(key = "appearance_compact_rounded_bar") {
+                        ToggleSettingCard(
+                            flat = flat,
+                            icon = Icons.Filled.RoundedCorner,
+                            title = stringResource(id = R.string.settings_compact_rounded_bar),
+                            description = stringResource(id = R.string.settings_compact_rounded_bar_summary),
+                            checked = FloatingBarConfig.isCompactRoundedStyle,
+                            onCheckedChange = { enabled ->
+                                FloatingBarConfig.isCompactRoundedStyle = enabled
+                                FloatingBarConfig.save(context)
                             },
                         )
                     }

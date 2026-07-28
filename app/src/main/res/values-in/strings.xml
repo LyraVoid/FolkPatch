@@ -46,6 +46,8 @@
     <string name="settings_navbar_glass_inner_glow_summary">Aktifkan efek cahaya halus di bagian bawah bilah navigasi</string>
     <string name="settings_navbar_glass_border">Batas Kaca</string>
     <string name="settings_navbar_glass_border_summary">Aktifkan batas halus di sekitar bilah navigasi</string>
+    <string name="settings_compact_rounded_bar">Gaya Bulat Ringkas</string>
+    <string name="settings_compact_rounded_bar_summary">Gunakan bilah apung ringkas dengan sudut membulat dan jarak lebih rapat</string>
     <string name="settings_stats_top_layout">Tata Letak Atas</string>
     <string name="settings_stats_top_layout_summary">Pilih gaya kartu info atas</string>
     <string name="settings_stats_top_layout_list">Daftar</string>

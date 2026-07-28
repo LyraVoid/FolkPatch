@@ -43,6 +43,8 @@
     <string name="settings_navbar_glass_inner_glow_summary">Enable subtle glow effect at the bottom of the navigation bar</string>
     <string name="settings_navbar_glass_border">Glass Border</string>
     <string name="settings_navbar_glass_border_summary">Enable subtle border outline around the navigation bar</string>
+    <string name="settings_compact_rounded_bar">Compact Rounded Style</string>
+    <string name="settings_compact_rounded_bar_summary">Use compact pill-shaped floating bar with rounded corners and tighter spacing</string>
     <string name="settings_stats_top_layout">Top Layout</string>
     <string name="settings_stats_top_layout_summary">Choose the top info card style</string>
     <string name="settings_stats_top_layout_list">ListUI</string>
