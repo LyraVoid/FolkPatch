@@ -143,6 +143,9 @@ fun APatchTheme(
             colorGenerationMode = prefs.getString("color_generation_mode", "classic")
             colorStandard = prefs.getString("color_standard", "MD3_2021")
             colorStyle = prefs.getString("color_style", "TONAL_SPOT")
+            BackgroundManager.loadCustomBackground(context)
+            FontConfig.load(context)
+            me.bmax.apatch.util.ui.FloatingBarConfig.load(context)
             refreshTheme.postValue(false)
         }
     }
@@ -318,16 +321,6 @@ fun APatchThemeWithBackground(
         isConfigLoaded = true
     }
 
-    // 监听refreshTheme的变化，重新加载背景配置
-    val refreshThemeObserver by refreshTheme.observeAsState(false)
-    LaunchedEffect(refreshThemeObserver) {
-        if (refreshThemeObserver) {
-            BackgroundManager.loadCustomBackground(context)
-            FontConfig.load(context)
-            refreshTheme.postValue(false)
-        }
-    }
-    
     APatchTheme(isSettingsScreen = isSettingsScreen) {
         Box(modifier = Modifier.fillMaxSize()) {
             // Always show background layer if enabled

@@ -409,6 +409,9 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
         MusicConfig.load(this)
         me.bmax.apatch.ui.theme.SoundEffectConfig.load(this)
         me.bmax.apatch.ui.theme.VibrationConfig.load(this)
+        me.bmax.apatch.ui.theme.BackgroundConfig.load(this)
+        me.bmax.apatch.ui.theme.FontConfig.load(this)
+        me.bmax.apatch.util.ui.FloatingBarConfig.load(this)
         MusicManager.init(this)
         
         Log.d(TAG, "APApplication onCreate completed")
