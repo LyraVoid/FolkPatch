@@ -44,6 +44,7 @@ import coil.request.ImageRequest
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.Natives
@@ -151,35 +152,49 @@ fun AppProfileScreen(
                 selectedIndex = selectedIndex,
                 onItemSelection = { index ->
                     selectedIndex = index
-                    
-                    // Update Logic
+
+                    // 先同步更新内存配置保证 UI 即时响应
                     when (index) {
                         0 -> { // ROOT
                             config.allow = 1
                             config.exclude = 0
                             config.profile.scontext = APApplication.MAGISK_SCONTEXT
-                            Natives.grantSu(appInfo.uid, 0, config.profile.scontext)
-                            Natives.setUidExclude(appInfo.uid, 0)
-                            SuAuditLog.logGrant(appInfo.packageName, appInfo.uid)
                         }
                         1 -> { // NO ROOT
                             config.allow = 0
                             config.exclude = 0
-                            Natives.revokeSu(appInfo.uid)
-                            Natives.setUidExclude(appInfo.uid, 0)
-                            SuAuditLog.logRevoke(appInfo.packageName, appInfo.uid)
                         }
                         2 -> { // Exclude
                             config.allow = 0
                             config.exclude = 1
                             config.profile.scontext = APApplication.DEFAULT_SCONTEXT
-                            Natives.revokeSu(appInfo.uid)
-                            Natives.setUidExclude(appInfo.uid, 1)
-                            SuAuditLog.logExclude(appInfo.packageName, appInfo.uid)
                         }
                     }
                     config.profile.uid = appInfo.uid
-                    PkgConfig.changeConfig(config)
+
+                    // 内核调用与配置文件读写移出主线程，避免切换权限时卡顿
+                    scope.launch(Dispatchers.IO) {
+                        when (index) {
+                            0 -> {
+                                Natives.grantSu(appInfo.uid, 0, config.profile.scontext)
+                                Natives.setUidExclude(appInfo.uid, 0)
+                                SuAuditLog.logGrant(appInfo.packageName, appInfo.uid)
+                            }
+                            1 -> {
+                                Natives.revokeSu(appInfo.uid)
+                                Natives.setUidExclude(appInfo.uid, 0)
+                                SuAuditLog.logRevoke(appInfo.packageName, appInfo.uid)
+                            }
+                            2 -> {
+                                Natives.revokeSu(appInfo.uid)
+                                Natives.setUidExclude(appInfo.uid, 1)
+                                SuAuditLog.logExclude(appInfo.packageName, appInfo.uid)
+                            }
+                        }
+                        PkgConfig.changeConfig(config)
+                        // 本地触发列表重新排序，返回 SuperUser 页无需全量重拉
+                        SuperUserViewModel.apps = ArrayList(SuperUserViewModel.apps)
+                    }
                 }
             )
 

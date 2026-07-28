@@ -68,6 +68,12 @@ class SuperUserViewModel : ViewModel() {
             get() = packageInfo.packageName
         val uid: Int
             get() = packageInfo.applicationInfo!!.uid
+
+        // 搜索匹配用的缓存：拼音转换开销很大，只能算一次并在后台预热，
+        // 否则每次搜索按键都会在主线程对全部应用重算一遍导致卡顿
+        val labelLower: String by lazy { label.lowercase() }
+        val packageNameLower: String by lazy { packageName.lowercase() }
+        val labelPinyin: String by lazy { HanziToPinyin.getInstance().toPinyinString(label) }
     }
 
     var search by mutableStateOf("")
@@ -90,13 +96,13 @@ class SuperUserViewModel : ViewModel() {
     }
 
     val appList by derivedStateOf {
+        val q = search.trim().lowercase()
         sortedList.filter {
-            it.label.lowercase().contains(search.lowercase()) || it.packageName.lowercase()
-                .contains(search.lowercase()) || HanziToPinyin.getInstance()
-                .toPinyinString(it.label).contains(search.lowercase())
-        }.filter {
             it.uid == 2000 // Always show shell
                     || showSystemApps || it.packageInfo.applicationInfo!!.flags.and(ApplicationInfo.FLAG_SYSTEM) == 0
+        }.filter {
+            q.isEmpty() || it.labelLower.contains(q) || it.packageNameLower.contains(q)
+                    || it.labelPinyin.contains(q)
         }
     }
 
@@ -168,7 +174,7 @@ class SuperUserViewModel : ViewModel() {
         }
     }
 
-    fun excludeAll() {
+    fun excludeAll() = viewModelScope.launch(Dispatchers.IO) {
         val modifiedConfigs = mutableListOf<PkgConfig.Config>()
         val currentApps = apps
 
@@ -190,7 +196,7 @@ class SuperUserViewModel : ViewModel() {
         }
     }
 
-    fun reverseExcludeAll() {
+    fun reverseExcludeAll() = viewModelScope.launch(Dispatchers.IO) {
         val modifiedConfigs = mutableListOf<PkgConfig.Config>()
         val currentApps = apps
 
@@ -457,6 +463,13 @@ class SuperUserViewModel : ViewModel() {
                     packageInfo = it,
                     config = config
                 )
+            }
+
+            // 在 IO 线程预热搜索缓存（拼音/小写），apps 替换后首次搜索不再在主线程全量计算
+            newApps.forEach {
+                it.labelLower
+                it.packageNameLower
+                it.labelPinyin
             }
 
             synchronized(appsLock) {
