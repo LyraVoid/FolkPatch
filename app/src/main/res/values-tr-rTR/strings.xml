@@ -1175,4 +1175,22 @@ Komutların çalışması için uygulamanın tamamen kapatılıp yeniden açıld
     <string name="settings_focus_card_device">Cihaz durumu kartı</string>
     <string name="settings_focus_card_storage">Depolama kartı</string>
     <string name="settings_focus_card_wallpaper_selected">Duvar kağıdı ayarlandı</string>
+    <string name="dashboard_card_background_title">Panel kartı duvar kağıdı</string>
+    <string name="settings_dashboard_card_background">Panel kartı duvar kağıdı</string>
+    <string name="settings_dashboard_card_background_enabled">Panel duvar kağıdı etkin; yönetmek için panel kartını uzun basın</string>
+    <string name="settings_dashboard_card_background_summary">DashboardUI panel kartı için duvar kağıdını etkinleştir</string>
+    <string name="dashboard_card_background_clear">Panel duvar kağıdını temizle</string>
+    <string name="dashboard_card_background_clear_confirm">Panel kartı duvar kağıdını temizlemek istediğinize emin misiniz?</string>
+    <string name="dashboard_card_background_saved">Panel duvar kağıdı başarıyla kaydedildi</string>
+    <string name="dashboard_card_background_error">Panel duvar kağıdı kaydedilemedi</string>
+    <string name="dashboard_card_background_cleared">Panel duvar kağıdı temizlendi</string>
+    <string name="settings_dashboard_card_dual_dim">Çift gün/gece karartmayı etkinleştir</string>
+    <string name="settings_dashboard_card_dual_dim_desc">Açık ve koyu temalar için panel duvar kağıdı karartmasını otomatik ayarla</string>
+    <string name="settings_dashboard_card_day_dim">Gündüz modunda panel duvar kağıdı karartması</string>
+    <string name="settings_dashboard_card_night_dim">Gece modunda panel duvar kağıdı karartması</string>
+    <string name="settings_dashboard_card_opacity">Panel duvar kağıdı opaklığı</string>
+    <string name="settings_dashboard_card_dual_opacity">Çift gün/gece opaklığını etkinleştir</string>
+    <string name="settings_dashboard_card_dual_opacity_desc">Açık ve koyu temalar için panel duvar kağıdı opaklığını otomatik ayarla</string>
+    <string name="settings_dashboard_card_day_opacity">Gündüz modunda panel duvar kağıdı opaklığı</string>
+    <string name="settings_dashboard_card_night_opacity">Gece modunda panel duvar kağıdı opaklığı</string>
 </resources>

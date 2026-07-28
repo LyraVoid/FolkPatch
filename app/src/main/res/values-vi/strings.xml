@@ -1169,4 +1169,22 @@ Cần đảm bảo phần mềm thoát hoàn toàn vào mới sẽ thực thi l�
     <string name="settings_focus_card_device">Thẻ trạng thái thiết bị</string>
     <string name="settings_focus_card_storage">Thẻ bộ nhớ</string>
     <string name="settings_focus_card_wallpaper_selected">Đã đặt nền</string>
+    <string name="dashboard_card_background_title">Hình nền thẻ bảng điều khiển</string>
+    <string name="settings_dashboard_card_background">Hình nền thẻ bảng điều khiển</string>
+    <string name="settings_dashboard_card_background_enabled">Hình nền bảng điều khiển đã bật; nhấn giữ thẻ bảng điều khiển để quản lý</string>
+    <string name="settings_dashboard_card_background_summary">Bật hình nền cho thẻ bảng điều khiển DashboardUI</string>
+    <string name="dashboard_card_background_clear">Xóa hình nền bảng điều khiển</string>
+    <string name="dashboard_card_background_clear_confirm">Bạn có chắc chắn muốn xóa hình nền thẻ bảng điều khiển?</string>
+    <string name="dashboard_card_background_saved">Đã lưu hình nền bảng điều khiển thành công</string>
+    <string name="dashboard_card_background_error">Không thể lưu hình nền bảng điều khiển</string>
+    <string name="dashboard_card_background_cleared">Đã xóa hình nền bảng điều khiển</string>
+    <string name="settings_dashboard_card_dual_dim">Bật điều chỉnh độ mờ kép ngày/đêm</string>
+    <string name="settings_dashboard_card_dual_dim_desc">Tự động điều chỉnh độ mờ hình nền bảng điều khiển cho chủ đề sáng và tối</string>
+    <string name="settings_dashboard_card_day_dim">Độ mờ hình nền bảng điều khiển chế độ ngày</string>
+    <string name="settings_dashboard_card_night_dim">Độ mờ hình nền bảng điều khiển chế độ đêm</string>
+    <string name="settings_dashboard_card_opacity">Độ mờ đục hình nền bảng điều khiển</string>
+    <string name="settings_dashboard_card_dual_opacity">Bật độ mờ đục kép ngày/đêm</string>
+    <string name="settings_dashboard_card_dual_opacity_desc">Tự động điều chỉnh độ mờ đục hình nền bảng điều khiển cho chủ đề sáng và tối</string>
+    <string name="settings_dashboard_card_day_opacity">Độ mờ đục hình nền bảng điều khiển chế độ ngày</string>
+    <string name="settings_dashboard_card_night_opacity">Độ mờ đục hình nền bảng điều khiển chế độ đêm</string>
 </resources>

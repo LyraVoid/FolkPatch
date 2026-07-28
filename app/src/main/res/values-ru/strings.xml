@@ -1170,4 +1170,22 @@
     <string name="settings_focus_card_device">Карточка состояния устройства</string>
     <string name="settings_focus_card_storage">Карточка хранилища</string>
     <string name="settings_focus_card_wallpaper_selected">Обои установлены</string>
+    <string name="dashboard_card_background_title">Обои карточки панели</string>
+    <string name="settings_dashboard_card_background">Обои карточки панели</string>
+    <string name="settings_dashboard_card_background_enabled">Обои панели включены; удерживайте карточку панели для управления</string>
+    <string name="settings_dashboard_card_background_summary">Включить обои для карточки панели DashboardUI</string>
+    <string name="dashboard_card_background_clear">Очистить обои панели</string>
+    <string name="dashboard_card_background_clear_confirm">Вы уверены, что хотите очистить обои карточки панели?</string>
+    <string name="dashboard_card_background_saved">Обои панели успешно сохранены</string>
+    <string name="dashboard_card_background_error">Не удалось сохранить обои панели</string>
+    <string name="dashboard_card_background_cleared">Обои панели очищены</string>
+    <string name="settings_dashboard_card_dual_dim">Включить двойное затемнение день/ночь</string>
+    <string name="settings_dashboard_card_dual_dim_desc">Автоматически регулировать затемнение обоев панели для светлой и тёмной темы</string>
+    <string name="settings_dashboard_card_day_dim">Затемнение обоев панели в дневном режиме</string>
+    <string name="settings_dashboard_card_night_dim">Затемнение обоев панели в ночном режиме</string>
+    <string name="settings_dashboard_card_opacity">Непрозрачность обоев панели</string>
+    <string name="settings_dashboard_card_dual_opacity">Включить двойную непрозрачность день/ночь</string>
+    <string name="settings_dashboard_card_dual_opacity_desc">Автоматически регулировать непрозрачность обоев панели для светлой и тёмной темы</string>
+    <string name="settings_dashboard_card_day_opacity">Непрозрачность обоев панели в дневном режиме</string>
+    <string name="settings_dashboard_card_night_opacity">Непрозрачность обоев панели в ночном режиме</string>
 </resources>

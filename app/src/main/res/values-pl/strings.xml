@@ -1093,4 +1093,22 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="settings_focus_card_device">Karta stanu urządzenia</string>
     <string name="settings_focus_card_storage">Karta pamięci</string>
     <string name="settings_focus_card_wallpaper_selected">Tapeta ustawiona</string>
+    <string name="dashboard_card_background_title">Tapeta karty pulpitu</string>
+    <string name="settings_dashboard_card_background">Tapeta karty pulpitu</string>
+    <string name="settings_dashboard_card_background_enabled">Tapeta pulpitu włączona; przytrzymaj kartę pulpitu, aby zarządzać</string>
+    <string name="settings_dashboard_card_background_summary">Włącz tapetę dla karty pulpitu DashboardUI</string>
+    <string name="dashboard_card_background_clear">Wyczyść tapetę pulpitu</string>
+    <string name="dashboard_card_background_clear_confirm">Czy na pewno chcesz wyczyścić tapetę karty pulpitu?</string>
+    <string name="dashboard_card_background_saved">Tapeta pulpitu zapisana pomyślnie</string>
+    <string name="dashboard_card_background_error">Nie udało się zapisać tapety pulpitu</string>
+    <string name="dashboard_card_background_cleared">Tapeta pulpitu wyczyszczona</string>
+    <string name="settings_dashboard_card_dual_dim">Włącz podwójne przyciemnianie dzień/noc</string>
+    <string name="settings_dashboard_card_dual_dim_desc">Automatycznie dostosuj przyciemnienie tapety pulpitu do jasnych i ciemnych motywów</string>
+    <string name="settings_dashboard_card_day_dim">Przyciemnienie tapety pulpitu w trybie dziennym</string>
+    <string name="settings_dashboard_card_night_dim">Przyciemnienie tapety pulpitu w trybie nocnym</string>
+    <string name="settings_dashboard_card_opacity">Krycie tapety pulpitu</string>
+    <string name="settings_dashboard_card_dual_opacity">Włącz podwójną przezroczystość dzień/noc</string>
+    <string name="settings_dashboard_card_dual_opacity_desc">Automatycznie dostosuj przezroczystość tapety pulpitu do jasnych i ciemnych motywów</string>
+    <string name="settings_dashboard_card_day_opacity">Przezroczystość tapety pulpitu w trybie dziennym</string>
+    <string name="settings_dashboard_card_night_opacity">Przezroczystość tapety pulpitu w trybie nocnym</string>
 </resources>

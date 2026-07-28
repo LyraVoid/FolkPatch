@@ -314,6 +314,22 @@ fun AppearanceSettingsContent(
         }
     }
 
+    val pickDashboardCardImageLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let {
+            scope.launch {
+                loadingDialog.show()
+                val success = BackgroundManager.saveAndApplyDashboardCardBackground(context, it)
+                loadingDialog.hide()
+                snackBarHost.showSnackbar(
+                    if (success) context.getString(R.string.dashboard_card_background_saved)
+                    else context.getString(R.string.dashboard_card_background_error)
+                )
+            }
+        }
+    }
+
     val pickFontLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
@@ -469,6 +485,7 @@ fun AppearanceSettingsContent(
     val isListStyle = currentStyle != "kernelsu" && currentStyle != "focus" && !(isStatsLayout && statsTopLayout == "grid")
     // Focus布局样式（FocusUI），该样式下4个卡片支持独立壁纸
     val isFocusStyle = currentStyle == "focus"
+    val isDashboardStyle = currentStyle == "dashboard_ui"
 
     val badgeTextModes = listOf(
         stringResource(R.string.settings_custom_badge_text_full_half),
@@ -1842,6 +1859,106 @@ fun AppearanceSettingsContent(
                         }
                     }
                 }
+                }
+            }
+        }
+
+        if (isDashboardStyle) {
+            SplicedColumnGroup(
+                title = stringResource(R.string.dashboard_card_background_title),
+                flat = flat,
+                highlightKey = highlightKey,
+            ) {
+                item(key = "appearance_dashboard_card_background_enabled") {
+                    ToggleSettingCard(
+                        flat = flat,
+                        icon = Icons.Filled.Wallpaper,
+                        title = stringResource(R.string.settings_dashboard_card_background),
+                        description = if (BackgroundConfig.isDashboardCardBackgroundEnabled) {
+                            stringResource(R.string.settings_dashboard_card_background_enabled)
+                        } else {
+                            stringResource(R.string.settings_dashboard_card_background_summary)
+                        },
+                        checked = BackgroundConfig.isDashboardCardBackgroundEnabled,
+                        onCheckedChange = {
+                            BackgroundConfig.setDashboardCardBackgroundEnabledState(it)
+                            BackgroundConfig.save(context)
+                        },
+                    )
+                }
+
+                if (BackgroundConfig.isDashboardCardBackgroundEnabled) {
+                    item(key = "appearance_dashboard_card_dual_background") {
+                        DualBackgroundSettings(
+                            flat = flat,
+                            dualDimEnabled = BackgroundConfig.isDashboardCardDualDimEnabled,
+                            onDualDimEnabledChange = { BackgroundConfig.setDashboardCardDualDimEnabledState(it) },
+                            dim = BackgroundConfig.dashboardCardBgDim,
+                            onDimChange = { BackgroundConfig.setDashboardCardBgDimValue(it) },
+                            dayDim = BackgroundConfig.dashboardCardBgDayDim,
+                            onDayDimChange = { BackgroundConfig.setDashboardCardBgDayDimValue(it) },
+                            nightDim = BackgroundConfig.dashboardCardBgNightDim,
+                            onNightDimChange = { BackgroundConfig.setDashboardCardBgNightDimValue(it) },
+                            dualOpacityEnabled = BackgroundConfig.isDashboardCardDualOpacityEnabled,
+                            onDualOpacityEnabledChange = { BackgroundConfig.setDashboardCardDualOpacityEnabledState(it) },
+                            opacity = BackgroundConfig.dashboardCardBgOpacity,
+                            onOpacityChange = { BackgroundConfig.setDashboardCardBgOpacityValue(it) },
+                            dayOpacity = BackgroundConfig.dashboardCardBgDayOpacity,
+                            onDayOpacityChange = { BackgroundConfig.setDashboardCardBgDayOpacityValue(it) },
+                            nightOpacity = BackgroundConfig.dashboardCardBgNightOpacity,
+                            onNightOpacityChange = { BackgroundConfig.setDashboardCardBgNightOpacityValue(it) },
+                            save = { BackgroundConfig.save(context) },
+                            keyPrefix = "dashboard_card",
+                            dualDimTitle = stringResource(R.string.settings_dashboard_card_dual_dim),
+                            dualDimDescription = stringResource(R.string.settings_dashboard_card_dual_dim_desc),
+                            opacityTitle = stringResource(R.string.settings_dashboard_card_opacity),
+                            dayDimTitle = stringResource(R.string.settings_dashboard_card_day_dim),
+                            nightDimTitle = stringResource(R.string.settings_dashboard_card_night_dim),
+                            dualOpacityTitle = stringResource(R.string.settings_dashboard_card_dual_opacity),
+                            dualOpacityDescription = stringResource(R.string.settings_dashboard_card_dual_opacity_desc),
+                            dayOpacityTitle = stringResource(R.string.settings_dashboard_card_day_opacity),
+                            nightOpacityTitle = stringResource(R.string.settings_dashboard_card_night_opacity),
+                        )
+                    }
+
+                    item(key = "appearance_dashboard_card_select") {
+                        ExpressiveCard(
+                            flat = flat,
+                            onClick = {
+                                if (PermissionUtils.hasExternalStoragePermission(context)) {
+                                    try {
+                                        pickDashboardCardImageLauncher.launch("image/*")
+                                    } catch (e: ActivityNotFoundException) {
+                                        showToast(context, e.message ?: "")
+                                    }
+                                } else {
+                                    showToast(context, context.getString(R.string.focus_card_permission_required))
+                                }
+                            },
+                        ) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth().padding(16.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                Icon(Icons.Filled.Image, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                                Spacer(Modifier.width(16.dp))
+                                Column(Modifier.weight(1f)) {
+                                    Text(
+                                        text = stringResource(R.string.settings_select_background_image),
+                                        style = MaterialTheme.typography.bodyLarge,
+                                        color = MaterialTheme.colorScheme.onSurface,
+                                    )
+                                    if (BackgroundConfig.dashboardCardBgUri != null) {
+                                        Text(
+                                            text = stringResource(R.string.settings_background_selected),
+                                            style = MaterialTheme.typography.bodySmall,
+                                            color = MaterialTheme.colorScheme.outline,
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

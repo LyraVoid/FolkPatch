@@ -1171,4 +1171,22 @@ Por favor, certifique-se de fechar completamente o app e reabri-lo para que os c
     <string name="settings_focus_card_device">Cartão de status do dispositivo</string>
     <string name="settings_focus_card_storage">Cartão de armazenamento</string>
     <string name="settings_focus_card_wallpaper_selected">Papel de parede definido</string>
+    <string name="dashboard_card_background_title">Papel de parede do cartão do painel</string>
+    <string name="settings_dashboard_card_background">Papel de parede do cartão do painel</string>
+    <string name="settings_dashboard_card_background_enabled">Papel de parede do painel ativado; pressione longamente o cartão do painel para gerenciar</string>
+    <string name="settings_dashboard_card_background_summary">Ativar papel de parede para o cartão do painel DashboardUI</string>
+    <string name="dashboard_card_background_clear">Limpar papel de parede do painel</string>
+    <string name="dashboard_card_background_clear_confirm">Tem certeza de que deseja limpar o papel de parede do cartão do painel?</string>
+    <string name="dashboard_card_background_saved">Papel de parede do painel salvo com sucesso</string>
+    <string name="dashboard_card_background_error">Falha ao salvar papel de parede do painel</string>
+    <string name="dashboard_card_background_cleared">Papel de parede do painel limpo</string>
+    <string name="settings_dashboard_card_dual_dim">Ativar escurecimento duplo dia/noite</string>
+    <string name="settings_dashboard_card_dual_dim_desc">Ajustar automaticamente o escurecimento do papel de parede do painel para temas claro e escuro</string>
+    <string name="settings_dashboard_card_day_dim">Escurecimento do papel de parede do painel no modo dia</string>
+    <string name="settings_dashboard_card_night_dim">Escurecimento do papel de parede do painel no modo noite</string>
+    <string name="settings_dashboard_card_opacity">Opacidade do papel de parede do painel</string>
+    <string name="settings_dashboard_card_dual_opacity">Ativar opacidade dupla dia/noite</string>
+    <string name="settings_dashboard_card_dual_opacity_desc">Ajustar automaticamente a opacidade do papel de parede do painel para temas claro e escuro</string>
+    <string name="settings_dashboard_card_day_opacity">Opacidade do papel de parede do painel no modo dia</string>
+    <string name="settings_dashboard_card_night_opacity">Opacidade do papel de parede do painel no modo noite</string>
 </resources>

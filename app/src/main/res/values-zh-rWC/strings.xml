@@ -1153,4 +1153,22 @@
     <string name="settings_focus_card_device">设备状态卡片</string>
     <string name="settings_focus_card_storage">存储卡片</string>
     <string name="settings_focus_card_wallpaper_selected">已设法相</string>
+    <string name="dashboard_card_background_title">仪表盘卡片法相</string>
+    <string name="settings_dashboard_card_background">仪表盘卡片法相</string>
+    <string name="settings_dashboard_card_background_enabled">仪表盘法相已启，长按仪表盘卡片管理法相</string>
+    <string name="settings_dashboard_card_background_summary">为 DashboardUI 仪表盘卡片启用法相</string>
+    <string name="dashboard_card_background_clear">清除仪表盘法相</string>
+    <string name="dashboard_card_background_clear_confirm">确定要清除仪表盘卡片法相吗？</string>
+    <string name="dashboard_card_background_saved">仪表盘法相保存成功</string>
+    <string name="dashboard_card_background_error">仪表盘法相保存失败</string>
+    <string name="dashboard_card_background_cleared">仪表盘法相已清除</string>
+    <string name="settings_dashboard_card_dual_dim">启用昼夜双法相暗度</string>
+    <string name="settings_dashboard_card_dual_dim_desc">自动根据明暗主题调整仪表盘法相暗度</string>
+    <string name="settings_dashboard_card_day_dim">白天模式仪表盘法相暗度</string>
+    <string name="settings_dashboard_card_night_dim">夜间模式仪表盘法相暗度</string>
+    <string name="settings_dashboard_card_opacity">仪表盘法相透明度</string>
+    <string name="settings_dashboard_card_dual_opacity">启用昼夜双法相透明度</string>
+    <string name="settings_dashboard_card_dual_opacity_desc">自动根据明暗主题调整仪表盘法相透明度</string>
+    <string name="settings_dashboard_card_day_opacity">白天模式仪表盘法相透明度</string>
+    <string name="settings_dashboard_card_night_opacity">夜间模式仪表盘法相透明度</string>
 </resources>

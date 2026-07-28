@@ -1173,4 +1173,22 @@ Por ejemplo, los KPM que previenen la modificación de particiones solo pueden u
     <string name="settings_focus_card_device">Tarjeta de estado del dispositivo</string>
     <string name="settings_focus_card_storage">Tarjeta de almacenamiento</string>
     <string name="settings_focus_card_wallpaper_selected">Fondo establecido</string>
+    <string name="dashboard_card_background_title">Fondo de tarjeta del panel</string>
+    <string name="settings_dashboard_card_background">Fondo de tarjeta del panel</string>
+    <string name="settings_dashboard_card_background_enabled">Fondo del panel activado; mantén pulsada la tarjeta del panel para gestionarlo</string>
+    <string name="settings_dashboard_card_background_summary">Activar un fondo para la tarjeta del panel DashboardUI</string>
+    <string name="dashboard_card_background_clear">Borrar fondo del panel</string>
+    <string name="dashboard_card_background_clear_confirm">¿Seguro que quieres borrar el fondo de la tarjeta del panel?</string>
+    <string name="dashboard_card_background_saved">Fondo del panel guardado correctamente</string>
+    <string name="dashboard_card_background_error">Error al guardar el fondo del panel</string>
+    <string name="dashboard_card_background_cleared">Fondo del panel borrado</string>
+    <string name="settings_dashboard_card_dual_dim">Activar atenuación dual día/noche</string>
+    <string name="settings_dashboard_card_dual_dim_desc">Ajustar automáticamente el oscurecimiento del fondo del panel según el tema claro u oscuro</string>
+    <string name="settings_dashboard_card_day_dim">Atenuación del fondo del panel en modo día</string>
+    <string name="settings_dashboard_card_night_dim">Atenuación del fondo del panel en modo noche</string>
+    <string name="settings_dashboard_card_opacity">Opacidad del fondo del panel</string>
+    <string name="settings_dashboard_card_dual_opacity">Activar opacidad dual día/noche</string>
+    <string name="settings_dashboard_card_dual_opacity_desc">Ajustar automáticamente la opacidad del fondo del panel según el tema claro u oscuro</string>
+    <string name="settings_dashboard_card_day_opacity">Opacidad del fondo del panel en modo día</string>
+    <string name="settings_dashboard_card_night_opacity">Opacidad del fondo del panel en modo noche</string>
 </resources>

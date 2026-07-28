@@ -756,6 +756,24 @@
     <string name="settings_focus_card_device">裝置狀態卡片</string>
     <string name="settings_focus_card_storage">儲存卡片</string>
     <string name="settings_focus_card_wallpaper_selected">已設定桌布</string>
+    <string name="dashboard_card_background_title">儀表板卡片桌布</string>
+    <string name="settings_dashboard_card_background">儀表板卡片桌布</string>
+    <string name="settings_dashboard_card_background_enabled">儀表板桌布已開啟，長按儀表板卡片管理桌布</string>
+    <string name="settings_dashboard_card_background_summary">為 DashboardUI 儀表板卡片啟用桌布</string>
+    <string name="dashboard_card_background_clear">清除儀表板桌布</string>
+    <string name="dashboard_card_background_clear_confirm">確定要清除儀表板卡片桌布嗎？</string>
+    <string name="dashboard_card_background_saved">儀表板桌布儲存成功</string>
+    <string name="dashboard_card_background_error">儀表板桌布儲存失敗</string>
+    <string name="dashboard_card_background_cleared">儀表板桌布已清除</string>
+    <string name="settings_dashboard_card_dual_dim">啟用晝夜雙暗度</string>
+    <string name="settings_dashboard_card_dual_dim_desc">自動根據明暗主題調整儀表板桌布暗度</string>
+    <string name="settings_dashboard_card_day_dim">白天模式儀表板桌布暗度</string>
+    <string name="settings_dashboard_card_night_dim">夜間模式儀表板桌布暗度</string>
+    <string name="settings_dashboard_card_opacity">儀表板桌布透明度</string>
+    <string name="settings_dashboard_card_dual_opacity">啟用晝夜雙透明度</string>
+    <string name="settings_dashboard_card_dual_opacity_desc">自動根據明暗主題調整儀表板桌布透明度</string>
+    <string name="settings_dashboard_card_day_opacity">白天模式儀表板桌布透明度</string>
+    <string name="settings_dashboard_card_night_opacity">夜間模式儀表板桌布透明度</string>
 
     <!-- Biometric Strings -->
     <string name="action_biometric">生物識別認證</string>

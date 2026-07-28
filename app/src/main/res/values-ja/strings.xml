@@ -1092,4 +1092,22 @@
     <string name="settings_focus_card_device">デバイス状態カード</string>
     <string name="settings_focus_card_storage">ストレージカード</string>
     <string name="settings_focus_card_wallpaper_selected">壁紙を設定済み</string>
+    <string name="dashboard_card_background_title">ダッシュボードカード壁紙</string>
+    <string name="settings_dashboard_card_background">ダッシュボードカード壁紙</string>
+    <string name="settings_dashboard_card_background_enabled">ダッシュボード壁紙有効。カードを長押しして管理</string>
+    <string name="settings_dashboard_card_background_summary">DashboardUI ダッシュボードカードの壁紙を有効化</string>
+    <string name="dashboard_card_background_clear">ダッシュボード壁紙をクリア</string>
+    <string name="dashboard_card_background_clear_confirm">ダッシュボードカードの壁紙をクリアしてもよろしいですか？</string>
+    <string name="dashboard_card_background_saved">ダッシュボード壁紙を保存しました</string>
+    <string name="dashboard_card_background_error">ダッシュボード壁紙の保存に失敗</string>
+    <string name="dashboard_card_background_cleared">ダッシュボード壁紙をクリアしました</string>
+    <string name="settings_dashboard_card_dual_dim">昼/夜デュアル調光を有効化</string>
+    <string name="settings_dashboard_card_dual_dim_desc">ライトテーマとダークテーマに応じてダッシュボード壁紙の暗さを自動調整</string>
+    <string name="settings_dashboard_card_day_dim">昼モードのダッシュボード壁紙の暗さ</string>
+    <string name="settings_dashboard_card_night_dim">夜モードのダッシュボード壁紙の暗さ</string>
+    <string name="settings_dashboard_card_opacity">ダッシュボード壁紙の不透明度</string>
+    <string name="settings_dashboard_card_dual_opacity">昼/夜デュアル透明度を有効化</string>
+    <string name="settings_dashboard_card_dual_opacity_desc">ライトテーマとダークテーマに応じてダッシュボード壁紙の透明度を自動調整</string>
+    <string name="settings_dashboard_card_day_opacity">昼モードのダッシュボード壁紙の透明度</string>
+    <string name="settings_dashboard_card_night_opacity">夜モードのダッシュボード壁紙の透明度</string>
 </resources>

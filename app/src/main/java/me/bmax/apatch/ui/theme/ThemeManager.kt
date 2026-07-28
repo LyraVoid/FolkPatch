@@ -112,7 +112,18 @@ object ThemeManager {
         val hasFocusCardKernelBg: Boolean = false,
         val hasFocusCardAppBg: Boolean = false,
         val hasFocusCardDeviceBg: Boolean = false,
-        val hasFocusCardStorageBg: Boolean = false
+        val hasFocusCardStorageBg: Boolean = false,
+        // DashboardUI Hero Card Wallpaper
+        val isDashboardCardBackgroundEnabled: Boolean = false,
+        val dashboardCardBgDim: Float = 0.3f,
+        val isDashboardCardDualDimEnabled: Boolean = false,
+        val dashboardCardBgDayDim: Float = 0.3f,
+        val dashboardCardBgNightDim: Float = 0.3f,
+        val dashboardCardBgOpacity: Float = 1.0f,
+        val isDashboardCardDualOpacityEnabled: Boolean = false,
+        val dashboardCardBgDayOpacity: Float = 1.0f,
+        val dashboardCardBgNightOpacity: Float = 1.0f,
+        val hasDashboardCardBg: Boolean = false,
     )
 
     data class ThemeMetadata(
@@ -191,7 +202,17 @@ object ThemeManager {
                     hasFocusCardKernelBg = BackgroundConfig.focusCardKernelBgUri != null,
                     hasFocusCardAppBg = BackgroundConfig.focusCardAppBgUri != null,
                     hasFocusCardDeviceBg = BackgroundConfig.focusCardDeviceBgUri != null,
-                    hasFocusCardStorageBg = BackgroundConfig.focusCardStorageBgUri != null
+                    hasFocusCardStorageBg = BackgroundConfig.focusCardStorageBgUri != null,
+                    isDashboardCardBackgroundEnabled = BackgroundConfig.isDashboardCardBackgroundEnabled,
+                    dashboardCardBgDim = BackgroundConfig.dashboardCardBgDim,
+                    isDashboardCardDualDimEnabled = BackgroundConfig.isDashboardCardDualDimEnabled,
+                    dashboardCardBgDayDim = BackgroundConfig.dashboardCardBgDayDim,
+                    dashboardCardBgNightDim = BackgroundConfig.dashboardCardBgNightDim,
+                    dashboardCardBgOpacity = BackgroundConfig.dashboardCardBgOpacity,
+                    isDashboardCardDualOpacityEnabled = BackgroundConfig.isDashboardCardDualOpacityEnabled,
+                    dashboardCardBgDayOpacity = BackgroundConfig.dashboardCardBgDayOpacity,
+                    dashboardCardBgNightOpacity = BackgroundConfig.dashboardCardBgNightOpacity,
+                    hasDashboardCardBg = BackgroundConfig.dashboardCardBgUri != null,
                 )
 
                 // 2. Write Config JSON
@@ -267,6 +288,16 @@ object ThemeManager {
                     put("hasFocusCardAppBg", config.hasFocusCardAppBg)
                     put("hasFocusCardDeviceBg", config.hasFocusCardDeviceBg)
                     put("hasFocusCardStorageBg", config.hasFocusCardStorageBg)
+                    put("isDashboardCardBackgroundEnabled", config.isDashboardCardBackgroundEnabled)
+                    put("dashboardCardBgDim", config.dashboardCardBgDim.toDouble())
+                    put("isDashboardCardDualDimEnabled", config.isDashboardCardDualDimEnabled)
+                    put("dashboardCardBgDayDim", config.dashboardCardBgDayDim.toDouble())
+                    put("dashboardCardBgNightDim", config.dashboardCardBgNightDim.toDouble())
+                    put("dashboardCardBgOpacity", config.dashboardCardBgOpacity.toDouble())
+                    put("isDashboardCardDualOpacityEnabled", config.isDashboardCardDualOpacityEnabled)
+                    put("dashboardCardBgDayOpacity", config.dashboardCardBgDayOpacity.toDouble())
+                    put("dashboardCardBgNightOpacity", config.dashboardCardBgNightOpacity.toDouble())
+                    put("hasDashboardCardBg", config.hasDashboardCardBg)
 
                     // Add metadata
                     put("meta_name", metadata.name)
@@ -418,6 +449,16 @@ object ThemeManager {
                                 bgFile.copyTo(File(cacheDir, "$bgName$ext"))
                                 break
                             }
+                        }
+                    }
+                }
+
+                if (config.hasDashboardCardBg) {
+                    for (ext in focusExtensions) {
+                        val bgFile = File(context.filesDir, "dashboard_card_bg$ext")
+                        if (bgFile.exists()) {
+                            bgFile.copyTo(File(cacheDir, "dashboard_card_bg$ext"))
+                            break
                         }
                     }
                 }
@@ -643,6 +684,17 @@ object ThemeManager {
                  val focusCardBgDayOpacity = json.optDouble("focusCardBgDayOpacity", focusCardBgOpacity.toDouble()).toFloat()
                  val focusCardBgNightOpacity = json.optDouble("focusCardBgNightOpacity", focusCardBgOpacity.toDouble()).toFloat()
 
+                 val hasDashboardCardBg = json.optBoolean("hasDashboardCardBg", false)
+                 val isDashboardCardBackgroundEnabled = json.optBoolean("isDashboardCardBackgroundEnabled", false)
+                 val dashboardCardBgDim = json.optDouble("dashboardCardBgDim", 0.3).toFloat()
+                 val isDashboardCardDualDimEnabled = json.optBoolean("isDashboardCardDualDimEnabled", false)
+                 val dashboardCardBgDayDim = json.optDouble("dashboardCardBgDayDim", dashboardCardBgDim.toDouble()).toFloat()
+                 val dashboardCardBgNightDim = json.optDouble("dashboardCardBgNightDim", dashboardCardBgDim.toDouble()).toFloat()
+                 val dashboardCardBgOpacity = json.optDouble("dashboardCardBgOpacity", 1.0).toFloat()
+                 val isDashboardCardDualOpacityEnabled = json.optBoolean("isDashboardCardDualOpacityEnabled", false)
+                 val dashboardCardBgDayOpacity = json.optDouble("dashboardCardBgDayOpacity", dashboardCardBgOpacity.toDouble()).toFloat()
+                 val dashboardCardBgNightOpacity = json.optDouble("dashboardCardBgNightOpacity", dashboardCardBgOpacity.toDouble()).toFloat()
+
                 // Multi-Background Mode
                 val isMultiBackgroundEnabled = json.optBoolean("isMultiBackgroundEnabled", false)
 
@@ -858,6 +910,37 @@ object ThemeManager {
                  BackgroundConfig.setFocusCardBgOpacityValue(focusCardBgOpacity)
                  BackgroundConfig.setFocusCardBgDayOpacityValue(focusCardBgDayOpacity)
                  BackgroundConfig.setFocusCardBgNightOpacityValue(focusCardBgNightOpacity)
+
+                 BackgroundConfig.setDashboardCardBackgroundEnabledState(isDashboardCardBackgroundEnabled)
+                 BackgroundConfig.setDashboardCardBgDimValue(dashboardCardBgDim)
+                 BackgroundConfig.setDashboardCardDualDimEnabledState(isDashboardCardDualDimEnabled)
+                 BackgroundConfig.setDashboardCardBgDayDimValue(dashboardCardBgDayDim)
+                 BackgroundConfig.setDashboardCardBgNightDimValue(dashboardCardBgNightDim)
+                 BackgroundConfig.setDashboardCardBgOpacityValue(dashboardCardBgOpacity)
+                 BackgroundConfig.setDashboardCardDualOpacityEnabledState(isDashboardCardDualOpacityEnabled)
+                 BackgroundConfig.setDashboardCardBgDayOpacityValue(dashboardCardBgDayOpacity)
+                 BackgroundConfig.setDashboardCardBgNightOpacityValue(dashboardCardBgNightOpacity)
+
+                 val dashboardExtensions = listOf(".jpg", ".png", ".gif", ".webp")
+                 if (hasDashboardCardBg) {
+                     var dashboardBgFound = false
+                     for (ext in dashboardExtensions) {
+                         val source = File(cacheDir, "dashboard_card_bg$ext")
+                         if (source.exists()) {
+                             dashboardExtensions.forEach { File(context.filesDir, "dashboard_card_bg$it").delete() }
+                             val destination = File(context.filesDir, "dashboard_card_bg$ext")
+                             source.copyTo(destination, overwrite = true)
+                             BackgroundConfig.updateDashboardCardBgUri(Uri.fromFile(destination).buildUpon()
+                                 .appendQueryParameter("t", System.currentTimeMillis().toString()).build().toString())
+                             dashboardBgFound = true
+                             break
+                         }
+                     }
+                     if (!dashboardBgFound) BackgroundConfig.updateDashboardCardBgUri(null)
+                 } else {
+                     dashboardExtensions.forEach { File(context.filesDir, "dashboard_card_bg$it").delete() }
+                     BackgroundConfig.updateDashboardCardBgUri(null)
+                 }
 
                 val focusCardImports = listOf(
                     "focus_card_kernel_bg" to (BackgroundConfig.FOCUS_CARD_KERNEL to hasFocusCardKernelBg),

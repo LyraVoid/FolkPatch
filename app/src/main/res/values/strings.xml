@@ -821,6 +821,24 @@ Please ensure the app is completely closed and reopened for the commands to exec
     <string name="settings_focus_card_device">Device Status Card</string>
     <string name="settings_focus_card_storage">Storage Card</string>
     <string name="settings_focus_card_wallpaper_selected">Wallpaper set</string>
+    <string name="dashboard_card_background_title">Dashboard Card Wallpaper</string>
+    <string name="settings_dashboard_card_background">Dashboard Card Wallpaper</string>
+    <string name="settings_dashboard_card_background_enabled">Dashboard wallpaper enabled; long press the dashboard card to manage it</string>
+    <string name="settings_dashboard_card_background_summary">Enable a wallpaper for the DashboardUI dashboard card</string>
+    <string name="dashboard_card_background_clear">Clear Dashboard Wallpaper</string>
+    <string name="dashboard_card_background_clear_confirm">Are you sure you want to clear the dashboard card wallpaper?</string>
+    <string name="dashboard_card_background_saved">Dashboard wallpaper saved successfully</string>
+    <string name="dashboard_card_background_error">Failed to save dashboard wallpaper</string>
+    <string name="dashboard_card_background_cleared">Dashboard wallpaper cleared</string>
+    <string name="settings_dashboard_card_dual_dim">Enable dual day/night dim</string>
+    <string name="settings_dashboard_card_dual_dim_desc">Automatically adjust dashboard wallpaper dim for light and dark themes</string>
+    <string name="settings_dashboard_card_day_dim">Day mode dashboard wallpaper dim</string>
+    <string name="settings_dashboard_card_night_dim">Night mode dashboard wallpaper dim</string>
+    <string name="settings_dashboard_card_opacity">Dashboard wallpaper opacity</string>
+    <string name="settings_dashboard_card_dual_opacity">Enable dual day/night opacity</string>
+    <string name="settings_dashboard_card_dual_opacity_desc">Automatically adjust dashboard wallpaper opacity for light and dark themes</string>
+    <string name="settings_dashboard_card_day_opacity">Day mode dashboard wallpaper opacity</string>
+    <string name="settings_dashboard_card_night_opacity">Night mode dashboard wallpaper opacity</string>
 
     <!-- Biometric Strings -->
     <string name="action_biometric">Biometric Authentication</string>

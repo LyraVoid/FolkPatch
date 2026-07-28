@@ -1,5 +1,7 @@
 package me.bmax.apatch.ui.screen
 
+import android.content.ActivityNotFoundException
+import android.net.Uri
 import android.os.BatteryManager
 import android.os.Build
 import android.system.Os
@@ -18,6 +20,9 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -86,15 +91,19 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -108,19 +117,28 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.launch
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import coil.compose.rememberAsyncImagePainter
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.Natives
 import me.bmax.apatch.R
 import me.bmax.apatch.apApp
 import me.bmax.apatch.ui.theme.BackgroundConfig
+import me.bmax.apatch.ui.theme.BackgroundManager
+import me.bmax.apatch.ui.component.BackgroundOptionsDialog
+import me.bmax.apatch.ui.component.rememberConfirmDialog
 import me.bmax.apatch.util.AppData
 import me.bmax.apatch.util.HardwareMonitor
+import me.bmax.apatch.util.PermissionUtils
 import me.bmax.apatch.util.Version
 import me.bmax.apatch.util.Version.getManagerVersion
 import me.bmax.apatch.util.getSELinuxStatus
 import me.bmax.apatch.util.reboot
 import me.bmax.apatch.util.rootShellForResult
 import me.bmax.apatch.util.ui.HomeBottomSpacer
+import me.bmax.apatch.util.ui.showToast
 
 private val managerVersion = getManagerVersion()
 
@@ -323,10 +341,38 @@ private fun HeroStatusCard(
     showInstallDialog: MutableState<Boolean>,
     isWallpaperMode: Boolean
 ) {
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
     val isWorking = kpState == APApplication.State.KERNELPATCH_INSTALLED
     val isUpdate = kpState == APApplication.State.KERNELPATCH_NEED_UPDATE || 
         kpState == APApplication.State.KERNELPATCH_NEED_REBOOT
     val isUnknown = kpState == APApplication.State.UNKNOWN_STATE
+    val wallpaperEnabled = BackgroundConfig.isDashboardCardBackgroundEnabled
+    val wallpaperUri = BackgroundConfig.dashboardCardBgUri
+    val hasWallpaper = wallpaperEnabled && !wallpaperUri.isNullOrEmpty()
+    val prefs = APApplication.sharedPreferences
+    val isDarkTheme = if (prefs.getBoolean("night_mode_follow_sys", false)) {
+        isSystemInDarkTheme()
+    } else {
+        prefs.getBoolean("night_mode_enabled", true)
+    }
+    val wallpaperDim = BackgroundConfig.getEffectiveDashboardCardBgDim(isDarkTheme)
+    val wallpaperOpacity = BackgroundConfig.getEffectiveDashboardCardBgOpacity(isDarkTheme)
+    var showBackgroundOptions by remember { mutableStateOf(false) }
+    val pickBackground = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        uri?.let {
+            scope.launch {
+                val success = BackgroundManager.saveAndApplyDashboardCardBackground(context, it)
+                showToast(context, if (success) R.string.dashboard_card_background_saved else R.string.dashboard_card_background_error)
+            }
+        }
+    }
+    val clearBackgroundDialog = rememberConfirmDialog(
+        onConfirm = {
+            BackgroundManager.clearDashboardCardBackground(context)
+            showToast(context, context.getString(R.string.dashboard_card_background_cleared))
+        }
+    )
 
     // 呼吸动画
     val infiniteTransition = rememberInfiniteTransition(label = "breathing")
@@ -353,7 +399,7 @@ private fun HeroStatusCard(
 
     val contentColor by animateColorAsState(
         targetValue = when {
-            isWorking -> MaterialTheme.colorScheme.onPrimary
+            isWorking -> if (hasWallpaper) Color.White else MaterialTheme.colorScheme.onPrimary
             isUpdate -> MaterialTheme.colorScheme.onSecondary
             else -> MaterialTheme.colorScheme.onErrorContainer
         },
@@ -377,7 +423,10 @@ private fun HeroStatusCard(
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .heightIn(min = 160.dp),
+                .heightIn(min = 160.dp)
+                .then(if (wallpaperEnabled) Modifier.pointerInput(Unit) {
+                    detectTapGestures(onLongPress = { showBackgroundOptions = true })
+                } else Modifier),
             shape = RoundedCornerShape(24.dp),
             colors = CardDefaults.cardColors(
                 containerColor = Color.Transparent,
@@ -387,11 +436,19 @@ private fun HeroStatusCard(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(gradientBrush)
-                    .padding(24.dp)
+                    .then(if (!hasWallpaper) Modifier.background(gradientBrush) else Modifier)
             ) {
+                if (hasWallpaper) {
+                    Image(
+                        painter = rememberAsyncImagePainter(wallpaperUri),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.matchParentSize().alpha(wallpaperOpacity),
+                    )
+                    Box(Modifier.matchParentSize().background(Color.Black.copy(alpha = wallpaperDim)))
+                }
                 Column(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth().padding(24.dp)
                 ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -489,21 +546,32 @@ private fun HeroStatusCard(
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable {
-                    navigator.navigate(InstallModeSelectScreenDestination)
-                },
+                .then(if (wallpaperEnabled) Modifier.pointerInput(Unit) {
+                    detectTapGestures(
+                        onTap = { navigator.navigate(InstallModeSelectScreenDestination) },
+                        onLongPress = { showBackgroundOptions = true },
+                    )
+                } else Modifier.clickable { navigator.navigate(InstallModeSelectScreenDestination) }),
             shape = RoundedCornerShape(20.dp),
             colors = CardDefaults.cardColors(
-                containerColor = finalContainerColor,
-                contentColor = MaterialTheme.colorScheme.onErrorContainer
+                containerColor = if (hasWallpaper) Color.Transparent else finalContainerColor,
+                contentColor = if (hasWallpaper) Color.White else MaterialTheme.colorScheme.onErrorContainer
             )
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(24.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+            Box {
+                if (hasWallpaper) {
+                    Image(
+                        painter = rememberAsyncImagePainter(wallpaperUri),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.matchParentSize().alpha(wallpaperOpacity),
+                    )
+                    Box(Modifier.matchParentSize().background(Color.Black.copy(alpha = wallpaperDim)))
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(24.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                 when {
                     isUpdate -> Icon(
                         imageVector = Icons.Outlined.SystemUpdate,
@@ -539,8 +607,38 @@ private fun HeroStatusCard(
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }
+                }
             }
         }
+    }
+
+    if (wallpaperEnabled) {
+        BackgroundOptionsDialog(
+            showDialog = showBackgroundOptions,
+            onDismiss = { showBackgroundOptions = false },
+            title = stringResource(R.string.dashboard_card_background_title),
+            selectLabel = stringResource(R.string.settings_select_background_image),
+            clearLabel = stringResource(R.string.dashboard_card_background_clear),
+            hasExisting = hasWallpaper,
+            onSelectImage = {
+                if (PermissionUtils.hasExternalStoragePermission(context)) {
+                    try {
+                        pickBackground.launch("image/*")
+                    } catch (e: ActivityNotFoundException) {
+                        showToast(context, e.message ?: "")
+                    }
+                } else {
+                    showToast(context, context.getString(R.string.focus_card_permission_required))
+                }
+            },
+            onClearImage = {
+                clearBackgroundDialog.showConfirm(
+                    title = context.getString(R.string.dashboard_card_background_clear),
+                    content = context.getString(R.string.dashboard_card_background_clear_confirm),
+                    markdown = false,
+                )
+            },
+        )
     }
 }
 

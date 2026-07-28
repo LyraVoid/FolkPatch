@@ -1152,4 +1152,22 @@ Pastikan aplikasi ditutup sepenuhnya dan dimulai ulang untuk menjalankan perinta
     <string name="settings_focus_card_device">Kartu status perangkat</string>
     <string name="settings_focus_card_storage">Kartu penyimpanan</string>
     <string name="settings_focus_card_wallpaper_selected">Latar diatur</string>
+    <string name="dashboard_card_background_title">Latar kartu dasbor</string>
+    <string name="settings_dashboard_card_background">Latar kartu dasbor</string>
+    <string name="settings_dashboard_card_background_enabled">Latar dasbor diaktifkan; tekan lama kartu dasbor untuk mengelolanya</string>
+    <string name="settings_dashboard_card_background_summary">Aktifkan latar untuk kartu dasbor DashboardUI</string>
+    <string name="dashboard_card_background_clear">Hapus latar dasbor</string>
+    <string name="dashboard_card_background_clear_confirm">Yakin ingin menghapus latar kartu dasbor?</string>
+    <string name="dashboard_card_background_saved">Latar dasbor berhasil disimpan</string>
+    <string name="dashboard_card_background_error">Gagal menyimpan latar dasbor</string>
+    <string name="dashboard_card_background_cleared">Latar dasbor dihapus</string>
+    <string name="settings_dashboard_card_dual_dim">Aktifkan peredupan ganda siang/malam</string>
+    <string name="settings_dashboard_card_dual_dim_desc">Sesuaikan keredupan latar dasbor secara otomatis untuk tema terang dan gelap</string>
+    <string name="settings_dashboard_card_day_dim">Keredupan latar dasbor mode siang</string>
+    <string name="settings_dashboard_card_night_dim">Keredupan latar dasbor mode malam</string>
+    <string name="settings_dashboard_card_opacity">Opasitas latar dasbor</string>
+    <string name="settings_dashboard_card_dual_opacity">Aktifkan opasitas ganda siang/malam</string>
+    <string name="settings_dashboard_card_dual_opacity_desc">Sesuaikan opasitas latar dasbor secara otomatis untuk tema terang dan gelap</string>
+    <string name="settings_dashboard_card_day_opacity">Opasitas latar dasbor mode siang</string>
+    <string name="settings_dashboard_card_night_opacity">Opasitas latar dasbor mode malam</string>
 </resources>

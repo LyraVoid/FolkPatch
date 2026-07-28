@@ -1184,4 +1184,22 @@
     <string name="settings_focus_card_device">기기 상태 카드</string>
     <string name="settings_focus_card_storage">저장공간 카드</string>
     <string name="settings_focus_card_wallpaper_selected">배경 설정됨</string>
+    <string name="dashboard_card_background_title">대시보드 카드 배경</string>
+    <string name="settings_dashboard_card_background">대시보드 카드 배경</string>
+    <string name="settings_dashboard_card_background_enabled">대시보드 배경 활성화됨; 카드를 길게 눌러 관리</string>
+    <string name="settings_dashboard_card_background_summary">DashboardUI 대시보드 카드 배경 활성화</string>
+    <string name="dashboard_card_background_clear">대시보드 배경 지우기</string>
+    <string name="dashboard_card_background_clear_confirm">대시보드 카드 배경을 지우시겠습니까?</string>
+    <string name="dashboard_card_background_saved">대시보드 배경 저장 성공</string>
+    <string name="dashboard_card_background_error">대시보드 배경 저장 실패</string>
+    <string name="dashboard_card_background_cleared">대시보드 배경 지워짐</string>
+    <string name="settings_dashboard_card_dual_dim">주/야 이중 어두움 활성화</string>
+    <string name="settings_dashboard_card_dual_dim_desc">밝은 테마와 어두운 테마에 따라 대시보드 배경 어두움 자동 조정</string>
+    <string name="settings_dashboard_card_day_dim">주간 모드 대시보드 배경 어두움</string>
+    <string name="settings_dashboard_card_night_dim">야간 모드 대시보드 배경 어두움</string>
+    <string name="settings_dashboard_card_opacity">대시보드 배경 불투명도</string>
+    <string name="settings_dashboard_card_dual_opacity">주/야 이중 불투명도 활성화</string>
+    <string name="settings_dashboard_card_dual_opacity_desc">밝은 테마와 어두운 테마에 따라 대시보드 배경 불투명도 자동 조정</string>
+    <string name="settings_dashboard_card_day_opacity">주간 모드 대시보드 배경 불투명도</string>
+    <string name="settings_dashboard_card_night_opacity">야간 모드 대시보드 배경 불투명도</string>
 </resources>
