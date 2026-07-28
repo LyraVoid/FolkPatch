@@ -35,8 +35,10 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
@@ -59,6 +61,16 @@ fun SearchAppBar(
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusRequester = remember { FocusRequester() }
     var onSearch by rememberSaveable { mutableStateOf(startInSearchMode) }
+
+    // 使用 TextFieldValue 管理文本+光标位置，避免页面导航返回后光标跳到文本开头
+    var textFieldValue by remember {
+        mutableStateOf(TextFieldValue(searchText, TextRange(searchText.length)))
+    }
+    LaunchedEffect(searchText) {
+        if (textFieldValue.text != searchText) {
+            textFieldValue = TextFieldValue(searchText, TextRange(searchText.length))
+        }
+    }
 
     if (onSearch) {
         LaunchedEffect(Unit) { focusRequester.requestFocus() }
@@ -108,8 +120,11 @@ fun SearchAppBar(
                                 if (focusState.isFocused) onSearch = true
                                 Log.d(TAG, "onFocusChanged: $focusState")
                             },
-                        value = searchText,
-                        onValueChange = onSearchTextChange,
+                        value = textFieldValue,
+                        onValueChange = { newValue ->
+                            textFieldValue = newValue
+                            onSearchTextChange(newValue.text)
+                        },
                         shape = RoundedCornerShape(15.dp),
                         trailingIcon = {
                             IconButton(
