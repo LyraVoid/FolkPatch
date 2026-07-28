@@ -9,6 +9,7 @@ import android.os.Build
 import android.provider.MediaStore
 import me.bmax.apatch.ui.component.ColorGenerationModeSelector
 import me.bmax.apatch.ui.component.SliderSettingCard
+import me.bmax.apatch.ui.component.SliderStyleConfig
 import me.bmax.apatch.ui.component.ColorStandardSelector
 import me.bmax.apatch.ui.component.ColorStylePicker
 import me.bmax.apatch.ui.theme.ColorGenerationMode
@@ -591,6 +592,22 @@ fun AppearanceSettingsContent(
                         showSwitchIcon = it
                         SwitchIconState.showIcon = it
                         prefs.edit().putBoolean("show_switch_icon", it).apply()
+                    },
+                )
+            }
+
+            item(key = "appearance_discrete_slider") {
+                var isDiscreteSlider by remember { mutableStateOf(SliderStyleConfig.isDiscrete) }
+                ToggleSettingCard(
+                    icon = Icons.Filled.Segment,
+                    flat = flat,
+                    title = stringResource(R.string.settings_discrete_slider),
+                    description = stringResource(R.string.settings_discrete_slider_desc),
+                    checked = isDiscreteSlider,
+                    onCheckedChange = {
+                        isDiscreteSlider = it
+                        SliderStyleConfig.isDiscrete = it
+                        prefs.edit().putBoolean("discrete_slider", it).apply()
                     },
                 )
             }

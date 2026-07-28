@@ -804,6 +804,8 @@ Por favor, certifique-se de fechar completamente o app e reabri-lo para que os c
     <string name="settings_amoled_theme_desc">Fundo preto puro para o modo escuro</string>
     <string name="settings_switch_icon">Indicador de botão</string>
     <string name="settings_switch_icon_desc">Mostrar ícones de status nos interruptores</string>
+    <string name="settings_discrete_slider">Controle deslizante discreto</string>
+    <string name="settings_discrete_slider_desc">Mostrar marcas na trilha do controle deslizante</string>
     <string name="settings_category_behavior">Comportamento</string>
     <string name="settings_category_function">Função</string>
     <string name="settings_use_legacy_su_page">Autorização de superusuário de página única</string>

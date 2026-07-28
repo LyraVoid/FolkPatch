@@ -63,6 +63,7 @@ object SettingsRegistry {
             // === Appearance ===
             add(SettingEntry("appearance_amoled_theme", R.string.settings_amoled_theme, R.string.settings_amoled_theme_desc, SettingCategory.APPEARANCE))
             add(SettingEntry("appearance_switch_icon", R.string.settings_switch_icon, R.string.settings_switch_icon_desc, SettingCategory.APPEARANCE))
+            add(SettingEntry("appearance_discrete_slider", R.string.settings_discrete_slider, R.string.settings_discrete_slider_desc, SettingCategory.APPEARANCE))
             add(SettingEntry("appearance_home_layout", R.string.settings_home_layout_style, category = SettingCategory.APPEARANCE))
             add(SettingEntry("appearance_stats_top_layout", R.string.settings_stats_top_layout, category = SettingCategory.APPEARANCE))
             add(SettingEntry("appearance_nav_layout", R.string.settings_nav_layout_title, R.string.settings_nav_layout_summary, SettingCategory.APPEARANCE))

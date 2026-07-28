@@ -831,6 +831,8 @@
     <string name="settings_amoled_theme_desc">다크 모드에서 순정 블랙 배경 사용</string>
     <string name="settings_switch_icon">버튼 표시기 활성화</string>
     <string name="settings_switch_icon_desc">스위치 버튼에 상태 아이콘 표시</string>
+    <string name="settings_discrete_slider">구분 슬라이더</string>
+    <string name="settings_discrete_slider_desc">슬라이더 트랙에 눈금 표시</string>
     <string name="settings_category_module">모듈</string>
     <string name="settings_category_security">보안</string>
     <string name="settings_category_function">기능</string>

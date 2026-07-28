@@ -756,6 +756,8 @@
     <string name="settings_amoled_theme_desc">ダークモードで完全な黒い背景を使用</string>
     <string name="settings_switch_icon">ボタンインジケーターを有効化</string>
     <string name="settings_switch_icon_desc">スイッチボタンにステータスアイコンを表示</string>
+    <string name="settings_discrete_slider">区分スライダー</string>
+    <string name="settings_discrete_slider_desc">スライダートラックに目盛りを表示</string>
     <string name="settings_category_behavior">動作</string>
     <string name="settings_category_function">機能</string>
     <string name="settings_category_module">モジュール</string>

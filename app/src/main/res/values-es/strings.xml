@@ -808,6 +808,8 @@ Por ejemplo, los KPM que previenen la modificación de particiones solo pueden u
     <string name="settings_amoled_theme_desc">Fondo negro puro para el modo oscuro</string>
     <string name="settings_switch_icon">Indicador de botón</string>
     <string name="settings_switch_icon_desc">Mostrar iconos de estado en los interruptores</string>
+    <string name="settings_discrete_slider">Control deslizante discreto</string>
+    <string name="settings_discrete_slider_desc">Mostrar marcas en las pistas del control deslizante</string>
     <string name="settings_category_behavior">Comportamiento</string>
     <string name="settings_category_function">Función</string>
     <string name="settings_use_legacy_su_page">Autorización de superusuario de página única</string>

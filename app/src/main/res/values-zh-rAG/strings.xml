@@ -816,6 +816,8 @@
     <string name="settings_amoled_theme_desc">为深色模式使用纯黑背景喵</string>
     <string name="settings_switch_icon">启用按钮指示器</string>
     <string name="settings_switch_icon_desc">为开关按钮添加状态指示图标</string>
+    <string name="settings_discrete_slider">离散滑块喵</string>
+    <string name="settings_discrete_slider_desc">在滑块轨道上显示刻度标记喵</string>
     <string name="settings_category_behavior">行为喵</string>
     <string name="settings_category_function">功能喵</string>
     <string name="settings_category_module">模块喵</string>

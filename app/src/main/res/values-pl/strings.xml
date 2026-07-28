@@ -730,6 +730,8 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="settings_amoled_theme_desc">Czysto czarne tło dla trybu ciemnego</string>
     <string name="settings_switch_icon">Wskaźnik przycisku</string>
     <string name="settings_switch_icon_desc">Pokaż ikony stanu na przełącznikach</string>
+    <string name="settings_discrete_slider">Suwak dyskretny</string>
+    <string name="settings_discrete_slider_desc">Pokaż znaczniki na torze suwaka</string>
     <string name="settings_category_behavior">Zachowanie</string>
     <string name="settings_category_function">Funkcje</string>
     <string name="settings_use_legacy_su_page">Jednostronicowa autoryzacja superużytkownika</string>

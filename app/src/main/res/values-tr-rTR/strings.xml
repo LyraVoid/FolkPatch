@@ -812,6 +812,8 @@ Komutların çalışması için uygulamanın tamamen kapatılıp yeniden açıld
     <string name="settings_amoled_theme_desc">Karanlık mod için tam siyah arka plan</string>
     <string name="settings_switch_icon">Düğme Göstergesi</string>
     <string name="settings_switch_icon_desc">Anahtar düğmelerinde durum simgelerini göster</string>
+    <string name="settings_discrete_slider">Kademeli Kaydırıcı</string>
+    <string name="settings_discrete_slider_desc">Kaydırıcı yolunda işaret çizgilerini göster</string>
     <string name="settings_category_behavior">Davranış</string>
     <string name="settings_category_function">Fonksiyon</string>
     <string name="settings_category_module">Modüller</string>

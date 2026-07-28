@@ -807,6 +807,8 @@
     <string name="settings_amoled_theme_desc">Чисто чёрный фон для тёмного режима</string>
     <string name="settings_switch_icon">Индикатор кнопки</string>
     <string name="settings_switch_icon_desc">Показать значки состояния на переключателях</string>
+    <string name="settings_discrete_slider">Дискретный ползунок</string>
+    <string name="settings_discrete_slider_desc">Показать отметки на дорожке ползунка</string>
     <string name="settings_category_behavior">Поведение</string>
     <string name="settings_category_function">Функция</string>
     <string name="settings_use_legacy_su_page">Авторизация суперпользователя на одной странице</string>

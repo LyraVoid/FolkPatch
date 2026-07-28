@@ -815,6 +815,8 @@
     <string name="settings_amoled_theme_desc">خلفية سوداء بالكامل للوضع الداكن</string>
     <string name="settings_switch_icon">تمكين مؤشر الزر</string>
     <string name="settings_switch_icon_desc">إظهار أيقونات الحالة على أزرار التبديل</string>
+    <string name="settings_discrete_slider">شريط تمرير متقطع</string>
+    <string name="settings_discrete_slider_desc">إظهار علامات التدرج على مسار شريط التمرير</string>
     <string name="settings_category_behavior">السلوك</string>
     <string name="settings_category_function">الوظيفة</string>
     <string name="settings_use_legacy_su_page">تفويض المستخدم المتميز لصفحة واحدة</string>

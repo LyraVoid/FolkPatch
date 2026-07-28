@@ -809,6 +809,8 @@
     <string name="settings_amoled_theme_desc">為深色模式使用純黑背景</string>
     <string name="settings_switch_icon">啟用按鈕指示器</string>
     <string name="settings_switch_icon_desc">為開關按鈕添加狀態指示圖標</string>
+    <string name="settings_discrete_slider">離散滑塊</string>
+    <string name="settings_discrete_slider_desc">在滑塊軌道上顯示刻度標記</string>
     <string name="settings_category_behavior">行為</string>
     <string name="settings_category_function">功能</string>
     <string name="settings_use_legacy_su_page">單頁超級用戶授權</string>

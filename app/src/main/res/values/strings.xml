@@ -878,6 +878,8 @@ Please ensure the app is completely closed and reopened for the commands to exec
     <string name="settings_amoled_theme_desc">Pure black background for dark mode</string>
     <string name="settings_switch_icon">Enable Button Indicator</string>
     <string name="settings_switch_icon_desc">Show status icons on toggle switches</string>
+    <string name="settings_discrete_slider">Discrete Slider</string>
+    <string name="settings_discrete_slider_desc">Show tick marks on slider tracks</string>
     <string name="settings_category_module">Modules</string>
     <string name="settings_category_security">Security</string>
     <string name="settings_category_function">Function</string>

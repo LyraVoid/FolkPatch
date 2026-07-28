@@ -10,9 +10,19 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import me.bmax.apatch.APApplication
+
+object SliderStyleConfig {
+    var isDiscrete by mutableStateOf(
+        APApplication.sharedPreferences.getBoolean("discrete_slider", true)
+    )
+}
 
 @Composable
 fun SliderSettingCard(
@@ -52,7 +62,7 @@ fun SliderSettingCard(
                 onValueChange = onValueChange,
                 onValueChangeFinished = onValueChangeFinished,
                 valueRange = valueRange,
-                steps = steps,
+                steps = if (SliderStyleConfig.isDiscrete) steps else 0,
                 colors = SliderDefaults.colors(
                     thumbColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
                     activeTrackColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),

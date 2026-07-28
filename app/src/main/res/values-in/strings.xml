@@ -788,6 +788,8 @@ Pastikan aplikasi ditutup sepenuhnya dan dimulai ulang untuk menjalankan perinta
     <string name="settings_amoled_theme_desc">Latar belakang hitam penuh untuk mode gelap</string>
     <string name="settings_switch_icon">Indikator Tombol</string>
     <string name="settings_switch_icon_desc">Tampilkan ikon status pada tombol saklar</string>
+    <string name="settings_discrete_slider">Penggeser Diskrit</string>
+    <string name="settings_discrete_slider_desc">Tampilkan tanda pada lintasan penggeser</string>
     <string name="settings_category_behavior">Perilaku</string>
     <string name="settings_category_function">Fungsi</string>
     <string name="settings_use_legacy_su_page">Otorisasi superuser satu halaman</string>

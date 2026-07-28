@@ -806,6 +806,8 @@ Cần đảm bảo phần mềm thoát hoàn toàn vào mới sẽ thực thi l�
     <string name="settings_amoled_theme_desc">Nền đen hoàn toàn cho chế độ tối</string>
     <string name="settings_switch_icon">Bật chỉ báo nút</string>
     <string name="settings_switch_icon_desc">Hiển thị biểu tượng trạng thái trên công tắc</string>
+    <string name="settings_discrete_slider">Thanh trượt có nấc</string>
+    <string name="settings_discrete_slider_desc">Hiển thị vạch đánh dấu trên đường trượt</string>
     <string name="settings_category_behavior">Hành vi</string>
     <string name="settings_category_function">Chức năng</string>
     <string name="settings_use_legacy_su_page">Ủy quyền siêu người dùng một trang</string>
