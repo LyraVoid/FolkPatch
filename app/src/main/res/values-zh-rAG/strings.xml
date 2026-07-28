@@ -895,6 +895,8 @@
 
     <string name="settings_list_card_hide_status_badge">使用经典表情喵</string>
     <string name="settings_list_card_hide_status_badge_summary">首页的状态标记即刻变身经典表情喵！</string>
+    <string name="settings_list_info_show_icons">信息区图标喵</string>
+    <string name="settings_list_info_show_icons_summary">在信息卡片中为每个信息项显示前置图标喵</string>
     <string name="settings_custom_badge_text">自选角标文字喵</string>
     <string name="settings_custom_badge_text_summary">修改角标的文字显示，仅供娱乐喵</string>
 

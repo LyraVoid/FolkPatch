@@ -164,9 +164,21 @@ fun HomeScreen(navigator: DestinationsNavigator) {
     }
 
     var homeLayout by remember { mutableStateOf(APApplication.sharedPreferences.getString("home_layout_style", "circle")) }
+    var showListInfoIcons by remember { mutableStateOf(APApplication.sharedPreferences.getBoolean("list_info_show_icons", false)) }
     val homeRefreshObserver by refreshTheme.observeAsState(false)
     if (homeRefreshObserver) {
         homeLayout = APApplication.sharedPreferences.getString("home_layout_style", "circle")
+        showListInfoIcons = APApplication.sharedPreferences.getBoolean("list_info_show_icons", false)
+    }
+
+    // 迁移旧版SignUI: 合并至ListUI + "信息区图标"开关
+    if (homeLayout == "sign") {
+        APApplication.sharedPreferences.edit()
+            .putString("home_layout_style", "default")
+            .putBoolean("list_info_show_icons", true)
+            .apply()
+        homeLayout = "default"
+        showListInfoIcons = true
     }
 
     // 首次启动欢迎引导
@@ -192,11 +204,10 @@ fun HomeScreen(navigator: DestinationsNavigator) {
         when (homeLayout) {
             "kernelsu" -> HomeScreenV2(innerPadding, navigator, kpState, apState)
             "focus" -> HomeScreenV3(innerPadding, navigator, kpState, apState)
-            "sign" -> HomeScreenSign(innerPadding, navigator, kpState, apState)
             "circle" -> HomeScreenCircle(innerPadding, navigator, kpState, apState)
             "dashboard_ui" -> HomeScreenV4(innerPadding, navigator, kpState, apState)
             "stats" -> HomeScreenStats(innerPadding, navigator, kpState, apState)
-            else -> HomeScreenV1(innerPadding, navigator, kpState, apState)
+            else -> HomeScreenV1(innerPadding, navigator, kpState, apState, showListInfoIcons)
         }
     }
 }
@@ -206,7 +217,8 @@ fun HomeScreenV1(
     innerPadding: PaddingValues,
     navigator: DestinationsNavigator,
     kpState: APApplication.State,
-    apState: APApplication.State
+    apState: APApplication.State,
+    showInfoIcons: Boolean = false
 ) {
     Column(
         modifier = Modifier
@@ -220,35 +232,7 @@ fun HomeScreenV1(
         if (kpState != APApplication.State.UNKNOWN_STATE && apState != APApplication.State.UNKNOWN_STATE && apState != APApplication.State.ANDROIDPATCH_INSTALLED) {
             AStatusCard(apState)
         }
-        ListInfoCard(kpState, apState)
-        val hideApatchCard = APApplication.sharedPreferences.getBoolean("hide_apatch_card", false)
-        if (!hideApatchCard) {
-            LearnMoreCard()
-        }
-        HomeBottomSpacer()
-    }
-}
-
-@Composable
-fun HomeScreenSign(
-    innerPadding: PaddingValues,
-    navigator: DestinationsNavigator,
-    kpState: APApplication.State,
-    apState: APApplication.State
-) {
-    Column(
-        modifier = Modifier
-            .padding(innerPadding)
-            .padding(horizontal = 16.dp)
-            .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        Spacer(Modifier.height(0.dp))
-        KStatusCard(kpState, apState, navigator)
-        if (kpState != APApplication.State.UNKNOWN_STATE && apState != APApplication.State.UNKNOWN_STATE && apState != APApplication.State.ANDROIDPATCH_INSTALLED) {
-            AStatusCard(apState)
-        }
-        SignInfoCard(kpState, apState)
+        ListInfoCard(kpState, apState, showInfoIcons)
         val hideApatchCard = APApplication.sharedPreferences.getBoolean("hide_apatch_card", false)
         if (!hideApatchCard) {
             LearnMoreCard()
@@ -1187,7 +1171,7 @@ fun InfoCard(kpState: APApplication.State, apState: APApplication.State) {
 }
 
 @Composable
-fun ListInfoCard(kpState: APApplication.State, apState: APApplication.State) {
+fun ListInfoCard(kpState: APApplication.State, apState: APApplication.State, showIcons: Boolean = false) {
     val hideSuPath = remember { mutableStateOf(APApplication.sharedPreferences.getBoolean("hide_su_path", false)) }
     val hideKpatchVersion = remember { mutableStateOf(APApplication.sharedPreferences.getBoolean("hide_kpatch_version", false)) }
     val hideFingerprint = remember { mutableStateOf(APApplication.sharedPreferences.getBoolean("hide_fingerprint", false)) }
@@ -1220,142 +1204,47 @@ fun ListInfoCard(kpState: APApplication.State, apState: APApplication.State) {
                 .fillMaxWidth()
                 .padding(start = 24.dp, top = 24.dp, end = 24.dp, bottom = 16.dp)
         ) {
-            val uname = Os.uname()
-
-            @Composable
-            fun InfoCardItem(label: String, content: String) {
-                Text(text = label, style = MaterialTheme.typography.bodyLarge)
-                Text(text = content, style = MaterialTheme.typography.bodyMedium)
-            }
-
-            if (kpState != APApplication.State.UNKNOWN_STATE && !hideKpatchVersion.value) {
-                InfoCardItem(stringResource(R.string.home_kpatch_version), Version.installedKPVString())
-                Spacer(Modifier.height(16.dp))
-            }
-
-            if (kpState != APApplication.State.UNKNOWN_STATE && !hideSuPath.value) {
-                InfoCardItem(stringResource(R.string.home_su_path), Natives.suPath())
-                Spacer(Modifier.height(16.dp))
-            }
-
-            if (apState != APApplication.State.UNKNOWN_STATE && apState != APApplication.State.ANDROIDPATCH_NOT_INSTALLED) {
-                InfoCardItem(stringResource(R.string.home_apatch_version), managerVersion.second.toString())
-                Spacer(Modifier.height(16.dp))
-            }
-
-            InfoCardItem(stringResource(R.string.home_device_info), getDeviceInfo())
-            Spacer(Modifier.height(16.dp))
-
-            InfoCardItem(stringResource(R.string.home_kernel), uname.release)
-            Spacer(Modifier.height(16.dp))
-
-            InfoCardItem(stringResource(R.string.home_system_version), getSystemVersion())
-            Spacer(Modifier.height(16.dp))
-
-            if (!hideFingerprint.value) {
-                InfoCardItem(stringResource(R.string.home_fingerprint), Build.FINGERPRINT)
-                Spacer(Modifier.height(16.dp))
-            }
-
-            if (kpState != APApplication.State.UNKNOWN_STATE && zygiskImplement != "None" && !hideZygisk.value) {
-                InfoCardItem(stringResource(R.string.home_zygisk_implement), zygiskImplement)
-                Spacer(Modifier.height(16.dp))
-            }
-
-            if (kpState != APApplication.State.UNKNOWN_STATE && mountImplement != "None" && !hideMount.value) {
-                InfoCardItem(stringResource(R.string.home_mount_implement), mountImplement)
-                Spacer(Modifier.height(16.dp))
-            }
-
-            InfoCardItem(stringResource(R.string.home_selinux_status), getSELinuxStatus())
-        }
-    }
-}
-
-@Composable
-fun SignInfoCard(kpState: APApplication.State, apState: APApplication.State) {
-    val hideSuPath = remember { mutableStateOf(APApplication.sharedPreferences.getBoolean("hide_su_path", false)) }
-    val hideKpatchVersion = remember { mutableStateOf(APApplication.sharedPreferences.getBoolean("hide_kpatch_version", false)) }
-    val hideFingerprint = remember { mutableStateOf(APApplication.sharedPreferences.getBoolean("hide_fingerprint", false)) }
-    val hideZygisk = remember { mutableStateOf(APApplication.sharedPreferences.getBoolean("hide_zygisk", false)) }
-    val hideMount = remember { mutableStateOf(APApplication.sharedPreferences.getBoolean("hide_mount", false)) }
-
-    var zygiskImplement by remember { mutableStateOf("None") }
-    var mountImplement by remember { mutableStateOf("None") }
-    LaunchedEffect(Unit) {
-        withContext(kotlinx.coroutines.Dispatchers.IO) {
-            try {
-                zygiskImplement = me.bmax.apatch.util.getZygiskImplement()
-                mountImplement = me.bmax.apatch.util.getMountImplement()
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-    }
-
-    Card(
-        shape = RoundedCornerShape(20.dp),
-        colors = CardDefaults.cardColors(containerColor = if (BackgroundConfig.isCustomBackgroundEnabled) {
-            MaterialTheme.colorScheme.surface
-        } else {
-            MaterialTheme.colorScheme.surfaceColorAtElevation(1.dp)
-        })
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 24.dp, top = 24.dp, end = 24.dp, bottom = 16.dp)
-        ) {
-            val contents = StringBuilder()
             val uname = Os.uname()
 
             @Composable
             fun InfoCardItem(icon: ImageVector, label: String, content: String) {
-                contents.appendLine(label).appendLine(content).appendLine()
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.Top
-                ) {
-                    Icon(
-                        imageVector = icon,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .padding(top = 2.dp)
-                            .size(20.dp),
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                    Spacer(Modifier.width(12.dp))
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(text = label, style = MaterialTheme.typography.bodyLarge)
-                        Text(text = content, style = MaterialTheme.typography.bodyMedium)
+                if (showIcons) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.Top
+                    ) {
+                        Icon(
+                            imageVector = icon,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .padding(top = 2.dp)
+                                .size(20.dp),
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Spacer(Modifier.width(12.dp))
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(text = label, style = MaterialTheme.typography.bodyLarge)
+                            Text(text = content, style = MaterialTheme.typography.bodyMedium)
+                        }
                     }
+                } else {
+                    Text(text = label, style = MaterialTheme.typography.bodyLarge)
+                    Text(text = content, style = MaterialTheme.typography.bodyMedium)
                 }
             }
 
             if (kpState != APApplication.State.UNKNOWN_STATE && !hideKpatchVersion.value) {
-                InfoCardItem(
-                    Icons.Outlined.Extension,
-                    stringResource(R.string.home_kpatch_version),
-                    Version.installedKPVString()
-                )
+                InfoCardItem(Icons.Outlined.Extension, stringResource(R.string.home_kpatch_version), Version.installedKPVString())
                 Spacer(Modifier.height(16.dp))
             }
 
             if (kpState != APApplication.State.UNKNOWN_STATE && !hideSuPath.value) {
-                InfoCardItem(
-                    Icons.Outlined.Code,
-                    stringResource(R.string.home_su_path),
-                    Natives.suPath()
-                )
+                InfoCardItem(Icons.Outlined.Code, stringResource(R.string.home_su_path), Natives.suPath())
                 Spacer(Modifier.height(16.dp))
             }
 
             if (apState != APApplication.State.UNKNOWN_STATE && apState != APApplication.State.ANDROIDPATCH_NOT_INSTALLED) {
-                InfoCardItem(
-                    Icons.Outlined.Android,
-                    stringResource(R.string.home_apatch_version),
-                    managerVersion.second.toString()
-                )
+                InfoCardItem(Icons.Outlined.Android, stringResource(R.string.home_apatch_version), managerVersion.second.toString())
                 Spacer(Modifier.height(16.dp))
             }
 

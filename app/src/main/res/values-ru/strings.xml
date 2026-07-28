@@ -553,6 +553,8 @@
     <string name="settings_grid_working_card_hide_mode_summary">Скрыть текст «Full» или «Half» на рабочей карточке</string>
     <string name="settings_list_card_hide_status_badge">Использовать классический эмодзи</string>
     <string name="settings_list_card_hide_status_badge_summary">Статусный бейдж на главной странице превращается в классический эмодзи</string>
+    <string name="settings_list_info_show_icons">Иконки элементов информации</string>
+    <string name="settings_list_info_show_icons_summary">Показывать иконку рядом с каждым элементом в карточке информации</string>
     <string name="settings_custom_badge_text">Пользовательский текст бейджа</string>
     <string name="settings_custom_badge_text_summary">Изменить текстовое отображение бейджа, только для развлечения</string>
     <string name="settings_custom_background_dual_dim">Включить двойную дневную/ночную затемненность</string>

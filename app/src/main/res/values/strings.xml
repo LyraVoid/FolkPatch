@@ -1046,6 +1046,8 @@ Please ensure the app is completely closed and reopened for the commands to exec
 
     <string name="settings_list_card_hide_status_badge">Use Classic Emoji</string>
     <string name="settings_list_card_hide_status_badge_summary">Turn the home status badge into classic emoji</string>
+    <string name="settings_list_info_show_icons">Info Item Icons</string>
+    <string name="settings_list_info_show_icons_summary">Show an icon next to each item in the info card</string>
     <string name="settings_custom_badge_text">Custom Badge Text</string>
     <string name="settings_custom_badge_text_summary">Modify the text display of the badge, just for fun</string>
     <string name="settings_custom_badge_text_full_half">Full/Half (Default)</string>

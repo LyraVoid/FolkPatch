@@ -889,6 +889,8 @@ Por ejemplo, los KPM que previenen la modificación de particiones solo pueden u
 
     <string name="settings_list_card_hide_status_badge">Usar Emojis Clásicos</string>
     <string name="settings_list_card_hide_status_badge_summary">La insignia de estado en la página de inicio se convierte en emoji clásico</string>
+    <string name="settings_list_info_show_icons">Iconos de elementos de información</string>
+    <string name="settings_list_info_show_icons_summary">Mostrar un icono junto a cada elemento en la tarjeta de información</string>
     <string name="settings_custom_badge_text">Personalizar Texto de Insignia</string>
     <string name="settings_custom_badge_text_summary">Modificar la visualización del texto de la insignia, solo por diversión</string>
 

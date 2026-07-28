@@ -562,6 +562,8 @@ Dưới đây là một số nguyên nhân có thể gây ra thất bại xác t
     <string name="settings_grid_working_card_hide_mode_summary">Ẩn văn bản "Full" hoặc "Half" trên thẻ làm việc</string>
     <string name="settings_list_card_hide_status_badge">Sử Dụng Emoji Cổ Điển</string>
     <string name="settings_list_card_hide_status_badge_summary">Huy hiệu trạng thái trên trang chủ trở thành emoji cổ điển</string>
+    <string name="settings_list_info_show_icons">Biểu tượng mục thông tin</string>
+    <string name="settings_list_info_show_icons_summary">Hiển thị biểu tượng bên cạnh mỗi mục trong thẻ thông tin</string>
     <string name="settings_custom_badge_text">Tùy Chỉnh Văn Bản Huy Hiệu</string>
     <string name="settings_custom_badge_text_summary">Thay đổi hiển thị văn bản của huy hiệu, chỉ để giải trí</string>
     <string name="settings_custom_background_dual_dim">Bật chế độ độ tối ngày/đêm kép</string>

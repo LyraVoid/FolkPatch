@@ -563,6 +563,8 @@ Berikut adalah beberapa kemungkinan penyebab kegagalan autentikasi—silakan cek
     <string name="settings_grid_working_card_hide_mode_summary">Sembunyikan teks "Full" atau "Half" pada kartu kerja</string>
     <string name="settings_list_card_hide_status_badge">Gunakan Emoji Klasik</string>
     <string name="settings_list_card_hide_status_badge_summary">Lencana status di halaman utama berubah menjadi emoji klasik</string>
+    <string name="settings_list_info_show_icons">Ikon Item Info</string>
+    <string name="settings_list_info_show_icons_summary">Tampilkan ikon di samping setiap item di kartu info</string>
     <string name="settings_custom_badge_text">Teks Lencana Kustom</string>
     <string name="settings_custom_badge_text_summary">Ubah tampilan teks lencana, hanya untuk hiburan</string>
     <string name="settings_custom_background_dual_dim">Aktifkan redup siang/malam ganda</string>

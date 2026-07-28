@@ -892,6 +892,8 @@ Komutların çalışması için uygulamanın tamamen kapatılıp yeniden açıld
 
     <string name="settings_list_card_hide_status_badge">Klasik Emoji Kullan</string>
     <string name="settings_list_card_hide_status_badge_summary">Ana sayfa durum rozetini klasik emojiye dönüştür</string>
+    <string name="settings_list_info_show_icons">Bilgi Öğesi Simgeleri</string>
+    <string name="settings_list_info_show_icons_summary">Bilgi kartındaki her öğenin yanında bir simge göster</string>
     <string name="settings_custom_badge_text">Özel Rozet Metni</string>
     <string name="settings_custom_badge_text_summary">Rozetin metin gösterimini değiştir, sadece eğlence amaçlı</string>
 

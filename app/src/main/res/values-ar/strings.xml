@@ -896,6 +896,8 @@
 
     <string name="settings_list_card_hide_status_badge">استخدم الإيموجي الكلاسيكي</string>
     <string name="settings_list_card_hide_status_badge_summary">شارة الحالة في الصفحة الرئيسية تتحول إلى إيموجي كلاسيكي</string>
+    <string name="settings_list_info_show_icons">أيقونات عناصر المعلومات</string>
+    <string name="settings_list_info_show_icons_summary">عرض أيقونة بجانب كل عنصر في بطاقة المعلومات</string>
     <string name="settings_custom_badge_text">نص الشارة المخصص</string>
     <string name="settings_custom_badge_text_summary">تعديل عرض نص الشارة، للمتعة فقط</string>
 

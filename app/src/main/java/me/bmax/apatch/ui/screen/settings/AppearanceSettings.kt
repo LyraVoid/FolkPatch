@@ -486,6 +486,8 @@ fun AppearanceSettingsContent(
     // Focus布局样式（FocusUI），该样式下4个卡片支持独立壁纸
     val isFocusStyle = currentStyle == "focus"
     val isDashboardStyle = currentStyle == "dashboard_ui"
+    // 默认ListUI布局（对应HomeScreen的else分支）
+    val isDefaultStyle = currentStyle !in listOf("kernelsu", "focus", "circle", "dashboard_ui", "stats")
 
     val badgeTextModes = listOf(
         stringResource(R.string.settings_custom_badge_text_full_half),
@@ -1104,6 +1106,22 @@ fun AppearanceSettingsContent(
                         }
                     }
                 }
+            }
+
+            item(key = "appearance_list_info_icons", visible = isDefaultStyle) {
+                var showListInfoIcons by remember { mutableStateOf(prefs.getBoolean("list_info_show_icons", false)) }
+                ToggleSettingCard(
+                    flat = flat,
+                    icon = Icons.Filled.ViewList,
+                    title = stringResource(id = R.string.settings_list_info_show_icons),
+                    description = stringResource(id = R.string.settings_list_info_show_icons_summary),
+                    checked = showListInfoIcons,
+                    onCheckedChange = {
+                        showListInfoIcons = it
+                        prefs.edit().putBoolean("list_info_show_icons", it).apply()
+                        refreshTheme.value = true
+                    },
+                )
             }
 
             item(key = "appearance_advanced_title") {
@@ -2578,7 +2596,6 @@ private fun homeLayoutStyleToString(style: String): Int {
     return when (style) {
         "kernelsu" -> R.string.settings_home_layout_grid
         "focus" -> R.string.settings_home_layout_focus
-        "sign" -> R.string.settings_home_layout_sign
         "circle" -> R.string.settings_home_layout_circle
         "dashboard_ui" -> R.string.settings_home_layout_dashboard_pro
         "stats" -> R.string.settings_home_layout_stats
@@ -2696,21 +2713,6 @@ fun HomeLayoutChooseDialog(showDialog: MutableState<Boolean>, onLayoutSelected: 
                             modifier = Modifier.clickable {
                                 prefs.edit().putString("home_layout_style", "focus").apply()
                                 onLayoutSelected("focus")
-                                showDialog.value = false
-                            }
-                        )
-
-                        ListItem(
-                            headlineContent = { Text(stringResource(R.string.settings_home_layout_sign)) },
-                            leadingContent = {
-                                RadioButton(
-                                    selected = currentStyle == "sign",
-                                    onClick = null
-                                )
-                            },
-                            modifier = Modifier.clickable {
-                                prefs.edit().putString("home_layout_style", "sign").apply()
-                                onLayoutSelected("sign")
                                 showDialog.value = false
                             }
                         )

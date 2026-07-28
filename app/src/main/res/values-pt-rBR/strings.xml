@@ -885,6 +885,8 @@ Por favor, certifique-se de fechar completamente o app e reabri-lo para que os c
 
     <string name="settings_list_card_hide_status_badge">Usar Emoji Clássico</string>
     <string name="settings_list_card_hide_status_badge_summary">O emblema de status na página inicial se transforma em emoji clássico</string>
+    <string name="settings_list_info_show_icons">Ícones dos itens de informação</string>
+    <string name="settings_list_info_show_icons_summary">Mostrar um ícone ao lado de cada item no cartão de informações</string>
     <string name="settings_custom_badge_text">Personalizar Texto do Emblema</string>
     <string name="settings_custom_badge_text_summary">Modificar a exibição de texto do emblema, apenas por diversão</string>
 

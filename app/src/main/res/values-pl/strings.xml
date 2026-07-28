@@ -492,6 +492,8 @@
     <string name="settings_grid_working_card_hide_mode_summary">Ukryj tekst \"W pełni\" lub \"Częściowo\" na karcie roboczej</string>
     <string name="settings_list_card_hide_status_badge">Użyj Klasycznego Emoji</string>
     <string name="settings_list_card_hide_status_badge_summary">Odznaka stanu na stronie głównej zmienia się w klasyczny emoji</string>
+    <string name="settings_list_info_show_icons">Ikony elementów info</string>
+    <string name="settings_list_info_show_icons_summary">Pokaż ikonę obok każdego elementu na karcie informacyjnej</string>
     <string name="settings_custom_badge_text">Niestandardowy tekst odznaki</string>
     <string name="settings_custom_badge_text_summary">Zmodyfikuj wyświetlanie tekstu odznaki, tylko dla zabawy</string>
     <string name="settings_custom_background_dual_dim">Włącz podwójne przyciemnienie dzienne/nocne</string>

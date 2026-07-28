@@ -79,6 +79,7 @@ object SettingsRegistry {
             add(SettingEntry("appearance_floating_swipe_hide", R.string.settings_floating_swipe_hide, R.string.settings_floating_swipe_hide_summary, SettingCategory.APPEARANCE))
             add(SettingEntry("appearance_list_card_badge", R.string.settings_list_card_hide_status_badge, R.string.settings_list_card_hide_status_badge_summary, SettingCategory.APPEARANCE))
             add(SettingEntry("appearance_custom_badge_text", R.string.settings_custom_badge_text, category = SettingCategory.APPEARANCE))
+            add(SettingEntry("appearance_list_info_icons", R.string.settings_list_info_show_icons, R.string.settings_list_info_show_icons_summary, SettingCategory.APPEARANCE))
             add(SettingEntry("appearance_advanced_title", R.string.settings_advanced_title_style, R.string.settings_advanced_title_style_summary, SettingCategory.APPEARANCE))
             add(SettingEntry("appearance_custom_background", R.string.settings_custom_background, R.string.settings_custom_background_summary, SettingCategory.APPEARANCE))
             add(SettingEntry("appearance_video_background", R.string.settings_video_background, R.string.settings_video_background_summary, SettingCategory.APPEARANCE))

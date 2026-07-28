@@ -566,6 +566,8 @@
     <string name="settings_grid_working_card_hide_mode_summary">隱藏工作卡片上的「Full」或「Half」文字</string>
     <string name="settings_list_card_hide_status_badge">使用經典表情</string>
     <string name="settings_list_card_hide_status_badge_summary">首頁的狀態徽章替換為經典表情</string>
+    <string name="settings_list_info_show_icons">資訊區圖標</string>
+    <string name="settings_list_info_show_icons_summary">在資訊卡片中為每個資訊項顯示前置圖標</string>
     <string name="settings_custom_badge_text">自選角標文字</string>
     <string name="settings_custom_badge_text_summary">修改角標的文字顯示，僅供娛樂</string>
     <string name="settings_custom_background_dual_dim">啟用日夜雙切模式</string>

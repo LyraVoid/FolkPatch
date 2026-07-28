@@ -560,6 +560,8 @@
     <string name="settings_grid_working_card_hide_mode_summary">隐仙术卡片上"Full"或"Half"文字</string>
     <string name="settings_list_card_hide_status_badge">使用经典表情</string>
     <string name="settings_list_card_hide_status_badge_summary">首页之仙域印记即刻变身经典表情</string>
+    <string name="settings_list_info_show_icons">仙讯项仙符</string>
+    <string name="settings_list_info_show_icons_summary">在仙讯道牌中为每项展示前置仙符</string>
     <string name="settings_custom_badge_text">自选仙域印记文字</string>
     <string name="settings_custom_badge_text_summary">修改仙域印记之文字显示，仅供道友娱乐</string>
     <string name="settings_custom_background_dual_dim">启昼夜双修仙法</string>
