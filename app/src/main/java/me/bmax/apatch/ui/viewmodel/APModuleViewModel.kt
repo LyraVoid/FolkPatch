@@ -16,6 +16,8 @@ import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withPermit
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.apApp
+import me.bmax.apatch.ui.screen.BannerApiService
+import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.util.getRootShell
 import me.bmax.apatch.util.listModules
 import me.bmax.apatch.util.toggleModule
@@ -201,10 +203,25 @@ class APModuleViewModel : ViewModel() {
                             obj.optString("name").contains("LSPosed", ignoreCase = true)
                         )
                     }.toList()
+
+                val ids = modules.map { it.id }
+
+                // Preload cached API banners before updating modules state
+                // so produceState initialValue can find data in memory cache
+                if (BackgroundConfig.isBannerApiModeEnabled && BackgroundConfig.bannerApiSource.isNotBlank()) {
+                    ids.forEach { id ->
+                        if (id !in bannerCache) {
+                            val cached = BannerApiService.loadSync(apApp, id, BackgroundConfig.bannerApiSource)
+                            if (cached != null) {
+                                bannerCache[id] = BannerInfo(cached, null)
+                            }
+                        }
+                    }
+                }
+
                 isNeedRefresh = false
 
                 // Non-critical: run in background without blocking module display
-                val ids = modules.map { it.id }
                 pruneBannerCache(ids.toSet())
                 pruneModuleSizeCache(ids.toSet())
                 viewModelScope.launch(Dispatchers.IO) { prefetchModuleSizes(ids) }

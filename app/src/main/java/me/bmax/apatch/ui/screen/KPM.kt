@@ -1138,8 +1138,12 @@ private fun KPModuleItem(
         }
     }
 
+    val cachedBanner = if (BackgroundConfig.isBannerApiModeEnabled && BackgroundConfig.getEffectiveBannerApiSource().isNotBlank()) {
+        BannerApiService.loadSync(context, "kpm_${module.name}", BackgroundConfig.getEffectiveBannerApiSource())
+    } else null
+
     val bannerData by produceState<ByteArray?>(
-        initialValue = null,
+        initialValue = cachedBanner,
         module.name,
         BackgroundConfig.isBannerEnabled,
         BackgroundConfig.isFolkBannerEnabled,

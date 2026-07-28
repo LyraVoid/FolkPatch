@@ -240,6 +240,28 @@ object BannerApiService {
     }
 
     /**
+     * 同步读取缓存横幅（非挂起，用于 produceState initialValue）
+     */
+    fun loadSync(context: Context, moduleId: String, source: String): ByteArray? {
+        if (source.isBlank()) return null
+        try {
+            val trimmedSource = source.trim()
+            val sourceHash = getSourceHash(trimmedSource)
+            val file = getCachedBannerFile(context, moduleId, sourceHash)
+            if (file.exists()) {
+                if (System.currentTimeMillis() - file.lastModified() > CACHE_TTL_MS) {
+                    file.delete()
+                    return null
+                }
+                return file.readBytes()
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to load cached banner synchronously: ${e.message}", e)
+        }
+        return null
+    }
+
+    /**
      * 缓存横幅图片
      */
     private suspend fun cacheBanner(context: Context, moduleId: String, sourceHash: String, data: ByteArray) = withContext(Dispatchers.IO) {
