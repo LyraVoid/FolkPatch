@@ -189,6 +189,7 @@
     <string name="kpm_unload">废符出体</string>
     <string name="kpm_control">驭符辖制</string>
     <string name="kpm_apm_empty">未引仙符入道</string>
+    <string name="kpm_custom_order">切换自定义仙符顺序</string>
     <string name="kpm_version">符篆篇次</string>
     <string name="kpm_license">仙门允准</string>
     <string name="kpm_author">符祖</string>

@@ -235,6 +235,7 @@
     <string name="kpm_unload">إلغاء التحميل</string>
     <string name="kpm_control">تحكم</string>
     <string name="kpm_apm_empty">لا توجد وحدات محملة</string>
+    <string name="kpm_custom_order">تبديل ترتيب الوحدات المخصص</string>
     <string name="kpm_version">الإصدار</string>
     <string name="kpm_license">الترخيص</string>
     <string name="kpm_author">المؤلف</string>

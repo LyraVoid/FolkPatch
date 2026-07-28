@@ -187,6 +187,7 @@
     <string name="kpm_unload">アンロード</string>
     <string name="kpm_control">コントロール</string>
     <string name="kpm_apm_empty">モジュールは読み込まれていません</string>
+    <string name="kpm_custom_order">カスタムモジュール順序を切り替え</string>
     <string name="kpm_version">バージョン</string>
     <string name="kpm_license">ライセンス</string>
     <string name="kpm_author">作者</string>

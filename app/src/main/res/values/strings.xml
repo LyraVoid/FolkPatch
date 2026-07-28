@@ -214,7 +214,8 @@
     <string name="kpm_unload">Unload</string>
     <string name="kpm_control">Control</string>
     <string name="kpm_apm_empty">No module loaded</string>
-        <string name="kpm_load_failed">Failed to load kernel modules</string>
+    <string name="kpm_custom_order">Toggle custom module order</string>
+    <string name="kpm_load_failed">Failed to load kernel modules</string>
     <string name="kpm_version">Version</string>
     <string name="kpm_license">License</string>
     <string name="kpm_author">Author</string>

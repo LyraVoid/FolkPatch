@@ -197,6 +197,7 @@
     <string name="kpm_unload">Выгрузить</string>
     <string name="kpm_control">Управление</string>
     <string name="kpm_apm_empty">Нет загруженных модулей</string>
+    <string name="kpm_custom_order">Переключить пользовательский порядок модулей</string>
     <string name="kpm_version">Версия</string>
     <string name="kpm_license">Лицензия</string>
     <string name="kpm_author">Автор</string>

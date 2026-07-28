@@ -12,11 +12,14 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,6 +31,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.layout.size
@@ -46,6 +50,7 @@ import androidx.compose.material.icons.outlined.ErrorOutline
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.automirrored.filled.Sort
 import androidx.compose.material.icons.outlined.Code
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Settings
@@ -74,8 +79,12 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -280,8 +289,14 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
         return true
     }
 
+    var showOrderDialog by remember { mutableStateOf(false) }
+    var orderedModules by remember { mutableStateOf(viewModel.moduleList) }
+
     Scaffold(topBar = {
-        TopBar(navigator, searchQuery) { searchQuery = it }
+        TopBar(navigator, searchQuery, onCustomOrderClick = {
+            orderedModules = viewModel.moduleList
+            showOrderDialog = true
+        }) { searchQuery = it }
     }, floatingActionButton = run {
         {
             val scope = rememberCoroutineScope()
@@ -500,6 +515,91 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
                 }
             }
         }
+    }
+
+    if (showOrderDialog) {
+        val reorderThreshold = with(LocalDensity.current) { 40.dp.toPx() }
+        val dragToReorderDescription = stringResource(R.string.apm_drag_to_reorder)
+        AlertDialog(
+            onDismissRequest = { showOrderDialog = false },
+            title = { Text(stringResource(R.string.apm_custom_order)) },
+            text = {
+                LazyColumn(modifier = Modifier.heightIn(max = 480.dp)) {
+                    itemsIndexed(orderedModules, key = { _, module -> module.name }) { _, module ->
+                        var draggedDistance by remember(module.name) { mutableStateOf(0f) }
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .animateItem(
+                                    placementSpec = spring(
+                                        dampingRatio = Spring.DampingRatioMediumBouncy,
+                                        stiffness = Spring.StiffnessMediumLow
+                                    )
+                                ),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = module.name,
+                                modifier = Modifier.weight(1f),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                            Column(
+                                modifier = Modifier
+                                    .padding(start = 12.dp, end = 4.dp)
+                                    .semantics { contentDescription = dragToReorderDescription }
+                                    .pointerInput(module.name) {
+                                        detectDragGestures(
+                                            onDragEnd = { draggedDistance = 0f },
+                                            onDragCancel = { draggedDistance = 0f }
+                                        ) { change, dragAmount ->
+                                            change.consume()
+                                            draggedDistance += dragAmount.y
+                                            val currentIndex = orderedModules.indexOfFirst { it.name == module.name }
+                                            val targetIndex = when {
+                                                draggedDistance > reorderThreshold -> currentIndex + 1
+                                                draggedDistance < -reorderThreshold -> currentIndex - 1
+                                                else -> currentIndex
+                                            }
+                                            if (currentIndex >= 0 && targetIndex in orderedModules.indices && targetIndex != currentIndex) {
+                                                orderedModules = orderedModules.toMutableList().apply {
+                                                    add(targetIndex, removeAt(currentIndex))
+                                                }
+                                                viewModel.setCustomModuleOrder(orderedModules.map { it.name })
+                                                draggedDistance = 0f
+                                            }
+                                        }
+                                    }
+                                    .padding(vertical = 12.dp),
+                                verticalArrangement = Arrangement.spacedBy(4.dp)
+                            ) {
+                                repeat(2) {
+                                    Box(
+                                        modifier = Modifier
+                                            .size(width = 24.dp, height = 3.dp)
+                                            .clip(RoundedCornerShape(2.dp))
+                                            .background(MaterialTheme.colorScheme.onSurfaceVariant)
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = { showOrderDialog = false }) {
+                    Text(stringResource(android.R.string.ok))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = {
+                    viewModel.resetCustomModuleOrder()
+                    orderedModules = viewModel.moduleList
+                }) {
+                    Text(stringResource(R.string.apm_reset_order))
+                }
+            }
+        )
     }
 }
 
@@ -939,6 +1039,7 @@ private fun KPModuleList(
 private fun TopBar(
     navigator: DestinationsNavigator,
     searchQuery: String,
+    onCustomOrderClick: () -> Unit,
     onSearchQueryChange: (String) -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -1027,6 +1128,13 @@ private fun TopBar(
                         Icon(
                             imageVector = Icons.Filled.Download,
                             contentDescription = "Online KPM"
+                        )
+                    }
+                    // 自定义排序按钮
+                    IconButton(onClick = onCustomOrderClick) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.Sort,
+                            contentDescription = stringResource(R.string.kpm_custom_order)
                         )
                     }
                 }

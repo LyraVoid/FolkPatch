@@ -214,6 +214,7 @@
     <string name="kpm_unload">Kaldır</string>
     <string name="kpm_control">Kontrol</string>
     <string name="kpm_apm_empty">Yüklü modül yok</string>
+    <string name="kpm_custom_order">Özel modül sırasını değiştir</string>
     <string name="kpm_version">Sürüm</string>
     <string name="kpm_license">Lisans</string>
     <string name="kpm_author">Yazar</string>

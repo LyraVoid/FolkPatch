@@ -191,6 +191,7 @@
     <string name="kpm_unload">Gỡ tải</string>
     <string name="kpm_control">Kiểm soát</string>
     <string name="kpm_apm_empty">Chưa tải module</string>
+    <string name="kpm_custom_order">Chuyển đổi thứ tự module tùy chỉnh</string>
     <string name="kpm_version">Phiên bản</string>
     <string name="kpm_license">Giấy phép</string>
     <string name="kpm_author">Tác giả</string>

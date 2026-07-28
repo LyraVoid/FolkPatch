@@ -207,6 +207,7 @@
     <string name="kpm_unload">拆除红石</string>
     <string name="kpm_control">红石信号控制台</string>
     <string name="kpm_apm_empty">红石组件栏空空如也</string>
+    <string name="kpm_custom_order">切换自定义红石组件顺序</string>
     <string name="kpm_version">版本</string>
     <string name="kpm_license">许可协议</string>
     <string name="kpm_author">制作者</string>

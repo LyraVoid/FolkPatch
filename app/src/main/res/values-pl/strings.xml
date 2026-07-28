@@ -172,6 +172,7 @@
     <string name="kpm_unload">Odładuj</string>
     <string name="kpm_control">Sterowanie</string>
     <string name="kpm_apm_empty">Brak załadowanych modułów</string>
+    <string name="kpm_custom_order">Przełącz niestandardową kolejność modułów</string>
     <string name="kpm_version">Wersja</string>
     <string name="kpm_license">Licencja</string>
     <string name="kpm_author">Autor</string>

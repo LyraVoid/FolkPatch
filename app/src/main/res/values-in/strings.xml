@@ -197,6 +197,7 @@
     <string name="kpm_unload">Lepas</string>
     <string name="kpm_control">Kontrol</string>
     <string name="kpm_apm_empty">Tidak ada modul yang dimuat</string>
+    <string name="kpm_custom_order">Alihkan urutan modul kustom</string>
     <string name="kpm_version">Versi</string>
     <string name="kpm_license">Lisensi</string>
     <string name="kpm_author">Penulis</string>

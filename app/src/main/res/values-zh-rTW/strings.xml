@@ -191,6 +191,7 @@
     <string name="kpm_unload">解除安裝</string>
     <string name="kpm_control">控制</string>
     <string name="kpm_apm_empty">尚未安裝模組</string>
+    <string name="kpm_custom_order">切換自訂模組順序</string>
     <string name="kpm_version">版本</string>
     <string name="kpm_license">授權</string>
     <string name="kpm_author">作者</string>

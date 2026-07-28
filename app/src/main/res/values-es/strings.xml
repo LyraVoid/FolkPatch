@@ -235,6 +235,7 @@
     <string name="kpm_unload">Descargar</string>
     <string name="kpm_control">Control</string>
     <string name="kpm_apm_empty">Ningún módulo cargado</string>
+    <string name="kpm_custom_order">Alternar orden personalizado de módulos</string>
     <string name="kpm_version">Versión</string>
     <string name="kpm_license">Licencia</string>
     <string name="kpm_author">Autor</string>

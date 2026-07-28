@@ -212,6 +212,7 @@
     <string name="kpm_unload">언로드</string>
     <string name="kpm_control">제어</string>
     <string name="kpm_apm_empty">로드된 모듈 없음</string>
+    <string name="kpm_custom_order">사용자 지정 모듈 순서 전환</string>
     <string name="kpm_version">버전</string>
     <string name="kpm_license">라이선스</string>
     <string name="kpm_author">개발자</string>

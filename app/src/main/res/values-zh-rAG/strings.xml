@@ -206,6 +206,7 @@
     <string name="kpm_unload">卸掉喵！</string>
     <string name="kpm_control">控制喵！</string>
     <string name="kpm_apm_empty">没加载模块喵！</string>
+    <string name="kpm_custom_order">切换自定义模块顺序喵</string>
     <string name="kpm_version">版本哒</string>
     <string name="kpm_license">许可哒</string>
     <string name="kpm_author">作者哒</string>
