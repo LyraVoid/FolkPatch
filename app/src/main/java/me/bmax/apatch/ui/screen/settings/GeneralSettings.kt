@@ -169,6 +169,12 @@ fun GeneralSettingsContent(
     val currentType = remember { prefs.getString("folkx_animation_type", "linear") }
     val currentSpeed = remember { prefs.getFloat("folkx_animation_speed", 1.0f) }
     var predictiveBackEnabled by remember { mutableStateOf(prefs.getBoolean("predictive_back_enabled", true)) }
+
+    val newAppProfileEnabledTitle = stringResource(id = R.string.settings_new_app_profile_enabled)
+    val newAppProfileEnabledSummary = stringResource(id = R.string.settings_new_app_profile_enabled_summary)
+    var newAppProfileEnabled by remember {
+        mutableStateOf(prefs.getBoolean(APApplication.PREF_NEW_APP_PROFILE_ENABLED, false))
+    }
     var newAppProfileMode by remember {
         mutableIntStateOf(prefs.getInt(APApplication.PREF_AUTO_EXCLUDE_NEW_APPS, 0))
     }
@@ -370,7 +376,30 @@ fun GeneralSettingsContent(
             )
         }
 
-        item(key = "general_new_app_profile", visible = kPatchReady) {
+        item(key = "general_new_app_profile_enabled", visible = kPatchReady) {
+            ToggleSettingCard(
+                flat = flat,
+                icon = Icons.Filled.Block,
+                title = newAppProfileEnabledTitle,
+                description = newAppProfileEnabledSummary,
+                checked = newAppProfileEnabled,
+                onCheckedChange = {
+                    newAppProfileEnabled = it
+                    if (it) {
+                        prefs.edit { putBoolean(APApplication.PREF_NEW_APP_PROFILE_ENABLED, true) }
+                    } else {
+                        runCatching { Natives.setNewAppProfileMode(0) }
+                        newAppProfileMode = 0
+                        prefs.edit {
+                            putBoolean(APApplication.PREF_NEW_APP_PROFILE_ENABLED, false)
+                            putInt(APApplication.PREF_AUTO_EXCLUDE_NEW_APPS, 0)
+                        }
+                    }
+                }
+            )
+        }
+
+        item(key = "general_new_app_profile", visible = kPatchReady && newAppProfileEnabled) {
             ExpressiveCard(flat = flat, onClick = { showNewAppProfileModeDialog.value = true }) {
                 Row(
                     modifier = Modifier.fillMaxWidth().padding(16.dp),

@@ -473,6 +473,8 @@
     <string name="dpi_confirm_message">將應用程式 DPI 從 %1$s 變更為 %2$s？</string>
     <string name="settings_magic_mount">Folk Mount API</string>
     <string name="settings_magic_mount_summary">啟用內建的模組掛載系統</string>
+    <string name="settings_new_app_profile_enabled">新軟體預設模式</string>
+    <string name="settings_new_app_profile_enabled_summary">開啟後，新安裝的軟體會根據下方選擇的模式自動配置</string>
     <string name="settings_new_app_profile_mode">新軟體預設模式</string>
     <string name="settings_new_app_profile_normal">一般</string>
     <string name="settings_new_app_profile_root">超級使用者</string>

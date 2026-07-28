@@ -483,6 +483,8 @@
     <string name="alt_icon_summary">استخدم أيقونة المشغل البديلة</string>
     <string name="settings_magic_mount">Folk Mount API</string>
     <string name="settings_magic_mount_summary">تفعيل نظام تركيب الوحدات المدمج</string>
+    <string name="settings_new_app_profile_enabled">الوضع الافتراضي للتطبيقات الجديدة</string>
+    <string name="settings_new_app_profile_enabled_summary">تكوين الملف التعريفي الافتراضي تلقائيًا للتطبيقات المثبتة حديثًا</string>
     <string name="settings_new_app_profile_mode">الوضع الافتراضي للتطبيقات الجديدة</string>
     <string name="settings_new_app_profile_normal">بدون صلاحية</string>
     <string name="settings_new_app_profile_root">صلاحية الجذر</string>

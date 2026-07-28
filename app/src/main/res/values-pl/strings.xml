@@ -418,6 +418,8 @@
     <string name="alt_icon_summary">Użyj alternatywnej ikony programu uruchamiającego</string>
     <string name="settings_magic_mount">API montowania Folk</string>
     <string name="settings_magic_mount_summary">Włącz wbudowany system montowania modułów</string>
+    <string name="settings_new_app_profile_enabled">Domyślny tryb dla nowych aplikacji</string>
+    <string name="settings_new_app_profile_enabled_summary">Automatycznie konfiguruj domyślny profil dla nowo zainstalowanych aplikacji</string>
     <string name="settings_new_app_profile_mode">Domyślny tryb dla nowych aplikacji</string>
     <string name="settings_new_app_profile_normal">BEZ ROOTA</string>
     <string name="settings_new_app_profile_root">ROOT</string>

@@ -136,6 +136,7 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
         const val PREF_BLOCK_KERNELPATCH_UPDATE = "block_kernelpatch_update"
         const val PREF_BLOCK_ANDROIDPATCH_UPDATE = "block_androidpatch_update"
         const val PREF_AUTO_EXCLUDE_NEW_APPS = "auto_exclude_new_apps"
+        const val PREF_NEW_APP_PROFILE_ENABLED = "new_app_profile_enabled"
         const val PREF_UTS_SPOOF_ENABLED = "uts_spoof_enabled"
         const val PREF_UTS_SPOOF_RELEASE = "uts_spoof_release"
         const val PREF_UTS_SPOOF_VERSION = "uts_spoof_version"

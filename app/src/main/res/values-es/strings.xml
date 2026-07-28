@@ -482,6 +482,8 @@ Aquí hay algunas posibles razones para el fallo de autenticación—por favor v
     <string name="alt_icon_summary">Usar icono de lanzador alternativo</string>
     <string name="settings_magic_mount">Folk Mount API</string>
     <string name="settings_magic_mount_summary">Activar el sistema de montaje de módulos integrado</string>
+    <string name="settings_new_app_profile_enabled">Modo predeterminado para apps nuevas</string>
+    <string name="settings_new_app_profile_enabled_summary">Configurar automáticamente el perfil predeterminado para apps recién instaladas</string>
     <string name="settings_new_app_profile_mode">Modo predeterminado para nuevas apps</string>
     <string name="settings_new_app_profile_normal">SIN ROOT</string>
     <string name="settings_new_app_profile_root">ROOT</string>

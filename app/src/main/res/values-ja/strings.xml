@@ -425,6 +425,8 @@
     <string name="dpi_confirm_message">アプリのDPIを%1$sから%2$sに変更しますか？</string>
     <string name="settings_magic_mount">Folk Mount API</string>
     <string name="settings_magic_mount_summary">内蔵のモジュールマウントシステムを有効化します。</string>
+    <string name="settings_new_app_profile_enabled">新しいアプリのデフォルトモード</string>
+    <string name="settings_new_app_profile_enabled_summary">新しくインストールされたアプリのデフォルトプロファイルを自動構成する</string>
     <string name="settings_new_app_profile_mode">新しいアプリのデフォルトモード</string>
     <string name="settings_new_app_profile_normal">ROOTなし</string>
     <string name="settings_new_app_profile_root">ROOT</string>

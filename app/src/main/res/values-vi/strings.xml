@@ -474,6 +474,8 @@ Dưới đây là một số nguyên nhân có thể gây ra thất bại xác t
     <string name="dpi_confirm_message">Thay đổi DPI ứng dụng từ %1$s sang %2$s?</string>
     <string name="settings_magic_mount">Folk Mount API</string>
     <string name="settings_magic_mount_summary">Bật hệ thống gắn kết mô-đun tích hợp</string>
+    <string name="settings_new_app_profile_enabled">Chế độ mặc định cho ứng dụng mới</string>
+    <string name="settings_new_app_profile_enabled_summary">Tự động cấu hình hồ sơ mặc định cho các ứng dụng mới cài đặt</string>
     <string name="settings_new_app_profile_mode">Chế độ mặc định cho ứng dụng mới</string>
     <string name="settings_new_app_profile_normal">KHÔNG ROOT</string>
     <string name="settings_new_app_profile_root">ROOT</string>

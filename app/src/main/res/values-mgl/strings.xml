@@ -476,6 +476,8 @@
     <string name="dpi_confirm_message">将应用DPI从%1$s更改为%2$s？</string>
     <string name="settings_magic_mount">Folk Mount API</string>
     <string name="settings_magic_mount_summary">启用内置的魔法阵挂载系统</string>
+    <string name="settings_new_app_profile_enabled">新魔法使默认形态</string>
+    <string name="settings_new_app_profile_enabled_summary">开启后，新魔法使会按默认形态自动配置</string>
     <string name="settings_new_app_profile_mode">新魔法使默认形态</string>
     <string name="settings_new_app_profile_normal">日常形态</string>
     <string name="settings_new_app_profile_root">魔法形态</string>

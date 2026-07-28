@@ -480,6 +480,8 @@
     <string name="alt_icon_summary">Использовать альтернативный значок запуска</string>
     <string name="settings_magic_mount">Folk Mount API</string>
     <string name="settings_magic_mount_summary">Включить встроенную систему монтирования модулей</string>
+    <string name="settings_new_app_profile_enabled">Режим по умолчанию для новых приложений</string>
+    <string name="settings_new_app_profile_enabled_summary">Автоматически настраивать профиль по умолчанию для новых приложений</string>
     <string name="settings_new_app_profile_mode">Режим по умолчанию для новых приложений</string>
     <string name="settings_new_app_profile_normal">БЕЗ ROOT</string>
     <string name="settings_new_app_profile_root">ROOT</string>

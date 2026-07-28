@@ -483,6 +483,8 @@ Here are some possible reasons for authentication failure—please check which o
     <string name="dpi_confirm_message">Change app DPI from %1$s to %2$s?</string>
     <string name="settings_magic_mount">Folk Mount API</string>
     <string name="settings_magic_mount_summary">Enable the built-in module mounting system</string>
+    <string name="settings_new_app_profile_enabled">New App Default Mode</string>
+    <string name="settings_new_app_profile_enabled_summary">Auto-configure default profile for newly installed apps</string>
     <string name="settings_new_app_profile_mode">Default mode for new apps</string>
     <string name="settings_new_app_profile_normal">NO ROOT</string>
     <string name="settings_new_app_profile_root">ROOT</string>
