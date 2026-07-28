@@ -58,13 +58,41 @@ class ThemeDownloader(private val context: Context) {
         .build()
 
     /**
+     * 确保目录存在且可用。
+     * 处理两种 mkdirs 必然失败的情况：
+     * 1. 路径上某一级残留了同名普通文件（包括目标目录本身）——逐级清理后重建；
+     * 2. 存储空间不足——抛出带剩余空间提示的错误，便于用户定位。
+     */
+    @Throws(IOException::class)
+    private fun ensureDirectory(dir: File) {
+        if (dir.isDirectory) return
+        // 向上找到第一个实际存在的路径节点；若它是普通文件，删掉后才能建子目录
+        var existing: File? = dir
+        while (existing != null && !existing.exists()) {
+            existing = existing.parentFile
+        }
+        if (existing != null && !existing.isDirectory) {
+            Log.w(TAG, "Path component is a regular file, deleting: ${existing.absolutePath}")
+            if (!existing.delete()) {
+                throw IOException("Cannot remove file blocking directory: ${existing.absolutePath}")
+            }
+        }
+        if (!dir.mkdirs() && !dir.isDirectory) {
+            val usable = runCatching { context.filesDir.usableSpace }.getOrDefault(-1L)
+            val hint = if (usable in 0 until 10L * 1024 * 1024) {
+                " (storage almost full: ${usable / 1024}KB left)"
+            } else ""
+            throw IOException("Cannot create directory: ${dir.absolutePath}$hint")
+        }
+    }
+
+    /**
      * 获取主题存储目录
      */
     fun getThemesDir(): File {
         val themesDir = File(context.filesDir, THEMES_DIR_NAME)
-        if (!themesDir.exists()) {
-            themesDir.mkdirs()
-        }
+        runCatching { ensureDirectory(themesDir) }
+            .onFailure { Log.w(TAG, "Failed to prepare themes dir", it) }
         return themesDir
     }
 
@@ -75,9 +103,8 @@ class ThemeDownloader(private val context: Context) {
         val safeAuthor = sanitizeFilename(author)
         val safeThemeName = sanitizeFilename(themeName)
         val themeDir = File(getThemesDir(), "$safeAuthor/$safeThemeName")
-        if (!themeDir.exists()) {
-            themeDir.mkdirs()
-        }
+        runCatching { ensureDirectory(themeDir) }
+            .onFailure { Log.w(TAG, "Failed to prepare theme dir", it) }
         return themeDir
     }
 
@@ -306,6 +333,12 @@ class ThemeDownloader(private val context: Context) {
                 Log.w(TAG, "Download attempt ${retryCount + 1} failed: $lastError")
                 retryCount++
 
+                // 任务已被取消：目录可能已被清理，继续重试没有意义
+                if (downloadTasks[taskId]?.isCancelled == true) {
+                    Log.d(TAG, "Download cancelled, stop retrying: ${file.absolutePath}")
+                    return@withContext DownloadFileResult(false, "Download cancelled")
+                }
+
                 if (retryCount < MAX_RETRIES) {
                     // 等待后重试
                     kotlinx.coroutines.delay(RETRY_DELAY_MS)
@@ -329,6 +362,18 @@ class ThemeDownloader(private val context: Context) {
         taskId: String,
         onProgress: (Float) -> Unit
     ): Long {
+        // 兜底确保父目录存在且可用：目录可能被取消/删除操作清理，
+        // 或路径上残留了同名普通文件导致 mkdirs 失败（open failed: ENOENT / ENOTDIR）
+        file.parentFile?.let { ensureDirectory(it) }
+
+        // 目标文件路径被同名目录占用时，清理后才能打开输出流
+        if (file.isDirectory) {
+            Log.w(TAG, "Target file path is a directory, deleting: ${file.absolutePath}")
+            if (!file.deleteRecursively()) {
+                throw IOException("Cannot remove directory blocking file: ${file.absolutePath}")
+            }
+        }
+
         // 已下载字节数（断点续传起点）
         val downloadedBytes = if (file.exists()) file.length() else 0L
 

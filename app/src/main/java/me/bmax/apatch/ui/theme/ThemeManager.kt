@@ -451,7 +451,10 @@ object ThemeManager {
             withContext(Dispatchers.IO) {
             val cacheDir = File(context.cacheDir, "theme_import")
             if (cacheDir.exists()) cacheDir.deleteRecursively()
-            cacheDir.mkdirs()
+            if (!cacheDir.mkdirs() && !cacheDir.isDirectory) {
+                Log.e(TAG, "Cannot create import cache dir: ${cacheDir.absolutePath}")
+                return@withContext false
+            }
 
             try {
                 // 1. Decrypt and Unzip
@@ -480,6 +483,17 @@ object ThemeManager {
                                     // Prevent path traversal
                                     if (!file.canonicalPath.startsWith(cacheDir.canonicalPath)) {
                                         continue
+                                    }
+                                    // 目录型条目：只建目录，不能当文件写
+                                    if (entry!!.isDirectory) {
+                                        file.mkdirs()
+                                        continue
+                                    }
+                                    // 嵌套条目（如 assets/bg.jpg）：先确保父目录存在，否则 ENOENT
+                                    file.parentFile?.let { parent ->
+                                        if (!parent.isDirectory && !parent.mkdirs() && !parent.isDirectory) {
+                                            throw Exception("Cannot create directory for zip entry: ${entry!!.name}")
+                                        }
                                     }
                                     FileOutputStream(file).use { fos ->
                                         zis.copyTo(fos)
@@ -874,6 +888,8 @@ object ThemeManager {
             }
         }
         } catch (e: Exception) {
+            // 外层兜底：不能静默吞异常，否则导入失败无法从日志排查
+            Log.e(TAG, "Import failed (outer): ${e.message ?: e.javaClass.simpleName}", e)
             false
         }
 

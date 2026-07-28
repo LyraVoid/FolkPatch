@@ -102,7 +102,9 @@ object SoundEffectConfig {
 
     fun getSoundEffectDir(context: Context): File {
         val dir = File(context.filesDir, "sound_effects")
-        if (!dir.exists()) {
+        // 同名普通文件占位会导致 mkdirs 静默失败，后续写入报 ENOTDIR，需清理后重建
+        if (!dir.isDirectory) {
+            if (dir.exists()) dir.delete()
             dir.mkdirs()
         }
         return dir
