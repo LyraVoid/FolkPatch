@@ -147,7 +147,7 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
     var showBatchExcludeDialog by remember { mutableStateOf(false) }
     var showAppActionDialog by remember { mutableStateOf(false) }
     var selectedApp by remember { mutableStateOf<SuperUserViewModel.AppInfo?>(null) }
-    var showOptionsSheet by remember { mutableStateOf(false) }
+    var showSuperUserMenu by remember { mutableStateOf(false) }
 
     if (showBatchExcludeDialog) {
         BatchExcludeDialog(
@@ -196,29 +196,6 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
         )
     }
 
-    if (showOptionsSheet) {
-        SuperUserOptionsSheet(
-            onDismiss = { showOptionsSheet = false },
-            onRefresh = {
-                scope.launch { viewModel.fetchAppList() }
-                showOptionsSheet = false
-            },
-            onToggleSystemApps = {
-                viewModel.showSystemApps = !viewModel.showSystemApps
-                showOptionsSheet = false
-            },
-            showSystemApps = viewModel.showSystemApps,
-            onBackup = {
-                backupLauncher.launch("FolkPatch_list_backup.json")
-                showOptionsSheet = false
-            },
-            onRestore = {
-                restoreLauncher.launch(arrayOf("application/json", "*/*"))
-                showOptionsSheet = false
-            },
-        )
-    }
-
     LaunchedEffect(Unit) {
         if (viewModel.appList.isEmpty()) {
             viewModel.fetchAppList()
@@ -248,11 +225,50 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
                     }
                 },
                 dropdownContent = {
-                    IconButton(onClick = { showOptionsSheet = true }) {
-                        Icon(
-                            imageVector = Icons.Filled.MoreVert,
-                            contentDescription = stringResource(id = R.string.settings)
-                        )
+                    Box {
+                        IconButton(onClick = { showSuperUserMenu = !showSuperUserMenu }) {
+                            Icon(
+                                imageVector = Icons.Filled.MoreVert,
+                                contentDescription = stringResource(id = R.string.settings)
+                            )
+                        }
+
+                        WallpaperAwareDropdownMenu(
+                            expanded = showSuperUserMenu,
+                            onDismissRequest = { showSuperUserMenu = false },
+                        ) {
+                            WallpaperAwareDropdownMenuItem(
+                                text = { Text(stringResource(R.string.su_refresh)) },
+                                onClick = {
+                                    showSuperUserMenu = false
+                                    scope.launch { viewModel.fetchAppList() }
+                                },
+                            )
+                            WallpaperAwareDropdownMenuItem(
+                                text = { Text(
+                                    if (viewModel.showSystemApps) stringResource(R.string.su_hide_system_apps)
+                                    else stringResource(R.string.su_show_system_apps)
+                                ) },
+                                onClick = {
+                                    showSuperUserMenu = false
+                                    viewModel.showSystemApps = !viewModel.showSystemApps
+                                },
+                            )
+                            WallpaperAwareDropdownMenuItem(
+                                text = { Text(stringResource(R.string.su_backup_list)) },
+                                onClick = {
+                                    showSuperUserMenu = false
+                                    backupLauncher.launch("FolkPatch_list_backup.json")
+                                },
+                            )
+                            WallpaperAwareDropdownMenuItem(
+                                text = { Text(stringResource(R.string.su_restore_list)) },
+                                onClick = {
+                                    showSuperUserMenu = false
+                                    restoreLauncher.launch(arrayOf("application/json", "*/*"))
+                                },
+                            )
+                        }
                     }
                 },
             )

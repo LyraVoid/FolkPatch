@@ -27,6 +27,11 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenu
 import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenuItem
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.ExposedDropdownMenuAnchorType
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -591,28 +596,28 @@ private fun KpmEditDialog(
                     modifier = Modifier.padding(bottom = 4.dp)
                 )
 
-                Box(modifier = Modifier.fillMaxWidth()) {
+                ExposedDropdownMenuBox(
+                    expanded = showEventDropdown,
+                    onExpandedChange = { showEventDropdown = it }
+                ) {
                     OutlinedTextField(
                         value = eventLabels[selectedEvent] ?: selectedEvent,
                         onValueChange = {},
                         readOnly = true,
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .menuAnchor(type = ExposedDropdownMenuAnchorType.PrimaryNotEditable),
                         trailingIcon = {
-                            IconButton(onClick = { showEventDropdown = true }) {
-                                Icon(
-                                    imageVector = Icons.Filled.KeyboardArrowDown,
-                                    contentDescription = stringResource(R.string.kpm_autoload_edit_kpm)
-                                )
-                            }
+                            ExposedDropdownMenuDefaults.TrailingIcon(expanded = showEventDropdown)
                         },
                         singleLine = true
                     )
-                    WallpaperAwareDropdownMenu(
+                    DropdownMenu(
                         expanded = showEventDropdown,
                         onDismissRequest = { showEventDropdown = false }
                     ) {
                         eventOptions.forEach { option ->
-                            WallpaperAwareDropdownMenuItem(
+                            DropdownMenuItem(
                                 text = { Text(eventLabels[option] ?: option) },
                                 onClick = {
                                     selectedEvent = option

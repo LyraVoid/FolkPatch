@@ -584,8 +584,7 @@ private fun TopBar(
                 )
                 WallpaperAwareDropdownMenu(
                     expanded = showDropdownMoreOptions,
-                    onDismissRequest = { showDropdownMoreOptions = false },
-                    shape = RoundedCornerShape(10.dp)
+                    onDismissRequest = { showDropdownMoreOptions = false }
                 ) {
                     WallpaperAwareDropdownMenuItem(
                         text = { Text(stringResource(R.string.home_more_menu_feedback_or_suggestion)) },

@@ -25,7 +25,7 @@ fun WallpaperAwareDropdownMenu(
     expanded: Boolean,
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
-    shape: CornerBasedShape = RoundedCornerShape(10.dp),
+    shape: CornerBasedShape = RoundedCornerShape(28.dp),
     containerColor: androidx.compose.ui.graphics.Color = androidx.compose.material3.MaterialTheme.colorScheme.surfaceContainer,
     content: @Composable ColumnScope.() -> Unit
 ) {
