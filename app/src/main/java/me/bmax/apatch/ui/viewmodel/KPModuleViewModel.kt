@@ -25,6 +25,9 @@ class KPModuleViewModel : ViewModel() {
     var isRefreshing by mutableStateOf(false)
         private set
 
+    var errorMessage by mutableStateOf<String?>(null)
+        private set
+
     val moduleList by derivedStateOf {
         val comparator = compareBy(Collator.getInstance(Locale.getDefault()), KPModel.KPMInfo::name)
         modules.sortedWith(comparator).also {
@@ -41,6 +44,7 @@ class KPModuleViewModel : ViewModel() {
 
     fun fetchModuleList() {
         viewModelScope.launch(Dispatchers.IO) {
+            errorMessage = null
             isRefreshing = true
             val oldModuleList = modules
             val start = SystemClock.elapsedRealtime()
@@ -77,6 +81,7 @@ class KPModuleViewModel : ViewModel() {
                 isNeedRefresh = false
             }.onFailure { e ->
                 Log.e(TAG, "fetchModuleList: ", e)
+                errorMessage = e.message ?: "Failed to load modules"
                 isRefreshing = false
             }
 

@@ -240,6 +240,7 @@
     <string name="apm_failed_to_enable">無法啟用 \"%s\" 模組</string>
     <string name="apm_failed_to_disable">無法停用 \"%s\" 模組</string>
     <string name="apm_empty">尚未安裝模組</string>
+    <string name="apm_load_failed">載入模組失敗</string>
     <string name="apm_remove">解除安裝</string>
     <string name="apm_install">安裝</string>
     <string name="apm_uninstall_confirm">確定要解除安裝 \"%s\" 模組？</string>

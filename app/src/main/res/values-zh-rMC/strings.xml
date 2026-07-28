@@ -236,6 +236,7 @@
     <string name="apm_failed_to_enable">启用模组炸了: %s</string>
     <string name="apm_failed_to_disable">禁用模组炸了: %s</string>
     <string name="apm_empty">背包空空，一个模组都没有</string>
+    <string name="apm_load_failed">模组加载失败了</string>
     <string name="apm_remove">从背包扔掉</string>
     <string name="apm_undo">捡回来！</string>
     <string name="apm_install">把模组放进背包</string>

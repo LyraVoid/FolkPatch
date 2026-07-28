@@ -246,6 +246,7 @@
     <string name="apm_failed_to_enable">Не удалось включить модуль: %s</string>
     <string name="apm_failed_to_disable">Не удалось отключить модуль: %s</string>
     <string name="apm_empty">Нет установленных модулей</string>
+    <string name="apm_load_failed">Не удалось загрузить модули</string>
     <string name="apm_remove">Удалить</string>
     <string name="apm_undo">Отменить</string>
     <string name="apm_install">Установить</string>

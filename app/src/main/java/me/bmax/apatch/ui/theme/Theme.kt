@@ -10,6 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.background
@@ -128,6 +129,25 @@ fun APatchTheme(
     var colorGenerationMode by remember { mutableStateOf(prefs.getString("color_generation_mode", "classic")) }
     var colorStandard by remember { mutableStateOf(prefs.getString("color_standard", "MD3_2021")) }
     var colorStyle by remember { mutableStateOf(prefs.getString("color_style", "TONAL_SPOT")) }
+
+    DisposableEffect(prefs) {
+        val listener = android.content.SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+            when (key) {
+                "night_mode_follow_sys" -> darkThemeFollowSys = prefs.getBoolean(key, false)
+                "night_mode_enabled" -> nightModeEnabled = prefs.getBoolean(key, false)
+                "use_system_color_theme" -> dynamicColor = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) prefs.getBoolean(key, false) else false
+                "custom_color" -> customColorScheme = prefs.getString(key, "indigo")
+                "amoled_theme" -> amoledTheme = prefs.getBoolean(key, false)
+                "color_generation_mode" -> colorGenerationMode = prefs.getString(key, "classic")
+                "color_standard" -> colorStandard = prefs.getString(key, "MD3_2021")
+                "color_style" -> colorStyle = prefs.getString(key, "TONAL_SPOT")
+            }
+        }
+        prefs.registerOnSharedPreferenceChangeListener(listener)
+        onDispose {
+            prefs.unregisterOnSharedPreferenceChangeListener(listener)
+        }
+    }
 
     val refreshThemeObserver by refreshTheme.observeAsState(false)
     LaunchedEffect(refreshThemeObserver) {

@@ -235,6 +235,7 @@
     <string name="apm_failed_to_enable">启用招牌菜失败: %s</string>
     <string name="apm_failed_to_disable">禁用招牌菜失败: %s</string>
     <string name="apm_empty">菜单空白</string>
+    <string name="apm_load_failed">菜单加载失败</string>
     <string name="apm_remove">移除</string>
     <string name="apm_undo">还要吃</string>
     <string name="apm_install">上菜</string>

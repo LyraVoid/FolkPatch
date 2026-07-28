@@ -240,6 +240,7 @@
     <string name="apm_failed_to_enable">激活魔法阵失败: %s</string>
     <string name="apm_failed_to_disable">解除魔法阵失败: %s</string>
     <string name="apm_empty">未契约魔法阵</string>
+    <string name="apm_load_failed">魔法阵召唤失败</string>
     <string name="apm_remove">移除</string>
     <string name="apm_undo">恢复契约</string>
     <string name="apm_install">契约</string>

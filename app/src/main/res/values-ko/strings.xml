@@ -237,6 +237,7 @@
     <string name="apm_failed_to_enable">모듈 활성화 실패: %s</string>
     <string name="apm_failed_to_disable">모듈 비활성화 실패: %s</string>
     <string name="apm_empty">설치된 모듈이 없음</string>
+    <string name="apm_load_failed">모듈 로드 실패</string>
     <string name="apm_remove">제거</string>
     <string name="apm_undo">실행 취소</string>
     <string name="apm_install">설치</string>

@@ -255,6 +255,7 @@
     <string name="apm_failed_to_enable">开模块失败了喵：%s</string>
     <string name="apm_failed_to_disable">关模块失败了喵：%s</string>
     <string name="apm_empty">没装模块喵，这里空空的</string>
+    <string name="apm_load_failed">加载模块失败了喵</string>
     <string name="apm_remove">删掉喵！</string>
     <string name="apm_undo">恢复喵！</string>
     <string name="apm_install">安装喵！</string>

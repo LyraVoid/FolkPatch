@@ -240,6 +240,7 @@
     <string name="apm_failed_to_enable">Không thể bật module: %s</string>
     <string name="apm_failed_to_disable">Không thể vô hiệu hóa module: %s</string>
     <string name="apm_empty">Chưa cài đặt module</string>
+    <string name="apm_load_failed">Không thể tải module</string>
     <string name="apm_remove">Xóa</string>
     <string name="apm_undo">Hoàn tác</string>
     <string name="apm_install">Cài đặt</string>

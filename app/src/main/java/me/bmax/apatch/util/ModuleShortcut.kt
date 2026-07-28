@@ -263,21 +263,33 @@ object ModuleShortcut {
         return try {
             val uri = iconUri.toUri()
             Log.d(TAG, "loadShortcutBitmap: loading bitmap from uri=$uri")
-            val rawBitmap = if (uri.scheme.equals("su", ignoreCase = true)) {
+            // Read stream into ByteArray so we can do two-phase decode
+            val imageBytes = if (uri.scheme.equals("su", ignoreCase = true)) {
                 val path = uri.path ?: ""
                 if (path.isNotBlank()) {
                     val shell = getRootShell(true)
                     val suFile = SuFile(path)
                     suFile.shell = shell
-                    SuFileInputStream.open(suFile).use { input ->
-                        BitmapFactory.decodeStream(input)
-                    }
+                    SuFileInputStream.open(suFile).use { it.readBytes() }
                 } else null
             } else {
-                SafeUriResolver.openInputStream(context, uri)?.use { input ->
-                    BitmapFactory.decodeStream(input)
-                }
+                SafeUriResolver.openInputStream(context, uri)?.use { it.readBytes() }
             }
+            if (imageBytes == null || imageBytes.isEmpty()) {
+                Log.w(TAG, "loadShortcutBitmap: failed to read image bytes from uri=$iconUri")
+                return null
+            }
+            // Phase 1: decode bounds only (no memory allocation)
+            val boundsOpts = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+            BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size, boundsOpts)
+            // Phase 2: calculate inSampleSize and decode
+            val targetSize = 512
+            val scale = maxOf(boundsOpts.outWidth, boundsOpts.outHeight) / targetSize
+            val decodeOpts = BitmapFactory.Options().apply {
+                inSampleSize = if (scale > 1) scale else 1
+            }
+            Log.d(TAG, "loadShortcutBitmap: outWidth=${boundsOpts.outWidth}, outHeight=${boundsOpts.outHeight}, inSampleSize=${decodeOpts.inSampleSize}")
+            val rawBitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size, decodeOpts)
             if (rawBitmap != null) {
                 Log.d(TAG, "loadShortcutBitmap: decoded bitmap successfully")
                 val w = rawBitmap.width

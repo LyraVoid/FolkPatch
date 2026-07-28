@@ -42,6 +42,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.ErrorOutline
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.Search
@@ -738,9 +739,35 @@ private fun KPModuleList(
                                 .defaultMinSize(minHeight = 300.dp),
                             contentAlignment = Alignment.Center
                         ) {
-                            Text(
-                                stringResource(R.string.kpm_apm_empty), textAlign = TextAlign.Center
-                            )
+                            if (viewModel.errorMessage != null && !viewModel.isRefreshing) {
+                                Column(
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    verticalArrangement = Arrangement.Center
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Outlined.ErrorOutline,
+                                        contentDescription = null,
+                                        tint = MaterialTheme.colorScheme.error,
+                                        modifier = Modifier.size(48.dp)
+                                    )
+                                    Spacer(Modifier.height(12.dp))
+                                    Text(
+                                        text = viewModel.errorMessage ?: stringResource(R.string.kpm_load_failed),
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        textAlign = TextAlign.Center,
+                                        modifier = Modifier.padding(horizontal = 16.dp)
+                                    )
+                                    Spacer(Modifier.height(12.dp))
+                                    Button(onClick = { viewModel.fetchModuleList() }) {
+                                        Text(stringResource(R.string.retry))
+                                    }
+                                }
+                            } else {
+                                Text(
+                                    stringResource(R.string.kpm_apm_empty), textAlign = TextAlign.Center
+                                )
+                            }
                         }
                     }
                 },
@@ -786,6 +813,41 @@ private fun KPModuleList(
                 },
             ) {
                 when {
+                    viewModel.errorMessage != null && !viewModel.isRefreshing -> {
+                        item {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .fillParentMaxHeight(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Column(
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    verticalArrangement = Arrangement.Center
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Outlined.ErrorOutline,
+                                        contentDescription = null,
+                                        tint = MaterialTheme.colorScheme.error,
+                                        modifier = Modifier.size(48.dp)
+                                    )
+                                    Spacer(Modifier.height(12.dp))
+                                    Text(
+                                        text = viewModel.errorMessage ?: stringResource(R.string.kpm_load_failed),
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        textAlign = TextAlign.Center,
+                                        modifier = Modifier.padding(horizontal = 16.dp)
+                                    )
+                                    Spacer(Modifier.height(12.dp))
+                                    Button(onClick = { viewModel.fetchModuleList() }) {
+                                        Text(stringResource(R.string.retry))
+                                    }
+                                }
+                            }
+                        }
+                    }
+
                     moduleList.isEmpty() -> {
                         item {
                             Box(

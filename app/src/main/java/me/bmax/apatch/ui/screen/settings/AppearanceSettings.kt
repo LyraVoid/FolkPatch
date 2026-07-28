@@ -414,6 +414,33 @@ fun AppearanceSettingsContent(
     var floatingAutoHide by remember { mutableStateOf(prefs.getBoolean("floating_auto_hide", true)) }
     var floatingSwipeHide by remember { mutableStateOf(prefs.getBoolean("floating_swipe_hide", true)) }
 
+    DisposableEffect(prefs) {
+        val listener = android.content.SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+            when (key) {
+                "night_mode_follow_sys" -> nightModeFollowSys = prefs.getBoolean(key, true)
+                "night_mode_enabled" -> nightModeEnabled = prefs.getBoolean(key, true)
+                "use_system_color_theme" -> useSystemDynamicColor = prefs.getBoolean(key, false)
+                "custom_color" -> customColorScheme = prefs.getString(key, "indigo")
+                "amoled_theme" -> amoledTheme = prefs.getBoolean(key, false)
+                "color_generation_mode" -> colorGenerationMode = ColorGenerationMode.fromKey(prefs.getString(key, "classic"))
+                "color_standard" -> colorStandard = ColorStandard.fromName(prefs.getString(key, "MD3_2021"))
+                "color_style" -> colorStyle = ColorStyle.fromName(prefs.getString(key, "TONAL_SPOT"))
+                "home_layout_style" -> currentStyle = prefs.getString(key, "circle")
+                "stats_top_layout" -> statsTopLayout = prefs.getString(key, "list") ?: "list"
+                "show_nav_apm" -> showNavApm = prefs.getBoolean(key, true)
+                "show_nav_kpm" -> showNavKpm = prefs.getBoolean(key, true)
+                "show_nav_superuser" -> showNavSuperUser = prefs.getBoolean(key, true)
+                "nav_mode" -> currentNavMode = prefs.getString(key, "floating") ?: "floating"
+                "floating_auto_hide" -> floatingAutoHide = prefs.getBoolean(key, true)
+                "floating_swipe_hide" -> floatingSwipeHide = prefs.getBoolean(key, true)
+            }
+        }
+        prefs.registerOnSharedPreferenceChangeListener(listener)
+        onDispose {
+            prefs.unregisterOnSharedPreferenceChangeListener(listener)
+        }
+    }
+
     val isKernelSuStyle = currentStyle == "kernelsu"
     val showGridCardSettings = isKernelSuStyle || (isStatsLayout && statsTopLayout == "grid")
     val isListStyle = currentStyle != "kernelsu" && currentStyle != "focus" && !(isStatsLayout && statsTopLayout == "grid")

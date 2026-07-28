@@ -75,6 +75,9 @@ class APModuleViewModel : ViewModel() {
     var isRefreshing by mutableStateOf(false)
         private set
 
+    var errorMessage by mutableStateOf<String?>(null)
+        private set
+
     private val prefs = APApplication.sharedPreferences
     var sortOptimizationEnabled by mutableStateOf(prefs.getBoolean("module_sort_optimization", true))
     private val bannerCache = mutableStateMapOf<String, BannerInfo>()
@@ -162,6 +165,7 @@ class APModuleViewModel : ViewModel() {
 
     fun fetchModuleList() {
         viewModelScope.launch(Dispatchers.IO) {
+            errorMessage = null
             isRefreshing = true
 
             try {
@@ -209,6 +213,7 @@ class APModuleViewModel : ViewModel() {
                 Log.i(TAG, "load cost: ${SystemClock.elapsedRealtime() - start}, modules: $modules")
             } catch (e: Exception) {
                 Log.e(TAG, "fetchModuleList: ", e)
+                errorMessage = e.message ?: "Failed to load modules"
             } finally {
                 isRefreshing = false
             }

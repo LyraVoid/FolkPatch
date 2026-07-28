@@ -238,6 +238,7 @@
     <string name="apm_failed_to_enable">启仙符败陨：%s</string>
     <string name="apm_failed_to_disable">禁仙符败陨：%s</string>
     <string name="apm_empty">未凝炼仙符入体</string>
+    <string name="apm_load_failed">凝炼仙符败陨</string>
     <string name="apm_remove">祛符出体</string>
     <string name="apm_undo">撤销</string>
     <string name="apm_install">凝符入体</string>

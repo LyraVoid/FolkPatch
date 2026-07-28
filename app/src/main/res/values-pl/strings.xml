@@ -218,6 +218,7 @@
     <string name="apm_failed_to_enable">Nie udało się włączyć modułu: %s</string>
     <string name="apm_failed_to_disable">Nie udało się wyłączyć modułu %s</string>
     <string name="apm_empty">Brak zainstalowanych modułów</string>
+    <string name="apm_load_failed">Nie udało się załadować modułów</string>
     <string name="apm_remove">Usuń</string>
     <string name="apm_undo">Cofnij</string>
     <string name="apm_install">Instaluj</string>

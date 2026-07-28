@@ -212,6 +212,7 @@
     <string name="kpm_unload">Unload</string>
     <string name="kpm_control">Control</string>
     <string name="kpm_apm_empty">No module loaded</string>
+        <string name="kpm_load_failed">Failed to load kernel modules</string>
     <string name="kpm_version">Version</string>
     <string name="kpm_license">License</string>
     <string name="kpm_author">Author</string>
@@ -237,6 +238,7 @@
     <string name="apm_failed_to_enable">Failed to enable module: %s</string>
     <string name="apm_failed_to_disable">Failed to disable module: %s</string>
     <string name="apm_empty">No module installed</string>
+    <string name="apm_load_failed">Failed to load modules</string>
     <string name="apm_remove">Remove</string>
     <string name="apm_undo">Undo</string>
     <string name="apm_install">Install</string>

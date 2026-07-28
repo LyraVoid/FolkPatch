@@ -259,6 +259,7 @@
     <string name="apm_failed_to_enable">Error al habilitar módulo: %s</string>
     <string name="apm_failed_to_disable">Error al deshabilitar módulo: %s</string>
     <string name="apm_empty">Ningún módulo instalado</string>
+    <string name="apm_load_failed">Error al cargar los módulos</string>
     <string name="apm_remove">Eliminar</string>
     <string name="apm_undo">Deshacer</string>
     <string name="apm_install">Instalar</string>

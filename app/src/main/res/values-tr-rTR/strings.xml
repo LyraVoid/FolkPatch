@@ -239,6 +239,7 @@
     <string name="apm_failed_to_enable">Modül etkinleştirilemedi: %s</string>
     <string name="apm_failed_to_disable">Modül devre dışı bırakılamadı: %s</string>
     <string name="apm_empty">Yüklü modül yok</string>
+    <string name="apm_load_failed">Modüller yüklenemedi</string>
     <string name="apm_remove">Kaldır</string>
     <string name="apm_undo">Geri al</string>
     <string name="apm_install">Kur</string>

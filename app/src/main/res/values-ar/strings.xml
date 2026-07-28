@@ -259,6 +259,7 @@
     <string name="apm_failed_to_enable">فشل تمكين الوحدة: %s</string>
     <string name="apm_failed_to_disable">فشل تعطيل الوحدة: %s</string>
     <string name="apm_empty">لا توجد وحدات مثبتة</string>
+    <string name="apm_load_failed">فشل تحميل الوحدات</string>
     <string name="apm_remove">إزالة</string>
     <string name="apm_undo">تراجع</string>
     <string name="apm_install">تثبيت</string>

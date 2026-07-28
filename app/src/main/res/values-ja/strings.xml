@@ -209,6 +209,7 @@
     <string name="apm_failed_to_enable">モジュールの有効化に失敗: %s</string>
     <string name="apm_failed_to_disable">モジュールの無効化に失敗: %s</string>
     <string name="apm_empty">モジュールはインストールされていません</string>
+    <string name="apm_load_failed">モジュールの読み込みに失敗しました</string>
     <string name="apm_remove">削除</string>
     <string name="apm_undo">元に戻す</string>
     <string name="apm_install">インストール</string>
