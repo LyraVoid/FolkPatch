@@ -633,14 +633,6 @@
     <string name="kpm_page_first_time_title">警告</string>
     <string name="kpm_page_first_time_message">核心酱料是直接修改 Boot 的实现，它不像招牌菜一样有很好的救砖机制，出问题只能进入 Fastboot 去修复。建议先添加酱料没有问题再融入到 Boot。如果是只能添加使用的酱料，可以尝试使用自动酱料添加功能。如果你不了解核心酱料，请不要使用本烹饪功能！</string>
     <!-- Module Backup/Restore Strings -->
-    <string name="apm_backup_title">备份招牌菜</string>
-    <string name="apm_restore_title">恢复招牌菜</string>
-    <string name="apm_backup_success">备份成功</string>
-    <string name="apm_restore_success">恢复成功</string>
-    <string name="apm_backup_failed">备份失败</string>
-    <string name="apm_restore_failed">恢复失败</string>
-    <string name="apm_backup_failed_msg">备份失败：%s</string>
-    <string name="apm_restore_failed_msg">恢复失败：%s</string>
     <string name="apm_copy_list_title">复制列表</string>
     <string name="apm_copy_list_success">招牌菜列表已复制</string>
 

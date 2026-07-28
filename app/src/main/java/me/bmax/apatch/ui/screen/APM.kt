@@ -168,15 +168,11 @@ import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.MoreVert
 import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenu
 import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenuItem
-import me.bmax.apatch.util.ModuleBackupUtils
 import me.bmax.apatch.util.SafeUriResolver
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.ui.LocalBottomBarVisible
 import me.bmax.apatch.ui.LocalIsFloatingNavMode
 import androidx.compose.ui.platform.LocalConfiguration
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 import java.util.Properties
 import java.io.File
 
@@ -1076,22 +1072,6 @@ private fun TopBar(
 
     var showMenu by remember { mutableStateOf(false) }
 
-    val backupLauncher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/gzip")) { uri ->
-        uri?.let {
-            scope.launch {
-                ModuleBackupUtils.backupModules(context, snackBarHost, it)
-            }
-        }
-    }
-    val restoreLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
-        uri?.let {
-            scope.launch {
-                ModuleBackupUtils.restoreModules(context, snackBarHost, it)
-                viewModel.fetchModuleList()
-            }
-        }
-    }
-
     SearchAppBar(
         title = { Text(stringResource(R.string.apm)) },
         searchText = searchQuery,
@@ -1130,21 +1110,6 @@ private fun TopBar(
                                     viewModel.disableAllModules()
                                 }
                             }
-                        }
-                    )
-                    WallpaperAwareDropdownMenuItem(
-                        text = { Text(stringResource(R.string.apm_backup_title)) },
-                        onClick = {
-                            showMenu = false
-                            val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-                            backupLauncher.launch("FolkPatch_Modules_Backup_$timeStamp.tar.gz")
-                        }
-                    )
-                    WallpaperAwareDropdownMenuItem(
-                        text = { Text(stringResource(R.string.apm_restore_title)) },
-                        onClick = {
-                            showMenu = false
-                            restoreLauncher.launch(arrayOf("application/gzip", "application/x-gzip", "application/x-tar"))
                         }
                     )
                     WallpaperAwareDropdownMenuItem(

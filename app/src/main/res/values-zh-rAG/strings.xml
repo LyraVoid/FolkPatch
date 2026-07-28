@@ -655,14 +655,6 @@
     <string name="kpm_page_first_time_title">警告喵！</string>
     <string name="kpm_page_first_time_message">内核模块是直接改Boot的喵！没系统模块的救砖机制，出问题只能进Fastboot修喵！先加载试试没问题再嵌Boot喵！只能加载的模块用自动加载功能喵！不懂的话不要用这个功能哦！</string>
     <!-- Module Backup/Restore Strings -->
-    <string name="apm_backup_title">备份模块喵！</string>
-    <string name="apm_restore_title">恢复模块喵！</string>
-    <string name="apm_backup_success">备份成功啦喵！</string>
-    <string name="apm_restore_success">恢复成功啦喵！</string>
-    <string name="apm_backup_failed">备份失败了喵...</string>
-    <string name="apm_restore_failed">恢复失败了喵...</string>
-    <string name="apm_backup_failed_msg">备份失败了喵：%s</string>
-    <string name="apm_restore_failed_msg">恢复失败了喵：%s</string>
     <string name="apm_copy_list_title">抄录名录喵！</string>
     <string name="apm_copy_list_success">名录已抄录喵！</string>
 

@@ -590,14 +590,6 @@ Bol şans! Ayrıca, aşağıdaki belge butonuna tıklamak kesinlikle doğru!</st
     <string name="kpm_autoload_edit_dialog_title">Editar KPM</string>    <string name="kpm_autoload_event_label">Evento:</string>    <string name="kpm_autoload_args_label">Argumentos:</string>    <string name="kpm_autoload_event_service">service</string>    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
     
     <!-- Module Backup/Restore Strings -->
-    <string name="apm_backup_title">Modülleri Yedekle</string>
-    <string name="apm_restore_title">Modülleri Geri Yükle</string>
-    <string name="apm_backup_success">Yedekleme başarılı</string>
-    <string name="apm_restore_success">Geri yükleme başarılı</string>
-    <string name="apm_backup_failed">Yedekleme başarısız</string>
-    <string name="apm_restore_failed">Geri yükleme başarısız</string>
-    <string name="apm_backup_failed_msg">Yedekleme başarısız: %s</string>
-    <string name="apm_restore_failed_msg">Geri yükleme başarısız: %s</string>
     <string name="apm_copy_list_title">Listeyi Kopyala</string>
     <string name="apm_copy_list_success">Modül listesi kopyalandı</string>
 

@@ -604,14 +604,6 @@
     <string name="kpm_autoload_edit_dialog_title">KPM 편집</string>    <string name="kpm_autoload_event_label">이벤트:</string>    <string name="kpm_autoload_args_label">매개변수:</string>    <string name="kpm_autoload_event_service">service</string>    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
     
     <!-- Module Backup/Restore Strings -->
-    <string name="apm_backup_title">모듈 백업</string>
-    <string name="apm_restore_title">모듈 복원</string>
-    <string name="apm_backup_success">백업됨</string>
-    <string name="apm_restore_success">복원됨</string>
-    <string name="apm_backup_failed">백업 실패</string>
-    <string name="apm_restore_failed">복원 실패</string>
-    <string name="apm_backup_failed_msg">백업 실패: %s</string>
-    <string name="apm_restore_failed_msg">복원 실패: %s</string>
     <string name="apm_copy_list_title">목록 복사</string>
     <string name="apm_copy_list_success">모듈 목록 복사됨</string>
 

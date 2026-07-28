@@ -654,14 +654,6 @@ Cần đảm bảo phần mềm thoát hoàn toàn vào mới sẽ thực thi l�
     <string name="kpm_page_first_time_title">Cảnh báo</string>
     <string name="kpm_page_first_time_message">Module nhân là thực hiện sửa đổi trực tiếp Boot, nó không có cơ chế cứu khôi tốt như module hệ thống, nếu có vấn đề chỉ có thể vào Fastboot để sửa chữa. Khuyên bạn nên tải module trước khi không có vấn đề thì mới nhúng vào Boot. Nếu là module chỉ có thể tải sử dụng, có thể thử sử dụng chức năng tải tự động module KPM. Nếu bạn không hiểu về module nhân, vui lòng không sử dụng chức năng này!</string>
     <!-- Module Backup/Restore Strings -->
-    <string name="apm_backup_title">Sao lưu module</string>
-    <string name="apm_restore_title">Khôi phục module</string>
-    <string name="apm_backup_success">Sao lưu thành công</string>
-    <string name="apm_restore_success">Khôi phục thành công</string>
-    <string name="apm_backup_failed">Sao lưu thất bại</string>
-    <string name="apm_restore_failed">Khôi phục thất bại</string>
-    <string name="apm_backup_failed_msg">Sao lưu thất bại: %s</string>
-    <string name="apm_restore_failed_msg">Khôi phục thất bại: %s</string>
     <string name="apm_copy_list_title">Sao chép danh sách</string>
     <string name="apm_copy_list_success">Đã sao chép danh sách mô-đun</string>
 

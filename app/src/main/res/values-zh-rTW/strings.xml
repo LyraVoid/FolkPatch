@@ -633,14 +633,6 @@
     <string name="welcome_got_it">開始使用</string>
 
     <!-- Module Backup/Restore Strings -->
-    <string name="apm_backup_title">備份模組</string>
-    <string name="apm_restore_title">還原模組</string>
-    <string name="apm_backup_success">備份成功</string>
-    <string name="apm_restore_success">還原成功</string>
-    <string name="apm_backup_failed">備份失敗</string>
-    <string name="apm_restore_failed">還原失敗</string>
-    <string name="apm_backup_failed_msg">備份失敗：%s</string>
-    <string name="apm_restore_failed_msg">還原失敗：%s</string>
     <string name="apm_copy_list_title">複製列表</string>
     <string name="apm_copy_list_success">模組列表已複製</string>
 

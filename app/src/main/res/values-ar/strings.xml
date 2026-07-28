@@ -595,14 +595,6 @@
     <string name="kpm_autoload_edit_dialog_title">Editar KPM</string>    <string name="kpm_autoload_event_label">Evento:</string>    <string name="kpm_autoload_args_label">Argumentos:</string>    <string name="kpm_autoload_event_service">service</string>    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
     
     <!-- Module Backup/Restore Strings -->
-    <string name="apm_backup_title">النسخ الاحتياطي للوحدات</string>
-    <string name="apm_restore_title">استعادة الوحدات</string>
-    <string name="apm_backup_success">نجح النسخ الاحتياطي</string>
-    <string name="apm_restore_success">نجحت الاستعادة</string>
-    <string name="apm_backup_failed">فشل النسخ الاحتياطي</string>
-    <string name="apm_restore_failed">فشلت الاستعادة</string>
-    <string name="apm_backup_failed_msg">فشل النسخ الاحتياطي: %s</string>
-    <string name="apm_restore_failed_msg">فشلت الاستعادة: %s</string>
     <string name="apm_copy_list_title">نسخ القائمة</string>
     <string name="apm_copy_list_success">تم نسخ قائمة الوحدات</string>
 

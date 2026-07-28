@@ -641,14 +641,6 @@
     <string name="kpm_page_first_time_title">警告</string>
     <string name="kpm_page_first_time_message">内核模块是直接修改Boot的实现，它不像系统模块一样有很好的救砖机制，出问题只能进入Fastboot去修复。建议先加载模块没有问题再嵌入到Boot。如果是只能加载使用的模块，可以尝试使用自动内核补丁模块加载功能。如果你不了解内核模块，请不要使用本功能！</string>
     <!-- Module Backup/Restore Strings -->
-    <string name="apm_backup_title">备份模块</string>
-    <string name="apm_restore_title">恢复模块</string>
-    <string name="apm_backup_success">备份成功</string>
-    <string name="apm_restore_success">恢复成功</string>
-    <string name="apm_backup_failed">备份失败</string>
-    <string name="apm_restore_failed">恢复失败</string>
-    <string name="apm_backup_failed_msg">备份失败：%s</string>
-    <string name="apm_restore_failed_msg">恢复失败：%s</string>
     <string name="apm_copy_list_title">复制列表</string>
     <string name="apm_copy_list_success">模块列表已复制</string>
 

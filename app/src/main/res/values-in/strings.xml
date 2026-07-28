@@ -634,14 +634,6 @@ Pastikan aplikasi ditutup sepenuhnya dan dimulai ulang untuk menjalankan perinta
 
     <string name="kpm_page_first_time_title">Peringatan</string>
     <string name="kpm_page_first_time_message">Modul Kernel secara langsung memodifikasi implementasi BOOT. Tidak seperti modul sistem, mereka tidak memiliki mekanisme pemulihan yang baik. Jika ada masalah, Anda hanya dapat memperbaikinya dengan masuk ke Fastboot. Disarankan untuk memuat modul terlebih dahulu untuk memastikan tidak ada masalah sebelum menyematkannya ke BOOT. Jika modul hanya dapat digunakan dengan pemuatan, Anda dapat mencoba fitur muat otomatis modul KPM. Jika Anda tidak memahami modul kernel, jangan gunakan fitur ini!</string>
-    <string name="apm_backup_title">Cadangkan Modul</string>
-    <string name="apm_restore_title">Pulihkan Modul</string>
-    <string name="apm_backup_success">Pencadangan berhasil</string>
-    <string name="apm_restore_success">Pemulihan berhasil</string>
-    <string name="apm_backup_failed">Pencadangan gagal</string>
-    <string name="apm_restore_failed">Pemulihan gagal</string>
-    <string name="apm_backup_failed_msg">Pencadangan gagal: %s</string>
-    <string name="apm_restore_failed_msg">Pemulihan gagal: %s</string>
     <string name="apm_copy_list_title">Salin daftar</string>
     <string name="apm_copy_list_success">Daftar modul disalin</string>
 

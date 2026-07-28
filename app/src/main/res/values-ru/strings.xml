@@ -643,14 +643,6 @@
     <string name="kpm_page_first_time_title">Предупреждение</string>
     <string name="kpm_page_first_time_message">Модули ядра напрямую изменяют реализацию BOOT. В отличие от системных модулей, они не имеют хорошего механизма восстановления. Если возникнут проблемы, вы можете исправить их только войдя в Fastboot. Рекомендуется сначала загрузить модуль, чтобы убедиться, что нет проблем, перед встраиванием его в BOOT. Если модуль можно использовать только загрузкой, вы можете попробовать функцию автоматической загрузки модулей KPM. Если вы не понимаете модули ядра, пожалуйста, не используйте эту функцию!</string>
     <!-- Module Backup/Restore Strings -->
-    <string name="apm_backup_title">Резервное копирование модулей</string>
-    <string name="apm_restore_title">Восстановление модулей</string>
-    <string name="apm_backup_success">Резервное копирование выполнено</string>
-    <string name="apm_restore_success">Восстановление выполнено</string>
-    <string name="apm_backup_failed">Ошибка резервного копирования</string>
-    <string name="apm_restore_failed">Ошибка восстановления</string>
-    <string name="apm_backup_failed_msg">Ошибка резервного копирования: %s</string>
-    <string name="apm_restore_failed_msg">Ошибка восстановления: %s</string>
     <string name="apm_copy_list_title">Копировать список</string>
     <string name="apm_copy_list_success">Список модулей скопирован</string>
 

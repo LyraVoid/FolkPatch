@@ -633,14 +633,6 @@
     <string name="kpm_page_first_time_title">警告：危险操作！</string>
     <string name="kpm_page_first_time_message">红石组件是直接改Boot区块的硬核操作，不像模组那样有救砖机制。出了问题只能进Fastboot修。建议先临时充能测试没问题再嵌进Boot。如果是只能临时充能的组件，可以用自动充能功能。如果你不懂红石组件，千万别碰！</string>
     <!-- 模组备份/恢复 -->
-    <string name="apm_backup_title">备份模组到末影箱</string>
-    <string name="apm_restore_title">从末影箱恢复模组</string>
-    <string name="apm_backup_success">备份成功！物品已存入末影箱</string>
-    <string name="apm_restore_success">恢复成功！物品已从末影箱取出</string>
-    <string name="apm_backup_failed">备份失败！末影箱装不下了</string>
-    <string name="apm_restore_failed">恢复失败！末影箱打不开</string>
-    <string name="apm_backup_failed_msg">备份失败：%s</string>
-    <string name="apm_restore_failed_msg">恢复失败：%s</string>
     <string name="apm_copy_list_title">复制列表</string>
     <string name="apm_copy_list_success">模组列表已复制</string>
 

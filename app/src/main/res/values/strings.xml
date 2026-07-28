@@ -653,14 +653,6 @@ Here are some possible reasons for authentication failure—please check which o
     <string name="kpm_autoload_edit_dialog_title">Editar KPM</string>    <string name="kpm_autoload_event_label">Evento:</string>    <string name="kpm_autoload_args_label">Argumentos:</string>    <string name="kpm_autoload_event_service">service</string>    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
     
     <!-- Module Backup/Restore Strings -->
-    <string name="apm_backup_title">Backup Modules</string>
-    <string name="apm_restore_title">Restore Modules</string>
-    <string name="apm_backup_success">Backup successful</string>
-    <string name="apm_restore_success">Restore successful</string>
-    <string name="apm_backup_failed">Backup failed</string>
-    <string name="apm_restore_failed">Restore failed</string>
-    <string name="apm_backup_failed_msg">Backup failed: %s</string>
-    <string name="apm_restore_failed_msg">Restore failed: %s</string>
     <string name="apm_copy_list_title">Copy List</string>
     <string name="apm_copy_list_success">Module list copied</string>
 

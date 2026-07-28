@@ -637,14 +637,6 @@
     <string name="kpm_page_first_time_title">渡劫警言</string>
     <string name="kpm_page_first_time_message">道核仙符者，直改仙躯Boot之法也，不若天道仙符有救砖之策，有天劫则唯入Fastboot仙台修之。宜先引符入道，无天劫再嵌于仙躯Boot。若仙符唯可引符用之，可试自动道核仙符引符之能。若未谙道核仙符，毋用此渡劫之能！</string>
     <!-- Module Backup/Restore Strings -->
-    <string name="apm_backup_title">拓印灵纹</string>
-    <string name="apm_restore_title">重塑灵纹</string>
-    <string name="apm_backup_success">拓印圆满</string>
-    <string name="apm_restore_success">重塑圆满</string>
-    <string name="apm_backup_failed">拓印受阻</string>
-    <string name="apm_restore_failed">重塑受阻</string>
-    <string name="apm_backup_failed_msg">拓印受阻：%s</string>
-    <string name="apm_restore_failed_msg">重塑受阻：%s</string>
     <string name="apm_copy_list_title">抄录卷宗</string>
     <string name="apm_copy_list_success">名录已拓印</string>
 
