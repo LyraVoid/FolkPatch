@@ -1153,6 +1153,15 @@
     <string name="color_style_neutral">Нейтральный</string>
     <string name="color_style_fidelity">Точность</string>
     <string name="settings_focus_card_dim">Затемнение обоев карточки</string>
+    <string name="settings_focus_card_dual_dim">Включить двойное затемнение день/ночь</string>
+    <string name="settings_focus_card_dual_dim_desc">Автоматически регулировать затемнение обоев карточки для светлой и тёмной темы</string>
+    <string name="settings_focus_card_day_dim">Затемнение обоев в дневном режиме</string>
+    <string name="settings_focus_card_night_dim">Затемнение обоев в ночном режиме</string>
+    <string name="settings_focus_card_opacity">Непрозрачность обоев карточки</string>
+    <string name="settings_focus_card_dual_opacity">Включить двойную непрозрачность день/ночь</string>
+    <string name="settings_focus_card_dual_opacity_desc">Автоматически регулировать непрозрачность обоев карточки для светлой и тёмной темы</string>
+    <string name="settings_focus_card_day_opacity">Непрозрачность обоев в дневном режиме</string>
+    <string name="settings_focus_card_night_opacity">Непрозрачность обоев в ночном режиме</string>
     <string name="settings_focus_card_kernel">Карточка ядра</string>
     <string name="settings_focus_card_app">Карточка приложений</string>
     <string name="settings_focus_card_device">Карточка состояния устройства</string>

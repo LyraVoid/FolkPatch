@@ -125,6 +125,20 @@ object BackgroundConfig {
         private set
     var focusCardBgDim: Float by mutableStateOf(0.3f)
         private set
+    var isFocusCardDualDimEnabled: Boolean by mutableStateOf(false)
+        private set
+    var focusCardBgDayDim: Float by mutableStateOf(0.3f)
+        private set
+    var focusCardBgNightDim: Float by mutableStateOf(0.3f)
+        private set
+    var isFocusCardDualOpacityEnabled: Boolean by mutableStateOf(false)
+        private set
+    var focusCardBgOpacity: Float by mutableStateOf(1f)
+        private set
+    var focusCardBgDayOpacity: Float by mutableStateOf(1f)
+        private set
+    var focusCardBgNightOpacity: Float by mutableStateOf(1f)
+        private set
 
     // NavBar Glass Effect (Floating mode only)
     var isNavBarGlassEnabled: Boolean by mutableStateOf(true)
@@ -199,6 +213,13 @@ object BackgroundConfig {
     private const val KEY_FOCUS_CARD_DEVICE_BG_URI = "focus_card_device_bg_uri"
     private const val KEY_FOCUS_CARD_STORAGE_BG_URI = "focus_card_storage_bg_uri"
     private const val KEY_FOCUS_CARD_BG_DIM = "focus_card_bg_dim"
+    private const val KEY_FOCUS_CARD_DUAL_DIM_ENABLED = "focus_card_dual_dim_enabled"
+    private const val KEY_FOCUS_CARD_DAY_DIM = "focus_card_day_dim"
+    private const val KEY_FOCUS_CARD_NIGHT_DIM = "focus_card_night_dim"
+    private const val KEY_FOCUS_CARD_DUAL_OPACITY_ENABLED = "focus_card_dual_opacity_enabled"
+    private const val KEY_FOCUS_CARD_OPACITY = "focus_card_opacity"
+    private const val KEY_FOCUS_CARD_DAY_OPACITY = "focus_card_day_opacity"
+    private const val KEY_FOCUS_CARD_NIGHT_OPACITY = "focus_card_night_opacity"
 
     private const val KEY_NAVBAR_GLASS_ENABLED = "navbar_glass_enabled"
     private const val KEY_NAVBAR_GLASS_BLUR_STRENGTH = "navbar_glass_blur_strength"
@@ -522,6 +543,18 @@ object BackgroundConfig {
         focusCardBgDim = dim
     }
 
+    fun setFocusCardDualDimEnabledState(enabled: Boolean) { isFocusCardDualDimEnabled = enabled }
+    fun setFocusCardBgDayDimValue(dim: Float) { focusCardBgDayDim = dim }
+    fun setFocusCardBgNightDimValue(dim: Float) { focusCardBgNightDim = dim }
+    fun setFocusCardDualOpacityEnabledState(enabled: Boolean) { isFocusCardDualOpacityEnabled = enabled }
+    fun setFocusCardBgOpacityValue(opacity: Float) { focusCardBgOpacity = opacity }
+    fun setFocusCardBgDayOpacityValue(opacity: Float) { focusCardBgDayOpacity = opacity }
+    fun setFocusCardBgNightOpacityValue(opacity: Float) { focusCardBgNightOpacity = opacity }
+    fun getEffectiveFocusCardBgDim(isDarkTheme: Boolean): Float =
+        if (isFocusCardDualDimEnabled) if (isDarkTheme) focusCardBgNightDim else focusCardBgDayDim else focusCardBgDim
+    fun getEffectiveFocusCardBgOpacity(isDarkTheme: Boolean): Float =
+        if (isFocusCardDualOpacityEnabled) if (isDarkTheme) focusCardBgNightOpacity else focusCardBgDayOpacity else focusCardBgOpacity
+
     /**
      * 判断任意FocusUI卡片是否设置了壁纸
      */
@@ -626,6 +659,13 @@ object BackgroundConfig {
             putString(KEY_FOCUS_CARD_DEVICE_BG_URI, focusCardDeviceBgUri)
             putString(KEY_FOCUS_CARD_STORAGE_BG_URI, focusCardStorageBgUri)
             putFloat(KEY_FOCUS_CARD_BG_DIM, focusCardBgDim)
+            putBoolean(KEY_FOCUS_CARD_DUAL_DIM_ENABLED, isFocusCardDualDimEnabled)
+            putFloat(KEY_FOCUS_CARD_DAY_DIM, focusCardBgDayDim)
+            putFloat(KEY_FOCUS_CARD_NIGHT_DIM, focusCardBgNightDim)
+            putBoolean(KEY_FOCUS_CARD_DUAL_OPACITY_ENABLED, isFocusCardDualOpacityEnabled)
+            putFloat(KEY_FOCUS_CARD_OPACITY, focusCardBgOpacity)
+            putFloat(KEY_FOCUS_CARD_DAY_OPACITY, focusCardBgDayOpacity)
+            putFloat(KEY_FOCUS_CARD_NIGHT_OPACITY, focusCardBgNightOpacity)
 
             putBoolean(KEY_NAVBAR_GLASS_ENABLED, isNavBarGlassEnabled)
             putFloat(KEY_NAVBAR_GLASS_BLUR_STRENGTH, navBarGlassBlurStrength)
@@ -701,6 +741,13 @@ object BackgroundConfig {
         val focusCardDeviceBg = prefs.getString(KEY_FOCUS_CARD_DEVICE_BG_URI, null)
         val focusCardStorageBg = prefs.getString(KEY_FOCUS_CARD_STORAGE_BG_URI, null)
         val focusCardDim = prefs.getFloat(KEY_FOCUS_CARD_BG_DIM, 0.3f)
+        val focusCardDualDim = prefs.getBoolean(KEY_FOCUS_CARD_DUAL_DIM_ENABLED, false)
+        val focusCardDayDim = prefs.getFloat(KEY_FOCUS_CARD_DAY_DIM, focusCardDim)
+        val focusCardNightDim = prefs.getFloat(KEY_FOCUS_CARD_NIGHT_DIM, focusCardDim)
+        val focusCardDualOpacity = prefs.getBoolean(KEY_FOCUS_CARD_DUAL_OPACITY_ENABLED, false)
+        val focusCardOpacity = prefs.getFloat(KEY_FOCUS_CARD_OPACITY, 1f)
+        val focusCardDayOpacity = prefs.getFloat(KEY_FOCUS_CARD_DAY_OPACITY, focusCardOpacity)
+        val focusCardNightOpacity = prefs.getFloat(KEY_FOCUS_CARD_NIGHT_OPACITY, focusCardOpacity)
 
         val navBarGlassEnabled = prefs.getBoolean(KEY_NAVBAR_GLASS_ENABLED, false)
         val prefsNavBarGlassBlurStrength = prefs.getFloat(KEY_NAVBAR_GLASS_BLUR_STRENGTH, 0.7f)
@@ -766,6 +813,13 @@ object BackgroundConfig {
         focusCardDeviceBgUri = focusCardDeviceBg
         focusCardStorageBgUri = focusCardStorageBg
         focusCardBgDim = focusCardDim
+        isFocusCardDualDimEnabled = focusCardDualDim
+        focusCardBgDayDim = focusCardDayDim
+        focusCardBgNightDim = focusCardNightDim
+        isFocusCardDualOpacityEnabled = focusCardDualOpacity
+        focusCardBgOpacity = focusCardOpacity
+        focusCardBgDayOpacity = focusCardDayOpacity
+        focusCardBgNightOpacity = focusCardNightOpacity
 
         isNavBarGlassEnabled = navBarGlassEnabled
         navBarGlassBlurStrength = prefsNavBarGlassBlurStrength
@@ -835,6 +889,13 @@ object BackgroundConfig {
         focusCardDeviceBgUri = null
         focusCardStorageBgUri = null
         focusCardBgDim = 0.3f
+        isFocusCardDualDimEnabled = false
+        focusCardBgDayDim = 0.3f
+        focusCardBgNightDim = 0.3f
+        isFocusCardDualOpacityEnabled = false
+        focusCardBgOpacity = 1f
+        focusCardBgDayOpacity = 1f
+        focusCardBgNightOpacity = 1f
 
         isNavBarGlassEnabled = true
         navBarGlassBlurStrength = 0.7f

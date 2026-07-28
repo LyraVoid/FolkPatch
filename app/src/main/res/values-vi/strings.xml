@@ -1152,6 +1152,15 @@ Cần đảm bảo phần mềm thoát hoàn toàn vào mới sẽ thực thi l�
     <string name="color_style_neutral">Trung tính</string>
     <string name="color_style_fidelity">Trung thực</string>
     <string name="settings_focus_card_dim">Độ mờ nền thẻ</string>
+    <string name="settings_focus_card_dual_dim">Bật điều chỉnh độ mờ kép ngày/đêm</string>
+    <string name="settings_focus_card_dual_dim_desc">Tự động điều chỉnh độ mờ nền thẻ cho chủ đề sáng và tối</string>
+    <string name="settings_focus_card_day_dim">Độ mờ nền thẻ chế độ ngày</string>
+    <string name="settings_focus_card_night_dim">Độ mờ nền thẻ chế độ đêm</string>
+    <string name="settings_focus_card_opacity">Độ mờ đục nền thẻ</string>
+    <string name="settings_focus_card_dual_opacity">Bật độ mờ đục kép ngày/đêm</string>
+    <string name="settings_focus_card_dual_opacity_desc">Tự động điều chỉnh độ mờ đục nền thẻ cho chủ đề sáng và tối</string>
+    <string name="settings_focus_card_day_opacity">Độ mờ đục nền thẻ chế độ ngày</string>
+    <string name="settings_focus_card_night_opacity">Độ mờ đục nền thẻ chế độ đêm</string>
     <string name="settings_focus_card_kernel">Thẻ nhân</string>
     <string name="settings_focus_card_app">Thẻ ứng dụng</string>
     <string name="settings_focus_card_device">Thẻ trạng thái thiết bị</string>

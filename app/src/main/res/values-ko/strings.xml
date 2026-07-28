@@ -1167,6 +1167,15 @@
     <string name="color_style_neutral">중립</string>
     <string name="color_style_fidelity">충실도</string>
     <string name="settings_focus_card_dim">카드 배경 어둡게</string>
+    <string name="settings_focus_card_dual_dim">주/야 이중 어두움 활성화</string>
+    <string name="settings_focus_card_dual_dim_desc">밝은 테마와 어두운 테마에 따라 카드 배경 어두움 자동 조정</string>
+    <string name="settings_focus_card_day_dim">주간 모드 카드 배경 어두움</string>
+    <string name="settings_focus_card_night_dim">야간 모드 카드 배경 어두움</string>
+    <string name="settings_focus_card_opacity">카드 배경 불투명도</string>
+    <string name="settings_focus_card_dual_opacity">주/야 이중 불투명도 활성화</string>
+    <string name="settings_focus_card_dual_opacity_desc">밝은 테마와 어두운 테마에 따라 카드 배경 불투명도 자동 조정</string>
+    <string name="settings_focus_card_day_opacity">주간 모드 카드 배경 불투명도</string>
+    <string name="settings_focus_card_night_opacity">야간 모드 카드 배경 불투명도</string>
     <string name="settings_focus_card_kernel">커널 카드</string>
     <string name="settings_focus_card_app">앱 카드</string>
     <string name="settings_focus_card_device">기기 상태 카드</string>

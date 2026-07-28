@@ -1141,6 +1141,15 @@
     <string name="color_style_neutral">محايد</string>
     <string name="color_style_fidelity">دقة</string>
     <string name="settings_focus_card_dim">تعتيم خلفية البطاقة</string>
+    <string name="settings_focus_card_dual_dim">تمكين التعتيم المزدوج للنهار/الليل</string>
+    <string name="settings_focus_card_dual_dim_desc">ضبط تعتيم خلفية البطاقة تلقائياً للسمات الفاتحة والداكنة</string>
+    <string name="settings_focus_card_day_dim">تعتيم خلفية البطاقة في الوضع النهاري</string>
+    <string name="settings_focus_card_night_dim">تعتيم خلفية البطاقة في الوضع الليلي</string>
+    <string name="settings_focus_card_opacity">شفافية خلفية البطاقة</string>
+    <string name="settings_focus_card_dual_opacity">تمكين الشفافية المزدوجة للنهار/الليل</string>
+    <string name="settings_focus_card_dual_opacity_desc">ضبط شفافية خلفية البطاقة تلقائياً للسمات الفاتحة والداكنة</string>
+    <string name="settings_focus_card_day_opacity">شفافية خلفية البطاقة في الوضع النهاري</string>
+    <string name="settings_focus_card_night_opacity">شفافية خلفية البطاقة في الوضع الليلي</string>
     <string name="settings_focus_card_kernel">بطاقة النواة</string>
     <string name="settings_focus_card_app">بطاقة التطبيقات</string>
     <string name="settings_focus_card_device">بطاقة حالة الجهاز</string>

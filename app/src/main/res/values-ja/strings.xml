@@ -1075,6 +1075,15 @@
     <string name="color_style_neutral">ニュートラル</string>
     <string name="color_style_fidelity">フィデリティ</string>
     <string name="settings_focus_card_dim">カード壁紙の暗さ</string>
+    <string name="settings_focus_card_dual_dim">昼/夜デュアル調光を有効化</string>
+    <string name="settings_focus_card_dual_dim_desc">ライトテーマとダークテーマに応じてカード壁紙の暗さを自動調整</string>
+    <string name="settings_focus_card_day_dim">昼モードのカード壁紙の暗さ</string>
+    <string name="settings_focus_card_night_dim">夜モードのカード壁紙の暗さ</string>
+    <string name="settings_focus_card_opacity">カード壁紙の不透明度</string>
+    <string name="settings_focus_card_dual_opacity">昼/夜デュアル透明度を有効化</string>
+    <string name="settings_focus_card_dual_opacity_desc">ライトテーマとダークテーマに応じてカード壁紙の透明度を自動調整</string>
+    <string name="settings_focus_card_day_opacity">昼モードのカード壁紙の透明度</string>
+    <string name="settings_focus_card_night_opacity">夜モードのカード壁紙の透明度</string>
     <string name="settings_focus_card_kernel">カーネルカード</string>
     <string name="settings_focus_card_app">アプリカード</string>
     <string name="settings_focus_card_device">デバイス状態カード</string>

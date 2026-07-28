@@ -717,6 +717,15 @@
     <string name="focus_card_background_cleared">卡片壁纸已清除</string>
     <string name="focus_card_permission_required">请先授予存储权限才能选择壁纸</string>
     <string name="settings_focus_card_dim">卡片壁纸暗度</string>
+    <string name="settings_focus_card_dual_dim">启用昼夜双暗度</string>
+    <string name="settings_focus_card_dual_dim_desc">自动根据明暗主题调整卡片壁纸暗度</string>
+    <string name="settings_focus_card_day_dim">日间模式卡片壁纸暗度</string>
+    <string name="settings_focus_card_night_dim">夜间模式卡片壁纸暗度</string>
+    <string name="settings_focus_card_opacity">卡片壁纸透明度</string>
+    <string name="settings_focus_card_dual_opacity">启用昼夜双透明度</string>
+    <string name="settings_focus_card_dual_opacity_desc">自动根据明暗主题调整卡片壁纸透明度</string>
+    <string name="settings_focus_card_day_opacity">日间模式卡片壁纸透明度</string>
+    <string name="settings_focus_card_night_opacity">夜间模式卡片壁纸透明度</string>
     <string name="settings_focus_card_kernel">内核卡片</string>
     <string name="settings_focus_card_app">应用卡片</string>
     <string name="settings_focus_card_device">设备状态卡片</string>

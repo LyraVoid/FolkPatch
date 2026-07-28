@@ -804,6 +804,15 @@ Please ensure the app is completely closed and reopened for the commands to exec
     <string name="focus_card_background_cleared">Card wallpaper cleared</string>
     <string name="focus_card_permission_required">Please grant storage permission to select a wallpaper</string>
     <string name="settings_focus_card_dim">Card Wallpaper Dim</string>
+    <string name="settings_focus_card_dual_dim">Enable dual day/night dim</string>
+    <string name="settings_focus_card_dual_dim_desc">Automatically adjust card wallpaper dim for light and dark themes</string>
+    <string name="settings_focus_card_day_dim">Day mode card wallpaper dim</string>
+    <string name="settings_focus_card_night_dim">Night mode card wallpaper dim</string>
+    <string name="settings_focus_card_opacity">Card wallpaper opacity</string>
+    <string name="settings_focus_card_dual_opacity">Enable dual day/night opacity</string>
+    <string name="settings_focus_card_dual_opacity_desc">Automatically adjust card wallpaper opacity for light and dark themes</string>
+    <string name="settings_focus_card_day_opacity">Day mode card wallpaper opacity</string>
+    <string name="settings_focus_card_night_opacity">Night mode card wallpaper opacity</string>
     <string name="settings_focus_card_kernel">Kernel Card</string>
     <string name="settings_focus_card_app">App Card</string>
     <string name="settings_focus_card_device">Device Status Card</string>

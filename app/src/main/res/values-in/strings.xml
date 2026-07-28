@@ -1135,6 +1135,15 @@ Pastikan aplikasi ditutup sepenuhnya dan dimulai ulang untuk menjalankan perinta
     <string name="color_style_neutral">Netral</string>
     <string name="color_style_fidelity">Fidelitas</string>
     <string name="settings_focus_card_dim">Keredupan latar kartu</string>
+    <string name="settings_focus_card_dual_dim">Aktifkan peredupan ganda siang/malam</string>
+    <string name="settings_focus_card_dual_dim_desc">Sesuaikan keredupan latar kartu secara otomatis untuk tema terang dan gelap</string>
+    <string name="settings_focus_card_day_dim">Keredupan latar kartu mode siang</string>
+    <string name="settings_focus_card_night_dim">Keredupan latar kartu mode malam</string>
+    <string name="settings_focus_card_opacity">Opasitas latar kartu</string>
+    <string name="settings_focus_card_dual_opacity">Aktifkan opasitas ganda siang/malam</string>
+    <string name="settings_focus_card_dual_opacity_desc">Sesuaikan opasitas latar kartu secara otomatis untuk tema terang dan gelap</string>
+    <string name="settings_focus_card_day_opacity">Opasitas latar kartu mode siang</string>
+    <string name="settings_focus_card_night_opacity">Opasitas latar kartu mode malam</string>
     <string name="settings_focus_card_kernel">Kartu kernel</string>
     <string name="settings_focus_card_app">Kartu aplikasi</string>
     <string name="settings_focus_card_device">Kartu status perangkat</string>

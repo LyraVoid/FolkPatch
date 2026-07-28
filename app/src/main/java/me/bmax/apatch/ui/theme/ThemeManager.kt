@@ -99,8 +99,15 @@ object ThemeManager {
         val titleImageNightOpacity: Float = 1.0f,
         val titleImageDim: Float = 0.0f,
         val titleImageOffsetX: Float = 0f,
-        // FocusUI Card Wallpapers
-        val focusCardBgDim: Float = 0.3f,
+         // FocusUI Card Wallpapers
+         val focusCardBgDim: Float = 0.3f,
+         val isFocusCardDualDimEnabled: Boolean = false,
+         val focusCardBgDayDim: Float = 0.3f,
+         val focusCardBgNightDim: Float = 0.3f,
+         val isFocusCardDualOpacityEnabled: Boolean = false,
+         val focusCardBgOpacity: Float = 1.0f,
+         val focusCardBgDayOpacity: Float = 1.0f,
+         val focusCardBgNightOpacity: Float = 1.0f,
         val hasFocusCardKernelBg: Boolean = false,
         val hasFocusCardAppBg: Boolean = false,
         val hasFocusCardDeviceBg: Boolean = false,
@@ -170,8 +177,15 @@ object ThemeManager {
                     titleImageNightOpacity = BackgroundConfig.titleImageNightOpacity,
                     titleImageDim = BackgroundConfig.titleImageDim,
                     titleImageOffsetX = BackgroundConfig.titleImageOffsetX,
-                    // FocusUI Card Wallpapers
-                    focusCardBgDim = BackgroundConfig.focusCardBgDim,
+                     // FocusUI Card Wallpapers
+                     focusCardBgDim = BackgroundConfig.focusCardBgDim,
+                     isFocusCardDualDimEnabled = BackgroundConfig.isFocusCardDualDimEnabled,
+                     focusCardBgDayDim = BackgroundConfig.focusCardBgDayDim,
+                     focusCardBgNightDim = BackgroundConfig.focusCardBgNightDim,
+                     isFocusCardDualOpacityEnabled = BackgroundConfig.isFocusCardDualOpacityEnabled,
+                     focusCardBgOpacity = BackgroundConfig.focusCardBgOpacity,
+                     focusCardBgDayOpacity = BackgroundConfig.focusCardBgDayOpacity,
+                     focusCardBgNightOpacity = BackgroundConfig.focusCardBgNightOpacity,
                     hasFocusCardKernelBg = BackgroundConfig.focusCardKernelBgUri != null,
                     hasFocusCardAppBg = BackgroundConfig.focusCardAppBgUri != null,
                     hasFocusCardDeviceBg = BackgroundConfig.focusCardDeviceBgUri != null,
@@ -237,8 +251,15 @@ object ThemeManager {
                     put("titleImageDim", config.titleImageDim.toDouble())
                     put("titleImageOffsetX", config.titleImageOffsetX.toDouble())
 
-                    // FocusUI Card Wallpapers
-                    put("focusCardBgDim", config.focusCardBgDim.toDouble())
+                     // FocusUI Card Wallpapers
+                     put("focusCardBgDim", config.focusCardBgDim.toDouble())
+                     put("isFocusCardDualDimEnabled", config.isFocusCardDualDimEnabled)
+                     put("focusCardBgDayDim", config.focusCardBgDayDim.toDouble())
+                     put("focusCardBgNightDim", config.focusCardBgNightDim.toDouble())
+                     put("isFocusCardDualOpacityEnabled", config.isFocusCardDualOpacityEnabled)
+                     put("focusCardBgOpacity", config.focusCardBgOpacity.toDouble())
+                     put("focusCardBgDayOpacity", config.focusCardBgDayOpacity.toDouble())
+                     put("focusCardBgNightOpacity", config.focusCardBgNightOpacity.toDouble())
                     put("hasFocusCardKernelBg", config.hasFocusCardKernelBg)
                     put("hasFocusCardAppBg", config.hasFocusCardAppBg)
                     put("hasFocusCardDeviceBg", config.hasFocusCardDeviceBg)
@@ -602,8 +623,15 @@ object ThemeManager {
                 val titleImageDim = json.optDouble("titleImageDim", 0.0).toFloat()
                 val titleImageOffsetX = json.optDouble("titleImageOffsetX", 0.0).toFloat()
 
-                // FocusUI Card Wallpapers
-                val focusCardBgDim = json.optDouble("focusCardBgDim", 0.3).toFloat()
+                 // FocusUI Card Wallpapers
+                 val focusCardBgDim = json.optDouble("focusCardBgDim", 0.3).toFloat()
+                 val isFocusCardDualDimEnabled = json.optBoolean("isFocusCardDualDimEnabled", false)
+                 val focusCardBgDayDim = json.optDouble("focusCardBgDayDim", focusCardBgDim.toDouble()).toFloat()
+                 val focusCardBgNightDim = json.optDouble("focusCardBgNightDim", focusCardBgDim.toDouble()).toFloat()
+                 val isFocusCardDualOpacityEnabled = json.optBoolean("isFocusCardDualOpacityEnabled", false)
+                 val focusCardBgOpacity = json.optDouble("focusCardBgOpacity", 1.0).toFloat()
+                 val focusCardBgDayOpacity = json.optDouble("focusCardBgDayOpacity", focusCardBgOpacity.toDouble()).toFloat()
+                 val focusCardBgNightOpacity = json.optDouble("focusCardBgNightOpacity", focusCardBgOpacity.toDouble()).toFloat()
                 val hasFocusCardKernelBg = json.optBoolean("hasFocusCardKernelBg", false)
                 val hasFocusCardAppBg = json.optBoolean("hasFocusCardAppBg", false)
                 val hasFocusCardDeviceBg = json.optBoolean("hasFocusCardDeviceBg", false)
@@ -814,8 +842,15 @@ object ThemeManager {
                     BackgroundConfig.updateTitleImageUri(null)
                 }
 
-                // Apply FocusUI Card Wallpapers
-                BackgroundConfig.setFocusCardBgDimValue(focusCardBgDim)
+                 // Apply FocusUI Card Wallpapers
+                 BackgroundConfig.setFocusCardBgDimValue(focusCardBgDim)
+                 BackgroundConfig.setFocusCardDualDimEnabledState(isFocusCardDualDimEnabled)
+                 BackgroundConfig.setFocusCardBgDayDimValue(focusCardBgDayDim)
+                 BackgroundConfig.setFocusCardBgNightDimValue(focusCardBgNightDim)
+                 BackgroundConfig.setFocusCardDualOpacityEnabledState(isFocusCardDualOpacityEnabled)
+                 BackgroundConfig.setFocusCardBgOpacityValue(focusCardBgOpacity)
+                 BackgroundConfig.setFocusCardBgDayOpacityValue(focusCardBgDayOpacity)
+                 BackgroundConfig.setFocusCardBgNightOpacityValue(focusCardBgNightOpacity)
 
                 val focusCardImports = listOf(
                     "focus_card_kernel_bg" to (BackgroundConfig.FOCUS_CARD_KERNEL to hasFocusCardKernelBg),

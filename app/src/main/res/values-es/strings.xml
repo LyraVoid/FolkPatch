@@ -1156,6 +1156,15 @@ Por ejemplo, los KPM que previenen la modificación de particiones solo pueden u
     <string name="color_style_neutral">Neutro</string>
     <string name="color_style_fidelity">Fidelidad</string>
     <string name="settings_focus_card_dim">Oscurecimiento del fondo de la tarjeta</string>
+    <string name="settings_focus_card_dual_dim">Activar atenuación dual día/noche</string>
+    <string name="settings_focus_card_dual_dim_desc">Ajustar automáticamente el oscurecimiento del fondo según el tema claro u oscuro</string>
+    <string name="settings_focus_card_day_dim">Atenuación de fondo en modo día</string>
+    <string name="settings_focus_card_night_dim">Atenuación de fondo en modo noche</string>
+    <string name="settings_focus_card_opacity">Opacidad del fondo de la tarjeta</string>
+    <string name="settings_focus_card_dual_opacity">Activar opacidad dual día/noche</string>
+    <string name="settings_focus_card_dual_opacity_desc">Ajustar automáticamente la opacidad del fondo según el tema claro u oscuro</string>
+    <string name="settings_focus_card_day_opacity">Opacidad de fondo en modo día</string>
+    <string name="settings_focus_card_night_opacity">Opacidad de fondo en modo noche</string>
     <string name="settings_focus_card_kernel">Tarjeta del kernel</string>
     <string name="settings_focus_card_app">Tarjeta de aplicaciones</string>
     <string name="settings_focus_card_device">Tarjeta de estado del dispositivo</string>

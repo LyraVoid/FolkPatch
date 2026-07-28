@@ -739,6 +739,15 @@
     <string name="focus_card_background_cleared">卡片桌布已清除</string>
     <string name="focus_card_permission_required">請先授予儲存權限才能選擇桌布</string>
     <string name="settings_focus_card_dim">卡片桌布暗度</string>
+    <string name="settings_focus_card_dual_dim">啟用晝夜雙暗度</string>
+    <string name="settings_focus_card_dual_dim_desc">自動根據明暗主題調整卡片桌布暗度</string>
+    <string name="settings_focus_card_day_dim">日間模式卡片桌布暗度</string>
+    <string name="settings_focus_card_night_dim">夜間模式卡片桌布暗度</string>
+    <string name="settings_focus_card_opacity">卡片桌布透明度</string>
+    <string name="settings_focus_card_dual_opacity">啟用晝夜雙透明度</string>
+    <string name="settings_focus_card_dual_opacity_desc">自動根據明暗主題調整卡片桌布透明度</string>
+    <string name="settings_focus_card_day_opacity">日間模式卡片桌布透明度</string>
+    <string name="settings_focus_card_night_opacity">夜間模式卡片桌布透明度</string>
     <string name="settings_focus_card_kernel">核心卡片</string>
     <string name="settings_focus_card_app">應用卡片</string>
     <string name="settings_focus_card_device">裝置狀態卡片</string>

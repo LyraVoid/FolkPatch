@@ -1139,6 +1139,15 @@
     <string name="color_style_neutral">中立魔法</string>
     <string name="color_style_fidelity">保真魔法</string>
     <string name="settings_focus_card_dim">卡片壁纸暗度</string>
+    <string name="settings_focus_card_dual_dim">开启昼夜双暗度魔法</string>
+    <string name="settings_focus_card_dual_dim_desc">自动随明暗主题调整卡片壁纸暗度</string>
+    <string name="settings_focus_card_day_dim">白日模式卡片壁纸暗度</string>
+    <string name="settings_focus_card_night_dim">暗夜模式卡片壁纸暗度</string>
+    <string name="settings_focus_card_opacity">卡片壁纸透明度</string>
+    <string name="settings_focus_card_dual_opacity">开启昼夜双透明度魔法</string>
+    <string name="settings_focus_card_dual_opacity_desc">自动随明暗主题调整卡片壁纸透明度</string>
+    <string name="settings_focus_card_day_opacity">白日模式卡片壁纸透明度</string>
+    <string name="settings_focus_card_night_opacity">暗夜模式卡片壁纸透明度</string>
     <string name="settings_focus_card_kernel">内核卡片</string>
     <string name="settings_focus_card_app">应用卡片</string>
     <string name="settings_focus_card_device">设备状态卡片</string>

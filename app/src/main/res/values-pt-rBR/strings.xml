@@ -1154,6 +1154,15 @@ Por favor, certifique-se de fechar completamente o app e reabri-lo para que os c
     <string name="color_style_neutral">Neutro</string>
     <string name="color_style_fidelity">Fidelidade</string>
     <string name="settings_focus_card_dim">Escurecimento do papel de parede do cartão</string>
+    <string name="settings_focus_card_dual_dim">Ativar escurecimento duplo dia/noite</string>
+    <string name="settings_focus_card_dual_dim_desc">Ajustar automaticamente o escurecimento do papel de parede para temas claro e escuro</string>
+    <string name="settings_focus_card_day_dim">Escurecimento do papel de parede no modo dia</string>
+    <string name="settings_focus_card_night_dim">Escurecimento do papel de parede no modo noite</string>
+    <string name="settings_focus_card_opacity">Opacidade do papel de parede do cartão</string>
+    <string name="settings_focus_card_dual_opacity">Ativar opacidade dupla dia/noite</string>
+    <string name="settings_focus_card_dual_opacity_desc">Ajustar automaticamente a opacidade do papel de parede para temas claro e escuro</string>
+    <string name="settings_focus_card_day_opacity">Opacidade do papel de parede no modo dia</string>
+    <string name="settings_focus_card_night_opacity">Opacidade do papel de parede no modo noite</string>
     <string name="settings_focus_card_kernel">Cartão do kernel</string>
     <string name="settings_focus_card_app">Cartão de aplicativos</string>
     <string name="settings_focus_card_device">Cartão de status do dispositivo</string>

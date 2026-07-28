@@ -11,6 +11,7 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Android
 import androidx.compose.material.icons.outlined.BatteryStd
@@ -571,6 +572,16 @@ private fun MagiskStyleCard(
     // FocusUI卡片壁纸状态
     val cardBgUri = if (cardId != null) BackgroundConfig.getFocusCardBgUri(cardId) else null
     val hasCardWallpaper = !cardBgUri.isNullOrEmpty()
+    // Match APatchTheme: manual light/dark mode must not be replaced by the
+    // device configuration when the app is not following the system.
+    val prefs = APApplication.sharedPreferences
+    val isDarkTheme = if (prefs.getBoolean("night_mode_follow_sys", false)) {
+        isSystemInDarkTheme()
+    } else {
+        prefs.getBoolean("night_mode_enabled", true)
+    }
+    val cardBgDim = BackgroundConfig.getEffectiveFocusCardBgDim(isDarkTheme)
+    val cardBgOpacity = BackgroundConfig.getEffectiveFocusCardBgOpacity(isDarkTheme)
 
     // 长按对话框状态
     var showBgOptionsDialog by remember { mutableStateOf(false) }
@@ -657,13 +668,14 @@ private fun MagiskStyleCard(
                     ),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier.matchParentSize()
+                        modifier = Modifier.matchParentSize()
+                            .alpha(cardBgOpacity)
                 )
                 // 暗度层，保证文字在壁纸上的可读性
                 Box(
                     modifier = Modifier
                         .matchParentSize()
-                        .background(Color.Black.copy(alpha = BackgroundConfig.focusCardBgDim))
+                        .background(Color.Black.copy(alpha = cardBgDim))
                 )
             }
 

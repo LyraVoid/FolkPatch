@@ -61,6 +61,7 @@ import me.bmax.apatch.ui.component.ExpressiveCard
 import me.bmax.apatch.ui.component.ExpressiveSwitch
 import me.bmax.apatch.ui.component.SwitchIconState
 import me.bmax.apatch.ui.component.FilePickerDialog
+import me.bmax.apatch.ui.component.DualBackgroundSettings
 
 import me.bmax.apatch.ui.component.SplicedColumnGroup
 import me.bmax.apatch.ui.component.ToggleSettingCard
@@ -1544,59 +1545,28 @@ fun AppearanceSettingsContent(
                 }
 
                 if (BackgroundConfig.isGridWorkingCardBackgroundEnabled) {
-                    item(key = "appearance_grid_dual_opacity") {
-                        ToggleSettingCard(
-                            flat = flat,
-                            icon = Icons.Filled.Contrast,
-                            title = stringResource(id = R.string.settings_grid_working_card_dual_opacity),
-                            description = stringResource(id = R.string.settings_grid_working_card_dual_opacity_desc),
-                            checked = BackgroundConfig.isGridDualOpacityEnabled,
-                            onCheckedChange = {
-                                BackgroundConfig.setGridDualOpacityEnabledState(it)
-                                BackgroundConfig.save(context)
-                            },
-                        )
-                    }
-
-                    if (!BackgroundConfig.isGridDualOpacityEnabled) {
-                        item(key = "appearance_grid_opacity") {
-                            SliderSettingCard(
-                                flat = flat,
-                                title = stringResource(id = R.string.settings_custom_background_opacity),
-                                value = BackgroundConfig.gridWorkingCardBackgroundOpacity,
-                                onValueChange = { BackgroundConfig.setGridWorkingCardBackgroundOpacityValue(it) },
-                                onValueChangeFinished = { BackgroundConfig.save(context) },
-                            )
-                        }
-                    } else {
-                        item(key = "appearance_grid_day_opacity") {
-                            SliderSettingCard(
-                                flat = flat,
-                                title = stringResource(id = R.string.settings_grid_working_card_day_opacity),
-                                value = BackgroundConfig.gridWorkingCardBackgroundDayOpacity,
-                                onValueChange = { BackgroundConfig.setGridWorkingCardBackgroundDayOpacityValue(it) },
-                                onValueChangeFinished = { BackgroundConfig.save(context) },
-                            )
-                        }
-
-                        item(key = "appearance_grid_night_opacity") {
-                            SliderSettingCard(
-                                flat = flat,
-                                title = stringResource(id = R.string.settings_grid_working_card_night_opacity),
-                                value = BackgroundConfig.gridWorkingCardBackgroundNightOpacity,
-                                onValueChange = { BackgroundConfig.setGridWorkingCardBackgroundNightOpacityValue(it) },
-                                onValueChangeFinished = { BackgroundConfig.save(context) },
-                            )
-                        }
-                    }
-
                     item(key = "appearance_grid_dim") {
-                        SliderSettingCard(
+                        DualBackgroundSettings(
                             flat = flat,
-                            title = stringResource(id = R.string.settings_custom_background_dim),
-                            value = BackgroundConfig.gridWorkingCardBackgroundDim,
-                            onValueChange = { BackgroundConfig.setGridWorkingCardBackgroundDimValue(it) },
-                            onValueChangeFinished = { BackgroundConfig.save(context) },
+                            dualDimEnabled = false,
+                            onDualDimEnabledChange = {},
+                            dim = BackgroundConfig.gridWorkingCardBackgroundDim,
+                            onDimChange = { BackgroundConfig.setGridWorkingCardBackgroundDimValue(it) },
+                            dayDim = 0f,
+                            onDayDimChange = {},
+                            nightDim = 0f,
+                            onNightDimChange = {},
+                            dualOpacityEnabled = BackgroundConfig.isGridDualOpacityEnabled,
+                            onDualOpacityEnabledChange = { BackgroundConfig.setGridDualOpacityEnabledState(it) },
+                            opacity = BackgroundConfig.gridWorkingCardBackgroundOpacity,
+                            onOpacityChange = { BackgroundConfig.setGridWorkingCardBackgroundOpacityValue(it) },
+                            dayOpacity = BackgroundConfig.gridWorkingCardBackgroundDayOpacity,
+                            onDayOpacityChange = { BackgroundConfig.setGridWorkingCardBackgroundDayOpacityValue(it) },
+                            nightOpacity = BackgroundConfig.gridWorkingCardBackgroundNightOpacity,
+                            onNightOpacityChange = { BackgroundConfig.setGridWorkingCardBackgroundNightOpacityValue(it) },
+                            save = { BackgroundConfig.save(context) },
+                            keyPrefix = "grid_card",
+                            showDualDim = false,
                         )
                     }
 
@@ -1736,14 +1706,36 @@ fun AppearanceSettingsContent(
             // ==================== FocusUI卡片壁纸设置 ====================
             // 仅在Focus布局样式下显示，支持为4个卡片（内核/应用/设备/存储）各自设置独立壁纸
             if (isFocusStyle) {
-                // 卡片壁纸暗度调节（保证壁纸上文字的可读性）
-                item(key = "appearance_focus_card_dim") {
-                    SliderSettingCard(
+                item(key = "appearance_focus_card_dual_background") {
+                    DualBackgroundSettings(
                         flat = flat,
-                        title = stringResource(id = R.string.settings_focus_card_dim),
-                        value = BackgroundConfig.focusCardBgDim,
-                        onValueChange = { BackgroundConfig.setFocusCardBgDimValue(it) },
-                        onValueChangeFinished = { BackgroundConfig.save(context) },
+                        dualDimEnabled = BackgroundConfig.isFocusCardDualDimEnabled,
+                        onDualDimEnabledChange = { BackgroundConfig.setFocusCardDualDimEnabledState(it) },
+                        dim = BackgroundConfig.focusCardBgDim,
+                        onDimChange = { BackgroundConfig.setFocusCardBgDimValue(it) },
+                        dayDim = BackgroundConfig.focusCardBgDayDim,
+                        onDayDimChange = { BackgroundConfig.setFocusCardBgDayDimValue(it) },
+                        nightDim = BackgroundConfig.focusCardBgNightDim,
+                        onNightDimChange = { BackgroundConfig.setFocusCardBgNightDimValue(it) },
+                        dualOpacityEnabled = BackgroundConfig.isFocusCardDualOpacityEnabled,
+                        onDualOpacityEnabledChange = { BackgroundConfig.setFocusCardDualOpacityEnabledState(it) },
+                        opacity = BackgroundConfig.focusCardBgOpacity,
+                        onOpacityChange = { BackgroundConfig.setFocusCardBgOpacityValue(it) },
+                        dayOpacity = BackgroundConfig.focusCardBgDayOpacity,
+                        onDayOpacityChange = { BackgroundConfig.setFocusCardBgDayOpacityValue(it) },
+                        nightOpacity = BackgroundConfig.focusCardBgNightOpacity,
+                        onNightOpacityChange = { BackgroundConfig.setFocusCardBgNightOpacityValue(it) },
+                        save = { BackgroundConfig.save(context) },
+                        keyPrefix = "focus_card",
+                        dualDimTitle = stringResource(R.string.settings_focus_card_dual_dim),
+                        dualDimDescription = stringResource(R.string.settings_focus_card_dual_dim_desc),
+                        opacityTitle = stringResource(R.string.settings_focus_card_opacity),
+                        dayDimTitle = stringResource(R.string.settings_focus_card_day_dim),
+                        nightDimTitle = stringResource(R.string.settings_focus_card_night_dim),
+                        dualOpacityTitle = stringResource(R.string.settings_focus_card_dual_opacity),
+                        dualOpacityDescription = stringResource(R.string.settings_focus_card_dual_opacity_desc),
+                        dayOpacityTitle = stringResource(R.string.settings_focus_card_day_opacity),
+                        nightOpacityTitle = stringResource(R.string.settings_focus_card_night_opacity),
                     )
                 }
 

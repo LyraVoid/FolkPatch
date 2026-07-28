@@ -1158,6 +1158,15 @@ Komutların çalışması için uygulamanın tamamen kapatılıp yeniden açıld
     <string name="color_style_neutral">Nötr</string>
     <string name="color_style_fidelity">Sadakat</string>
     <string name="settings_focus_card_dim">Kart duvar kağıdı karartması</string>
+    <string name="settings_focus_card_dual_dim">Çift gün/gece karartmayı etkinleştir</string>
+    <string name="settings_focus_card_dual_dim_desc">Açık ve koyu temalar için kart duvar kağıdı karartmasını otomatik ayarla</string>
+    <string name="settings_focus_card_day_dim">Gündüz modunda kart duvar kağıdı karartması</string>
+    <string name="settings_focus_card_night_dim">Gece modunda kart duvar kağıdı karartması</string>
+    <string name="settings_focus_card_opacity">Kart duvar kağıdı opaklığı</string>
+    <string name="settings_focus_card_dual_opacity">Çift gün/gece opaklığını etkinleştir</string>
+    <string name="settings_focus_card_dual_opacity_desc">Açık ve koyu temalar için kart duvar kağıdı opaklığını otomatik ayarla</string>
+    <string name="settings_focus_card_day_opacity">Gündüz modunda kart duvar kağıdı opaklığı</string>
+    <string name="settings_focus_card_night_opacity">Gece modunda kart duvar kağıdı opaklığı</string>
     <string name="settings_focus_card_kernel">Çekirdek kartı</string>
     <string name="settings_focus_card_app">Uygulama kartı</string>
     <string name="settings_focus_card_device">Cihaz durumu kartı</string>
