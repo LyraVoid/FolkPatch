@@ -40,6 +40,19 @@ import android.os.Build
 import me.bmax.apatch.apApp
 import me.bmax.apatch.util.Version.getManagerVersion
 import me.bmax.apatch.util.ui.HomeBottomSpacer
+import android.content.ActivityNotFoundException
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.ui.input.pointer.pointerInput
+import kotlinx.coroutines.launch
+import me.bmax.apatch.ui.component.BackgroundOptionsDialog
+import me.bmax.apatch.ui.component.rememberConfirmDialog
+import me.bmax.apatch.ui.theme.BackgroundManager
+import me.bmax.apatch.util.PermissionUtils
+import me.bmax.apatch.util.ui.showToast
 
 private val managerVersion = getManagerVersion()
 
@@ -220,9 +233,49 @@ fun StatusCardBig(
     // Let's assume white text for image background with dimming
     val contentColor = if (useCustomGridBg) Color.White else baseContentColor
 
+    // Long-press card options (only when working and card background feature enabled)
+    val scope = rememberCoroutineScope()
+    var showCardOptionsDialog by remember { mutableStateOf(false) }
+    val isLongPressEnabled = isWorking && BackgroundConfig.isGridWorkingCardBackgroundEnabled
+
+    val pickGridImageLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let {
+            scope.launch {
+                val success = BackgroundManager.saveAndApplyGridWorkingCardBackground(context, it)
+                if (success) {
+                    showToast(context, R.string.settings_grid_working_card_background_saved)
+                } else {
+                    showToast(context, R.string.settings_grid_working_card_background_error)
+                }
+            }
+        }
+    }
+
+    val clearGridBackgroundDialog = rememberConfirmDialog(
+        onConfirm = {
+            scope.launch {
+                BackgroundManager.clearGridWorkingCardBackground(context)
+                showToast(context, context.getString(R.string.settings_grid_working_card_background_cleared))
+            }
+        }
+    )
+
     Card(
-        onClick = onClick,
-        modifier = modifier,
+        modifier = modifier
+            .then(
+                if (isLongPressEnabled) {
+                    Modifier.pointerInput(Unit) {
+                        detectTapGestures(
+                            onTap = { onClick() },
+                            onLongPress = { showCardOptionsDialog = true }
+                        )
+                    }
+                } else {
+                    Modifier.clickable { onClick() }
+                }
+            ),
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(containerColor = containerColor)
     ) {
@@ -313,6 +366,34 @@ fun StatusCardBig(
             }
         }
     }
+
+    // Card Options Dialog
+    BackgroundOptionsDialog(
+        showDialog = showCardOptionsDialog,
+        onDismiss = { showCardOptionsDialog = false },
+        title = stringResource(R.string.settings_grid_working_card_background),
+        selectLabel = stringResource(R.string.settings_select_background_image),
+        clearLabel = stringResource(R.string.settings_clear_grid_working_card_background),
+        hasExisting = !BackgroundConfig.gridWorkingCardBackgroundUri.isNullOrEmpty(),
+        onSelectImage = {
+            if (PermissionUtils.hasExternalStoragePermission(context)) {
+                try {
+                    pickGridImageLauncher.launch("image/*")
+                } catch (e: ActivityNotFoundException) {
+                    showToast(context, e.message ?: "")
+                }
+            } else {
+                showToast(context, "请先授予存储权限才能选择背景图片")
+            }
+        },
+        onClearImage = {
+            clearGridBackgroundDialog.showConfirm(
+                title = context.getString(R.string.settings_clear_grid_working_card_background),
+                content = context.getString(R.string.settings_clear_grid_working_card_background_confirm),
+                markdown = false,
+            )
+        },
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -145,6 +145,7 @@ import me.bmax.apatch.ui.component.ModuleRemoveButton
 import me.bmax.apatch.ui.component.ModuleStateIndicator
 import me.bmax.apatch.ui.component.ModuleUpdateButton
 import me.bmax.apatch.ui.component.SearchAppBar
+import me.bmax.apatch.ui.component.BackgroundOptionsDialog
 import me.bmax.apatch.ui.component.rememberConfirmDialog
 import me.bmax.apatch.ui.component.rememberLoadingDialog
 import me.bmax.apatch.ui.viewmodel.APModuleViewModel
@@ -1915,60 +1916,39 @@ private fun ModuleItem(
         )
     }
 
-    if (showFolkBannerDialog) {
-        AlertDialog(
-            onDismissRequest = { showFolkBannerDialog = false },
-            title = { Text(folkBannerTitle) },
-            text = {
-                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    Button(
-                        onClick = {
-                            showFolkBannerDialog = false
-                            pickFolkBannerLauncher.launch("image/*")
-                        },
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text(folkBannerSelect)
-                    }
-                    if (hasFolkBanner) {
-                        Button(
-                            onClick = {
-                                showFolkBannerDialog = false
-                                scope.launch {
-                                    loadingDialog.show()
-                                    val success = withContext(Dispatchers.IO) {
-                                        runCatching {
-                                            val localCleared = clearFolkBanner(context, module.id)
-                                            val legacyCleared = runCatching {
-                                                val rootShell = getRootShell(true)
-                                                val resolvedDir = resolveModuleDir(rootShell, module.id)
-                                                clearLegacyFolkBanner(rootShell, resolvedDir)
-                                            }.getOrDefault(false)
-                                            localCleared || legacyCleared
-                                        }.getOrDefault(false)
-                                    }
-                                    loadingDialog.hide()
-                                    if (success) {
-                                        viewModel.removeBannerInfo(module.id)
-                                        bannerReloadKey++
-                                        snackBarHost.showSnackbar(folkBannerCleared.format(module.name))
-                                    } else {
-                                        snackBarHost.showSnackbar(folkBannerFailed.format(module.name))
-                                    }
-                                }
-                            },
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text(folkBannerClear)
-                        }
-                    }
+    BackgroundOptionsDialog(
+        showDialog = showFolkBannerDialog,
+        onDismiss = { showFolkBannerDialog = false },
+        title = folkBannerTitle,
+        selectLabel = folkBannerSelect,
+        clearLabel = folkBannerClear,
+        hasExisting = hasFolkBanner,
+        onSelectImage = {
+            pickFolkBannerLauncher.launch("image/*")
+        },
+        onClearImage = {
+            scope.launch {
+                loadingDialog.show()
+                val success = withContext(Dispatchers.IO) {
+                    runCatching {
+                        val localCleared = clearFolkBanner(context, module.id)
+                        val legacyCleared = runCatching {
+                            val rootShell = getRootShell(true)
+                            val resolvedDir = resolveModuleDir(rootShell, module.id)
+                            clearLegacyFolkBanner(rootShell, resolvedDir)
+                        }.getOrDefault(false)
+                        localCleared || legacyCleared
+                    }.getOrDefault(false)
                 }
-            },
-            confirmButton = {
-                TextButton(onClick = { showFolkBannerDialog = false }) {
-                    Text(stringResource(android.R.string.cancel))
+                loadingDialog.hide()
+                if (success) {
+                    viewModel.removeBannerInfo(module.id)
+                    bannerReloadKey++
+                    snackBarHost.showSnackbar(folkBannerCleared.format(module.name))
+                } else {
+                    snackBarHost.showSnackbar(folkBannerFailed.format(module.name))
                 }
             }
-        )
-    }
+        }
+    )
 }
