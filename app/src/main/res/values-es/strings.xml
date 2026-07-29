@@ -347,7 +347,7 @@
     <string name="apm_enable_module_banner_summary">Mostrar imagen de banner para módulos si está disponible</string>
     <string name="apm_enable_folk_banner">Personalizar banner de módulo</string>
     <string name="apm_enable_folk_banner_summary">Presiona largo en la tarjeta del módulo para seleccionar la imagen del banner</string>
-    <string name="apm_folk_banner_title">FolkBanner</string>
+    <string name="apm_folk_banner_title">Editor de módulos</string>
     <string name="apm_folk_banner_select">Seleccionar imagen</string>
     <string name="apm_folk_banner_clear">Limpiar FolkBanner</string>
     <string name="apm_folk_banner_saved">FolkBanner inyectado para %s.</string>
@@ -747,6 +747,7 @@ Por ejemplo, los KPM que previenen la modificación de particiones solo pueden u
     <!-- Biometric Strings -->
     <string name="action_biometric">Autenticación Biométrica</string>
     <string name="msg_biometric">Por favor verifica tu identidad biométrica</string>
+    <string name="msg_enable_biometric">¿Activar autenticación biométrica para solicitar verificación al abrir la aplicación?</string>
     <string name="settings_biometric_login">Autenticación Biométrica</string>
     <string name="settings_biometric_login_summary">Requerir autenticación biométrica al abrir la app</string>
     <string name="settings_strong_biometric">Autenticación biométrica fuerte</string>
@@ -1206,4 +1207,13 @@ Por ejemplo, los KPM que previenen la modificación de particiones solo pueden u
     <string name="settings_dashboard_card_dual_opacity_desc">Ajustar automáticamente la opacidad del fondo del panel según el tema claro u oscuro</string>
     <string name="settings_dashboard_card_day_opacity">Opacidad del fondo del panel en modo día</string>
     <string name="settings_dashboard_card_night_opacity">Opacidad del fondo del panel en modo noche</string>
+    <string name="folk_banner_custom_info_title">Info del módulo</string>
+    <string name="folk_banner_custom_info_name">Nombre</string>
+    <string name="folk_banner_custom_info_version">Versión</string>
+    <string name="folk_banner_custom_info_author">Autor</string>
+    <string name="folk_banner_custom_info_description">Descripción</string>
+    <string name="folk_banner_custom_info_save">Guardar</string>
+    <string name="folk_banner_custom_info_reset">Restablecer</string>
+    <string name="folk_banner_custom_info_saved">Info del módulo guardada para %s</string>
+    <string name="folk_banner_custom_info_reset_done">Info del módulo restablecida para %s</string>
 </resources>

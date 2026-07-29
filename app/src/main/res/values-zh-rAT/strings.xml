@@ -337,12 +337,21 @@
     <string name="apm_enable_module_banner_summary">为支持的圣光阵显示横幅图片</string>
     <string name="apm_enable_folk_banner">自定义圣光阵横幅</string>
     <string name="apm_enable_folk_banner_summary">长按圣光阵卡片自选横幅图片</string>
-    <string name="apm_folk_banner_title">FolkBanner</string>
+    <string name="apm_folk_banner_title">模組編輯</string>
     <string name="apm_folk_banner_select">选择圣像</string>
     <string name="apm_folk_banner_clear">净化 FolkBanner</string>
     <string name="apm_folk_banner_saved">已为 %s 附上 FolkBanner 圣光。</string>
     <string name="apm_folk_banner_cleared">%s 的 FolkBanner 圣光已净化。</string>
     <string name="apm_folk_banner_failed">为 %s 附上 FolkBanner 圣光失败。</string>
+    <string name="folk_banner_custom_info_title">圣光阵信息</string>
+    <string name="folk_banner_custom_info_name">圣名</string>
+    <string name="folk_banner_custom_info_version">神恩等级</string>
+    <string name="folk_banner_custom_info_author">圣者</string>
+    <string name="folk_banner_custom_info_description">圣光述</string>
+    <string name="folk_banner_custom_info_save">圣封</string>
+    <string name="folk_banner_custom_info_reset">归元</string>
+    <string name="folk_banner_custom_info_saved">已为 %s 封存圣光阵信息</string>
+    <string name="folk_banner_custom_info_reset_done">已归元 %s 的圣光阵信息</string>
     <string name="apm_banner_api_mode">圣光图鉴模式</string>
     <string name="apm_banner_api_mode_summary">以圣光图鉴之术或凡间图库为圣光阵提供圣图</string>
     <string name="apm_banner_api_source">布置圣光图鉴</string>
@@ -740,6 +749,7 @@
     <!-- Biometric Strings -->
     <string name="action_biometric">天使印鉴认证</string>
     <string name="msg_biometric">请验证您的天使印鉴</string>
+    <string name="msg_enable_biometric">开启天使印鉴认证以在打开应用时要求验证？</string>
     <string name="settings_biometric_login">天使印鉴认证</string>
     <string name="settings_biometric_login_summary">开启天使工坊时需要进行天使印鉴认证</string>
     <string name="settings_strong_biometric">强力天使印鉴</string>

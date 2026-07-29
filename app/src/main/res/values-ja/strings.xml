@@ -296,12 +296,21 @@
     <string name="apm_enable_module_banner_summary">モジュールのバナー画像が利用可能な場合に表示します。</string>
     <string name="apm_enable_folk_banner">カスタムモジュールバナー</string>
     <string name="apm_enable_folk_banner_summary">モジュールカードを長押しでバナー画像を選択します。</string>
-    <string name="apm_folk_banner_title">Folk バナー</string>
+    <string name="apm_folk_banner_title">モジュールエディタ</string>
     <string name="apm_folk_banner_select">画像を選択</string>
     <string name="apm_folk_banner_clear">Folk バナーを消去</string>
     <string name="apm_folk_banner_saved">「%s」に Folk バナーをインジェクトしました。</string>
     <string name="apm_folk_banner_cleared">「%s」の Folk バナーを消去しました。</string>
     <string name="apm_folk_banner_failed">「%s」の Folk バナーの更新に失敗しました。</string>
+    <string name="folk_banner_custom_info_title">モジュール情報</string>
+    <string name="folk_banner_custom_info_name">名前</string>
+    <string name="folk_banner_custom_info_version">バージョン</string>
+    <string name="folk_banner_custom_info_author">作者</string>
+    <string name="folk_banner_custom_info_description">説明</string>
+    <string name="folk_banner_custom_info_save">保存</string>
+    <string name="folk_banner_custom_info_reset">リセット</string>
+    <string name="folk_banner_custom_info_saved">%s のモジュール情報を保存しました</string>
+    <string name="folk_banner_custom_info_reset_done">%s のモジュール情報をリセットしました</string>
     <string name="apm_banner_api_mode">API モード</string>
     <string name="apm_banner_api_mode_summary">モジュールバナーでランダム画像 API またはローカルディレクトリを使用します。</string>
     <string name="apm_banner_api_source">構成 API ソース</string>
@@ -689,6 +698,7 @@
     <!-- Biometric Strings -->
     <string name="action_biometric">生体認証</string>
     <string name="msg_biometric">生体認証で確認してください</string>
+    <string name="msg_enable_biometric">アプリを開くときに確認を求めるため、生体認証を有効にしますか？</string>
     <string name="settings_biometric_login">生体認証</string>
     <string name="settings_biometric_login_summary">アプリを開くときに生体認証を要求します。</string>
     <string name="settings_strong_biometric">強力な生体認証</string>

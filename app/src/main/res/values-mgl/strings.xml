@@ -338,12 +338,21 @@
     <string name="apm_enable_module_banner_summary">为支持的魔法阵显示横幅图片</string>
     <string name="apm_enable_folk_banner">自定义魔法阵横幅</string>
     <string name="apm_enable_folk_banner_summary">长按魔法阵卡片自选横幅图片</string>
-    <string name="apm_folk_banner_title">FolkBanner</string>
+    <string name="apm_folk_banner_title">Модуль засвар</string>
     <string name="apm_folk_banner_select">选择图片</string>
     <string name="apm_folk_banner_clear">清除 FolkBanner</string>
     <string name="apm_folk_banner_saved">已为 %s 注入 FolkBanner。</string>
     <string name="apm_folk_banner_cleared">已为 %s 清除 FolkBanner。</string>
     <string name="apm_folk_banner_failed">为 %s 更新 FolkBanner 失败。</string>
+    <string name="folk_banner_custom_info_title">模块信息</string>
+    <string name="folk_banner_custom_info_name">名称</string>
+    <string name="folk_banner_custom_info_version">版本</string>
+    <string name="folk_banner_custom_info_author">作者</string>
+    <string name="folk_banner_custom_info_description">简介</string>
+    <string name="folk_banner_custom_info_save">保存</string>
+    <string name="folk_banner_custom_info_reset">重置</string>
+    <string name="folk_banner_custom_info_saved">已保存 %s 的模块自定义信息</string>
+    <string name="folk_banner_custom_info_reset_done">已重置 %s 的模块自定义信息</string>
     <string name="apm_banner_api_mode">API模式</string>
     <string name="apm_banner_api_mode_summary">使用随机图API或本地目录为模块提供横幅</string>
     <string name="apm_banner_api_source">配置API源</string>
@@ -748,6 +757,7 @@
     <!-- Biometric Strings -->
     <string name="action_biometric">魔法印鉴认证</string>
     <string name="msg_biometric">请验证您的魔法印鉴</string>
+    <string name="msg_enable_biometric">开启魔法印鉴认证以在打开应用时要求验证？</string>
     <string name="settings_biometric_login">魔法印鉴认证</string>
     <string name="settings_biometric_login_summary">开启魔法工坊时需要进行魔法印鉴认证</string>
     <string name="settings_strong_biometric">强力魔法印鉴</string>

@@ -347,7 +347,7 @@
     <string name="apm_enable_module_banner_summary">عرض صورة اللافتة للوحدات إذا كانت متوفرة</string>
     <string name="apm_enable_folk_banner">تخصيص لافتة الوحدة</string>
     <string name="apm_enable_folk_banner_summary">اضغط مطولًا على بطاقة الوحدة لاختيار صورة اللافتة</string>
-    <string name="apm_folk_banner_title">FolkBanner</string>
+    <string name="apm_folk_banner_title">محرر الوحدات</string>
     <string name="apm_folk_banner_select">اختيار صورة</string>
     <string name="apm_folk_banner_clear">مسح FolkBanner</string>
     <string name="apm_folk_banner_saved">تم حقن FolkBanner لـ %s.</string>
@@ -750,6 +750,7 @@
     <!-- Biometric Strings -->
     <string name="action_biometric">المصادقة البيومترية</string>
     <string name="msg_biometric">يرجى التحقق من هويتك البيومترية</string>
+    <string name="msg_enable_biometric">تمكين المصادقة البيومترية لطلب التحقق عند فتح التطبيق؟</string>
     <string name="settings_biometric_login">المصادقة البيومترية</string>
     <string name="settings_biometric_login_summary">تتطلب مصادقة بيومترية عند فتح التطبيق</string>
     <string name="settings_strong_biometric">المصادقة البيومترية القوية</string>
@@ -1191,4 +1192,13 @@
     <string name="settings_dashboard_card_dual_opacity_desc">ضبط شفافية خلفية لوحة القيادة تلقائياً للسمات الفاتحة والداكنة</string>
     <string name="settings_dashboard_card_day_opacity">شفافية خلفية لوحة القيادة في الوضع النهاري</string>
     <string name="settings_dashboard_card_night_opacity">شفافية خلفية لوحة القيادة في الوضع الليلي</string>
+    <string name="folk_banner_custom_info_title">معلومات الوحدة</string>
+    <string name="folk_banner_custom_info_name">الاسم</string>
+    <string name="folk_banner_custom_info_version">الإصدار</string>
+    <string name="folk_banner_custom_info_author">المؤلف</string>
+    <string name="folk_banner_custom_info_description">الوصف</string>
+    <string name="folk_banner_custom_info_save">حفظ</string>
+    <string name="folk_banner_custom_info_reset">إعادة تعيين</string>
+    <string name="folk_banner_custom_info_saved">تم حفظ معلومات الوحدة لـ %s</string>
+    <string name="folk_banner_custom_info_reset_done">تم إعادة تعيين معلومات الوحدة لـ %s</string>
 </resources>

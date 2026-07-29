@@ -236,7 +236,7 @@
     <string name="su_multi_select_title">Uygulamaları Seç</string>
     <string name="su_multi_select_count">%d seçildi</string>
     <string name="su_multi_select_grant_root">ROOT Ver</string>
-    <string name="su_multi_select_revoke_root">ROOT'u Kaldır</string>
+    <string name="su_multi_select_revoke_root">ROOT\'u Kaldır</string>
     <string name="su_multi_select_exclude">Hariç Tut</string>
     <string name="su_multi_select_confirm_grant">%d uygulamaya ROOT verilsin mi?</string>
     <string name="su_multi_select_confirm_revoke">%d uygulamadan ROOT kaldırılsın mı?</string>
@@ -330,12 +330,21 @@
     <string name="apm_enable_module_banner_summary">Mevcutsa modüller için banner görseli göster</string>
     <string name="apm_enable_folk_banner">Modül Banner’ını Özelleştir</string>
     <string name="apm_enable_folk_banner_summary">Banner görselini seçmek için modül kartına uzun basın</string>
-    <string name="apm_folk_banner_title">FolkBanner</string>
+    <string name="apm_folk_banner_title">Modül Düzenleyici</string>
     <string name="apm_folk_banner_select">Görsel seç</string>
     <string name="apm_folk_banner_clear">FolkBanner’ı Temizle</string>
     <string name="apm_folk_banner_saved">%s için FolkBanner eklendi.</string>
     <string name="apm_folk_banner_cleared">%s için FolkBanner temizlendi.</string>
     <string name="apm_folk_banner_failed">%s için FolkBanner güncellenemedi.</string>
+    <string name="folk_banner_custom_info_title">Modül Bilgisi</string>
+    <string name="folk_banner_custom_info_name">Ad</string>
+    <string name="folk_banner_custom_info_version">Sürüm</string>
+    <string name="folk_banner_custom_info_author">Yazar</string>
+    <string name="folk_banner_custom_info_description">Açıklama</string>
+    <string name="folk_banner_custom_info_save">Kaydet</string>
+    <string name="folk_banner_custom_info_reset">Sıfırla</string>
+    <string name="folk_banner_custom_info_saved">%s için modül bilgisi kaydedildi</string>
+    <string name="folk_banner_custom_info_reset_done">%s için modül bilgisi sıfırlandı</string>
     <string name="apm_banner_api_mode">API Modu</string>
     <string name="apm_banner_api_mode_summary">Modül bannerları için rastgele görsel API veya yerel dizin kullan</string>
     <string name="apm_banner_api_source">API Kaynağını Yapılandır</string>
@@ -745,6 +754,7 @@ Komutların çalışması için uygulamanın tamamen kapatılıp yeniden açıld
     <!-- Biometric Strings -->
     <string name="action_biometric">Biyometrik Kimlik Doğrulama</string>
     <string name="msg_biometric">Lütfen biyometrik kimliğinizi doğrulayın</string>
+    <string name="msg_enable_biometric">Uygulama açılırken doğrulama istemek için biyometrik kimlik doğrulama etkinleştirilsin mi?</string>
     <string name="settings_biometric_login">Biyometrik Kimlik Doğrulama</string>
     <string name="settings_biometric_login_summary">Uygulama açılırken biyometrik kimlik doğrulaması iste</string>
     <string name="settings_strong_biometric">Güçlü Biyometrik Kimlik Doğrulama</string>

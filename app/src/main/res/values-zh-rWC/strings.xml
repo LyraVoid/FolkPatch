@@ -336,12 +336,21 @@
     <string name="apm_enable_module_banner_summary">为所容之仙阵显横幅仙图</string>
     <string name="apm_enable_folk_banner">自定仙阵横幅</string>
     <string name="apm_enable_folk_banner_summary">长按仙阵卡片自选横幅仙图</string>
-    <string name="apm_folk_banner_title">FolkBanner</string>
+    <string name="apm_folk_banner_title">模組編輯</string>
     <string name="apm_folk_banner_select">择仙图</string>
     <string name="apm_folk_banner_clear">消解 FolkBanner</string>
     <string name="apm_folk_banner_saved">已为 %s 注入 FolkBanner 仙气。</string>
     <string name="apm_folk_banner_cleared">%s 的 FolkBanner 仙气已消解。</string>
     <string name="apm_folk_banner_failed">为 %s 注入 FolkBanner 仙气失败。</string>
+    <string name="folk_banner_custom_info_title">仙符册</string>
+    <string name="folk_banner_custom_info_name">仙号</string>
+    <string name="folk_banner_custom_info_version">符箓篇次</string>
+    <string name="folk_banner_custom_info_author">符祖</string>
+    <string name="folk_banner_custom_info_description">仙符简述</string>
+    <string name="folk_banner_custom_info_save">封存入册</string>
+    <string name="folk_banner_custom_info_reset">涤符归元</string>
+    <string name="folk_banner_custom_info_saved">已为 %s 封存仙符册</string>
+    <string name="folk_banner_custom_info_reset_done">已涤符归元 %s 之仙符册</string>
     <string name="apm_banner_api_mode">仙图法门</string>
     <string name="apm_banner_api_mode_summary">借用天界仙图之法或凡间图库为仙阵提供仙图</string>
     <string name="apm_banner_api_source">布置仙图法门</string>
@@ -741,6 +750,7 @@
     <!-- Biometric Strings-->
     <string name="action_biometric">仙纹核验</string>
     <string name="msg_biometric">请核验本命仙纹</string>
+    <string name="msg_enable_biometric">开启仙纹核验以在入仙门时验明正身？</string>
     <string name="settings_biometric_login">仙纹核验</string>
     <string name="settings_biometric_login_summary">启府需验本命仙纹</string>
     <string name="settings_strong_biometric">强力本命仙纹</string>

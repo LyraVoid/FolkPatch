@@ -328,12 +328,21 @@
     <string name="apm_enable_module_banner_summary">사용 가능한 경우 모듈용 배너 이미지를 표시합니다.</string>
     <string name="apm_enable_folk_banner">모듈 배너 사용자 지정</string>
     <string name="apm_enable_folk_banner_summary">모듈 카드를 길게 눌러 배너 이미지를 선택하세요.</string>
-    <string name="apm_folk_banner_title">FolkBanner</string>
+    <string name="apm_folk_banner_title">모듈 편집기</string>
     <string name="apm_folk_banner_select">이미지 선택</string>
     <string name="apm_folk_banner_clear">FolkBanner 지우기</string>
     <string name="apm_folk_banner_saved">%s에 FolkBanner 삽입됨</string>
     <string name="apm_folk_banner_cleared">%s의 FolkBanner 삭제됨</string>
     <string name="apm_folk_banner_failed">%s의 FolkBanner 업데이트 실패</string>
+    <string name="folk_banner_custom_info_title">모듈 정보</string>
+    <string name="folk_banner_custom_info_name">이름</string>
+    <string name="folk_banner_custom_info_version">버전</string>
+    <string name="folk_banner_custom_info_author">작성자</string>
+    <string name="folk_banner_custom_info_description">설명</string>
+    <string name="folk_banner_custom_info_save">저장</string>
+    <string name="folk_banner_custom_info_reset">초기화</string>
+    <string name="folk_banner_custom_info_saved">%s의 모듈 정보 저장됨</string>
+    <string name="folk_banner_custom_info_reset_done">%s의 모듈 정보 초기화됨</string>
     <string name="apm_banner_api_mode">API 모드</string>
     <string name="apm_banner_api_mode_summary">모듈 배너에 무작위 이미지 API 또는 로컬 디렉터리를 사용합니다.</string>
     <string name="apm_banner_api_source">API 소스 구성</string>
@@ -759,6 +768,7 @@
     <!-- Biometric Strings -->
     <string name="action_biometric">생체 인식 인증</string>
     <string name="msg_biometric">생체 인식으로 본인 확인을 하세요.</string>
+    <string name="msg_enable_biometric">앱을 열 때 확인을 요구하도록 생체 인증을 활성화하시겠습니까?</string>
     <string name="settings_biometric_login">생체 인식 인증</string>
     <string name="settings_biometric_login_summary">앱을 열 때 생체 인식 인증을 요구합니다.</string>
     <string name="settings_strong_biometric">강력한 생체 인식</string>

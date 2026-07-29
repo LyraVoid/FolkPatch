@@ -347,12 +347,21 @@
     <string name="apm_enable_module_banner_summary">Exibir imagem de banner para módulos se disponível</string>
     <string name="apm_enable_folk_banner">Personalizar banner de módulo</string>
     <string name="apm_enable_folk_banner_summary">Pressione longo no cartão do módulo para selecionar a imagem do banner</string>
-    <string name="apm_folk_banner_title">FolkBanner</string>
+    <string name="apm_folk_banner_title">Editor de módulos</string>
     <string name="apm_folk_banner_select">Selecionar imagem</string>
     <string name="apm_folk_banner_clear">Limpar FolkBanner</string>
     <string name="apm_folk_banner_saved">FolkBanner injetado para %s.</string>
     <string name="apm_folk_banner_cleared">FolkBanner limpo para %s.</string>
     <string name="apm_folk_banner_failed">Falha ao atualizar FolkBanner para %s.</string>
+    <string name="folk_banner_custom_info_title">Info do Módulo</string>
+    <string name="folk_banner_custom_info_name">Nome</string>
+    <string name="folk_banner_custom_info_version">Versão</string>
+    <string name="folk_banner_custom_info_author">Autor</string>
+    <string name="folk_banner_custom_info_description">Descrição</string>
+    <string name="folk_banner_custom_info_save">Salvar</string>
+    <string name="folk_banner_custom_info_reset">Redefinir</string>
+    <string name="folk_banner_custom_info_saved">Info do módulo salva para %s</string>
+    <string name="folk_banner_custom_info_reset_done">Info do módulo redefinida para %s</string>
     <string name="apm_banner_api_mode">Modo API</string>
     <string name="apm_banner_api_mode_summary">Usar API de imagens aleatórias ou diretório local para banners de módulos</string>
     <string name="apm_banner_api_source">Configurar fonte API</string>
@@ -745,6 +754,7 @@ Por favor, certifique-se de fechar completamente o app e reabri-lo para que os c
     <!-- Biometric Strings -->
     <string name="action_biometric">Autenticação Biométrica</string>
     <string name="msg_biometric">Por favor, verifique sua identidade biométrica</string>
+    <string name="msg_enable_biometric">Ativar autenticação biométrica para exigir verificação ao abrir o aplicativo?</string>
     <string name="settings_biometric_login">Login Biométrico</string>
     <string name="settings_biometric_login_summary">Exigir autenticação biométrica ao abrir o app</string>
     <string name="settings_strong_biometric">Autenticação Biométrica Forte</string>

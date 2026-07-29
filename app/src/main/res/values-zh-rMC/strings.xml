@@ -323,12 +323,21 @@
     <string name="apm_enable_module_banner_summary">给支持的模组加个炫酷的横幅图</string>
     <string name="apm_enable_folk_banner">自定义模组横幅</string>
     <string name="apm_enable_folk_banner_summary">长按模组卡片挑一张横幅图</string>
-    <string name="apm_folk_banner_title">FolkBanner</string>
+    <string name="apm_folk_banner_title">模块编辑</string>
     <string name="apm_folk_banner_select">选择图片</string>
     <string name="apm_folk_banner_clear">清除 FolkBanner</string>
     <string name="apm_folk_banner_saved">已为 %s 设置 FolkBanner</string>
     <string name="apm_folk_banner_cleared">已为 %s 清除 FolkBanner</string>
     <string name="apm_folk_banner_failed">为 %s 设置 FolkBanner 失败</string>
+    <string name="folk_banner_custom_info_title">模组信息</string>
+    <string name="folk_banner_custom_info_name">名称</string>
+    <string name="folk_banner_custom_info_version">版本</string>
+    <string name="folk_banner_custom_info_author">作者</string>
+    <string name="folk_banner_custom_info_description">简介</string>
+    <string name="folk_banner_custom_info_save">保存</string>
+    <string name="folk_banner_custom_info_reset">重置</string>
+    <string name="folk_banner_custom_info_saved">已保存 %s 的模组自定义信息</string>
+    <string name="folk_banner_custom_info_reset_done">已重置 %s 的模组自定义信息</string>
     <string name="apm_banner_api_mode">API模式</string>
     <string name="apm_banner_api_mode_summary">使用随机图API或本地目录为模组提供横幅</string>
     <string name="apm_banner_api_source">配置API源</string>
@@ -768,6 +777,7 @@
     <!-- 生物识别 -->
     <string name="action_biometric">生物验证（就像村民交易确认）</string>
     <string name="msg_biometric">请验证你的身份</string>
+    <string name="msg_enable_biometric">开启生物验证？打开管理器时要验证身份</string>
     <string name="settings_biometric_login">生物验证</string>
     <string name="settings_biometric_login_summary">打开管理器时要求生物验证</string>
     <string name="settings_strong_biometric">高强度生物验证</string>

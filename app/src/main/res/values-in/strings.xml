@@ -342,12 +342,21 @@
     <string name="apm_enable_module_banner_summary">Tampilkan gambar banner untuk modul jika tersedia</string>
     <string name="apm_enable_folk_banner">Kustomisasi banner modul</string>
     <string name="apm_enable_folk_banner_summary">Tekan lama pada kartu modul untuk memilih gambar banner</string>
-    <string name="apm_folk_banner_title">FolkBanner</string>
+    <string name="apm_folk_banner_title">Editor Modul</string>
     <string name="apm_folk_banner_select">Pilih gambar</string>
     <string name="apm_folk_banner_clear">Hapus FolkBanner</string>
     <string name="apm_folk_banner_saved">FolkBanner disuntikkan untuk %s.</string>
     <string name="apm_folk_banner_cleared">FolkBanner dihapus untuk %s.</string>
     <string name="apm_folk_banner_failed">Gagal memperbarui FolkBanner untuk %s.</string>
+    <string name="folk_banner_custom_info_title">Info Modul</string>
+    <string name="folk_banner_custom_info_name">Nama</string>
+    <string name="folk_banner_custom_info_version">Versi</string>
+    <string name="folk_banner_custom_info_author">Penulis</string>
+    <string name="folk_banner_custom_info_description">Deskripsi</string>
+    <string name="folk_banner_custom_info_save">Simpan</string>
+    <string name="folk_banner_custom_info_reset">Atur Ulang</string>
+    <string name="folk_banner_custom_info_saved">Info modul disimpan untuk %s</string>
+    <string name="folk_banner_custom_info_reset_done">Info modul diatur ulang untuk %s</string>
     <string name="apm_banner_api_mode">Mode API</string>
     <string name="apm_banner_api_mode_summary">Gunakan API gambar acak atau direktori lokal untuk banner modul</string>
     <string name="apm_banner_api_source">Konfigurasi Sumber API</string>
@@ -729,6 +738,7 @@ Pastikan aplikasi ditutup sepenuhnya dan dimulai ulang untuk menjalankan perinta
 
     <string name="action_biometric">Auntentikasi Biometrik</string>
     <string name="msg_biometric">Harap konfirmasi identitas biometrik Anda</string>
+    <string name="msg_enable_biometric">Aktifkan autentikasi biometrik untuk meminta verifikasi saat membuka aplikasi?</string>
     <string name="settings_biometric_login">Auntentikasi Biometrik</string>
     <string name="settings_biometric_login_summary">Wajibkan Autentikasi biometrik saat membuka aplikasi</string>
     <string name="settings_strong_biometric">Autentikasi Biometrik Kuat</string>

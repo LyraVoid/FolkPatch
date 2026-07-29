@@ -342,12 +342,21 @@
     <string name="apm_enable_module_banner_summary">Отображать изображение баннера для модулей если доступно</string>
     <string name="apm_enable_folk_banner">Настроить баннер модуля</string>
     <string name="apm_enable_folk_banner_summary">Длительное нажатие на карточку модуля для выбора изображения баннера</string>
-    <string name="apm_folk_banner_title">FolkBanner</string>
+    <string name="apm_folk_banner_title">Редактор модулей</string>
     <string name="apm_folk_banner_select">Выбрать изображение</string>
     <string name="apm_folk_banner_clear">Очистить FolkBanner</string>
     <string name="apm_folk_banner_saved">FolkBanner внедрен для %s.</string>
     <string name="apm_folk_banner_cleared">FolkBanner очищен для %s.</string>
     <string name="apm_folk_banner_failed">Не удалось обновить FolkBanner для %s.</string>
+    <string name="folk_banner_custom_info_title">Информация о модуле</string>
+    <string name="folk_banner_custom_info_name">Название</string>
+    <string name="folk_banner_custom_info_version">Версия</string>
+    <string name="folk_banner_custom_info_author">Автор</string>
+    <string name="folk_banner_custom_info_description">Описание</string>
+    <string name="folk_banner_custom_info_save">Сохранить</string>
+    <string name="folk_banner_custom_info_reset">Сбросить</string>
+    <string name="folk_banner_custom_info_saved">Информация о модуле сохранена для %s</string>
+    <string name="folk_banner_custom_info_reset_done">Информация о модуле сброшена для %s</string>
     <string name="apm_banner_api_mode">Режим API</string>
     <string name="apm_banner_api_mode_summary">Использовать API случайных изображений или локальный каталог для баннеров модулей</string>
     <string name="apm_banner_api_source">Настроить источник API</string>
@@ -746,6 +755,7 @@
     <!-- Biometric Strings -->
     <string name="action_biometric">Биометрическая аутентификация</string>
     <string name="msg_biometric">Пожалуйста, подтвердите свою биометрическую личность</string>
+    <string name="msg_enable_biometric">Включить биометрическую аутентификацию для подтверждения при открытии приложения?</string>
     <string name="settings_biometric_login">Биометрическая аутентификация</string>
     <string name="settings_biometric_login_summary">Требовать биометрическую аутентификацию при открытии приложения</string>
     <string name="settings_strong_biometric">Сильная биометрическая аутентификация</string>

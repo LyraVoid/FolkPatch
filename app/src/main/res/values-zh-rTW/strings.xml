@@ -333,12 +333,21 @@
     <string name="apm_enable_module_banner_summary">為支援的模組顯示橫幅圖片</string>
     <string name="apm_enable_folk_banner">自訂模組橫幅</string>
     <string name="apm_enable_folk_banner_summary">長按模組卡片自選橫幅圖片</string>
-    <string name="apm_folk_banner_title">FolkBanner</string>
+    <string name="apm_folk_banner_title">模組編輯</string>
     <string name="apm_folk_banner_select">選取圖片</string>
     <string name="apm_folk_banner_clear">清除 FolkBanner</string>
     <string name="apm_folk_banner_saved">已為 %s 注入 FolkBanner。</string>
     <string name="apm_folk_banner_cleared">已為 %s 清除 FolkBanner。</string>
     <string name="apm_folk_banner_failed">為 %s 更新 FolkBanner 失敗。</string>
+    <string name="folk_banner_custom_info_title">模組資訊</string>
+    <string name="folk_banner_custom_info_name">名稱</string>
+    <string name="folk_banner_custom_info_version">版本</string>
+    <string name="folk_banner_custom_info_author">作者</string>
+    <string name="folk_banner_custom_info_description">簡介</string>
+    <string name="folk_banner_custom_info_save">儲存</string>
+    <string name="folk_banner_custom_info_reset">重置</string>
+    <string name="folk_banner_custom_info_saved">已儲存 %s 的模組自訂資訊</string>
+    <string name="folk_banner_custom_info_reset_done">已重置 %s 的模組自訂資訊</string>
     <string name="apm_banner_api_mode">API模式</string>
     <string name="apm_banner_api_mode_summary">使用隨機圖API或本機目錄為模組提供橫幅</string>
     <string name="apm_banner_api_source">設定API來源</string>
@@ -793,6 +802,7 @@
     <!-- Biometric Strings -->
     <string name="action_biometric">生物識別認證</string>
     <string name="msg_biometric">請驗證您的生物識別身分</string>
+    <string name="msg_enable_biometric">啟用生物識別認證以在開啟應用程式時要求驗證？</string>
     <string name="settings_biometric_login">生物識別認證</string>
     <string name="settings_biometric_login_summary">開啟應用程式時要求生物識別認證</string>
     <string name="settings_strong_biometric">強力生物識別</string>

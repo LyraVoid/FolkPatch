@@ -310,12 +310,21 @@
     <string name="apm_enable_module_banner_summary">Wyświetl obraz banera dla modułów jeśli jest dostępny</string>
     <string name="apm_enable_folk_banner">Dostosuj baner modułu</string>
     <string name="apm_enable_folk_banner_summary">Naciśnij długo kartę modułu, aby wybrać obraz banera</string>
-    <string name="apm_folk_banner_title">FolkBanner</string>
+    <string name="apm_folk_banner_title">Edytor modułów</string>
     <string name="apm_folk_banner_select">Wybierz obraz</string>
     <string name="apm_folk_banner_clear">Wyczyść FolkBanner</string>
     <string name="apm_folk_banner_saved">Wstrzyknięto FolkBanner dla %s.</string>
     <string name="apm_folk_banner_cleared">Wyczyszczono FolkBanner dla %s.</string>
     <string name="apm_folk_banner_failed">Nie udało się zaktualizować FolkBanner dla %s.</string>
+    <string name="folk_banner_custom_info_title">Informacje o module</string>
+    <string name="folk_banner_custom_info_name">Nazwa</string>
+    <string name="folk_banner_custom_info_version">Wersja</string>
+    <string name="folk_banner_custom_info_author">Autor</string>
+    <string name="folk_banner_custom_info_description">Opis</string>
+    <string name="folk_banner_custom_info_save">Zapisz</string>
+    <string name="folk_banner_custom_info_reset">Resetuj</string>
+    <string name="folk_banner_custom_info_saved">Informacje o module zapisane dla %s</string>
+    <string name="folk_banner_custom_info_reset_done">Informacje o module zresetowane dla %s</string>
     <string name="apm_banner_api_mode">Tryb API</string>
     <string name="apm_banner_api_mode_summary">Użyj API losowych obrazów lub katalogu lokalnego dla banerów modułów</string>
     <string name="apm_banner_api_source">Konfiguruj źródło API</string>
@@ -673,6 +682,7 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <!-- Biometric Strings -->
     <string name="action_biometric">Uwierzytelnianie biometryczne</string>
     <string name="msg_biometric">Proszę zweryfikować swoją tożsamość biometryczną</string>
+    <string name="msg_enable_biometric">Włączyć uwierzytelnianie biometryczne, aby wymagać weryfikacji przy otwieraniu aplikacji?</string>
     <string name="settings_biometric_login">Uwierzytelnianie biometryczne</string>
     <string name="settings_biometric_login_summary">Wymagaj uwierzytelniania biometrycznego przy otwieraniu aplikacji</string>
     <string name="settings_strong_biometric">Silne uwierzytelnianie biometryczne</string>

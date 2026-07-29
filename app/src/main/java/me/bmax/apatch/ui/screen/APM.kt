@@ -10,6 +10,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
 import android.util.Patterns
+import org.json.JSONObject
 import me.bmax.apatch.util.ui.showToast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -156,6 +157,7 @@ import me.bmax.apatch.ui.component.ModuleStateIndicator
 import me.bmax.apatch.ui.component.ModuleUpdateButton
 import me.bmax.apatch.ui.component.SearchAppBar
 import me.bmax.apatch.ui.component.BackgroundOptionsDialog
+import me.bmax.apatch.ui.component.ModuleInfoData
 import me.bmax.apatch.ui.component.rememberConfirmDialog
 import me.bmax.apatch.ui.component.rememberLoadingDialog
 import me.bmax.apatch.ui.viewmodel.APModuleViewModel
@@ -305,6 +307,14 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
                 it.name.contains(searchQuery, ignoreCase = true) ||
                         it.description.contains(searchQuery, ignoreCase = true) ||
                         it.author.contains(searchQuery, ignoreCase = true)
+            }
+        }
+    }
+
+    LaunchedEffect(filteredModuleList) {
+        if (filteredModuleList.isNotEmpty()) {
+            withContext(Dispatchers.IO) {
+                pruneCustomModuleInfo(context, filteredModuleList.map { it.id }.toSet())
             }
         }
     }
@@ -1438,6 +1448,86 @@ private fun clearLegacyFolkBanner(rootShell: Shell, resolvedDir: String): Boolea
     return !file.exists() || file.delete()
 }
 
+// ==================== Custom Module Info ====================
+
+data class CustomModuleInfo(
+    val name: String? = null,
+    val version: String? = null,
+    val author: String? = null,
+    val description: String? = null
+) {
+    fun hasAnyInfo(): Boolean = !name.isNullOrBlank() || !version.isNullOrBlank() || !author.isNullOrBlank() || !description.isNullOrBlank()
+
+    fun toJson(): String {
+        val json = JSONObject()
+        name?.takeIf { it.isNotBlank() }?.let { json.put("name", it) }
+        version?.takeIf { it.isNotBlank() }?.let { json.put("version", it) }
+        author?.takeIf { it.isNotBlank() }?.let { json.put("author", it) }
+        description?.takeIf { it.isNotBlank() }?.let { json.put("description", it) }
+        return json.toString()
+    }
+
+    companion object {
+        fun fromJson(jsonStr: String): CustomModuleInfo? {
+            return runCatching {
+                val json = JSONObject(jsonStr)
+                CustomModuleInfo(
+                    name = if (json.has("name")) json.optString("name") else null,
+                    version = if (json.has("version")) json.optString("version") else null,
+                    author = if (json.has("author")) json.optString("author") else null,
+                    description = if (json.has("description")) json.optString("description") else null,
+                )
+            }.getOrNull()
+        }
+    }
+}
+
+private const val CUSTOM_MODULE_INFO_DIR_NAME = "custom_module_info"
+
+private fun getCustomModuleInfoFile(context: Context, moduleId: String): File {
+    val dir = File(context.filesDir, CUSTOM_MODULE_INFO_DIR_NAME)
+    if (!dir.exists()) {
+        dir.mkdirs()
+    }
+    return File(dir, sanitizeBannerKey(moduleId) + ".json")
+}
+
+private fun readCustomModuleInfo(context: Context, moduleId: String): CustomModuleInfo? {
+    return runCatching {
+        val file = getCustomModuleInfoFile(context, moduleId)
+        if (file.exists()) {
+            CustomModuleInfo.fromJson(file.readText())
+        } else null
+    }.getOrNull()
+}
+
+private fun writeCustomModuleInfo(context: Context, moduleId: String, info: CustomModuleInfo) {
+    runCatching {
+        val file = getCustomModuleInfoFile(context, moduleId)
+        file.writeText(info.toJson())
+    }
+}
+
+private fun clearCustomModuleInfo(context: Context, moduleId: String) {
+    runCatching {
+        val file = getCustomModuleInfoFile(context, moduleId)
+        if (file.exists()) file.delete()
+    }
+}
+
+private fun pruneCustomModuleInfo(context: Context, validModuleIds: Set<String>) {
+    runCatching {
+        val dir = File(context.filesDir, CUSTOM_MODULE_INFO_DIR_NAME)
+        if (!dir.exists()) return@runCatching
+        val validFiles = validModuleIds.map { sanitizeBannerKey(it) + ".json" }.toSet()
+        dir.listFiles()?.forEach { file ->
+            if (file.isFile && file.name !in validFiles) {
+                file.delete()
+            }
+        }
+    }
+}
+
 @Composable
 private fun ModuleItem(
     navigator: DestinationsNavigator,
@@ -1474,6 +1564,8 @@ private fun ModuleItem(
     var showFolkBannerDialog by remember { mutableStateOf(false) }
     var hasFolkBanner by remember { mutableStateOf(false) }
     var bannerReloadKey by rememberSaveable(module.id) { mutableStateOf(0) }
+    val customInfoReloadKeyState = remember { mutableStateOf(0) }
+    var customInfoReloadKey by customInfoReloadKeyState
     
     LaunchedEffect(showFolkBannerDialog) {
         if (showFolkBannerDialog) {
@@ -1572,6 +1664,12 @@ private fun ModuleItem(
         }
     }
     
+    val customInfo by produceState(initialValue = null as CustomModuleInfo?, key1 = module.id, key2 = customInfoReloadKey) {
+        value = withContext(Dispatchers.IO) {
+            readCustomModuleInfo(context, module.id)
+        }
+    }
+
     val sizeStr = if (showMoreModuleInfo) viewModel.getModuleSize(module.id) else "0 KB"
 
     val bannerInfo by produceState<APModuleViewModel.BannerInfo?>(
@@ -1686,9 +1784,7 @@ private fun ModuleItem(
                 }
             },
             onLongClick = {
-                if (BackgroundConfig.isBannerEnabled && BackgroundConfig.isFolkBannerEnabled) {
-                    showFolkBannerDialog = true
-                }
+                showFolkBannerDialog = true
             }
         )
 
@@ -1817,20 +1913,20 @@ private fun ModuleItem(
                         }
 
                         Text(
-                            text = module.name,
+                            text = customInfo?.name?.takeIf { it.isNotBlank() } ?: module.name,
                             style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
                             textDecoration = if (module.remove) TextDecoration.LineThrough else TextDecoration.None
                         )
 
                         Text(
-                            text = module.version,
+                            text = customInfo?.version?.takeIf { it.isNotBlank() } ?: module.version,
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             textDecoration = if (module.remove) TextDecoration.LineThrough else TextDecoration.None
                         )
 
                         Text(
-                            text = module.author,
+                            text = customInfo?.author?.takeIf { it.isNotBlank() } ?: module.author,
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             textDecoration = if (module.remove) TextDecoration.LineThrough else TextDecoration.None
@@ -1847,7 +1943,7 @@ private fun ModuleItem(
                 Spacer(modifier = Modifier.height(12.dp))
 
                 Text(
-                    text = module.description,
+                    text = customInfo?.description?.takeIf { it.isNotBlank() } ?: module.description,
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 4,
@@ -2047,10 +2143,40 @@ private fun ModuleItem(
         )
     }
 
+    // 自定义模块信息状态
+    var customName by remember { mutableStateOf("") }
+    var customVersion by remember { mutableStateOf("") }
+    var customAuthor by remember { mutableStateOf("") }
+    var customDescription by remember { mutableStateOf("") }
+
+    // 弹窗打开时加载自定义信息
+    LaunchedEffect(showFolkBannerDialog) {
+        if (showFolkBannerDialog) {
+            val info = withContext(Dispatchers.IO) {
+                readCustomModuleInfo(context, module.id)
+            }
+            customName = info?.name?.takeIf { it.isNotBlank() } ?: module.name
+            customVersion = info?.version?.takeIf { it.isNotBlank() } ?: module.version
+            customAuthor = info?.author?.takeIf { it.isNotBlank() } ?: module.author
+            customDescription = info?.description?.takeIf { it.isNotBlank() } ?: module.description
+        }
+    }
+
+    val customInfoTitle = stringResource(R.string.folk_banner_custom_info_title)
+    val customInfoNameLabel = stringResource(R.string.folk_banner_custom_info_name)
+    val customInfoVersionLabel = stringResource(R.string.folk_banner_custom_info_version)
+    val customInfoAuthorLabel = stringResource(R.string.folk_banner_custom_info_author)
+    val customInfoDescriptionLabel = stringResource(R.string.folk_banner_custom_info_description)
+    val customInfoSaveLabel = stringResource(R.string.folk_banner_custom_info_save)
+    val customInfoResetLabel = stringResource(R.string.folk_banner_custom_info_reset)
+    val customInfoSavedMsg = stringResource(R.string.folk_banner_custom_info_saved)
+    val customInfoResetMsg = stringResource(R.string.folk_banner_custom_info_reset_done)
+
     BackgroundOptionsDialog(
         showDialog = showFolkBannerDialog,
         onDismiss = { showFolkBannerDialog = false },
         title = folkBannerTitle,
+        showBannerSection = BackgroundConfig.isFolkBannerEnabled,
         selectLabel = folkBannerSelect,
         clearLabel = folkBannerClear,
         hasExisting = hasFolkBanner,
@@ -2079,6 +2205,46 @@ private fun ModuleItem(
                 } else {
                     snackBarHost.showSnackbar(folkBannerFailed.format(module.name))
                 }
+            }
+        },
+        customInfoTitle = customInfoTitle,
+        customInfoNameLabel = customInfoNameLabel,
+        customInfoVersionLabel = customInfoVersionLabel,
+        customInfoAuthorLabel = customInfoAuthorLabel,
+        customInfoDescriptionLabel = customInfoDescriptionLabel,
+        saveLabel = customInfoSaveLabel,
+        resetLabel = customInfoResetLabel,
+        initialModuleInfo = ModuleInfoData(
+            name = customName,
+            version = customVersion,
+            author = customAuthor,
+            description = customDescription
+        ),
+        hasSavedCustomInfo = customInfo?.hasAnyInfo() == true,
+        customInfoReloadKey = customInfoReloadKeyState,
+        onSaveModuleInfo = { info ->
+            scope.launch {
+                withContext(Dispatchers.IO) {
+                    writeCustomModuleInfo(context, module.id, CustomModuleInfo(
+                        name = info.name.takeIf { it.isNotBlank() },
+                        version = info.version.takeIf { it.isNotBlank() },
+                        author = info.author.takeIf { it.isNotBlank() },
+                        description = info.description.takeIf { it.isNotBlank() },
+                    ))
+                }
+                snackBarHost.showSnackbar(
+                    customInfoSavedMsg.format(module.name)
+                )
+            }
+        },
+        onResetModuleInfo = {
+            scope.launch {
+                withContext(Dispatchers.IO) {
+                    clearCustomModuleInfo(context, module.id)
+                }
+                snackBarHost.showSnackbar(
+                    customInfoResetMsg.format(module.name)
+                )
             }
         }
     )

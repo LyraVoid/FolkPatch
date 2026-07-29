@@ -338,12 +338,21 @@
     <string name="apm_enable_module_banner_summary">Hiển thị ảnh banner cho module nếu có sẵn</string>
     <string name="apm_enable_folk_banner">Tùy chỉnh banner module</string>
     <string name="apm_enable_folk_banner_summary">Nhấn giữ thẻ module để chọn ảnh banner</string>
-    <string name="apm_folk_banner_title">FolkBanner</string>
+    <string name="apm_folk_banner_title">Trình chỉnh sửa mô-đun</string>
     <string name="apm_folk_banner_select">Chọn ảnh</string>
     <string name="apm_folk_banner_clear">Xóa FolkBanner</string>
     <string name="apm_folk_banner_saved">Đã thêm FolkBanner cho %s.</string>
     <string name="apm_folk_banner_cleared">Đã xóa FolkBanner cho %s.</string>
     <string name="apm_folk_banner_failed">Cập nhật FolkBanner cho %s thất bại.</string>
+    <string name="folk_banner_custom_info_title">Thông tin module</string>
+    <string name="folk_banner_custom_info_name">Tên</string>
+    <string name="folk_banner_custom_info_version">Phiên bản</string>
+    <string name="folk_banner_custom_info_author">Tác giả</string>
+    <string name="folk_banner_custom_info_description">Mô tả</string>
+    <string name="folk_banner_custom_info_save">Lưu</string>
+    <string name="folk_banner_custom_info_reset">Đặt lại</string>
+    <string name="folk_banner_custom_info_saved">Đã lưu thông tin module cho %s</string>
+    <string name="folk_banner_custom_info_reset_done">Đã đặt lại thông tin module cho %s</string>
     <string name="apm_banner_api_mode">Chế độ API</string>
     <string name="apm_banner_api_mode_summary">Sử dụng API hình ảnh ngẫu nhiên hoặc thư mục cục bộ cho banner mô-đun</string>
     <string name="apm_banner_api_source">Cấu hình nguồn API</string>
@@ -743,6 +752,7 @@ Cần đảm bảo phần mềm thoát hoàn toàn vào mới sẽ thực thi l�
     <!-- Biometric Strings -->
     <string name="action_biometric">Xác thực sinh trắc học</string>
     <string name="msg_biometric">Vui lòng xác minh danh tính sinh trắc học của bạn</string>
+    <string name="msg_enable_biometric">Bật xác thực sinh trắc học để yêu cầu xác minh khi mở ứng dụng?</string>
     <string name="settings_biometric_login">Xác thực sinh trắc học</string>
     <string name="settings_biometric_login_summary">Yêu cầu xác thực sinh trắc học khi mở ứng dụng</string>
     <string name="settings_strong_biometric">Xác thực sinh trắc học mạnh</string>
