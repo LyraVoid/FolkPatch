@@ -2,7 +2,6 @@ package me.bmax.apatch.ui.screen
 
 import android.content.ActivityNotFoundException
 import android.net.Uri
-import android.os.BatteryManager
 import android.os.Build
 import android.system.Os
 import androidx.compose.animation.AnimatedVisibility
@@ -84,8 +83,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -126,7 +123,7 @@ import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.ui.theme.BackgroundManager
 import me.bmax.apatch.ui.component.BackgroundOptionsDialog
 import me.bmax.apatch.ui.component.rememberConfirmDialog
-import me.bmax.apatch.util.HardwareMonitor
+import me.bmax.apatch.util.SystemInfoCollector
 import me.bmax.apatch.util.PermissionUtils
 import me.bmax.apatch.util.Version
 import me.bmax.apatch.util.Version.getManagerVersion
@@ -616,27 +613,14 @@ private fun HeroStatusCard(
 @Composable
 private fun DeviceStatusCard(isWallpaperMode: Boolean, modifier: Modifier = Modifier) {
     val context = LocalContext.current
-    var batteryTemp by remember { mutableStateOf(0f) }
-    var batteryLevel by remember { mutableIntStateOf(0) }
-    var cpuUsage by remember { mutableIntStateOf(0) }
+    var deviceStatus by remember { mutableStateOf(SystemInfoCollector.DeviceStatus()) }
 
     val lifecycleOwner = LocalLifecycleOwner.current
 
     LaunchedEffect(lifecycleOwner) {
         lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-            withContext(Dispatchers.IO) {
-                val intent = context.registerReceiver(null, android.content.IntentFilter(android.content.Intent.ACTION_BATTERY_CHANGED))
-                batteryTemp = (intent?.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, 0) ?: 0) / 10f
-                val level = intent?.getIntExtra(BatteryManager.EXTRA_LEVEL, -1) ?: -1
-                val scale = intent?.getIntExtra(BatteryManager.EXTRA_SCALE, -1) ?: -1
-                if (level != -1 && scale != -1) {
-                    batteryLevel = (level * 100 / scale.toFloat()).toInt()
-                }
-
-                cpuUsage = HardwareMonitor.getCpuUsage()
-
-                kotlinx.coroutines.delay(10000)
-            }
+            deviceStatus = SystemInfoCollector.collectDeviceStatus(context)
+            delay(10000)
         }
     }
 
@@ -656,21 +640,21 @@ private fun DeviceStatusCard(isWallpaperMode: Boolean, modifier: Modifier = Modi
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             StatusCircle(
-                value = "${batteryTemp}°C",
+                value = "${deviceStatus.batteryTemp}°C",
                 label = stringResource(R.string.home_device_status_battery_temp),
-                progress = (batteryTemp / 50f).coerceIn(0f, 1f),
+                progress = (deviceStatus.batteryTemp / 50f).coerceIn(0f, 1f),
                 color = MaterialTheme.colorScheme.primary
             )
             StatusCircle(
-                value = "$cpuUsage%",
+                value = "${deviceStatus.cpuUsage}%",
                 label = stringResource(R.string.home_device_status_cpu_load),
-                progress = (cpuUsage / 100f).coerceIn(0f, 1f),
+                progress = (deviceStatus.cpuUsage / 100f).coerceIn(0f, 1f),
                 color = MaterialTheme.colorScheme.secondary
             )
             StatusCircle(
-                value = "$batteryLevel%",
+                value = "${deviceStatus.batteryLevel}%",
                 label = stringResource(R.string.home_device_status_battery_level),
-                progress = (batteryLevel / 100f).coerceIn(0f, 1f),
+                progress = (deviceStatus.batteryLevel / 100f).coerceIn(0f, 1f),
                 color = MaterialTheme.colorScheme.tertiary
             )
         }
@@ -1103,33 +1087,14 @@ private fun InfoItem(icon: ImageVector, label: String, value: String) {
  */
 @Composable
 private fun StorageInfoCard(modifier: Modifier = Modifier) {
-    val context = LocalContext.current
-    var ramUsed by remember { mutableStateOf(0L) }
-    var ramTotal by remember { mutableStateOf(0L) }
-    var storageUsed by remember { mutableStateOf(0L) }
-    var storageTotal by remember { mutableStateOf(0L) }
+    var storageStatus by remember { mutableStateOf(SystemInfoCollector.StorageStatus()) }
 
     val lifecycleOwner = LocalLifecycleOwner.current
 
     LaunchedEffect(lifecycleOwner) {
         lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-            withContext(Dispatchers.IO) {
-                // 内部存储
-                val dataDir = android.os.Environment.getDataDirectory()
-                val stat = android.os.StatFs(dataDir.path)
-                val blockSize = stat.blockSizeLong
-                val totalBlocks = stat.blockCountLong
-                val availableBlocks = stat.availableBlocksLong
-                storageTotal = totalBlocks * blockSize
-                storageUsed = storageTotal - (availableBlocks * blockSize)
-
-                // 内存信息
-                val memInfo = HardwareMonitor.getMemoryInfo()
-                ramTotal = memInfo.ramTotal
-                ramUsed = memInfo.ramUsed
-
-                delay(5000)
-            }
+            storageStatus = SystemInfoCollector.collectStorageStatus()
+            delay(5000)
         }
     }
 
@@ -1166,8 +1131,8 @@ private fun StorageInfoCard(modifier: Modifier = Modifier) {
             // 存储进度
             StorageProgressBar(
                 label = stringResource(R.string.home_storage_internal),
-                used = storageUsed,
-                total = storageTotal,
+                used = storageStatus.storageUsed,
+                total = storageStatus.storageTotal,
                 color = MaterialTheme.colorScheme.primary
             )
 
@@ -1175,8 +1140,8 @@ private fun StorageInfoCard(modifier: Modifier = Modifier) {
 
             StorageProgressBar(
                 label = stringResource(R.string.home_storage_ram),
-                used = ramUsed,
-                total = ramTotal,
+                used = storageStatus.ramUsed,
+                total = storageStatus.ramTotal,
                 color = MaterialTheme.colorScheme.secondary
             )
         }

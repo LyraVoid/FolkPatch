@@ -55,7 +55,7 @@ import me.bmax.apatch.ui.component.BackgroundOptionsDialog
 import me.bmax.apatch.ui.component.rememberConfirmDialog
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.ui.theme.BackgroundManager
-import me.bmax.apatch.util.HardwareMonitor
+import me.bmax.apatch.util.SystemInfoCollector
 import me.bmax.apatch.util.PermissionUtils
 import me.bmax.apatch.util.Version
 import me.bmax.apatch.util.Version.getManagerVersion
@@ -311,29 +311,14 @@ private fun AppCard(
 @Composable
 private fun DeviceStatusCard(isWallpaperMode: Boolean, modifier: Modifier = Modifier) {
     val context = LocalContext.current
-    var batteryTemp by remember { mutableStateOf(0f) }
-    var batteryLevel by remember { mutableIntStateOf(0) }
-    var cpuUsage by remember { mutableIntStateOf(0) }
+    var deviceStatus by remember { mutableStateOf(SystemInfoCollector.DeviceStatus()) }
 
     val lifecycleOwner = LocalLifecycleOwner.current
 
     LaunchedEffect(lifecycleOwner) {
         lifecycleOwner.lifecycle.repeatOnLifecycle(androidx.lifecycle.Lifecycle.State.RESUMED) {
-            withContext(Dispatchers.IO) {
-                // Battery Info
-                val intent = context.registerReceiver(null, android.content.IntentFilter(android.content.Intent.ACTION_BATTERY_CHANGED))
-                batteryTemp = (intent?.getIntExtra(android.os.BatteryManager.EXTRA_TEMPERATURE, 0) ?: 0) / 10f
-                val level = intent?.getIntExtra(android.os.BatteryManager.EXTRA_LEVEL, -1) ?: -1
-                val scale = intent?.getIntExtra(android.os.BatteryManager.EXTRA_SCALE, -1) ?: -1
-                if (level != -1 && scale != -1) {
-                    batteryLevel = (level * 100 / scale.toFloat()).toInt()
-                }
-
-                // CPU Usage (HardwareMonitor)
-                cpuUsage = HardwareMonitor.getCpuUsage()
-
-                kotlinx.coroutines.delay(10000)
-            }
+            deviceStatus = SystemInfoCollector.collectDeviceStatus(context)
+            kotlinx.coroutines.delay(10000)
         }
     }
 
@@ -354,21 +339,21 @@ private fun DeviceStatusCard(isWallpaperMode: Boolean, modifier: Modifier = Modi
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             StatusCircle(
-                value = "${batteryTemp}°C",
+                value = "${deviceStatus.batteryTemp}°C",
                 label = stringResource(R.string.home_device_status_battery_temp),
-                progress = (batteryTemp / 50f).coerceIn(0f, 1f),
+                progress = (deviceStatus.batteryTemp / 50f).coerceIn(0f, 1f),
                 color = MaterialTheme.colorScheme.primary
             )
             StatusCircle(
-                value = "$cpuUsage%",
+                value = "${deviceStatus.cpuUsage}%",
                 label = stringResource(R.string.home_device_status_cpu_load),
-                progress = (cpuUsage / 100f).coerceIn(0f, 1f),
+                progress = (deviceStatus.cpuUsage / 100f).coerceIn(0f, 1f),
                 color = MaterialTheme.colorScheme.secondary
             )
             StatusCircle(
-                value = "$batteryLevel%",
+                value = "${deviceStatus.batteryLevel}%",
                 label = stringResource(R.string.home_device_status_battery_level),
-                progress = (batteryLevel / 100f).coerceIn(0f, 1f),
+                progress = (deviceStatus.batteryLevel / 100f).coerceIn(0f, 1f),
                 color = MaterialTheme.colorScheme.tertiary
             )
         }
@@ -377,44 +362,14 @@ private fun DeviceStatusCard(isWallpaperMode: Boolean, modifier: Modifier = Modi
 
 @Composable
 private fun StorageCard(isWallpaperMode: Boolean, modifier: Modifier = Modifier) {
-    var ramUsed by remember { mutableLongStateOf(0L) }
-    var ramTotal by remember { mutableLongStateOf(0L) }
-    var storageUsed by remember { mutableLongStateOf(0L) }
-    var storageTotal by remember { mutableLongStateOf(0L) }
-
-    // ZRAM & Swap
-    var zramUsed by remember { mutableLongStateOf(0L) }
-    var zramTotal by remember { mutableLongStateOf(0L) }
-    var swapUsed by remember { mutableLongStateOf(0L) }
-    var swapTotal by remember { mutableLongStateOf(0L) }
+    var storageStatus by remember { mutableStateOf(SystemInfoCollector.StorageStatus()) }
 
     val lifecycleOwner = LocalLifecycleOwner.current
 
-    // [OPTIMIZE] 只在 RESUMED 状态时定期更新,并在 PAUSED 时自动停止
     LaunchedEffect(lifecycleOwner) {
         lifecycleOwner.lifecycle.repeatOnLifecycle(androidx.lifecycle.Lifecycle.State.RESUMED) {
-            withContext(Dispatchers.IO) {
-                // Internal Storage (Standard Java API)
-                val dataDir = android.os.Environment.getDataDirectory()
-                val stat = android.os.StatFs(dataDir.path)
-                val blockSize = stat.blockSizeLong
-                val totalBlocks = stat.blockCountLong
-                val availableBlocks = stat.availableBlocksLong
-                storageTotal = totalBlocks * blockSize
-                storageUsed = storageTotal - (availableBlocks * blockSize)
-
-                // Memory Info (HardwareMonitor)
-                val memInfo = HardwareMonitor.getMemoryInfo()
-                ramTotal = memInfo.ramTotal
-                ramUsed = memInfo.ramUsed
-                zramTotal = memInfo.zramTotal
-                zramUsed = memInfo.zramUsed
-                swapTotal = memInfo.swapTotal
-                swapUsed = memInfo.swapUsed
-
-                // [OPTIMIZE] 保持5秒更新频率,存储信息变化较慢
-                kotlinx.coroutines.delay(5000)
-            }
+            storageStatus = SystemInfoCollector.collectStorageStatus()
+            kotlinx.coroutines.delay(5000)
         }
     }
     
@@ -430,32 +385,32 @@ private fun StorageCard(isWallpaperMode: Boolean, modifier: Modifier = Modifier)
     ) {
         StorageRow(
             label = stringResource(R.string.home_storage_internal),
-            used = storageUsed,
-            total = storageTotal,
+            used = storageStatus.storageUsed,
+            total = storageStatus.storageTotal,
             color = MaterialTheme.colorScheme.primary
         )
         Spacer(modifier = Modifier.height(12.dp))
         StorageRow(
             label = stringResource(R.string.home_storage_ram),
-            used = ramUsed,
-            total = ramTotal,
+            used = storageStatus.ramUsed,
+            total = storageStatus.ramTotal,
             color = MaterialTheme.colorScheme.secondary
         )
-        if (zramTotal > 0) {
+        if (storageStatus.zramTotal > 0) {
             Spacer(modifier = Modifier.height(12.dp))
             StorageRow(
                 label = stringResource(R.string.home_storage_zram),
-                used = zramUsed,
-                total = zramTotal,
+                used = storageStatus.zramUsed,
+                total = storageStatus.zramTotal,
                 color = MaterialTheme.colorScheme.tertiary
             )
         }
-        if (swapTotal > 0) {
+        if (storageStatus.swapTotal > 0) {
             Spacer(modifier = Modifier.height(12.dp))
             StorageRow(
                 label = stringResource(R.string.home_storage_swap),
-                used = swapUsed,
-                total = swapTotal,
+                used = storageStatus.swapUsed,
+                total = storageStatus.swapTotal,
                 color = MaterialTheme.colorScheme.error
             )
         }
