@@ -160,6 +160,7 @@ import androidx.compose.runtime.getValue
 import me.bmax.apatch.util.BiometricUtils
 import me.bmax.apatch.util.ModuleBackupUtils
 import me.bmax.apatch.util.ModuleBannerStorage
+import me.bmax.apatch.util.kpmBannerStorage
 import me.bmax.apatch.util.SafeUriResolver
 import me.bmax.apatch.util.getFileNameFromUri
 import kotlinx.coroutines.CoroutineScope
@@ -168,9 +169,6 @@ import coil.request.ImageRequest
 
 private const val TAG = "KernelPatchModule"
 private lateinit var targetKPMToControl: KPModel.KPMInfo
-private const val KPM_BANNER_DIR_NAME = "kpm_banners"
-
-private val kpmBannerStorage by lazy { ModuleBannerStorage(me.bmax.apatch.apApp.applicationContext, KPM_BANNER_DIR_NAME) }
 
 @Destination<RootGraph>
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)

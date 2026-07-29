@@ -12,11 +12,14 @@ import java.util.Properties
 
 const val FOLK_BANNER_FILE_NAME = "FolkBanner"
 private const val FOLK_BANNER_DIR_NAME = "folk_banners"
+private const val KPM_BANNER_DIR_NAME = "kpm_banners"
 private const val CUSTOM_MODULE_INFO_DIR_NAME = "custom_module_info"
 
 // ==================== Banner Storage ====================
 
 val apmBannerStorage by lazy { ModuleBannerStorage(apApp.applicationContext, FOLK_BANNER_DIR_NAME) }
+
+val kpmBannerStorage by lazy { ModuleBannerStorage(apApp.applicationContext, KPM_BANNER_DIR_NAME) }
 
 // ==================== Key Sanitization ====================
 
