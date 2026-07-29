@@ -163,6 +163,13 @@ import me.bmax.apatch.util.ModuleBannerStorage
 import me.bmax.apatch.util.kpmBannerStorage
 import me.bmax.apatch.util.SafeUriResolver
 import me.bmax.apatch.util.getFileNameFromUri
+import me.bmax.apatch.util.CustomModuleInfo
+import me.bmax.apatch.util.readCustomModuleInfo
+import me.bmax.apatch.util.writeCustomModuleInfo
+import me.bmax.apatch.util.clearCustomModuleInfo
+import me.bmax.apatch.util.pruneCustomModuleInfo
+import me.bmax.apatch.ui.component.BackgroundOptionsDialog
+import me.bmax.apatch.ui.component.ModuleInfoData
 import kotlinx.coroutines.CoroutineScope
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -243,6 +250,14 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
                 it.name.contains(searchQuery, ignoreCase = true) ||
                 it.description.contains(searchQuery, ignoreCase = true) ||
                 it.author.contains(searchQuery, ignoreCase = true)
+            }
+        }
+    }
+
+    LaunchedEffect(filteredModuleList) {
+        if (filteredModuleList.isNotEmpty()) {
+            withContext(Dispatchers.IO) {
+                pruneCustomModuleInfo(context, filteredModuleList.map { it.name }.toSet())
             }
         }
     }
@@ -1183,6 +1198,8 @@ private fun KPModuleItem(
     var showFolkBannerDialog by remember { mutableStateOf(false) }
     var hasFolkBanner by remember { mutableStateOf(false) }
     var bannerReloadKey by remember { mutableStateOf(0) }
+    val customInfoReloadKeyState = remember { mutableStateOf(0) }
+    var customInfoReloadKey by customInfoReloadKeyState
     
     LaunchedEffect(showFolkBannerDialog) {
         if (showFolkBannerDialog) {
@@ -1279,6 +1296,12 @@ private fun KPModuleItem(
         }
     }
 
+    val customInfo by produceState(initialValue = null as CustomModuleInfo?, key1 = module.name, key2 = customInfoReloadKey) {
+        value = withContext(Dispatchers.IO) {
+            readCustomModuleInfo(context, module.name)
+        }
+    }
+
     val insideSplicedGroup = me.bmax.apatch.ui.component.LocalInsideSplicedGroup.current
 
     val cardShape = RoundedCornerShape(20.dp)
@@ -1293,9 +1316,7 @@ private fun KPModuleItem(
                 }
             },
             onLongClick = {
-                if (BackgroundConfig.isBannerEnabled && BackgroundConfig.isFolkBannerEnabled) {
-                    showFolkBannerDialog = true
-                }
+                showFolkBannerDialog = true
             }
         )
 
@@ -1388,20 +1409,20 @@ private fun KPModuleItem(
                         }
                     
                         Text(
-                            text = module.name,
+                            text = customInfo?.name?.takeIf { it.isNotBlank() } ?: module.name,
                             style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
                             textDecoration = decoration
                         )
 
                         Text(
-                            text = module.version,
+                            text = customInfo?.version?.takeIf { it.isNotBlank() } ?: module.version,
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             textDecoration = decoration
                         )
 
                         Text(
-                            text = module.author,
+                            text = customInfo?.author?.takeIf { it.isNotBlank() } ?: module.author,
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             textDecoration = decoration
@@ -1422,7 +1443,7 @@ private fun KPModuleItem(
                 Spacer(modifier = Modifier.height(12.dp))
 
                 Text(
-                    text = module.description,
+                    text = customInfo?.description?.takeIf { it.isNotBlank() } ?: module.description,
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 4,
@@ -1508,52 +1529,97 @@ private fun KPModuleItem(
         }
     }
 
-    if (showFolkBannerDialog) {
-        AlertDialog(
-            onDismissRequest = { showFolkBannerDialog = false },
-            title = { Text(folkBannerTitle) },
-            text = {
-                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    Button(
-                        onClick = {
-                            showFolkBannerDialog = false
-                            pickFolkBannerLauncher.launch("image/*")
-                        },
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text(folkBannerSelect)
-                    }
-                    if (hasFolkBanner) {
-                        Button(
-                            onClick = {
-                                showFolkBannerDialog = false
-                                scope.launch {
-                                    loadingDialog.show()
-                                    val success = withContext(Dispatchers.IO) {
-                                        runCatching { kpmBannerStorage.clear(module.name) }.getOrDefault(false)
-                                    }
-                                    loadingDialog.hide()
-                                    val message = if (success) {
-                                        bannerReloadKey++
-                                        folkBannerCleared.format(module.name)
-                                    } else {
-                                        folkBannerFailed.format(module.name)
-                                    }
-                                    showToast(context, message)
-                                }
-                            },
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text(folkBannerClear)
-                        }
-                    }
-                }
-            },
-            confirmButton = {
-                TextButton(onClick = { showFolkBannerDialog = false }) {
-                    Text(stringResource(android.R.string.cancel))
-                }
+    // 自定义模块信息状态
+    var customName by remember { mutableStateOf("") }
+    var customVersion by remember { mutableStateOf("") }
+    var customAuthor by remember { mutableStateOf("") }
+    var customDescription by remember { mutableStateOf("") }
+
+    // 弹窗打开时加载自定义信息
+    LaunchedEffect(showFolkBannerDialog) {
+        if (showFolkBannerDialog) {
+            val info = withContext(Dispatchers.IO) {
+                readCustomModuleInfo(context, module.name)
             }
-        )
+            customName = info?.name?.takeIf { it.isNotBlank() } ?: module.name
+            customVersion = info?.version?.takeIf { it.isNotBlank() } ?: module.version
+            customAuthor = info?.author?.takeIf { it.isNotBlank() } ?: module.author
+            customDescription = info?.description?.takeIf { it.isNotBlank() } ?: module.description
+        }
     }
+
+    val customInfoTitle = stringResource(R.string.folk_banner_custom_info_title)
+    val customInfoNameLabel = stringResource(R.string.folk_banner_custom_info_name)
+    val customInfoVersionLabel = stringResource(R.string.folk_banner_custom_info_version)
+    val customInfoAuthorLabel = stringResource(R.string.folk_banner_custom_info_author)
+    val customInfoDescriptionLabel = stringResource(R.string.folk_banner_custom_info_description)
+    val customInfoSaveLabel = stringResource(R.string.folk_banner_custom_info_save)
+    val customInfoResetLabel = stringResource(R.string.folk_banner_custom_info_reset)
+    val customInfoSavedMsg = stringResource(R.string.folk_banner_custom_info_saved)
+    val customInfoResetMsg = stringResource(R.string.folk_banner_custom_info_reset_done)
+
+    BackgroundOptionsDialog(
+        showDialog = showFolkBannerDialog,
+        onDismiss = { showFolkBannerDialog = false },
+        title = folkBannerTitle,
+        showBannerSection = BackgroundConfig.isFolkBannerEnabled,
+        selectLabel = folkBannerSelect,
+        clearLabel = folkBannerClear,
+        hasExisting = hasFolkBanner,
+        onSelectImage = {
+            pickFolkBannerLauncher.launch("image/*")
+        },
+        onClearImage = {
+            scope.launch {
+                loadingDialog.show()
+                val success = withContext(Dispatchers.IO) {
+                    runCatching { kpmBannerStorage.clear(module.name) }.getOrDefault(false)
+                }
+                loadingDialog.hide()
+                val message = if (success) {
+                    bannerReloadKey++
+                    folkBannerCleared.format(module.name)
+                } else {
+                    folkBannerFailed.format(module.name)
+                }
+                showToast(context, message)
+            }
+        },
+        customInfoTitle = customInfoTitle,
+        customInfoNameLabel = customInfoNameLabel,
+        customInfoVersionLabel = customInfoVersionLabel,
+        customInfoAuthorLabel = customInfoAuthorLabel,
+        customInfoDescriptionLabel = customInfoDescriptionLabel,
+        saveLabel = customInfoSaveLabel,
+        resetLabel = customInfoResetLabel,
+        initialModuleInfo = ModuleInfoData(
+            name = customName,
+            version = customVersion,
+            author = customAuthor,
+            description = customDescription
+        ),
+        hasSavedCustomInfo = customInfo?.hasAnyInfo() == true,
+        customInfoReloadKey = customInfoReloadKeyState,
+        onSaveModuleInfo = { info ->
+            scope.launch {
+                withContext(Dispatchers.IO) {
+                    writeCustomModuleInfo(context, module.name, CustomModuleInfo(
+                        name = info.name.takeIf { it.isNotBlank() },
+                        version = info.version.takeIf { it.isNotBlank() },
+                        author = info.author.takeIf { it.isNotBlank() },
+                        description = info.description.takeIf { it.isNotBlank() },
+                    ))
+                }
+                showToast(context, customInfoSavedMsg.format(module.name))
+            }
+        },
+        onResetModuleInfo = {
+            scope.launch {
+                withContext(Dispatchers.IO) {
+                    clearCustomModuleInfo(context, module.name)
+                }
+                showToast(context, customInfoResetMsg.format(module.name))
+            }
+        }
+    )
 }
