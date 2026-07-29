@@ -128,9 +128,12 @@ class KPModuleViewModel : ViewModel() {
             val start = SystemClock.elapsedRealtime()
 
             kotlin.runCatching {
-                var names = Natives.kernelPatchModuleList()
-                if (Natives.kernelPatchModuleNum() <= 0)
-                    names = ""
+                // Some older kernels return an uninitialized list buffer when no KPM is loaded.
+                val names = if (Natives.kernelPatchModuleNum() > 0) {
+                    Natives.kernelPatchModuleList()
+                } else {
+                    ""
+                }
                 val nameList = names.split('\n').toList()
                 Log.d(TAG, "kpm list: $nameList")
                 modules = nameList.filter { it.isNotEmpty() }.map {
