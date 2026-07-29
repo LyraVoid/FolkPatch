@@ -116,6 +116,7 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.input.pointer.pointerInput
@@ -128,6 +129,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.core.net.toUri
 import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -1218,21 +1220,31 @@ private fun TopBar(
     if (showOrderDialog) {
         val reorderThreshold = with(LocalDensity.current) { 40.dp.toPx() }
         val dragToReorderDescription = stringResource(R.string.apm_drag_to_reorder)
+        var draggedModuleId by remember { mutableStateOf<String?>(null) }
+        var draggedDistance by remember { mutableStateOf(0f) }
         AlertDialog(
             onDismissRequest = { showOrderDialog = false },
             title = { Text(stringResource(R.string.apm_custom_order)) },
             text = {
                 LazyColumn(modifier = Modifier.heightIn(max = 480.dp)) {
                     itemsIndexed(orderedModules, key = { _, module -> module.id }) { _, module ->
-                        var draggedDistance by remember(module.id) { mutableStateOf(0f) }
+                        val isDragging = draggedModuleId == module.id
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .animateItem(
-                                    placementSpec = spring(
-                                        dampingRatio = Spring.DampingRatioMediumBouncy,
-                                        stiffness = Spring.StiffnessMediumLow
-                                    )
+                                .then(
+                                    if (isDragging) {
+                                        Modifier
+                                            .zIndex(1f)
+                                            .graphicsLayer { translationY = draggedDistance }
+                                    } else {
+                                        Modifier.animateItem(
+                                            placementSpec = spring(
+                                                dampingRatio = Spring.DampingRatioMediumBouncy,
+                                                stiffness = Spring.StiffnessMediumLow
+                                            )
+                                        )
+                                    }
                                 ),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -1248,8 +1260,18 @@ private fun TopBar(
                                     .semantics { contentDescription = dragToReorderDescription }
                                     .pointerInput(module.id) {
                                         detectDragGestures(
-                                            onDragEnd = { draggedDistance = 0f },
-                                            onDragCancel = { draggedDistance = 0f }
+                                            onDragStart = {
+                                                draggedModuleId = module.id
+                                                draggedDistance = 0f
+                                            },
+                                            onDragEnd = {
+                                                draggedModuleId = null
+                                                draggedDistance = 0f
+                                            },
+                                            onDragCancel = {
+                                                draggedModuleId = null
+                                                draggedDistance = 0f
+                                            }
                                         ) { change, dragAmount ->
                                             change.consume()
                                             draggedDistance += dragAmount.y
@@ -1264,7 +1286,11 @@ private fun TopBar(
                                                     add(targetIndex, removeAt(currentIndex))
                                                 }
                                                 viewModel.setCustomModuleOrder(orderedModules.map { it.id })
-                                                draggedDistance = 0f
+                                                draggedDistance -= if (targetIndex > currentIndex) {
+                                                    reorderThreshold
+                                                } else {
+                                                    -reorderThreshold
+                                                }
                                             }
                                         }
                                     }
