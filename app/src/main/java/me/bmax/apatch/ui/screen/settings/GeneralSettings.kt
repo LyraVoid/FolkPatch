@@ -829,7 +829,7 @@ fun NewAppProfileModeDialog(
                                         onModeChanged(mode)
                                         showDialog.value = false
                                     } else {
-                                        showToast(context, "New app profile update failed: $result")
+                                        showToast(context, context.getString(R.string.settings_new_app_profile_update_failed, result.toString()))
                                     }
                                 }
                             )

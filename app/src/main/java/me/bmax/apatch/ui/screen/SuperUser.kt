@@ -332,9 +332,9 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
                                     label = "fabIconCrossfade"
                                 ) { isExpanded ->
                                     if (isExpanded) {
-                                        Icon(Icons.Filled.Close, contentDescription = null)
+                                        Icon(Icons.Filled.Close, contentDescription = stringResource(R.string.close))
                                     } else {
-                                        Icon(Icons.Filled.History, contentDescription = null)
+                                        Icon(Icons.Filled.History, contentDescription = stringResource(R.string.su_audit_log_title))
                                     }
                                 }
                             }
@@ -348,7 +348,7 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
                             icon = {
                                 Icon(
                                     Icons.Filled.Terminal,
-                                    contentDescription = null,
+                                    contentDescription = stringResource(R.string.script_library),
                                     modifier = Modifier.size(18.dp)
                                 )
                             },
@@ -362,7 +362,7 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
                             icon = {
                                 Icon(
                                     Icons.Filled.History,
-                                    contentDescription = null,
+                                    contentDescription = stringResource(R.string.su_audit_log_title),
                                     modifier = Modifier.size(18.dp)
                                 )
                             },

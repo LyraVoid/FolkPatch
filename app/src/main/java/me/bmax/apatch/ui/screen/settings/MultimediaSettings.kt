@@ -86,7 +86,7 @@ fun MultimediaSettingsContent(
                 if (success) {
                     snackBarHost.showSnackbar(message = context.getString(R.string.settings_sound_effect_selected))
                 } else {
-                    snackBarHost.showSnackbar(message = "Failed to save sound effect")
+                    snackBarHost.showSnackbar(message = context.getString(R.string.settings_sound_effect_save_failed))
                 }
             }
         }
@@ -103,7 +103,7 @@ fun MultimediaSettingsContent(
                 if (success) {
                     snackBarHost.showSnackbar(message = context.getString(R.string.settings_startup_sound_selected))
                 } else {
-                    snackBarHost.showSnackbar(message = "Failed to save startup sound")
+                    snackBarHost.showSnackbar(message = context.getString(R.string.settings_startup_sound_save_failed))
                 }
             }
         }
@@ -368,7 +368,7 @@ fun MultimediaSettingsContent(
                         IconButton(onClick = { MusicManager.toggle() }) {
                             Icon(
                                 imageVector = if (isPlaying) Icons.Filled.Pause else Icons.Filled.PlayArrow,
-                                contentDescription = null
+                                contentDescription = stringResource(R.string.settings_music_playback_control)
                             )
                         }
                         Text(

@@ -383,7 +383,7 @@ fun StatusCardBig(
                     showToast(context, e.message ?: "")
                 }
             } else {
-                showToast(context, "请先授予存储权限才能选择背景图片")
+                showToast(context, context.getString(R.string.settings_background_permission_required))
             }
         },
         onClearImage = {

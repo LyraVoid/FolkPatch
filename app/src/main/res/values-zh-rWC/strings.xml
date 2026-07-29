@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">FolkPatch</string>
     <string name="app_name_fpatch">FPatch</string>
@@ -1196,4 +1196,11 @@
     <string name="settings_dashboard_card_dual_opacity_desc">自动根据明暗主题调整仪表盘法相透明度</string>
     <string name="settings_dashboard_card_day_opacity">白天模式仪表盘法相透明度</string>
     <string name="settings_dashboard_card_night_opacity">夜间模式仪表盘法相透明度</string>
+    <string name="settings_title_image_permission_required">需授予乾坤戒权限方可选取仙题画卷</string>
+    <string name="settings_background_permission_required">需授予乾坤戒权限方可选取仙境画卷</string>
+    <string name="settings_sound_effect_save_failed">仙音铭刻败陨</string>
+    <string name="settings_startup_sound_save_failed">启道之音铭刻败陨</string>
+    <string name="script_library_downloaded_to">仙典已藏于：%s</string>
+    <string name="script_library_download_failed">仙典摄取败陨：%s</string>
+    <string name="settings_new_app_profile_update_failed">新弟子命格更新败陨：%s</string>
 </resources>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">FolkPatch</string>
     <string name="app_name_fpatch">FPatch</string>
@@ -1213,4 +1213,11 @@
     <string name="settings_dashboard_card_dual_opacity_desc">Автоматически регулировать непрозрачность обоев панели для светлой и тёмной темы</string>
     <string name="settings_dashboard_card_day_opacity">Непрозрачность обоев панели в дневном режиме</string>
     <string name="settings_dashboard_card_night_opacity">Непрозрачность обоев панели в ночном режиме</string>
+    <string name="settings_title_image_permission_required">Предоставьте доступ к хранилищу для выбора изображения заголовка</string>
+    <string name="settings_background_permission_required">Предоставьте доступ к хранилищу для выбора фонового изображения</string>
+    <string name="settings_sound_effect_save_failed">Не удалось сохранить звуковой эффект</string>
+    <string name="settings_startup_sound_save_failed">Не удалось сохранить звук запуска</string>
+    <string name="script_library_downloaded_to">Загружено в: %s</string>
+    <string name="script_library_download_failed">Ошибка загрузки: %s</string>
+    <string name="settings_new_app_profile_update_failed">Не удалось обновить профиль нового приложения: %s</string>
 </resources>

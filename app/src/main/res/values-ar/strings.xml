@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">FolkPatch</string>
     <string name="app_name_fpatch">FPatch</string>
@@ -1201,4 +1201,11 @@
     <string name="folk_banner_custom_info_reset">إعادة تعيين</string>
     <string name="folk_banner_custom_info_saved">تم حفظ معلومات الوحدة لـ %s</string>
     <string name="folk_banner_custom_info_reset_done">تم إعادة تعيين معلومات الوحدة لـ %s</string>
+    <string name="settings_title_image_permission_required">يرجى منح إذن التخزين لاختيار صورة العنوان</string>
+    <string name="settings_background_permission_required">يرجى منح إذن التخزين لاختيار صورة الخلفية</string>
+    <string name="settings_sound_effect_save_failed">فشل حفظ المؤثر الصوتي</string>
+    <string name="settings_startup_sound_save_failed">فشل حفظ صوت البدء</string>
+    <string name="script_library_downloaded_to">تم التنزيل إلى: %s</string>
+    <string name="script_library_download_failed">فشل التنزيل: %s</string>
+    <string name="settings_new_app_profile_update_failed">فشل تحديث ملف تعريف التطبيق الجديد: %s</string>
 </resources>

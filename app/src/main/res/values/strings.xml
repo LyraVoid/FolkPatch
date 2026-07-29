@@ -521,6 +521,7 @@ Here are some possible reasons for authentication failure—please check which o
     <string name="settings_new_app_profile_normal">NO ROOT</string>
     <string name="settings_new_app_profile_root">ROOT</string>
     <string name="settings_new_app_profile_exclude">Exclude</string>
+    <string name="settings_new_app_profile_update_failed">New app profile update failed: %s</string>
     <string name="settings_hide_service">FolkPatch Hide</string>
     <string name="settings_hide_service_summary">Hide Bootloader unlock status to some extent</string>
     <string name="settings_kernel_spoof">Kernel Spoof Config</string>
@@ -606,6 +607,8 @@ Here are some possible reasons for authentication failure—please check which o
     <string name="settings_advanced_title_style_summary">Replace top bar title with custom image</string>
     <string name="settings_advanced_title_style_enabled">Advanced title style enabled</string>
     <string name="settings_select_title_image">Select Title Image</string>
+    <string name="settings_title_image_permission_required">Please grant storage permission to select a title image</string>
+    <string name="settings_background_permission_required">Please grant storage permission to select a background image</string>
     <string name="settings_title_image_selected">Title image selected</string>
     <string name="settings_title_image_saved">Title image saved successfully</string>
     <string name="settings_title_image_error">Failed to save title image</string>
@@ -1144,6 +1147,8 @@ Please ensure the app is completely closed and reopened for the commands to exec
     <string name="settings_clear_startup_sound">Clear Startup Sound</string>
     <string name="settings_clear_startup_sound_confirm">Are you sure you want to clear the startup sound?</string>
     <string name="settings_startup_sound_cleared">Startup sound cleared</string>
+    <string name="settings_sound_effect_save_failed">Failed to save sound effect</string>
+    <string name="settings_startup_sound_save_failed">Failed to save startup sound</string>
 
     <string name="settings_vibration">Vibration Feedback</string>
     <string name="settings_vibration_summary">Vibrate on touch events</string>
@@ -1189,6 +1194,8 @@ Please ensure the app is completely closed and reopened for the commands to exec
     <string name="script_library_alias">Alias</string>
     <string name="script_library_alias_hint">Enter script alias (optional)</string>
     <string name="script_library_run">Run</string>
+    <string name="script_library_downloaded_to">Downloaded to: %s</string>
+    <string name="script_library_download_failed">Download failed: %s</string>
     <string name="script_library_delete">Delete</string>
     <string name="script_library_path">Path: %s</string>
     <string name="script_library_confirm_delete">Confirm to delete script?</string>

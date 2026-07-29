@@ -140,11 +140,11 @@ import me.bmax.apatch.util.writeTo
 import java.io.IOException
 import java.io.File
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import me.bmax.apatch.ui.theme.BackgroundConfig
+import me.bmax.apatch.ui.theme.bannerFadeColor
 import me.bmax.apatch.ui.LocalBottomBarVisible
 import me.bmax.apatch.ui.LocalIsFloatingNavMode
 import androidx.compose.material3.ButtonDefaults
@@ -1263,7 +1263,6 @@ private fun KPModuleItem(
         1f
     }
     
-    val isDark = isSystemInDarkTheme()
     val cardColor = if (isWallpaperMode) {
         MaterialTheme.colorScheme.surface.copy(alpha = opacity)
     } else {
@@ -1346,13 +1345,7 @@ private fun KPModuleItem(
     val contentBlock: @Composable () -> Unit = {
         Box(modifier = Modifier.fillMaxWidth()) {
             if (bannerData != null) {
-                val colorScheme = MaterialTheme.colorScheme
-                val isDynamic = colorScheme.primary != colorScheme.secondary
-                val fadeColor = when {
-                    isDynamic -> colorScheme.surface
-                    isDark -> Color(0xFF222222)
-                    else -> Color.White
-                }
+                val fadeColor = bannerFadeColor()
 
                 Box(
                     modifier = Modifier.matchParentSize(),

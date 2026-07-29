@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">FolkPatch</string>
     <string name="app_name_fpatch">FPatch</string>
@@ -1214,4 +1214,11 @@ Por favor, certifique-se de fechar completamente o app e reabri-lo para que os c
     <string name="settings_dashboard_card_dual_opacity_desc">Ajustar automaticamente a opacidade do papel de parede do painel para temas claro e escuro</string>
     <string name="settings_dashboard_card_day_opacity">Opacidade do papel de parede do painel no modo dia</string>
     <string name="settings_dashboard_card_night_opacity">Opacidade do papel de parede do painel no modo noite</string>
+    <string name="settings_title_image_permission_required">Conceda a permissão de armazenamento para selecionar uma imagem de título</string>
+    <string name="settings_background_permission_required">Conceda a permissão de armazenamento para selecionar uma imagem de fundo</string>
+    <string name="settings_sound_effect_save_failed">Falha ao salvar o efeito sonoro</string>
+    <string name="settings_startup_sound_save_failed">Falha ao salvar o som de inicialização</string>
+    <string name="script_library_downloaded_to">Baixado em: %s</string>
+    <string name="script_library_download_failed">Falha no download: %s</string>
+    <string name="settings_new_app_profile_update_failed">Falha ao atualizar o perfil de novo app: %s</string>
 </resources>

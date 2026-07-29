@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">FolkPatch</string>
     <string name="app_name_fpatch">FPatch</string>
@@ -1211,4 +1211,11 @@
     <string name="color_style_monochrome">單色</string>
     <string name="color_style_neutral">中性</string>
     <string name="color_style_fidelity">保真</string>
+    <string name="settings_title_image_permission_required">請先授予儲存空間權限才能選擇標題圖片</string>
+    <string name="settings_background_permission_required">請先授予儲存空間權限才能選擇背景圖片</string>
+    <string name="settings_sound_effect_save_failed">儲存音效檔案失敗</string>
+    <string name="settings_startup_sound_save_failed">儲存啟動音效失敗</string>
+    <string name="script_library_downloaded_to">已下載至：%s</string>
+    <string name="script_library_download_failed">下載失敗：%s</string>
+    <string name="settings_new_app_profile_update_failed">新應用程式設定檔更新失敗：%s</string>
 </resources>

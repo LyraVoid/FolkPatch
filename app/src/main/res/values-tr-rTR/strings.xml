@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">FolkPatch</string>
     <string name="app_name_fpatch">FPatch</string>
@@ -1218,4 +1218,11 @@ Komutların çalışması için uygulamanın tamamen kapatılıp yeniden açıld
     <string name="settings_dashboard_card_dual_opacity_desc">Açık ve koyu temalar için panel duvar kağıdı opaklığını otomatik ayarla</string>
     <string name="settings_dashboard_card_day_opacity">Gündüz modunda panel duvar kağıdı opaklığı</string>
     <string name="settings_dashboard_card_night_opacity">Gece modunda panel duvar kağıdı opaklığı</string>
+    <string name="settings_title_image_permission_required">Başlık görseli seçmek için depolama izni verin</string>
+    <string name="settings_background_permission_required">Arka plan görseli seçmek için depolama izni verin</string>
+    <string name="settings_sound_effect_save_failed">Ses efekti kaydedilemedi</string>
+    <string name="settings_startup_sound_save_failed">Başlangıç sesi kaydedilemedi</string>
+    <string name="script_library_downloaded_to">İndirilen konum: %s</string>
+    <string name="script_library_download_failed">İndirme başarısız: %s</string>
+    <string name="settings_new_app_profile_update_failed">Yeni uygulama profili güncellenemedi: %s</string>
 </resources>

@@ -120,6 +120,7 @@ class SuperUserViewModel : ViewModel() {
     private var bindJob: kotlinx.coroutines.Job? = null
     private val fetchInFlight = AtomicBoolean(false)
     private val batchInFlight = AtomicBoolean(false)
+    private val collator = Collator.getInstance(Locale.getDefault())
 
     private val sortedList by derivedStateOf {
         val comparator = compareBy<AppInfo> {
@@ -128,7 +129,7 @@ class SuperUserViewModel : ViewModel() {
                 it.config.exclude == 1 -> 1
                 else -> 2
             }
-        }.then(compareBy(Collator.getInstance(Locale.getDefault()), AppInfo::label))
+        }.then(compareBy(collator, AppInfo::label))
         apps.sortedWith(comparator)
     }
 
@@ -395,7 +396,7 @@ class SuperUserViewModel : ViewModel() {
             } catch (e: Exception) {
                 Log.e(TAG, "Backup failed", e)
                 withContext(Dispatchers.Main) {
-                    me.bmax.apatch.util.ui.showToast(context, "Backup failed: ${e.message}")
+                    me.bmax.apatch.util.ui.showToast(context, context.getString(me.bmax.apatch.R.string.backup_failed, e.message ?: ""))
                 }
             }
         }
@@ -494,7 +495,7 @@ class SuperUserViewModel : ViewModel() {
             } catch (e: Exception) {
                 Log.e(TAG, "Restore failed", e)
                 withContext(Dispatchers.Main) {
-                    me.bmax.apatch.util.ui.showToast(context, "Restore failed: ${e.message}")
+                    me.bmax.apatch.util.ui.showToast(context, context.getString(me.bmax.apatch.R.string.restore_failed, e.message ?: ""))
                 }
             }
         }

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">FolkPatch</string>
     <string name="app_name_fpatch">FPatch</string>
@@ -1201,4 +1201,11 @@
     <string name="settings_dashboard_card_dual_opacity_desc">自动根据明暗主题调整仪表盘壁纸透明度喵</string>
     <string name="settings_dashboard_card_day_opacity">白天模式仪表盘壁纸透明度喵</string>
     <string name="settings_dashboard_card_night_opacity">夜间模式仪表盘壁纸透明度喵</string>
+    <string name="settings_title_image_permission_required">要先给存储权限才能选标题图片喵！</string>
+    <string name="settings_background_permission_required">要先给存储权限才能选背景图片喵！</string>
+    <string name="settings_sound_effect_save_failed">保存音效失败了喵...</string>
+    <string name="settings_startup_sound_save_failed">保存启动音效失败了喵...</string>
+    <string name="script_library_downloaded_to">已经下载到 %s 了喵！</string>
+    <string name="script_library_download_failed">下载失败了喵...: %s</string>
+    <string name="settings_new_app_profile_update_failed">新应用配置更新失败了喵: %s</string>
 </resources>

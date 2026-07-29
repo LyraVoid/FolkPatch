@@ -1044,7 +1044,7 @@ fun WarningCard() {
 
                         Icon(
                             Icons.Outlined.Clear,
-                            contentDescription = "",
+                            contentDescription = stringResource(R.string.close),
                             modifier = Modifier.clickable {
                                 show = false
                                 apApp.updateBackupWarningState(false)
@@ -1082,6 +1082,7 @@ fun InfoCard(kpState: APApplication.State, apState: APApplication.State) {
 
     var zygiskImplement by remember { mutableStateOf("None") }
     var mountImplement by remember { mutableStateOf("None") }
+    val suPath = remember { Natives.suPath() }
     LaunchedEffect(Unit) {
         withContext(kotlinx.coroutines.Dispatchers.IO) {
             try {
@@ -1113,7 +1114,7 @@ fun InfoCard(kpState: APApplication.State, apState: APApplication.State) {
             fun InfoCardItem(label: String, content: String) {
                 contents.appendLine(label).appendLine(content).appendLine()
                 Text(text = label, style = MaterialTheme.typography.bodyLarge)
-                Text(text = content, style = MaterialTheme.typography.bodyMedium)
+                Text(text = content, style = MaterialTheme.typography.bodySmall)
             }
 
             if (kpState != APApplication.State.UNKNOWN_STATE && !hideKpatchVersion.value) {
@@ -1125,7 +1126,7 @@ fun InfoCard(kpState: APApplication.State, apState: APApplication.State) {
             }
             
             if (kpState != APApplication.State.UNKNOWN_STATE && !hideSuPath.value) {
-                InfoCardItem(stringResource(R.string.home_su_path), Natives.suPath())
+                InfoCardItem(stringResource(R.string.home_su_path), suPath)
 
                 Spacer(Modifier.height(16.dp))
             }
@@ -1180,6 +1181,7 @@ fun ListInfoCard(kpState: APApplication.State, apState: APApplication.State, sho
 
     var zygiskImplement by remember { mutableStateOf("None") }
     var mountImplement by remember { mutableStateOf("None") }
+    val suPath = remember { Natives.suPath() }
     LaunchedEffect(Unit) {
         withContext(kotlinx.coroutines.Dispatchers.IO) {
             try {
@@ -1239,7 +1241,7 @@ fun ListInfoCard(kpState: APApplication.State, apState: APApplication.State, sho
             }
 
             if (kpState != APApplication.State.UNKNOWN_STATE && !hideSuPath.value) {
-                InfoCardItem(Icons.Outlined.Code, stringResource(R.string.home_su_path), Natives.suPath())
+                InfoCardItem(Icons.Outlined.Code, stringResource(R.string.home_su_path), suPath)
                 Spacer(Modifier.height(16.dp))
             }
 

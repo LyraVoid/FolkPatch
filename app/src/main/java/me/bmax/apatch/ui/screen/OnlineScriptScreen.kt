@@ -201,11 +201,11 @@ fun OnlineScriptItem(
                 }
 
                 withContext(Dispatchers.Main) {
-                    showToast(context, "Downloaded to: ${targetFile.absolutePath}")
+                    showToast(context, context.getString(R.string.script_library_downloaded_to, targetFile.absolutePath))
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    showToast(context, "Download failed: ${e.message}")
+                    showToast(context, context.getString(R.string.script_library_download_failed, e.message ?: ""))
                 }
             }
         }

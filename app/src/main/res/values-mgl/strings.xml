@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">FolkPatch</string>
     <string name="app_name_fpatch">FPatch</string>
@@ -1199,4 +1199,11 @@
     <string name="settings_dashboard_card_dual_opacity_desc">自动根据明暗主题调整仪表盘壁纸透明度</string>
     <string name="settings_dashboard_card_day_opacity">白天模式仪表盘壁纸透明度</string>
     <string name="settings_dashboard_card_night_opacity">夜间模式仪表盘壁纸透明度</string>
+    <string name="settings_title_image_permission_required">需要魔法仓库权限才能选择标题画卷</string>
+    <string name="settings_background_permission_required">需要魔法仓库权限才能选择背景画卷</string>
+    <string name="settings_sound_effect_save_failed">音效魔法保存失败</string>
+    <string name="settings_startup_sound_save_failed">启动音效魔法保存失败</string>
+    <string name="script_library_downloaded_to">已召唤到：%s</string>
+    <string name="script_library_download_failed">召唤失败：%s</string>
+    <string name="settings_new_app_profile_update_failed">新魔法使配置更新失败：%s</string>
 </resources>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">FolkPatch</string>
     <string name="app_name_fpatch">FPatch</string>
@@ -1196,4 +1196,11 @@
     <string name="color_style_monochrome">单色</string>
     <string name="color_style_neutral">中性</string>
     <string name="color_style_fidelity">保真</string>
+    <string name="settings_title_image_permission_required">需要存储权限才能选择标题贴图！</string>
+    <string name="settings_background_permission_required">需要存储权限才能选择背景贴图！</string>
+    <string name="settings_sound_effect_save_failed">音效保存到末影箱失败了！</string>
+    <string name="settings_startup_sound_save_failed">启动音效保存到末影箱失败了！</string>
+    <string name="script_library_downloaded_to">已下载到：%s</string>
+    <string name="script_library_download_failed">下载被苦力怕炸了：%s</string>
+    <string name="settings_new_app_profile_update_failed">新应用配置更新被苦力怕炸了：%s</string>
 </resources>

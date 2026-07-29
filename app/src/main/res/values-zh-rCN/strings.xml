@@ -498,6 +498,7 @@
     <string name="settings_new_app_profile_normal">常规</string>
     <string name="settings_new_app_profile_root">超级用户</string>
     <string name="settings_new_app_profile_exclude">排除</string>
+    <string name="settings_new_app_profile_update_failed">新应用配置更新失败：%s</string>
     <string name="settings_hide_service">FolkPatch Hide</string>
     <string name="settings_hide_service_summary">一定程度上隐藏Bootloader锁解锁状态</string>
     <string name="settings_app_title">应用名称</string>
@@ -529,6 +530,8 @@
     <string name="settings_advanced_title_style_summary">使用自定义图片替换顶部标题</string>
     <string name="settings_advanced_title_style_enabled">高级标题样式已启用</string>
     <string name="settings_select_title_image">选择标题图片</string>
+    <string name="settings_title_image_permission_required">请先授予存储权限才能选择标题图片</string>
+    <string name="settings_background_permission_required">请先授予存储权限才能选择背景图片</string>
     <string name="settings_title_image_selected">已选择标题图片</string>
     <string name="settings_title_image_saved">标题图片保存成功</string>
     <string name="settings_title_image_error">保存标题图片失败</string>
@@ -1055,6 +1058,8 @@
     <string name="settings_clear_startup_sound">清除启动音效</string>
     <string name="settings_clear_startup_sound_confirm">确定要清除启动音效吗？</string>
     <string name="settings_startup_sound_cleared">启动音效已清除</string>
+    <string name="settings_sound_effect_save_failed">保存音效文件失败</string>
+    <string name="settings_startup_sound_save_failed">保存启动音效失败</string>
 
     <string name="settings_vibration">震动触感</string>
     <string name="settings_vibration_summary">在触摸事件时震动</string>
@@ -1099,6 +1104,8 @@
     <string name="script_library_alias">别名</string>
     <string name="script_library_alias_hint">输入脚本别名（可选）</string>
     <string name="script_library_run">运行</string>
+    <string name="script_library_downloaded_to">已下载到：%s</string>
+    <string name="script_library_download_failed">下载失败：%s</string>
     <string name="script_library_delete">删除</string>
     <string name="script_library_path">路径：%s</string>
     <string name="script_library_confirm_delete">确认删除脚本？</string>

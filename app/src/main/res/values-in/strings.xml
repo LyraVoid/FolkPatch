@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">FolkPatch</string>
     <string name="app_name_fpatch">FPatch</string>
@@ -1195,4 +1195,11 @@ Pastikan aplikasi ditutup sepenuhnya dan dimulai ulang untuk menjalankan perinta
     <string name="settings_dashboard_card_dual_opacity_desc">Sesuaikan opasitas latar dasbor secara otomatis untuk tema terang dan gelap</string>
     <string name="settings_dashboard_card_day_opacity">Opasitas latar dasbor mode siang</string>
     <string name="settings_dashboard_card_night_opacity">Opasitas latar dasbor mode malam</string>
+    <string name="settings_title_image_permission_required">Berikan izin penyimpanan untuk memilih gambar judul</string>
+    <string name="settings_background_permission_required">Berikan izin penyimpanan untuk memilih gambar latar belakang</string>
+    <string name="settings_sound_effect_save_failed">Gagal menyimpan efek suara</string>
+    <string name="settings_startup_sound_save_failed">Gagal menyimpan suara pembuka</string>
+    <string name="script_library_downloaded_to">Diunduh ke: %s</string>
+    <string name="script_library_download_failed">Gagal mengunduh: %s</string>
+    <string name="settings_new_app_profile_update_failed">Gagal memperbarui profil aplikasi baru: %s</string>
 </resources>

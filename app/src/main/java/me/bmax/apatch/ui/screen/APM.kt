@@ -67,7 +67,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.foundation.background
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.material3.ButtonDefaults
@@ -185,6 +184,7 @@ import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenu
 import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenuItem
 import me.bmax.apatch.util.SafeUriResolver
 import me.bmax.apatch.ui.theme.BackgroundConfig
+import me.bmax.apatch.ui.theme.bannerFadeColor
 import me.bmax.apatch.ui.LocalBottomBarVisible
 import me.bmax.apatch.ui.LocalIsFloatingNavMode
 import androidx.compose.ui.platform.LocalConfiguration
@@ -1794,14 +1794,7 @@ private fun ModuleItem(
             val bannerData = bannerInfo?.bytes
             val hasBannerUrl = !bannerUrl.isNullOrEmpty()
             if (bannerData != null || hasBannerUrl) {
-                val isDark = isSystemInDarkTheme()
-                val colorScheme = MaterialTheme.colorScheme
-                val isDynamic = colorScheme.primary != colorScheme.secondary
-                val fadeColor = when {
-                    isDynamic -> colorScheme.surface
-                    isDark -> Color(0xFF222222)
-                    else -> Color.White
-                }
+                val fadeColor = bannerFadeColor()
 
                 Box(
                     modifier = Modifier.matchParentSize(),

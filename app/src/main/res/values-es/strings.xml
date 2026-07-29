@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">FolkPatch</string>
     <string name="app_name_fpatch">FPatch</string>
@@ -1216,4 +1216,11 @@ Por ejemplo, los KPM que previenen la modificación de particiones solo pueden u
     <string name="folk_banner_custom_info_reset">Restablecer</string>
     <string name="folk_banner_custom_info_saved">Info del módulo guardada para %s</string>
     <string name="folk_banner_custom_info_reset_done">Info del módulo restablecida para %s</string>
+    <string name="settings_title_image_permission_required">Concede el permiso de almacenamiento para seleccionar una imagen de título</string>
+    <string name="settings_background_permission_required">Concede el permiso de almacenamiento para seleccionar una imagen de fondo</string>
+    <string name="settings_sound_effect_save_failed">Error al guardar el efecto de sonido</string>
+    <string name="settings_startup_sound_save_failed">Error al guardar el sonido de inicio</string>
+    <string name="script_library_downloaded_to">Descargado en: %s</string>
+    <string name="script_library_download_failed">Error en la descarga: %s</string>
+    <string name="settings_new_app_profile_update_failed">Error al actualizar el perfil de nueva app: %s</string>
 </resources>
