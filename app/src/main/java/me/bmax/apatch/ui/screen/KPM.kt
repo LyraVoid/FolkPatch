@@ -146,8 +146,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.ui.theme.bannerFadeColor
-import me.bmax.apatch.ui.LocalBottomBarVisible
-import me.bmax.apatch.ui.LocalIsFloatingNavMode
+import me.bmax.apatch.ui.navigation.LocalBottomBarVisible
+import me.bmax.apatch.ui.navigation.LocalIsFloatingNavMode
 import androidx.compose.material3.ButtonDefaults
 
 import android.content.SharedPreferences

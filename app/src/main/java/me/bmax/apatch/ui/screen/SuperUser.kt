@@ -103,8 +103,8 @@ import me.bmax.apatch.APApplication
 import me.bmax.apatch.Natives
 import me.bmax.apatch.R
 import me.bmax.apatch.apApp
-import me.bmax.apatch.ui.LocalBottomBarVisible
-import me.bmax.apatch.ui.LocalIsFloatingNavMode
+import me.bmax.apatch.ui.navigation.LocalBottomBarVisible
+import me.bmax.apatch.ui.navigation.LocalIsFloatingNavMode
 import me.bmax.apatch.ui.component.ExpressiveSwitch
 import me.bmax.apatch.ui.component.SearchAppBar
 import me.bmax.apatch.ui.component.SwitchItem

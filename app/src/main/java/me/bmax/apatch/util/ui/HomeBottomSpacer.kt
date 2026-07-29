@@ -11,8 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import me.bmax.apatch.ui.LocalBottomBarVisible
-import me.bmax.apatch.ui.LocalIsFloatingNavMode
+import me.bmax.apatch.ui.navigation.LocalBottomBarVisible
+import me.bmax.apatch.ui.navigation.LocalIsFloatingNavMode
 
 @Composable
 fun HomeBottomSpacer(modifier: Modifier = Modifier) {
