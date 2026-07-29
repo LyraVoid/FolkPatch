@@ -1,6 +1,7 @@
 package me.bmax.apatch.ui.screen.settings
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Archive
 import androidx.compose.material.icons.filled.Block
 import androidx.compose.material.icons.filled.Dock
 import androidx.compose.material.icons.filled.Download
@@ -45,6 +46,9 @@ fun ModuleSettingsContent(
     val splicedCardGroupTitle = stringResource(id = R.string.settings_spliced_card_group)
     val splicedCardGroupSummary = stringResource(id = R.string.settings_spliced_card_group_summary)
 
+    val showKpmStatusBadgeTitle = stringResource(id = R.string.settings_show_kpm_status_badge)
+    val showKpmStatusBadgeSummary = stringResource(id = R.string.settings_show_kpm_status_badge_summary)
+
     var disableModuleUpdateCheck by remember { mutableStateOf(prefs.getBoolean("disable_module_update_check", false)) }
     var showMoreModuleInfo by remember { mutableStateOf(prefs.getBoolean("show_more_module_info", true)) }
     var moduleSortOptimization by remember { mutableStateOf(prefs.getBoolean("module_sort_optimization", true)) }
@@ -52,6 +56,7 @@ fun ModuleSettingsContent(
     var apmBatchInstallFullProcess by remember { mutableStateOf(prefs.getBoolean("apm_batch_install_full_process", false)) }
     var simpleListBottomBar by remember { mutableStateOf(prefs.getBoolean("simple_list_bottom_bar", false)) }
     var splicedCardGroup by remember { mutableStateOf(prefs.getBoolean("spliced_card_group", true)) }
+    var showKpmStatusBadge by remember { mutableStateOf(prefs.getBoolean("show_kpm_status_badge", true)) }
 
     SplicedColumnGroup(flat = flat, highlightKey = highlightKey) {
         item(key = "module_disable_update") {
@@ -148,6 +153,20 @@ fun ModuleSettingsContent(
                 onCheckedChange = {
                     splicedCardGroup = it
                     prefs.edit().putBoolean("spliced_card_group", it).apply()
+                }
+            )
+        }
+
+        item(key = "module_kpm_status_badge") {
+            ToggleSettingCard(
+                icon = Icons.Filled.Archive,
+                flat = flat,
+                title = showKpmStatusBadgeTitle,
+                description = showKpmStatusBadgeSummary,
+                checked = showKpmStatusBadge,
+                onCheckedChange = {
+                    showKpmStatusBadge = it
+                    prefs.edit().putBoolean("show_kpm_status_badge", it).apply()
                 }
             )
         }

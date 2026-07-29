@@ -204,6 +204,7 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
     var foldSystemModule by remember { mutableStateOf(prefs.getBoolean("fold_system_module", true)) }
     var simpleListBottomBar by remember { mutableStateOf(prefs.getBoolean("simple_list_bottom_bar", false)) }
     var splicedCardGroup by remember { mutableStateOf(prefs.getBoolean("spliced_card_group", true)) }
+    var showKpmStatusBadge by remember { mutableStateOf(prefs.getBoolean("show_kpm_status_badge", true)) }
 
     DisposableEffect(Unit) {
         val listener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPrefs, key ->
@@ -215,6 +216,8 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
                 simpleListBottomBar = sharedPrefs.getBoolean("simple_list_bottom_bar", false)
             } else if (key == "spliced_card_group") {
                 splicedCardGroup = sharedPrefs.getBoolean("spliced_card_group", true)
+            } else if (key == "show_kpm_status_badge") {
+                showKpmStatusBadge = sharedPrefs.getBoolean("show_kpm_status_badge", true)
             }
         }
         prefs.registerOnSharedPreferenceChangeListener(listener)
@@ -418,6 +421,7 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
             foldSystemModule = foldSystemModule,
             simpleListBottomBar = simpleListBottomBar,
             splicedCardGroup = splicedCardGroup,
+            showKpmStatusBadge = showKpmStatusBadge,
             checkStrongBiometric = ::checkStrongBiometric
         )
     }
@@ -762,6 +766,7 @@ private fun KPModuleList(
     foldSystemModule: Boolean,
     simpleListBottomBar: Boolean,
     splicedCardGroup: Boolean,
+    showKpmStatusBadge: Boolean,
     checkStrongBiometric: suspend () -> Boolean
 ) {
     val moduleStr = stringResource(id = R.string.kpm)
@@ -893,7 +898,7 @@ private fun KPModuleList(
                         onExpandToggle = {
                             expandedModuleId = if (expandedModuleId == module.name) null else module.name
                         },
-                        isEmbedded = viewModel.embeddedKpmNames?.let { module.name.trim() in it }
+                        isEmbedded = if (showKpmStatusBadge) viewModel.embeddedKpmNames?.let { module.name.trim() in it } else null
                     )
                 }
             )
@@ -993,7 +998,7 @@ private fun KPModuleList(
                                     onExpandToggle = {
                                         expandedModuleId = if (expandedModuleId == module.name) null else module.name
                                     },
-                                    isEmbedded = viewModel.embeddedKpmNames?.let { module.name.trim() in it }
+                                    isEmbedded = if (showKpmStatusBadge) viewModel.embeddedKpmNames?.let { module.name.trim() in it } else null
                                 )
                             }
                             item { Spacer(Modifier.height(if (LocalIsFloatingNavMode.current) 88.dp else 8.dp)) }
@@ -1022,7 +1027,7 @@ private fun KPModuleList(
                                     onExpandToggle = {
                                         expandedModuleId = if (expandedModuleId == module.name) null else module.name
                                     },
-                                    isEmbedded = viewModel.embeddedKpmNames?.let { module.name.trim() in it }
+                                    isEmbedded = if (showKpmStatusBadge) viewModel.embeddedKpmNames?.let { module.name.trim() in it } else null
                                 )
                                 }
                             }

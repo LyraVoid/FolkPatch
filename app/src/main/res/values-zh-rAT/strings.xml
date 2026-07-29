@@ -329,6 +329,8 @@
         <string name="settings_simple_list_bottom_bar_summary">圣光阵符法使用纯图标按钮样式，灵感来自APatch</string>
     <string name="settings_spliced_card_group">拼接圣光阵符</string>
     <string name="settings_spliced_card_group_summary">圣光阵符法使用连续拼接卡片样式</string>
+    <string name="settings_show_kpm_status_badge">显示魂晶石状态徽记</string>
+    <string name="settings_show_kpm_status_badge_summary">在魂晶石卡上显化已融合/已激活的状态徽记</string>
     <string name="apm_install_confirm_title">安装圣光阵</string>
     <string name="settings_show_more_module_info">显示圣光阵详细信息</string>
     <string name="settings_show_more_module_info_summary">在圣光阵列表中显示圣光阵 ID 和大小</string>

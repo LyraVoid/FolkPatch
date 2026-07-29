@@ -132,6 +132,7 @@ object SettingsRegistry {
             add(SettingEntry("module_batch_install", R.string.apm_batch_install_full_process, R.string.apm_batch_install_full_process_summary, SettingCategory.MODULE))
             add(SettingEntry("module_simple_list", R.string.settings_simple_list_bottom_bar, R.string.settings_simple_list_bottom_bar_summary, SettingCategory.MODULE))
             add(SettingEntry("module_spliced_card", R.string.settings_spliced_card_group, R.string.settings_spliced_card_group_summary, SettingCategory.MODULE))
+            add(SettingEntry("module_kpm_status_badge", R.string.settings_show_kpm_status_badge, R.string.settings_show_kpm_status_badge_summary, SettingCategory.MODULE))
 
             // === Multimedia ===
             add(SettingEntry("multimedia_bg_music", R.string.settings_background_music, R.string.settings_background_music_summary, SettingCategory.MULTIMEDIA))

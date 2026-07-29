@@ -319,6 +319,8 @@
     <string name="settings_simple_list_bottom_bar_summary">招牌菜烹饪操作使用纯图标按钮样式，灵感来自 FolkPatch</string>
     <string name="settings_spliced_card_group">拼接招牌菜</string>
     <string name="settings_spliced_card_group_summary">招牌菜列表使用连续拼接卡片样式</string>
+    <string name="settings_show_kpm_status_badge">显示金色传说徽章</string>
+    <string name="settings_show_kpm_status_badge_summary">在金色传说卡片上显示已融入/已出炉状态徽章</string>
     <string name="apm_install_confirm_title">烹饪招牌菜</string>
     <string name="apm_install_confirm_content">确定要烹饪 %s 吗？</string>
     <string name="apm_disable_all_title">禁用所有招牌菜</string>

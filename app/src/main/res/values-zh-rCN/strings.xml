@@ -319,6 +319,8 @@
     <string name="settings_simple_list_bottom_bar_summary">模块操作使用纯图标按钮样式，灵感来自APatch</string>
     <string name="settings_spliced_card_group">拼接卡片组</string>
     <string name="settings_spliced_card_group_summary">模块列表使用 M3E 连续拼接卡片样式</string>
+    <string name="settings_show_kpm_status_badge">显示内核模块状态徽章</string>
+    <string name="settings_show_kpm_status_badge_summary">在内核模块卡片上显示已嵌入/已加载状态徽章</string>
     <string name="apm_install_confirm_title">安装模块</string>
     <string name="apm_install_confirm_content">确定要安装 %s 吗？</string>
     <string name="apm_disable_all_title">禁用所有模块</string>
