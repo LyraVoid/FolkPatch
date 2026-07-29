@@ -123,10 +123,10 @@ fun GeneralSettingsContent(
     }
 
     val customAppTitleTitle = stringResource(id = R.string.settings_custom_app_title)
-    val currentCustomAppTitle = remember { prefs.getString("custom_app_title", "FolkPatch") }
+    var currentCustomAppTitle by remember { mutableStateOf(prefs.getString("custom_app_title", "FolkPatch") ?: "FolkPatch") }
 
     val desktopAppNameTitle = stringResource(id = R.string.desktop_app_name)
-    val currentDesktopAppName = remember { prefs.getString("desktop_app_name", "FolkPatch") }
+    var currentDesktopAppName by remember { mutableStateOf(prefs.getString("desktop_app_name", "FolkPatch") ?: "FolkPatch") }
 
     val dpiTitle = stringResource(id = R.string.settings_app_dpi)
     val currentDpiVal = DPIUtils.currentDpi
@@ -144,7 +144,7 @@ fun GeneralSettingsContent(
     val predictiveBackSummary = stringResource(id = R.string.settings_predictive_back_summary)
 
     val appListLoadingSchemeTitle = stringResource(id = R.string.settings_app_list_loading_scheme)
-    val currentScheme = remember { prefs.getString("app_list_loading_scheme", "root_service") }
+    var currentScheme by remember { mutableStateOf(prefs.getString("app_list_loading_scheme", "root_service") ?: "root_service") }
     val currentSchemeLabel = if (currentScheme == "root_service") stringResource(R.string.app_list_loading_scheme_root_service) else stringResource(R.string.app_list_loading_scheme_package_manager)
     val newAppProfileTitle = stringResource(id = R.string.settings_new_app_profile_mode)
 
@@ -172,8 +172,8 @@ fun GeneralSettingsContent(
     var blockUpdateChecked by remember { mutableStateOf(prefs.getBoolean(APApplication.PREF_BLOCK_KERNELPATCH_UPDATE, false)) }
     var blockApUpdateChecked by remember { mutableStateOf(prefs.getBoolean(APApplication.PREF_BLOCK_ANDROIDPATCH_UPDATE, false)) }
     var folkXEngineEnabled by remember { mutableStateOf(prefs.getBoolean("folkx_engine_enabled", true)) }
-    val currentType = remember { prefs.getString("folkx_animation_type", "linear") }
-    val currentSpeed = remember { prefs.getFloat("folkx_animation_speed", 1.0f) }
+    var currentType by remember { mutableStateOf(prefs.getString("folkx_animation_type", "linear") ?: "linear") }
+    var currentSpeed by remember { mutableStateOf(prefs.getFloat("folkx_animation_speed", 1.0f)) }
     var predictiveBackEnabled by remember { mutableStateOf(prefs.getBoolean("predictive_back_enabled", true)) }
 
     val newAppProfileEnabledTitle = stringResource(id = R.string.settings_new_app_profile_enabled)
@@ -577,7 +577,7 @@ fun GeneralSettingsContent(
                         )
                         Spacer(Modifier.height(4.dp))
                         Text(
-                            text = currentCustomAppTitle ?: "",
+                            text = currentCustomAppTitle,
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -602,7 +602,7 @@ fun GeneralSettingsContent(
                         )
                         Spacer(Modifier.height(4.dp))
                         Text(
-                            text = currentDesktopAppName.toString(),
+                            text = currentDesktopAppName,
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -740,11 +740,15 @@ fun GeneralSettingsContent(
     }
 
     if (showCustomAppTitleDialog.value) {
-        CustomAppTitleDialog(showCustomAppTitleDialog, snackBarHost)
+        CustomAppTitleDialog(showCustomAppTitleDialog, snackBarHost) { newTitle ->
+            currentCustomAppTitle = newTitle
+        }
     }
 
     if (showDesktopAppNameDialog.value) {
-        DesktopAppNameChooseDialog(showDesktopAppNameDialog)
+        DesktopAppNameChooseDialog(showDesktopAppNameDialog) { newName ->
+            currentDesktopAppName = newName
+        }
     }
 
     if (showDpiDialog.value) {
@@ -752,15 +756,21 @@ fun GeneralSettingsContent(
     }
 
     if (showFolkXAnimationTypeDialog.value) {
-        FolkXAnimationTypeDialog(showFolkXAnimationTypeDialog)
+        FolkXAnimationTypeDialog(showFolkXAnimationTypeDialog) { newType ->
+            currentType = newType
+        }
     }
 
     if (showFolkXAnimationSpeedDialog.value) {
-        FolkXAnimationSpeedDialog(showFolkXAnimationSpeedDialog)
+        FolkXAnimationSpeedDialog(showFolkXAnimationSpeedDialog) { newSpeed ->
+            currentSpeed = newSpeed
+        }
     }
 
     if (showAppListLoadingSchemeDialog.value) {
-        AppListLoadingSchemeDialog(showAppListLoadingSchemeDialog)
+        AppListLoadingSchemeDialog(showAppListLoadingSchemeDialog) { newScheme ->
+            currentScheme = newScheme
+        }
     }
 
     if (showNewAppProfileModeDialog.value) {

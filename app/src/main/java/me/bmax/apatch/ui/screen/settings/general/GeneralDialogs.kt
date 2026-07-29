@@ -524,7 +524,7 @@ fun AppTitleChooseDialog(showDialog: MutableState<Boolean>, onTitleChanged: (Str
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CustomAppTitleDialog(showDialog: MutableState<Boolean>, snackBarHost: SnackbarHostState) {
+fun CustomAppTitleDialog(showDialog: MutableState<Boolean>, snackBarHost: SnackbarHostState, onTitleChanged: (String) -> Unit = {}) {
     val prefs = APApplication.sharedPreferences
     var customTitle by remember {
         mutableStateOf(prefs.getString("custom_app_title", "FolkPatch") ?: "FolkPatch")
@@ -575,6 +575,7 @@ fun CustomAppTitleDialog(showDialog: MutableState<Boolean>, snackBarHost: Snackb
                             return@TextButton
                         }
                         prefs.edit { putString("custom_app_title", trimmed) }
+                        onTitleChanged(trimmed)
                         showDialog.value = false
                     }) {
                         Text(stringResource(R.string.custom_app_title_dialog_confirm))
@@ -590,7 +591,7 @@ fun CustomAppTitleDialog(showDialog: MutableState<Boolean>, snackBarHost: Snackb
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DesktopAppNameChooseDialog(showDialog: MutableState<Boolean>) {
+fun DesktopAppNameChooseDialog(showDialog: MutableState<Boolean>, onNameChanged: (String) -> Unit = {}) {
     val prefs = APApplication.sharedPreferences
     val context = LocalContext.current
     val currentName = remember { prefs.getString("desktop_app_name", "FolkPatch") }
@@ -617,6 +618,7 @@ fun DesktopAppNameChooseDialog(showDialog: MutableState<Boolean>) {
                             prefs.edit {
                                 putString("desktop_app_name", "FolkPatch")
                             }
+                            onNameChanged("FolkPatch")
                             LauncherIconUtils.applySaved(context)
                         },
                         trailingContent = {
@@ -634,6 +636,7 @@ fun DesktopAppNameChooseDialog(showDialog: MutableState<Boolean>) {
                             prefs.edit {
                                 putString("desktop_app_name", "FPatch")
                             }
+                            onNameChanged("FPatch")
                             LauncherIconUtils.applySaved(context)
                         },
                         trailingContent = {
@@ -653,7 +656,7 @@ fun DesktopAppNameChooseDialog(showDialog: MutableState<Boolean>) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FolkXAnimationTypeDialog(showDialog: MutableState<Boolean>) {
+fun FolkXAnimationTypeDialog(showDialog: MutableState<Boolean>, onTypeChanged: (String) -> Unit = {}) {
     val prefs = APApplication.sharedPreferences
 
     BasicAlertDialog(
@@ -704,6 +707,7 @@ fun FolkXAnimationTypeDialog(showDialog: MutableState<Boolean>) {
                                 },
                                 modifier = Modifier.clickable {
                                     prefs.edit().putString("folkx_animation_type", type).apply()
+                                    onTypeChanged(type)
                                     showDialog.value = false
                                 }
                             )
@@ -730,7 +734,7 @@ fun FolkXAnimationTypeDialog(showDialog: MutableState<Boolean>) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppListLoadingSchemeDialog(showDialog: MutableState<Boolean>) {
+fun AppListLoadingSchemeDialog(showDialog: MutableState<Boolean>, onSchemeChanged: (String) -> Unit = {}) {
     val prefs = APApplication.sharedPreferences
 
     BasicAlertDialog(
@@ -778,6 +782,7 @@ fun AppListLoadingSchemeDialog(showDialog: MutableState<Boolean>) {
                                 },
                                 modifier = Modifier.clickable {
                                     prefs.edit { putString("app_list_loading_scheme", scheme) }
+                                    onSchemeChanged(scheme)
                                     showDialog.value = false
                                 }
                             )
@@ -962,7 +967,7 @@ fun CleanStorageDialog(showDialog: MutableState<Boolean>) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FolkXAnimationSpeedDialog(showDialog: MutableState<Boolean>) {
+fun FolkXAnimationSpeedDialog(showDialog: MutableState<Boolean>, onSpeedChanged: (Float) -> Unit = {}) {
     val prefs = APApplication.sharedPreferences
 
     BasicAlertDialog(
@@ -1014,6 +1019,7 @@ fun FolkXAnimationSpeedDialog(showDialog: MutableState<Boolean>) {
                                 },
                                 modifier = Modifier.clickable {
                                     prefs.edit().putFloat("folkx_animation_speed", speed).apply()
+                                    onSpeedChanged(speed)
                                     showDialog.value = false
                                 }
                             )
