@@ -27,6 +27,7 @@ import kotlinx.coroutines.launch
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.ExpressiveCard
+import me.bmax.apatch.ui.screen.settings.multimedia.MultimediaDialogs
 import me.bmax.apatch.ui.component.SliderSettingCard
 import me.bmax.apatch.ui.component.SplicedColumnGroup
 import me.bmax.apatch.ui.component.ToggleSettingCard
@@ -176,11 +177,11 @@ fun MultimediaSettingsContent(
     val soundEffectSourceTitle = stringResource(id = R.string.settings_sound_effect_source)
     val soundEffectSourceLocal = stringResource(id = R.string.settings_sound_effect_source_local)
     val soundEffectSourcePreset = stringResource(id = R.string.settings_sound_effect_source_preset)
-    var showSoundEffectSourceDialog by remember { mutableStateOf(false) }
+    val showSoundEffectSourceDialogState = remember { mutableStateOf(false) }
 
     // Sound effect preset dialog
     val soundEffectPresetTitle = stringResource(id = R.string.settings_sound_effect_preset_title)
-    var showSoundEffectPresetDialog by remember { mutableStateOf(false) }
+    val showSoundEffectPresetDialogState = remember { mutableStateOf(false) }
 
     // Clear sound effect dialog
     val clearSoundEffectTitle = stringResource(id = R.string.settings_clear_sound_effect)
@@ -194,17 +195,17 @@ fun MultimediaSettingsContent(
     )
 
     // Sound effect scope dialog
-    var showSoundEffectScopeDialog by remember { mutableStateOf(false) }
+    val showSoundEffectScopeDialogState = remember { mutableStateOf(false) }
 
     // Startup sound source dialog
     val startupSourceTitle = stringResource(id = R.string.settings_sound_effect_source)
     val startupSourceLocal = stringResource(id = R.string.settings_sound_effect_source_local)
     val startupSourcePreset = stringResource(id = R.string.settings_sound_effect_source_preset)
-    var showStartupSourceDialog by remember { mutableStateOf(false) }
+    val showStartupSourceDialogState = remember { mutableStateOf(false) }
 
     // Startup sound preset dialog
     val startupPresetTitle = stringResource(id = R.string.settings_sound_effect_preset_title)
-    var showStartupPresetDialog by remember { mutableStateOf(false) }
+    val showStartupPresetDialogState = remember { mutableStateOf(false) }
 
     // Clear startup sound dialog
     val clearStartupSoundTitle = stringResource(id = R.string.settings_clear_startup_sound)
@@ -218,7 +219,7 @@ fun MultimediaSettingsContent(
     )
 
     // Vibration scope dialog
-    var showVibrationScopeDialog by remember { mutableStateOf(false) }
+    val showVibrationScopeDialogState = remember { mutableStateOf(false) }
 
     SplicedColumnGroup(flat = flat, highlightKey = highlightKey) {
 
@@ -436,7 +437,7 @@ fun MultimediaSettingsContent(
         item(key = "multimedia_sound_effect_source", visible = SoundEffectConfig.isSoundEffectEnabled) {
             ExpressiveCard(
                 flat = flat,
-                onClick = { showSoundEffectSourceDialog = true }
+                onClick = { showSoundEffectSourceDialogState.value = true }
             ) {
                 Row(
                     modifier = Modifier
@@ -534,7 +535,7 @@ fun MultimediaSettingsContent(
         item(key = "multimedia_sound_effect_preset", visible = SoundEffectConfig.isSoundEffectEnabled && SoundEffectConfig.sourceType == SoundEffectConfig.SOURCE_TYPE_PRESET) {
             ExpressiveCard(
                 flat = flat,
-                onClick = { showSoundEffectPresetDialog = true }
+                onClick = { showSoundEffectPresetDialogState.value = true }
             ) {
                 Row(
                     modifier = Modifier
@@ -566,7 +567,7 @@ fun MultimediaSettingsContent(
             ExpressiveCard(
                 flat = flat,
                 onClick = {
-                    showSoundEffectScopeDialog = true
+                    showSoundEffectScopeDialogState.value = true
                 }
             ) {
                 Row(
@@ -624,7 +625,7 @@ fun MultimediaSettingsContent(
         item(key = "multimedia_startup_sound_source", visible = SoundEffectConfig.isStartupSoundEnabled) {
             ExpressiveCard(
                 flat = flat,
-                onClick = { showStartupSourceDialog = true }
+                onClick = { showStartupSourceDialogState.value = true }
             ) {
                 Row(
                     modifier = Modifier
@@ -722,7 +723,7 @@ fun MultimediaSettingsContent(
         item(key = "multimedia_startup_sound_preset", visible = SoundEffectConfig.isStartupSoundEnabled && SoundEffectConfig.startupSourceType == SoundEffectConfig.SOURCE_TYPE_PRESET) {
             ExpressiveCard(
                 flat = flat,
-                onClick = { showStartupPresetDialog = true }
+                onClick = { showStartupPresetDialogState.value = true }
             ) {
                 Row(
                     modifier = Modifier
@@ -769,7 +770,7 @@ fun MultimediaSettingsContent(
             ExpressiveCard(
                 flat = flat,
                 onClick = {
-                    showVibrationScopeDialog = true
+                    showVibrationScopeDialogState.value = true
                 }
             ) {
                 Row(
@@ -814,457 +815,13 @@ fun MultimediaSettingsContent(
         }
     }
 
-    // --- Dialogs (outside SplicedColumnGroup) ---
-
-    // Sound Effect Source Dialog
-    if (showSoundEffectSourceDialog) {
-        BasicAlertDialog(
-            onDismissRequest = { showSoundEffectSourceDialog = false },
-            properties = DialogProperties(
-                decorFitsSystemWindows = true,
-                usePlatformDefaultWidth = false,
-            )
-        ) {
-            Surface(
-                modifier = Modifier
-                    .width(310.dp)
-                    .wrapContentHeight(),
-                shape = RoundedCornerShape(30.dp),
-                tonalElevation = AlertDialogDefaults.TonalElevation,
-                color = AlertDialogDefaults.containerColor,
-            ) {
-                Column(modifier = Modifier.padding(24.dp)) {
-                    Text(
-                        text = soundEffectSourceTitle,
-                        style = MaterialTheme.typography.headlineSmall,
-                        modifier = Modifier.padding(bottom = 16.dp)
-                    )
-
-                    Surface(
-                        shape = RoundedCornerShape(12.dp),
-                        color = AlertDialogDefaults.containerColor,
-                        tonalElevation = 2.dp
-                    ) {
-                        Column {
-                            ListItem(
-                                headlineContent = { Text(soundEffectSourceLocal) },
-                                leadingContent = {
-                                    RadioButton(
-                                        selected = SoundEffectConfig.sourceType == SoundEffectConfig.SOURCE_TYPE_LOCAL,
-                                        onClick = null
-                                    )
-                                },
-                                modifier = Modifier.clickable {
-                                    SoundEffectConfig.setSourceTypeValue(SoundEffectConfig.SOURCE_TYPE_LOCAL)
-                                    SoundEffectConfig.save(context)
-                                    showSoundEffectSourceDialog = false
-                                }
-                            )
-
-                            ListItem(
-                                headlineContent = { Text(soundEffectSourcePreset) },
-                                leadingContent = {
-                                    RadioButton(
-                                        selected = SoundEffectConfig.sourceType == SoundEffectConfig.SOURCE_TYPE_PRESET,
-                                        onClick = null
-                                    )
-                                },
-                                modifier = Modifier.clickable {
-                                    SoundEffectConfig.setSourceTypeValue(SoundEffectConfig.SOURCE_TYPE_PRESET)
-                                    SoundEffectConfig.save(context)
-                                    showSoundEffectSourceDialog = false
-                                }
-                            )
-                        }
-                    }
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 24.dp),
-                        horizontalArrangement = Arrangement.End
-                    ) {
-                        TextButton(onClick = { showSoundEffectSourceDialog = false }) {
-                            Text(stringResource(id = android.R.string.cancel))
-                        }
-                    }
-                }
-                val dialogWindowProvider = LocalView.current.parent as DialogWindowProvider
-                APDialogBlurBehindUtils.setupWindowBlurListener(dialogWindowProvider.window)
-            }
-        }
-    }
-
-    // Sound Effect Preset Dialog
-    if (showSoundEffectPresetDialog) {
-        BasicAlertDialog(
-            onDismissRequest = { showSoundEffectPresetDialog = false },
-            properties = DialogProperties(
-                decorFitsSystemWindows = true,
-                usePlatformDefaultWidth = false,
-            )
-        ) {
-            Surface(
-                modifier = Modifier
-                    .width(310.dp)
-                    .wrapContentHeight(),
-                shape = RoundedCornerShape(30.dp),
-                tonalElevation = AlertDialogDefaults.TonalElevation,
-                color = AlertDialogDefaults.containerColor,
-            ) {
-                Column(modifier = Modifier.padding(24.dp)) {
-                    Text(
-                        text = soundEffectPresetTitle,
-                        style = MaterialTheme.typography.headlineSmall,
-                        modifier = Modifier.padding(bottom = 16.dp)
-                    )
-
-                    Surface(
-                        shape = RoundedCornerShape(12.dp),
-                        color = AlertDialogDefaults.containerColor,
-                        tonalElevation = 2.dp,
-                        modifier = Modifier.heightIn(max = 400.dp)
-                    ) {
-                        androidx.compose.foundation.lazy.LazyColumn {
-                            items(SoundEffectConfig.PRESETS.size, key = { it }) { index ->
-                                val preset = SoundEffectConfig.PRESETS[index]
-                                ListItem(
-                                    headlineContent = { Text(preset) },
-                                    leadingContent = {
-                                        RadioButton(
-                                            selected = SoundEffectConfig.presetName == preset,
-                                            onClick = null
-                                        )
-                                    },
-                                    modifier = Modifier.clickable {
-                                        SoundEffectConfig.setPresetNameValue(preset)
-                                        SoundEffectConfig.save(context)
-                                        showSoundEffectPresetDialog = false
-                                    }
-                                )
-                            }
-                        }
-                    }
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 24.dp),
-                        horizontalArrangement = Arrangement.End
-                    ) {
-                        TextButton(onClick = { showSoundEffectPresetDialog = false }) {
-                            Text(stringResource(id = android.R.string.cancel))
-                        }
-                    }
-                }
-                val dialogWindowProvider = LocalView.current.parent as DialogWindowProvider
-                APDialogBlurBehindUtils.setupWindowBlurListener(dialogWindowProvider.window)
-            }
-        }
-    }
-
-    // Sound Effect Scope Dialog
-    if (showSoundEffectScopeDialog) {
-        BasicAlertDialog(
-            onDismissRequest = { showSoundEffectScopeDialog = false },
-            properties = DialogProperties(
-                decorFitsSystemWindows = true,
-                usePlatformDefaultWidth = false,
-            )
-        ) {
-            Surface(
-                modifier = Modifier
-                    .width(310.dp)
-                    .wrapContentHeight(),
-                shape = RoundedCornerShape(30.dp),
-                tonalElevation = AlertDialogDefaults.TonalElevation,
-                color = AlertDialogDefaults.containerColor,
-            ) {
-                Column(modifier = Modifier.padding(24.dp)) {
-                    Text(
-                        text = soundEffectScopeTitle,
-                        style = MaterialTheme.typography.headlineSmall,
-                        modifier = Modifier.padding(bottom = 16.dp)
-                    )
-
-                    Surface(
-                        shape = RoundedCornerShape(12.dp),
-                        color = AlertDialogDefaults.containerColor,
-                        tonalElevation = 2.dp
-                    ) {
-                        Column {
-                            ListItem(
-                                headlineContent = { Text(stringResource(R.string.settings_sound_effect_scope_global)) },
-                                leadingContent = {
-                                    RadioButton(
-                                        selected = SoundEffectConfig.scope == SoundEffectConfig.SCOPE_GLOBAL,
-                                        onClick = null
-                                    )
-                                },
-                                modifier = Modifier.clickable {
-                                    SoundEffectConfig.setScopeValue(SoundEffectConfig.SCOPE_GLOBAL)
-                                    SoundEffectConfig.save(context)
-                                    showSoundEffectScopeDialog = false
-                                }
-                            )
-
-                            ListItem(
-                                headlineContent = { Text(stringResource(R.string.settings_sound_effect_scope_bottom_bar)) },
-                                leadingContent = {
-                                    RadioButton(
-                                        selected = SoundEffectConfig.scope == SoundEffectConfig.SCOPE_BOTTOM_BAR,
-                                        onClick = null
-                                    )
-                                },
-                                modifier = Modifier.clickable {
-                                    SoundEffectConfig.setScopeValue(SoundEffectConfig.SCOPE_BOTTOM_BAR)
-                                    SoundEffectConfig.save(context)
-                                    showSoundEffectScopeDialog = false
-                                }
-                            )
-                        }
-                    }
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 24.dp),
-                        horizontalArrangement = Arrangement.End
-                    ) {
-                        TextButton(onClick = { showSoundEffectScopeDialog = false }) {
-                            Text(stringResource(id = android.R.string.cancel))
-                        }
-                    }
-                }
-                val dialogWindowProvider = LocalView.current.parent as DialogWindowProvider
-                APDialogBlurBehindUtils.setupWindowBlurListener(dialogWindowProvider.window)
-            }
-        }
-    }
-
-    // Startup Sound Source Dialog
-    if (showStartupSourceDialog) {
-        BasicAlertDialog(
-            onDismissRequest = { showStartupSourceDialog = false },
-            properties = DialogProperties(
-                decorFitsSystemWindows = true,
-                usePlatformDefaultWidth = false,
-            )
-        ) {
-            Surface(
-                modifier = Modifier
-                    .width(310.dp)
-                    .wrapContentHeight(),
-                shape = RoundedCornerShape(30.dp),
-                tonalElevation = AlertDialogDefaults.TonalElevation,
-                color = AlertDialogDefaults.containerColor,
-            ) {
-                Column(modifier = Modifier.padding(24.dp)) {
-                    Text(
-                        text = startupSourceTitle,
-                        style = MaterialTheme.typography.headlineSmall,
-                        modifier = Modifier.padding(bottom = 16.dp)
-                    )
-
-                    Surface(
-                        shape = RoundedCornerShape(12.dp),
-                        color = AlertDialogDefaults.containerColor,
-                        tonalElevation = 2.dp
-                    ) {
-                        Column {
-                            ListItem(
-                                headlineContent = { Text(startupSourceLocal) },
-                                leadingContent = {
-                                    RadioButton(
-                                        selected = SoundEffectConfig.startupSourceType == SoundEffectConfig.SOURCE_TYPE_LOCAL,
-                                        onClick = null
-                                    )
-                                },
-                                modifier = Modifier.clickable {
-                                    SoundEffectConfig.setStartupSourceTypeValue(SoundEffectConfig.SOURCE_TYPE_LOCAL)
-                                    SoundEffectConfig.save(context)
-                                    showStartupSourceDialog = false
-                                }
-                            )
-
-                            ListItem(
-                                headlineContent = { Text(startupSourcePreset) },
-                                leadingContent = {
-                                    RadioButton(
-                                        selected = SoundEffectConfig.startupSourceType == SoundEffectConfig.SOURCE_TYPE_PRESET,
-                                        onClick = null
-                                    )
-                                },
-                                modifier = Modifier.clickable {
-                                    SoundEffectConfig.setStartupSourceTypeValue(SoundEffectConfig.SOURCE_TYPE_PRESET)
-                                    SoundEffectConfig.save(context)
-                                    showStartupSourceDialog = false
-                                }
-                            )
-                        }
-                    }
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 24.dp),
-                        horizontalArrangement = Arrangement.End
-                    ) {
-                        TextButton(onClick = { showStartupSourceDialog = false }) {
-                            Text(stringResource(id = android.R.string.cancel))
-                        }
-                    }
-                }
-                val dialogWindowProvider = LocalView.current.parent as DialogWindowProvider
-                APDialogBlurBehindUtils.setupWindowBlurListener(dialogWindowProvider.window)
-            }
-        }
-    }
-
-    // Startup Sound Preset Dialog
-    if (showStartupPresetDialog) {
-        BasicAlertDialog(
-            onDismissRequest = { showStartupPresetDialog = false },
-            properties = DialogProperties(
-                decorFitsSystemWindows = true,
-                usePlatformDefaultWidth = false,
-            )
-        ) {
-            Surface(
-                modifier = Modifier
-                    .width(310.dp)
-                    .wrapContentHeight(),
-                shape = RoundedCornerShape(30.dp),
-                tonalElevation = AlertDialogDefaults.TonalElevation,
-                color = AlertDialogDefaults.containerColor,
-            ) {
-                Column(modifier = Modifier.padding(24.dp)) {
-                    Text(
-                        text = startupPresetTitle,
-                        style = MaterialTheme.typography.headlineSmall,
-                        modifier = Modifier.padding(bottom = 16.dp)
-                    )
-
-                    Surface(
-                        shape = RoundedCornerShape(12.dp),
-                        color = AlertDialogDefaults.containerColor,
-                        tonalElevation = 2.dp,
-                        modifier = Modifier.heightIn(max = 400.dp)
-                    ) {
-                        androidx.compose.foundation.lazy.LazyColumn {
-                            items(SoundEffectConfig.STARTUP_PRESETS.size, key = { it }) { index ->
-                                val preset = SoundEffectConfig.STARTUP_PRESETS[index]
-                                ListItem(
-                                    headlineContent = { Text(preset) },
-                                    leadingContent = {
-                                        RadioButton(
-                                            selected = SoundEffectConfig.startupPresetName == preset,
-                                            onClick = null
-                                        )
-                                    },
-                                    modifier = Modifier.clickable {
-                                        SoundEffectConfig.setStartupPresetNameValue(preset)
-                                        SoundEffectConfig.save(context)
-                                        showStartupPresetDialog = false
-                                    }
-                                )
-                            }
-                        }
-                    }
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 24.dp),
-                        horizontalArrangement = Arrangement.End
-                    ) {
-                        TextButton(onClick = { showStartupPresetDialog = false }) {
-                            Text(stringResource(id = android.R.string.cancel))
-                        }
-                    }
-                }
-                val dialogWindowProvider = LocalView.current.parent as DialogWindowProvider
-                APDialogBlurBehindUtils.setupWindowBlurListener(dialogWindowProvider.window)
-            }
-        }
-    }
-
-    // Vibration Scope Dialog
-    if (showVibrationScopeDialog) {
-        BasicAlertDialog(
-            onDismissRequest = { showVibrationScopeDialog = false },
-            properties = DialogProperties(
-                decorFitsSystemWindows = true,
-                usePlatformDefaultWidth = false,
-            )
-        ) {
-            Surface(
-                modifier = Modifier
-                    .width(310.dp)
-                    .wrapContentHeight(),
-                shape = RoundedCornerShape(30.dp),
-                tonalElevation = AlertDialogDefaults.TonalElevation,
-                color = AlertDialogDefaults.containerColor,
-            ) {
-                Column(modifier = Modifier.padding(24.dp)) {
-                    Text(
-                        text = vibrationScopeTitle,
-                        style = MaterialTheme.typography.headlineSmall,
-                        modifier = Modifier.padding(bottom = 16.dp)
-                    )
-
-                    Surface(
-                        shape = RoundedCornerShape(12.dp),
-                        color = AlertDialogDefaults.containerColor,
-                        tonalElevation = 2.dp
-                    ) {
-                        Column {
-                            ListItem(
-                                headlineContent = { Text(stringResource(R.string.settings_vibration_scope_global)) },
-                                leadingContent = {
-                                    RadioButton(
-                                        selected = VibrationConfig.scope == VibrationConfig.SCOPE_GLOBAL,
-                                        onClick = null
-                                    )
-                                },
-                                modifier = Modifier.clickable {
-                                    VibrationConfig.setScopeValue(VibrationConfig.SCOPE_GLOBAL)
-                                    VibrationConfig.save(context)
-                                    showVibrationScopeDialog = false
-                                }
-                            )
-
-                            ListItem(
-                                headlineContent = { Text(stringResource(R.string.settings_vibration_scope_bottom_bar)) },
-                                leadingContent = {
-                                    RadioButton(
-                                        selected = VibrationConfig.scope == VibrationConfig.SCOPE_BOTTOM_BAR,
-                                        onClick = null
-                                    )
-                                },
-                                modifier = Modifier.clickable {
-                                    VibrationConfig.setScopeValue(VibrationConfig.SCOPE_BOTTOM_BAR)
-                                    VibrationConfig.save(context)
-                                    showVibrationScopeDialog = false
-                                }
-                            )
-                        }
-                    }
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 24.dp),
-                        horizontalArrangement = Arrangement.End
-                    ) {
-                        TextButton(onClick = { showVibrationScopeDialog = false }) {
-                            Text(stringResource(id = android.R.string.cancel))
-                        }
-                    }
-                }
-                val dialogWindowProvider = LocalView.current.parent as DialogWindowProvider
-                APDialogBlurBehindUtils.setupWindowBlurListener(dialogWindowProvider.window)
-            }
-        }
-    }
+    // --- Dialogs ---
+    MultimediaDialogs(
+        showSoundEffectSourceDialog = showSoundEffectSourceDialogState,
+        showSoundEffectPresetDialog = showSoundEffectPresetDialogState,
+        showSoundEffectScopeDialog = showSoundEffectScopeDialogState,
+        showStartupSourceDialog = showStartupSourceDialogState,
+        showStartupPresetDialog = showStartupPresetDialogState,
+        showVibrationScopeDialog = showVibrationScopeDialogState,
+    )
 }
