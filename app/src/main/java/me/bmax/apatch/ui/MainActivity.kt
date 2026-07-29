@@ -165,7 +165,7 @@ import me.bmax.apatch.ui.component.rememberConfirmDialog
 import me.bmax.apatch.ui.component.rememberLoadingDialog
 
 
-import me.bmax.apatch.ui.screen.settings.ThemeImportDialog
+import me.bmax.apatch.ui.screen.settings.appearance.ThemeImportDialog
 import me.bmax.apatch.util.BiometricUtils
 import me.bmax.apatch.util.ui.navBarGlassEffect
 import me.bmax.apatch.util.ui.navBarLiquefiable
