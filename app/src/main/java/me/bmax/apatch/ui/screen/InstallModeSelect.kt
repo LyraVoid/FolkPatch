@@ -14,17 +14,21 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.AutoFixHigh
+import androidx.compose.material.icons.filled.ExpandLess
+import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.FileUpload
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -83,7 +87,11 @@ fun InstallModeSelectScreen(navigator: DestinationsNavigator) {
             onBack = dropUnlessResumed { navigator.popBackStack() },
         )
     }) {
-        Column(modifier = Modifier.padding(it)) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it)
+        ) {
             SelectInstallMethod(
                 onSelected = { method ->
                     installMethod = method
@@ -309,132 +317,145 @@ private fun SelectInstallMethod(
         }
     }
 
-    var kpExpanded by remember { mutableStateOf(false) }
+    var kpExpanded by remember { mutableStateOf(true) }
     var restoreExpanded by remember { mutableStateOf(false) }
 
     val cardColors = CardDefaults.elevatedCardColors(
         containerColor = if (BackgroundConfig.isCustomBackgroundEnabled) {
             MaterialTheme.colorScheme.surfaceContainerLow.copy(alpha = BackgroundConfig.customBackgroundOpacity)
         } else {
-            Color.Transparent
+            MaterialTheme.colorScheme.surfaceContainerLow
         }
     )
 
     Column(
-        modifier = Modifier
-            .verticalScroll(rememberScrollState())
-            .padding(horizontal = 16.dp)
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
-        // KernelPatch Patching/Installing
-        ElevatedCard(
-            colors = cardColors,
-            elevation = CardDefaults.elevatedCardElevation(defaultElevation = 0.dp),
+        Column(
             modifier = Modifier
+                .weight(1f)
                 .fillMaxWidth()
-                .padding(vertical = 8.dp)
+                .widthIn(max = 720.dp)
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = 16.dp, vertical = 8.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            ListItem(
-                colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                leadingContent = {
-                    Icon(
-                        Icons.Filled.AutoFixHigh,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.primary
-                    )
-                },
-                headlineContent = {
-                    Text(
-                        stringResource(R.string.kp_install_methods),
-                        style = MaterialTheme.typography.titleMedium
-                    )
-                },
-                modifier = Modifier.clickable {
-                    kpExpanded = !kpExpanded
-                }
-            )
-
-            AnimatedVisibility(
-                visible = kpExpanded,
-                enter = fadeIn() + expandVertically(),
-                exit = shrinkVertically() + fadeOut()
+            // KernelPatch Patching/Installing
+            ElevatedCard(
+                colors = cardColors,
+                elevation = CardDefaults.elevatedCardElevation(defaultElevation = 0.dp),
+                modifier = Modifier.fillMaxWidth()
             ) {
-                Column(
-                    modifier = Modifier.padding(
-                        start = 16.dp,
-                        end = 16.dp,
-                        bottom = 16.dp
-                    )
-                ) {
-                    kpOptions.forEach { option ->
-                        InstallMethodOption(
-                            option = option,
-                            selectedOption = selectedOption,
-                            onClick = onClick
+                ListItem(
+                    colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+                    leadingContent = {
+                        Icon(
+                            Icons.Filled.AutoFixHigh,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.primary
                         )
+                    },
+                    headlineContent = {
+                        Text(
+                            stringResource(R.string.kp_install_methods),
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                    },
+                    trailingContent = {
+                        Icon(
+                            imageVector = if (kpExpanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
+                            contentDescription = null
+                        )
+                    },
+                    modifier = Modifier.clickable { kpExpanded = !kpExpanded }
+                )
+
+                AnimatedVisibility(
+                    visible = kpExpanded,
+                    enter = fadeIn() + expandVertically(),
+                    exit = shrinkVertically() + fadeOut()
+                ) {
+                    Column(
+                        modifier = Modifier.padding(
+                            start = 12.dp,
+                            end = 12.dp,
+                            bottom = 12.dp
+                        )
+                    ) {
+                        kpOptions.forEach { option ->
+                            InstallMethodOption(
+                                option = option,
+                                selectedOption = selectedOption,
+                                onClick = onClick
+                            )
+                        }
                     }
                 }
             }
-        }
 
-        // Select a boot to restore to boot partition
-        ElevatedCard(
-            colors = cardColors,
-            elevation = CardDefaults.elevatedCardElevation(defaultElevation = 0.dp),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp)
-        ) {
-            ListItem(
-                colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                leadingContent = {
-                    Icon(
-                        Icons.Filled.FileUpload,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.primary
-                    )
-                },
-                headlineContent = {
-                    Text(
-                        stringResource(R.string.restore_boot_methods),
-                        style = MaterialTheme.typography.titleMedium
-                    )
-                },
-                modifier = Modifier.clickable {
-                    restoreExpanded = !restoreExpanded
-                }
-            )
-
-            AnimatedVisibility(
-                visible = restoreExpanded,
-                enter = fadeIn() + expandVertically(),
-                exit = shrinkVertically() + fadeOut()
+            // Select a boot to restore to boot partition
+            ElevatedCard(
+                colors = cardColors,
+                elevation = CardDefaults.elevatedCardElevation(defaultElevation = 0.dp),
+                modifier = Modifier.fillMaxWidth()
             ) {
-                Column(
-                    modifier = Modifier.padding(
-                        start = 16.dp,
-                        end = 16.dp,
-                        bottom = 16.dp
-                    )
-                ) {
-                     restoreOptions.forEach { option ->
-                        InstallMethodOption(
-                            option = option,
-                            selectedOption = selectedOption,
-                            onClick = onClick
+                ListItem(
+                    colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+                    leadingContent = {
+                        Icon(
+                            Icons.Filled.FileUpload,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.primary
                         )
+                    },
+                    headlineContent = {
+                        Text(
+                            stringResource(R.string.restore_boot_methods),
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                    },
+                    trailingContent = {
+                        Icon(
+                            imageVector = if (restoreExpanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
+                            contentDescription = null
+                        )
+                    },
+                    modifier = Modifier.clickable { restoreExpanded = !restoreExpanded }
+                )
+
+                AnimatedVisibility(
+                    visible = restoreExpanded,
+                    enter = fadeIn() + expandVertically(),
+                    exit = shrinkVertically() + fadeOut()
+                ) {
+                    Column(
+                        modifier = Modifier.padding(
+                            start = 12.dp,
+                            end = 12.dp,
+                            bottom = 12.dp
+                        )
+                    ) {
+                        restoreOptions.forEach { option ->
+                            InstallMethodOption(
+                                option = option,
+                                selectedOption = selectedOption,
+                                onClick = onClick
+                            )
+                        }
                     }
                 }
             }
         }
 
         Button(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .widthIn(max = 720.dp)
+                .padding(start = 16.dp, end = 16.dp, top = 12.dp, bottom = 16.dp),
             enabled = selectedOption != null,
-            onClick = {
-                onNext()
-            },
-            shape = MaterialTheme.shapes.medium,
+            onClick = { onNext() },
+            shape = MaterialTheme.shapes.large,
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = MaterialTheme.colorScheme.onPrimary,
@@ -457,20 +478,22 @@ fun InstallMethodOption(
     onClick: (InstallMethod) -> Unit
 ) {
     val interactionSource = remember { MutableInteractionSource() }
+    val isSelected = option.javaClass == selectedOption?.javaClass
     Surface(
-        color = Color.Transparent,
-        shape = MaterialTheme.shapes.medium,
+        color = if (isSelected) MaterialTheme.colorScheme.secondaryContainer else Color.Transparent,
+        contentColor = if (isSelected) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onSurface,
+        shape = MaterialTheme.shapes.large,
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp)
-            .clip(MaterialTheme.shapes.medium)
+            .clip(MaterialTheme.shapes.large)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
                 .selectable(
-                    selected = option.javaClass == selectedOption?.javaClass,
+                    selected = isSelected,
                     onClick = { onClick(option) },
                     role = Role.RadioButton,
                     indication = LocalIndication.current,
@@ -479,7 +502,7 @@ fun InstallMethodOption(
                 .padding(vertical = 8.dp, horizontal = 12.dp)
         ) {
             RadioButton(
-                selected = option.javaClass == selectedOption?.javaClass,
+                selected = isSelected,
                 onClick = null,
                 interactionSource = interactionSource,
                 colors = RadioButtonDefaults.colors(
