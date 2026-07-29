@@ -387,6 +387,13 @@
     <string name="mode_select_page_install_inactive_slot">Install to inactive slot (After OTA)</string>
     <string name="mode_select_page_install_inactive_slot_warning">Your device will be **FORCED** to boot to the current inactive slot after a reboot!\nOnly use this option after OTA is done.\nContinue?</string>
     <string name="mode_select_page_select_kpimg">Use local patch file (KPimg)</string>
+    <string name="mode_select_page_init_boot_warning_title">Wrong image selected</string>
+    <string name="mode_select_page_init_boot_warning_message">The selected file appears to be an init_boot image.
+KernelPatch requires a boot image to patch.
+
+Please select the correct boot image (usually named boot.img).
+
+Continue anyway?</string>
     <string name="patch_custom_kpimg_label">Custom KPimg</string>
     <string name="patch_custom_kpimg_file">File: %s</string>
     <string name="patch_select_kpimg_btn">Select KPimg</string>

@@ -379,6 +379,13 @@
     <string name="mode_select_page_install_inactive_slot">安装到未激活槽位 (OTA 后)</string>
     <string name="mode_select_page_install_inactive_slot_warning">您的设备将在重启后**强制**启动到当前未激活的槽位！\n仅在 OTA 完成后使用此选项。\n继续吗？</string>
     <string name="mode_select_page_select_kpimg">使用本地补丁文件(KPimg)</string>
+    <string name="mode_select_page_init_boot_warning_title">选择了错误的镜像</string>
+    <string name="mode_select_page_init_boot_warning_message">所选文件似乎是 init_boot 镜像。
+KernelPatch 需要修补 boot 镜像。
+
+请选择正确的 boot 镜像（通常名为 boot.img）。
+
+仍然继续？</string>
     <string name="patch_custom_kpimg_label">自定义 KPimg</string>
     <string name="patch_custom_kpimg_file">文件: %s</string>
     <string name="patch_select_kpimg_btn">选择 KPimg</string>

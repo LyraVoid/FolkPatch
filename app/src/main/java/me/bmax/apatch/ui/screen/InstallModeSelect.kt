@@ -51,6 +51,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
@@ -63,6 +64,7 @@ import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.rememberConfirmDialog
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.ui.viewmodel.PatchesViewModel
+import me.bmax.apatch.util.getFileNameFromUri
 import me.bmax.apatch.util.isABDevice
 import me.bmax.apatch.util.rootAvailable
 
@@ -129,6 +131,7 @@ private fun SelectInstallMethod(
     onSelected: (InstallMethod) -> Unit = {},
     navigator: DestinationsNavigator
 ) {
+    val context = LocalContext.current
     val rootAvailable = rootAvailable()
     val isAbDevice = isABDevice()
 
@@ -146,6 +149,8 @@ private fun SelectInstallMethod(
 
 
     var selectedOption by remember { mutableStateOf<InstallMethod?>(null) }
+    var showInitBootWarning by remember { mutableStateOf(false) }
+    var pendingBootUri by remember { mutableStateOf<Uri?>(null) }
     
     // Launcher for KP Patching (SelectFile)
     val selectImageLauncher = rememberLauncherForActivityResult(
@@ -153,10 +158,16 @@ private fun SelectInstallMethod(
     ) {
         if (it.resultCode == Activity.RESULT_OK) {
             it.data?.data?.let { uri ->
-                val option = InstallMethod.SelectFile(uri)
-                selectedOption = option
-                onSelected(option)
-                selectedBootImage = option.uri
+                val fileName = getFileNameFromUri(context, uri) ?: ""
+                if (fileName.contains("init_boot", ignoreCase = true)) {
+                    pendingBootUri = uri
+                    showInitBootWarning = true
+                } else {
+                    val option = InstallMethod.SelectFile(uri)
+                    selectedOption = option
+                    onSelected(option)
+                    selectedBootImage = option.uri
+                }
             }
         }
     }
@@ -195,6 +206,37 @@ private fun SelectInstallMethod(
     }, onDismiss = null)
     val dialogTitle = stringResource(id = android.R.string.dialog_alert_title)
     val dialogContent = stringResource(id = R.string.mode_select_page_install_inactive_slot_warning)
+
+    // init_boot warning dialog
+    if (showInitBootWarning) {
+        androidx.compose.material3.AlertDialog(
+            onDismissRequest = { showInitBootWarning = false },
+            title = { Text(stringResource(R.string.mode_select_page_init_boot_warning_title)) },
+            text = { Text(stringResource(R.string.mode_select_page_init_boot_warning_message)) },
+            confirmButton = {
+                Button(onClick = {
+                    showInitBootWarning = false
+                    pendingBootUri?.let { uri ->
+                        val option = InstallMethod.SelectFile(uri)
+                        selectedOption = option
+                        onSelected(option)
+                        selectedBootImage = option.uri
+                    }
+                    pendingBootUri = null
+                }) {
+                    Text(stringResource(android.R.string.ok))
+                }
+            },
+            dismissButton = {
+                androidx.compose.material3.TextButton(onClick = {
+                    showInitBootWarning = false
+                    pendingBootUri = null
+                }) {
+                    Text(stringResource(android.R.string.cancel))
+                }
+            }
+        )
+    }
 
     val onClick = { option: InstallMethod ->
         when (option) {
