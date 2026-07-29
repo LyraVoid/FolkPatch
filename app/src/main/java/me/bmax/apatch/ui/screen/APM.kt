@@ -92,6 +92,7 @@ import androidx.compose.material3.Surface
 import me.bmax.apatch.ui.component.ExpressiveSwitch
 import me.bmax.apatch.ui.component.ExpressiveCard
 import me.bmax.apatch.ui.component.LocalInsideSplicedGroup
+import me.bmax.apatch.ui.component.ModuleLabel
 import me.bmax.apatch.ui.component.TwoColumnGrid
 import me.bmax.apatch.ui.component.splicedLazyColumnGroup
 import me.bmax.apatch.ui.component.WarningCard
@@ -183,6 +184,7 @@ import androidx.compose.material.icons.filled.MoreVert
 import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenu
 import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenuItem
 import me.bmax.apatch.util.SafeUriResolver
+import me.bmax.apatch.util.ModuleBannerStorage
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.ui.theme.bannerFadeColor
 import me.bmax.apatch.ui.LocalBottomBarVisible
@@ -1339,40 +1341,13 @@ private fun TopBar(
     }
 }
 
-@Composable
-private fun ModuleLabel(
-    text: String,
-    containerColor: Color,
-    contentColor: Color
-) {
-    Surface(
-        color = containerColor,
-        contentColor = contentColor,
-        shape = RoundedCornerShape(8.dp),
-    ) {
-        Text(
-            text = text,
-            style = MaterialTheme.typography.labelSmall,
-            modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
-        )
-    }
-}
-
 private const val FOLK_BANNER_FILE_NAME = "FolkBanner"
 private const val FOLK_BANNER_DIR_NAME = "folk_banners"
 
-private fun sanitizeBannerKey(raw: String): String {
-    return raw.replace(Regex("[^a-zA-Z0-9._-]"), "_")
-}
+private val apmBannerStorage by lazy { ModuleBannerStorage(me.bmax.apatch.apApp.applicationContext, FOLK_BANNER_DIR_NAME) }
 
-private fun getFolkBannerFile(context: Context, moduleId: String): File {
-    val dir = File(context.filesDir, FOLK_BANNER_DIR_NAME)
-    if (!dir.exists()) {
-        dir.mkdirs()
-    }
-    return File(dir, sanitizeBannerKey(moduleId))
+private fun sanitizeKey(raw: String): String {
+    return raw.replace(Regex("[^a-zA-Z0-9._-]"), "_")
 }
 
 private fun resolveModuleDir(rootShell: Shell, moduleId: String): String {
@@ -1403,16 +1378,7 @@ private fun resolveModuleDir(rootShell: Shell, moduleId: String): String {
     }.getOrDefault(defaultDir)
 }
 
-private fun readFolkBanner(context: Context, moduleId: String): ByteArray? {
-    return runCatching {
-        val file = getFolkBannerFile(context, moduleId)
-        if (file.exists()) {
-            file.readBytes().takeIf { it.isNotEmpty() }
-        } else {
-            null
-        }
-    }.getOrNull()
-}
+
 
 private fun readModulePropBanner(rootShell: Shell, resolvedDir: String): String? {
     return runCatching {
@@ -1427,21 +1393,7 @@ private fun readModulePropBanner(rootShell: Shell, resolvedDir: String): String?
     }.getOrNull()
 }
 
-private fun writeFolkBanner(
-    context: Context,
-    moduleId: String,
-    uri: Uri
-): ByteArray? {
-    val data = SafeUriResolver.openInputStream(context, uri)?.use { it.readBytes() } ?: return null
-    val file = getFolkBannerFile(context, moduleId)
-    file.outputStream().use { it.write(data) }
-    return data
-}
 
-private fun clearFolkBanner(context: Context, moduleId: String): Boolean {
-    val file = getFolkBannerFile(context, moduleId)
-    return !file.exists() || file.delete()
-}
 
 private fun clearLegacyFolkBanner(rootShell: Shell, resolvedDir: String): Boolean {
     val file = SuFile("$resolvedDir/$FOLK_BANNER_FILE_NAME").apply { shell = rootShell }
@@ -1489,7 +1441,7 @@ private fun getCustomModuleInfoFile(context: Context, moduleId: String): File {
     if (!dir.exists()) {
         dir.mkdirs()
     }
-    return File(dir, sanitizeBannerKey(moduleId) + ".json")
+    return File(dir, sanitizeKey(moduleId) + ".json")
 }
 
 private fun readCustomModuleInfo(context: Context, moduleId: String): CustomModuleInfo? {
@@ -1519,7 +1471,7 @@ private fun pruneCustomModuleInfo(context: Context, validModuleIds: Set<String>)
     runCatching {
         val dir = File(context.filesDir, CUSTOM_MODULE_INFO_DIR_NAME)
         if (!dir.exists()) return@runCatching
-        val validFiles = validModuleIds.map { sanitizeBannerKey(it) + ".json" }.toSet()
+        val validFiles = validModuleIds.map { sanitizeKey(it) + ".json" }.toSet()
         dir.listFiles()?.forEach { file ->
             if (file.isFile && file.name !in validFiles) {
                 file.delete()
@@ -1570,7 +1522,7 @@ private fun ModuleItem(
     LaunchedEffect(showFolkBannerDialog) {
         if (showFolkBannerDialog) {
             hasFolkBanner = withContext(Dispatchers.IO) {
-                readFolkBanner(context, module.id) != null
+                apmBannerStorage.read(module.id) != null
             }
         }
     }
@@ -1583,7 +1535,7 @@ private fun ModuleItem(
                 loadingDialog.show()
                 val result = withContext(Dispatchers.IO) {
                     runCatching {
-                        val data = writeFolkBanner(context, module.id, it)
+                        val data = apmBannerStorage.write(context, module.id, it)
                         if (data != null) {
                             runCatching {
                                 val rootShell = getRootShell(true)
@@ -1712,7 +1664,7 @@ private fun ModuleItem(
 
         val loaded = withContext(Dispatchers.IO) {
             try {
-                val folkBanner = if (BackgroundConfig.isFolkBannerEnabled) readFolkBanner(context, module.id) else null
+                val folkBanner = if (BackgroundConfig.isFolkBannerEnabled) apmBannerStorage.read(module.id) else null
                 if (folkBanner != null) {
                     return@withContext APModuleViewModel.BannerInfo(folkBanner, null)
                 }
@@ -2181,7 +2133,7 @@ private fun ModuleItem(
                 loadingDialog.show()
                 val success = withContext(Dispatchers.IO) {
                     runCatching {
-                        val localCleared = clearFolkBanner(context, module.id)
+                        val localCleared = apmBannerStorage.clear(module.id)
                         val legacyCleared = runCatching {
                             val rootShell = getRootShell(true)
                             val resolvedDir = resolveModuleDir(rootShell, module.id)

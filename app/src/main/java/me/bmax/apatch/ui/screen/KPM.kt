@@ -127,6 +127,7 @@ import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import me.bmax.apatch.ui.component.ConfirmResult
 import me.bmax.apatch.ui.component.KpmAutoLoadManager
 import me.bmax.apatch.ui.component.LoadingDialogHandle
+import me.bmax.apatch.ui.component.ModuleLabel
 import me.bmax.apatch.ui.component.TwoColumnGrid
 import me.bmax.apatch.ui.component.splicedLazyColumnGroup
 import me.bmax.apatch.ui.component.rememberConfirmDialog
@@ -158,6 +159,7 @@ import androidx.compose.runtime.getValue
 
 import me.bmax.apatch.util.BiometricUtils
 import me.bmax.apatch.util.ModuleBackupUtils
+import me.bmax.apatch.util.ModuleBannerStorage
 import me.bmax.apatch.util.SafeUriResolver
 import me.bmax.apatch.util.getFileNameFromUri
 import kotlinx.coroutines.CoroutineScope
@@ -168,40 +170,7 @@ private const val TAG = "KernelPatchModule"
 private lateinit var targetKPMToControl: KPModel.KPMInfo
 private const val KPM_BANNER_DIR_NAME = "kpm_banners"
 
-private fun sanitizeKpmBannerKey(raw: String): String {
-    return raw.replace(Regex("[^a-zA-Z0-9._-]"), "_")
-}
-
-private fun getKpmBannerFile(context: Context, moduleName: String): File {
-    val dir = File(context.filesDir, KPM_BANNER_DIR_NAME)
-    if (!dir.exists()) {
-        dir.mkdirs()
-    }
-    return File(dir, sanitizeKpmBannerKey(moduleName))
-}
-
-private fun readKpmBanner(context: Context, moduleName: String): ByteArray? {
-    return runCatching {
-        val file = getKpmBannerFile(context, moduleName)
-        if (file.exists()) {
-            file.readBytes().takeIf { it.isNotEmpty() }
-        } else {
-            null
-        }
-    }.getOrNull()
-}
-
-private fun writeKpmBanner(context: Context, moduleName: String, uri: Uri): ByteArray? {
-    val data = SafeUriResolver.openInputStream(context, uri)?.use { it.readBytes() } ?: return null
-    val file = getKpmBannerFile(context, moduleName)
-    file.outputStream().use { it.write(data) }
-    return data
-}
-
-private fun clearKpmBanner(context: Context, moduleName: String): Boolean {
-    val file = getKpmBannerFile(context, moduleName)
-    return !file.exists() || file.delete()
-}
+private val kpmBannerStorage by lazy { ModuleBannerStorage(me.bmax.apatch.apApp.applicationContext, KPM_BANNER_DIR_NAME) }
 
 @Destination<RootGraph>
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
@@ -1177,26 +1146,7 @@ private fun TopBar(
     )
 }
 
-@Composable
-private fun KPModuleLabel(
-    text: String,
-    containerColor: Color,
-    contentColor: Color
-) {
-    Surface(
-        color = containerColor,
-        contentColor = contentColor,
-        shape = RoundedCornerShape(8.dp),
-    ) {
-        Text(
-            text = text,
-            style = MaterialTheme.typography.labelSmall,
-            modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
-        )
-    }
-}
+
 
 @Composable
 private fun KPModuleItem(
@@ -1230,7 +1180,7 @@ private fun KPModuleItem(
     LaunchedEffect(showFolkBannerDialog) {
         if (showFolkBannerDialog) {
             hasFolkBanner = withContext(Dispatchers.IO) {
-                readKpmBanner(context, module.name) != null
+                kpmBannerStorage.read(module.name) != null
             }
         }
     }
@@ -1242,7 +1192,7 @@ private fun KPModuleItem(
             scope.launch {
                 loadingDialog.show()
                 val result = withContext(Dispatchers.IO) {
-                    runCatching { writeKpmBanner(context, module.name, it) }.getOrNull()
+                    runCatching { kpmBannerStorage.write(context, module.name, it) }.getOrNull()
                 }
                 loadingDialog.hide()
                 val message = if (result != null) {
@@ -1315,7 +1265,7 @@ private fun KPModuleItem(
         }
 
         value = if (BackgroundConfig.isFolkBannerEnabled) {
-            withContext(Dispatchers.IO) { readKpmBanner(context, module.name) }
+            withContext(Dispatchers.IO) { kpmBannerStorage.read(module.name) }
         } else {
             null
         }
@@ -1396,14 +1346,14 @@ private fun KPModuleItem(
                             ) {
                                  val labelOpacity = (opacity + 0.1f).coerceAtMost(1f)
                                  
-                                 KPModuleLabel(
+                                 ModuleLabel(
                                     text = "KPM",
                                     containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = labelOpacity),
                                     contentColor = MaterialTheme.colorScheme.onPrimaryContainer
                                  )
                                  
                                  if (module.args.isNotBlank()) {
-                                     KPModuleLabel(
+                                     ModuleLabel(
                                         text = "Args",
                                         containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = labelOpacity),
                                         contentColor = MaterialTheme.colorScheme.onSecondaryContainer
@@ -1555,7 +1505,7 @@ private fun KPModuleItem(
                                 scope.launch {
                                     loadingDialog.show()
                                     val success = withContext(Dispatchers.IO) {
-                                        runCatching { clearKpmBanner(context, module.name) }.getOrDefault(false)
+                                        runCatching { kpmBannerStorage.clear(module.name) }.getOrDefault(false)
                                     }
                                     loadingDialog.hide()
                                     val message = if (success) {
