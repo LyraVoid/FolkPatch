@@ -280,6 +280,10 @@ class PatchesViewModel : ViewModel() {
             try {
                 prepare()
 
+                if (mode == PatchMode.RESTORE) {
+                    extractAndParseBootimg(mode)
+                }
+
                 if (selectedKPImg != null && mode == PatchMode.PATCH_ONLY) {
                     try {
                         val kpimgFile = File(patchDir, "kpimg")

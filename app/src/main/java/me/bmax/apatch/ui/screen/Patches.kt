@@ -15,11 +15,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.layout.PaddingValues
@@ -38,6 +40,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -58,6 +61,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.DialogWindowProvider
@@ -111,143 +115,156 @@ fun Patches(mode: PatchesViewModel.PatchMode) {
     }) { innerPadding ->
         Column(
             modifier = Modifier
-                .padding(innerPadding)
-                .padding(horizontal = 16.dp)
-                .padding(top = 16.dp)
-                .verticalScroll(scrollState),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+                .fillMaxSize()
+                .padding(innerPadding),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            val context = LocalContext.current
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
+                    .widthIn(max = 720.dp)
+                    .verticalScroll(scrollState)
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                val context = LocalContext.current
 
-            LaunchedEffect(Unit) {
-                val permissions = arrayOf(
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.READ_EXTERNAL_STORAGE
-                )
-                val permissionsToRequest = permissions.filter {
-                    ContextCompat.checkSelfPermission(context, it) != PackageManager.PERMISSION_GRANTED
+                LaunchedEffect(Unit) {
+                    val permissions = arrayOf(
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    )
+                    val permissionsToRequest = permissions.filter {
+                        ContextCompat.checkSelfPermission(context, it) != PackageManager.PERMISSION_GRANTED
+                    }
+                    if (permissionsToRequest.isNotEmpty()) {
+                        ActivityCompat.requestPermissions(
+                            context as Activity,
+                            permissionsToRequest.toTypedArray(),
+                            1001
+                        )
+                    }
                 }
-                if (permissionsToRequest.isNotEmpty()) {
-                    ActivityCompat.requestPermissions(
-                        context as Activity,
-                        permissionsToRequest.toTypedArray(),
-                        1001
+
+                PatchMode(mode)
+                ErrorView(viewModel.error)
+                KernelPatchImageView(viewModel.kpimgInfo)
+                CustomKPImgView(viewModel)
+
+                // select boot.img
+                if ((mode == PatchesViewModel.PatchMode.PATCH_ONLY || mode == PatchesViewModel.PatchMode.RESTORE) && viewModel.kimgInfo.banner.isEmpty()) {
+                    SelectFileButton(
+                        text = stringResource(id = R.string.patch_select_bootimg_btn),
+                        onSelected = { data, uri ->
+                            Log.d(TAG, "select boot.img, data: $data, uri: $uri")
+                            viewModel.copyAndParseBootimg(uri)
+                        }
                     )
                 }
-            }
 
-            PatchMode(mode)
-            ErrorView(viewModel.error)
-            KernelPatchImageView(viewModel.kpimgInfo)
-            CustomKPImgView(viewModel)
+                if (viewModel.bootSlot.isNotEmpty() || viewModel.bootDev.isNotEmpty()) {
+                    BootimgView(slot = viewModel.bootSlot, boot = viewModel.bootDev)
+                }
 
-            // select boot.img
-            if ((mode == PatchesViewModel.PatchMode.PATCH_ONLY || mode == PatchesViewModel.PatchMode.RESTORE) && viewModel.kimgInfo.banner.isEmpty()) {
-                SelectFileButton(
-                    text = stringResource(id = R.string.patch_select_bootimg_btn),
-                    onSelected = { data, uri ->
-                        Log.d(TAG, "select boot.img, data: $data, uri: $uri")
-                        viewModel.copyAndParseBootimg(uri)
-                    }
-                )
-            }
+                if (viewModel.kimgInfo.banner.isNotEmpty()) {
+                    KernelImageView(viewModel.kimgInfo)
+                }
 
-            if (viewModel.bootSlot.isNotEmpty() || viewModel.bootDev.isNotEmpty()) {
-                BootimgView(slot = viewModel.bootSlot, boot = viewModel.bootDev)
-            }
+                if (viewModel.useCustomKPImg && !viewModel.patching && !viewModel.patchdone) {
+                    SelectFileButton(
+                        text = stringResource(id = R.string.patch_select_kpimg_btn),
+                        onSelected = { _, uri -> viewModel.setCustomKPImg(uri) }
+                    )
+                }
 
-            if (viewModel.kimgInfo.banner.isNotEmpty()) {
-                KernelImageView(viewModel.kimgInfo)
-            }
-
-            if (viewModel.useCustomKPImg && !viewModel.patching && !viewModel.patchdone) {
-                SelectFileButton(
-                    text = stringResource(id = R.string.patch_select_kpimg_btn),
-                    onSelected = { _, uri ->
-                        viewModel.setCustomKPImg(uri)
-                    }
-                )
-            }
-
-            // existed extras
-            if (mode == PatchesViewModel.PatchMode.PATCH_AND_INSTALL || mode == PatchesViewModel.PatchMode.INSTALL_TO_NEXT_SLOT) {
-                viewModel.existedExtras.forEach(action = {
-                    ExtraItem(extra = it, true, onDelete = {
-                        viewModel.existedExtras.remove(it)
+                // existed extras
+                if (mode == PatchesViewModel.PatchMode.PATCH_AND_INSTALL || mode == PatchesViewModel.PatchMode.INSTALL_TO_NEXT_SLOT) {
+                    viewModel.existedExtras.forEach(action = {
+                        ExtraItem(extra = it, true, onDelete = {
+                            viewModel.existedExtras.remove(it)
+                        })
                     })
-                })
-            }
+                }
 
-            // add new extras
-            if (mode != PatchesViewModel.PatchMode.UNPATCH && mode != PatchesViewModel.PatchMode.RESTORE) {
-                viewModel.newExtras.forEach(action = {
-                    ExtraItem(extra = it, false, onDelete = {
-                        val idx = viewModel.newExtras.indexOf(it)
-                        viewModel.newExtras.remove(it)
-                        viewModel.newExtrasFileName.removeAt(idx)
-                    })
-                })
-            }
-
-            // add new KPM
-            if (!viewModel.patching && !viewModel.patchdone && mode != PatchesViewModel.PatchMode.UNPATCH && mode != PatchesViewModel.PatchMode.RESTORE) {
-
-                SelectFileButton(
-                    text = stringResource(id = R.string.patch_embed_kpm_btn),
-                    onSelected = { data, uri ->
-                        Log.d(TAG, "select kpm, data: $data, uri: $uri")
-                        viewModel.embedKPM(uri)
-                    }
-                )
-            }
-
-            // do patch, update, unpatch
-            if (!viewModel.patching && !viewModel.patchdone) {
-                // patch start
+                // add new extras
                 if (mode != PatchesViewModel.PatchMode.UNPATCH && mode != PatchesViewModel.PatchMode.RESTORE) {
-                    if (viewModel.kimgInfo.banner.isNotEmpty()) {
-                        StartButton(stringResource(id = R.string.patch_start_patch_btn)) {
-                            viewModel.doPatch(mode, false)
+                    viewModel.newExtras.forEach(action = {
+                        ExtraItem(extra = it, false, onDelete = {
+                            val idx = viewModel.newExtras.indexOf(it)
+                            viewModel.newExtras.remove(it)
+                            viewModel.newExtrasFileName.removeAt(idx)
+                        })
+                    })
+                }
+
+                // add new KPM
+                if (!viewModel.patching && !viewModel.patchdone && mode != PatchesViewModel.PatchMode.UNPATCH && mode != PatchesViewModel.PatchMode.RESTORE) {
+                    SelectFileButton(
+                        text = stringResource(id = R.string.patch_embed_kpm_btn),
+                        onSelected = { data, uri ->
+                            Log.d(TAG, "select kpm, data: $data, uri: $uri")
+                            viewModel.embedKPM(uri)
+                        }
+                    )
+                }
+
+                // patch log
+                if (viewModel.patching || viewModel.patchdone) {
+                    Surface(
+                        color = MaterialTheme.colorScheme.surfaceContainerLow,
+                        shape = MaterialTheme.shapes.large,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        SelectionContainer {
+                            Text(
+                                modifier = Modifier.padding(16.dp),
+                                text = viewModel.patchLog,
+                                fontSize = MaterialTheme.typography.bodySmall.fontSize,
+                                fontFamily = FontFamily.Monospace,
+                                lineHeight = MaterialTheme.typography.bodySmall.lineHeight,
+                            )
                         }
                     }
+                    LaunchedEffect(viewModel.patchLog) {
+                        scrollState.animateScrollTo(scrollState.maxValue, animationSpec = tween(durationMillis = 80))
+                    }
                 }
-                // unpatch
-                if (mode == PatchesViewModel.PatchMode.UNPATCH && viewModel.kimgInfo.banner.isNotEmpty()) {
-                    StartButton(stringResource(id = R.string.patch_start_unpatch_btn)) { viewModel.doUnpatch() }
-                }
-            }
 
-            // patch log
-            if (viewModel.patching || viewModel.patchdone) {
-                SelectionContainer {
-                    Text(
-                        modifier = Modifier.padding(8.dp),
-                        text = viewModel.patchLog,
-                        fontSize = MaterialTheme.typography.bodySmall.fontSize,
-                        fontFamily = MaterialTheme.typography.bodySmall.fontFamily,
-                        lineHeight = MaterialTheme.typography.bodySmall.lineHeight,
-                    )
-                }
-                LaunchedEffect(viewModel.patchLog) {
-                    scrollState.animateScrollTo(scrollState.maxValue, animationSpec = tween(durationMillis = 80))
-                }
-            }
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            // loading progress
-            if (viewModel.running) {
-                Box(
-                    modifier = Modifier
-                        .padding(innerPadding)
-                        .align(Alignment.CenterHorizontally)
-                ) {
+                // loading progress
+                if (viewModel.running) {
                     CircularProgressIndicator(
                         modifier = Modifier
-                            .size(50.dp)
                             .padding(16.dp)
-                            .align(Alignment.BottomCenter)
+                            .size(32.dp)
+                            .align(Alignment.CenterHorizontally)
                     )
+                }
+
+                Spacer(modifier = Modifier.height(4.dp))
+            }
+
+            val canStart = !viewModel.running && !viewModel.patching && !viewModel.patchdone &&
+                viewModel.kimgInfo.banner.isNotEmpty() &&
+                (mode != PatchesViewModel.PatchMode.RESTORE || viewModel.bootDev.isNotEmpty())
+            if (canStart) {
+                val actionText = if (mode == PatchesViewModel.PatchMode.UNPATCH) {
+                    stringResource(id = R.string.patch_start_unpatch_btn)
+                } else {
+                    stringResource(id = R.string.patch_start_patch_btn)
+                }
+                StartButton(
+                    text = actionText,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .widthIn(max = 720.dp)
+                        .padding(start = 16.dp, end = 16.dp, top = 12.dp, bottom = 16.dp)
+                ) {
+                    if (mode == PatchesViewModel.PatchMode.UNPATCH) {
+                        viewModel.doUnpatch()
+                    } else {
+                        viewModel.doPatch(mode, false)
+                    }
                 }
             }
         }
@@ -256,22 +273,17 @@ fun Patches(mode: PatchesViewModel.PatchMode) {
 
 
 @Composable
-private fun StartButton(text: String, onClick: () -> Unit) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth(),
-        horizontalAlignment = Alignment.End
-    ) {
-        Button(
-            onClick = onClick,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                contentColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 1f)
-            ),
-            content = {
-                Text(text = text)
-            }
+private fun StartButton(text: String, modifier: Modifier = Modifier, onClick: () -> Unit) {
+    Button(
+        modifier = modifier,
+        onClick = onClick,
+        shape = MaterialTheme.shapes.large,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+            contentColor = MaterialTheme.colorScheme.onPrimary
         )
+    ) {
+        Text(text = text)
     }
 }
 
@@ -548,24 +560,17 @@ private fun SelectFileButton(text: String, onSelected: (data: Intent, uri: Uri) 
         onSelected(data, uri)
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxWidth(),
-        horizontalAlignment = Alignment.End
+    FilledTonalButton(
+        modifier = Modifier.fillMaxWidth(),
+        onClick = {
+            val intent = Intent(Intent.ACTION_GET_CONTENT)
+            intent.type = "*/*"
+            intent.addCategory(Intent.CATEGORY_OPENABLE)
+            selectFileLauncher.launch(intent)
+        },
+        shape = MaterialTheme.shapes.large
     ) {
-        Button(
-            onClick = {
-                val intent = Intent(Intent.ACTION_GET_CONTENT)
-                intent.type = "*/*"
-                intent.addCategory(Intent.CATEGORY_OPENABLE)
-                selectFileLauncher.launch(intent)
-            },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                contentColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 1f)
-            ),
-            content = { Text(text = text) }
-        )
+        Text(text = text)
     }
 }
 
