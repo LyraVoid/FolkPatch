@@ -1170,14 +1170,16 @@ private fun TopBar(
                     expanded = showMenu,
                     onDismissRequest = { showMenu = false }
                 ) {
-                    WallpaperAwareDropdownMenuItem(
-                        text = { Text(stringResource(R.string.apm_custom_order)) },
-                        onClick = {
-                            showMenu = false
-                            orderedModules = viewModel.moduleList
-                            showOrderDialog = true
-                        }
-                    )
+                    if (viewModel.moduleList.isNotEmpty()) {
+                        WallpaperAwareDropdownMenuItem(
+                            text = { Text(stringResource(R.string.apm_custom_order)) },
+                            onClick = {
+                                showMenu = false
+                                orderedModules = viewModel.moduleList
+                                showOrderDialog = true
+                            }
+                        )
+                    }
                     WallpaperAwareDropdownMenuItem(
                         text = { Text(stringResource(R.string.apm_disable_all_title)) },
                         onClick = {

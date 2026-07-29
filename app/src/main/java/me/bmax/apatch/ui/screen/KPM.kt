@@ -295,10 +295,15 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
     var orderedModules by remember { mutableStateOf(viewModel.moduleList) }
 
     Scaffold(topBar = {
-        TopBar(navigator, searchQuery, onCustomOrderClick = {
-            orderedModules = viewModel.moduleList
-            showOrderDialog = true
-        }) { searchQuery = it }
+        TopBar(
+            navigator,
+            searchQuery,
+            showCustomOrder = viewModel.moduleList.isNotEmpty(),
+            onCustomOrderClick = {
+                orderedModules = viewModel.moduleList
+                showOrderDialog = true
+            }
+        ) { searchQuery = it }
     }, floatingActionButton = run {
         {
             val scope = rememberCoroutineScope()
@@ -1065,6 +1070,7 @@ private fun KPModuleList(
 private fun TopBar(
     navigator: DestinationsNavigator,
     searchQuery: String,
+    showCustomOrder: Boolean,
     onCustomOrderClick: () -> Unit,
     onSearchQueryChange: (String) -> Unit
 ) {
@@ -1156,12 +1162,14 @@ private fun TopBar(
                             contentDescription = "Search"
                         )
                     }
-                    // 自定义排序按钮
-                    IconButton(onClick = onCustomOrderClick) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.Sort,
-                            contentDescription = stringResource(R.string.kpm_custom_order)
-                        )
+                    // 自定义排序按钮（无模块时隐藏）
+                    if (showCustomOrder) {
+                        IconButton(onClick = onCustomOrderClick) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.Sort,
+                                contentDescription = stringResource(R.string.kpm_custom_order)
+                            )
+                        }
                     }
                 }
             }
