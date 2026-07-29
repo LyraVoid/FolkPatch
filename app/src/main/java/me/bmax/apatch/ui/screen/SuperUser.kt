@@ -1,13 +1,13 @@
 package me.bmax.apatch.ui.screen
 
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -33,13 +33,17 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.automirrored.filled.PlaylistAddCheck
+import androidx.compose.material.icons.filled.Block
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Deselect
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Security
+import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material.icons.filled.Terminal
 import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.BasicAlertDialog
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FloatingActionButton
@@ -55,6 +59,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.contentColorFor
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
@@ -145,6 +151,7 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
     var showAppActionDialog by remember { mutableStateOf(false) }
     var selectedApp by remember { mutableStateOf<SuperUserViewModel.AppInfo?>(null) }
     var showSuperUserMenu by remember { mutableStateOf(false) }
+    var showBatchConfirmDialog by remember { mutableStateOf<SuperUserViewModel.BatchAction?>(null) }
 
     if (showBatchExcludeDialog) {
         BatchExcludeDialog(
@@ -193,74 +200,116 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
         )
     }
 
+    if (showBatchConfirmDialog != null) {
+        val action = showBatchConfirmDialog!!
+        val count = viewModel.selectedCount
+        val selectedUids = viewModel.selectionMap.entries.filter { it.value }.map { it.key }
+        
+        BatchActionConfirmDialog(
+            action = action,
+            count = count,
+            onDismiss = { showBatchConfirmDialog = null },
+            onConfirm = {
+                when (action) {
+                    SuperUserViewModel.BatchAction.GRANT_ROOT -> viewModel.batchGrantRoot(selectedUids)
+                    SuperUserViewModel.BatchAction.REVOKE_ROOT -> viewModel.batchRevokeRoot(selectedUids)
+                    SuperUserViewModel.BatchAction.EXCLUDE -> viewModel.batchExclude(selectedUids)
+                }
+                viewModel.exitSelectionMode()
+                showBatchConfirmDialog = null
+            }
+        )
+    }
+
     LaunchedEffect(Unit) {
         if (viewModel.appList.isEmpty()) {
             viewModel.fetchAppList()
         }
     }
 
+    BackHandler(enabled = viewModel.isSelectionMode) {
+        viewModel.exitSelectionMode()
+    }
+
+    val filteredApps = viewModel.appList.filter { it.packageName != apApp.packageName }
+
     Scaffold(
         topBar = {
-            SearchAppBar(
-                title = { Text(stringResource(R.string.su_title)) },
-                searchText = viewModel.search,
-                onSearchTextChange = { viewModel.search = it },
-                onClearClick = { viewModel.search = "" },
-                leadingActions = {
-                    IconButton(onClick = {
-                        showBatchExcludeDialog = true
-                    }) {
-                        Icon(Icons.AutoMirrored.Filled.PlaylistAddCheck, contentDescription = stringResource(R.string.su_batch_exclude_title))
-                    }
-                },
-                dropdownContent = {
-                    Box {
-                        IconButton(onClick = { showSuperUserMenu = !showSuperUserMenu }) {
-                            Icon(
-                                imageVector = Icons.Filled.MoreVert,
-                                contentDescription = stringResource(id = R.string.settings)
-                            )
+            if (viewModel.isSelectionMode) {
+                SelectionTopBar(
+                    selectedCount = viewModel.selectedCount,
+                    onClose = { viewModel.exitSelectionMode() },
+                    onGrantRoot = { showBatchConfirmDialog = SuperUserViewModel.BatchAction.GRANT_ROOT },
+                    onRevokeRoot = { showBatchConfirmDialog = SuperUserViewModel.BatchAction.REVOKE_ROOT },
+                    onExclude = { showBatchConfirmDialog = SuperUserViewModel.BatchAction.EXCLUDE },
+                )
+            } else {
+                SearchAppBar(
+                    title = { Text(stringResource(R.string.su_title)) },
+                    searchText = viewModel.search,
+                    onSearchTextChange = { viewModel.search = it },
+                    onClearClick = { viewModel.search = "" },
+                    leadingActions = {
+                        IconButton(onClick = {
+                            viewModel.enterSelectionMode()
+                        }) {
+                            Icon(Icons.Filled.Deselect, contentDescription = stringResource(R.string.su_multi_select_enter))
                         }
+                        IconButton(onClick = {
+                            showBatchExcludeDialog = true
+                        }) {
+                            Icon(Icons.AutoMirrored.Filled.PlaylistAddCheck, contentDescription = stringResource(R.string.su_batch_exclude_title))
+                        }
+                    },
+                    dropdownContent = {
+                        Box {
+                            IconButton(onClick = { showSuperUserMenu = !showSuperUserMenu }) {
+                                Icon(
+                                    imageVector = Icons.Filled.MoreVert,
+                                    contentDescription = stringResource(id = R.string.settings)
+                                )
+                            }
 
-                        WallpaperAwareDropdownMenu(
-                            expanded = showSuperUserMenu,
-                            onDismissRequest = { showSuperUserMenu = false },
-                        ) {
-                            WallpaperAwareDropdownMenuItem(
-                                text = { Text(stringResource(R.string.su_refresh)) },
-                                onClick = {
-                                    showSuperUserMenu = false
-                                    scope.launch { viewModel.fetchAppList() }
-                                },
-                            )
-                            WallpaperAwareDropdownMenuItem(
-                                text = { Text(
-                                    if (viewModel.showSystemApps) stringResource(R.string.su_hide_system_apps)
-                                    else stringResource(R.string.su_show_system_apps)
-                                ) },
-                                onClick = {
-                                    showSuperUserMenu = false
-                                    viewModel.showSystemApps = !viewModel.showSystemApps
-                                },
-                            )
-                            WallpaperAwareDropdownMenuItem(
-                                text = { Text(stringResource(R.string.su_backup_list)) },
-                                onClick = {
-                                    showSuperUserMenu = false
-                                    backupLauncher.launch("FolkPatch_list_backup.json")
-                                },
-                            )
-                            WallpaperAwareDropdownMenuItem(
-                                text = { Text(stringResource(R.string.su_restore_list)) },
-                                onClick = {
-                                    showSuperUserMenu = false
-                                    restoreLauncher.launch(arrayOf("application/json", "*/*"))
-                                },
-                            )
+                            WallpaperAwareDropdownMenu(
+                                expanded = showSuperUserMenu,
+                                onDismissRequest = { showSuperUserMenu = false },
+                            ) {
+                                WallpaperAwareDropdownMenuItem(
+                                    text = { Text(stringResource(R.string.su_refresh)) },
+                                    onClick = {
+                                        showSuperUserMenu = false
+                                        scope.launch { viewModel.fetchAppList() }
+                                    },
+                                )
+                                WallpaperAwareDropdownMenuItem(
+                                    text = { Text(
+                                        if (viewModel.showSystemApps) stringResource(R.string.su_hide_system_apps)
+                                        else stringResource(R.string.su_show_system_apps)
+                                    ) },
+                                    onClick = {
+                                        showSuperUserMenu = false
+                                        viewModel.showSystemApps = !viewModel.showSystemApps
+                                    },
+                                )
+                                WallpaperAwareDropdownMenuItem(
+                                    text = { Text(stringResource(R.string.su_backup_list)) },
+                                    onClick = {
+                                        showSuperUserMenu = false
+                                        backupLauncher.launch("FolkPatch_list_backup.json")
+                                    },
+                                )
+                                WallpaperAwareDropdownMenuItem(
+                                    text = { Text(stringResource(R.string.su_restore_list)) },
+                                    onClick = {
+                                        showSuperUserMenu = false
+                                        restoreLauncher.launch(arrayOf("application/json", "*/*"))
+                                    },
+                                )
+                            }
                         }
-                    }
-                },
-            )
+                    },
+                )
+            }
         },
         floatingActionButton = run {
             {
@@ -340,23 +389,30 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
             }
         }
     ) { innerPadding ->
-        val pullToRefreshState = rememberPullToRefreshState()
-        PullToRefreshBox(
-            modifier = Modifier.padding(innerPadding),
+        Box(modifier = Modifier.padding(innerPadding)) {
+            val pullToRefreshState = rememberPullToRefreshState()
+            PullToRefreshBox(
             onRefresh = { scope.launch { viewModel.fetchAppList() } },
             isRefreshing = viewModel.isRefreshing,
             state = pullToRefreshState,
             indicator = { PullToRefreshDefaults.LoadingIndicator(state = pullToRefreshState, isRefreshing = viewModel.isRefreshing, modifier = Modifier.align(Alignment.TopCenter)) }
         ) {
-            val filteredApps = viewModel.appList.filter { it.packageName != apApp.packageName }
-
             LazyColumn(Modifier.fillMaxSize()) {
                 if (useLegacySuPage) {
                     items(
                         filteredApps,
                         key = { it.packageName + it.uid }
                     ) { app ->
-                        AppItemLegacy(app)
+                        AppItemLegacy(
+                            app = app,
+                            isSelected = viewModel.isUidSelected(app.uid),
+                            selectionMode = viewModel.isSelectionMode,
+                            onToggleSelection = { viewModel.toggleSelection(app.uid) },
+                            onLongPress = {
+                                viewModel.enterSelectionMode()
+                                viewModel.toggleSelection(app.uid)
+                            }
+                        )
                     }
                 } else {
                     item { Spacer(Modifier.height(8.dp)) }
@@ -367,20 +423,96 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
                     ) { _, app ->
                         AppItemM3E(
                             app = app,
+                            isSelected = viewModel.isUidSelected(app.uid),
+                            selectionMode = viewModel.isSelectionMode,
                             onClick = {
-                                navigator.navigate(AppProfileScreenDestination(app.packageName, app.uid))
+                                if (viewModel.isSelectionMode) {
+                                    viewModel.toggleSelection(app.uid)
+                                } else {
+                                    navigator.navigate(AppProfileScreenDestination(app.packageName, app.uid))
+                                }
                             },
                             onLongClick = {
-                                selectedApp = app
-                                showAppActionDialog = true
-                            }
+                                if (!viewModel.isSelectionMode) {
+                                    viewModel.enterSelectionMode()
+                                    viewModel.toggleSelection(app.uid)
+                                } else {
+                                    selectedApp = app
+                                    showAppActionDialog = true
+                                }
+                            },
+                            onToggleSelection = { viewModel.toggleSelection(app.uid) }
                         )
                     }
-                    item { Spacer(Modifier.height(if (LocalIsFloatingNavMode.current) 88.dp else 8.dp)) }
+                    item {
+                        Spacer(Modifier.height(if (LocalIsFloatingNavMode.current) 88.dp else 8.dp))
+                    }
                 }
             }
         }
+
+        }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun SelectionTopBar(
+    selectedCount: Int,
+    onClose: () -> Unit,
+    onGrantRoot: () -> Unit,
+    onRevokeRoot: () -> Unit,
+    onExclude: () -> Unit,
+) {
+    TopAppBar(
+        title = {
+            Text(stringResource(R.string.su_multi_select_count, selectedCount))
+        },
+        navigationIcon = {
+            IconButton(onClick = onClose) {
+                Icon(
+                    imageVector = Icons.Filled.Close,
+                    contentDescription = stringResource(android.R.string.cancel),
+                )
+            }
+        },
+        actions = {
+            IconButton(
+                onClick = onGrantRoot,
+                enabled = selectedCount > 0,
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Shield,
+                    contentDescription = stringResource(R.string.su_multi_select_grant_root),
+                )
+            }
+            IconButton(
+                onClick = onRevokeRoot,
+                enabled = selectedCount > 0,
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Security,
+                    contentDescription = stringResource(R.string.su_multi_select_revoke_root),
+                )
+            }
+            IconButton(
+                onClick = onExclude,
+                enabled = selectedCount > 0,
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Block,
+                    contentDescription = stringResource(R.string.su_multi_select_exclude),
+                )
+            }
+
+        },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            navigationIconContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            actionIconContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+        ),
+    )
 }
 
 // ── M3E App Item ──────────────────────────────────────────────────────────
@@ -389,8 +521,11 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
 @Composable
 private fun AppItemM3E(
     app: SuperUserViewModel.AppInfo,
+    isSelected: Boolean = false,
+    selectionMode: Boolean = false,
     onClick: () -> Unit,
     onLongClick: () -> Unit,
+    onToggleSelection: (() -> Unit)? = null,
 ) {
     val config = app.config
     val rootGranted = config.allow != 0
@@ -399,6 +534,11 @@ private fun AppItemM3E(
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .background(
+                if (isSelected && selectionMode) 
+                    MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.12f)
+                else Color.Transparent
+            )
             .combinedClickable(
                 onClick = onClick,
                 onLongClick = onLongClick,
@@ -446,12 +586,19 @@ private fun AppItemM3E(
             }
         }
 
-        Icon(
-            imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-            contentDescription = null,
-            tint = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.size(20.dp),
-        )
+        if (selectionMode) {
+            Checkbox(
+                checked = isSelected,
+                onCheckedChange = { onToggleSelection?.invoke() },
+            )
+        } else {
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.size(20.dp),
+            )
+        }
     }
 }
 
@@ -461,6 +608,10 @@ private fun AppItemM3E(
 @Composable
 private fun AppItemLegacy(
     app: SuperUserViewModel.AppInfo,
+    isSelected: Boolean = false,
+    selectionMode: Boolean = false,
+    onToggleSelection: (() -> Unit)? = null,
+    onLongPress: (() -> Unit)? = null,
 ) {
     val config = app.config
     var showEditProfile by remember { mutableStateOf(false) }
@@ -468,17 +619,32 @@ private fun AppItemLegacy(
     var excludeApp by remember { mutableIntStateOf(config.exclude) }
 
     ListItem(
-        modifier = Modifier.clickable(onClick = {
-            if (!rootGranted) {
-                showEditProfile = !showEditProfile
-            } else {
-                rootGranted = false
-                config.allow = 0
-                Natives.revokeSu(app.uid)
-                PkgConfig.changeConfig(config)
-                SuAuditLog.logRevoke(app.packageName, app.uid)
-            }
-        }),
+        modifier = Modifier
+            .background(
+                if (isSelected && selectionMode)
+                    MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.12f)
+                else Color.Transparent
+            )
+            .combinedClickable(
+                onClick = {
+                    if (selectionMode) {
+                        onToggleSelection?.invoke()
+                    } else if (!rootGranted) {
+                        showEditProfile = !showEditProfile
+                    } else {
+                        rootGranted = false
+                        config.allow = 0
+                        Natives.revokeSu(app.uid)
+                        PkgConfig.changeConfig(config)
+                        SuAuditLog.logRevoke(app.packageName, app.uid)
+                    }
+                },
+                onLongClick = {
+                    if (!selectionMode) {
+                        onLongPress?.invoke()
+                    }
+                }
+            ),
         colors = ListItemDefaults.colors(containerColor = Color.Transparent),
         headlineContent = { Text(app.label) },
         leadingContent = {
@@ -516,27 +682,34 @@ private fun AppItemLegacy(
             }
         },
         trailingContent = {
-            ExpressiveSwitch(checked = rootGranted, onCheckedChange = {
-                rootGranted = !rootGranted
-                if (rootGranted) {
-                    excludeApp = 0
-                    config.allow = 1
-                    config.exclude = 0
-                    config.profile.scontext = APApplication.MAGISK_SCONTEXT
-                } else {
-                    config.allow = 0
-                }
-                config.profile.uid = app.uid
-                PkgConfig.changeConfig(config)
-                if (config.allow == 1) {
-                    Natives.grantSu(app.uid, 0, config.profile.scontext)
-                    Natives.setUidExclude(app.uid, 0)
-                    SuAuditLog.logGrant(app.packageName, app.uid)
-                } else {
-                    Natives.revokeSu(app.uid)
-                    SuAuditLog.logRevoke(app.packageName, app.uid)
-                }
-            })
+            if (selectionMode) {
+                Checkbox(
+                    checked = isSelected,
+                    onCheckedChange = { onToggleSelection?.invoke() },
+                )
+            } else {
+                ExpressiveSwitch(checked = rootGranted, onCheckedChange = {
+                    rootGranted = !rootGranted
+                    if (rootGranted) {
+                        excludeApp = 0
+                        config.allow = 1
+                        config.exclude = 0
+                        config.profile.scontext = APApplication.MAGISK_SCONTEXT
+                    } else {
+                        config.allow = 0
+                    }
+                    config.profile.uid = app.uid
+                    PkgConfig.changeConfig(config)
+                    if (config.allow == 1) {
+                        Natives.grantSu(app.uid, 0, config.profile.scontext)
+                        Natives.setUidExclude(app.uid, 0)
+                        SuAuditLog.logGrant(app.packageName, app.uid)
+                    } else {
+                        Natives.revokeSu(app.uid)
+                        SuAuditLog.logRevoke(app.packageName, app.uid)
+                    }
+                })
+            }
         },
     )
 
@@ -766,6 +939,78 @@ fun BatchExcludeDialog(
                     }
                     TextButton(onClick = onReverseExclude) {
                         Text(text = reverseText)
+                    }
+                }
+            }
+            val dialogWindowProvider = LocalView.current.parent as DialogWindowProvider
+            setupWindowBlurListener(dialogWindowProvider.window)
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun BatchActionConfirmDialog(
+    action: SuperUserViewModel.BatchAction,
+    count: Int,
+    onDismiss: () -> Unit,
+    onConfirm: () -> Unit,
+) {
+    val title = stringResource(R.string.su_multi_select_title)
+    val content = when (action) {
+        SuperUserViewModel.BatchAction.GRANT_ROOT -> stringResource(R.string.su_multi_select_confirm_grant, count)
+        SuperUserViewModel.BatchAction.REVOKE_ROOT -> stringResource(R.string.su_multi_select_confirm_revoke, count)
+        SuperUserViewModel.BatchAction.EXCLUDE -> stringResource(R.string.su_multi_select_confirm_exclude, count)
+    }
+    val confirmText = when (action) {
+        SuperUserViewModel.BatchAction.GRANT_ROOT -> stringResource(R.string.su_multi_select_grant_root)
+        SuperUserViewModel.BatchAction.REVOKE_ROOT -> stringResource(R.string.su_multi_select_revoke_root)
+        SuperUserViewModel.BatchAction.EXCLUDE -> stringResource(R.string.su_multi_select_exclude)
+    }
+    val cancelText = stringResource(android.R.string.cancel)
+
+    BasicAlertDialog(
+        onDismissRequest = onDismiss,
+        properties = DialogProperties(
+            decorFitsSystemWindows = true,
+            usePlatformDefaultWidth = false,
+            securePolicy = SecureFlagPolicy.SecureOff,
+            dismissOnClickOutside = false
+        )
+    ) {
+        Surface(
+            modifier = Modifier
+                .width(320.dp)
+                .wrapContentHeight(),
+            shape = RoundedCornerShape(20.dp),
+            tonalElevation = AlertDialogDefaults.TonalElevation,
+            color = AlertDialogDefaults.containerColor,
+        ) {
+            Column(modifier = Modifier.padding(PaddingValues(all = 24.dp))) {
+                Box(
+                    Modifier
+                        .padding(PaddingValues(bottom = 16.dp))
+                        .align(Alignment.Start)
+                ) {
+                    Text(text = title, style = MaterialTheme.typography.headlineSmall)
+                }
+                Box(
+                    Modifier
+                        .weight(weight = 1f, fill = false)
+                        .padding(PaddingValues(bottom = 24.dp))
+                        .align(Alignment.Start)
+                ) {
+                    Text(text = content, style = MaterialTheme.typography.bodyMedium)
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    TextButton(onClick = onDismiss) {
+                        Text(text = cancelText)
+                    }
+                    TextButton(onClick = onConfirm) {
+                        Text(text = confirmText)
                     }
                 }
             }

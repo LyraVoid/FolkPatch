@@ -234,6 +234,15 @@
     <string name="su_show_system_apps">Show system apps</string>
     <string name="su_hide_system_apps">Hide system apps</string>
     <string name="su_refresh">Refresh</string>
+    <string name="su_multi_select_title">Select Apps</string>
+    <string name="su_multi_select_count">%d selected</string>
+    <string name="su_multi_select_grant_root">Grant ROOT</string>
+    <string name="su_multi_select_revoke_root">Revoke ROOT</string>
+    <string name="su_multi_select_exclude">Exclude</string>
+    <string name="su_multi_select_confirm_grant">Grant ROOT to %d apps?</string>
+    <string name="su_multi_select_confirm_revoke">Revoke ROOT from %d apps?</string>
+    <string name="su_multi_select_confirm_exclude">Exclude %d apps?</string>
+    <string name="su_multi_select_enter">Multi-select</string>
     <string name="apm">System Module</string>
 
 

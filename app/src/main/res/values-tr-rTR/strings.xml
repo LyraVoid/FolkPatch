@@ -233,6 +233,15 @@
     <string name="su_show_system_apps">Sistem uygulamalarını göster</string>
     <string name="su_hide_system_apps">Sistem uygulamalarını gizle</string>
     <string name="su_refresh">Yenile</string>
+    <string name="su_multi_select_title">Uygulamaları Seç</string>
+    <string name="su_multi_select_count">%d seçildi</string>
+    <string name="su_multi_select_grant_root">ROOT Ver</string>
+    <string name="su_multi_select_revoke_root">ROOT'u Kaldır</string>
+    <string name="su_multi_select_exclude">Hariç Tut</string>
+    <string name="su_multi_select_confirm_grant">%d uygulamaya ROOT verilsin mi?</string>
+    <string name="su_multi_select_confirm_revoke">%d uygulamadan ROOT kaldırılsın mı?</string>
+    <string name="su_multi_select_confirm_exclude">%d uygulama hariç tutulsun mu?</string>
+    <string name="su_multi_select_enter">Çoklu Seçim</string>
     <string name="apm">Sistem Modülü</string>
 
 

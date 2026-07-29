@@ -250,6 +250,15 @@
     <string name="su_show_system_apps">显示系统应用喵</string>
     <string name="su_hide_system_apps">藏起系统应用喵</string>
     <string name="su_refresh">刷新一下喵！</string>
+    <string name="su_multi_select_title">选择应用喵</string>
+    <string name="su_multi_select_count">已选择 %d 个喵</string>
+    <string name="su_multi_select_grant_root">授予 ROOT 喵</string>
+    <string name="su_multi_select_revoke_root">撤销 ROOT 喵</string>
+    <string name="su_multi_select_exclude">排除喵</string>
+    <string name="su_multi_select_confirm_grant">授予 ROOT 给 %d 个应用喵？</string>
+    <string name="su_multi_select_confirm_revoke">撤销 %d 个应用的 ROOT 权限喵？</string>
+    <string name="su_multi_select_confirm_exclude">排除 %d 个应用喵？</string>
+    <string name="su_multi_select_enter">多选喵</string>
 
     <string name="apm">系统模块</string>
     <string name="apm_not_installed">系统补丁没装喵！</string>

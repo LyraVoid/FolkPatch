@@ -235,6 +235,15 @@
     <string name="su_show_system_apps">显示系统魔法使</string>
     <string name="su_hide_system_apps">隐藏系统魔法使</string>
     <string name="su_refresh">刷新魔法阵</string>
+    <string name="su_multi_select_title">选择应用</string>
+    <string name="su_multi_select_count">已选择 %d 个</string>
+    <string name="su_multi_select_grant_root">授予 ROOT</string>
+    <string name="su_multi_select_revoke_root">撤销 ROOT</string>
+    <string name="su_multi_select_exclude">排除</string>
+    <string name="su_multi_select_confirm_grant">授予 ROOT 给 %d 个应用？</string>
+    <string name="su_multi_select_confirm_revoke">撤销 %d 个应用的 ROOT 权限？</string>
+    <string name="su_multi_select_confirm_exclude">排除 %d 个应用？</string>
+    <string name="su_multi_select_enter">多选</string>
 
     <string name="apm">星之魔法阵</string>
     <string name="apm_not_installed">星之守护尚未觉醒</string>

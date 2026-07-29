@@ -231,6 +231,15 @@
     <string name="su_show_system_apps">시스템 앱 표시</string>
     <string name="su_hide_system_apps">시스템 앱 숨김</string>
     <string name="su_refresh">새로고침</string>
+    <string name="su_multi_select_title">앱 선택</string>
+    <string name="su_multi_select_count">%d개 선택됨</string>
+    <string name="su_multi_select_grant_root">ROOT 부여</string>
+    <string name="su_multi_select_revoke_root">ROOT 취소</string>
+    <string name="su_multi_select_exclude">제외</string>
+    <string name="su_multi_select_confirm_grant">%d개 앱에 ROOT 부여?</string>
+    <string name="su_multi_select_confirm_revoke">%d개 앱에서 ROOT 취소?</string>
+    <string name="su_multi_select_confirm_exclude">%d개 앱 제외?</string>
+    <string name="su_multi_select_enter">다중 선택</string>
     <string name="apm">시스템 모듈</string>
 
 

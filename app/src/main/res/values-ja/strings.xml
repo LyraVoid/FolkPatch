@@ -205,6 +205,15 @@
     <string name="su_show_system_apps">システムアプリを表示</string>
     <string name="su_hide_system_apps">システムアプリを非表示</string>
     <string name="su_refresh">更新</string>
+    <string name="su_multi_select_title">アプリを選択</string>
+    <string name="su_multi_select_count">%d 個選択中</string>
+    <string name="su_multi_select_grant_root">ROOTを許可</string>
+    <string name="su_multi_select_revoke_root">ROOTを解除</string>
+    <string name="su_multi_select_exclude">除外</string>
+    <string name="su_multi_select_confirm_grant">%d 個のアプリに ROOT を許可しますか？</string>
+    <string name="su_multi_select_confirm_revoke">%d 個のアプリから ROOT を解除しますか？</string>
+    <string name="su_multi_select_confirm_exclude">%d 個のアプリを除外しますか？</string>
+    <string name="su_multi_select_enter">複数選択</string>
     <string name="apm">AP モジュール</string>
     <string name="apm_not_installed">AndroidPatch はインストールされていません</string>
     <string name="apm_failed_to_enable">モジュールの有効化に失敗: %s</string>

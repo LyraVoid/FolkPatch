@@ -241,6 +241,15 @@
     <string name="su_show_system_apps">Tampilkan aplikasi sistem</string>
     <string name="su_hide_system_apps">Sembunyikan aplikasi sistem</string>
     <string name="su_refresh">Segarkan</string>
+    <string name="su_multi_select_title">Pilih Aplikasi</string>
+    <string name="su_multi_select_count">%d dipilih</string>
+    <string name="su_multi_select_grant_root">Beri ROOT</string>
+    <string name="su_multi_select_revoke_root">Cabut ROOT</string>
+    <string name="su_multi_select_exclude">Kecualikan</string>
+    <string name="su_multi_select_confirm_grant">Beri ROOT ke %d aplikasi?</string>
+    <string name="su_multi_select_confirm_revoke">Cabut ROOT dari %d aplikasi?</string>
+    <string name="su_multi_select_confirm_exclude">Kecualikan %d aplikasi?</string>
+    <string name="su_multi_select_enter">Pilih banyak</string>
 
     <string name="apm">Modul Sistem</string>
     <string name="apm_not_installed">AndroidPatch tidak terinstal</string>

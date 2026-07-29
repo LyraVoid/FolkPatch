@@ -254,6 +254,15 @@
     <string name="su_show_system_apps">Mostrar apps del sistema</string>
     <string name="su_hide_system_apps">Ocultar apps del sistema</string>
     <string name="su_refresh">Actualizar</string>
+    <string name="su_multi_select_title">Seleccionar aplicaciones</string>
+    <string name="su_multi_select_count">%d seleccionadas</string>
+    <string name="su_multi_select_grant_root">Conceder ROOT</string>
+    <string name="su_multi_select_revoke_root">Revocar ROOT</string>
+    <string name="su_multi_select_exclude">Excluir</string>
+    <string name="su_multi_select_confirm_grant">¿Conceder ROOT a %d aplicaciones?</string>
+    <string name="su_multi_select_confirm_revoke">¿Revocar ROOT de %d aplicaciones?</string>
+    <string name="su_multi_select_confirm_exclude">¿Excluir %d aplicaciones?</string>
+    <string name="su_multi_select_enter">Multiselección</string>
 
     <string name="apm">Módulo del Sistema</string>
     <string name="apm_not_installed">AndroidPatch no instalado</string>

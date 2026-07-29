@@ -254,6 +254,15 @@
     <string name="su_show_system_apps">إظهار تطبيقات النظام</string>
     <string name="su_hide_system_apps">إخفاء تطبيقات النظام</string>
     <string name="su_refresh">تحديث</string>
+    <string name="su_multi_select_title">تحديد التطبيقات</string>
+    <string name="su_multi_select_count">تم تحديد %d</string>
+    <string name="su_multi_select_grant_root">منح صلاحية ROOT</string>
+    <string name="su_multi_select_revoke_root">سحب صلاحية ROOT</string>
+    <string name="su_multi_select_exclude">استبعاد</string>
+    <string name="su_multi_select_confirm_grant">منح صلاحية ROOT لـ %d تطبيق؟</string>
+    <string name="su_multi_select_confirm_revoke">سحب صلاحية ROOT من %d تطبيق؟</string>
+    <string name="su_multi_select_confirm_exclude">استبعاد %d تطبيق؟</string>
+    <string name="su_multi_select_enter">تحديد متعدد</string>
 
     <string name="apm">وحدة AP</string>
     <string name="apm_not_installed">AndroidPatch غير مثبت</string>

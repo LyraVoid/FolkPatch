@@ -13,6 +13,7 @@ import android.os.Parcelable
 import android.util.Log
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
@@ -31,6 +32,7 @@ import me.bmax.apatch.util.APatchCli
 import me.bmax.apatch.util.HanziToPinyin
 import me.bmax.apatch.util.PkgConfig
 import me.bmax.apatch.util.SafeUriResolver
+import me.bmax.apatch.util.SuAuditLog
 import me.bmax.apatch.util.getRootShell
 import java.text.Collator
 import java.util.Locale
@@ -81,8 +83,43 @@ class SuperUserViewModel : ViewModel() {
     var isRefreshing by mutableStateOf(false)
         private set
 
+    // Multi-select mode state
+    var isSelectionMode by mutableStateOf(false)
+        private set
+    val selectionMap = mutableStateMapOf<Int, Boolean>()
+
+    val selectedCount: Int by derivedStateOf {
+        selectionMap.values.count { it }
+    }
+
+    fun enterSelectionMode() {
+        isSelectionMode = true
+        selectionMap.clear()
+    }
+
+    fun exitSelectionMode() {
+        isSelectionMode = false
+        selectionMap.clear()
+    }
+
+    fun toggleSelection(uid: Int) {
+        if (selectionMap[uid] == true) {
+            selectionMap[uid] = false
+        } else {
+            selectionMap[uid] = true
+        }
+    }
+
+    fun selectAll(uids: List<Int>) {
+        selectionMap.clear()
+        selectionMap.putAll(uids.associateWith { true })
+    }
+
+    fun isUidSelected(uid: Int): Boolean = selectionMap[uid] == true
+
     private var bindJob: kotlinx.coroutines.Job? = null
     private val fetchInFlight = AtomicBoolean(false)
+    private val batchInFlight = AtomicBoolean(false)
 
     private val sortedList by derivedStateOf {
         val comparator = compareBy<AppInfo> {
@@ -193,6 +230,91 @@ class SuperUserViewModel : ViewModel() {
             PkgConfig.batchChangeConfigs(modifiedConfigs)
             // Force UI update
             apps = ArrayList(currentApps)
+        }
+    }
+
+    enum class BatchAction { GRANT_ROOT, REVOKE_ROOT, EXCLUDE }
+
+    fun batchGrantRoot(uids: List<Int>) = viewModelScope.launch(Dispatchers.IO) {
+        if (!batchInFlight.compareAndSet(false, true)) return@launch
+        try {
+            val uidSet = uids.toSet()
+            val modifiedConfigs = mutableListOf<PkgConfig.Config>()
+            val snapshot = synchronized(appsLock) { apps.toList() }
+
+            snapshot.forEach { app ->
+                if (app.uid !in uidSet) return@forEach
+                if (app.config.allow != 0) return@forEach
+                app.config.allow = 1
+                app.config.exclude = 0
+                app.config.profile.scontext = APApplication.MAGISK_SCONTEXT
+                Natives.grantSu(app.uid, 0, app.config.profile.scontext)
+                Natives.setUidExclude(app.uid, 0)
+                SuAuditLog.logGrant(app.packageName, app.uid)
+                modifiedConfigs.add(app.config)
+            }
+
+            if (modifiedConfigs.isNotEmpty()) {
+                PkgConfig.batchChangeConfigs(modifiedConfigs)
+                apps = ArrayList(snapshot)
+            }
+        } finally {
+            batchInFlight.set(false)
+        }
+    }
+
+    fun batchRevokeRoot(uids: List<Int>) = viewModelScope.launch(Dispatchers.IO) {
+        if (!batchInFlight.compareAndSet(false, true)) return@launch
+        try {
+            val uidSet = uids.toSet()
+            val modifiedConfigs = mutableListOf<PkgConfig.Config>()
+            val snapshot = synchronized(appsLock) { apps.toList() }
+
+            snapshot.forEach { app ->
+                if (app.uid !in uidSet) return@forEach
+                if (app.config.allow == 0) return@forEach
+                app.config.allow = 0
+                Natives.revokeSu(app.uid)
+                SuAuditLog.logRevoke(app.packageName, app.uid)
+                modifiedConfigs.add(app.config)
+            }
+
+            if (modifiedConfigs.isNotEmpty()) {
+                PkgConfig.batchChangeConfigs(modifiedConfigs)
+                apps = ArrayList(snapshot)
+            }
+        } finally {
+            batchInFlight.set(false)
+        }
+    }
+
+    fun batchExclude(uids: List<Int>) = viewModelScope.launch(Dispatchers.IO) {
+        if (!batchInFlight.compareAndSet(false, true)) return@launch
+        try {
+            val uidSet = uids.toSet()
+            val modifiedConfigs = mutableListOf<PkgConfig.Config>()
+            val snapshot = synchronized(appsLock) { apps.toList() }
+
+            snapshot.forEach { app ->
+                if (app.uid !in uidSet) return@forEach
+                if (app.config.allow == 0 && app.config.exclude == 1) return@forEach
+                if (app.config.allow != 0) {
+                    Natives.revokeSu(app.uid)
+                }
+                app.config.allow = 0
+                app.config.exclude = 1
+                app.config.profile.scontext = APApplication.DEFAULT_SCONTEXT
+                Natives.setUidExclude(app.uid, 1)
+                SuAuditLog.logExclude(app.packageName, app.uid)
+                modifiedConfigs.add(app.config)
+            }
+
+            if (modifiedConfigs.isNotEmpty()) {
+                PkgConfig.batchChangeConfigs(modifiedConfigs)
+                apps = ArrayList(snapshot)
+            }
+        } finally {
+            batchInFlight.set(false)
         }
     }
 

@@ -233,6 +233,15 @@
     <string name="su_show_system_apps">显天道凡器</string>
     <string name="su_hide_system_apps">隐天道凡器</string>
     <string name="su_refresh">刷新仙域</string>
+    <string name="su_multi_select_title">择选法器</string>
+    <string name="su_multi_select_count">已择 %d 件</string>
+    <string name="su_multi_select_grant_root">赐予 ROOT</string>
+    <string name="su_multi_select_revoke_root">收回 ROOT</string>
+    <string name="su_multi_select_exclude">摒除</string>
+    <string name="su_multi_select_confirm_grant">赐予 %d 件法器 ROOT？</string>
+    <string name="su_multi_select_confirm_revoke">收回 %d 件法器 ROOT？</string>
+    <string name="su_multi_select_confirm_exclude">摒除 %d 件法器？</string>
+    <string name="su_multi_select_enter">批量择选</string>
 
     <string name="apm">天道仙符</string>
     <string name="apm_not_installed">未凝炼天道符箓</string>
