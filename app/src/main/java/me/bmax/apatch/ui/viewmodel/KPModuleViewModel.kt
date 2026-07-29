@@ -11,9 +11,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.sync.withLock
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.Natives
+import me.bmax.apatch.util.EmbeddedKpmUtils
 import org.json.JSONArray
 import java.text.Collator
 import java.util.Locale
@@ -27,6 +30,10 @@ class KPModuleViewModel : ViewModel() {
         val bannerSemaphore = Semaphore(4)
     }
 
+    /** null means the current boot image could not be inspected reliably. */
+    var embeddedKpmNames by mutableStateOf<Set<String>?>(null)
+        private set
+
     var isRefreshing by mutableStateOf(false)
         private set
 
@@ -34,6 +41,7 @@ class KPModuleViewModel : ViewModel() {
         private set
 
     private val prefs = APApplication.sharedPreferences
+    private val refreshMutex = Mutex()
     private var customOrderEnabled by mutableStateOf(prefs.getBoolean(CUSTOM_ORDER_ENABLED_KEY, false))
     private var customOrder by mutableStateOf(readCustomOrder())
     private val collator = Collator.getInstance(Locale.getDefault())
@@ -59,6 +67,19 @@ class KPModuleViewModel : ViewModel() {
 
     fun markNeedRefresh() {
         isNeedRefresh = true
+    }
+
+    private suspend fun refreshEmbeddedKpmNames(force: Boolean) {
+        if (!force && embeddedKpmNames != null) return
+        if (force) embeddedKpmNames = null
+
+        val names = EmbeddedKpmUtils.getEmbeddedKpmNames()
+        embeddedKpmNames = names
+        if (names != null) {
+            Log.i(TAG, "embedded kpm names: $names")
+        } else {
+            Log.w(TAG, "failed to resolve embedded kpm names")
+        }
     }
 
     init {
@@ -120,61 +141,61 @@ class KPModuleViewModel : ViewModel() {
         }
     }
 
-    fun fetchModuleList() {
+    fun fetchModuleList(forceEmbeddedRefresh: Boolean = false) {
         viewModelScope.launch(Dispatchers.IO) {
-            errorMessage = null
-            isRefreshing = true
-            val oldModuleList = modules
-            val start = SystemClock.elapsedRealtime()
+            refreshMutex.withLock {
+                errorMessage = null
+                isRefreshing = true
+                val oldModuleList = modules
+                val start = SystemClock.elapsedRealtime()
 
-            kotlin.runCatching {
-                // Some older kernels return an uninitialized list buffer when no KPM is loaded.
-                val names = if (Natives.kernelPatchModuleNum() > 0) {
-                    Natives.kernelPatchModuleList()
-                } else {
-                    ""
+                refreshEmbeddedKpmNames(forceEmbeddedRefresh)
+
+                kotlin.runCatching {
+                    // Some older kernels return an uninitialized list buffer when no KPM is loaded.
+                    val names = if (Natives.kernelPatchModuleNum() > 0) {
+                        Natives.kernelPatchModuleList()
+                    } else {
+                        ""
+                    }
+                    val nameList = names.split('\n').toList()
+                    Log.d(TAG, "kpm list: $nameList")
+                    modules = nameList.filter { it.isNotEmpty() }.map {
+                        val infoline = Natives.kernelPatchModuleInfo(it)
+                        val spi = infoline.split('\n')
+                        val name = spi.find { it.startsWith("name=") }?.removePrefix("name=")
+                        val version = spi.find { it.startsWith("version=") }?.removePrefix("version=")
+                        val license = spi.find { it.startsWith("license=") }?.removePrefix("license=")
+                        val author = spi.find { it.startsWith("author=") }?.removePrefix("author=")
+                        val description =
+                            spi.find { it.startsWith("description=") }?.removePrefix("description=")
+                        val rawArgs = spi.find { it.startsWith("args=") }?.removePrefix("args=")?.trim()
+                        val args = if (rawArgs.isNullOrEmpty() || rawArgs == "(null)") "" else rawArgs
+                        KPModel.KPMInfo(
+                            KPModel.ExtraType.KPM,
+                            name?.trim().orEmpty(),
+                            "",
+                            args ?: "",
+                            version ?: "",
+                            license ?: "",
+                            author ?: "",
+                            description ?: ""
+                        )
+                    }
+                    isNeedRefresh = false
+                }.onFailure { e ->
+                    Log.e(TAG, "fetchModuleList: ", e)
+                    errorMessage = e.message ?: "Failed to load modules"
                 }
-                val nameList = names.split('\n').toList()
-                Log.d(TAG, "kpm list: $nameList")
-                modules = nameList.filter { it.isNotEmpty() }.map {
-                    val infoline = Natives.kernelPatchModuleInfo(it)
-                    val spi = infoline.split('\n')
-                    val name = spi.find { it.startsWith("name=") }?.removePrefix("name=")
-                    val version = spi.find { it.startsWith("version=") }?.removePrefix("version=")
-                    val license = spi.find { it.startsWith("license=") }?.removePrefix("license=")
-                    val author = spi.find { it.startsWith("author=") }?.removePrefix("author=")
-                    val description =
-                        spi.find { it.startsWith("description=") }?.removePrefix("description=")
-                    val rawArgs = spi.find { it.startsWith("args=") }?.removePrefix("args=")?.trim()
-                    val args = if (rawArgs.isNullOrEmpty() || rawArgs == "(null)") "" else rawArgs
-                    val info = KPModel.KPMInfo(
-                        KPModel.ExtraType.KPM,
-                        name ?: "",
-                        "",
-                        args ?: "",
-                        version ?: "",
-                        license ?: "",
-                        author ?: "",
-                        description ?: ""
-                    )
-                    info
-                }
-                isNeedRefresh = false
-            }.onFailure { e ->
-                Log.e(TAG, "fetchModuleList: ", e)
-                errorMessage = e.message ?: "Failed to load modules"
+
+                reconcileCustomOrder()
+
+                // when both old and new is kotlin.collections.EmptyList
+                // moduleList update will don't trigger
                 isRefreshing = false
+
+                Log.i(TAG, "load cost: ${SystemClock.elapsedRealtime() - start}, modules: $modules, unchanged=${oldModuleList === modules}")
             }
-
-            reconcileCustomOrder()
-
-            // when both old and new is kotlin.collections.EmptyList
-            // moduleList update will don't trigger
-            if (oldModuleList === modules) {
-                isRefreshing = false
-            }
-
-            Log.i(TAG, "load cost: ${SystemClock.elapsedRealtime() - start}, modules: $modules")
         }
     }
 

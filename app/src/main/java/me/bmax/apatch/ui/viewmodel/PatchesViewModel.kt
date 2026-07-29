@@ -280,10 +280,6 @@ class PatchesViewModel : ViewModel() {
             try {
                 prepare()
 
-                if (mode == PatchMode.RESTORE) {
-                    extractAndParseBootimg(mode)
-                }
-
                 if (selectedKPImg != null && mode == PatchMode.PATCH_ONLY) {
                     try {
                         val kpimgFile = File(patchDir, "kpimg")
@@ -464,10 +460,6 @@ class PatchesViewModel : ViewModel() {
             patching = false
         }
     }
-    fun isSuExecutable(): Boolean {
-        val suFile = File("/system/bin/su")
-        return suFile.exists() && suFile.canExecute()
-    }
     fun doPatch(mode: PatchMode, useKey: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
             patching = true
@@ -534,8 +526,7 @@ class PatchesViewModel : ViewModel() {
 
             var patchCommand = mutableListOf("./busybox sh boot_patch.sh \"$0\" \"$@\"")
 
-            // adapt for 0.10.7 and lower KP
-            var isKpOld = false
+            val installDirectly = mode == PatchMode.PATCH_AND_INSTALL || mode == PatchMode.INSTALL_TO_NEXT_SLOT
 
             val superkey = if (useKey && this@PatchesViewModel.superkey.isNotEmpty()) {
                 this@PatchesViewModel.superkey
@@ -543,19 +534,9 @@ class PatchesViewModel : ViewModel() {
                 "su"
             }
 
-            if (mode == PatchMode.PATCH_AND_INSTALL || mode == PatchMode.INSTALL_TO_NEXT_SLOT) {
-
-                val KPCheck = getShell().newJob().add("truncate ${APApplication.superKey} -Z u:r:magisk:s0 -c whoami").exec()
-
-                if (KPCheck.isSuccess && !isSuExecutable()) {
-                    patchCommand.addAll(0, listOf(APApplication.SUPERCMD, APApplication.superKey, "-Z", APApplication.MAGISK_SCONTEXT, "-c"))
-                    patchCommand.addAll(listOf(superkey, srcBoot.path, "true"))
-                } else {
-                    patchCommand = mutableListOf("./busybox", "sh", "boot_patch.sh")
-                    patchCommand.addAll(listOf(superkey, srcBoot.path, "true"))
-                    isKpOld = true
-                }
-
+            if (installDirectly) {
+                patchCommand = mutableListOf("./busybox", "sh", "boot_patch.sh")
+                patchCommand.addAll(listOf(superkey, srcBoot.path, "true"))
             } else {
                 patchCommand.addAll(0, listOf("sh", "-c"))
                 patchCommand.addAll(listOf(superkey, srcBoot.path))
@@ -591,7 +572,7 @@ class PatchesViewModel : ViewModel() {
 
             var succ = false
 
-            if (isKpOld) {
+            if (installDirectly) {
                 val resultString = "\"" + patchCommand.joinToString(separator = "\" \"") + "\""
                 val result = getShell().newJob().add(
                     "export ASH_STANDALONE=1",
@@ -604,19 +585,28 @@ class PatchesViewModel : ViewModel() {
                 builder.directory(patchDir)
                 builder.redirectErrorStream(true)
 
-                val process = builder.start()
+                try {
+                    val process = builder.start()
 
-                Thread {
-                    BufferedReader(InputStreamReader(process.inputStream)).use { reader ->
-                        var line: String?
-                        while (reader.readLine().also { line = it } != null) {
-                            patchLog += line
-                            Log.i(TAG, "" + line)
-                            patchLog += "\n"
+                    Thread {
+                        BufferedReader(InputStreamReader(process.inputStream)).use { reader ->
+                            var line: String?
+                            while (reader.readLine().also { line = it } != null) {
+                                patchLog += line
+                                Log.i(TAG, "" + line)
+                                patchLog += "\n"
+                            }
                         }
+                    }.start()
+                    val exitCode = process.waitFor()
+                    succ = exitCode == 0
+                    if (!succ) {
+                        logs.add("- Patch process exited with code: $exitCode")
                     }
-                }.start()
-                succ = process.waitFor() == 0
+                } catch (e: Exception) {
+                    Log.e(TAG, "Failed to start patch process", e)
+                    logs.add("- Failed to start patch process: ${e.message}")
+                }
             }
 
             if (!succ) {

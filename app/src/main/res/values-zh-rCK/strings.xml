@@ -201,6 +201,8 @@
     <string name="kpm_load">添加</string>
     <string name="kpm_install">安装</string>
     <string name="kpm_embed">融入</string>
+    <string name="kpm_embedded">已融入</string>
+    <string name="kpm_loaded">已加料</string>
     <string name="kpm_load_toast_succ">酱料添加成功</string>
     <string name="kpm_load_toast_failed">酱料添加失败</string>
     <string name="kpm_unload_confirm">撤下 %s 酱料？</string>

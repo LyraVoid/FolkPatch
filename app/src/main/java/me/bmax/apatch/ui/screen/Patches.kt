@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -87,6 +88,7 @@ private const val TAG = "Patches"
 @Composable
 fun Patches(mode: PatchesViewModel.PatchMode) {
     val scrollState = rememberScrollState()
+    val logScrollState = rememberScrollState()
     val scope = rememberCoroutineScope()
     val viewModel = viewModel<PatchesViewModel>()
     LaunchedEffect(mode) {
@@ -214,11 +216,15 @@ fun Patches(mode: PatchesViewModel.PatchMode) {
                     Surface(
                         color = MaterialTheme.colorScheme.surfaceContainerLow,
                         shape = MaterialTheme.shapes.large,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .heightIn(min = 160.dp, max = 360.dp)
                     ) {
                         SelectionContainer {
                             Text(
-                                modifier = Modifier.padding(16.dp),
+                                modifier = Modifier
+                                    .verticalScroll(logScrollState)
+                                    .padding(16.dp),
                                 text = viewModel.patchLog,
                                 fontSize = MaterialTheme.typography.bodySmall.fontSize,
                                 fontFamily = FontFamily.Monospace,
@@ -227,7 +233,11 @@ fun Patches(mode: PatchesViewModel.PatchMode) {
                         }
                     }
                     LaunchedEffect(viewModel.patchLog) {
-                        scrollState.animateScrollTo(scrollState.maxValue, animationSpec = tween(durationMillis = 80))
+                        kotlinx.coroutines.yield()
+                        logScrollState.animateScrollTo(
+                            logScrollState.maxValue,
+                            animationSpec = tween(durationMillis = 80)
+                        )
                     }
                 }
 
@@ -246,7 +256,7 @@ fun Patches(mode: PatchesViewModel.PatchMode) {
 
             val canStart = !viewModel.running && !viewModel.patching && !viewModel.patchdone &&
                 viewModel.kimgInfo.banner.isNotEmpty() &&
-                (mode != PatchesViewModel.PatchMode.RESTORE || viewModel.bootDev.isNotEmpty())
+                mode != PatchesViewModel.PatchMode.RESTORE
             if (canStart) {
                 val actionText = if (mode == PatchesViewModel.PatchMode.UNPATCH) {
                     stringResource(id = R.string.patch_start_unpatch_btn)

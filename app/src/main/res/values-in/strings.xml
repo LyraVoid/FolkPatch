@@ -191,6 +191,8 @@
     <string name="kpm_load">Muat</string>
     <string name="kpm_install">Instal</string>
     <string name="kpm_embed">Sematkan</string>
+    <string name="kpm_embedded">Tersemat</string>
+    <string name="kpm_loaded">Termuat</string>
     <string name="kpm_load_toast_succ">Pemuatan berhasil</string>
     <string name="kpm_load_toast_failed">Pemuatan gagal</string>
     <string name="kpm_unload_confirm">Lepas modul %s?</string>

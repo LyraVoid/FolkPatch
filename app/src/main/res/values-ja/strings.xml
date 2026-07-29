@@ -181,6 +181,8 @@
     <string name="kpm_load">読み込み</string>
     <string name="kpm_install">インストール</string>
     <string name="kpm_embed">埋め込む</string>
+    <string name="kpm_embedded">埋め込み済み</string>
+    <string name="kpm_loaded">読み込み済み</string>
     <string name="kpm_load_toast_succ">読み込みに成功</string>
     <string name="kpm_load_toast_failed">読み込みに失敗</string>
     <string name="kpm_unload_confirm">「%s」のモジュールをアンロードしますか？</string>

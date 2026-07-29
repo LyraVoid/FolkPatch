@@ -208,6 +208,8 @@
     <string name="kpm_load">Yükle</string>
     <string name="kpm_install">Kur</string>
     <string name="kpm_embed">Göm</string>
+    <string name="kpm_embedded">Gömülü</string>
+    <string name="kpm_loaded">Yüklü</string>
     <string name="kpm_load_toast_succ">Yükleme başarılı</string>
     <string name="kpm_load_toast_failed">Yükleme başarısız</string>
     <string name="kpm_unload_confirm">%s modülü kaldırılsın mı?</string>

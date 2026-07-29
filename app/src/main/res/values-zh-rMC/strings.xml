@@ -201,6 +201,8 @@
     <string name="kpm_load">给红石充能</string>
     <string name="kpm_install">安装红石</string>
     <string name="kpm_embed">把红石嵌进基岩</string>
+    <string name="kpm_embedded">已嵌入基岩</string>
+    <string name="kpm_loaded">已充能</string>
     <string name="kpm_load_toast_succ">红石充能成功！亮了！</string>
     <string name="kpm_load_toast_failed">红石充能失败…没反应</string>
     <string name="kpm_unload_confirm">把 %s 红石组件拆了？</string>

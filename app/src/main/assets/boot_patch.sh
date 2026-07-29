@@ -30,7 +30,12 @@ echo "****************************"
 SUPERKEY="$1"
 BOOTIMAGE=$2
 FLASH_TO_DEVICE=$3
-shift 2
+if [ "$FLASH_TO_DEVICE" = "true" ]; then
+  shift 3
+else
+  FLASH_TO_DEVICE=false
+  shift 2
+fi
 
 [ -z "$SUPERKEY" ] && { >&2 echo "- SuperKey empty!"; exit 1; }
 [ -e "$BOOTIMAGE" ] || { >&2 echo "- $BOOTIMAGE does not exist!"; exit 1; }
@@ -107,9 +112,10 @@ if [ "$FLASH_TO_DEVICE" = "true" ]; then
     if [ -f "new-boot.img" ]; then
       echo "- Flashing new boot image"
       flash_image new-boot.img "$BOOTIMAGE"
-      if [ $? -ne 0 ]; then
-        >&2 echo "- Flash error: $?"
-        exit $?
+      flash_rc=$?
+      if [ "$flash_rc" -ne 0 ]; then
+        >&2 echo "- Flash error: $flash_rc"
+        exit "$flash_rc"
       fi
     else
       >&2 echo "- new-boot.img missing - refusing to flash"
@@ -121,4 +127,3 @@ if [ "$FLASH_TO_DEVICE" = "true" ]; then
 else
   echo "- Successfully Patched!"
 fi
-

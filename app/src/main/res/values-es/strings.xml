@@ -229,6 +229,8 @@
     <string name="kpm_load">Cargar</string>
     <string name="kpm_install">Instalar</string>
     <string name="kpm_embed">Incrustar</string>
+    <string name="kpm_embedded">Incrustado</string>
+    <string name="kpm_loaded">Cargado</string>
     <string name="kpm_load_toast_succ">Carga exitosa</string>
     <string name="kpm_load_toast_failed">Error en la carga</string>
     <string name="kpm_unload_confirm">¿Descargar el módulo %s?</string>

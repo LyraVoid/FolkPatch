@@ -185,6 +185,8 @@
     <string name="kpm_load">匯入</string>
     <string name="kpm_install">安裝</string>
     <string name="kpm_embed">嵌入</string>
+    <string name="kpm_embedded">已嵌入</string>
+    <string name="kpm_loaded">已載入</string>
     <string name="kpm_load_toast_succ">匯入成功</string>
     <string name="kpm_load_toast_failed">匯入失敗</string>
     <string name="kpm_unload_confirm">解除安裝 \"%s\" 模組？</string>

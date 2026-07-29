@@ -201,6 +201,8 @@
     <string name="kpm_load">加载</string>
     <string name="kpm_install">安装</string>
     <string name="kpm_embed">嵌入</string>
+    <string name="kpm_embedded">已嵌入</string>
+    <string name="kpm_loaded">已加载</string>
     <string name="kpm_load_toast_succ">加载成功</string>
     <string name="kpm_load_toast_failed">加载失败</string>
     <string name="kpm_unload_confirm">卸载 %s 模块？</string>

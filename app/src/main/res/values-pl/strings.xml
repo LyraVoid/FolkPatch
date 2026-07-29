@@ -166,6 +166,8 @@
     <string name="kpm_load">Załaduj</string>
     <string name="kpm_install">Instaluj</string>
     <string name="kpm_embed">Osadź</string>
+    <string name="kpm_embedded">Osadzony</string>
+    <string name="kpm_loaded">Załadowany</string>
     <string name="kpm_load_toast_succ">Pomyślnie załadowano</string>
     <string name="kpm_load_toast_failed">Załadowanie nie powiodło się</string>
     <string name="kpm_unload_confirm">Odładować moduł %s?</string>

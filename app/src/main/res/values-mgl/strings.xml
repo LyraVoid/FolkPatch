@@ -185,6 +185,8 @@
     <string name="kpm_load">激活</string>
     <string name="kpm_install">契约</string>
     <string name="kpm_embed">融合</string>
+    <string name="kpm_embedded">已融合</string>
+    <string name="kpm_loaded">已激活</string>
     <string name="kpm_load_toast_succ">激活成功</string>
     <string name="kpm_load_toast_failed">激活失败</string>
     <string name="kpm_unload_confirm">卸载%s心之结晶？</string>

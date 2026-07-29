@@ -184,6 +184,8 @@
     <string name="kpm_load">唤醒</string>
     <string name="kpm_install">祝祷</string>
     <string name="kpm_embed">融合</string>
+    <string name="kpm_embedded">已融合</string>
+    <string name="kpm_loaded">已唤醒</string>
     <string name="kpm_load_toast_succ">唤醒成功</string>
     <string name="kpm_load_toast_failed">唤醒失败</string>
     <string name="kpm_unload_confirm">解除%s灵魂晶石？</string>

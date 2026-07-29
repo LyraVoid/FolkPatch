@@ -191,6 +191,8 @@
     <string name="kpm_load">Загрузить</string>
     <string name="kpm_install">Установить</string>
     <string name="kpm_embed">Встроить</string>
+    <string name="kpm_embedded">Встроен</string>
+    <string name="kpm_loaded">Загружен</string>
     <string name="kpm_load_toast_succ">Загрузка успешна</string>
     <string name="kpm_load_toast_failed">Загрузка не удалась</string>
     <string name="kpm_unload_confirm">Выгрузить модуль %s?</string>

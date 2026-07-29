@@ -185,6 +185,8 @@
     <string name="kpm_load">Tải</string>
     <string name="kpm_install">Cài đặt</string>
     <string name="kpm_embed">Nhúng</string>
+    <string name="kpm_embedded">Đã nhúng</string>
+    <string name="kpm_loaded">Đã tải</string>
     <string name="kpm_load_toast_succ">Tải thành công</string>
     <string name="kpm_load_toast_failed">Tải thất bại</string>
     <string name="kpm_unload_confirm">Bạn có muốn gỡ module %s không?</string>

@@ -224,7 +224,7 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
     }
 
     LaunchedEffect(Unit) {
-        if (viewModel.moduleList.isEmpty() || viewModel.isNeedRefresh) {
+        if (viewModel.moduleList.isEmpty() || viewModel.isNeedRefresh || viewModel.embeddedKpmNames == null) {
             viewModel.fetchModuleList()
         }
     }
@@ -805,7 +805,7 @@ private fun KPModuleList(
     val pullToRefreshState = rememberPullToRefreshState()
     PullToRefreshBox(
         modifier = modifier,
-        onRefresh = { viewModel.fetchModuleList() },
+        onRefresh = { viewModel.fetchModuleList(forceEmbeddedRefresh = true) },
         isRefreshing = viewModel.isRefreshing,
         state = pullToRefreshState,
         indicator = { PullToRefreshDefaults.LoadingIndicator(state = pullToRefreshState, isRefreshing = viewModel.isRefreshing, modifier = Modifier.align(Alignment.TopCenter)) }
@@ -892,7 +892,8 @@ private fun KPModuleList(
                         expanded = expandedModuleId == module.name,
                         onExpandToggle = {
                             expandedModuleId = if (expandedModuleId == module.name) null else module.name
-                        }
+                        },
+                        isEmbedded = viewModel.embeddedKpmNames?.let { module.name.trim() in it }
                     )
                 }
             )
@@ -991,7 +992,8 @@ private fun KPModuleList(
                                     expanded = expandedModuleId == module.name,
                                     onExpandToggle = {
                                         expandedModuleId = if (expandedModuleId == module.name) null else module.name
-                                    }
+                                    },
+                                    isEmbedded = viewModel.embeddedKpmNames?.let { module.name.trim() in it }
                                 )
                             }
                             item { Spacer(Modifier.height(if (LocalIsFloatingNavMode.current) 88.dp else 8.dp)) }
@@ -1019,7 +1021,8 @@ private fun KPModuleList(
                                     expanded = expandedModuleId == module.name,
                                     onExpandToggle = {
                                         expandedModuleId = if (expandedModuleId == module.name) null else module.name
-                                    }
+                                    },
+                                    isEmbedded = viewModel.embeddedKpmNames?.let { module.name.trim() in it }
                                 )
                                 }
                             }
@@ -1157,7 +1160,8 @@ private fun KPModuleItem(
     simpleListBottomBar: Boolean,
     foldSystemModule: Boolean,
     expanded: Boolean,
-    onExpandToggle: () -> Unit
+    onExpandToggle: () -> Unit,
+    isEmbedded: Boolean? = null
 ) {
     val moduleAuthor = stringResource(id = R.string.kpm_author)
     val moduleArgs = stringResource(id = R.string.kpm_args)
@@ -1336,25 +1340,43 @@ private fun KPModuleItem(
                     verticalAlignment = Alignment.Top
                 ) {
                     Column(modifier = Modifier.weight(1f)) {
-                        val hasAnyLabel = showMoreModuleInfo
+                        val hasAnyLabel = showMoreModuleInfo || isEmbedded != null
                         if (hasAnyLabel) {
                             Row(
                                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                                 modifier = Modifier.padding(bottom = 8.dp)
                             ) {
                                  val labelOpacity = (opacity + 0.1f).coerceAtMost(1f)
-                                 
-                                 ModuleLabel(
-                                    text = "KPM",
-                                    containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = labelOpacity),
-                                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer
-                                 )
-                                 
-                                 if (module.args.isNotBlank()) {
+
+                                 if (showMoreModuleInfo) {
                                      ModuleLabel(
-                                        text = "Args",
-                                        containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = labelOpacity),
-                                        contentColor = MaterialTheme.colorScheme.onSecondaryContainer
+                                        text = "KPM",
+                                        containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = labelOpacity),
+                                        contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                                     )
+
+                                     if (module.args.isNotBlank()) {
+                                         ModuleLabel(
+                                            text = "Args",
+                                            containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = labelOpacity),
+                                            contentColor = MaterialTheme.colorScheme.onSecondaryContainer
+                                         )
+                                     }
+                                 }
+
+                                 isEmbedded?.let { embedded ->
+                                     ModuleLabel(
+                                        text = stringResource(if (embedded) R.string.kpm_embedded else R.string.kpm_loaded),
+                                        containerColor = if (embedded) {
+                                            MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = labelOpacity)
+                                        } else {
+                                            MaterialTheme.colorScheme.secondaryContainer.copy(alpha = labelOpacity)
+                                        },
+                                        contentColor = if (embedded) {
+                                            MaterialTheme.colorScheme.onTertiaryContainer
+                                        } else {
+                                            MaterialTheme.colorScheme.onSecondaryContainer
+                                        }
                                      )
                                  }
                             }
