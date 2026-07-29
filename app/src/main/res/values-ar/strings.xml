@@ -393,6 +393,13 @@
     <string name="mode_select_page_install_inactive_slot">التثبيت في الفتحة غير النشطة (بعد OTA)</string>
     <string name="mode_select_page_install_inactive_slot_warning">سيتم **إجبار** جهازك على الإقلاع إلى الفتحة غير النشطة الحالية بعد إعادة التشغيل!\nاستخدم هذا الخيار فقط بعد الانتهاء من OTA.\nهل تريد المتابعة؟</string>
     <string name="mode_select_page_select_kpimg">استخدام ملف ترقيع محلي (KPimg)</string>
+    <string name="mode_select_page_init_boot_warning_title">تم اختيار صورة خاطئة</string>
+    <string name="mode_select_page_init_boot_warning_message">يبدو أن الملف المحدد هو صورة init_boot أو vendor_boot.
+يتطلب KernelPatch صورة boot للترقيع.
+
+يرجى اختيار صورة boot الصحيحة (عادةً boot.img).
+
+المتابعة على أي حال؟</string>
     <string name="patch_custom_kpimg_label">KPimg مخصص</string>
     <string name="patch_custom_kpimg_file">الملف: %s</string>
     <string name="patch_select_kpimg_btn">اختيار KPimg</string>

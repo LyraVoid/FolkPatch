@@ -384,6 +384,13 @@
     <string name="mode_select_page_install_inactive_slot">비활성 슬롯에 설치 (OTA 이후)</string>
     <string name="mode_select_page_install_inactive_slot_warning">다시 시작한 후 기기가 현재 비활성 슬롯으로 **강제** 부팅됩니다!\nOTA가 완료된 후에만 이 옵션을 사용하세요.\n계속할까요?</string>
     <string name="mode_select_page_select_kpimg">로컬 패치 파일 사용 (KPimg)</string>
+    <string name="mode_select_page_init_boot_warning_title">잘못된 이미지 선택됨</string>
+    <string name="mode_select_page_init_boot_warning_message">선택한 파일이 init_boot 또는 vendor_boot 이미지인 것 같습니다.
+KernelPatch는 boot 이미지를 패치해야 합니다.
+
+올바른 boot 이미지(보통 boot.img)를 선택하세요.
+
+그래도 계속하시겠습니까?</string>
     <string name="patch_custom_kpimg_label">사용자 지정 KPimg</string>
     <string name="patch_custom_kpimg_file">파일: %s</string>
     <string name="patch_select_kpimg_btn">KPimg 선택</string>

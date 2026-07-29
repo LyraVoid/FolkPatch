@@ -391,6 +391,13 @@
     <string name="mode_select_page_install_inactive_slot">Cài đặt vào slot chưa kích hoạt (sau OTA)</string>
     <string name="mode_select_page_install_inactive_slot_warning">Thiết bị của bạn SẼ BỊ BẮT BUỘC khởi động vào slot chưa kích hoạt hiện tại sau khi khởi động lại!\nChỉ sử dụng tùy chọn này sau khi OTA hoàn tất.\nTiếp tục?</string>
     <string name="mode_select_page_select_kpimg">Sử dụng tệp vá cục bộ (KPimg)</string>
+    <string name="mode_select_page_init_boot_warning_title">Đã chọn sai image</string>
+    <string name="mode_select_page_init_boot_warning_message">Tệp đã chọn có vẻ là image init_boot hoặc vendor_boot.
+KernelPatch yêu cầu image boot để vá.
+
+Vui lòng chọn đúng image boot (thường là boot.img).
+
+Vẫn tiếp tục?</string>
     <string name="patch_custom_kpimg_label">KPimg tùy chỉnh</string>
     <string name="patch_custom_kpimg_file">Tệp: %s</string>
     <string name="patch_select_kpimg_btn">Chọn KPimg</string>

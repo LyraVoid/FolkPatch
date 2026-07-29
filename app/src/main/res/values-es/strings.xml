@@ -392,6 +392,13 @@
     <string name="mode_select_page_install_inactive_slot">Instalar en ranura inactiva (Tras OTA)</string>
     <string name="mode_select_page_install_inactive_slot_warning">¡Tu dispositivo será **FORZADO** a arrancar en la ranura inactiva actual tras reiniciar!\nUsa esta opción solo después de completar la OTA.\n¿Continuar?</string>
     <string name="mode_select_page_select_kpimg">Usar archivo de parche local (KPimg)</string>
+    <string name="mode_select_page_init_boot_warning_title">Imagen incorrecta seleccionada</string>
+    <string name="mode_select_page_init_boot_warning_message">El archivo seleccionado parece ser una imagen init_boot o vendor_boot.
+KernelPatch requiere una imagen boot para parchear.
+
+Seleccione la imagen boot correcta (normalmente boot.img).
+
+¿Continuar de todos modos?</string>
     <string name="patch_custom_kpimg_label">KPimg personalizado</string>
     <string name="patch_custom_kpimg_file">Archivo: %s</string>
     <string name="patch_select_kpimg_btn">Seleccionar KPimg</string>

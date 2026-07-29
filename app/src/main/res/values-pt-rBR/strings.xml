@@ -401,6 +401,13 @@
     <string name="mode_select_page_install_inactive_slot">Instalar no slot inativo (Após OTA)</string>
     <string name="mode_select_page_install_inactive_slot_warning">Seu dispositivo será **FORÇADO** a inicializar no slot inativo atual após reiniciar!\nUse esta opção apenas após o término da OTA.\nContinuar?</string>
     <string name="mode_select_page_select_kpimg">Usar arquivo de patch local (KPimg)</string>
+    <string name="mode_select_page_init_boot_warning_title">Imagem incorreta selecionada</string>
+    <string name="mode_select_page_init_boot_warning_message">O arquivo selecionado parece ser uma imagem init_boot ou vendor_boot.
+O KernelPatch requer uma imagem boot para patch.
+
+Selecione a imagem boot correta (geralmente boot.img).
+
+Continuar mesmo assim?</string>
     <string name="patch_custom_kpimg_label">KPimg personalizado</string>
     <string name="patch_custom_kpimg_file">Arquivo: %s</string>
     <string name="patch_select_kpimg_btn">Selecionar KPimg</string>

@@ -379,6 +379,13 @@
     <string name="mode_select_page_install_inactive_slot">烹饪到备用灶台 (OTA 后)</string>
     <string name="mode_select_page_install_inactive_slot_warning">您的设备将在重新开火后**强制**启动到当前未激活的灶台！\n仅在 OTA 完成后使用此烹饪选项。\n继续烹饪吗？</string>
     <string name="mode_select_page_select_kpimg">使用本地秘方补丁 (KPimg)</string>
+    <string name="mode_select_page_init_boot_warning_title">拿错食材了！</string>
+    <string name="mode_select_page_init_boot_warning_message">这份食材看起来是 init_boot 或 vendor_boot 的边角料。
+KernelPatch 这道菜需要用 boot 主料来烹饪。
+
+请选用正确的 boot 食材（通常名为 boot.img）。
+
+硬要用这个？</string>
     <string name="patch_custom_kpimg_label">自定义 KPimg</string>
     <string name="patch_custom_kpimg_file">文件: %s</string>
     <string name="patch_select_kpimg_btn">选择 KPimg</string>

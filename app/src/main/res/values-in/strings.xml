@@ -395,6 +395,13 @@
     <string name="mode_select_page_install_inactive_slot">Instal ke slot tidak aktif (Setelah OTA)</string>
     <string name="mode_select_page_install_inactive_slot_warning">Perangkat Anda **AKAN DIPAKSA** untuk boot ke slot tidak aktif saat ini setelah *reboot*!\nGunakan opsi ini hanya setelah OTA selesai.\nLanjutkan?</string>
     <string name="mode_select_page_select_kpimg">Gunakan file *patch* lokal (KPimg)</string>
+    <string name="mode_select_page_init_boot_warning_title">Image salah dipilih</string>
+    <string name="mode_select_page_init_boot_warning_message">File yang dipilih tampaknya image init_boot atau vendor_boot.
+KernelPatch memerlukan image boot untuk di-patch.
+
+Silakan pilih image boot yang benar (biasanya bernama boot.img).
+
+Lanjutkan saja?</string>
     <string name="patch_custom_kpimg_label">KPimg kustom</string>
     <string name="patch_custom_kpimg_file">Berkas: %s</string>
     <string name="patch_select_kpimg_btn">Pilih KPimg</string>

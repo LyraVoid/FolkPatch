@@ -385,6 +385,13 @@
     <string name="mode_select_page_install_inactive_slot">Etkin olmayan slota kur (OTA sonrası)</string>
     <string name="mode_select_page_install_inactive_slot_warning">Cihazınız yeniden başlatma sonrası mevcut etkin olmayan slottan **ZORLA** açılacaktır!\nBu seçeneği yalnızca OTA tamamlandıktan sonra kullanın.\nDevam edilsin mi?</string>
     <string name="mode_select_page_select_kpimg">Yerel yama dosyası kullan (KPimg)</string>
+    <string name="mode_select_page_init_boot_warning_title">Yanlış imaj seçildi</string>
+    <string name="mode_select_page_init_boot_warning_message">Seçilen dosya bir init_boot veya vendor_boot imajı gibi görünüyor.
+KernelPatch, yama için boot imajı gerektirir.
+
+Lütfen doğru boot imajını seçin (genellikle boot.img).
+
+Yine de devam edilsin mi?</string>
     <string name="patch_custom_kpimg_label">Özel KPimg</string>
     <string name="patch_custom_kpimg_file">Dosya: %s</string>
     <string name="patch_select_kpimg_btn">KPimg Seç</string>

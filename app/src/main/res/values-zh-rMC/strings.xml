@@ -377,6 +377,13 @@
     <string name="mode_select_page_install_inactive_slot">装到备用槽位（OTA后用这个）</string>
     <string name="mode_select_page_install_inactive_slot_warning">重生后会**强制**进入当前没用的那个槽位！\n只在OTA完成后用这个。\n继续吗？</string>
     <string name="mode_select_page_select_kpimg">使用本地补丁文件(KPimg)</string>
+    <string name="mode_select_page_init_boot_warning_title">错误的方块！</string>
+    <string name="mode_select_page_init_boot_warning_message">你拿到的好像是 init_boot 或 vendor_boot 方块。
+KernelPatch 附魔需要 boot 方块作为材料。
+
+请从箱子里拿出正确的 boot 方块（通常叫 boot.img）。
+
+还是要强行合成？</string>
     <string name="patch_custom_kpimg_label">自定义 KPimg</string>
     <string name="patch_custom_kpimg_file">文件: %s</string>
     <string name="patch_select_kpimg_btn">选择 KPimg</string>

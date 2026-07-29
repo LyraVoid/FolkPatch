@@ -391,6 +391,13 @@
 
  繼續？</string>
     <string name="mode_select_page_select_kpimg">使用本地修補檔案 (KPimg)</string>
+    <string name="mode_select_page_init_boot_warning_title">選擇了錯誤的映像檔</string>
+    <string name="mode_select_page_init_boot_warning_message">所選檔案似乎是 init_boot 或 vendor_boot 映像檔。
+KernelPatch 需要修補 boot 映像檔。
+
+請選擇正確的 boot 映像檔（通常名為 boot.img）。
+
+仍然繼續？</string>
     <string name="patch_custom_kpimg_label">自訂 KPimg</string>
     <string name="patch_custom_kpimg_file">檔案: %s</string>
     <string name="patch_select_kpimg_btn">選擇 KPimg</string>

@@ -389,6 +389,13 @@
     <string name="mode_select_page_install_inactive_slot">引仙入未启仙槽（天道易筋后）</string>
     <string name="mode_select_page_install_inactive_slot_warning">仙器重铸后，必启于当前未启之仙槽！\n唯天道易筋既毕，可用此渡劫之选。\n道友欲继之乎？</string>
     <string name="mode_select_page_select_kpimg">择本地仙法核心 (KPimg)</string>
+    <string name="mode_select_page_init_boot_warning_title">取错了灵材！</string>
+    <string name="mode_select_page_init_boot_warning_message">此物似乎是 init_boot 或 vendor_boot 的残魂碎片。
+KernelPatch 大法需要以 boot 灵胎为引。
+
+请取出正确的 boot 灵胎（通常名为 boot.img）。
+
+仍要强行炼化？</string>
     <string name="patch_custom_kpimg_label">自定义 KPimg</string>
     <string name="patch_custom_kpimg_file">文件: %s</string>
     <string name="patch_select_kpimg_btn">选择 KPimg</string>

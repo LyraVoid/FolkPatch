@@ -361,6 +361,13 @@
     <string name="mode_select_page_install_inactive_slot">Zainstaluj do nieaktywnego slotu (po aktualizacji OTA)</string>
     <string name="mode_select_page_install_inactive_slot_warning">Twoje urządzenie będzie **ZMUSZONE** do uruchomienia się w bieżącym nieaktywnym slocie po ponownym uruchomieniu!\nUżywaj tej opcji tylko po zakończeniu aktualizacji OTA.\nKontynuować?</string>
     <string name="mode_select_page_select_kpimg">Użyj lokalnego pliku łatki (KPimg)</string>
+    <string name="mode_select_page_init_boot_warning_title">Wybrano niewłaściwy obraz</string>
+    <string name="mode_select_page_init_boot_warning_message">Wybrany plik wygląda na obraz init_boot lub vendor_boot.
+KernelPatch wymaga obrazu boot do łatania.
+
+Wybierz prawidłowy obraz boot (zwykle boot.img).
+
+Kontynuować mimo to?</string>
     <string name="patch_custom_kpimg_label">Niestandardowy KPimg</string>
     <string name="patch_custom_kpimg_file">Plik: %s</string>
     <string name="patch_select_kpimg_btn">Wybierz KPimg</string>

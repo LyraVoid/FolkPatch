@@ -391,6 +391,13 @@
     <string name="mode_select_page_install_inactive_slot">契约到备用星之容器 (OTA仪式后)</string>
     <string name="mode_select_page_install_inactive_slot_warning">你的魔法道具将在重新觉醒后**强制**启动到当前未激活的星之位置！\n仅在OTA仪式完成后使用此选项。\n继续吗？</string>
     <string name="mode_select_page_select_kpimg">使用本地魔法补丁 (KPimg)</string>
+    <string name="mode_select_page_init_boot_warning_title">拿错了魔法材料！</string>
+    <string name="mode_select_page_init_boot_warning_message">这份材料看起来是 init_boot 或 vendor_boot 的魔力残渣。
+KernelPatch 魔法阵需要 boot 核心来施展。
+
+请选取正确的 boot 核心（通常名为 boot.img）。
+
+仍要强行施法？</string>
     <string name="patch_custom_kpimg_label">自定义 KPimg</string>
     <string name="patch_custom_kpimg_file">文件: %s</string>
     <string name="patch_select_kpimg_btn">选择 KPimg</string>

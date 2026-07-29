@@ -395,6 +395,13 @@
     <string name="mode_select_page_install_inactive_slot">Установить в неактивный слот (После OTA)</string>
     <string name="mode_select_page_install_inactive_slot_warning">Ваше устройство будет **ПРИНУДИТЕЛЬНО** загружено в текущий неактивный слот после перезагрузки!\nИспользуйте эту опцию только после завершения OTA.\nПродолжить?</string>
     <string name="mode_select_page_select_kpimg">Использовать локальный файл патча (KPimg)</string>
+    <string name="mode_select_page_init_boot_warning_title">Выбран неверный образ</string>
+    <string name="mode_select_page_init_boot_warning_message">Выбранный файл похож на образ init_boot или vendor_boot.
+KernelPatch требует образ boot для патча.
+
+Пожалуйста, выберите правильный образ boot (обычно boot.img).
+
+Всё равно продолжить?</string>
     <string name="patch_custom_kpimg_label">Пользовательский KPimg</string>
     <string name="patch_custom_kpimg_file">Файл: %s</string>
     <string name="patch_select_kpimg_btn">Выбрать KPimg</string>

@@ -348,6 +348,13 @@
     <string name="mode_select_page_install_inactive_slot">非アクティブスロットにインストール (OTA 後)</string>
     <string name="mode_select_page_install_inactive_slot_warning">再起動後にデバイスは、非アクティブなスロットから**強制的に**起動されます！\nこのオプションは、OTA の完了後にのみ使用してください。\n続行しますか？</string>
     <string name="mode_select_page_select_kpimg">ローカルパッチファイルを使用 (KPimg)</string>
+    <string name="mode_select_page_init_boot_warning_title">間違ったイメージが選択されました</string>
+    <string name="mode_select_page_init_boot_warning_message">選択されたファイルは init_boot または vendor_boot イメージのようです。
+KernelPatch は boot イメージをパッチする必要があります。
+
+正しい boot イメージ（通常 boot.img という名前）を選択してください。
+
+それでも続行しますか？</string>
     <string name="patch_custom_kpimg_label">カスタム KPimg</string>
     <string name="patch_custom_kpimg_file">ファイル: %s</string>
     <string name="patch_select_kpimg_btn">KPimg を選択</string>
