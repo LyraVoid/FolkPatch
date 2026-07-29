@@ -185,6 +185,16 @@ import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenu
 import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenuItem
 import me.bmax.apatch.util.SafeUriResolver
 import me.bmax.apatch.util.ModuleBannerStorage
+import me.bmax.apatch.util.apmBannerStorage
+import me.bmax.apatch.util.resolveModuleDir
+import me.bmax.apatch.util.readModulePropBanner
+import me.bmax.apatch.util.clearLegacyFolkBanner
+import me.bmax.apatch.util.CustomModuleInfo
+import me.bmax.apatch.util.readCustomModuleInfo
+import me.bmax.apatch.util.writeCustomModuleInfo
+import me.bmax.apatch.util.clearCustomModuleInfo
+import me.bmax.apatch.util.pruneCustomModuleInfo
+import me.bmax.apatch.util.sanitizeModuleKey
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.ui.theme.bannerFadeColor
 import me.bmax.apatch.ui.navigation.LocalBottomBarVisible
@@ -1341,144 +1351,6 @@ private fun TopBar(
     }
 }
 
-private const val FOLK_BANNER_FILE_NAME = "FolkBanner"
-private const val FOLK_BANNER_DIR_NAME = "folk_banners"
-
-private val apmBannerStorage by lazy { ModuleBannerStorage(me.bmax.apatch.apApp.applicationContext, FOLK_BANNER_DIR_NAME) }
-
-private fun sanitizeKey(raw: String): String {
-    return raw.replace(Regex("[^a-zA-Z0-9._-]"), "_")
-}
-
-private fun resolveModuleDir(rootShell: Shell, moduleId: String): String {
-    val suFile = { path: String ->
-        SuFile(path).apply { shell = rootShell }
-    }
-    val defaultDir = "/data/adb/modules/$moduleId"
-    return runCatching {
-        val direct = suFile(defaultDir)
-        if (direct.exists()) {
-            direct.path
-        } else {
-            val modulesRoot = suFile("/data/adb/modules")
-            val dirs = modulesRoot.listFiles() ?: return@runCatching defaultDir
-            for (dir in dirs) {
-                if (!dir.isDirectory) continue
-                val propFile = suFile("${dir.path}/module.prop")
-                if (!propFile.exists()) continue
-                val props = Properties()
-                props.load(propFile.newInputStream())
-                val id = props.getProperty("id")?.trim()
-                if (id == moduleId) {
-                    return@runCatching dir.path
-                }
-            }
-            defaultDir
-        }
-    }.getOrDefault(defaultDir)
-}
-
-
-
-private fun readModulePropBanner(rootShell: Shell, resolvedDir: String): String? {
-    return runCatching {
-        val propFile = SuFile("$resolvedDir/module.prop").apply { shell = rootShell }
-        if (propFile.exists()) {
-            val props = Properties()
-            props.load(propFile.newInputStream())
-            props.getProperty("banner")?.trim()?.takeIf { it.isNotEmpty() }
-        } else {
-            null
-        }
-    }.getOrNull()
-}
-
-
-
-private fun clearLegacyFolkBanner(rootShell: Shell, resolvedDir: String): Boolean {
-    val file = SuFile("$resolvedDir/$FOLK_BANNER_FILE_NAME").apply { shell = rootShell }
-    return !file.exists() || file.delete()
-}
-
-// ==================== Custom Module Info ====================
-
-data class CustomModuleInfo(
-    val name: String? = null,
-    val version: String? = null,
-    val author: String? = null,
-    val description: String? = null
-) {
-    fun hasAnyInfo(): Boolean = !name.isNullOrBlank() || !version.isNullOrBlank() || !author.isNullOrBlank() || !description.isNullOrBlank()
-
-    fun toJson(): String {
-        val json = JSONObject()
-        name?.takeIf { it.isNotBlank() }?.let { json.put("name", it) }
-        version?.takeIf { it.isNotBlank() }?.let { json.put("version", it) }
-        author?.takeIf { it.isNotBlank() }?.let { json.put("author", it) }
-        description?.takeIf { it.isNotBlank() }?.let { json.put("description", it) }
-        return json.toString()
-    }
-
-    companion object {
-        fun fromJson(jsonStr: String): CustomModuleInfo? {
-            return runCatching {
-                val json = JSONObject(jsonStr)
-                CustomModuleInfo(
-                    name = if (json.has("name")) json.optString("name") else null,
-                    version = if (json.has("version")) json.optString("version") else null,
-                    author = if (json.has("author")) json.optString("author") else null,
-                    description = if (json.has("description")) json.optString("description") else null,
-                )
-            }.getOrNull()
-        }
-    }
-}
-
-private const val CUSTOM_MODULE_INFO_DIR_NAME = "custom_module_info"
-
-private fun getCustomModuleInfoFile(context: Context, moduleId: String): File {
-    val dir = File(context.filesDir, CUSTOM_MODULE_INFO_DIR_NAME)
-    if (!dir.exists()) {
-        dir.mkdirs()
-    }
-    return File(dir, sanitizeKey(moduleId) + ".json")
-}
-
-private fun readCustomModuleInfo(context: Context, moduleId: String): CustomModuleInfo? {
-    return runCatching {
-        val file = getCustomModuleInfoFile(context, moduleId)
-        if (file.exists()) {
-            CustomModuleInfo.fromJson(file.readText())
-        } else null
-    }.getOrNull()
-}
-
-private fun writeCustomModuleInfo(context: Context, moduleId: String, info: CustomModuleInfo) {
-    runCatching {
-        val file = getCustomModuleInfoFile(context, moduleId)
-        file.writeText(info.toJson())
-    }
-}
-
-private fun clearCustomModuleInfo(context: Context, moduleId: String) {
-    runCatching {
-        val file = getCustomModuleInfoFile(context, moduleId)
-        if (file.exists()) file.delete()
-    }
-}
-
-private fun pruneCustomModuleInfo(context: Context, validModuleIds: Set<String>) {
-    runCatching {
-        val dir = File(context.filesDir, CUSTOM_MODULE_INFO_DIR_NAME)
-        if (!dir.exists()) return@runCatching
-        val validFiles = validModuleIds.map { sanitizeKey(it) + ".json" }.toSet()
-        dir.listFiles()?.forEach { file ->
-            if (file.isFile && file.name !in validFiles) {
-                file.delete()
-            }
-        }
-    }
-}
 
 @Composable
 private fun ModuleItem(
