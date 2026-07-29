@@ -159,7 +159,7 @@ private fun SelectInstallMethod(
         if (it.resultCode == Activity.RESULT_OK) {
             it.data?.data?.let { uri ->
                 val fileName = getFileNameFromUri(context, uri) ?: ""
-                if (fileName.contains("init_boot", ignoreCase = true)) {
+                if (fileName.contains("init_boot", ignoreCase = true) || fileName.contains("vendor_boot", ignoreCase = true)) {
                     pendingBootUri = uri
                     showInitBootWarning = true
                 } else {
