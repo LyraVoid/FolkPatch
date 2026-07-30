@@ -5,6 +5,13 @@ import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.background
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -23,10 +30,15 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -40,6 +52,8 @@ import com.ramcosta.composedestinations.generated.destinations.OnlineScriptScree
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.sync.withPermit
 import kotlinx.coroutines.withContext
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
@@ -47,13 +61,22 @@ import me.bmax.apatch.data.ScriptInfo
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import me.bmax.apatch.ui.component.FilePickerDialog
+import me.bmax.apatch.ui.component.TwoColumnGrid
+import me.bmax.apatch.ui.component.splicedLazyColumnGroup
+import me.bmax.apatch.ui.component.LocalInsideSplicedGroup
+import me.bmax.apatch.ui.component.BackgroundOptionsDialog
 import me.bmax.apatch.ui.component.rememberConfirmDialog
 import me.bmax.apatch.ui.component.rememberLoadingDialog
 import me.bmax.apatch.ui.theme.BackgroundConfig
+import me.bmax.apatch.ui.theme.bannerFadeColor
 import me.bmax.apatch.ui.viewmodel.ScriptLibraryViewModel
 import me.bmax.apatch.util.ModuleShortcut
+import me.bmax.apatch.util.scriptBannerStorage
+import me.bmax.apatch.util.ui.showToast
 import me.bmax.apatch.util.ui.LocalSnackbarHost
 import java.io.File
+
+private val scriptBannerSemaphore = Semaphore(4)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Destination<RootGraph>
@@ -72,6 +95,7 @@ fun ScriptLibraryScreen(navigator: DestinationsNavigator) {
     var selectedFile by remember { mutableStateOf<File?>(null) }
     var scriptAlias by remember { mutableStateOf("") }
     var selectedScript by remember { mutableStateOf<ScriptInfo?>(null) }
+    var expandedScriptId by rememberSaveable { mutableStateOf<String?>(null) }
 
     val confirmDialog = rememberConfirmDialog()
 
@@ -83,11 +107,20 @@ fun ScriptLibraryScreen(navigator: DestinationsNavigator) {
     var enableModuleShortcutAdd by remember {
         mutableStateOf(prefs.getBoolean("enable_module_shortcut_add", true))
     }
+    var foldSystemModule by remember { mutableStateOf(prefs.getBoolean("fold_system_module", true)) }
+    var splicedCardGroup by remember { mutableStateOf(prefs.getBoolean("spliced_card_group", true)) }
+    var simpleListBottomBar by remember { mutableStateOf(prefs.getBoolean("simple_list_bottom_bar", false)) }
 
     DisposableEffect(Unit) {
         val listener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
             if (key == "enable_module_shortcut_add") {
                 enableModuleShortcutAdd = sharedPreferences.getBoolean("enable_module_shortcut_add", true)
+            } else if (key == "fold_system_module") {
+                foldSystemModule = sharedPreferences.getBoolean("fold_system_module", true)
+            } else if (key == "spliced_card_group") {
+                splicedCardGroup = sharedPreferences.getBoolean("spliced_card_group", true)
+            } else if (key == "simple_list_bottom_bar") {
+                simpleListBottomBar = sharedPreferences.getBoolean("simple_list_bottom_bar", false)
             }
         }
         prefs.registerOnSharedPreferenceChangeListener(listener)
@@ -136,15 +169,25 @@ fun ScriptLibraryScreen(navigator: DestinationsNavigator) {
                     )
                 }
             } else {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    items(scripts, key = { it.path }) { script ->
+                val isWideScreen = LocalConfiguration.current.screenWidthDp >= 600
+                if (isWideScreen) {
+                    TwoColumnGrid(
+                        modifier = Modifier.fillMaxSize(),
+                        items = scripts,
+                        key = { it.id },
+                        verticalSpacing = 16.dp,
+                        horizontalSpacing = 16.dp,
+                        contentPadding = PaddingValues(16.dp),
+                    ) { script ->
                         ScriptItem(
                             script = script,
                             enableShortcut = enableModuleShortcutAdd,
+                            simpleListBottomBar = simpleListBottomBar,
+                            foldCard = foldSystemModule,
+                            expanded = expandedScriptId == script.id,
+                            onExpandToggle = {
+                                expandedScriptId = if (expandedScriptId == script.id) null else script.id
+                            },
                             onRun = {
                                 navigator.navigate(ScriptExecutionLogScreenDestination(script))
                             },
@@ -177,6 +220,87 @@ fun ScriptLibraryScreen(navigator: DestinationsNavigator) {
                                 }
                             }
                         )
+                    }
+                } else {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding = PaddingValues(top = 24.dp, bottom = 16.dp)
+                    ) {
+                        if (splicedCardGroup) {
+                            splicedLazyColumnGroup(
+                                items = scripts,
+                                key = { _, script -> script.id },
+                                contentType = { _, _ -> "ScriptItem" },
+                            ) { _, script ->
+                                ScriptItem(
+                                    script = script,
+                                    enableShortcut = enableModuleShortcutAdd,
+                                    simpleListBottomBar = simpleListBottomBar,
+                                    foldCard = foldSystemModule,
+                                    expanded = expandedScriptId == script.id,
+                                    onExpandToggle = {
+                                        expandedScriptId = if (expandedScriptId == script.id) null else script.id
+                                    },
+                                    onRun = { navigator.navigate(ScriptExecutionLogScreenDestination(script)) },
+                                    onDelete = {
+                                        selectedScript = script
+                                        scope.launch {
+                                            val result = confirmDialog.awaitConfirm(
+                                                title = confirmDeleteTitle,
+                                                content = "${script.alias}\n${script.path}",
+                                                confirm = confirmDeleteLabel,
+                                                dismiss = dismissLabel
+                                            )
+                                            if (result == me.bmax.apatch.ui.component.ConfirmResult.Confirmed) {
+                                                viewModel.removeScript(
+                                                    script,
+                                                    onSuccess = { scope.launch { snackBarHost.showSnackbar(deleteSuccessMsg) } },
+                                                    onError = { error ->
+                                                        scope.launch { snackBarHost.showSnackbar(context.getString(R.string.script_library_delete_failed, error)) }
+                                                    }
+                                                )
+                                            }
+                                        }
+                                    }
+                                )
+                            }
+                        } else {
+                            items(scripts, key = { it.id }) { script ->
+                                Box(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
+                                    ScriptItem(
+                                        script = script,
+                                        enableShortcut = enableModuleShortcutAdd,
+                                        simpleListBottomBar = simpleListBottomBar,
+                                        foldCard = foldSystemModule,
+                                        expanded = expandedScriptId == script.id,
+                                        onExpandToggle = {
+                                            expandedScriptId = if (expandedScriptId == script.id) null else script.id
+                                        },
+                                        onRun = { navigator.navigate(ScriptExecutionLogScreenDestination(script)) },
+                                        onDelete = {
+                                            selectedScript = script
+                                            scope.launch {
+                                                val result = confirmDialog.awaitConfirm(
+                                                    title = confirmDeleteTitle,
+                                                    content = "${script.alias}\n${script.path}",
+                                                    confirm = confirmDeleteLabel,
+                                                    dismiss = dismissLabel
+                                                )
+                                                if (result == me.bmax.apatch.ui.component.ConfirmResult.Confirmed) {
+                                                    viewModel.removeScript(
+                                                        script,
+                                                        onSuccess = { scope.launch { snackBarHost.showSnackbar(deleteSuccessMsg) } },
+                                                        onError = { error ->
+                                                            scope.launch { snackBarHost.showSnackbar(context.getString(R.string.script_library_delete_failed, error)) }
+                                                        }
+                                                    )
+                                                }
+                                            }
+                                        }
+                                    )
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -244,6 +368,10 @@ private fun ScriptLabel(
 private fun ScriptItem(
     script: ScriptInfo,
     enableShortcut: Boolean,
+    simpleListBottomBar: Boolean,
+    foldCard: Boolean,
+    expanded: Boolean,
+    onExpandToggle: () -> Unit,
     onRun: () -> Unit,
     onDelete: () -> Unit
 ) {
@@ -285,19 +413,105 @@ private fun ScriptItem(
 
     val labelOpacity = (opacity + 0.1f).coerceAtMost(1f)
 
-    Surface(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(20.dp),
-        color = cardColor,
-        tonalElevation = 0.dp,
+    val bannerImageAlpha = if (BackgroundConfig.isBannerCustomOpacityEnabled) {
+        BackgroundConfig.bannerCustomOpacity
+    } else if (isWallpaperMode) {
+        (0.35f + (opacity - 0.2f) * 0.5f).coerceIn(0.25f, 0.6f)
+    } else {
+        0.18f
+    }
+    var showBannerDialog by remember { mutableStateOf(false) }
+    var hasBanner by remember { mutableStateOf(false) }
+    var bannerReloadKey by rememberSaveable(script.id) { mutableStateOf(0) }
+    val loadingDialog = rememberLoadingDialog()
+    val bannerTitle = stringResource(R.string.apm_folk_banner_title)
+    val bannerSelect = stringResource(R.string.apm_folk_banner_select)
+    val bannerClear = stringResource(R.string.apm_folk_banner_clear)
+    val bannerSaved = stringResource(R.string.apm_folk_banner_saved)
+    val bannerCleared = stringResource(R.string.apm_folk_banner_cleared)
+    val bannerFailed = stringResource(R.string.apm_folk_banner_failed)
+
+    LaunchedEffect(showBannerDialog) {
+        if (showBannerDialog) {
+            hasBanner = withContext(Dispatchers.IO) { scriptBannerStorage.read(script.id) != null }
+        }
+    }
+
+    val pickBannerLauncher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        uri?.let {
+            scope.launch {
+                loadingDialog.show()
+                val data = withContext(Dispatchers.IO) {
+                    runCatching { scriptBannerStorage.write(context, script.id, it) }.getOrNull()
+                }
+                loadingDialog.hide()
+                if (data != null) {
+                    bannerReloadKey++
+                    showToast(context, bannerSaved.format(script.alias))
+                } else {
+                    showToast(context, bannerFailed.format(script.alias))
+                }
+            }
+        }
+    }
+
+    val bannerData by produceState<ByteArray?>(
+        initialValue = null,
+        script.id,
+        BackgroundConfig.isBannerEnabled,
+        BackgroundConfig.isBannerApiModeEnabled,
+        BackgroundConfig.bannerApiSource,
+        BackgroundConfig.isFolkBannerEnabled,
+        bannerReloadKey
     ) {
+        if (!BackgroundConfig.isBannerEnabled) {
+            value = null
+            return@produceState
+        }
+        scriptBannerSemaphore.withPermit {
+            val apiSource = BackgroundConfig.getEffectiveBannerApiSource()
+            value = if (BackgroundConfig.isBannerApiModeEnabled && apiSource.isNotBlank()) {
+                BannerApiService.getModuleBanner(context, "script_${script.id}", apiSource)
+                    ?: if (BackgroundConfig.isFolkBannerEnabled) withContext(Dispatchers.IO) { scriptBannerStorage.read(script.id) } else null
+            } else if (BackgroundConfig.isFolkBannerEnabled) {
+                withContext(Dispatchers.IO) { scriptBannerStorage.read(script.id) }
+            } else null
+        }
+    }
+
+    val cardShape = RoundedCornerShape(20.dp)
+    val clickModifier = Modifier
+        .fillMaxWidth()
+        .animateContentSize()
+        .combinedClickable(
+            onClick = { if (foldCard) onExpandToggle() else onRun() },
+            onLongClick = { showBannerDialog = true }
+        )
+
+    val contentBlock: @Composable () -> Unit = {
         Box(modifier = Modifier.fillMaxWidth()) {
+            if (bannerData != null) {
+                val fadeColor = bannerFadeColor()
+                AsyncImage(
+                    model = coil.request.ImageRequest.Builder(context).data(bannerData).build(),
+                    contentDescription = null,
+                    modifier = Modifier.matchParentSize(),
+                    contentScale = ContentScale.Crop,
+                    alpha = bannerImageAlpha
+                )
+                Box(
+                    modifier = Modifier.matchParentSize().background(
+                        Brush.verticalGradient(
+                            listOf(fadeColor.copy(alpha = 0f), fadeColor.copy(alpha = if (isWallpaperMode) 0.5f else 0.8f))
+                        )
+                    )
+                )
+            }
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
-                // 第一行：标签 + 脚本名称
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -305,7 +519,7 @@ private fun ScriptItem(
                 ) {
                     Text(
                         text = script.alias,
-                        style = MaterialTheme.typography.titleMedium
+                        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                     )
 
                     ScriptLabel(
@@ -322,24 +536,26 @@ private fun ScriptItem(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
 
-                // 按钮区域
                 Spacer(modifier = Modifier.height(12.dp))
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                AnimatedVisibility(
+                    visible = !foldCard || expanded,
+                    enter = fadeIn() + expandVertically(),
+                    exit = shrinkVertically() + fadeOut()
                 ) {
+                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     FilledTonalButton(
                         onClick = onRun,
-                        contentPadding = ButtonDefaults.TextButtonContentPadding,
-                        modifier = Modifier.height(36.dp),
+                        contentPadding = if (simpleListBottomBar) PaddingValues(12.dp) else ButtonDefaults.TextButtonContentPadding,
+                        modifier = if (simpleListBottomBar) Modifier else Modifier.height(36.dp),
                         colors = ButtonDefaults.filledTonalButtonColors(
                             containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = (opacity + 0.3f).coerceAtMost(1f))
                         )
                     ) {
                         Icon(Icons.Outlined.PlayArrow, contentDescription = null, modifier = Modifier.size(18.dp))
-                        Spacer(Modifier.width(8.dp))
-                        Text(stringResource(R.string.script_library_run))
+                        if (!simpleListBottomBar) {
+                            Spacer(Modifier.width(8.dp))
+                            Text(stringResource(R.string.script_library_run))
+                        }
                     }
 
                     if (enableShortcut) {
@@ -349,16 +565,18 @@ private fun ScriptItem(
                                 shortcutIconUri = null
                                 showShortcutDialog = true
                             },
-                            contentPadding = ButtonDefaults.TextButtonContentPadding,
-                            modifier = Modifier.height(36.dp),
+                            contentPadding = if (simpleListBottomBar) PaddingValues(12.dp) else ButtonDefaults.TextButtonContentPadding,
+                            modifier = if (simpleListBottomBar) Modifier else Modifier.height(36.dp),
                             colors = ButtonDefaults.filledTonalButtonColors(
                                 containerColor = MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = (opacity + 0.3f).coerceAtMost(1f)),
                                 contentColor = MaterialTheme.colorScheme.onTertiaryContainer
                             )
                         ) {
                             Icon(Icons.Outlined.Add, contentDescription = null, modifier = Modifier.size(18.dp))
-                            Spacer(Modifier.width(8.dp))
-                            Text(stringResource(R.string.module_shortcut_add))
+                            if (!simpleListBottomBar) {
+                                Spacer(Modifier.width(8.dp))
+                                Text(stringResource(R.string.module_shortcut_add))
+                            }
                         }
                     }
 
@@ -366,21 +584,60 @@ private fun ScriptItem(
 
                     FilledTonalButton(
                         onClick = onDelete,
-                        contentPadding = ButtonDefaults.TextButtonContentPadding,
-                        modifier = Modifier.height(36.dp),
-                        colors = ButtonDefaults.filledTonalButtonColors(
+                        contentPadding = if (simpleListBottomBar) PaddingValues(12.dp) else ButtonDefaults.TextButtonContentPadding,
+                        modifier = if (simpleListBottomBar) Modifier else Modifier.height(36.dp),
+                        colors = if (simpleListBottomBar) ButtonDefaults.filledTonalButtonColors(
+                            containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = (opacity + 0.3f).coerceAtMost(1f))
+                        ) else ButtonDefaults.filledTonalButtonColors(
                             containerColor = MaterialTheme.colorScheme.errorContainer.copy(alpha = (opacity + 0.3f).coerceAtMost(1f)),
                             contentColor = MaterialTheme.colorScheme.onErrorContainer
                         )
                     ) {
                         Icon(Icons.Outlined.Delete, contentDescription = null, modifier = Modifier.size(18.dp))
-                        Spacer(Modifier.width(8.dp))
-                        Text(stringResource(R.string.script_library_delete))
+                        if (!simpleListBottomBar) {
+                            Spacer(Modifier.width(8.dp))
+                            Text(stringResource(R.string.script_library_delete))
+                        }
                     }
                 }
             }
         }
     }
+    }
+
+    if (LocalInsideSplicedGroup.current) {
+        Box(modifier = clickModifier) { contentBlock() }
+    } else {
+        Surface(
+            modifier = Modifier.clip(cardShape).then(clickModifier),
+            shape = cardShape,
+            color = cardColor,
+            tonalElevation = 0.dp,
+        ) { contentBlock() }
+    }
+
+    BackgroundOptionsDialog(
+        showDialog = showBannerDialog,
+        onDismiss = { showBannerDialog = false },
+        title = bannerTitle,
+        selectLabel = bannerSelect,
+        clearLabel = bannerClear,
+        hasExisting = hasBanner,
+        onSelectImage = { pickBannerLauncher.launch("image/*") },
+        onClearImage = {
+            scope.launch {
+                loadingDialog.show()
+                val cleared = withContext(Dispatchers.IO) { scriptBannerStorage.clear(script.id) }
+                loadingDialog.hide()
+                if (cleared) {
+                    bannerReloadKey++
+                    showToast(context, bannerCleared.format(script.alias))
+                } else {
+                    showToast(context, bannerFailed.format(script.alias))
+                }
+            }
+        }
+    )
 
     if (showShortcutDialog) {
         AlertDialog(

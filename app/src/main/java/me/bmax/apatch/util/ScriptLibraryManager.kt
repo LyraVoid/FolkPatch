@@ -196,6 +196,7 @@ import java.io.File
             if (scriptFile.exists()) {
                 scriptFile.delete()
             }
+            scriptBannerStorage.clear(scriptInfo.id)
             true
         } catch (e: Exception) {
             e.printStackTrace()
