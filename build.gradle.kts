@@ -34,7 +34,7 @@ fun getGitDescribe(): String {
 }
 
 fun getVersionCode(): Int {
-    return 114268
+    return 115000
 }
 
 fun getbranch(): String {
@@ -42,7 +42,7 @@ fun getbranch(): String {
 }
 
 fun getVersionName(): String {
-    return "4.3"
+    return "5.0"
 }
 
 tasks.register("printVersion") {
