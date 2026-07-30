@@ -139,7 +139,7 @@ fun HomeLayoutChooseDialog(showDialog: MutableState<Boolean>, onLayoutSelected: 
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
 
-                val currentStyle = prefs.getString("home_layout_style", "circle")
+                val currentStyle = prefs.getString("home_layout_style", "dashboard_ui")
 
                 Surface(
                     shape = RoundedCornerShape(12.dp),

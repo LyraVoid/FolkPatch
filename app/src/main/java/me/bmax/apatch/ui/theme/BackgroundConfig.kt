@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.compose.runtime.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import me.bmax.apatch.R
 import me.bmax.apatch.util.SafeUriResolver
 import java.io.File
 import java.io.FileOutputStream
@@ -145,19 +146,19 @@ object BackgroundConfig {
     // DashboardUI Hero Card Wallpaper
     var dashboardCardBgUri: String? by mutableStateOf(null)
         private set
-    var isDashboardCardBackgroundEnabled: Boolean by mutableStateOf(false)
+    var isDashboardCardBackgroundEnabled: Boolean by mutableStateOf(true)
         private set
     var dashboardCardBgDim: Float by mutableStateOf(0.3f)
         private set
-    var isDashboardCardDualDimEnabled: Boolean by mutableStateOf(false)
+    var isDashboardCardDualDimEnabled: Boolean by mutableStateOf(true)
         private set
-    var dashboardCardBgDayDim: Float by mutableStateOf(0.3f)
+    var dashboardCardBgDayDim: Float by mutableStateOf(0.15f)
         private set
-    var dashboardCardBgNightDim: Float by mutableStateOf(0.3f)
+    var dashboardCardBgNightDim: Float by mutableStateOf(0.5f)
         private set
     var dashboardCardBgOpacity: Float by mutableStateOf(1f)
         private set
-    var isDashboardCardDualOpacityEnabled: Boolean by mutableStateOf(false)
+    var isDashboardCardDualOpacityEnabled: Boolean by mutableStateOf(true)
         private set
     var dashboardCardBgDayOpacity: Float by mutableStateOf(1f)
         private set
@@ -820,15 +821,15 @@ object BackgroundConfig {
         val focusCardNightOpacity = prefs.getFloat(KEY_FOCUS_CARD_NIGHT_OPACITY, focusCardOpacity)
 
         val dashboardCardBg = prefs.getString(KEY_DASHBOARD_CARD_BG_URI, null)
-        val dashboardCardEnabled = prefs.getBoolean(KEY_DASHBOARD_CARD_BACKGROUND_ENABLED, false)
+        val dashboardCardEnabled = prefs.getBoolean(KEY_DASHBOARD_CARD_BACKGROUND_ENABLED, true)
         val dashboardCardDim = prefs.getFloat(KEY_DASHBOARD_CARD_BG_DIM, 0.3f)
-        val dashboardCardDualDim = prefs.getBoolean(KEY_DASHBOARD_CARD_DUAL_DIM_ENABLED, false)
-        val dashboardCardDayDim = prefs.getFloat(KEY_DASHBOARD_CARD_DAY_DIM, dashboardCardDim)
-        val dashboardCardNightDim = prefs.getFloat(KEY_DASHBOARD_CARD_NIGHT_DIM, dashboardCardDim)
+        val dashboardCardDualDim = prefs.getBoolean(KEY_DASHBOARD_CARD_DUAL_DIM_ENABLED, true)
+        val dashboardCardDayDim = prefs.getFloat(KEY_DASHBOARD_CARD_DAY_DIM, 0.15f)
+        val dashboardCardNightDim = prefs.getFloat(KEY_DASHBOARD_CARD_NIGHT_DIM, 0.5f)
         val dashboardCardOpacity = prefs.getFloat(KEY_DASHBOARD_CARD_OPACITY, 1f)
-        val dashboardCardDualOpacity = prefs.getBoolean(KEY_DASHBOARD_CARD_DUAL_OPACITY_ENABLED, false)
-        val dashboardCardDayOpacity = prefs.getFloat(KEY_DASHBOARD_CARD_DAY_OPACITY, dashboardCardOpacity)
-        val dashboardCardNightOpacity = prefs.getFloat(KEY_DASHBOARD_CARD_NIGHT_OPACITY, dashboardCardOpacity)
+        val dashboardCardDualOpacity = prefs.getBoolean(KEY_DASHBOARD_CARD_DUAL_OPACITY_ENABLED, true)
+        val dashboardCardDayOpacity = prefs.getFloat(KEY_DASHBOARD_CARD_DAY_OPACITY, 1f)
+        val dashboardCardNightOpacity = prefs.getFloat(KEY_DASHBOARD_CARD_NIGHT_OPACITY, 1f)
 
         val navBarGlassEnabled = prefs.getBoolean(KEY_NAVBAR_GLASS_ENABLED, false)
         val prefsNavBarGlassBlurStrength = prefs.getFloat(KEY_NAVBAR_GLASS_BLUR_STRENGTH, 0.7f)
@@ -992,13 +993,13 @@ object BackgroundConfig {
         focusCardBgNightOpacity = 1f
 
         dashboardCardBgUri = null
-        isDashboardCardBackgroundEnabled = false
+        isDashboardCardBackgroundEnabled = true
         dashboardCardBgDim = 0.3f
-        isDashboardCardDualDimEnabled = false
-        dashboardCardBgDayDim = 0.3f
-        dashboardCardBgNightDim = 0.3f
+        isDashboardCardDualDimEnabled = true
+        dashboardCardBgDayDim = 0.15f
+        dashboardCardBgNightDim = 0.5f
         dashboardCardBgOpacity = 1f
-        isDashboardCardDualOpacityEnabled = false
+        isDashboardCardDualOpacityEnabled = true
         dashboardCardBgDayOpacity = 1f
         dashboardCardBgNightOpacity = 1f
 
@@ -1357,6 +1358,37 @@ object BackgroundManager {
         clearGenericBackground(context, DASHBOARD_CARD_BG_FILENAME) {
             BackgroundConfig.updateDashboardCardBgUri(it)
         }
+
+    /**
+     * 部署内置默认仪表盘卡片壁纸（首次安装/主题重置时调用）
+     * 将 res/raw/dashboard_card_bg_default.webp 复制到内部存储并更新配置
+     */
+    fun provisionDefaultDashboardCardBg(context: Context) {
+        try {
+            clearOldFiles(context, DASHBOARD_CARD_BG_FILENAME)
+            val targetFile = File(context.filesDir, "$DASHBOARD_CARD_BG_FILENAME.webp")
+            context.resources.openRawResource(R.raw.dashboard_card_bg_default).use { input ->
+                FileOutputStream(targetFile).use { output ->
+                    input.copyTo(output)
+                }
+            }
+            val fileUri = Uri.fromFile(targetFile).buildUpon()
+                .appendQueryParameter("t", System.currentTimeMillis().toString())
+                .build()
+            BackgroundConfig.updateDashboardCardBgUri(fileUri.toString())
+            BackgroundConfig.setDashboardCardBackgroundEnabledState(true)
+            BackgroundConfig.setDashboardCardDualDimEnabledState(true)
+            BackgroundConfig.setDashboardCardBgDayDimValue(0.15f)
+            BackgroundConfig.setDashboardCardBgNightDimValue(0.5f)
+            BackgroundConfig.setDashboardCardDualOpacityEnabledState(true)
+            BackgroundConfig.setDashboardCardBgDayOpacityValue(1f)
+            BackgroundConfig.setDashboardCardBgNightOpacityValue(1f)
+            BackgroundConfig.save(context)
+            Log.d(TAG, "默认仪表盘卡片壁纸部署成功")
+        } catch (e: Exception) {
+            Log.e(TAG, "部署默认仪表盘卡片壁纸失败: ${e.message}", e)
+        }
+    }
 
     // Title Image
     suspend fun saveAndApplyTitleImage(context: Context, uri: Uri): Boolean {

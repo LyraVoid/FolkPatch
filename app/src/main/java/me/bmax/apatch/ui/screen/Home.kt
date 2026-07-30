@@ -163,11 +163,11 @@ fun HomeScreen(navigator: DestinationsNavigator) {
         }
     }
 
-    var homeLayout by remember { mutableStateOf(APApplication.sharedPreferences.getString("home_layout_style", "circle")) }
+    var homeLayout by remember { mutableStateOf(APApplication.sharedPreferences.getString("home_layout_style", "dashboard_ui")) }
     var showListInfoIcons by remember { mutableStateOf(APApplication.sharedPreferences.getBoolean("list_info_show_icons", false)) }
     val homeRefreshObserver by refreshTheme.observeAsState(false)
     if (homeRefreshObserver) {
-        homeLayout = APApplication.sharedPreferences.getString("home_layout_style", "circle")
+        homeLayout = APApplication.sharedPreferences.getString("home_layout_style", "dashboard_ui")
         showListInfoIcons = APApplication.sharedPreferences.getBoolean("list_info_show_icons", false)
     }
 

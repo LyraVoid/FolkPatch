@@ -73,7 +73,7 @@ internal object ThemeIO {
                     backgroundNightDim = BackgroundConfig.customBackgroundNightDim,
                     isFontEnabled = FontConfig.isCustomFontEnabled,
                     customColor = prefs.getString("custom_color", "indigo") ?: "indigo",
-                    homeLayoutStyle = prefs.getString("home_layout_style", "circle") ?: "circle",
+                    homeLayoutStyle = prefs.getString("home_layout_style", "dashboard_ui") ?: "dashboard_ui",
                     statsTopLayout = prefs.getString("stats_top_layout", "list") ?: "list",
                     nightModeEnabled = prefs.getBoolean("night_mode_enabled", true),
                     nightModeFollowSys = prefs.getBoolean("night_mode_follow_sys", false),
@@ -1058,7 +1058,7 @@ internal object ThemeIO {
                     .putBoolean("night_mode_follow_sys", true)
                     .putBoolean("use_system_color_theme", true)
                     .putString("custom_color", "indigo")
-                    .putString("home_layout_style", "circle")
+                    .putString("home_layout_style", "dashboard_ui")
                     .putString("stats_top_layout", "list")
                     .putString("color_generation_mode", "classic")
                     .putString("color_standard", "MD3_2021")
@@ -1132,6 +1132,9 @@ internal object ThemeIO {
                         file.delete()
                     }
                 }
+
+                // 重置后恢复内置默认仪表盘卡片壁纸
+                BackgroundManager.provisionDefaultDashboardCardBg(context)
 
       
                 FontConfig.clearFont(context)
