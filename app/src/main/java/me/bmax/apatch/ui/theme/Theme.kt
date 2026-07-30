@@ -5,11 +5,16 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material.ripple.RippleAlpha
 import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.LocalRippleConfiguration
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RippleConfiguration
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -90,6 +95,16 @@ fun ColorScheme.toAmoled(): ColorScheme = copy(
 
 val refreshTheme = MutableLiveData(false)
 
+// Default dark ripple alpha (~10% pressed) is nearly invisible on near-black
+// surfaceContainer backgrounds, so boost it for clear press feedback at night
+private val DarkRippleAlpha = RippleAlpha(
+    draggedAlpha = 0.32f,
+    focusedAlpha = 0.24f,
+    hoveredAlpha = 0.16f,
+    pressedAlpha = 0.24f,
+)
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun APatchTheme(
     isSettingsScreen: Boolean = false,
@@ -312,8 +327,15 @@ fun APatchTheme(
         colorScheme = colorScheme,
         typography = typography,
         content = {
-            MonetColorsProvider.UpdateCss()
-            content()
+            val rippleConfiguration = if (darkTheme) {
+                RippleConfiguration(rippleAlpha = DarkRippleAlpha)
+            } else {
+                LocalRippleConfiguration.current
+            }
+            CompositionLocalProvider(LocalRippleConfiguration provides rippleConfiguration) {
+                MonetColorsProvider.UpdateCss()
+                content()
+            }
         }
     )
 }
