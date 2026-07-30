@@ -222,6 +222,7 @@ fun AppProfileScreen(
                                     text = appInfo.label,
                                     style = MaterialTheme.typography.titleLarge,
                                     fontWeight = FontWeight.SemiBold,
+                                    color = MaterialTheme.colorScheme.onSurface,
                                 )
                                 Spacer(Modifier.height(2.dp))
                                 Text(
@@ -331,6 +332,7 @@ private fun AuthorizationOption(
                 text = title,
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Medium,
+                color = MaterialTheme.colorScheme.onSurface,
             )
             Spacer(Modifier.height(2.dp))
             Text(
