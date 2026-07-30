@@ -187,6 +187,12 @@ private fun OfficialContent(
     viewModel: OnlineModuleViewModel,
     context: Context
 ) {
+    LaunchedEffect(Unit) {
+        if (viewModel.modules.isEmpty() && !viewModel.isRefreshing) {
+            viewModel.fetchModules()
+        }
+    }
+
     Box(modifier = Modifier.fillMaxSize()) {
         if (viewModel.isRefreshing) {
             AppLoadingIndicator(
