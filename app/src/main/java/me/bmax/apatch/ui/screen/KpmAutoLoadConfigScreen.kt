@@ -23,8 +23,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
+import me.bmax.apatch.ui.component.ExpressiveCard
 import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenu
 import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenuItem
 import androidx.compose.material3.DropdownMenuItem
@@ -171,12 +170,7 @@ fun KpmAutoLoadConfigScreen(navigator: DestinationsNavigator) {
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             // 功能启用开关
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceContainer
-                )
-            ) {
+            ExpressiveCard(flat = true) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -210,13 +204,9 @@ fun KpmAutoLoadConfigScreen(navigator: DestinationsNavigator) {
             // 可视化模式或JSON模式
             if (isVisualMode) {
                 // 可视化模式
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surfaceContainer
-                    )
+                ExpressiveCard(
+                    modifier = Modifier.weight(1f),
+                    flat = true
                 ) {
                     Column(
                         modifier = Modifier
@@ -337,13 +327,9 @@ fun KpmAutoLoadConfigScreen(navigator: DestinationsNavigator) {
                 }
             } else {
                 // JSON配置编辑框
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surfaceContainer
-                    )
+                ExpressiveCard(
+                    modifier = Modifier.weight(1f),
+                    flat = true
                 ) {
                     Column(
                         modifier = Modifier

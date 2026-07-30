@@ -14,7 +14,6 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -32,8 +31,6 @@ import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.FileUpload
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -65,8 +62,8 @@ import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.PatchesDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import me.bmax.apatch.R
+import me.bmax.apatch.ui.component.SplicedColumnGroup
 import me.bmax.apatch.ui.component.rememberConfirmDialog
-import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.ui.viewmodel.PatchesViewModel
 import me.bmax.apatch.util.getFileNameFromUri
 import me.bmax.apatch.util.isABDevice
@@ -320,14 +317,6 @@ private fun SelectInstallMethod(
     var kpExpanded by remember { mutableStateOf(true) }
     var restoreExpanded by remember { mutableStateOf(false) }
 
-    val cardColors = CardDefaults.elevatedCardColors(
-        containerColor = if (BackgroundConfig.isCustomBackgroundEnabled) {
-            MaterialTheme.colorScheme.surfaceContainerLow.copy(alpha = BackgroundConfig.customBackgroundOpacity)
-        } else {
-            MaterialTheme.colorScheme.surfaceContainerLow
-        }
-    )
-
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -338,110 +327,103 @@ private fun SelectInstallMethod(
                 .fillMaxWidth()
                 .widthIn(max = 720.dp)
                 .verticalScroll(rememberScrollState())
-                .padding(horizontal = 16.dp, vertical = 8.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+                .padding(vertical = 8.dp)
         ) {
-            // KernelPatch Patching/Installing
-            ElevatedCard(
-                colors = cardColors,
-                elevation = CardDefaults.elevatedCardElevation(defaultElevation = 0.dp),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                ListItem(
-                    colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                    leadingContent = {
-                        Icon(
-                            Icons.Filled.AutoFixHigh,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-                    },
-                    headlineContent = {
-                        Text(
-                            stringResource(R.string.kp_install_methods),
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                    },
-                    trailingContent = {
-                        Icon(
-                            imageVector = if (kpExpanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
-                            contentDescription = null
-                        )
-                    },
-                    modifier = Modifier.clickable { kpExpanded = !kpExpanded }
-                )
-
-                AnimatedVisibility(
-                    visible = kpExpanded,
-                    enter = fadeIn() + expandVertically(),
-                    exit = shrinkVertically() + fadeOut()
-                ) {
-                    Column(
-                        modifier = Modifier.padding(
-                            start = 12.dp,
-                            end = 12.dp,
-                            bottom = 12.dp
-                        )
-                    ) {
-                        kpOptions.forEach { option ->
-                            InstallMethodOption(
-                                option = option,
-                                selectedOption = selectedOption,
-                                onClick = onClick
+            SplicedColumnGroup {
+                // KernelPatch Patching/Installing
+                item(key = "kp_install") {
+                    ListItem(
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+                        leadingContent = {
+                            Icon(
+                                Icons.Filled.AutoFixHigh,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.primary
                             )
+                        },
+                        headlineContent = {
+                            Text(
+                                stringResource(R.string.kp_install_methods),
+                                style = MaterialTheme.typography.titleMedium
+                            )
+                        },
+                        trailingContent = {
+                            Icon(
+                                imageVector = if (kpExpanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
+                                contentDescription = null
+                            )
+                        },
+                        modifier = Modifier.clickable { kpExpanded = !kpExpanded }
+                    )
+
+                    AnimatedVisibility(
+                        visible = kpExpanded,
+                        enter = fadeIn() + expandVertically(),
+                        exit = shrinkVertically() + fadeOut()
+                    ) {
+                        Column(
+                            modifier = Modifier.padding(
+                                start = 12.dp,
+                                end = 12.dp,
+                                bottom = 12.dp
+                            )
+                        ) {
+                            kpOptions.forEach { option ->
+                                InstallMethodOption(
+                                    option = option,
+                                    selectedOption = selectedOption,
+                                    onClick = onClick
+                                )
+                            }
                         }
                     }
                 }
-            }
 
-            // Select a boot to restore to boot partition
-            ElevatedCard(
-                colors = cardColors,
-                elevation = CardDefaults.elevatedCardElevation(defaultElevation = 0.dp),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                ListItem(
-                    colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                    leadingContent = {
-                        Icon(
-                            Icons.Filled.FileUpload,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-                    },
-                    headlineContent = {
-                        Text(
-                            stringResource(R.string.restore_boot_methods),
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                    },
-                    trailingContent = {
-                        Icon(
-                            imageVector = if (restoreExpanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
-                            contentDescription = null
-                        )
-                    },
-                    modifier = Modifier.clickable { restoreExpanded = !restoreExpanded }
-                )
-
-                AnimatedVisibility(
-                    visible = restoreExpanded,
-                    enter = fadeIn() + expandVertically(),
-                    exit = shrinkVertically() + fadeOut()
-                ) {
-                    Column(
-                        modifier = Modifier.padding(
-                            start = 12.dp,
-                            end = 12.dp,
-                            bottom = 12.dp
-                        )
-                    ) {
-                        restoreOptions.forEach { option ->
-                            InstallMethodOption(
-                                option = option,
-                                selectedOption = selectedOption,
-                                onClick = onClick
+                // Select a boot to restore to boot partition
+                item(key = "restore") {
+                    ListItem(
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+                        leadingContent = {
+                            Icon(
+                                Icons.Filled.FileUpload,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.primary
                             )
+                        },
+                        headlineContent = {
+                            Text(
+                                stringResource(R.string.restore_boot_methods),
+                                style = MaterialTheme.typography.titleMedium
+                            )
+                        },
+                        trailingContent = {
+                            Icon(
+                                imageVector = if (restoreExpanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
+                                contentDescription = null
+                            )
+                        },
+                        modifier = Modifier.clickable { restoreExpanded = !restoreExpanded }
+                    )
+
+                    AnimatedVisibility(
+                        visible = restoreExpanded,
+                        enter = fadeIn() + expandVertically(),
+                        exit = shrinkVertically() + fadeOut()
+                    ) {
+                        Column(
+                            modifier = Modifier.padding(
+                                start = 12.dp,
+                                end = 12.dp,
+                                bottom = 12.dp
+                            )
+                        ) {
+                            restoreOptions.forEach { option ->
+                                InstallMethodOption(
+                                    option = option,
+                                    selectedOption = selectedOption,
+                                    onClick = onClick
+                                )
+                            }
                         }
                     }
                 }
