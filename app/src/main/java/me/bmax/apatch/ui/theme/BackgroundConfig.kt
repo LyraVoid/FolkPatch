@@ -76,9 +76,9 @@ object BackgroundConfig {
         private set
     var isFolkBannerEnabled: Boolean by mutableStateOf(true)
         private set
-    var isBannerCustomOpacityEnabled: Boolean by mutableStateOf(false)
+    var isBannerCustomOpacityEnabled: Boolean by mutableStateOf(true)
         private set
-    var bannerCustomOpacity: Float by mutableStateOf(0.5f)
+    var bannerCustomOpacity: Float by mutableStateOf(1.0f)
         private set
 
     // Banner API Mode Settings
@@ -166,7 +166,7 @@ object BackgroundConfig {
         private set
 
     // NavBar Glass Effect (Floating mode only)
-    var isNavBarGlassEnabled: Boolean by mutableStateOf(true)
+    var isNavBarGlassEnabled: Boolean by mutableStateOf(false)
         private set
     var navBarGlassBlurStrength: Float by mutableStateOf(0.7f)
         private set
@@ -781,8 +781,8 @@ object BackgroundConfig {
 
         val bannerEnabled = prefs.getBoolean(KEY_BANNER_ENABLED, true)
         val folkBannerEnabled = prefs.getBoolean(KEY_FOLK_BANNER_ENABLED, true)
-        val bannerCustomOpacityEnabled = prefs.getBoolean(KEY_BANNER_CUSTOM_OPACITY_ENABLED, false)
-        val bannerCustomOpacity = prefs.getFloat(KEY_BANNER_CUSTOM_OPACITY, 0.5f)
+        val bannerCustomOpacityEnabled = prefs.getBoolean(KEY_BANNER_CUSTOM_OPACITY_ENABLED, true)
+        val bannerCustomOpacity = prefs.getFloat(KEY_BANNER_CUSTOM_OPACITY, 1.0f)
 
         val bannerApiModeEnabled = prefs.getBoolean(KEY_BANNER_API_MODE_ENABLED, false)
         val bannerApiSourceValue = prefs.getString(KEY_BANNER_API_SOURCE, "") ?: ""
@@ -958,8 +958,8 @@ object BackgroundConfig {
 
         isBannerEnabled = true
         isFolkBannerEnabled = true
-        isBannerCustomOpacityEnabled = false
-        bannerCustomOpacity = 0.5f
+        isBannerCustomOpacityEnabled = true
+        bannerCustomOpacity = 1.0f
 
         isBannerApiModeEnabled = false
         bannerApiSource = ""
@@ -1003,7 +1003,7 @@ object BackgroundConfig {
         dashboardCardBgDayOpacity = 1f
         dashboardCardBgNightOpacity = 1f
 
-        isNavBarGlassEnabled = true
+        isNavBarGlassEnabled = false
         navBarGlassBlurStrength = 0.7f
         navBarGlassTransparency = 0.3f
         navBarGlassHighlightStrength = 0.5f
