@@ -571,7 +571,7 @@ private fun HeroStatusCard(
                     )
                     Spacer(Modifier.height(4.dp))
                     Text(
-                        text = if (isUnknown) stringResource(R.string.super_key) else stringResource(R.string.home_click_to_install),
+                        text = stringResource(R.string.home_click_to_install),
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }
