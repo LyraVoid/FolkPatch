@@ -156,6 +156,16 @@ class ThemeStoreViewModel(private val context: Context) : ViewModel() {
                     val list = ArrayList<RemoteTheme>()
                     for (i in 0 until jsonArray.length()) {
                         val obj = jsonArray.getJSONObject(i)
+                        val downloadUrl = obj.optString("download_url")
+                        val previewUrl = obj.optString("preview_url")
+
+                        // 安全校验：跳过下载URL无效的条目
+                        if (downloadUrl.isBlank() ||
+                            (!downloadUrl.startsWith("https://") && !downloadUrl.startsWith("http://"))) {
+                            Log.w(TAG, "Skipping theme with unsafe download_url: $downloadUrl")
+                            continue
+                        }
+
                         list.add(
                             RemoteTheme(
                                 id = obj.optString("id"),
@@ -163,8 +173,8 @@ class ThemeStoreViewModel(private val context: Context) : ViewModel() {
                                 author = obj.optString("author"),
                                 description = obj.optString("description"),
                                 version = obj.optString("version"),
-                                previewUrl = obj.optString("preview_url"),
-                                downloadUrl = obj.optString("download_url"),
+                                previewUrl = previewUrl,
+                                downloadUrl = downloadUrl,
                                 type = obj.optString("type", "phone"),
                                 source = obj.optString("source", "third_party")
                             )

@@ -78,6 +78,15 @@ class OnlineModuleViewModel : ViewModel() {
                     val list = ArrayList<OnlineModule>()
                     for (i in 0 until jsonArray.length()) {
                         val obj = jsonArray.getJSONObject(i)
+                        val moduleUrl = obj.optString("url")
+
+                        // 安全校验：跳过URL无效的模块
+                        if (moduleUrl.isBlank() ||
+                            (!moduleUrl.startsWith("https://") && !moduleUrl.startsWith("http://"))) {
+                            Log.w(TAG, "Skipping module with unsafe url: $moduleUrl")
+                            continue
+                        }
+
                         val descZh = obj.optString("description")
                         val descEn = obj.optString("description_en")
                         val finalDesc = if (lang == "zh") {
@@ -90,7 +99,7 @@ class OnlineModuleViewModel : ViewModel() {
                             OnlineModule(
                                 name = obj.optString("name"),
                                 version = obj.optString("version"),
-                                url = obj.optString("url"),
+                                url = moduleUrl,
                                 description = finalDesc
                             )
                         )

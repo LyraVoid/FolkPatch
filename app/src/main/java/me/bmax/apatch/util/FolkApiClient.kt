@@ -38,6 +38,12 @@ object FolkApiClient {
         maxRetries: Int = DEFAULT_MAX_RETRIES,
         forceRefresh: Boolean = false
     ): Result<String> {
+        // 安全校验：拒绝非 HTTP/HTTPS 协议的 URL
+        if (!url.startsWith("https://") && !url.startsWith("http://")) {
+            Log.e(TAG, "Rejected unsafe URL scheme: $url")
+            return Result.failure(IOException("Unsafe URL scheme"))
+        }
+
         if (!forceRefresh) {
             val cached = memoryCache[url]
             if (cached != null && System.currentTimeMillis() - cached.timestamp < ttlMs) {

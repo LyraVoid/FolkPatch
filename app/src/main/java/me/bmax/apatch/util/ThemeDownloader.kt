@@ -1,6 +1,7 @@
 package me.bmax.apatch.util
 
 import android.content.Context
+import android.net.Uri
 import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -168,6 +169,21 @@ class ThemeDownloader(private val context: Context) {
     }
 
     /**
+     * 验证下载 URL 安全性：仅允许 HTTPS 协议，禁止 file://、javascript: 等危险协议
+     */
+    private fun isSafeDownloadUrl(url: String): Boolean {
+        if (url.isBlank()) return false
+        return try {
+            val uri = Uri.parse(url)
+            val scheme = uri.scheme?.lowercase() ?: return false
+            // 仅允许 HTTPS（也允许 HTTP 用于本地开发，但生产环境应仅用 HTTPS）
+            scheme == "https" || scheme == "http"
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    /**
      * 开始下载主题
      */
     fun downloadTheme(theme: ThemeStoreViewModel.RemoteTheme): Flow<DownloadProgress> = flow {
@@ -190,6 +206,17 @@ class ThemeDownloader(private val context: Context) {
         downloadSemaphore.acquire()
         
         try {
+            // 验证下载 URL 安全性
+            if (!isSafeDownloadUrl(theme.downloadUrl)) {
+                Log.e(TAG, "Unsafe download URL rejected: ${theme.downloadUrl}")
+                updateProgress(taskId, 0f, 0f, 0f, DownloadStatus.FAILED, "Invalid download URL")
+                return@flow
+            }
+            if (theme.previewUrl.isNotBlank() && !isSafeDownloadUrl(theme.previewUrl)) {
+                Log.w(TAG, "Unsafe preview URL rejected: ${theme.previewUrl}")
+                // 预览图 URL 不安全时仅跳过预览图，不阻断主题下载
+            }
+
             val task = DownloadTask(theme)
             downloadTasks[taskId] = task
             

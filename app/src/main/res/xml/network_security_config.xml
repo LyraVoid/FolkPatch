@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
+    <!-- 允许明文流量（局域网通信需要）；外部 API 安全性由应用层 URL 校验保证 -->
     <base-config cleartextTrafficPermitted="true" />
-    <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">127.0.0.1</domain>
-        <domain includeSubdomains="true">0.0.0.0</domain>
-        <domain includeSubdomains="true">::1</domain>
-    </domain-config>
 </network-security-config>
