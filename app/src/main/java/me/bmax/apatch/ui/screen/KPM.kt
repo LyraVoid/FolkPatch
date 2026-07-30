@@ -164,10 +164,7 @@ import me.bmax.apatch.util.kpmBannerStorage
 import me.bmax.apatch.util.SafeUriResolver
 import me.bmax.apatch.util.getFileNameFromUri
 import me.bmax.apatch.util.CustomModuleInfo
-import me.bmax.apatch.util.readCustomModuleInfo
-import me.bmax.apatch.util.writeCustomModuleInfo
-import me.bmax.apatch.util.clearCustomModuleInfo
-import me.bmax.apatch.util.pruneCustomModuleInfo
+import me.bmax.apatch.util.kpmCustomModuleInfoStorage
 import me.bmax.apatch.ui.component.BackgroundOptionsDialog
 import me.bmax.apatch.ui.component.ModuleInfoData
 import kotlinx.coroutines.CoroutineScope
@@ -254,10 +251,10 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
         }
     }
 
-    LaunchedEffect(filteredModuleList) {
-        if (filteredModuleList.isNotEmpty()) {
+    LaunchedEffect(viewModel.moduleList) {
+        if (viewModel.moduleList.isNotEmpty()) {
             withContext(Dispatchers.IO) {
-                pruneCustomModuleInfo(context, filteredModuleList.map { it.name }.toSet())
+                kpmCustomModuleInfoStorage.prune(viewModel.moduleList.map { it.name }.toSet())
             }
         }
     }
@@ -1298,7 +1295,7 @@ private fun KPModuleItem(
 
     val customInfo by produceState(initialValue = null as CustomModuleInfo?, key1 = module.name, key2 = customInfoReloadKey) {
         value = withContext(Dispatchers.IO) {
-            readCustomModuleInfo(context, module.name)
+            kpmCustomModuleInfoStorage.read(module.name)
         }
     }
 
@@ -1539,7 +1536,7 @@ private fun KPModuleItem(
     LaunchedEffect(showFolkBannerDialog) {
         if (showFolkBannerDialog) {
             val info = withContext(Dispatchers.IO) {
-                readCustomModuleInfo(context, module.name)
+                kpmCustomModuleInfoStorage.read(module.name)
             }
             customName = info?.name?.takeIf { it.isNotBlank() } ?: module.name
             customVersion = info?.version?.takeIf { it.isNotBlank() } ?: module.version
@@ -1603,7 +1600,7 @@ private fun KPModuleItem(
         onSaveModuleInfo = { info ->
             scope.launch {
                 withContext(Dispatchers.IO) {
-                    writeCustomModuleInfo(context, module.name, CustomModuleInfo(
+                    kpmCustomModuleInfoStorage.write(module.name, CustomModuleInfo(
                         name = info.name.takeIf { it.isNotBlank() },
                         version = info.version.takeIf { it.isNotBlank() },
                         author = info.author.takeIf { it.isNotBlank() },
@@ -1616,7 +1613,7 @@ private fun KPModuleItem(
         onResetModuleInfo = {
             scope.launch {
                 withContext(Dispatchers.IO) {
-                    clearCustomModuleInfo(context, module.name)
+                    kpmCustomModuleInfoStorage.clear(module.name)
                 }
                 showToast(context, customInfoResetMsg.format(module.name))
             }

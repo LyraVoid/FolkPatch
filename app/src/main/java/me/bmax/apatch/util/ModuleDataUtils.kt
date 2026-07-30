@@ -13,7 +13,8 @@ import java.util.Properties
 const val FOLK_BANNER_FILE_NAME = "FolkBanner"
 private const val FOLK_BANNER_DIR_NAME = "folk_banners"
 private const val KPM_BANNER_DIR_NAME = "kpm_banners"
-private const val CUSTOM_MODULE_INFO_DIR_NAME = "custom_module_info"
+private const val APM_CUSTOM_MODULE_INFO_DIR_NAME = "apm_custom_module_info"
+private const val KPM_CUSTOM_MODULE_INFO_DIR_NAME = "kpm_custom_module_info"
 
 // ==================== Banner Storage ====================
 
@@ -109,46 +110,61 @@ data class CustomModuleInfo(
     }
 }
 
-private fun getCustomModuleInfoFile(context: Context, moduleId: String): File {
-    val dir = File(context.filesDir, CUSTOM_MODULE_INFO_DIR_NAME)
+private fun getCustomModuleInfoFile(context: Context, dirName: String, moduleId: String): File {
+    val dir = File(context.filesDir, dirName)
     if (!dir.exists()) {
         dir.mkdirs()
     }
     return File(dir, sanitizeModuleKey(moduleId) + ".json")
 }
 
-fun readCustomModuleInfo(context: Context, moduleId: String): CustomModuleInfo? {
-    return runCatching {
-        val file = getCustomModuleInfoFile(context, moduleId)
-        if (file.exists()) {
-            CustomModuleInfo.fromJson(file.readText())
-        } else null
-    }.getOrNull()
-}
+/**
+ * 自定义模块信息存储，APM 与 KPM 各自使用独立目录，
+ * 避免 prune 时互相清除对方的自定义信息。
+ */
+class CustomModuleInfoStorage(private val context: Context, private val dirName: String) {
 
-fun writeCustomModuleInfo(context: Context, moduleId: String, info: CustomModuleInfo) {
-    runCatching {
-        val file = getCustomModuleInfoFile(context, moduleId)
-        file.writeText(info.toJson())
+    fun read(moduleId: String): CustomModuleInfo? {
+        return runCatching {
+            val file = getCustomModuleInfoFile(context, dirName, moduleId)
+            if (file.exists()) {
+                CustomModuleInfo.fromJson(file.readText())
+            } else null
+        }.getOrNull()
     }
-}
 
-fun clearCustomModuleInfo(context: Context, moduleId: String) {
-    runCatching {
-        val file = getCustomModuleInfoFile(context, moduleId)
-        if (file.exists()) file.delete()
+    fun write(moduleId: String, info: CustomModuleInfo) {
+        runCatching {
+            val file = getCustomModuleInfoFile(context, dirName, moduleId)
+            file.writeText(info.toJson())
+        }
     }
-}
 
-fun pruneCustomModuleInfo(context: Context, validModuleIds: Set<String>) {
-    runCatching {
-        val dir = File(context.filesDir, CUSTOM_MODULE_INFO_DIR_NAME)
-        if (!dir.exists()) return@runCatching
-        val validFiles = validModuleIds.map { sanitizeModuleKey(it) + ".json" }.toSet()
-        dir.listFiles()?.forEach { file ->
-            if (file.isFile && file.name !in validFiles) {
-                file.delete()
+    fun clear(moduleId: String) {
+        runCatching {
+            val file = getCustomModuleInfoFile(context, dirName, moduleId)
+            if (file.exists()) file.delete()
+        }
+    }
+
+    fun prune(validModuleIds: Set<String>) {
+        runCatching {
+            val dir = File(context.filesDir, dirName)
+            if (!dir.exists()) return@runCatching
+            val validFiles = validModuleIds.map { sanitizeModuleKey(it) + ".json" }.toSet()
+            dir.listFiles()?.forEach { file ->
+                if (file.isFile && file.name !in validFiles) {
+                    file.delete()
+                }
             }
         }
     }
+}
+
+val apmCustomModuleInfoStorage by lazy {
+    CustomModuleInfoStorage(apApp.applicationContext, APM_CUSTOM_MODULE_INFO_DIR_NAME)
+}
+
+val kpmCustomModuleInfoStorage by lazy {
+    CustomModuleInfoStorage(apApp.applicationContext, KPM_CUSTOM_MODULE_INFO_DIR_NAME)
 }

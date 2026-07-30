@@ -190,10 +190,7 @@ import me.bmax.apatch.util.resolveModuleDir
 import me.bmax.apatch.util.readModulePropBanner
 import me.bmax.apatch.util.clearLegacyFolkBanner
 import me.bmax.apatch.util.CustomModuleInfo
-import me.bmax.apatch.util.readCustomModuleInfo
-import me.bmax.apatch.util.writeCustomModuleInfo
-import me.bmax.apatch.util.clearCustomModuleInfo
-import me.bmax.apatch.util.pruneCustomModuleInfo
+import me.bmax.apatch.util.apmCustomModuleInfoStorage
 import me.bmax.apatch.util.sanitizeModuleKey
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.ui.theme.bannerFadeColor
@@ -323,10 +320,10 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
         }
     }
 
-    LaunchedEffect(filteredModuleList) {
-        if (filteredModuleList.isNotEmpty()) {
+    LaunchedEffect(viewModel.moduleList) {
+        if (viewModel.moduleList.isNotEmpty()) {
             withContext(Dispatchers.IO) {
-                pruneCustomModuleInfo(context, filteredModuleList.map { it.id }.toSet())
+                apmCustomModuleInfoStorage.prune(viewModel.moduleList.map { it.id }.toSet())
             }
         }
     }
@@ -1490,7 +1487,7 @@ private fun ModuleItem(
     
     val customInfo by produceState(initialValue = null as CustomModuleInfo?, key1 = module.id, key2 = customInfoReloadKey) {
         value = withContext(Dispatchers.IO) {
-            readCustomModuleInfo(context, module.id)
+            apmCustomModuleInfoStorage.read(module.id)
         }
     }
 
@@ -1970,7 +1967,7 @@ private fun ModuleItem(
     LaunchedEffect(showFolkBannerDialog) {
         if (showFolkBannerDialog) {
             val info = withContext(Dispatchers.IO) {
-                readCustomModuleInfo(context, module.id)
+                apmCustomModuleInfoStorage.read(module.id)
             }
             customName = info?.name?.takeIf { it.isNotBlank() } ?: module.name
             customVersion = info?.version?.takeIf { it.isNotBlank() } ?: module.version
@@ -2042,7 +2039,7 @@ private fun ModuleItem(
         onSaveModuleInfo = { info ->
             scope.launch {
                 withContext(Dispatchers.IO) {
-                    writeCustomModuleInfo(context, module.id, CustomModuleInfo(
+                    apmCustomModuleInfoStorage.write(module.id, CustomModuleInfo(
                         name = info.name.takeIf { it.isNotBlank() },
                         version = info.version.takeIf { it.isNotBlank() },
                         author = info.author.takeIf { it.isNotBlank() },
@@ -2057,7 +2054,7 @@ private fun ModuleItem(
         onResetModuleInfo = {
             scope.launch {
                 withContext(Dispatchers.IO) {
-                    clearCustomModuleInfo(context, module.id)
+                    apmCustomModuleInfoStorage.clear(module.id)
                 }
                 snackBarHost.showSnackbar(
                     customInfoResetMsg.format(module.name)
