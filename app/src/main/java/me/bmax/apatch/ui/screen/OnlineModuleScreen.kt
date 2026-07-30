@@ -1,41 +1,43 @@
 package me.bmax.apatch.ui.screen
 
 import android.content.Context
-import me.bmax.apatch.util.ui.showToast
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
-import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.foundation.lazy.staggeredgrid.items
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Download
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.filled.CloudOff
+import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.generated.destinations.InstallScreenDestination
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.AppLoadingIndicator
+import me.bmax.apatch.ui.component.OnlineModuleCard
+import me.bmax.apatch.ui.component.SearchAppBar
 import me.bmax.apatch.ui.viewmodel.OnlineModuleViewModel
-import me.bmax.apatch.util.download
 import me.bmax.apatch.util.DownloadListener
+import me.bmax.apatch.util.download
+import me.bmax.apatch.util.ui.showToast
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Destination<RootGraph>
@@ -43,7 +45,6 @@ import me.bmax.apatch.util.DownloadListener
 fun OnlineModuleScreen(navigator: DestinationsNavigator) {
     val viewModel = viewModel<OnlineModuleViewModel>()
     val context = LocalContext.current
-    var isSearchActive by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         if (viewModel.modules.isEmpty()) {
@@ -53,52 +54,12 @@ fun OnlineModuleScreen(navigator: DestinationsNavigator) {
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    if (isSearchActive) {
-                        TextField(
-                            value = viewModel.searchQuery,
-                            onValueChange = { viewModel.onSearchQueryChange(it) },
-                            placeholder = { Text(stringResource(R.string.search_modules)) },
-                            singleLine = true,
-                            colors = TextFieldDefaults.colors(
-                                focusedContainerColor =  Color.Transparent,
-                                unfocusedContainerColor = Color.Transparent,
-                                disabledContainerColor = Color.Transparent,
-                                focusedIndicatorColor = Color.Transparent,
-                                unfocusedIndicatorColor = Color.Transparent,
-                            ),
-                            modifier = Modifier.fillMaxWidth()
-                        )
-                    } else {
-                        Text(stringResource(R.string.online_module_title))
-                    }
-                },
-                navigationIcon = {
-                    IconButton(onClick = {
-                        if (isSearchActive) {
-                            isSearchActive = false
-                            viewModel.onSearchQueryChange("")
-                        } else {
-                            navigator.popBackStack()
-                        }
-                    }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
-                    }
-                },
-                actions = {
-                    if (isSearchActive) {
-                        if (viewModel.searchQuery.isNotEmpty()) {
-                            IconButton(onClick = { viewModel.onSearchQueryChange("") }) {
-                                Icon(Icons.Filled.Close, contentDescription = "Clear")
-                            }
-                        }
-                    } else {
-                        IconButton(onClick = { isSearchActive = true }) {
-                            Icon(Icons.Filled.Search, contentDescription = "Search")
-                        }
-                    }
-                }
+            SearchAppBar(
+                title = { Text(stringResource(R.string.online_module_title)) },
+                searchText = viewModel.searchQuery,
+                onSearchTextChange = viewModel::onSearchQueryChange,
+                onClearClick = { viewModel.onSearchQueryChange("") },
+                onBackClick = { navigator.popBackStack() },
             )
         }
     ) { innerPadding ->
@@ -126,30 +87,15 @@ fun OnlineModuleScreen(navigator: DestinationsNavigator) {
                     }
                 }
             } else {
-                val configuration = LocalConfiguration.current
-                val isWideScreen = configuration.screenWidthDp >= 600
-
-                if (isWideScreen) {
-                    LazyVerticalStaggeredGrid(
-                        modifier = Modifier.fillMaxSize(),
-                        columns = StaggeredGridCells.Fixed(2),
-                        verticalItemSpacing = 8.dp,
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        contentPadding = PaddingValues(16.dp)
-                    ) {
-                        items(viewModel.modules, key = { module -> module.name }) { module ->
-                            OnlineModuleItem(module, context)
-                        }
-                    }
-                } else {
-                    LazyColumn(
-                        modifier = Modifier.fillMaxSize(),
-                        contentPadding = PaddingValues(16.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        items(viewModel.modules, key = { it.name }) { module ->
-                            OnlineModuleItem(module, context)
-                        }
+                LazyVerticalGrid(
+                    columns = GridCells.Adaptive(minSize = 320.dp),
+                    modifier = Modifier.fillMaxSize(),
+                    contentPadding = PaddingValues(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                ) {
+                    items(viewModel.modules, key = { it.name }) { module ->
+                        OnlineModuleItem(module, context)
                     }
                 }
             }
@@ -166,59 +112,23 @@ fun OnlineModuleItem(module: OnlineModuleViewModel.OnlineModule, context: Contex
     val downloadStartText = stringResource(R.string.online_module_download_start, module.name)
     val downloadNotificationText = stringResource(R.string.online_module_download_notification, module.name)
 
-    Surface(
-        modifier = Modifier.fillMaxWidth().fillMaxHeight(),
-        color = MaterialTheme.colorScheme.surface,
-        tonalElevation = 1.dp,
-        shape = RoundedCornerShape(20.dp)
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Column(
-                modifier = Modifier.weight(1f)
-            ) {
-                Text(
-                    text = module.name, 
-                    style = MaterialTheme.typography.titleMedium, 
-                    fontWeight = FontWeight.Bold
-                )
-                Text(
-                    text = "Version: ${module.version}", 
-                    style = MaterialTheme.typography.bodyMedium
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = module.description, 
-                    style = MaterialTheme.typography.bodySmall
-                )
-            }
-            
-            IconButton(
-                onClick = {
-                    // Show toast message with download info
-                    showToast(context, downloadNotificationText)
-                    
-                    // Start the download
-                    download(
-                        context = context,
-                        url = module.url,
-                        fileName = "${module.name}-${module.version}.zip",
-                        description = downloadStartText,
-                        onDownloading = {},
-                        onDownloaded = {}
-                    )
-                }
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Download,
-                    contentDescription = "Download"
-                )
-            }
-        }
-    }
+    OnlineModuleCard(
+        name = module.name,
+        version = module.version,
+        description = module.description,
+        typeLabel = "APM",
+        versionLabel = stringResource(R.string.apm_version),
+        downloadContentDescription = downloadStartText,
+        onDownload = {
+            showToast(context, downloadNotificationText)
+            download(
+                context = context,
+                url = module.url,
+                fileName = "${module.name}-${module.version}.zip",
+                description = downloadStartText,
+                onDownloading = {},
+                onDownloaded = {},
+            )
+        },
+    )
 }
