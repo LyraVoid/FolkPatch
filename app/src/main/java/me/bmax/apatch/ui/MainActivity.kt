@@ -9,8 +9,11 @@ import android.os.Handler
 import android.os.Looper
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.compose.BackHandler
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
+import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
@@ -176,7 +179,6 @@ import me.bmax.apatch.util.ui.isRealTimeBlurAvailable
 import me.bmax.apatch.util.ui.showToast
 
 class MainActivity : AppCompatActivity() {
-
     private var isLoading = true
     private var installUri: Uri? = null
     private var installUris: ArrayList<Uri>? = null
@@ -684,6 +686,15 @@ class MainActivity : AppCompatActivity() {
                     autoHideKey++
                 }
 
+                // Reset bar visibility together with scroll state so the bar
+                // shows immediately regardless of the previous scroll direction
+                fun resetBottomBarFully() {
+                    resetBottomBarAutoHide()
+                    isScrollingDown.value = false
+                    scrollOffset.value = 0f
+                    previousScrollOffset.value = 0f
+                }
+
                 // Remember the last valid navbar selection (persists across navbar hide/show)
                 val lastValidNavbarSelection = remember { mutableStateOf(0) }
 
@@ -694,6 +705,14 @@ class MainActivity : AppCompatActivity() {
                 // Show bottom bar logic: hide when scrolling down in floating mode,
                 // plus 3s auto-hide after last interaction.
                 val isFloatingMode = navMode == "floating"
+
+                // Force the floating bar back to a fully visible state whenever
+                // the app returns to the foreground
+                LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
+                    if (isFloatingMode && (floatingAutoHide || floatingSwipeHide)) {
+                        resetBottomBarFully()
+                    }
+                }
 
                 LaunchedEffect(isFloatingMode, autoHideKey, floatingAutoHide) {
                     if (isFloatingMode && floatingAutoHide && isBottomBarVisible) {
@@ -713,6 +732,20 @@ class MainActivity : AppCompatActivity() {
                     else isBottomBarVisible && !isScrollingDown.value
                 } else {
                     true
+                }
+
+                // Returning from a secondary page to a main tab: show the bar
+                // immediately with scroll state reset
+                val previousRoute = remember { mutableStateOf<String?>(null) }
+                LaunchedEffect(currentRoute, isFloatingMode) {
+                    if (isFloatingMode) {
+                        val isCurrentTab = currentRoute in bottomBarRoutes
+                        val wasPreviousTab = previousRoute.value in bottomBarRoutes
+                        if (isCurrentTab && !wasPreviousTab && previousRoute.value != null) {
+                            resetBottomBarFully()
+                        }
+                        previousRoute.value = currentRoute
+                    }
                 }
 
                 // 使用 BoxWithConstraints 检测屏幕宽度
@@ -806,6 +839,18 @@ class MainActivity : AppCompatActivity() {
 
                         if (!useNavigationRail) {
                             if (isFloatingMode) {
+                                // Back press on a non-home tab returns to the home tab
+                                // with the floating bar reset; back on the home tab keeps
+                                // the system default (predictive back) behavior
+                                val homeRoute = bottomBarRoutes.first()
+                                BackHandler(enabled = currentRoute in bottomBarRoutes && currentRoute != homeRoute) {
+                                    resetBottomBarFully()
+                                    navController.navigate(homeRoute) {
+                                        popUpTo(NavGraphs.root.route) { saveState = true }
+                                        launchSingleTop = true
+                                        restoreState = true
+                                    }
+                                }
                                 AnimatedVisibility(
                                     visible = showBottomBar,
                                     modifier = Modifier.align(Alignment.BottomCenter),
