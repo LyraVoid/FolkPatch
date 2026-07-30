@@ -79,106 +79,45 @@ fun ScriptExecutionLogScreen(
         withContext(Dispatchers.IO) {
             var p: Process? = null
             try {
-                // Try to start root shell with multiple strategies
-                
-                if (p == null) {
+                val kpatchPath = apApp.applicationInfo.nativeLibraryDir + File.separator + "libkpatch.so"
+                val commands = listOf(
+                    listOf(
+                        kpatchPath,
+                        APApplication.superKey,
+                        "su",
+                        "-Z",
+                        APApplication.MAGISK_SCONTEXT
+                    ),
+                    listOf("su")
+                )
+                var lastError: Exception? = null
+                for (command in commands) {
                     try {
-                        val pb = ProcessBuilder(
-                            APApplication.SUPERCMD,
-                            APApplication.superKey,
-                            "-Z",
-                            APApplication.MAGISK_SCONTEXT
-                        )
-                        pb.redirectErrorStream(true)
-                        pb.environment()?.apply {
-                            set("PATH", System.getenv("PATH") ?: "" + ":/system_ext/bin:/vendor/bin:${APApplication.APATCH_FOLDER}bin")
-                            set("BUSYBOX", "${APApplication.APATCH_FOLDER}bin/busybox")
+                        val pb = ProcessBuilder(command).redirectErrorStream(true)
+                        pb.environment().apply {
+                            val basePath = System.getenv("PATH").orEmpty()
+                            this["PATH"] = "$basePath:/system_ext/bin:/vendor/bin:${APApplication.APATCH_FOLDER}bin"
+                            this["BUSYBOX"] = "${APApplication.APATCH_FOLDER}bin/busybox"
                         }
                         p = pb.start()
+                        break
                     } catch (e: Exception) {
-                        // Continue
+                        lastError = e
                     }
                 }
-
                 if (p == null) {
-                    try {
-                        val pb = ProcessBuilder(
-                            APApplication.SUPERCMD,
-                            APApplication.superKey,
-                            "su",
-                            "-Z",
-                            APApplication.MAGISK_SCONTEXT
-                        )
-                        pb.redirectErrorStream(true)
-                        pb.environment()?.apply {
-                            set("PATH", System.getenv("PATH") ?: "" + ":/system_ext/bin:/vendor/bin:${APApplication.APATCH_FOLDER}bin")
-                            set("BUSYBOX", "${APApplication.APATCH_FOLDER}bin/busybox")
-                        }
-                        p = pb.start()
-                    } catch (e: Exception) {
-                        // Continue
-                    }
+                    throw lastError ?: IllegalStateException("Unable to start root shell")
                 }
 
-              
-                if (p == null) {
-                    try {
-                        val pb = ProcessBuilder("su")
-                        pb.redirectErrorStream(true)
-                        pb.environment()?.apply {
-                            set("PATH", System.getenv("PATH") ?: "" + ":/system_ext/bin:/vendor/bin:${APApplication.APATCH_FOLDER}bin")
-                            set("BUSYBOX", "${APApplication.APATCH_FOLDER}bin/busybox")
-                        }
-                        p = pb.start()
-                    } catch (e: Exception) {
-                        // Continue
-                    }
-                }
-
-              
-                if (p == null) {
-                    try {
-                        val kpatchPath = apApp.applicationInfo.nativeLibraryDir + File.separator + "libkpatch.so"
-                        val pb = ProcessBuilder(
-                            kpatchPath,
-                            APApplication.superKey,
-                            "su",
-                            "-Z",
-                            APApplication.MAGISK_SCONTEXT
-                        )
-                        pb.redirectErrorStream(true)
-                        val env = pb.environment()
-                        env?.set("PATH", System.getenv("PATH") ?: "" + ":/system_ext/bin:/vendor/bin:${APApplication.APATCH_FOLDER}bin")
-                        env?.set("BUSYBOX", "${APApplication.APATCH_FOLDER}bin/busybox")
-                        p = pb.start()
-                    } catch (e: Exception) {
-                        // Continue
-                    }
-                }
-
-               
-                if (p == null) {
-                    try {
-                        val pb = ProcessBuilder("su")
-                        pb.redirectErrorStream(true)
-                        val env = pb.environment()
-                        env?.set("PATH", System.getenv("PATH") ?: "" + ":/system_ext/bin:/vendor/bin:${APApplication.APATCH_FOLDER}bin")
-                        env?.set("BUSYBOX", "${APApplication.APATCH_FOLDER}bin/busybox")
-                        p = pb.start()
-                    } catch (e: Exception) {
-                        throw e // Rethrow if all failed
-                    }
-                }
-
-                process = p
-                
-                if (p != null) {
-                    val os = p!!.outputStream
+                val runningProcess = p
+                process = runningProcess
+                run {
+                    val os = runningProcess.outputStream
                     // Start the script
                     os.write("sh \"${scriptInfo.path}\"\n".toByteArray())
                     os.flush()
 
-                    val reader = p!!.inputStream.bufferedReader()
+                    val reader = runningProcess.inputStream.bufferedReader()
                     val buffer = CharArray(1024)
                     while (true) {
                         val count = reader.read(buffer)
@@ -203,7 +142,7 @@ fun ScriptExecutionLogScreen(
                             }
                         }
                     }
-                    p!!.waitFor()
+                    runningProcess.waitFor()
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
