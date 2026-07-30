@@ -514,32 +514,17 @@ private fun HeroStatusCard(
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .then(if (wallpaperEnabled) Modifier.pointerInput(Unit) {
-                    detectTapGestures(
-                        onTap = { navigator.navigate(InstallModeSelectScreenDestination) },
-                        onLongPress = { showBackgroundOptions = true },
-                    )
-                } else Modifier.clickable { navigator.navigate(InstallModeSelectScreenDestination) }),
+                .clickable { navigator.navigate(InstallModeSelectScreenDestination) },
             shape = RoundedCornerShape(20.dp),
             colors = CardDefaults.cardColors(
-                containerColor = if (hasWallpaper) Color.Transparent else finalContainerColor,
-                contentColor = if (hasWallpaper) Color.White else MaterialTheme.colorScheme.onErrorContainer
+                containerColor = finalContainerColor,
+                contentColor = MaterialTheme.colorScheme.onErrorContainer
             )
         ) {
-            Box {
-                if (hasWallpaper) {
-                    Image(
-                        painter = rememberAsyncImagePainter(wallpaperUri),
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier.matchParentSize().alpha(wallpaperOpacity),
-                    )
-                    Box(Modifier.matchParentSize().background(Color.Black.copy(alpha = wallpaperDim)))
-                }
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(24.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(24.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 when {
                     isUpdate -> Icon(
                         imageVector = Icons.Outlined.SystemUpdate,
@@ -574,7 +559,6 @@ private fun HeroStatusCard(
                         text = stringResource(R.string.home_click_to_install),
                         style = MaterialTheme.typography.bodyMedium
                     )
-                }
                 }
             }
         }
