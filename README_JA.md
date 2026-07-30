@@ -78,6 +78,7 @@ FolkPatch - インターフェースの最適化と拡張機能に重視した R
 - [KernelSU](https://github.com/tiann/KernelSU) - アプリ UI と Magisk ライクなモジュールサポート
 - [Sukisu-Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra) - 一部のインターフェースデザインを参照
 - [APatch](https://github.com/bmax121/APatch) - 上流ブランチ
+- [MMRL](https://github.com/MMRLApp/MMRL) - モジュールリポジトリのデータ形式参考およびデータソース
 
 ## 📄 ライセンス
 

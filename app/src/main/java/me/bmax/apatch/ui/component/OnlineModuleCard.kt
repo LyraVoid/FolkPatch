@@ -16,6 +16,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,6 +27,45 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun OnlineModuleCard(
+    name: String,
+    version: String,
+    description: String,
+    typeLabel: String,
+    versionLabel: String,
+    capabilityLabel: String? = null,
+    downloadContentDescription: String,
+    onDownload: () -> Unit,
+    onClick: (() -> Unit)? = null,
+) {
+    if (onClick != null) {
+        Surface(onClick = onClick) {
+            OnlineModuleCardContent(
+                name = name,
+                version = version,
+                description = description,
+                typeLabel = typeLabel,
+                versionLabel = versionLabel,
+                capabilityLabel = capabilityLabel,
+                downloadContentDescription = downloadContentDescription,
+                onDownload = onDownload,
+            )
+        }
+    } else {
+        OnlineModuleCardContent(
+            name = name,
+            version = version,
+            description = description,
+            typeLabel = typeLabel,
+            versionLabel = versionLabel,
+            capabilityLabel = capabilityLabel,
+            downloadContentDescription = downloadContentDescription,
+            onDownload = onDownload,
+        )
+    }
+}
+
+@Composable
+private fun OnlineModuleCardContent(
     name: String,
     version: String,
     description: String,

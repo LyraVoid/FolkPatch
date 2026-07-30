@@ -78,6 +78,7 @@ This project is based on the following open source projects:
 - [KernelSU](https://github.com/tiann/KernelSU) - App UI and Magisk-like module support
 - [Sukisu-Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra) - Referenced some interface designs
 - [APatch](https://github.com/bmax121/APatch) - Upstream branch
+- [MMRL](https://github.com/MMRLApp/MMRL) - Module repository data format reference and data source
 
 ## 📄 License
 

@@ -194,6 +194,7 @@
     <string name="kpm_control">控制</string>
     <string name="kpm_apm_empty">尚未安裝模組</string>
     <string name="kpm_custom_order">切換自訂模組順序</string>
+    <string name="kpm_load_failed">載入核心模組失敗</string>
     <string name="kpm_version">版本</string>
     <string name="kpm_license">授權</string>
     <string name="kpm_author">作者</string>
@@ -485,6 +486,47 @@ KernelPatch 需要修補 boot 映像檔。
     <string name="online_module_download_start">開始下載：%s</string>
     <string name="online_module_download_complete">下載完成：%s</string>
     <string name="online_module_download_notification">正在下載 %s。請查看通知列取得下載進度，下載檔案位於 Download 資料夾中。</string>
+
+    <!-- Online Module Source Strings -->
+    <string name="online_module_source_official">官方源</string>
+    <string name="online_module_source_cluster">倉庫集群</string>
+    <string name="online_module_source_custom">自定義倉庫</string>
+    <string name="online_module_source_title">模塊源</string>
+    <string name="online_module_repo_url_title">倉庫地址</string>
+    <string name="online_module_repo_url_hint">https://example.com/modules.json</string>
+    <string name="online_module_repo_settings">倉庫設定</string>
+
+    <!-- Repo Module Detail Strings -->
+    <string name="repo_module_detail_links">連結</string>
+    <string name="repo_module_detail_homepage">主頁</string>
+    <string name="repo_module_detail_source">源碼</string>
+    <string name="repo_module_detail_support">反饋</string>
+    <string name="repo_module_detail_versions">版本歷史</string>
+    <string name="repo_module_detail_download">下載安裝</string>
+    <string name="repo_module_detail_by_author">作者：%1$s</string>
+    <string name="online_module_repo_browse_title">瀏覽倉庫</string>
+    <string name="online_module_view_modules">查看模組</string>
+    <string name="online_module_select_repo_hint">選擇倉庫以瀏覽模組</string>
+    <string name="online_module_enter_url_hint">輸入倉庫網址</string>
+    <string name="online_module_invalid_url">請輸入有效的網址</string>
+    <string name="online_module_explore_repos">探索倉庫</string>
+    <string name="online_module_repo_count">%1$d 個倉庫</string>
+    <string name="online_module_module_count">%1$d+ 個模組</string>
+    <string name="online_module_select_repo">選擇倉庫</string>
+    <string name="online_module_enter_url_manually">手動輸入網址</string>
+    <string name="online_module_default_repo">預設倉庫</string>
+    <string name="online_module_repo_list_title">倉庫列表</string>
+    <string name="online_module_load_error">載入失敗，請重新整理後再試</string>
+    <string name="online_module_no_search_results">未找到相符的模組</string>
+    <string name="online_module_module_detail_download_count">下載次數：%1$s</string>
+    <string name="online_module_module_detail_last_update">最後更新：%1$s</string>
+    <string name="online_module_module_detail_version">版本：%1$s</string>
+    <string name="online_module_module_detail_size">大小：%1$s</string>
+    <string name="online_module_module_detail_author">作者：%1$s</string>
+    <string name="online_module_module_detail_description">描述：%1$s</string>
+    <string name="online_module_module_detail_suitable">適用於：%1$s</string>
+    <string name="online_module_module_detail_changelog">更新日誌：%1$s</string>
+    <string name="online_module_module_detail_instructions">使用說明：%1$s</string>
 
     <!-- Online KPM Strings -->
     <string name="online_kpm_title">線上核心模組</string>

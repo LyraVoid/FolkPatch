@@ -200,6 +200,7 @@
     <string name="kpm_control">Управление</string>
     <string name="kpm_apm_empty">Нет загруженных модулей</string>
     <string name="kpm_custom_order">Переключить пользовательский порядок модулей</string>
+    <string name="kpm_load_failed">Не удалось загрузить модули ядра</string>
     <string name="kpm_version">Версия</string>
     <string name="kpm_license">Лицензия</string>
     <string name="kpm_author">Автор</string>
@@ -490,6 +491,47 @@ KernelPatch требует образ boot для патча.
     <string name="online_module_download_start">Начать загрузку: %s</string>
     <string name="online_module_download_complete">Загрузка завершена: %s</string>
     <string name="online_module_download_notification">Загрузка %s. Проверьте панель уведомлений для отслеживания прогресса и папку Загрузки для завершённого файла.</string>
+
+    <!-- Online Module Source Strings -->
+    <string name="online_module_source_official">Официальный</string>
+    <string name="online_module_source_cluster">Кластер репозиториев</string>
+    <string name="online_module_source_custom">Пользовательский репозиторий</string>
+    <string name="online_module_source_title">Источник модулей</string>
+    <string name="online_module_repo_url_title">URL репозитория</string>
+    <string name="online_module_repo_url_hint">https://example.com/modules.json</string>
+    <string name="online_module_repo_settings">Настройки репозитория</string>
+
+    <!-- Repo Module Detail Strings -->
+    <string name="repo_module_detail_links">Ссылки</string>
+    <string name="repo_module_detail_homepage">Главная</string>
+    <string name="repo_module_detail_source">Исходный код</string>
+    <string name="repo_module_detail_support">Поддержка</string>
+    <string name="repo_module_detail_versions">История версий</string>
+    <string name="repo_module_detail_download">Скачать и установить</string>
+    <string name="repo_module_detail_by_author">автор: %1$s</string>
+    <string name="online_module_repo_browse_title">Обзор репозиториев</string>
+    <string name="online_module_view_modules">Просмотр модулей</string>
+    <string name="online_module_select_repo_hint">Выберите репозиторий для просмотра модулей</string>
+    <string name="online_module_enter_url_hint">Введите URL репозитория</string>
+    <string name="online_module_invalid_url">Пожалуйста, введите корректный URL</string>
+    <string name="online_module_explore_repos">Обзор репозиториев</string>
+    <string name="online_module_repo_count">%1$d репозиториев</string>
+    <string name="online_module_module_count">%1$d+ модулей</string>
+    <string name="online_module_select_repo">Выберите репозиторий</string>
+    <string name="online_module_enter_url_manually">Ввести URL вручную</string>
+    <string name="online_module_default_repo">Репозиторий по умолчанию</string>
+    <string name="online_module_repo_list_title">Список репозиториев</string>
+    <string name="online_module_load_error">Не удалось загрузить, попробуйте обновить</string>
+    <string name="online_module_no_search_results">Подходящие модули не найдены</string>
+    <string name="online_module_module_detail_download_count">Загрузок: %1$s</string>
+    <string name="online_module_module_detail_last_update">Последнее обновление: %1$s</string>
+    <string name="online_module_module_detail_version">Версия: %1$s</string>
+    <string name="online_module_module_detail_size">Размер: %1$s</string>
+    <string name="online_module_module_detail_author">Автор: %1$s</string>
+    <string name="online_module_module_detail_description">Описание: %1$s</string>
+    <string name="online_module_module_detail_suitable">Подходит для: %1$s</string>
+    <string name="online_module_module_detail_changelog">Список изменений: %1$s</string>
+    <string name="online_module_module_detail_instructions">Инструкция: %1$s</string>
 
     <!-- Online KPM Strings -->
     <string name="online_kpm_title">Онлайн модули ядра</string>

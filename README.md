@@ -78,6 +78,7 @@ FolkPatch - 专注界面优化与功能扩展的Root管理工具
 - [KernelSU](https://github.com/tiann/KernelSU) - 应用UI和类似Magisk的模块支持
 - [Sukisu-Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra) - 参考一些界面的设计
 - [APatch](https://github.com/bmax121/APatch) - 上游分支
+- [MMRL](https://github.com/MMRLApp/MMRL) - 模块仓库数据格式参考和数据源
 
 ## 📄 许可证
 

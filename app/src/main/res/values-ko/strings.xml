@@ -215,6 +215,7 @@
     <string name="kpm_control">제어</string>
     <string name="kpm_apm_empty">로드된 모듈 없음</string>
     <string name="kpm_custom_order">사용자 지정 모듈 순서 전환</string>
+    <string name="kpm_load_failed">커널 모듈 로드 실패</string>
     <string name="kpm_version">버전</string>
     <string name="kpm_license">라이선스</string>
     <string name="kpm_author">개발자</string>
@@ -477,6 +478,47 @@ KernelPatch는 boot 이미지를 패치해야 합니다.
     <string name="online_module_download_start">다운로드 시작: %s</string>
     <string name="online_module_download_complete">다운로드 완료: %s</string>
     <string name="online_module_download_notification">%s을(를) 다운로드하는 중입니다. 진행 상황은 알림 패널에서, 완료된 파일은 Download 폴더에서 확인하세요.</string>
+
+    <!-- Online Module Source Strings -->
+    <string name="online_module_source_official">공식 소스</string>
+    <string name="online_module_source_cluster">저장소 클러스터</string>
+    <string name="online_module_source_custom">사용자 정의 저장소</string>
+    <string name="online_module_source_title">모듈 소스</string>
+    <string name="online_module_repo_url_title">저장소 URL</string>
+    <string name="online_module_repo_url_hint">https://example.com/modules.json</string>
+    <string name="online_module_repo_settings">저장소 설정</string>
+
+    <!-- Repo Module Detail Strings -->
+    <string name="repo_module_detail_links">링크</string>
+    <string name="repo_module_detail_homepage">홈페이지</string>
+    <string name="repo_module_detail_source">소스 코드</string>
+    <string name="repo_module_detail_support">지원</string>
+    <string name="repo_module_detail_versions">버전 기록</string>
+    <string name="repo_module_detail_download">다운로드 및 설치</string>
+    <string name="repo_module_detail_by_author">작성자: %1$s</string>
+    <string name="online_module_repo_browse_title">저장소 찾아보기</string>
+    <string name="online_module_view_modules">모듈 보기</string>
+    <string name="online_module_select_repo_hint">저장소를 선택하여 모듈을 찾아보세요</string>
+    <string name="online_module_enter_url_hint">저장소 URL 입력</string>
+    <string name="online_module_invalid_url">유효한 URL을 입력해 주세요</string>
+    <string name="online_module_explore_repos">저장소 탐색</string>
+    <string name="online_module_repo_count">%1$d개 저장소</string>
+    <string name="online_module_module_count">%1$d+개 모듈</string>
+    <string name="online_module_select_repo">저장소 선택</string>
+    <string name="online_module_enter_url_manually">URL 직접 입력</string>
+    <string name="online_module_default_repo">기본 저장소</string>
+    <string name="online_module_repo_list_title">저장소 목록</string>
+    <string name="online_module_load_error">로드 실패, 새로고침 후 다시 시도해 주세요</string>
+    <string name="online_module_no_search_results">일치하는 모듈을 찾을 수 없습니다</string>
+    <string name="online_module_module_detail_download_count">다운로드 수: %1$s</string>
+    <string name="online_module_module_detail_last_update">마지막 업데이트: %1$s</string>
+    <string name="online_module_module_detail_version">버전: %1$s</string>
+    <string name="online_module_module_detail_size">크기: %1$s</string>
+    <string name="online_module_module_detail_author">작성자: %1$s</string>
+    <string name="online_module_module_detail_description">설명: %1$s</string>
+    <string name="online_module_module_detail_suitable">지원: %1$s</string>
+    <string name="online_module_module_detail_changelog">변경 사항: %1$s</string>
+    <string name="online_module_module_detail_instructions">사용 방법: %1$s</string>
 
     <!-- Online KPM Strings -->
     <string name="online_kpm_title">온라인 커널 모듈</string>

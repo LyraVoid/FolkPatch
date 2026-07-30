@@ -209,6 +209,7 @@
     <string name="kpm_control">控制喵！</string>
     <string name="kpm_apm_empty">没加载模块喵！</string>
     <string name="kpm_custom_order">切换自定义模块顺序喵</string>
+    <string name="kpm_load_failed">加载内核模块失败了喵</string>
     <string name="kpm_version">版本哒</string>
     <string name="kpm_license">许可哒</string>
     <string name="kpm_author">作者哒</string>
@@ -493,6 +494,43 @@ KernelPatch 需要修补 boot 镜像才能工作喵。
     <string name="online_module_download_start">开始下载喵：%s</string>
     <string name="online_module_download_complete">下载完成了喵：%s</string>
     <string name="online_module_download_notification">正在下 %s 喵！看通知栏进度，下完看下载文件夹哦喵</string>
+
+    <!-- Online Module Source Strings -->
+    <string name="online_module_source_official">Official</string>
+    <string name="online_module_source_cluster">Repository Cluster</string>
+    <string name="online_module_source_custom">Custom Repository</string>
+    <string name="online_module_source_title">Module Source</string>
+    <string name="online_module_repo_url_title">Repository URL</string>
+    <string name="online_module_repo_url_hint">https://example.com/modules.json</string>
+    <string name="online_module_repo_settings">Repository Settings</string>
+
+    <!-- Repo Module Detail Strings -->
+    <string name="repo_module_detail_links">Links</string>
+    <string name="repo_module_detail_homepage">Homepage</string>
+    <string name="repo_module_detail_source">Source Code</string>
+    <string name="repo_module_detail_support">Support</string>
+    <string name="repo_module_detail_versions">Version History</string>
+    <string name="repo_module_detail_download">Download &amp; Install</string>
+    <string name="repo_module_detail_by_author">by %1$s</string>
+    <string name="online_module_repo_browse_title">Browse Repositories</string>
+    <string name="online_module_view_modules">View Modules</string>
+    <string name="online_module_select_repo_hint">Select a repository to browse modules</string>
+    <string name="online_module_enter_url_hint">Enter repository URL</string>
+    <string name="online_module_invalid_url">Please enter a valid URL</string>
+    <string name="online_module_explore_repos">Explore Repositories</string>
+    <string name="online_module_repo_count">%1$d repositories</string>
+    <string name="online_module_module_count">%1$d+ modules</string>
+    <string name="online_module_select_repo">Select a repository</string>
+    <string name="online_module_enter_url_manually">Enter URL manually</string>
+    <string name="online_module_default_repo">Default Repository</string>
+    <string name="online_module_repo_list_title">Repository List</string>
+    <string name="online_module_load_error">Failed to load, please refresh and try again</string>
+    <string name="online_module_no_search_results">No matching modules found</string>
+    <string name="online_module_module_detail_download_count">Downloads: %1$s</string>
+    <string name="online_module_module_detail_last_update">Last update: %1$s</string>
+    <string name="online_module_module_detail_version">Version: %1$s</string>
+    <string name="online_module_module_detail_size">Size: %1$s</string>
+    <string name="online_module_module_detail_author">Author: %1$s</string>
 
     <!-- Online KPM Strings -->
     <string name="online_kpm_title">给主人内核模块喵</string>
