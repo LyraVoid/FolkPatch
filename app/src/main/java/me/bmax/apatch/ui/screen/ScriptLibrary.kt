@@ -514,29 +514,46 @@ private fun ScriptItem(
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.Top
                 ) {
-                    Text(
-                        text = script.alias,
-                        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
-                    )
+                    Column(modifier = Modifier.weight(1f)) {
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(6.dp),
+                            modifier = Modifier.padding(bottom = 8.dp)
+                        ) {
+                            ScriptLabel(
+                                text = "Shell",
+                                containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = labelOpacity),
+                                contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                            )
+                        }
 
-                    ScriptLabel(
-                        text = "Shell",
-                        containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = labelOpacity),
-                        contentColor = MaterialTheme.colorScheme.onPrimaryContainer
-                    )
+                        Text(
+                            text = script.alias,
+                            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
+                        )
+
+                        Text(
+                            text = File(script.path).name,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
                 }
 
-                // 第二行：脚本路径
+                Spacer(modifier = Modifier.height(12.dp))
+
                 Text(
                     text = script.path,
                     style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 4,
+                    overflow = TextOverflow.Ellipsis
                 )
 
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(16.dp))
                 AnimatedVisibility(
                     visible = !foldCard || expanded,
                     enter = fadeIn() + expandVertically(),
