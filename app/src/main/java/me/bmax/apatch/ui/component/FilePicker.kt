@@ -9,9 +9,11 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Folder
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.automirrored.filled.InsertDriveFile
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.*
@@ -76,9 +78,10 @@ fun FilePickerDialog(
     ) {
         Surface(
             modifier = Modifier
-                .fillMaxWidth(0.95f)
-                .fillMaxHeight(0.85f),
-            shape = MaterialTheme.shapes.extraLarge,
+                .fillMaxWidth(0.94f)
+                .widthIn(max = 720.dp)
+                .fillMaxHeight(0.88f),
+            shape = RoundedCornerShape(24.dp),
             // Force opaque color to avoid transparency issues
             color = MaterialTheme.colorScheme.surface.copy(alpha = 1f),
             tonalElevation = 6.dp
@@ -146,9 +149,13 @@ fun FilePickerDialog(
                     currentPath = rootPath
                 }
 
-                val files = remember(currentPath) {
+                val files = remember(currentPath, allowedExtensions) {
                     try {
-                        File(currentPath).listFiles()?.sortedWith(compareBy({ !it.isDirectory }, { it.name.lowercase() }))
+                        File(currentPath).listFiles()
+                            ?.filter { file ->
+                                file.isDirectory || allowedExtensions.isEmpty() || file.extension.lowercase() in allowedExtensions
+                            }
+                            ?.sortedWith(compareBy({ !it.isDirectory }, { it.name.lowercase() }))
                             ?: emptyList()
                     } catch (e: Exception) {
                         emptyList()
@@ -179,8 +186,42 @@ fun FilePickerDialog(
                                     Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                                 }
                             }
+                        },
+                        actions = {
+                            IconButton(onClick = onDismissRequest) {
+                                Icon(
+                                    Icons.Default.Close,
+                                    contentDescription = stringResource(R.string.file_picker_close)
+                                )
+                            }
                         }
                     )
+
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 8.dp)
+                    ) {
+                        Text(
+                            text = currentPath.removePrefix(rootPath).ifEmpty { "/" },
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            maxLines = 1
+                        )
+                        if (allowedExtensions.isNotEmpty()) {
+                            Text(
+                                text = stringResource(
+                                    R.string.file_picker_filtered_files,
+                                    allowedExtensions.joinToString(", ") { ".${it.lowercase()}" }
+                                ),
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier.padding(top = 2.dp)
+                            )
+                        }
+                    }
+
+                    HorizontalDivider()
 
                     LazyColumn(
                         modifier = Modifier.weight(1f)
@@ -213,36 +254,28 @@ fun FilePickerDialog(
                                         }
                                     )
                                 } else {
-                                    val ext = file.extension.lowercase()
-                                    if (allowedExtensions.isEmpty() || allowedExtensions.contains(ext)) {
-                                        ListItem(
-                                            headlineContent = { Text(file.name) },
-                                            leadingContent = {
-                                                Icon(
-                                                    Icons.AutoMirrored.Default.InsertDriveFile,
-                                                    contentDescription = null
-                                                )
-                                            },
-                                            modifier = Modifier.clickable {
-                                                onFileSelected(file)
-                                            }
-                                        )
-                                    }
+                                    ListItem(
+                                        headlineContent = { Text(file.name, maxLines = 1) },
+                                        supportingContent = {
+                                            Text(
+                                                text = "${file.length() / 1024L} KB",
+                                                style = MaterialTheme.typography.bodySmall
+                                            )
+                                        },
+                                        leadingContent = {
+                                            Icon(
+                                                Icons.AutoMirrored.Default.InsertDriveFile,
+                                                contentDescription = null,
+                                                tint = MaterialTheme.colorScheme.primary
+                                            )
+                                        },
+                                        modifier = Modifier.clickable { onFileSelected(file) }
+                                    )
                                 }
                             }
                         }
                     }
 
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                        horizontalArrangement = Arrangement.End
-                    ) {
-                        TextButton(onClick = onDismissRequest) {
-                            Text(stringResource(R.string.file_picker_cancel))
-                        }
-                    }
                 }
             }
         }

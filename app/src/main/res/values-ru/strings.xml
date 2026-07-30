@@ -948,6 +948,8 @@ KernelPatch требует образ boot для патча.
     <string name="file_picker_cancel">Отмена</string>
     <string name="file_picker_internal_storage">Внутреннее хранилище</string>
     <string name="file_picker_no_files">Нет файлов</string>
+    <string name="file_picker_filtered_files">Показано %1$s файлов</string>
+    <string name="file_picker_close">Закрыть выбор файлов</string>
     <!-- HomeV3 Strings -->
     <string name="home_device_status_title">Состояние устройства</string>
     <string name="home_device_status_battery_temp">Температура батареи</string>

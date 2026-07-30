@@ -1016,6 +1016,8 @@ KernelPatch 需要修补 boot 镜像。
     <string name="file_picker_cancel">取消</string>
     <string name="file_picker_internal_storage">内部存储</string>
     <string name="file_picker_no_files">无文件</string>
+    <string name="file_picker_filtered_files">仅显示 %1$s 文件</string>
+    <string name="file_picker_close">关闭文件选择器</string>
 
     <!-- HomeV3 Strings -->
     <string name="home_device_status_title">设备状态</string>

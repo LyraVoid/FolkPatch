@@ -866,6 +866,8 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="file_picker_cancel">Anuluj</string>
     <string name="file_picker_internal_storage">Pamięć wewnętrzna</string>
     <string name="file_picker_no_files">Brak plików</string>
+    <string name="file_picker_filtered_files">Wyświetlanie %1$s plików</string>
+    <string name="file_picker_close">Zamknij selektor plików</string>
     <!-- HomeV3 Strings -->
     <string name="home_device_status_title">Status urządzenia</string>
     <string name="home_device_status_battery_temp">Temperatura baterii</string>

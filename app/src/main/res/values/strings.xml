@@ -1091,6 +1091,8 @@ Please ensure the app is completely closed and reopened for the commands to exec
     <string name="file_picker_cancel">Cancel</string>
     <string name="file_picker_internal_storage">Internal Storage</string>
     <string name="file_picker_no_files">No files</string>
+    <string name="file_picker_filtered_files">Showing %1$s files</string>
+    <string name="file_picker_close">Close file picker</string>
 
     <!-- HomeV3 Strings -->
     <string name="home_device_status_title">Device Status</string>

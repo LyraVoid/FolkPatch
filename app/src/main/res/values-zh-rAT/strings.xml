@@ -947,6 +947,8 @@
     <string name="file_picker_cancel">撤销</string>
     <string name="file_picker_internal_storage">圣域记忆</string>
     <string name="file_picker_no_files">无典籍</string>
+    <string name="file_picker_filtered_files">展示 %1$s 部圣典</string>
+    <string name="file_picker_close">闭合圣典宝库</string>
     <!-- HomeV3 Strings -->
     <string name="home_device_status_title">圣域状态</string>
     <string name="home_device_status_battery_temp">圣光温度</string>

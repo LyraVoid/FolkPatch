@@ -944,6 +944,8 @@ KernelPatch 魔法阵需要 boot 核心来施展。
     <string name="file_picker_cancel">魔法取消</string>
     <string name="file_picker_internal_storage">魔法储物袋</string>
     <string name="file_picker_no_files">魔法书空空如也</string>
+    <string name="file_picker_filtered_files">展示 %1$s 个魔法文件</string>
+    <string name="file_picker_close">关闭魔法书卷</string>
     <!-- HomeV3 Strings -->
     <string name="home_device_status_title">魔法状态</string>
     <string name="home_device_status_battery_temp">魔力温度</string>

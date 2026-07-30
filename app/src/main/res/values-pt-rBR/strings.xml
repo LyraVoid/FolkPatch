@@ -931,6 +931,8 @@ Por favor, certifique-se de fechar completamente o app e reabri-lo para que os c
     <string name="file_picker_cancel">Cancelar</string>
     <string name="file_picker_internal_storage">Armazenamento Interno</string>
     <string name="file_picker_no_files">Sem arquivos</string>
+    <string name="file_picker_filtered_files">Mostrando %1$s arquivos</string>
+    <string name="file_picker_close">Fechar seletor de arquivos</string>
 
     <!-- HomeV3 Strings -->
     <string name="home_device_status_title">Status do Dispositivo</string>

@@ -939,6 +939,8 @@ KernelPatch 大法需要以 boot 灵胎为引。
     <string name="file_picker_cancel">作罢</string>
     <string name="file_picker_internal_storage">乾坤宝阁</string>
     <string name="file_picker_no_files">宝阁空空如也</string>
+    <string name="file_picker_filtered_files">展示 %1$s 件仙宝</string>
+    <string name="file_picker_close">关闭仙宝阁</string>
     <!-- HomeV3 Strings -->
     <string name="home_device_status_title">仙府状态</string>
     <string name="home_device_status_battery_temp">灵气温</string>

@@ -943,6 +943,8 @@ Cần đảm bảo phần mềm thoát hoàn toàn vào mới sẽ thực thi l�
     <string name="file_picker_cancel">Hủy</string>
     <string name="file_picker_internal_storage">Bộ nhớ trong</string>
     <string name="file_picker_no_files">Không có tệp</string>
+    <string name="file_picker_filtered_files">Hiển thị %1$s tệp</string>
+    <string name="file_picker_close">Đóng trình chọn tệp</string>
     <!-- HomeV3 Strings -->
     <string name="home_device_status_title">Trạng thái thiết bị</string>
     <string name="home_device_status_battery_temp">Nhiệt độ pin</string>

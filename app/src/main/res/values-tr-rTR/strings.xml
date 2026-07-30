@@ -939,6 +939,8 @@ Komutların çalışması için uygulamanın tamamen kapatılıp yeniden açıld
     <string name="file_picker_cancel">İptal</string>
     <string name="file_picker_internal_storage">Dahili Depolama</string>
     <string name="file_picker_no_files">Dosya yok</string>
+    <string name="file_picker_filtered_files">%1$s dosya gösteriliyor</string>
+    <string name="file_picker_close">Dosya seçiciyi kapat</string>
 
     <!-- HomeV3 Strings -->
     <string name="home_device_status_title">Cihaz Durumu</string>

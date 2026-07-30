@@ -1000,6 +1000,8 @@ KernelPatch 附魔需要 boot 方块作为材料。
     <string name="file_picker_cancel">算了</string>
     <string name="file_picker_internal_storage">内部存储</string>
     <string name="file_picker_no_files">箱子是空的，啥也没有</string>
+    <string name="file_picker_filtered_files">展示 %1$s 个文件</string>
+    <string name="file_picker_close">关闭文件选择界面</string>
 
     <!-- 主世界V3 -->
     <string name="home_device_status_title">设备状态</string>

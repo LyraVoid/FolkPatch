@@ -941,6 +941,8 @@ KernelPatch 需要修补 boot 镜像才能工作喵。
     <string name="file_picker_cancel">取消喵！</string>
     <string name="file_picker_internal_storage">内部存储喵</string>
     <string name="file_picker_no_files">没文件喵！</string>
+    <string name="file_picker_filtered_files">显示 %1$s 个文件喵</string>
+    <string name="file_picker_close">关闭文件选择器喵</string>
 
     <!-- HomeV3 Strings -->
     <string name="home_device_status_title">设备状态喵</string>

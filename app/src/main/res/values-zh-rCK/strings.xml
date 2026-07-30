@@ -919,6 +919,8 @@ KernelPatch 这道菜需要用 boot 主料来烹饪。
     <string name="file_picker_cancel">取消</string>
     <string name="file_picker_internal_storage">内部存储</string>
     <string name="file_picker_no_files">无菜谱文件</string>
+    <string name="file_picker_filtered_files">展示 %1$s 份菜谱</string>
+    <string name="file_picker_close">收起菜谱架</string>
 
     <!-- HomeV3 Strings -->
     <string name="home_device_status_title">厨房设备状态</string>

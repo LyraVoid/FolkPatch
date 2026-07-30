@@ -925,6 +925,8 @@ Pastikan aplikasi ditutup sepenuhnya dan dimulai ulang untuk menjalankan perinta
     <string name="file_picker_cancel">Batal</string>
     <string name="file_picker_internal_storage">Penyimpanan Internal</string>
     <string name="file_picker_no_files">Tidak ada file</string>
+    <string name="file_picker_filtered_files">Menampilkan %1$s file</string>
+    <string name="file_picker_close">Tutup pemilih file</string>
     <!-- HomeV3 Strings -->
     <string name="home_device_status_title">Status Perangkat</string>
     <string name="home_device_status_battery_temp">Suhu Baterai</string>

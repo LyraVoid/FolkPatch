@@ -995,6 +995,8 @@ KernelPatch 需要修補 boot 映像檔。
     <string name="file_picker_cancel">取消</string>
     <string name="file_picker_internal_storage">內部儲存</string>
     <string name="file_picker_no_files">無檔案</string>
+    <string name="file_picker_filtered_files">顯示 %1$s 個檔案</string>
+    <string name="file_picker_close">關閉檔案選擇器</string>
 
     <!-- HomeV3 Strings -->
     <string name="home_device_status_title">裝置狀態</string>

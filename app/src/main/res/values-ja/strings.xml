@@ -916,6 +916,8 @@ KernelPatch は boot イメージをパッチする必要があります。
     <string name="file_picker_cancel">キャンセル</string>
     <string name="file_picker_internal_storage">内部ストレージ</string>
     <string name="file_picker_no_files">ファイルなし</string>
+    <string name="file_picker_filtered_files">%1$s 個のファイルを表示</string>
+    <string name="file_picker_close">ファイル選択を閉じる</string>
     <!-- HomeV3 Strings -->
     <string name="home_device_status_title">デバイスのステータス</string>
     <string name="home_device_status_battery_temp">バッテリー温度</string>

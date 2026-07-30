@@ -1,6 +1,7 @@
 package me.bmax.apatch.ui.screen.settings.appearance
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -9,6 +10,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.PhoneAndroid
+import androidx.compose.material.icons.filled.TabletAndroid
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -232,53 +236,130 @@ fun ThemeExportDialog(
         properties = DialogProperties(decorFitsSystemWindows = true, usePlatformDefaultWidth = false)
     ) {
         Surface(
-            modifier = Modifier.width(320.dp).wrapContentHeight(),
+            modifier = Modifier
+                .fillMaxWidth(0.92f)
+                .widthIn(max = 440.dp)
+                .wrapContentHeight(),
             shape = RoundedCornerShape(28.dp),
             tonalElevation = AlertDialogDefaults.TonalElevation,
             color = AlertDialogDefaults.containerColor,
         ) {
-            Column(modifier = Modifier.padding(24.dp).verticalScroll(rememberScrollState())) {
+            Column(modifier = Modifier.padding(24.dp)) {
                 Text(
                     text = stringResource(R.string.theme_export_title),
                     style = MaterialTheme.typography.headlineSmall,
-                    modifier = Modifier.padding(bottom = 16.dp)
+                    modifier = Modifier.padding(bottom = 20.dp)
                 )
-                OutlinedTextField(
-                    value = name, onValueChange = { name = it },
-                    label = { Text(stringResource(R.string.theme_name)) },
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
-                )
-                Text(
-                    text = stringResource(R.string.theme_type),
-                    style = MaterialTheme.typography.bodySmall,
-                    modifier = Modifier.padding(bottom = 4.dp, top = 4.dp)
-                )
-                Row(modifier = Modifier.fillMaxWidth()) {
-                    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.clickable { type = "phone" }) {
-                        RadioButton(selected = type == "phone", onClick = { type = "phone" })
-                        Text(text = stringResource(R.string.theme_type_phone), style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(start = 8.dp))
+                Column(
+                    modifier = Modifier
+                        .weight(1f, fill = false)
+                        .verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    OutlinedTextField(
+                        value = name,
+                        onValueChange = { name = it },
+                        label = { Text(stringResource(R.string.theme_name)) },
+                        singleLine = true,
+                        shape = RoundedCornerShape(16.dp),
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Text(
+                        text = stringResource(R.string.theme_type),
+                        style = MaterialTheme.typography.labelLarge,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(0.dp)
+                    ) {
+                        listOf(
+                            Triple("phone", Icons.Default.PhoneAndroid, R.string.theme_type_phone),
+                            Triple("tablet", Icons.Default.TabletAndroid, R.string.theme_type_tablet)
+                        ).forEachIndexed { index, (value, icon, label) ->
+                            val selected = type == value
+                            Surface(
+                                onClick = { type = value },
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .height(56.dp),
+                                shape = when (index) {
+                                    0 -> RoundedCornerShape(topStart = 16.dp, bottomStart = 16.dp)
+                                    else -> RoundedCornerShape(topEnd = 16.dp, bottomEnd = 16.dp)
+                                },
+                                color = if (selected) {
+                                    MaterialTheme.colorScheme.secondaryContainer
+                                } else {
+                                    MaterialTheme.colorScheme.surface
+                                },
+                                contentColor = if (selected) {
+                                    MaterialTheme.colorScheme.onSecondaryContainer
+                                } else {
+                                    MaterialTheme.colorScheme.onSurfaceVariant
+                                },
+                                border = BorderStroke(
+                                    width = 1.dp,
+                                    color = if (selected) {
+                                        MaterialTheme.colorScheme.primary
+                                    } else {
+                                        MaterialTheme.colorScheme.outline
+                                    }
+                                )
+                            ) {
+                                Row(
+                                    modifier = Modifier.fillMaxSize(),
+                                    horizontalArrangement = Arrangement.Center,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Icon(icon, contentDescription = null, modifier = Modifier.size(20.dp))
+                                    Spacer(Modifier.width(8.dp))
+                                    Text(
+                                        text = stringResource(label),
+                                        style = MaterialTheme.typography.labelLarge
+                                    )
+                                    if (selected) {
+                                        Spacer(Modifier.width(8.dp))
+                                        Icon(
+                                            imageVector = Icons.Default.Check,
+                                            contentDescription = null,
+                                            modifier = Modifier.size(18.dp)
+                                        )
+                                    }
+                                }
+                            }
+                        }
                     }
-                    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.clickable { type = "tablet" }.padding(start = 16.dp)) {
-                        RadioButton(selected = type == "tablet", onClick = { type = "tablet" })
-                        Text(text = stringResource(R.string.theme_type_tablet), style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(start = 8.dp))
-                    }
+                    OutlinedTextField(
+                        value = version,
+                        onValueChange = { version = it },
+                        label = { Text(stringResource(R.string.theme_version)) },
+                        singleLine = true,
+                        shape = RoundedCornerShape(16.dp),
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    OutlinedTextField(
+                        value = author,
+                        onValueChange = { author = it },
+                        label = { Text(stringResource(R.string.theme_author)) },
+                        singleLine = true,
+                        shape = RoundedCornerShape(16.dp),
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    OutlinedTextField(
+                        value = description,
+                        onValueChange = { description = it },
+                        label = { Text(stringResource(R.string.theme_description)) },
+                        shape = RoundedCornerShape(16.dp),
+                        modifier = Modifier.fillMaxWidth(),
+                        minLines = 3,
+                        maxLines = 5
+                    )
                 }
-                OutlinedTextField(
-                    value = version, onValueChange = { version = it },
-                    label = { Text(stringResource(R.string.theme_version)) },
-                    modifier = Modifier.fillMaxWidth().padding(top = 8.dp, bottom = 8.dp)
-                )
-                OutlinedTextField(
-                    value = author, onValueChange = { author = it },
-                    label = { Text(stringResource(R.string.theme_author)) },
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
-                )
-                OutlinedTextField(
-                    value = description, onValueChange = { description = it },
-                    label = { Text(stringResource(R.string.theme_description)) },
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp), minLines = 3
-                )
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(top = 20.dp),
+                    horizontalArrangement = Arrangement.End,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     TextButton(onClick = { showDialog.value = false }) { Text(stringResource(android.R.string.cancel)) }
                     Button(
                         onClick = {
@@ -309,29 +390,61 @@ fun ThemeImportDialog(
         properties = DialogProperties(decorFitsSystemWindows = true, usePlatformDefaultWidth = false)
     ) {
         Surface(
-            modifier = Modifier.width(320.dp).wrapContentHeight(),
+            modifier = Modifier
+                .fillMaxWidth(0.92f)
+                .widthIn(max = 440.dp)
+                .wrapContentHeight(),
             shape = RoundedCornerShape(28.dp),
             tonalElevation = AlertDialogDefaults.TonalElevation,
             color = AlertDialogDefaults.containerColor,
         ) {
-            Column(modifier = Modifier.padding(24.dp).verticalScroll(rememberScrollState())) {
-                Text(text = stringResource(R.string.theme_import_title), style = MaterialTheme.typography.headlineSmall, modifier = Modifier.padding(bottom = 16.dp))
-                Text(text = stringResource(R.string.theme_import_confirm), style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(bottom = 16.dp))
+            Column(modifier = Modifier.padding(24.dp)) {
+                Text(text = stringResource(R.string.theme_import_title), style = MaterialTheme.typography.headlineSmall)
+                Text(
+                    text = stringResource(R.string.theme_import_confirm),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(top = 8.dp, bottom = 20.dp)
+                )
                 Surface(
-                    shape = RoundedCornerShape(12.dp),
-                    color = MaterialTheme.colorScheme.surfaceVariant,
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp)
+                    shape = RoundedCornerShape(18.dp),
+                    color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.35f),
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text(text = stringResource(R.string.theme_info), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(bottom = 8.dp))
-                        Text(text = "${stringResource(R.string.theme_name)}: ${metadata.name}")
-                        Text(text = "${stringResource(R.string.theme_type)}: ${if (metadata.type == "tablet") stringResource(R.string.theme_type_tablet) else stringResource(R.string.theme_type_phone)}")
-                        if (metadata.version.isNotEmpty()) Text(text = "${stringResource(R.string.theme_version)}: ${metadata.version}")
-                        if (metadata.author.isNotEmpty()) Text(text = "${stringResource(R.string.theme_author)}: ${metadata.author}")
-                        if (metadata.description.isNotEmpty()) Text(text = "${stringResource(R.string.theme_description)}: ${metadata.description}", modifier = Modifier.padding(top = 4.dp))
+                    Column(modifier = Modifier.padding(18.dp)) {
+                        Text(metadata.name, style = MaterialTheme.typography.titleLarge)
+                        Row(
+                            modifier = Modifier.padding(top = 8.dp),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            SuggestionChip(
+                                onClick = {},
+                                enabled = false,
+                                label = { Text(if (metadata.type == "tablet") stringResource(R.string.theme_type_tablet) else stringResource(R.string.theme_type_phone)) }
+                            )
+                            if (metadata.version.isNotEmpty()) {
+                                SuggestionChip(onClick = {}, enabled = false, label = { Text(metadata.version) })
+                            }
+                        }
+                        if (metadata.author.isNotEmpty()) {
+                            Text(
+                                text = metadata.author,
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                modifier = Modifier.padding(top = 8.dp)
+                            )
+                        }
+                        if (metadata.description.isNotEmpty()) {
+                            HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp))
+                            Text(
+                                text = metadata.description,
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
                     }
                 }
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                Row(modifier = Modifier.fillMaxWidth().padding(top = 20.dp), horizontalArrangement = Arrangement.End) {
                     TextButton(onClick = { showDialog.value = false }) { Text(stringResource(android.R.string.cancel)) }
                     Button(onClick = { showDialog.value = false; onConfirm() }) { Text(stringResource(R.string.theme_import_action)) }
                 }

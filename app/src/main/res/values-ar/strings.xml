@@ -937,6 +937,8 @@
     <string name="file_picker_cancel">إلغاء</string>
     <string name="file_picker_internal_storage">التخزين الداخلي</string>
     <string name="file_picker_no_files">لا توجد ملفات</string>
+    <string name="file_picker_filtered_files">عرض %1$s ملفات</string>
+    <string name="file_picker_close">إغلاق منتقي الملفات</string>
 
     <!-- HomeV3 Strings -->
     <string name="home_device_status_title">حالة الجهاز</string>

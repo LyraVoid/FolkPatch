@@ -994,6 +994,8 @@ KernelPatch는 boot 이미지를 패치해야 합니다.
     <string name="file_picker_cancel">취소</string>
     <string name="file_picker_internal_storage">내부 저장소</string>
     <string name="file_picker_no_files">파일 없음</string>
+    <string name="file_picker_filtered_files">파일 %1$s개 표시 중</string>
+    <string name="file_picker_close">파일 선택기 닫기</string>
 
     <!-- HomeV3 Strings -->
     <string name="home_device_status_title">기기 상태</string>

@@ -926,6 +926,8 @@ Por ejemplo, los KPM que previenen la modificación de particiones solo pueden u
     <string name="file_picker_cancel">Cancelar</string>
     <string name="file_picker_internal_storage">Almacenamiento Interno</string>
     <string name="file_picker_no_files">Sin archivos</string>
+    <string name="file_picker_filtered_files">Mostrando %1$s archivos</string>
+    <string name="file_picker_close">Cerrar selector de archivos</string>
 
     <!-- HomeV3 Strings -->
     <string name="home_device_status_title">Estado del Dispositivo</string>
