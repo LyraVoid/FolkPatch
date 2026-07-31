@@ -148,6 +148,7 @@ import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.ui.theme.bannerFadeColor
 import me.bmax.apatch.ui.navigation.LocalBottomBarVisible
 import me.bmax.apatch.ui.navigation.LocalIsFloatingNavMode
+import me.bmax.apatch.ui.navigation.fabNavBottomClearance
 import androidx.compose.material3.ButtonDefaults
 
 import android.content.SharedPreferences
@@ -838,13 +839,13 @@ private fun KPModuleList(
                 verticalSpacing = 16.dp,
                 horizontalSpacing = 16.dp,
                 contentPadding = run {
-                    val isFloating = LocalIsFloatingNavMode.current
-                    remember(isFloating) {
+                    val bottomClearance = fabNavBottomClearance()
+                    remember(bottomClearance) {
                         PaddingValues(
                             start = 16.dp,
                             top = 16.dp,
                             end = 16.dp,
-                            bottom = if (isFloating) 16.dp + 16.dp + 56.dp else 16.dp
+                            bottom = bottomClearance
                         )
                     }
                 },
@@ -919,13 +920,13 @@ private fun KPModuleList(
                 modifier = Modifier.fillMaxSize(),
                 state = state,
                 contentPadding = run {
-                    val isFloating = LocalIsFloatingNavMode.current
-                    remember(isFloating) {
+                    val bottomClearance = fabNavBottomClearance()
+                    remember(bottomClearance) {
                         PaddingValues(
                             start = 0.dp,
                             top = 16.dp,
                             end = 0.dp,
-                            bottom = if (isFloating) 16.dp + 16.dp + 56.dp else 16.dp
+                            bottom = bottomClearance
                         )
                     }
                 },
@@ -1013,7 +1014,7 @@ private fun KPModuleList(
                                     isEmbedded = if (showKpmStatusBadge) viewModel.embeddedKpmNames?.let { module.name.trim() in it } else null
                                 )
                             }
-                            item { Spacer(Modifier.height(if (LocalIsFloatingNavMode.current) 88.dp else 8.dp)) }
+                            item { Spacer(Modifier.height(8.dp)) } // bottom clearance handled by contentPadding
                         } else {
                             item { Spacer(Modifier.height(8.dp)) }
                             itemsIndexed(moduleList, key = { _, module -> module.name }) { _, module ->
@@ -1043,7 +1044,7 @@ private fun KPModuleList(
                                 )
                                 }
                             }
-                            item { Spacer(Modifier.height(if (LocalIsFloatingNavMode.current) 88.dp else 8.dp)) }
+                            item { Spacer(Modifier.height(8.dp)) } // bottom clearance handled by contentPadding
                         }
                     }
                 }

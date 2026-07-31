@@ -105,6 +105,7 @@ import me.bmax.apatch.R
 import me.bmax.apatch.apApp
 import me.bmax.apatch.ui.navigation.LocalBottomBarVisible
 import me.bmax.apatch.ui.navigation.LocalIsFloatingNavMode
+import me.bmax.apatch.ui.navigation.fabNavBottomClearance
 import me.bmax.apatch.ui.component.ExpressiveSwitch
 import me.bmax.apatch.ui.component.SearchAppBar
 import me.bmax.apatch.ui.component.SwitchItem
@@ -397,7 +398,13 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
             state = pullToRefreshState,
             indicator = { PullToRefreshDefaults.LoadingIndicator(state = pullToRefreshState, isRefreshing = viewModel.isRefreshing, modifier = Modifier.align(Alignment.TopCenter)) }
         ) {
-            LazyColumn(Modifier.fillMaxSize()) {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = run {
+                    val bottomClearance = fabNavBottomClearance()
+                    remember(bottomClearance) { PaddingValues(bottom = bottomClearance) }
+                }
+            ) {
                 if (useLegacySuPage) {
                     items(
                         filteredApps,
@@ -445,7 +452,7 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
                         )
                     }
                     item {
-                        Spacer(Modifier.height(if (LocalIsFloatingNavMode.current) 88.dp else 8.dp))
+                        Spacer(Modifier.height(8.dp)) // bottom clearance handled by contentPadding
                     }
                 }
             }
