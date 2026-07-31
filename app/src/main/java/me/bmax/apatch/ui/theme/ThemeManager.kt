@@ -2,7 +2,6 @@ package me.bmax.apatch.ui.theme
 
 import android.content.Context
 import android.net.Uri
-import androidx.lifecycle.MutableLiveData
 
 object ThemeManager {
 
@@ -93,7 +92,12 @@ object ThemeManager {
     )
 
 
-    val refreshTheme = MutableLiveData<Boolean>()
+    /**
+     * Same LiveData instance as the top-level [refreshTheme] (Theme.kt) that
+     * [APatchTheme] and the settings screens observe, so theme import/reset
+     * refreshes the UI immediately (e.g. system-following night mode).
+     */
+    val refreshTheme = me.bmax.apatch.ui.theme.refreshTheme
 
     suspend fun exportTheme(context: Context, uri: Uri, metadata: ThemeMetadata): Boolean {
         return ThemeIO.exportTheme(context, uri, metadata)
