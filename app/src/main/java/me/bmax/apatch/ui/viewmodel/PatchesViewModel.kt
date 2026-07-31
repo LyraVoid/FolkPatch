@@ -615,6 +615,7 @@ class PatchesViewModel : ViewModel() {
 //                error += result.err.joinToString("\n")
                 logs.add(error)
                 logs.add("****************************")
+                patchdone = true
                 patching = false
                 return@launch
             }
