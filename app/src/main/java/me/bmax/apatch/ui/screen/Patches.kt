@@ -204,6 +204,7 @@ fun Patches(mode: PatchesViewModel.PatchMode) {
                 if (!viewModel.patching && !viewModel.patchdone && mode != PatchesViewModel.PatchMode.UNPATCH && mode != PatchesViewModel.PatchMode.RESTORE) {
                     SelectFileButton(
                         text = stringResource(id = R.string.patch_embed_kpm_btn),
+                        opaque = true,
                         onSelected = { data, uri ->
                             Log.d(TAG, "select kpm, data: $data, uri: $uri")
                             viewModel.embedKPM(uri)
@@ -558,7 +559,11 @@ private fun KernelImageView(kImgInfo: KPModel.KImgInfo) {
 
 
 @Composable
-private fun SelectFileButton(text: String, onSelected: (data: Intent, uri: Uri) -> Unit) {
+private fun SelectFileButton(
+    text: String,
+    opaque: Boolean = false,
+    onSelected: (data: Intent, uri: Uri) -> Unit
+) {
     val selectFileLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
     ) {
@@ -570,6 +575,17 @@ private fun SelectFileButton(text: String, onSelected: (data: Intent, uri: Uri) 
         onSelected(data, uri)
     }
 
+    // When a custom wallpaper is enabled the secondaryContainer token is made
+    // translucent (only the alpha channel changes), so restoring alpha to 1f
+    // keeps this button opaque with its original color.
+    val colors = if (opaque) {
+        ButtonDefaults.filledTonalButtonColors(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 1f)
+        )
+    } else {
+        ButtonDefaults.filledTonalButtonColors()
+    }
+
     FilledTonalButton(
         modifier = Modifier.fillMaxWidth(),
         onClick = {
@@ -578,7 +594,8 @@ private fun SelectFileButton(text: String, onSelected: (data: Intent, uri: Uri) 
             intent.addCategory(Intent.CATEGORY_OPENABLE)
             selectFileLauncher.launch(intent)
         },
-        shape = MaterialTheme.shapes.large
+        shape = MaterialTheme.shapes.large,
+        colors = colors
     ) {
         Text(text = text)
     }
