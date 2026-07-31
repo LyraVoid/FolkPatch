@@ -50,7 +50,6 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.generated.destinations.InstallScreenDestination
-import com.ramcosta.composedestinations.generated.destinations.RepoModuleDetailScreenDestination
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.AppLoadingIndicator
@@ -140,7 +139,7 @@ fun OnlineModuleScreen(navigator: DestinationsNavigator) {
             if (sourceType == "official") {
                 OfficialContent(viewModel, context)
             } else {
-                RepoContent(repoViewModel, repoUrl, navigator, context)
+                RepoContent(repoViewModel, repoUrl, context)
             }
         }
 
@@ -233,7 +232,6 @@ private fun OfficialContent(
 private fun RepoContent(
     viewModel: RepoModuleViewModel,
     repoUrl: String,
-    navigator: DestinationsNavigator,
     context: Context
 ) {
     LaunchedEffect(repoUrl) {
@@ -289,10 +287,6 @@ private fun RepoContent(
                                 )
                             }
                         },
-                        onClick = {
-                            viewModel.selectModule(module.id)
-                            navigator.navigate(RepoModuleDetailScreenDestination(module.id))
-                        }
                     )
                 }
             }
