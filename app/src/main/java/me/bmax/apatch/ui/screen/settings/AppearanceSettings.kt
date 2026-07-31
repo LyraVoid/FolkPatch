@@ -91,6 +91,7 @@ import me.bmax.apatch.ui.screen.settings.appearance.colorNameToString
 import me.bmax.apatch.ui.screen.settings.appearance.homeLayoutStyleToString
 import me.bmax.apatch.util.PermissionUtils
 import me.bmax.apatch.util.BottomBarIconConfig
+import me.bmax.apatch.util.SafeUriResolver
 import me.bmax.apatch.util.ui.FloatingBarConfig
 import me.bmax.apatch.util.ui.APDialogBlurBehindUtils
 import me.bmax.apatch.util.ui.NavigationBarsSpacer
@@ -132,7 +133,7 @@ fun AppearanceSettingsContent(
                     deleteOnExit()
                 }
 
-                context.contentResolver.openInputStream(input)?.use { inputStream ->
+                SafeUriResolver.openInputStream(context, input).use { inputStream ->
                     tempFile.outputStream().use { outputStream ->
                         inputStream.copyTo(outputStream)
                     }
@@ -236,6 +237,10 @@ fun AppearanceSettingsContent(
                             }
                             pickingType = null
                         }
+                    } catch (e: Exception) {
+                        // 源图片 URI 已失效（如文件被删除/回收）时读取会抛 FileNotFoundException
+                        showToast(context, context.getString(R.string.settings_custom_background_error))
+                        pickingType = null
                     }
                 }) {
                     Text(text = stringResource(R.string.settings_crop_dialog_crop))
