@@ -1276,4 +1276,7 @@ KernelPatch требует образ boot для патча.
     <string name="script_library_downloaded_to">Загружено в: %s</string>
     <string name="script_library_download_failed">Ошибка загрузки: %s</string>
     <string name="settings_new_app_profile_update_failed">Не удалось обновить профиль нового приложения: %s</string>
+    <string name="settings_info_copy">Долгое нажатие для копирования</string>
+    <string name="settings_info_copy_summary">Долгое нажатие на элемент информационной панели главного экрана копирует его содержимое</string>
+    <string name="home_info_copied">%1$s скопировано</string>
 </resources>

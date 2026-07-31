@@ -45,6 +45,7 @@ import me.bmax.apatch.ui.screen.BottomBarDestination
 import me.bmax.apatch.util.AppData
 import me.bmax.apatch.util.Version.getManagerVersion
 import me.bmax.apatch.ui.theme.BackgroundConfig
+import me.bmax.apatch.ui.component.copyableInfo
 import androidx.compose.material3.surfaceColorAtElevation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -353,7 +354,12 @@ fun InfoCardCircle(kpState: APApplication.State, apState: APApplication.State) {
                 content: String,
                 icon: @Composable () -> Unit
             ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .copyableInfo(label, content),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     icon()
                     Spacer(Modifier.width(16.dp))
                     Column {

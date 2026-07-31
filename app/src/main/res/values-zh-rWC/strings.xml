@@ -1255,4 +1255,7 @@ KernelPatch 大法需要以 boot 灵胎为引。
     <string name="script_library_downloaded_to">仙典已藏于：%s</string>
     <string name="script_library_download_failed">仙典摄取败陨：%s</string>
     <string name="settings_new_app_profile_update_failed">新弟子命格更新败陨：%s</string>
+    <string name="settings_info_copy">长按拓印信息</string>
+    <string name="settings_info_copy_summary">长按洞府首页信息栏之条目，即可拓印其内容</string>
+    <string name="home_info_copied">%1$s 已拓印</string>
 </resources>

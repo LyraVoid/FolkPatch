@@ -1280,4 +1280,7 @@ KernelPatch 需要修补 boot 镜像。
     <string name="color_style_monochrome">单色</string>
     <string name="color_style_neutral">中性</string>
     <string name="color_style_fidelity">保真</string>
+    <string name="settings_info_copy">长按复制信息</string>
+    <string name="settings_info_copy_summary">长按首页信息栏中的条目即可复制其内容</string>
+    <string name="home_info_copied">%1$s 已复制</string>
 </resources>

@@ -101,6 +101,7 @@ object SettingsRegistry {
 
             // === Behavior ===
             add(SettingEntry("behavior_web_debugging", R.string.enable_web_debugging, R.string.enable_web_debugging_summary, SettingCategory.BEHAVIOR))
+            add(SettingEntry("behavior_info_copy", R.string.settings_info_copy, R.string.settings_info_copy_summary, SettingCategory.BEHAVIOR))
             add(SettingEntry("behavior_install_confirm", R.string.settings_apm_install_confirm, R.string.settings_apm_install_confirm_summary, SettingCategory.BEHAVIOR))
             add(SettingEntry("behavior_module_shortcut", R.string.settings_enable_module_shortcut_add, R.string.settings_enable_module_shortcut_add_summary, SettingCategory.BEHAVIOR))
             add(SettingEntry("behavior_stay_on_page", R.string.settings_apm_stay_on_page, R.string.settings_apm_stay_on_page_summary, SettingCategory.BEHAVIOR))

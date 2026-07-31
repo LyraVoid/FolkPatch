@@ -122,6 +122,7 @@ import me.bmax.apatch.apApp
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.ui.theme.BackgroundManager
 import me.bmax.apatch.ui.component.BackgroundOptionsDialog
+import me.bmax.apatch.ui.component.copyableInfo
 import me.bmax.apatch.ui.component.rememberConfirmDialog
 import me.bmax.apatch.util.SystemInfoCollector
 import me.bmax.apatch.util.PermissionUtils
@@ -1038,6 +1039,7 @@ private fun InfoItem(icon: ImageVector, label: String, value: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .copyableInfo(label, value)
             .padding(vertical = 6.dp),
         verticalAlignment = Alignment.Top
     ) {

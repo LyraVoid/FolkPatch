@@ -1277,4 +1277,7 @@ Komutların çalışması için uygulamanın tamamen kapatılıp yeniden açıld
     <string name="script_library_downloaded_to">İndirilen konum: %s</string>
     <string name="script_library_download_failed">İndirme başarısız: %s</string>
     <string name="settings_new_app_profile_update_failed">Yeni uygulama profili güncellenemedi: %s</string>
+    <string name="settings_info_copy">Bilgiyi kopyalamak için basılı tutun</string>
+    <string name="settings_info_copy_summary">İçeriğini kopyalamak için ana ekrandaki bilgi kartındaki bir öğeyi basılı tutun</string>
+    <string name="home_info_copied">%1$s kopyalandı</string>
 </resources>

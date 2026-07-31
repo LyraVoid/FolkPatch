@@ -1256,4 +1256,7 @@ KernelPatch 这道菜需要用 boot 主料来烹饪。
     <string name="script_library_downloaded_to">已出锅到：%s</string>
     <string name="script_library_download_failed">下载翻车了：%s</string>
     <string name="settings_new_app_profile_update_failed">新菜品配置更新翻车了：%s</string>
+    <string name="settings_info_copy">长按复制菜谱信息</string>
+    <string name="settings_info_copy_summary">长按后厨首页信息栏中的条目即可复制其内容</string>
+    <string name="home_info_copied">%1$s 已复制</string>
 </resources>

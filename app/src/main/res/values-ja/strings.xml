@@ -1199,4 +1199,7 @@ KernelPatch は boot イメージをパッチする必要があります。
     <string name="script_library_downloaded_to">ダウンロード先: %s</string>
     <string name="script_library_download_failed">ダウンロードに失敗: %s</string>
     <string name="settings_new_app_profile_update_failed">新規アプリプロファイルの更新に失敗: %s</string>
+    <string name="settings_info_copy">長押しで情報をコピー</string>
+    <string name="settings_info_copy_summary">ホーム画面の情報欄の項目を長押しすると内容をコピーできます。</string>
+    <string name="home_info_copied">%1$sをコピーしました。</string>
 </resources>

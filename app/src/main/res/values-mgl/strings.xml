@@ -1258,4 +1258,7 @@ KernelPatch 魔法阵需要 boot 核心来施展。
     <string name="script_library_downloaded_to">已召唤到：%s</string>
     <string name="script_library_download_failed">召唤失败：%s</string>
     <string name="settings_new_app_profile_update_failed">新魔法使配置更新失败：%s</string>
+    <string name="settings_info_copy">长按抄录信息</string>
+    <string name="settings_info_copy_summary">长按首页信息栏中的条目即可抄录其内容</string>
+    <string name="home_info_copied">%1$s 已抄录完毕</string>
 </resources>

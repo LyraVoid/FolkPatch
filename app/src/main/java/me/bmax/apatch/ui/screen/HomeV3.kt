@@ -52,6 +52,7 @@ import me.bmax.apatch.apApp
 import me.bmax.apatch.Natives
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.BackgroundOptionsDialog
+import me.bmax.apatch.ui.component.copyableInfo
 import me.bmax.apatch.ui.component.rememberConfirmDialog
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.ui.theme.BackgroundManager
@@ -744,6 +745,7 @@ private fun InfoRow(
     val valueColor = if (isWallpaper) Color.White else MaterialTheme.colorScheme.onSurface
 
     Row(
+        modifier = Modifier.copyableInfo(label, value),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(

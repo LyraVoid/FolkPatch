@@ -305,6 +305,9 @@
     <string name="settings_apm_stay_on_page_summary">Do not automatically return after module action execution</string>
     <string name="settings_enable_module_shortcut_add">Enable shortcut add button</string>
     <string name="settings_enable_module_shortcut_add_summary">Show WebUI shortcut add button</string>
+    <string name="settings_info_copy">Long press to copy info</string>
+    <string name="settings_info_copy_summary">Long press an item in the home info panels to copy its content</string>
+    <string name="home_info_copied">%1$s copied</string>
     <string name="settings_disable_module_update_check">Disable module update check</string>
     <string name="settings_disable_module_update_check_summary">Disable automatic update checks for system modules</string>
     <string name="settings_module_sort_optimization">Module Sorting Optimization</string>

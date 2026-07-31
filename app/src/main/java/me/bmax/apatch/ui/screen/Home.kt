@@ -122,6 +122,7 @@ import me.bmax.apatch.apApp
 import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenu
 import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenuItem
 import me.bmax.apatch.ui.component.WelcomeGuideDialog
+import me.bmax.apatch.ui.component.copyableInfo
 import me.bmax.apatch.ui.viewmodel.PatchesViewModel
 import me.bmax.apatch.util.Version
 import me.bmax.apatch.util.Version.getManagerVersion
@@ -1113,8 +1114,14 @@ fun InfoCard(kpState: APApplication.State, apState: APApplication.State) {
             @Composable
             fun InfoCardItem(label: String, content: String) {
                 contents.appendLine(label).appendLine(content).appendLine()
-                Text(text = label, style = MaterialTheme.typography.bodyLarge)
-                Text(text = content, style = MaterialTheme.typography.bodySmall)
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .copyableInfo(label, content)
+                ) {
+                    Text(text = label, style = MaterialTheme.typography.bodyLarge)
+                    Text(text = content, style = MaterialTheme.typography.bodySmall)
+                }
             }
 
             if (kpState != APApplication.State.UNKNOWN_STATE && !hideKpatchVersion.value) {
@@ -1212,7 +1219,9 @@ fun ListInfoCard(kpState: APApplication.State, apState: APApplication.State, sho
             fun InfoCardItem(icon: ImageVector, label: String, content: String) {
                 if (showIcons) {
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .copyableInfo(label, content),
                         verticalAlignment = Alignment.Top
                     ) {
                         Icon(
@@ -1230,8 +1239,14 @@ fun ListInfoCard(kpState: APApplication.State, apState: APApplication.State, sho
                         }
                     }
                 } else {
-                    Text(text = label, style = MaterialTheme.typography.bodyLarge)
-                    Text(text = content, style = MaterialTheme.typography.bodyMedium)
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .copyableInfo(label, content)
+                    ) {
+                        Text(text = label, style = MaterialTheme.typography.bodyLarge)
+                        Text(text = content, style = MaterialTheme.typography.bodyMedium)
+                    }
                 }
             }
 

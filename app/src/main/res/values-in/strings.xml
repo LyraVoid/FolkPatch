@@ -1254,4 +1254,7 @@ Pastikan aplikasi ditutup sepenuhnya dan dimulai ulang untuk menjalankan perinta
     <string name="script_library_downloaded_to">Diunduh ke: %s</string>
     <string name="script_library_download_failed">Gagal mengunduh: %s</string>
     <string name="settings_new_app_profile_update_failed">Gagal memperbarui profil aplikasi baru: %s</string>
+    <string name="settings_info_copy">Tekan lama untuk menyalin info</string>
+    <string name="settings_info_copy_summary">Tekan lama item di panel info beranda untuk menyalin isinya</string>
+    <string name="home_info_copied">%1$s disalin</string>
 </resources>

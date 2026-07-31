@@ -1264,4 +1264,7 @@
     <string name="script_library_downloaded_to">تم التنزيل إلى: %s</string>
     <string name="script_library_download_failed">فشل التنزيل: %s</string>
     <string name="settings_new_app_profile_update_failed">فشل تحديث ملف تعريف التطبيق الجديد: %s</string>
+    <string name="settings_info_copy">النسخ بالضغط المطول</string>
+    <string name="settings_info_copy_summary">اضغط مطولاً على عنصر في لوحة معلومات الشاشة الرئيسية لنسخ محتواه</string>
+    <string name="home_info_copied">تم نسخ %1$s</string>
 </resources>

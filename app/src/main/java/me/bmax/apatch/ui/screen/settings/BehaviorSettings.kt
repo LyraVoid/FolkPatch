@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Badge
 import androidx.compose.material.icons.filled.BugReport
+import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.Fingerprint
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.KeyboardArrowDown
@@ -79,6 +80,21 @@ fun BehaviorSettingsContent(
             prefs.edit().putBoolean("enable_web_debugging", it).apply()
         }
     )
+    }
+
+    item(key = "behavior_info_copy") {
+        var infoCopyEnabled by remember { mutableStateOf(prefs.getBoolean("enable_info_copy", true)) }
+        ToggleSettingCard(
+            flat = flat,
+            icon = Icons.Filled.ContentCopy,
+            title = stringResource(id = R.string.settings_info_copy),
+            description = stringResource(id = R.string.settings_info_copy_summary),
+            checked = infoCopyEnabled,
+            onCheckedChange = {
+                infoCopyEnabled = it
+                prefs.edit().putBoolean("enable_info_copy", it).apply()
+            }
+        )
     }
 
     item(key = "behavior_install_confirm", visible = aPatchReady) {

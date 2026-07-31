@@ -1255,4 +1255,7 @@ KernelPatch 附魔需要 boot 方块作为材料。
     <string name="script_library_downloaded_to">已下载到：%s</string>
     <string name="script_library_download_failed">下载被苦力怕炸了：%s</string>
     <string name="settings_new_app_profile_update_failed">新应用配置更新被苦力怕炸了：%s</string>
+    <string name="settings_info_copy">长按复制信息</string>
+    <string name="settings_info_copy_summary">长按主界面信息栏中的条目即可复制其内容</string>
+    <string name="home_info_copied">%1$s 已复制</string>
 </resources>

@@ -1259,4 +1259,7 @@
     <string name="script_library_downloaded_to">圣典已降于：%s</string>
     <string name="script_library_download_failed">圣典降临失败：%s</string>
     <string name="settings_new_app_profile_update_failed">新信徒圣谕更新失败：%s</string>
+    <string name="settings_info_copy">长按抄录圣典信息</string>
+    <string name="settings_info_copy_summary">长按主页信息栏中的条目即可抄录其内容</string>
+    <string name="home_info_copied">%1$s 已抄录完毕</string>
 </resources>

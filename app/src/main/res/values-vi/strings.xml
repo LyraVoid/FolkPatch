@@ -1271,4 +1271,7 @@ Cần đảm bảo phần mềm thoát hoàn toàn vào mới sẽ thực thi l�
     <string name="script_library_downloaded_to">Đã tải xuống: %s</string>
     <string name="script_library_download_failed">Tải xuống thất bại: %s</string>
     <string name="settings_new_app_profile_update_failed">Cập nhật hồ sơ ứng dụng mới thất bại: %s</string>
+    <string name="settings_info_copy">Nhấn giữ để sao chép thông tin</string>
+    <string name="settings_info_copy_summary">Nhấn giữ một mục trong bảng thông tin trang chủ để sao chép nội dung</string>
+    <string name="home_info_copied">Đã sao chép %1$s</string>
 </resources>

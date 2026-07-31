@@ -1273,4 +1273,7 @@ Por favor, certifique-se de fechar completamente o app e reabri-lo para que os c
     <string name="script_library_downloaded_to">Baixado em: %s</string>
     <string name="script_library_download_failed">Falha no download: %s</string>
     <string name="settings_new_app_profile_update_failed">Falha ao atualizar o perfil de novo app: %s</string>
+    <string name="settings_info_copy">Toque longo para copiar informações</string>
+    <string name="settings_info_copy_summary">Toque e segure um item do painel de informações da tela inicial para copiar seu conteúdo</string>
+    <string name="home_info_copied">%1$s copiado</string>
 </resources>

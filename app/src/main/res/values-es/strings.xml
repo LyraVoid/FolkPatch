@@ -1275,4 +1275,7 @@ Por ejemplo, los KPM que previenen la modificación de particiones solo pueden u
     <string name="script_library_downloaded_to">Descargado en: %s</string>
     <string name="script_library_download_failed">Error en la descarga: %s</string>
     <string name="settings_new_app_profile_update_failed">Error al actualizar el perfil de nueva app: %s</string>
+    <string name="settings_info_copy">Mantener pulsado para copiar información</string>
+    <string name="settings_info_copy_summary">Mantén pulsado un elemento del panel de información de inicio para copiar su contenido</string>
+    <string name="home_info_copied">%1$s copiado</string>
 </resources>

@@ -1196,4 +1196,7 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="script_library_downloaded_to">Pobrano do: %s</string>
     <string name="script_library_download_failed">Pobieranie nie powiodło się: %s</string>
     <string name="settings_new_app_profile_update_failed">Nie udało się zaktualizować profilu nowej aplikacji: %s</string>
+    <string name="settings_info_copy">Przytrzymaj, aby skopiować informacje</string>
+    <string name="settings_info_copy_summary">Przytrzymaj element panelu informacji na ekranie głównym, aby skopiować jego zawartość</string>
+    <string name="home_info_copied">Skopiowano %1$s</string>
 </resources>
