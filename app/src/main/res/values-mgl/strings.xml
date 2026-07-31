@@ -855,6 +855,7 @@ KernelPatch 魔法阵需要 boot 核心来施展。
     <string name="nav_icon_default">默认</string>
     <string name="nav_icon_cleared">印记已重置</string>
     <string name="nav_icon_set">印记已更新</string>
+    <string name="nav_icon_set_failed">印记保存失败</string>
 
     <string name="settings_theme_mode">魔法模式配置</string>
     <string name="settings_theme_mode_summary">在星之主题商店和凡间浏览器模式之间切换</string>

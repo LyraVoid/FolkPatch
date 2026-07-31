@@ -113,6 +113,42 @@ object BottomBarIconConfig {
     }
 
     /**
+     * Persist a picked image as the custom icon for a destination.
+     *
+     * The picked [sourceUri] is usually a `content://` URI whose read grant only
+     * lasts until the process dies. Copying it into internal storage (filesDir)
+     * keeps the icon visible after app restarts.
+     *
+     * @return true if the icon was saved successfully
+     */
+    fun saveCustomIcon(context: Context, destinationName: String, sourceUri: Uri): Boolean {
+        val destFile = File(context.filesDir, "nav_icon_$destinationName.png")
+        return try {
+            SafeUriResolver.openInputStream(context, sourceUri).use { input ->
+                destFile.outputStream().use { output -> input.copyTo(output) }
+            }
+            if (destFile.exists() && destFile.length() > 0) {
+                setCustomIconUri(destinationName, Uri.fromFile(destFile).toString())
+                true
+            } else {
+                destFile.delete()
+                false
+            }
+        } catch (_: Throwable) {
+            destFile.delete()
+            false
+        }
+    }
+
+    /**
+     * Remove the custom icon for a destination and delete its copied file.
+     */
+    fun clearCustomIcon(context: Context, destinationName: String) {
+        setCustomIconUri(destinationName, null)
+        File(context.filesDir, "nav_icon_$destinationName.png").takeIf { it.exists() }?.delete()
+    }
+
+    /**
      * Remove all custom icon preferences.
      */
     fun resetAll() {

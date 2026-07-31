@@ -859,6 +859,7 @@ KernelPatch требует образ boot для патча.
     <string name="nav_icon_default">Стандартная</string>
     <string name="nav_icon_cleared">Иконка сброшена</string>
     <string name="nav_icon_set">Иконка обновлена</string>
+    <string name="nav_icon_set_failed">Не удалось сохранить иконку</string>
 
     <string name="settings_theme_mode">Режим настройки</string>
     <string name="settings_theme_mode_summary">Переключение между встроенным магазином и режимом совместимости браузера</string>

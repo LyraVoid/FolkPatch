@@ -858,6 +858,7 @@ Komutların çalışması için uygulamanın tamamen kapatılıp yeniden açıld
     <string name="nav_icon_default">Varsayılan</string>
     <string name="nav_icon_cleared">Simge varsayılana sıfırlandı</string>
     <string name="nav_icon_set">Simge güncellendi</string>
+    <string name="nav_icon_set_failed">Simge kaydedilemedi</string>
 
     <string name="settings_theme_mode">Mod Yapılandırması</string>
     <string name="settings_theme_mode_summary">Yerleşik mağaza ile tarayıcı uyumluluk modu arasında geçiş yapın</string>

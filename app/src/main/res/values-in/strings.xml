@@ -836,6 +836,7 @@ Pastikan aplikasi ditutup sepenuhnya dan dimulai ulang untuk menjalankan perinta
     <string name="nav_icon_default">Default</string>
     <string name="nav_icon_cleared">Ikon direset ke default</string>
     <string name="nav_icon_set">Ikon diperbarui</string>
+    <string name="nav_icon_set_failed">Gagal menyimpan ikon</string>
 
     <string name="settings_theme_mode">Konfigurasi Mode</string>
     <string name="settings_theme_mode_summary">Beralih antara mode toko bawaan dan mode kompatibilitas browser</string>

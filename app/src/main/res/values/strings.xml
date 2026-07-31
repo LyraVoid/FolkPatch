@@ -993,6 +993,7 @@ Please ensure the app is completely closed and reopened for the commands to exec
     <string name="nav_icon_default">Default</string>
     <string name="nav_icon_cleared">Icon reset to default</string>
     <string name="nav_icon_set">Icon updated</string>
+    <string name="nav_icon_set_failed">Failed to save icon</string>
     <string name="settings_appearance_banner">Banner Settings</string>
     <string name="settings_appearance_banner_summary">Module banner configuration</string>
     <string name="settings_appearance_layout">Layout Settings</string>

@@ -779,6 +779,7 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="nav_icon_default">Domyślne</string>
     <string name="nav_icon_cleared">Ikona przywrócona</string>
     <string name="nav_icon_set">Ikona zaktualizowana</string>
+    <string name="nav_icon_set_failed">Nie udało się zapisać ikony</string>
 
     <string name="settings_theme_mode">Konfiguracja trybu</string>
     <string name="settings_theme_mode_summary">Przełączanie między wbudowanym sklepem a trybem zgodności przeglądarki</string>

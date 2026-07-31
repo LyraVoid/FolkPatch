@@ -807,6 +807,7 @@ KernelPatch は boot イメージをパッチする必要があります。
     <string name="nav_icon_default">デフォルト</string>
     <string name="nav_icon_cleared">アイコンをデフォルトに戻しました</string>
     <string name="nav_icon_set">アイコンを更新しました</string>
+    <string name="nav_icon_set_failed">アイコンの保存に失敗しました</string>
 
     <string name="settings_theme_mode">モード設定</string>
     <string name="settings_theme_mode_summary">内蔵ストアとブラウザ互換モードを切り替えます</string>

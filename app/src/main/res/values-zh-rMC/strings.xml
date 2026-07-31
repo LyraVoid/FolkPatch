@@ -887,6 +887,7 @@ KernelPatch 附魔需要 boot 方块作为材料。
     <string name="nav_icon_default">默认</string>
     <string name="nav_icon_cleared">图标已重置</string>
     <string name="nav_icon_set">图标已更新</string>
+    <string name="nav_icon_set_failed">图标保存失败</string>
 
     <string name="settings_theme_mode">模式配置</string>
     <string name="settings_theme_mode_summary">在资源包商店和浏览器兼容模式之间切换</string>

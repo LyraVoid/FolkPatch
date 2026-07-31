@@ -845,6 +845,7 @@ Por ejemplo, los KPM que previenen la modificación de particiones solo pueden u
     <string name="nav_icon_default">Por defecto</string>
     <string name="nav_icon_cleared">Icono restablecido</string>
     <string name="nav_icon_set">Icono actualizado</string>
+    <string name="nav_icon_set_failed">Error al guardar el icono</string>
 
     <string name="settings_theme_mode">Modo de configuración</string>
     <string name="settings_theme_mode_summary">Cambiar entre el modo de tienda integrada y el modo de compatibilidad del navegador</string>

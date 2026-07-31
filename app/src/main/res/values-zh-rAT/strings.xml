@@ -852,6 +852,7 @@
     <string name="nav_icon_default">默认</string>
     <string name="nav_icon_cleared">圣印已重置</string>
     <string name="nav_icon_set">圣印已更新</string>
+    <string name="nav_icon_set_failed">圣印保存失败</string>
 
     <string name="settings_theme_mode">圣域模式配置</string>
     <string name="settings_theme_mode_summary">在圣域主题商店和青铜浏览器模式之间切换</string>

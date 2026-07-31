@@ -856,6 +856,7 @@
     <string name="nav_icon_default">افتراضي</string>
     <string name="nav_icon_cleared">تم إعادة تعيين الأيقونة</string>
     <string name="nav_icon_set">تم تحديث الأيقونة</string>
+    <string name="nav_icon_set_failed">فشل حفظ الأيقونة</string>
 
     <string name="settings_theme_mode">وضع التكوين</string>
     <string name="settings_theme_mode_summary">التبديل بين المتجر المدمج ووضع توافق المتصفح</string>

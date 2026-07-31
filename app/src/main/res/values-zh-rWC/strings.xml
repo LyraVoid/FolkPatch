@@ -852,6 +852,7 @@ KernelPatch 大法需要以 boot 灵胎为引。
     <string name="nav_icon_default">默认</string>
     <string name="nav_icon_cleared">道印已重置</string>
     <string name="nav_icon_set">道印已更新</string>
+    <string name="nav_icon_set_failed">道印封存失败</string>
 
     <string name="settings_theme_mode">道法配置</string>
     <string name="settings_theme_mode_summary">在洞府藏经阁和凡间浏览器之间切换</string>

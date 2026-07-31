@@ -756,12 +756,25 @@ fun NavBarIcon(
     val isCustomEnabled = remember(revision) { BottomBarIconConfig.isEnabled }
 
     if (isCustomEnabled && customUri != null) {
-        AsyncImage(
-            model = customUri,
-            contentDescription = stringResource(destination.label),
-            modifier = modifier.size(24.dp),
-            contentScale = androidx.compose.ui.layout.ContentScale.Fit,
-        )
+        // Fall back to the default icon if the custom image can't be loaded
+        // (e.g. a legacy content:// URI whose read grant expired).
+        var loadFailed by remember(customUri) { mutableStateOf(false) }
+        if (loadFailed) {
+            Icon(
+                imageVector = if (isSelected) destination.iconSelected else destination.iconNotSelected,
+                contentDescription = stringResource(destination.label),
+                tint = tint,
+                modifier = modifier,
+            )
+        } else {
+            AsyncImage(
+                model = customUri,
+                contentDescription = stringResource(destination.label),
+                modifier = modifier.size(24.dp),
+                contentScale = androidx.compose.ui.layout.ContentScale.Fit,
+                onError = { loadFailed = true },
+            )
+        }
     } else {
         Icon(
             imageVector = if (isSelected) destination.iconSelected else destination.iconNotSelected,

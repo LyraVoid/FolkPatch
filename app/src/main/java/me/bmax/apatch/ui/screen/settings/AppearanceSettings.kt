@@ -54,7 +54,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.DialogWindowProvider
 import androidx.core.content.edit
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.ExpressiveCard
@@ -988,9 +990,18 @@ fun AppearanceSettingsContent(
                 ) { uri ->
                     val dest = editingDestName ?: return@rememberLauncherForActivityResult
                     if (uri != null) {
-                        BottomBarIconConfig.setCustomIconUri(dest, uri.toString())
+                        // Copy the picked image into internal storage so it survives app
+                        // restarts (content:// read grants are only temporary).
                         scope.launch {
-                            snackBarHost.showSnackbar(context.getString(R.string.nav_icon_set))
+                            val saved = withContext(Dispatchers.IO) {
+                                BottomBarIconConfig.saveCustomIcon(context, dest, uri)
+                            }
+                            snackBarHost.showSnackbar(
+                                context.getString(
+                                    if (saved) R.string.nav_icon_set
+                                    else R.string.nav_icon_set_failed
+                                )
+                            )
                         }
                     }
                     editingDestName = null
@@ -1064,7 +1075,7 @@ fun AppearanceSettingsContent(
                                     if (customUri != null) {
                                         IconButton(
                                             onClick = {
-                                                BottomBarIconConfig.setCustomIconUri(destName, null)
+                                                BottomBarIconConfig.clearCustomIcon(context, destName)
                                                 scope.launch {
                                                     snackBarHost.showSnackbar(context.getString(R.string.nav_icon_cleared))
                                                 }

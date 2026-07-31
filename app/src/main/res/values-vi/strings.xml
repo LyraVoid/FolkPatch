@@ -854,6 +854,7 @@ Cần đảm bảo phần mềm thoát hoàn toàn vào mới sẽ thực thi l�
     <string name="nav_icon_default">Mặc định</string>
     <string name="nav_icon_cleared">Đã đặt lại biểu tượng</string>
     <string name="nav_icon_set">Đã cập nhật biểu tượng</string>
+    <string name="nav_icon_set_failed">Không thể lưu biểu tượng</string>
 
     <string name="settings_theme_mode">Cấu hình chế độ</string>
     <string name="settings_theme_mode_summary">Chuyển đổi giữa chế độ cửa hàng tích hợp và chế độ tương thích trình duyệt</string>

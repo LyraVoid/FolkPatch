@@ -881,6 +881,7 @@ KernelPatch는 boot 이미지를 패치해야 합니다.
     <string name="nav_icon_default">기본값</string>
     <string name="nav_icon_cleared">아이콘이 기본값으로 초기화됨</string>
     <string name="nav_icon_set">아이콘 업데이트됨</string>
+    <string name="nav_icon_set_failed">아이콘 저장 실패</string>
 
     <string name="settings_theme_mode">모드 설정</string>
     <string name="settings_theme_mode_summary">내장 스토어와 브라우저 호환 모드 간 전환</string>
