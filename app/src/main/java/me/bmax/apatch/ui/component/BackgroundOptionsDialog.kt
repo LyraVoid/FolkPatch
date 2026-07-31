@@ -87,66 +87,56 @@ fun BackgroundOptionsDialog(
     onResetModuleInfo: (() -> Unit)? = null,
 ) {
     if (showDialog) {
-        BasicAlertDialog(
-            onDismissRequest = onDismiss,
-            properties = DialogProperties(
-                decorFitsSystemWindows = true,
-                usePlatformDefaultWidth = false,
+        // The theme applies custom background opacity to some color roles (surface,
+        // secondaryContainer, surfaceContainer). Restore full opacity inside this
+        // dialog so the "Module Editor" / "Select image" layout is not affected
+        // by the background transparency feature.
+        val scheme = MaterialTheme.colorScheme
+        MaterialTheme(
+            colorScheme = scheme.copy(
+                surface = scheme.surface.copy(alpha = 1f),
+                secondaryContainer = scheme.secondaryContainer.copy(alpha = 1f),
+                surfaceContainer = scheme.surfaceContainer.copy(alpha = 1f),
             )
         ) {
-            Surface(
-                modifier = Modifier
-                    .width(320.dp)
-                    .wrapContentHeight(),
-                shape = RoundedCornerShape(20.dp),
-                tonalElevation = AlertDialogDefaults.TonalElevation,
-                color = AlertDialogDefaults.containerColor,
+            BasicAlertDialog(
+                onDismissRequest = onDismiss,
+                properties = DialogProperties(
+                    decorFitsSystemWindows = true,
+                    usePlatformDefaultWidth = false,
+                )
             ) {
-                Column(modifier = Modifier.padding(24.dp)) {
-                    // 标题
-                    Text(
-                        text = title,
-                        style = MaterialTheme.typography.headlineSmall,
-                        modifier = Modifier.padding(bottom = 16.dp)
-                    )
-
-                    // 可滚动内容区
-                    Column(
-                        modifier = Modifier
-                            .verticalScroll(rememberScrollState())
-                    ) {
-                        // Banner 区域
-                        if (showBannerSection) {
-                            Column(
-                                verticalArrangement = Arrangement.spacedBy(12.dp)
-                            ) {
-                                // 选择图片按钮 — FilledTonal 风格
-                                FilledTonalButton(
-                                    onClick = {
-                                        onDismiss()
-                                        onSelectImage()
-                                    },
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .height(52.dp),
-                                    shape = RoundedCornerShape(14.dp),
+                Surface(
+                    modifier = Modifier
+                        .width(320.dp)
+                        .wrapContentHeight(),
+                    shape = RoundedCornerShape(20.dp),
+                    tonalElevation = AlertDialogDefaults.TonalElevation,
+                    color = AlertDialogDefaults.containerColor,
+                ) {
+                    Column(modifier = Modifier.padding(24.dp)) {
+                        // 标题
+                        Text(
+                            text = title,
+                            style = MaterialTheme.typography.headlineSmall,
+                            modifier = Modifier.padding(bottom = 16.dp)
+                        )
+    
+                        // 可滚动内容区
+                        Column(
+                            modifier = Modifier
+                                .verticalScroll(rememberScrollState())
+                        ) {
+                            // Banner 区域
+                            if (showBannerSection) {
+                                Column(
+                                    verticalArrangement = Arrangement.spacedBy(12.dp)
                                 ) {
-                                    Icon(
-                                        Icons.Default.Image,
-                                        contentDescription = null,
-                                        modifier = Modifier.size(20.dp)
-                                    )
-                                    Text(
-                                        text = selectLabel,
-                                        modifier = Modifier.padding(start = 8.dp)
-                                    )
-                                }
-                                // 清除按钮 — Outlined 风格，仅有已存在图片时显示
-                                if (hasExisting) {
-                                    OutlinedButton(
+                                    // 选择图片按钮 — FilledTonal 风格
+                                    FilledTonalButton(
                                         onClick = {
                                             onDismiss()
-                                            onClearImage()
+                                            onSelectImage()
                                         },
                                         modifier = Modifier
                                             .fillMaxWidth()
@@ -154,156 +144,179 @@ fun BackgroundOptionsDialog(
                                         shape = RoundedCornerShape(14.dp),
                                     ) {
                                         Icon(
-                                            Icons.Default.Delete,
+                                            Icons.Default.Image,
                                             contentDescription = null,
-                                            modifier = Modifier.size(20.dp),
-                                            tint = MaterialTheme.colorScheme.error
+                                            modifier = Modifier.size(20.dp)
                                         )
                                         Text(
-                                            text = clearLabel,
-                                            modifier = Modifier.padding(start = 8.dp),
-                                            color = MaterialTheme.colorScheme.error
+                                            text = selectLabel,
+                                            modifier = Modifier.padding(start = 8.dp)
                                         )
                                     }
+                                    // 清除按钮 — Outlined 风格，仅有已存在图片时显示
+                                    if (hasExisting) {
+                                        OutlinedButton(
+                                            onClick = {
+                                                onDismiss()
+                                                onClearImage()
+                                            },
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .height(52.dp),
+                                            shape = RoundedCornerShape(14.dp),
+                                        ) {
+                                            Icon(
+                                                Icons.Default.Delete,
+                                                contentDescription = null,
+                                                modifier = Modifier.size(20.dp),
+                                                tint = MaterialTheme.colorScheme.error
+                                            )
+                                            Text(
+                                                text = clearLabel,
+                                                modifier = Modifier.padding(start = 8.dp),
+                                                color = MaterialTheme.colorScheme.error
+                                            )
+                                        }
+                                    }
                                 }
+    
+                                // Banner 与模块信息区域的分隔线
+                                HorizontalDivider(
+                                    modifier = Modifier.padding(top = 20.dp, bottom = 4.dp),
+                                    color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
+                                )
                             }
-
-                            // Banner 与模块信息区域的分隔线
-                            HorizontalDivider(
-                                modifier = Modifier.padding(top = 20.dp, bottom = 4.dp),
-                                color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
-                            )
-                        }
-
-                        if (onSaveModuleInfo != null && onResetModuleInfo != null) {
-                            // 分隔标题 — 模块信息
-                            Text(
-                                text = customInfoTitle,
-                                style = MaterialTheme.typography.titleSmall,
-                                modifier = Modifier.padding(top = 8.dp, bottom = 8.dp)
-                            )
-
-                            // 模块信息输入字段
-                            var name by remember { mutableStateOf(initialModuleInfo.name) }
-                            var version by remember { mutableStateOf(initialModuleInfo.version) }
-                            var author by remember { mutableStateOf(initialModuleInfo.author) }
-                            var description by remember { mutableStateOf(initialModuleInfo.description) }
-
-                            // 上次保存/加载的基线值（用于变更检测）
-                            var baselineName by remember { mutableStateOf(initialModuleInfo.name) }
-                            var baselineVersion by remember { mutableStateOf(initialModuleInfo.version) }
-                            var baselineAuthor by remember { mutableStateOf(initialModuleInfo.author) }
-                            var baselineDescription by remember { mutableStateOf(initialModuleInfo.description) }
-
-                            LaunchedEffect(initialModuleInfo) {
-                                name = initialModuleInfo.name
-                                version = initialModuleInfo.version
-                                author = initialModuleInfo.author
-                                description = initialModuleInfo.description
-                                baselineName = initialModuleInfo.name
-                                baselineVersion = initialModuleInfo.version
-                                baselineAuthor = initialModuleInfo.author
-                                baselineDescription = initialModuleInfo.description
-                            }
-
-                            val textFieldShape = RoundedCornerShape(50f)
-
-                            OutlinedTextField(
-                                value = name,
-                                onValueChange = { name = it },
-                                label = { Text(customInfoNameLabel) },
-                                singleLine = true,
-                                shape = textFieldShape,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(bottom = 8.dp)
-                            )
-
-                            OutlinedTextField(
-                                value = version,
-                                onValueChange = { version = it },
-                                label = { Text(customInfoVersionLabel) },
-                                singleLine = true,
-                                shape = textFieldShape,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(bottom = 8.dp)
-                            )
-
-                            OutlinedTextField(
-                                value = author,
-                                onValueChange = { author = it },
-                                label = { Text(customInfoAuthorLabel) },
-                                singleLine = true,
-                                shape = textFieldShape,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(bottom = 8.dp)
-                            )
-
-                            OutlinedTextField(
-                                value = description,
-                                onValueChange = { description = it },
-                                label = { Text(customInfoDescriptionLabel) },
-                                maxLines = 2,
-                                shape = textFieldShape,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(bottom = 16.dp)
-                            )
-
-                            // 底部按钮行
-                            val hasChanges = name != baselineName || version != baselineVersion ||
-                                    author != baselineAuthor || description != baselineDescription
-                            val hasNonBlank = name.isNotBlank() || version.isNotBlank() ||
-                                    author.isNotBlank() || description.isNotBlank()
-
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.End
-                            ) {
-                                TextButton(onClick = onDismiss) {
-                                    Text(stringResource(android.R.string.cancel))
+    
+                            if (onSaveModuleInfo != null && onResetModuleInfo != null) {
+                                // 分隔标题 — 模块信息
+                                Text(
+                                    text = customInfoTitle,
+                                    style = MaterialTheme.typography.titleSmall,
+                                    modifier = Modifier.padding(top = 8.dp, bottom = 8.dp)
+                                )
+    
+                                // 模块信息输入字段
+                                var name by remember { mutableStateOf(initialModuleInfo.name) }
+                                var version by remember { mutableStateOf(initialModuleInfo.version) }
+                                var author by remember { mutableStateOf(initialModuleInfo.author) }
+                                var description by remember { mutableStateOf(initialModuleInfo.description) }
+    
+                                // 上次保存/加载的基线值（用于变更检测）
+                                var baselineName by remember { mutableStateOf(initialModuleInfo.name) }
+                                var baselineVersion by remember { mutableStateOf(initialModuleInfo.version) }
+                                var baselineAuthor by remember { mutableStateOf(initialModuleInfo.author) }
+                                var baselineDescription by remember { mutableStateOf(initialModuleInfo.description) }
+    
+                                LaunchedEffect(initialModuleInfo) {
+                                    name = initialModuleInfo.name
+                                    version = initialModuleInfo.version
+                                    author = initialModuleInfo.author
+                                    description = initialModuleInfo.description
+                                    baselineName = initialModuleInfo.name
+                                    baselineVersion = initialModuleInfo.version
+                                    baselineAuthor = initialModuleInfo.author
+                                    baselineDescription = initialModuleInfo.description
                                 }
-                                TextButton(
-                                    onClick = {
-                                        customInfoReloadKey?.value = (customInfoReloadKey?.value ?: 0) + 1
-                                        onDismiss()
-                                        onResetModuleInfo()
-                                    },
-                                    enabled = hasChanges || hasSavedCustomInfo
+    
+                                val textFieldShape = RoundedCornerShape(50f)
+    
+                                OutlinedTextField(
+                                    value = name,
+                                    onValueChange = { name = it },
+                                    label = { Text(customInfoNameLabel) },
+                                    singleLine = true,
+                                    shape = textFieldShape,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(bottom = 8.dp)
+                                )
+    
+                                OutlinedTextField(
+                                    value = version,
+                                    onValueChange = { version = it },
+                                    label = { Text(customInfoVersionLabel) },
+                                    singleLine = true,
+                                    shape = textFieldShape,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(bottom = 8.dp)
+                                )
+    
+                                OutlinedTextField(
+                                    value = author,
+                                    onValueChange = { author = it },
+                                    label = { Text(customInfoAuthorLabel) },
+                                    singleLine = true,
+                                    shape = textFieldShape,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(bottom = 8.dp)
+                                )
+    
+                                OutlinedTextField(
+                                    value = description,
+                                    onValueChange = { description = it },
+                                    label = { Text(customInfoDescriptionLabel) },
+                                    maxLines = 2,
+                                    shape = textFieldShape,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(bottom = 16.dp)
+                                )
+    
+                                // 底部按钮行
+                                val hasChanges = name != baselineName || version != baselineVersion ||
+                                        author != baselineAuthor || description != baselineDescription
+                                val hasNonBlank = name.isNotBlank() || version.isNotBlank() ||
+                                        author.isNotBlank() || description.isNotBlank()
+    
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.End
                                 ) {
-                                    Text(resetLabel)
+                                    TextButton(onClick = onDismiss) {
+                                        Text(stringResource(android.R.string.cancel))
+                                    }
+                                    TextButton(
+                                        onClick = {
+                                            customInfoReloadKey?.value = (customInfoReloadKey?.value ?: 0) + 1
+                                            onDismiss()
+                                            onResetModuleInfo()
+                                        },
+                                        enabled = hasChanges || hasSavedCustomInfo
+                                    ) {
+                                        Text(resetLabel)
+                                    }
+                                    TextButton(
+                                        onClick = {
+                                            customInfoReloadKey?.value = (customInfoReloadKey?.value ?: 0) + 1
+                                            onDismiss()
+                                            onSaveModuleInfo(ModuleInfoData(name, version, author, description))
+                                        },
+                                        enabled = hasNonBlank && hasChanges
+                                    ) {
+                                        Text(saveLabel)
+                                    }
                                 }
-                                TextButton(
-                                    onClick = {
-                                        customInfoReloadKey?.value = (customInfoReloadKey?.value ?: 0) + 1
-                                        onDismiss()
-                                        onSaveModuleInfo(ModuleInfoData(name, version, author, description))
-                                    },
-                                    enabled = hasNonBlank && hasChanges
+                            } else {
+                                // 仅取消按钮
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.End
                                 ) {
-                                    Text(saveLabel)
-                                }
-                            }
-                        } else {
-                            // 仅取消按钮
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.End
-                            ) {
-                                TextButton(onClick = onDismiss) {
-                                    Text(stringResource(android.R.string.cancel))
+                                    TextButton(onClick = onDismiss) {
+                                        Text(stringResource(android.R.string.cancel))
+                                    }
                                 }
                             }
                         }
                     }
+    
+                    // 背景模糊
+                    val dialogWindowProvider = LocalView.current.parent as DialogWindowProvider
+                    APDialogBlurBehindUtils.setupWindowBlurListener(dialogWindowProvider.window)
                 }
-
-                // 背景模糊
-                val dialogWindowProvider = LocalView.current.parent as DialogWindowProvider
-                APDialogBlurBehindUtils.setupWindowBlurListener(dialogWindowProvider.window)
-            }
+                }
         }
     }
 }
