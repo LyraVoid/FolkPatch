@@ -8,6 +8,7 @@ import androidx.compose.runtime.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import me.bmax.apatch.R
+import me.bmax.apatch.util.FsUtils
 import me.bmax.apatch.util.SafeUriResolver
 import java.io.File
 import java.io.FileOutputStream
@@ -1068,10 +1069,8 @@ object BackgroundManager {
     private fun clearOldFiles(context: Context, baseName: String) {
         val extensions = listOf(".jpg", ".png", ".gif", ".webp", ".mp4", ".webm", ".mkv")
         extensions.forEach { ext ->
-            val file = File(context.filesDir, "$baseName$ext")
-            if (file.exists()) {
-                file.delete()
-            }
+            // 路径被同名目录占用时 delete() 必然失败，交给 FsUtils 递归清理并留日志
+            FsUtils.deleteQuietly(File(context.filesDir, "$baseName$ext"))
         }
     }
     
@@ -1439,28 +1438,38 @@ object BackgroundManager {
     private suspend fun saveImageToInternalStorage(context: Context, uri: Uri, targetFile: File): Uri? {
         return withContext(Dispatchers.IO) {
             try {
-                val inputStream = SafeUriResolver.openInputStream(context, uri) ?: return@withContext null
-                // val file = getBackgroundFile(context) // Use targetFile instead
+                // 写入前兜底：父目录可能不可用（同名文件占位/被清理），目标路径可能被同名目录占用
+                FsUtils.prepareTargetFile(targetFile)
 
-                FileOutputStream(targetFile).use { outputStream ->
-                    val buffer = ByteArray(8 * 1024)
-                    var read: Int
-                    while (inputStream.read(buffer).also { read = it } != -1) {
-                        outputStream.write(buffer, 0, read)
+                SafeUriResolver.openInputStream(context, uri).use { inputStream ->
+                    FileOutputStream(targetFile).use { outputStream ->
+                        val buffer = ByteArray(8 * 1024)
+                        var read: Int
+                        while (inputStream.read(buffer).also { read = it } != -1) {
+                            outputStream.write(buffer, 0, read)
+                        }
+                        outputStream.flush()
                     }
-                    outputStream.flush()
                 }
-                inputStream.close()
+
+                // 校验落盘结果，空文件视为失败，避免持久化失效 URI
+                if (!targetFile.exists() || targetFile.length() == 0L) {
+                    Log.e(TAG, "保存图片到内部存储失败: 目标文件为空 ${targetFile.absolutePath}")
+                    FsUtils.deleteQuietly(targetFile)
+                    return@withContext null
+                }
 
                 // 返回带时间戳的URI，确保Compose重组
                 val fileUri = Uri.fromFile(targetFile).buildUpon()
                     .appendQueryParameter("t", System.currentTimeMillis().toString())
                     .build()
-                    
+
                 Log.d(TAG, "图片保存成功，文件URI: $fileUri")
                 fileUri
             } catch (e: Exception) {
                 Log.e(TAG, "保存图片到内部存储失败: ${e.message}", e)
+                // 写到一半失败时清理残缺文件，防止读取端加载坏图
+                FsUtils.deleteQuietly(targetFile)
                 null
             }
         }

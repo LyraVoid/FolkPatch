@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.util.MusicManager
+import me.bmax.apatch.util.FsUtils
 import me.bmax.apatch.util.SafeUriResolver
 import me.bmax.apatch.util.BottomBarIconConfig
 import org.json.JSONObject
@@ -58,7 +59,12 @@ internal object ThemeIO {
         return withContext(Dispatchers.IO) {
             val cacheDir = File(context.cacheDir, "theme_export")
             if (cacheDir.exists()) cacheDir.deleteRecursively()
-            cacheDir.mkdirs()
+            try {
+                FsUtils.ensureDirectory(cacheDir)
+            } catch (e: Exception) {
+                Log.e(TAG, "Cannot create export cache dir: ${cacheDir.absolutePath}", e)
+                return@withContext false
+            }
 
             try {
                 // 1. Collect Config
@@ -652,7 +658,7 @@ internal object ThemeIO {
                             }
                             
                             val destFile = File(context.filesDir, "background$ext")
-                            bgFile.copyTo(destFile, overwrite = true)
+                            FsUtils.hardenedCopy(bgFile, destFile)
                             // Update URI to point to local file with timestamp to force refresh
                              val fileUri = Uri.fromFile(destFile).buildUpon()
                                 .appendQueryParameter("t", System.currentTimeMillis().toString())
@@ -695,7 +701,7 @@ internal object ThemeIO {
                             }
                             
                             val destFile = File(context.filesDir, "grid_working_card_background$ext")
-                            bgFile.copyTo(destFile, overwrite = true)
+                            FsUtils.hardenedCopy(bgFile, destFile)
                             // Update URI
                              val fileUri = Uri.fromFile(destFile).buildUpon()
                                 .appendQueryParameter("t", System.currentTimeMillis().toString())
@@ -731,8 +737,8 @@ internal object ThemeIO {
                                 }
                                 
                                 val destFile = File(context.filesDir, "$bgName$ext")
-                                bgFile.copyTo(destFile, overwrite = true)
-                                
+                                FsUtils.hardenedCopy(bgFile, destFile)
+
                                 val fileUri = Uri.fromFile(destFile).buildUpon()
                                     .appendQueryParameter("t", System.currentTimeMillis().toString())
                                     .build()
@@ -771,7 +777,7 @@ internal object ThemeIO {
                             BackgroundManager.clearVideoBackground(context)
                             
                             val destFile = File(context.filesDir, "video_background$ext")
-                            videoFile.copyTo(destFile, overwrite = true)
+                            FsUtils.hardenedCopy(videoFile, destFile)
                             
                             val fileUri = Uri.fromFile(destFile).toString()
                             BackgroundConfig.updateVideoBackgroundUri(fileUri)
@@ -801,7 +807,7 @@ internal object ThemeIO {
                             }
                             
                             val destFile = File(context.filesDir, "title_image$ext")
-                            titleImageFile.copyTo(destFile, overwrite = true)
+                            FsUtils.hardenedCopy(titleImageFile, destFile)
                             
                             val fileUri = Uri.fromFile(destFile).buildUpon()
                                 .appendQueryParameter("t", System.currentTimeMillis().toString())
@@ -849,7 +855,7 @@ internal object ThemeIO {
                          if (source.exists()) {
                              dashboardExtensions.forEach { File(context.filesDir, "dashboard_card_bg$it").delete() }
                              val destination = File(context.filesDir, "dashboard_card_bg$ext")
-                             source.copyTo(destination, overwrite = true)
+                             FsUtils.hardenedCopy(source, destination)
                              BackgroundConfig.updateDashboardCardBgUri(Uri.fromFile(destination).buildUpon()
                                  .appendQueryParameter("t", System.currentTimeMillis().toString()).build().toString())
                              dashboardBgFound = true
@@ -884,7 +890,7 @@ internal object ThemeIO {
                                 }
 
                                 val destFile = File(context.filesDir, "$bgName$ext")
-                                bgFile.copyTo(destFile, overwrite = true)
+                                FsUtils.hardenedCopy(bgFile, destFile)
 
                                 val fileUri = Uri.fromFile(destFile).buildUpon()
                                     .appendQueryParameter("t", System.currentTimeMillis().toString())
@@ -928,7 +934,7 @@ internal object ThemeIO {
                     val musicFile = File(cacheDir, musicFilename)
                     if (musicFile.exists()) {
                          val destFile = File(MusicConfig.getMusicDir(context), musicFilename)
-                         musicFile.copyTo(destFile, overwrite = true)
+                         FsUtils.hardenedCopy(musicFile, destFile)
                          MusicConfig.setMusicFilenameValue(musicFilename)
                     }
                 }
@@ -950,7 +956,7 @@ internal object ThemeIO {
                     val soundEffectFile = File(cacheDir, soundEffectFilename)
                     if (soundEffectFile.exists()) {
                         val destFile = File(SoundEffectConfig.getSoundEffectDir(context), soundEffectFilename)
-                        soundEffectFile.copyTo(destFile, overwrite = true)
+                        FsUtils.hardenedCopy(soundEffectFile, destFile)
                         SoundEffectConfig.setFilenameValue(soundEffectFilename)
                     }
                 }
@@ -970,7 +976,7 @@ internal object ThemeIO {
                             val iconFile = File(cacheDir, filename)
                             if (iconFile.exists()) {
                                 val destFile = File(context.filesDir, filename)
-                                iconFile.copyTo(destFile, overwrite = true)
+                                FsUtils.hardenedCopy(iconFile, destFile)
                                 val fileUri = Uri.fromFile(destFile).toString()
                                 APApplication.sharedPreferences.edit()
                                     .putString("nav_icon_$destName", fileUri)

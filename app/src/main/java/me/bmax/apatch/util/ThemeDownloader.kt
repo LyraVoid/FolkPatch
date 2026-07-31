@@ -131,9 +131,8 @@ class ThemeDownloader(private val context: Context) {
             getSafeDownloadsDir(context),
             "FolkPatch/Themes"
         )
-        if (!externalDir.exists()) {
-            externalDir.mkdirs()
-        }
+        runCatching { ensureDirectory(externalDir) }
+            .onFailure { Log.w(TAG, "Failed to prepare external themes dir", it) }
         return externalDir
     }
 
@@ -144,9 +143,8 @@ class ThemeDownloader(private val context: Context) {
         val safeAuthor = sanitizeFilename(author)
         val safeThemeName = sanitizeFilename(themeName)
         val themeDir = File(getExternalThemesDir(), "$safeAuthor/$safeThemeName")
-        if (!themeDir.exists()) {
-            themeDir.mkdirs()
-        }
+        runCatching { ensureDirectory(themeDir) }
+            .onFailure { Log.w(TAG, "Failed to prepare external theme dir", it) }
         return File(themeDir, "${sanitizeFilename(themeName)}.fpt")
     }
 
