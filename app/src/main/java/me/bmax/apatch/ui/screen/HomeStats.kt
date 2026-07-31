@@ -125,6 +125,7 @@ fun HomeScreenStats(
                 if (isInstalled) {
                     SystemMonitoringSection(uiState.systemMonitor, timeSeries)
                 }
+                HomeBottomSpacer()
             }
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 if (isInstalled) {
@@ -134,6 +135,7 @@ fun HomeScreenStats(
                 if (!hideApatchCard) {
                     LearnMoreCardV4()
                 }
+                HomeBottomSpacer()
             }
         }
     } else {
@@ -161,6 +163,7 @@ fun HomeScreenStats(
             if (!hideApatchCard) {
                 LearnMoreCardV4()
             }
+            HomeBottomSpacer()
         }
     }
 }
@@ -715,6 +718,4 @@ private fun StatsGridTopSection(
     if (kpState != APApplication.State.UNKNOWN_STATE && apState != APApplication.State.UNKNOWN_STATE && apState != APApplication.State.ANDROIDPATCH_INSTALLED) {
         AStatusCard(apState)
     }
-
-    HomeBottomSpacer()
 }
