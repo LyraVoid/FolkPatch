@@ -426,6 +426,43 @@
     <string name="home_more_menu_about">حول</string>
     <string name="home_more_menu_document">توثيق</string>
 
+    <string name="home_more_menu_plugin">المكونات الإضافية</string>
+
+    <!-- Plugin strings -->
+    <string name="plugin_title">المكونات الإضافية</string>
+    <string name="plugin_refresh">تحديث</string>
+    <string name="plugin_summary_title">مكونات Lua خفيفة الوزن</string>
+    <string name="plugin_summary_desc">ممكّن %1$d · الإجمالي %2$d</string>
+    <string name="plugin_state_enabled">ممكّن</string>
+    <string name="plugin_state_disabled">معطّل</string>
+    <string name="plugin_empty">لا توجد مكونات إضافية مثبتة</string>
+    <string name="plugin_empty_hint">ضع main.lua في /data/adb/plugins/&lt;id&gt;/ لإضافة مكوّن.</string>
+    <string name="plugin_load_failed">فشل تحميل المكونات الإضافية</string>
+    <string name="plugin_manage_summary">إدارة مكونات Lua خفيفة الوزن</string>
+    <string name="plugin_install">تثبيت المكوّن</string>
+    <string name="plugin_install_success">تم تثبيت المكوّن</string>
+    <string name="plugin_install_failed">فشل تثبيت المكوّن</string>
+    <string name="plugin_uninstall_title">إلغاء تثبيت المكوّن</string>
+    <string name="plugin_uninstall">إلغاء التثبيت</string>
+    <string name="plugin_uninstall_confirm">إلغاء تثبيت المكوّن %1$s؟</string>
+    <string name="plugin_uninstall_success">تمت إزالة المكوّن</string>
+    <string name="plugin_uninstall_failed">فشل إزالة المكوّن</string>
+    <string name="plugin_action">تشغيل</string>
+    <string name="plugin_action_success">تم تنفيذ العملية</string>
+    <string name="plugin_action_failed">فشل تنفيذ العملية</string>
+    <string name="plugin_quick_action_success">تم التنفيذ بنجاح</string>
+    <string name="plugin_quick_action_failed">فشل التنفيذ</string>
+    <string name="plugin_config">إعداد</string>
+    <string name="plugin_config_title">إعداد %1$s</string>
+    <string name="plugin_config_saved">تم حفظ الإعدادات</string>
+    <string name="plugin_log_title">مخرجات التنفيذ</string>
+    <string name="plugin_log_empty">لا توجد سجلات تنفيذ بعد</string>
+    <string name="plugin_log_page_title">سجلات المكونات</string>
+    <string name="plugin_log_all_empty">لم تُنتج أي مكونات سجلات بعد</string>
+    <string name="plugin_log_clear">مسح السجلات</string>
+    <string name="plugin_log_cleared">تم مسح السجلات</string>
+    <string name="plugin_log_export">تصدير السجلات</string>
+
     <string name="home_dialog_uninstall_title">إلغاء التثبيت</string>
     
     <string name="home_dialog_uninstall_ap_only">إلغاء تثبيت التصحيح فقط</string>

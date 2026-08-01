@@ -222,6 +222,20 @@ pub fn execute(cli: &Args) -> Result<()> {
     Ok(())
 }
 
+/// Set a single property, bypassing property_service read-only checks.
+pub fn set_prop(name: &str, value: &str) -> Result<()> {
+    sys_prop::init().context("Failed to initialize system property API")?;
+    let rp = ResetProp {
+        skip_svc: true,
+        persistent: false,
+        persist_only: false,
+        verbose: false,
+        show_context: false,
+    };
+    rp.set(name, value)
+        .with_context(|| format!("Failed to set {name}"))
+}
+
 /// Load system.prop file using internal resetprop API.
 ///
 /// Equivalent to `resetprop -n --file <path>`.

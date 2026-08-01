@@ -53,6 +53,21 @@ Get started quickly with our comprehensive documentation. Whether it's installat
 - [x] KPM: Kernel module system (supports inline-hook and syscall-table-hook), supports automatic loading
 - [x] Download popular APM or KPM through the store
 
+### 🧩 Plugin System (Lua)
+
+Plugins are lightweight extensions sitting between APM and KPM: no system file modification, no kernel injection — just Lua callbacks running in the `apd` lifecycle.
+
+- Storage: `/data/adb/plugins/<id>/`
+- Package: zip containing `plugin.json` (manifest) + `main.lua` (entry script)
+- Features: enable/disable, quick actions, user config UI, persistent execution logs (exportable)
+- API: `exec`, `getprop`, `setprop`, `read_file`, `write_file`, `sysctl`, `chmod`, `mkdir`, `rm`, `start_daemon`, `get_config`, `set_config`
+- Lifecycle: `post_fs_data`, `service`, `boot_completed`, plus optional `main` daemon
+- Examples: `examples/plugins/hello-plugin/` and `examples/plugins/cache-cleaner/`
+
+```sh
+apd plugin list / install / uninstall / enable / disable / run / action / log / clear-log
+```
+
 ### ⚡ Technical Features
 - [x] Based on [KernelPatch](https://github.com/bmax121/KernelPatch/)
 

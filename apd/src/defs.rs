@@ -33,6 +33,8 @@ pub const NETISOLATE_ENABLE_FILE: &str = concatcp!(ADB_DIR, "fp/netisolate/enabl
 pub const NETISOLATE_UIDS_FILE: &str = concatcp!(ADB_DIR, "fp/netisolate/uids");
 
 pub const MODULE_DIR: &str = concatcp!(ADB_DIR, "modules/");
+pub const PLUGIN_DIR: &str = concatcp!(ADB_DIR, "plugins/");
+pub const PLUGIN_STAGE_DIR: &str = concatcp!(ADB_DIR, "plugins_stage/");
 pub const AP_MAGIC_MOUNT_SOURCE: &str = concatcp!(WORKING_DIR, "magic_mount");
 
 // warning: this directory should not change, or you need to change the code in module_installer.sh!!!

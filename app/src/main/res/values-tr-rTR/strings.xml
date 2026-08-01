@@ -418,6 +418,43 @@ Bol şans! Ayrıca, aşağıdaki belge butonuna tıklamak kesinlikle doğru!</st
     <string name="home_more_menu_about">Hakkında</string>
     <string name="home_more_menu_document">Belge</string>
 
+    <string name="home_more_menu_plugin">Eklentiler</string>
+
+    <!-- Plugin strings -->
+    <string name="plugin_title">Eklentiler</string>
+    <string name="plugin_refresh">Yenile</string>
+    <string name="plugin_summary_title">Hafif Lua eklentileri</string>
+    <string name="plugin_summary_desc">%1$d etkin · %2$d toplam</string>
+    <string name="plugin_state_enabled">Etkin</string>
+    <string name="plugin_state_disabled">Devre dışı</string>
+    <string name="plugin_empty">Yüklü eklenti yok</string>
+    <string name="plugin_empty_hint">Eklemek için /data/adb/plugins/&lt;id&gt;/ altına bir main.lua yerleştirin.</string>
+    <string name="plugin_load_failed">Eklentiler yüklenemedi</string>
+    <string name="plugin_manage_summary">Hafif Lua eklentilerini yönet</string>
+    <string name="plugin_install">Eklenti yükle</string>
+    <string name="plugin_install_success">Eklenti yüklendi</string>
+    <string name="plugin_install_failed">Eklenti yükleme başarısız</string>
+    <string name="plugin_uninstall_title">Eklentiyi kaldır</string>
+    <string name="plugin_uninstall">Kaldır</string>
+    <string name="plugin_uninstall_confirm">%1$s eklentisi kaldırılsın mı?</string>
+    <string name="plugin_uninstall_success">Eklenti kaldırıldı</string>
+    <string name="plugin_uninstall_failed">Eklenti kaldırılamadı</string>
+    <string name="plugin_action">Çalıştır</string>
+    <string name="plugin_action_success">İşlem yürütüldü</string>
+    <string name="plugin_action_failed">İşlem başarısız</string>
+    <string name="plugin_quick_action_success">Başarıyla yürütüldü</string>
+    <string name="plugin_quick_action_failed">Yürütme başarısız</string>
+    <string name="plugin_config">Yapılandır</string>
+    <string name="plugin_config_title">%1$s yapılandır</string>
+    <string name="plugin_config_saved">Yapılandırma kaydedildi</string>
+    <string name="plugin_log_title">Yürütme Çıktısı</string>
+    <string name="plugin_log_empty">Henüz yürütme günlüğü yok</string>
+    <string name="plugin_log_page_title">Eklenti Günlükleri</string>
+    <string name="plugin_log_all_empty">Henüz hiçbir eklenti günlük üretmedi</string>
+    <string name="plugin_log_clear">Günlükleri temizle</string>
+    <string name="plugin_log_cleared">Günlükler temizlendi</string>
+    <string name="plugin_log_export">Günlükleri dışa aktar</string>
+
     <string name="home_dialog_uninstall_title">Kaldır</string>
     
     <string name="home_dialog_uninstall_ap_only">Yalnızca yamayı kaldır</string>

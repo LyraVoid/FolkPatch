@@ -9,6 +9,7 @@ mod metamodule;
 mod module;
 mod module_config;
 mod package;
+mod plugin;
 #[cfg(any(target_os = "linux", target_os = "android"))]
 mod pty;
 mod resetprop;

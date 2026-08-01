@@ -412,6 +412,43 @@ KernelPatch 这道菜需要用 boot 主料来烹饪。
     <string name="home_more_menu_about">关于</string>
     <string name="home_more_menu_document">菜谱文档</string>
 
+    <string name="home_more_menu_plugin">菜谱插件</string>
+
+    <!-- Plugin strings -->
+    <string name="plugin_title">菜谱插件</string>
+    <string name="plugin_refresh">刷新菜单</string>
+    <string name="plugin_summary_title">轻量 Lua 调味术</string>
+    <string name="plugin_summary_desc">已上 %1$d 道 · 共 %2$d 道</string>
+    <string name="plugin_state_enabled">已上架</string>
+    <string name="plugin_state_disabled">已下架</string>
+    <string name="plugin_empty">菜单上还没有插件</string>
+    <string name="plugin_empty_hint">将 main.lua 放入 /data/adb/plugins/&lt;id&gt;/ 即可上架新菜。</string>
+    <string name="plugin_load_failed">菜单加载失败</string>
+    <string name="plugin_manage_summary">管理轻量 Lua 调味插件</string>
+    <string name="plugin_install">上架插件</string>
+    <string name="plugin_install_success">插件已上架</string>
+    <string name="plugin_install_failed">插件上架失败</string>
+    <string name="plugin_uninstall_title">撤下插件</string>
+    <string name="plugin_uninstall">撤下</string>
+    <string name="plugin_uninstall_confirm">确定撤下插件 %1$s？</string>
+    <string name="plugin_uninstall_success">插件已撤下</string>
+    <string name="plugin_uninstall_failed">插件撤下失败</string>
+    <string name="plugin_action">开炒</string>
+    <string name="plugin_action_success">烹饪完成</string>
+    <string name="plugin_action_failed">烹饪失败</string>
+    <string name="plugin_quick_action_success">出锅成功</string>
+    <string name="plugin_quick_action_failed">出锅失败</string>
+    <string name="plugin_config">调味</string>
+    <string name="plugin_config_title">调味 %1$s</string>
+    <string name="plugin_config_saved">调味完成</string>
+    <string name="plugin_log_title">烹饪日志</string>
+    <string name="plugin_log_empty">暂无烹饪记录</string>
+    <string name="plugin_log_page_title">插件日志</string>
+    <string name="plugin_log_all_empty">所有插件都还没开过火</string>
+    <string name="plugin_log_clear">清空日志</string>
+    <string name="plugin_log_cleared">日志已清空</string>
+    <string name="plugin_log_export">导出日志</string>
+
     <string name="home_dialog_uninstall_title">撤下菜品</string>
 
     <string name="home_dialog_uninstall_ap_only">仅撤下配方</string>

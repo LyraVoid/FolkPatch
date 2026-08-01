@@ -416,6 +416,43 @@ KernelPatch는 boot 이미지를 패치해야 합니다.
     <string name="home_more_menu_about">정보</string>
     <string name="home_more_menu_document">문서</string>
 
+    <string name="home_more_menu_plugin">플러그인</string>
+
+    <!-- Plugin strings -->
+    <string name="plugin_title">플러그인</string>
+    <string name="plugin_refresh">새로고침</string>
+    <string name="plugin_summary_title">경량 Lua 플러그인</string>
+    <string name="plugin_summary_desc">%1$d개 활성 · 총 %2$d개</string>
+    <string name="plugin_state_enabled">활성화됨</string>
+    <string name="plugin_state_disabled">비활성화됨</string>
+    <string name="plugin_empty">설치된 플러그인이 없습니다</string>
+    <string name="plugin_empty_hint">main.lua를 /data/adb/plugins/&lt;id&gt;/에 넣어 추가하세요.</string>
+    <string name="plugin_load_failed">플러그인 로드 실패</string>
+    <string name="plugin_manage_summary">경량 Lua 플러그인 관리</string>
+    <string name="plugin_install">플러그인 설치</string>
+    <string name="plugin_install_success">플러그인 설치됨</string>
+    <string name="plugin_install_failed">플러그인 설치 실패</string>
+    <string name="plugin_uninstall_title">플러그인 제거</string>
+    <string name="plugin_uninstall">제거</string>
+    <string name="plugin_uninstall_confirm">플러그인 %1$s을(를) 제거할까요?</string>
+    <string name="plugin_uninstall_success">플러그인 제거됨</string>
+    <string name="plugin_uninstall_failed">플러그인 제거 실패</string>
+    <string name="plugin_action">실행</string>
+    <string name="plugin_action_success">작업 실행됨</string>
+    <string name="plugin_action_failed">작업 실패</string>
+    <string name="plugin_quick_action_success">실행 성공</string>
+    <string name="plugin_quick_action_failed">실행 실패</string>
+    <string name="plugin_config">구성</string>
+    <string name="plugin_config_title">%1$s 구성</string>
+    <string name="plugin_config_saved">구성 저장됨</string>
+    <string name="plugin_log_title">실행 출력</string>
+    <string name="plugin_log_empty">아직 실행 로그가 없음</string>
+    <string name="plugin_log_page_title">플러그인 로그</string>
+    <string name="plugin_log_all_empty">아직 로그를 생성한 플러그인이 없음</string>
+    <string name="plugin_log_clear">로그 지우기</string>
+    <string name="plugin_log_cleared">로그 지워짐</string>
+    <string name="plugin_log_export">로그 내보내기</string>
+
     <string name="home_dialog_uninstall_title">삭제</string>
     
     <string name="home_dialog_uninstall_ap_only">패치만 삭제</string>

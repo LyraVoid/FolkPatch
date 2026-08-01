@@ -420,6 +420,42 @@ Here are some possible reasons for authentication failure—please check which o
     <string name="home_more_menu_feedback_or_suggestion">Feedback or suggestion</string>
     <string name="home_more_menu_about">About</string>
     <string name="home_more_menu_document">Document</string>
+    <string name="home_more_menu_plugin">Plugins</string>
+
+    <!-- Plugin strings -->
+    <string name="plugin_title">Plugins</string>
+    <string name="plugin_refresh">Refresh</string>
+    <string name="plugin_summary_title">Lightweight Lua plugins</string>
+    <string name="plugin_summary_desc">%1$d enabled · %2$d total</string>
+    <string name="plugin_state_enabled">Enabled</string>
+    <string name="plugin_state_disabled">Disabled</string>
+    <string name="plugin_empty">No plugins installed</string>
+    <string name="plugin_empty_hint">Place a main.lua under /data/adb/plugins/&lt;id&gt;/ to add one.</string>
+    <string name="plugin_load_failed">Failed to load plugins</string>
+    <string name="plugin_manage_summary">Manage lightweight Lua plugins</string>
+    <string name="plugin_install">Install plugin</string>
+    <string name="plugin_install_success">Plugin installed</string>
+    <string name="plugin_install_failed">Plugin installation failed</string>
+    <string name="plugin_uninstall_title">Uninstall plugin</string>
+    <string name="plugin_uninstall">Uninstall</string>
+    <string name="plugin_uninstall_confirm">Uninstall the %1$s plugin?</string>
+    <string name="plugin_uninstall_success">Plugin removed</string>
+    <string name="plugin_uninstall_failed">Failed to remove plugin</string>
+    <string name="plugin_action">Run</string>
+    <string name="plugin_action_success">Action executed</string>
+    <string name="plugin_action_failed">Action failed</string>
+    <string name="plugin_quick_action_success">Executed successfully</string>
+    <string name="plugin_quick_action_failed">Execution failed</string>
+    <string name="plugin_config">Configure</string>
+    <string name="plugin_config_title">Configure %1$s</string>
+    <string name="plugin_config_saved">Configuration saved</string>
+    <string name="plugin_log_title">Execution Output</string>
+    <string name="plugin_log_empty">No execution log yet</string>
+    <string name="plugin_log_page_title">Plugin Logs</string>
+    <string name="plugin_log_all_empty">No plugin has produced any log yet</string>
+    <string name="plugin_log_clear">Clear logs</string>
+    <string name="plugin_log_cleared">Logs cleared</string>
+    <string name="plugin_log_export">Export logs</string>
 
     <string name="home_dialog_uninstall_title">Uninstall</string>
     

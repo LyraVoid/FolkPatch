@@ -425,6 +425,43 @@ Aquí hay algunas posibles razones para el fallo de autenticación—por favor v
     <string name="home_more_menu_about">Acerca de</string>
     <string name="home_more_menu_document">Documentación</string>
 
+    <string name="home_more_menu_plugin">Complementos</string>
+
+    <!-- Plugin strings -->
+    <string name="plugin_title">Complementos</string>
+    <string name="plugin_refresh">Actualizar</string>
+    <string name="plugin_summary_title">Complementos Lua ligeros</string>
+    <string name="plugin_summary_desc">%1$d activados · %2$d en total</string>
+    <string name="plugin_state_enabled">Activado</string>
+    <string name="plugin_state_disabled">Desactivado</string>
+    <string name="plugin_empty">No hay complementos instalados</string>
+    <string name="plugin_empty_hint">Coloca un main.lua en /data/adb/plugins/&lt;id&gt;/ para añadir uno.</string>
+    <string name="plugin_load_failed">Error al cargar los complementos</string>
+    <string name="plugin_manage_summary">Gestionar complementos Lua ligeros</string>
+    <string name="plugin_install">Instalar complemento</string>
+    <string name="plugin_install_success">Complemento instalado</string>
+    <string name="plugin_install_failed">Error al instalar el complemento</string>
+    <string name="plugin_uninstall_title">Desinstalar complemento</string>
+    <string name="plugin_uninstall">Desinstalar</string>
+    <string name="plugin_uninstall_confirm">¿Desinstalar el complemento %1$s?</string>
+    <string name="plugin_uninstall_success">Complemento eliminado</string>
+    <string name="plugin_uninstall_failed">Error al eliminar el complemento</string>
+    <string name="plugin_action">Ejecutar</string>
+    <string name="plugin_action_success">Acción ejecutada</string>
+    <string name="plugin_action_failed">La acción falló</string>
+    <string name="plugin_quick_action_success">Ejecutado correctamente</string>
+    <string name="plugin_quick_action_failed">La ejecución falló</string>
+    <string name="plugin_config">Configurar</string>
+    <string name="plugin_config_title">Configurar %1$s</string>
+    <string name="plugin_config_saved">Configuración guardada</string>
+    <string name="plugin_log_title">Salida de ejecución</string>
+    <string name="plugin_log_empty">Aún no hay registro de ejecución</string>
+    <string name="plugin_log_page_title">Registros de complementos</string>
+    <string name="plugin_log_all_empty">Ningún complemento ha generado registros aún</string>
+    <string name="plugin_log_clear">Borrar registros</string>
+    <string name="plugin_log_cleared">Registros borrados</string>
+    <string name="plugin_log_export">Exportar registros</string>
+
     <string name="home_dialog_uninstall_title">Desinstalar</string>
     
     <string name="home_dialog_uninstall_ap_only">Desinstalar solo parche</string>

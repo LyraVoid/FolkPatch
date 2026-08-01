@@ -435,6 +435,43 @@ KernelPatch 需要修补 boot 镜像才能工作喵。
     <string name="home_more_menu_about">关于人家哒</string>
     <string name="home_more_menu_document">文档喵</string>
 
+    <string name="home_more_menu_plugin">插件喵</string>
+
+    <!-- Plugin strings -->
+    <string name="plugin_title">插件喵</string>
+    <string name="plugin_refresh">刷新喵</string>
+    <string name="plugin_summary_title">轻量级 Lua 插件喵</string>
+    <string name="plugin_summary_desc">已启用 %1$d 个 · 共 %2$d 个喵</string>
+    <string name="plugin_state_enabled">已启用喵</string>
+    <string name="plugin_state_disabled">已停用喵</string>
+    <string name="plugin_empty">还没装插件喵</string>
+    <string name="plugin_empty_hint">把 main.lua 放到 /data/adb/plugins/&lt;id&gt;/ 就能加插件喵。</string>
+    <string name="plugin_load_failed">插件加载失败了喵</string>
+    <string name="plugin_manage_summary">管理轻量级 Lua 插件喵</string>
+    <string name="plugin_install">安装插件喵</string>
+    <string name="plugin_install_success">插件装好啦喵</string>
+    <string name="plugin_install_failed">插件安装失败喵</string>
+    <string name="plugin_uninstall_title">卸载插件喵</string>
+    <string name="plugin_uninstall">卸载喵</string>
+    <string name="plugin_uninstall_confirm">确定卸载插件 %1$s 喵？</string>
+    <string name="plugin_uninstall_success">插件已卸掉喵</string>
+    <string name="plugin_uninstall_failed">插件卸载失败喵</string>
+    <string name="plugin_action">运行喵</string>
+    <string name="plugin_action_success">操作执行成功喵</string>
+    <string name="plugin_action_failed">操作执行失败喵</string>
+    <string name="plugin_quick_action_success">执行成功喵</string>
+    <string name="plugin_quick_action_failed">执行失败喵</string>
+    <string name="plugin_config">配置喵</string>
+    <string name="plugin_config_title">配置 %1$s 喵</string>
+    <string name="plugin_config_saved">配置已保存喵</string>
+    <string name="plugin_log_title">执行输出喵</string>
+    <string name="plugin_log_empty">暂无执行日志喵</string>
+    <string name="plugin_log_page_title">插件日志喵</string>
+    <string name="plugin_log_all_empty">所有插件都还没日志喵</string>
+    <string name="plugin_log_clear">清除日志喵</string>
+    <string name="plugin_log_cleared">日志已清除喵</string>
+    <string name="plugin_log_export">导出日志喵</string>
+
     <string name="home_dialog_uninstall_title">卸载喵！</string>
     
     <string name="home_dialog_uninstall_ap_only">只卸补丁喵</string>

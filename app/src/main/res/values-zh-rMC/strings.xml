@@ -410,6 +410,43 @@ KernelPatch 附魔需要 boot 方块作为材料。
     <string name="home_more_menu_about">世界概况</string>
     <string name="home_more_menu_document">Wiki百科</string>
 
+    <string name="home_more_menu_plugin">红石插件</string>
+
+    <!-- Plugin strings -->
+    <string name="plugin_title">红石插件</string>
+    <string name="plugin_refresh">刷新</string>
+    <string name="plugin_summary_title">轻量级 Lua 插件</string>
+    <string name="plugin_summary_desc">已激活 %1$d · 共 %2$d</string>
+    <string name="plugin_state_enabled">已激活</string>
+    <string name="plugin_state_disabled">已停用</string>
+    <string name="plugin_empty">背包里还没有插件</string>
+    <string name="plugin_empty_hint">把 main.lua 放进 /data/adb/plugins/&lt;id&gt;/ 就能装进背包。</string>
+    <string name="plugin_load_failed">插件加载失败</string>
+    <string name="plugin_manage_summary">管理轻量级 Lua 插件</string>
+    <string name="plugin_install">装进背包</string>
+    <string name="plugin_install_success">插件装好了</string>
+    <string name="plugin_install_failed">插件没装上</string>
+    <string name="plugin_uninstall_title">扔掉插件</string>
+    <string name="plugin_uninstall">扔掉</string>
+    <string name="plugin_uninstall_confirm">确定扔掉插件 %1$s？</string>
+    <string name="plugin_uninstall_success">插件扔掉了</string>
+    <string name="plugin_uninstall_failed">插件没扔掉</string>
+    <string name="plugin_action">激活</string>
+    <string name="plugin_action_success">操作激活成功</string>
+    <string name="plugin_action_failed">操作激活失败</string>
+    <string name="plugin_quick_action_success">执行成功</string>
+    <string name="plugin_quick_action_failed">执行失败</string>
+    <string name="plugin_config">配置</string>
+    <string name="plugin_config_title">配置 %1$s</string>
+    <string name="plugin_config_saved">配置已保存</string>
+    <string name="plugin_log_title">执行输出</string>
+    <string name="plugin_log_empty">暂无执行日志</string>
+    <string name="plugin_log_page_title">插件日志</string>
+    <string name="plugin_log_all_empty">所有插件都还没产生日志</string>
+    <string name="plugin_log_clear">清除日志</string>
+    <string name="plugin_log_cleared">日志已清除</string>
+    <string name="plugin_log_export">导出日志</string>
+
     <string name="home_dialog_uninstall_title">卸载模组</string>
 
     <string name="home_dialog_uninstall_ap_only">只卸补丁</string>

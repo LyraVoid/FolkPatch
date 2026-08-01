@@ -304,6 +304,9 @@ pub fn on_post_data_fs(superkey: Option<String>) -> Result<()> {
     if let Err(e) = lua::exec_stage_lua("post-fs-data", true, superkey.as_deref().unwrap_or("")) {
         warn!("Failed to exec post-fs-data lua: {}", e);
     }
+    if let Err(e) = lua::exec_plugin_stage("post-fs-data") {
+        warn!("Failed to exec plugin post-fs-data: {}", e);
+    }
     // load system.prop
     if let Err(e) = module::load_system_prop() {
         warn!("load system.prop failed: {}", e);
@@ -348,6 +351,9 @@ fn run_stage(stage: &str, superkey: Option<String>, block: bool) {
     }
     if let Err(e) = lua::exec_stage_lua(stage, block, superkey.as_deref().unwrap_or("")) {
         warn!("Failed to exec {stage} lua: {e}");
+    }
+    if let Err(e) = lua::exec_plugin_stage(stage) {
+        warn!("Failed to exec plugin {stage}: {e}");
     }
 }
 

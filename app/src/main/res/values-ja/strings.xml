@@ -376,6 +376,43 @@ KernelPatch は boot イメージをパッチする必要があります。
     <string name="home_more_menu_feedback_or_suggestion">フィードバックまたは提案</string>
     <string name="home_more_menu_about">アプリについて</string>
     <string name="home_more_menu_document">ドキュメント</string>
+    <string name="home_more_menu_plugin">プラグイン</string>
+
+    <!-- Plugin strings -->
+    <string name="plugin_title">プラグイン</string>
+    <string name="plugin_refresh">更新</string>
+    <string name="plugin_summary_title">軽量 Lua プラグイン</string>
+    <string name="plugin_summary_desc">有効 %1$d · 合計 %2$d</string>
+    <string name="plugin_state_enabled">有効</string>
+    <string name="plugin_state_disabled">無効</string>
+    <string name="plugin_empty">プラグインはインストールされていません</string>
+    <string name="plugin_empty_hint">/data/adb/plugins/&lt;id&gt;/ に main.lua を配置すると追加できます。</string>
+    <string name="plugin_load_failed">プラグインの読み込みに失敗しました</string>
+    <string name="plugin_manage_summary">軽量 Lua プラグインを管理</string>
+    <string name="plugin_install">プラグインをインストール</string>
+    <string name="plugin_install_success">プラグインをインストールしました</string>
+    <string name="plugin_install_failed">プラグインのインストールに失敗</string>
+    <string name="plugin_uninstall_title">プラグインをアンインストール</string>
+    <string name="plugin_uninstall">アンインストール</string>
+    <string name="plugin_uninstall_confirm">プラグイン %1$s をアンインストールしますか？</string>
+    <string name="plugin_uninstall_success">プラグインを削除しました</string>
+    <string name="plugin_uninstall_failed">プラグインの削除に失敗</string>
+    <string name="plugin_action">実行</string>
+    <string name="plugin_action_success">操作を実行しました</string>
+    <string name="plugin_action_failed">操作に失敗しました</string>
+    <string name="plugin_quick_action_success">実行に成功しました</string>
+    <string name="plugin_quick_action_failed">実行に失敗しました</string>
+    <string name="plugin_config">設定</string>
+    <string name="plugin_config_title">%1$s を設定</string>
+    <string name="plugin_config_saved">設定を保存しました</string>
+    <string name="plugin_log_title">実行出力</string>
+    <string name="plugin_log_empty">実行ログはまだありません</string>
+    <string name="plugin_log_page_title">プラグインログ</string>
+    <string name="plugin_log_all_empty">プラグインはまだログを出力していません</string>
+    <string name="plugin_log_clear">ログをクリア</string>
+    <string name="plugin_log_cleared">ログをクリアしました</string>
+    <string name="plugin_log_export">ログをエクスポート</string>
+
     <string name="home_dialog_uninstall_title">アンインストール</string>
     <string name="home_dialog_uninstall_ap_only">パッチのアンインストールのみ</string>
     <string name="home_dialog_uninstall_all">完全にアンインストール</string>

@@ -386,6 +386,43 @@ Kontynuować mimo to?</string>
     <string name="home_more_menu_feedback_or_suggestion">Opinie bądź sugestie</string>
     <string name="home_more_menu_about">O aplikacji</string>
     <string name="home_more_menu_document">Dokumentacja</string>
+    <string name="home_more_menu_plugin">Wtyczki</string>
+
+    <!-- Plugin strings -->
+    <string name="plugin_title">Wtyczki</string>
+    <string name="plugin_refresh">Odśwież</string>
+    <string name="plugin_summary_title">Lekkie wtyczki Lua</string>
+    <string name="plugin_summary_desc">Włączone: %1$d · Łącznie: %2$d</string>
+    <string name="plugin_state_enabled">Włączona</string>
+    <string name="plugin_state_disabled">Wyłączona</string>
+    <string name="plugin_empty">Brak zainstalowanych wtyczek</string>
+    <string name="plugin_empty_hint">Umieść main.lua w /data/adb/plugins/&lt;id&gt;/ aby dodać wtyczkę.</string>
+    <string name="plugin_load_failed">Nie udało się załadować wtyczek</string>
+    <string name="plugin_manage_summary">Zarządzaj lekkimi wtyczkami Lua</string>
+    <string name="plugin_install">Zainstaluj wtyczkę</string>
+    <string name="plugin_install_success">Wtyczka zainstalowana</string>
+    <string name="plugin_install_failed">Instalacja wtyczki nie powiodła się</string>
+    <string name="plugin_uninstall_title">Odinstaluj wtyczkę</string>
+    <string name="plugin_uninstall">Odinstaluj</string>
+    <string name="plugin_uninstall_confirm">Odinstalować wtyczkę %1$s?</string>
+    <string name="plugin_uninstall_success">Wtyczka usunięta</string>
+    <string name="plugin_uninstall_failed">Nie udało się usunąć wtyczki</string>
+    <string name="plugin_action">Uruchom</string>
+    <string name="plugin_action_success">Wykonano akcję</string>
+    <string name="plugin_action_failed">Akcja nie powiodła się</string>
+    <string name="plugin_quick_action_success">Wykonano pomyślnie</string>
+    <string name="plugin_quick_action_failed">Wykonanie nie powiodło się</string>
+    <string name="plugin_config">Konfiguruj</string>
+    <string name="plugin_config_title">Konfiguruj %1$s</string>
+    <string name="plugin_config_saved">Konfiguracja zapisana</string>
+    <string name="plugin_log_title">Dane wyjściowe</string>
+    <string name="plugin_log_empty">Brak dziennika wykonania</string>
+    <string name="plugin_log_page_title">Dzienniki wtyczek</string>
+    <string name="plugin_log_all_empty">Żadna wtyczka nie wygenerowała jeszcze dziennika</string>
+    <string name="plugin_log_clear">Wyczyść dzienniki</string>
+    <string name="plugin_log_cleared">Dzienniki wyczyszczone</string>
+    <string name="plugin_log_export">Eksportuj dzienniki</string>
+
     <string name="home_dialog_uninstall_title">Odinstaluj</string>
     <string name="home_dialog_uninstall_ap_only">Odinstaluj tylko łatkę</string>
     <string name="home_dialog_uninstall_ap_only_desc">Usuń tylko AndroidPatch, zachowując menedżer.</string>

@@ -1,4 +1,4 @@
-use crate::{defs, event, lua, module, module_config, supercall, utils};
+use crate::{defs, event, lua, module, module_config, plugin, supercall, utils};
 #[cfg(target_os = "android")]
 use android_logger::Config;
 use anyhow::{Context, Result};
@@ -27,6 +27,12 @@ enum Commands {
     Module {
         #[command(subcommand)]
         command: Module,
+    },
+
+    /// Manage lightweight Lua plugins
+    Plugin {
+        #[command(subcommand)]
+        command: Plugin,
     },
 
     /// Trigger `post-fs-data` event
@@ -106,6 +112,63 @@ enum Module {
         #[command(subcommand)]
         command: ModuleConfigCmd,
     },
+}
+
+#[derive(clap::Subcommand, Debug)]
+enum Plugin {
+    /// List installed plugins
+    List,
+    /// Install plugin from <ZIP>
+    Install {
+        /// plugin zip file path
+        zip: String,
+    },
+    /// Uninstall plugin <id>
+    Uninstall {
+        /// plugin id
+        id: String,
+    },
+    /// Enable plugin <id>
+    Enable { id: String },
+    /// Disable plugin <id>
+    Disable { id: String },
+    /// Run a plugin callback
+    Run { id: String, function: String },
+    /// Run a plugin callback as a background daemon loop
+    Daemon {
+        /// plugin id
+        id: String,
+        /// callback function name
+        function: String,
+        /// interval between runs in seconds
+        interval: u64,
+    },
+    /// Run the plugin's action callback
+    Action { id: String },
+    /// Show the last execution log of a plugin
+    Log { id: String },
+    /// Clear the log of a plugin (or all plugins if id is "all")
+    ClearLog { id: String },
+    /// Manage plugin user configuration
+    Config {
+        /// target plugin id
+        #[arg(long)]
+        id: Option<String>,
+        #[command(subcommand)]
+        command: PluginConfigCmd,
+    },
+}
+
+#[derive(clap::Subcommand, Debug)]
+enum PluginConfigCmd {
+    /// List all config entries of the current plugin
+    List,
+    /// Get a config value
+    Get { key: String },
+    /// Set a config value
+    Set { key: String, value: String },
+    /// Delete a config entry
+    Delete { key: String },
 }
 
 #[derive(clap::Subcommand, Debug)]
@@ -300,6 +363,107 @@ pub fn run() -> Result<()> {
                                 module_config::ConfigType::Persist
                             };
                             module_config::clear_config(&module_id, config_type)
+                        }
+                    }
+                }
+            }
+        }
+
+        Commands::Plugin { command } => {
+            #[cfg(any(target_os = "linux", target_os = "android"))]
+            utils::switch_mnt_ns(1)?;
+            match command {
+                Plugin::List => plugin::list_plugins_json(),
+                Plugin::Install { zip } => plugin::install_plugin(&zip),
+                Plugin::Uninstall { id } => plugin::uninstall_plugin(&id),
+                Plugin::Enable { id } => lua::set_plugin_state(&id, true),
+                Plugin::Disable { id } => lua::set_plugin_state(&id, false),
+                Plugin::Run { id, function } => lua::run_plugin_callback(&id, &function),
+                Plugin::Daemon {
+                    id,
+                    function,
+                    interval,
+                } => lua::run_plugin_daemon(&id, &function, interval),
+                Plugin::Action { id } => lua::run_plugin_callback(&id, "action"),
+                Plugin::Log { id } => {
+                    let log_path = plugin::plugin_path(&id)?.join("last_output.log");
+                    if log_path.exists() {
+                        let content = std::fs::read_to_string(&log_path)?;
+                        print!("{content}");
+                    } else {
+                        println!("No log found for plugin '{id}'");
+                    }
+                    Ok(())
+                }
+                Plugin::ClearLog { id } => {
+                    if id == "all" {
+                        let plugins_dir = std::path::Path::new(defs::PLUGIN_DIR);
+                        if plugins_dir.exists() {
+                            for entry in std::fs::read_dir(plugins_dir)? {
+                                let path = entry?.path();
+                                if path.is_dir() {
+                                    let log = path.join("last_output.log");
+                                    if log.exists() {
+                                        let _ = std::fs::remove_file(&log);
+                                    }
+                                }
+                            }
+                        }
+                        println!("All plugin logs cleared");
+                    } else {
+                        let log_path = plugin::plugin_path(&id)?.join("last_output.log");
+                        if log_path.exists() {
+                            std::fs::remove_file(&log_path)?;
+                        }
+                        println!("Log cleared for plugin '{id}'");
+                    }
+                    Ok(())
+                }
+                Plugin::Config { id, command } => {
+                    let plugin_id = match id {
+                        Some(id) => id,
+                        None => std::env::var("AP_PLUGIN").map_err(|_| {
+                            anyhow::anyhow!(
+                                "This command must be run in the context of a plugin or passed --id <id>"
+                            )
+                        })?,
+                    };
+                    match command {
+                        PluginConfigCmd::List => {
+                            let map = plugin::read_user_config(&plugin_id)?;
+                            if map.is_empty() {
+                                println!("No config entries found");
+                            } else {
+                                for (key, value) in map {
+                                    let raw = match &value {
+                                        serde_json::Value::String(s) => s.clone(),
+                                        other => other.to_string(),
+                                    };
+                                    println!("{key}={raw}");
+                                }
+                            }
+                            Ok(())
+                        }
+                        PluginConfigCmd::Get { key } => {
+                            let map = plugin::read_user_config(&plugin_id)?;
+                            match map.get(&key) {
+                                Some(v) => {
+                                    // Print raw string without JSON quotes
+                                    let raw = match v {
+                                        serde_json::Value::String(s) => s.clone(),
+                                        other => other.to_string(),
+                                    };
+                                    println!("{raw}");
+                                    Ok(())
+                                }
+                                None => anyhow::bail!("Key '{key}' not found"),
+                            }
+                        }
+                        PluginConfigCmd::Set { key, value } => {
+                            plugin::set_user_config(&plugin_id, &key, &value)
+                        }
+                        PluginConfigCmd::Delete { key } => {
+                            plugin::delete_user_config(&plugin_id, &key)
                         }
                     }
                 }

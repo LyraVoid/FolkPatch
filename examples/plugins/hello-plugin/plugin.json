@@ -1,0 +1,8 @@
+{
+  "id": "hello-plugin",
+  "name": "Hello Plugin",
+  "author": "FolkPatch",
+  "version": "1.0.0",
+  "description": "Example plugin demonstrating the plugin API",
+  "license": "MIT"
+}

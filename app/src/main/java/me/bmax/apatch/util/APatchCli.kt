@@ -373,6 +373,92 @@ fun undoUninstallModule(id: String): Boolean {
     return result
 }
 
+fun listPlugins(): String = runCatching {
+    val shell = getRootShell()
+    shell.newJob().add("${APApplication.APD_PATH} plugin list").to(ArrayList(), null).exec().out
+        .joinToString("\n")
+}.getOrElse { e ->
+    Log.e(TAG, "listPlugins failed: ${e.message}")
+    ""
+}
+
+fun setPluginState(id: String, enable: Boolean): Boolean {
+    val cmd = if (enable) "plugin enable $id" else "plugin disable $id"
+    val result = execApd(cmd, true)
+    Log.i(TAG, "$cmd result: $result")
+    return result
+}
+
+fun runPluginCallback(id: String, function: String): Boolean {
+    val cmd = "plugin run $id $function"
+    val result = execApd(cmd, true)
+    Log.i(TAG, "run plugin $id $function result: $result")
+    return result
+}
+
+/**
+ * Run a plugin callback and capture its stdout output.
+ * Returns a pair of (success, output).
+ */
+fun runPluginCallbackWithOutput(id: String, function: String): Pair<Boolean, String> {
+    val cmd = "${APApplication.APD_PATH} plugin run $id $function"
+    return runCatching {
+        val result = rootShellForResult(cmd)
+        val output = result.out.joinToString("\n").trim()
+        val success = result.isSuccess
+        Log.i(TAG, "run plugin $id $function success=$success output_len=${output.length}")
+        success to output
+    }.getOrElse { e ->
+        Log.e(TAG, "runPluginCallbackWithOutput failed: ${e.message}")
+        false to ""
+    }
+}
+
+fun installPlugin(zipPath: String): Boolean {
+    val cmd = "plugin install $zipPath"
+    val result = execApd(cmd, true)
+    Log.i(TAG, "install plugin $zipPath result: $result")
+    return result
+}
+
+fun uninstallPlugin(id: String): Boolean {
+    val cmd = "plugin uninstall $id"
+    val result = execApd(cmd, true)
+    Log.i(TAG, "uninstall plugin $id result: $result")
+    return result
+}
+
+fun getPluginConfig(id: String, key: String): String {
+    val cmd = "${APApplication.APD_PATH} plugin config --id $id get $key"
+    return runCatching {
+        rootShellForResult(cmd).out.joinToString("\n").trim()
+    }.getOrElse { e ->
+        Log.e(TAG, "getPluginConfig failed: ${e.message}")
+        ""
+    }
+}
+
+fun setPluginConfig(id: String, key: String, value: String): Boolean {
+    // Escape single quotes for safe shell passing.
+    val escaped = value.replace("'", "'\\''")
+    val cmd = "plugin config --id $id set $key '$escaped'"
+    val result = execApd(cmd, true)
+    Log.i(TAG, "setPluginConfig $id $key result: $result")
+    return result
+}
+
+fun runPluginAction(id: String): Boolean = runPluginCallback(id, "action")
+
+fun getPluginLog(id: String): String {
+    val cmd = "${APApplication.APD_PATH} plugin log $id"
+    return runCatching {
+        rootShellForResult(cmd).out.joinToString("\n").trim()
+    }.getOrElse { e ->
+        Log.e(TAG, "getPluginLog failed: ${e.message}")
+        ""
+    }
+}
+
 fun installModule(
     uri: Uri, type: MODULE_TYPE, onFinish: (Boolean) -> Unit, onStdout: (String) -> Unit, onStderr: (String) -> Unit
 ): Boolean {

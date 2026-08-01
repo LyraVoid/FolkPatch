@@ -423,6 +423,43 @@ Dưới đây là một số nguyên nhân có thể gây ra thất bại xác t
     <string name="home_more_menu_about">Về</string>
     <string name="home_more_menu_document">Tài liệu</string>
 
+    <string name="home_more_menu_plugin">Plugin</string>
+
+    <!-- Plugin strings -->
+    <string name="plugin_title">Plugin</string>
+    <string name="plugin_refresh">Làm mới</string>
+    <string name="plugin_summary_title">Plugin Lua nhẹ</string>
+    <string name="plugin_summary_desc">Đã bật %1$d · Tổng %2$d</string>
+    <string name="plugin_state_enabled">Đã bật</string>
+    <string name="plugin_state_disabled">Đã tắt</string>
+    <string name="plugin_empty">Chưa cài đặt plugin</string>
+    <string name="plugin_empty_hint">Đặt main.lua vào /data/adb/plugins/&lt;id&gt;/ để thêm plugin.</string>
+    <string name="plugin_load_failed">Không thể tải plugin</string>
+    <string name="plugin_manage_summary">Quản lý plugin Lua nhẹ</string>
+    <string name="plugin_install">Cài đặt plugin</string>
+    <string name="plugin_install_success">Đã cài đặt plugin</string>
+    <string name="plugin_install_failed">Cài đặt plugin thất bại</string>
+    <string name="plugin_uninstall_title">Gỡ cài đặt plugin</string>
+    <string name="plugin_uninstall">Gỡ cài đặt</string>
+    <string name="plugin_uninstall_confirm">Gỡ cài đặt plugin %1$s?</string>
+    <string name="plugin_uninstall_success">Đã gỡ plugin</string>
+    <string name="plugin_uninstall_failed">Không thể gỡ plugin</string>
+    <string name="plugin_action">Chạy</string>
+    <string name="plugin_action_success">Đã thực thi thao tác</string>
+    <string name="plugin_action_failed">Thao tác thất bại</string>
+    <string name="plugin_quick_action_success">Thực thi thành công</string>
+    <string name="plugin_quick_action_failed">Thực thi thất bại</string>
+    <string name="plugin_config">Cấu hình</string>
+    <string name="plugin_config_title">Cấu hình %1$s</string>
+    <string name="plugin_config_saved">Đã lưu cấu hình</string>
+    <string name="plugin_log_title">Kết quả thực thi</string>
+    <string name="plugin_log_empty">Chưa có nhật ký thực thi</string>
+    <string name="plugin_log_page_title">Nhật ký Plugin</string>
+    <string name="plugin_log_all_empty">Chưa có plugin nào tạo nhật ký</string>
+    <string name="plugin_log_clear">Xóa nhật ký</string>
+    <string name="plugin_log_cleared">Đã xóa nhật ký</string>
+    <string name="plugin_log_export">Xuất nhật ký</string>
+
     <string name="home_dialog_uninstall_title">Gỡ cài đặt</string>
     
     <string name="home_dialog_uninstall_ap_only">Chỉ gỡ bản vá</string>

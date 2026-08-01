@@ -426,6 +426,43 @@ Berikut adalah beberapa kemungkinan penyebab kegagalan autentikasi—silakan cek
     <string name="home_more_menu_about">Tentang Aplikasi</string>
     <string name="home_more_menu_document">Dokumentasi</string>
 
+    <string name="home_more_menu_plugin">Plugin</string>
+
+    <!-- Plugin strings -->
+    <string name="plugin_title">Plugin</string>
+    <string name="plugin_refresh">Segarkan</string>
+    <string name="plugin_summary_title">Plugin Lua ringan</string>
+    <string name="plugin_summary_desc">%1$d aktif · %2$d total</string>
+    <string name="plugin_state_enabled">Aktif</string>
+    <string name="plugin_state_disabled">Nonaktif</string>
+    <string name="plugin_empty">Belum ada plugin terpasang</string>
+    <string name="plugin_empty_hint">Letakkan main.lua di /data/adb/plugins/&lt;id&gt;/ untuk menambahnya.</string>
+    <string name="plugin_load_failed">Gagal memuat plugin</string>
+    <string name="plugin_manage_summary">Kelola plugin Lua ringan</string>
+    <string name="plugin_install">Pasang plugin</string>
+    <string name="plugin_install_success">Plugin terpasang</string>
+    <string name="plugin_install_failed">Pemasangan plugin gagal</string>
+    <string name="plugin_uninstall_title">Copot plugin</string>
+    <string name="plugin_uninstall">Copot</string>
+    <string name="plugin_uninstall_confirm">Copot plugin %1$s?</string>
+    <string name="plugin_uninstall_success">Plugin dihapus</string>
+    <string name="plugin_uninstall_failed">Gagal menghapus plugin</string>
+    <string name="plugin_action">Jalankan</string>
+    <string name="plugin_action_success">Aksi dieksekusi</string>
+    <string name="plugin_action_failed">Aksi gagal</string>
+    <string name="plugin_quick_action_success">Berhasil dieksekusi</string>
+    <string name="plugin_quick_action_failed">Eksekusi gagal</string>
+    <string name="plugin_config">Konfigurasi</string>
+    <string name="plugin_config_title">Konfigurasi %1$s</string>
+    <string name="plugin_config_saved">Konfigurasi disimpan</string>
+    <string name="plugin_log_title">Keluaran Eksekusi</string>
+    <string name="plugin_log_empty">Belum ada log eksekusi</string>
+    <string name="plugin_log_page_title">Log Plugin</string>
+    <string name="plugin_log_all_empty">Belum ada plugin yang menghasilkan log</string>
+    <string name="plugin_log_clear">Bersihkan log</string>
+    <string name="plugin_log_cleared">Log dibersihkan</string>
+    <string name="plugin_log_export">Ekspor log</string>
+
     <string name="home_dialog_uninstall_title">Hapus Instalasi</string>
 
     <string name="home_dialog_uninstall_ap_only">Hapus Patch Saja</string>

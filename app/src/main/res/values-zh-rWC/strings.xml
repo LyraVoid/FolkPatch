@@ -423,6 +423,43 @@ KernelPatch 大法需要以 boot 灵胎为引。
     <string name="home_more_menu_about">仙门叙略</string>
     <string name="home_more_menu_document">道藏</string>
 
+    <string name="home_more_menu_plugin">仙法插件</string>
+
+    <!-- Plugin strings -->
+    <string name="plugin_title">仙法插件</string>
+    <string name="plugin_refresh">刷新仙册</string>
+    <string name="plugin_summary_title">轻量 Lua 仙法</string>
+    <string name="plugin_summary_desc">已启 %1$d · 共 %2$d</string>
+    <string name="plugin_state_enabled">已启</string>
+    <string name="plugin_state_disabled">已禁</string>
+    <string name="plugin_empty">尚未炼成插件</string>
+    <string name="plugin_empty_hint">将 main.lua 置于 /data/adb/plugins/&lt;id&gt;/ 即可炼成插件。</string>
+    <string name="plugin_load_failed">插件引渡失败</string>
+    <string name="plugin_manage_summary">管理轻量 Lua 仙法插件</string>
+    <string name="plugin_install">炼入插件</string>
+    <string name="plugin_install_success">插件炼成</string>
+    <string name="plugin_install_failed">插件炼成失败</string>
+    <string name="plugin_uninstall_title">废去插件</string>
+    <string name="plugin_uninstall">废去</string>
+    <string name="plugin_uninstall_confirm">确定废去插件 %1$s？</string>
+    <string name="plugin_uninstall_success">插件已废去</string>
+    <string name="plugin_uninstall_failed">插件废去失败</string>
+    <string name="plugin_action">运转</string>
+    <string name="plugin_action_success">法门运转成功</string>
+    <string name="plugin_action_failed">法门运转失败</string>
+    <string name="plugin_quick_action_success">运转成功</string>
+    <string name="plugin_quick_action_failed">运转失败</string>
+    <string name="plugin_config">仙设</string>
+    <string name="plugin_config_title">仙设 %1$s</string>
+    <string name="plugin_config_saved">仙设已存</string>
+    <string name="plugin_log_title">法门输出</string>
+    <string name="plugin_log_empty">暂无运转日志</string>
+    <string name="plugin_log_page_title">插件仙录</string>
+    <string name="plugin_log_all_empty">诸插件皆无日志</string>
+    <string name="plugin_log_clear">涤清日志</string>
+    <string name="plugin_log_cleared">日志已涤清</string>
+    <string name="plugin_log_export">导出日志</string>
+
     <string name="home_dialog_uninstall_title">废去仙籍</string>
     <string name="home_dialog_uninstall_ap_only">唯废符箓</string>
     <string name="home_dialog_uninstall_ap_only_desc">唯废系统符箓，留仙官</string>

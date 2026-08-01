@@ -113,6 +113,7 @@ import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.AboutScreenDestination
 import com.ramcosta.composedestinations.generated.destinations.InstallModeSelectScreenDestination
 import com.ramcosta.composedestinations.generated.destinations.PatchesDestination
+import com.ramcosta.composedestinations.generated.destinations.PluginScreenDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.withContext
 import me.bmax.apatch.APApplication
@@ -582,6 +583,13 @@ private fun TopBar(
                         text = { Text(stringResource(R.string.home_more_menu_about)) },
                         onClick = {
                             navigator.navigate(AboutScreenDestination)
+                            showDropdownMoreOptions = false
+                        }
+                    )
+                    WallpaperAwareDropdownMenuItem(
+                        text = { Text(stringResource(R.string.home_more_menu_plugin)) },
+                        onClick = {
+                            navigator.navigate(PluginScreenDestination)
                             showDropdownMoreOptions = false
                         }
                     )

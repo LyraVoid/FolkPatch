@@ -53,6 +53,21 @@ FolkPatch - インターフェースの最適化と拡張機能に重視した R
 - [x] KPM: カーネルモジュールシステム（inline-hook と syscall-table-hook をサポート）、自動ロードをサポート
 - [x] ストアから人気のある APM または KPM をダウンロード可能
 
+### 🧩 プラグインシステム（Lua）
+
+プラグインは APM と KPM の中間に位置する軽量な拡張機能です。システムファイルの変更やカーネルへの注入を行わず、`apd` ライフサイクル内で Lua コールバックを実行します。
+
+- 保存先: `/data/adb/plugins/<id>/`
+- パッケージ: `plugin.json`（マニフェスト）+ `main.lua`（エントリスクリプト）を含む zip
+- 機能: 有効/無効、クイックアクション、ユーザー設定 UI、永続的な実行ログ（エクスポート可能）
+- API: `exec`, `getprop`, `setprop`, `read_file`, `write_file`, `sysctl`, `chmod`, `mkdir`, `rm`, `start_daemon`, `get_config`, `set_config`
+- ライフサイクル: `post_fs_data`, `service`, `boot_completed`、オプションの `main` デーモン
+- 例: `examples/plugins/hello-plugin/` および `examples/plugins/cache-cleaner/`
+
+```sh
+apd plugin list / install / uninstall / enable / disable / run / action / log / clear-log
+```
+
 ### ⚡ 技術的特徴
 - [x] [KernelPatch](https://github.com/bmax121/KernelPatch/) に基づいています
 

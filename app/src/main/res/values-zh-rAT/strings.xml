@@ -422,6 +422,43 @@
     <string name="home_more_menu_about">关于</string>
     <string name="home_more_menu_document">文档</string>
 
+    <string name="home_more_menu_plugin">圣光插件</string>
+
+    <!-- Plugin strings -->
+    <string name="plugin_title">圣光插件</string>
+    <string name="plugin_refresh">刷新圣光</string>
+    <string name="plugin_summary_title">轻量 Lua 圣光术</string>
+    <string name="plugin_summary_desc">已启 %1$d · 共 %2$d</string>
+    <string name="plugin_state_enabled">已启</string>
+    <string name="plugin_state_disabled">已禁</string>
+    <string name="plugin_empty">尚未祝福插件</string>
+    <string name="plugin_empty_hint">将 main.lua 置于 /data/adb/plugins/&lt;id&gt;/ 即可祝福插件。</string>
+    <string name="plugin_load_failed">圣光引渡失败</string>
+    <string name="plugin_manage_summary">管理轻量 Lua 圣光插件</string>
+    <string name="plugin_install">祝祷插件</string>
+    <string name="plugin_install_success">插件祝祷成功</string>
+    <string name="plugin_install_failed">插件祝祷失败</string>
+    <string name="plugin_uninstall_title">解除圣契</string>
+    <string name="plugin_uninstall">解除</string>
+    <string name="plugin_uninstall_confirm">确定解除插件 %1$s 的圣契？</string>
+    <string name="plugin_uninstall_success">圣契已解除</string>
+    <string name="plugin_uninstall_failed">圣契解除失败</string>
+    <string name="plugin_action">施行</string>
+    <string name="plugin_action_success">圣术施行成功</string>
+    <string name="plugin_action_failed">圣术施行失败</string>
+    <string name="plugin_quick_action_success">施行成功</string>
+    <string name="plugin_quick_action_failed">施行失败</string>
+    <string name="plugin_config">圣设</string>
+    <string name="plugin_config_title">圣设 %1$s</string>
+    <string name="plugin_config_saved">圣设已存</string>
+    <string name="plugin_log_title">圣光输出</string>
+    <string name="plugin_log_empty">暂无施行日志</string>
+    <string name="plugin_log_page_title">插件圣录</string>
+    <string name="plugin_log_all_empty">诸插件皆无日志</string>
+    <string name="plugin_log_clear">涤净日志</string>
+    <string name="plugin_log_cleared">日志已涤净</string>
+    <string name="plugin_log_export">导出日志</string>
+
     <string name="home_dialog_uninstall_title">解除祝福</string>
     
     <string name="home_dialog_uninstall_ap_only">仅解除天使祝福</string>

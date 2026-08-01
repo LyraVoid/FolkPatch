@@ -427,6 +427,43 @@ KernelPatch требует образ boot для патча.
     <string name="home_more_menu_about">О приложении</string>
     <string name="home_more_menu_document">Документация</string>
 
+    <string name="home_more_menu_plugin">Плагины</string>
+
+    <!-- Plugin strings -->
+    <string name="plugin_title">Плагины</string>
+    <string name="plugin_refresh">Обновить</string>
+    <string name="plugin_summary_title">Лёгкие Lua-плагины</string>
+    <string name="plugin_summary_desc">Включено: %1$d · Всего: %2$d</string>
+    <string name="plugin_state_enabled">Включено</string>
+    <string name="plugin_state_disabled">Отключено</string>
+    <string name="plugin_empty">Плагины не установлены</string>
+    <string name="plugin_empty_hint">Поместите main.lua в /data/adb/plugins/&lt;id&gt;/ чтобы добавить плагин.</string>
+    <string name="plugin_load_failed">Не удалось загрузить плагины</string>
+    <string name="plugin_manage_summary">Управление лёгкими Lua-плагинами</string>
+    <string name="plugin_install">Установить плагин</string>
+    <string name="plugin_install_success">Плагин установлен</string>
+    <string name="plugin_install_failed">Не удалось установить плагин</string>
+    <string name="plugin_uninstall_title">Удалить плагин</string>
+    <string name="plugin_uninstall">Удалить</string>
+    <string name="plugin_uninstall_confirm">Удалить плагин %1$s?</string>
+    <string name="plugin_uninstall_success">Плагин удалён</string>
+    <string name="plugin_uninstall_failed">Не удалось удалить плагин</string>
+    <string name="plugin_action">Запустить</string>
+    <string name="plugin_action_success">Действие выполнено</string>
+    <string name="plugin_action_failed">Действие не выполнено</string>
+    <string name="plugin_quick_action_success">Выполнено успешно</string>
+    <string name="plugin_quick_action_failed">Выполнение не удалось</string>
+    <string name="plugin_config">Настроить</string>
+    <string name="plugin_config_title">Настроить %1$s</string>
+    <string name="plugin_config_saved">Настройки сохранены</string>
+    <string name="plugin_log_title">Вывод выполнения</string>
+    <string name="plugin_log_empty">Журнал выполнения пуст</string>
+    <string name="plugin_log_page_title">Журналы плагинов</string>
+    <string name="plugin_log_all_empty">Ни один плагин ещё не создавал журналы</string>
+    <string name="plugin_log_clear">Очистить журналы</string>
+    <string name="plugin_log_cleared">Журналы очищены</string>
+    <string name="plugin_log_export">Экспорт журналов</string>
+
     <string name="home_dialog_uninstall_title">Удаление</string>
     
     <string name="home_dialog_uninstall_ap_only">Удалить только патч</string>

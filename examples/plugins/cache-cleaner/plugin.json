@@ -1,0 +1,38 @@
+{
+  "id": "cache-cleaner",
+  "name": "Cache Cleaner",
+  "author": "FolkPatch",
+  "version": "1.2.0",
+  "description": "Periodically clears app and system caches",
+  "license": "MIT",
+  "quick_action": {
+    "function": "clean_now",
+    "label": "Clean now",
+    "labels": {
+      "zh": "立即清理",
+      "ja": "今すぐクリーン"
+    }
+  },
+  "config": [
+    {
+      "key": "clean_hour",
+      "label": "Cleaning hour (0-23)",
+      "labels": {
+        "zh": "每日清理时间（0-23 点）",
+        "ja": "クリーニング時間（0-23時）"
+      },
+      "type": "number",
+      "default": 4
+    },
+    {
+      "key": "clear_all",
+      "label": "Also clear caches of running apps",
+      "labels": {
+        "zh": "同时清理正在运行应用的缓存",
+        "ja": "実行中アプリのキャッシュもクリア"
+      },
+      "type": "bool",
+      "default": false
+    }
+  ]
+}
