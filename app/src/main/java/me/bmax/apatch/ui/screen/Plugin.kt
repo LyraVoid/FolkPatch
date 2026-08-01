@@ -17,35 +17,38 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
+import androidx.compose.material.icons.automirrored.outlined.Article
 import androidx.compose.material.icons.outlined.Extension
 import androidx.compose.material.icons.outlined.Refresh
 import androidx.compose.material.icons.outlined.Warning
 import androidx.compose.material.icons.outlined.Add
-import androidx.compose.material.icons.outlined.Article
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.PlayArrow
 import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material3.AlertDialogDefaults
+import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
@@ -63,11 +66,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogProperties
+import androidx.compose.ui.window.DialogWindowProvider
 import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ramcosta.composedestinations.annotation.Destination
@@ -78,8 +84,11 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.ConfirmResult
+import me.bmax.apatch.ui.component.ExpressiveSwitch
 import me.bmax.apatch.ui.component.rememberConfirmDialog
+import me.bmax.apatch.ui.component.splicedLazyColumnGroup
 import me.bmax.apatch.ui.viewmodel.PluginViewModel
+import me.bmax.apatch.util.ui.APDialogBlurBehindUtils
 import me.bmax.apatch.util.ui.showToast
 
 @Destination<RootGraph>
@@ -137,7 +146,7 @@ fun PluginScreen(navigator: DestinationsNavigator) {
                 },
                 actions = {
                     IconButton(onClick = dropUnlessResumed { navigator.navigate(com.ramcosta.composedestinations.generated.destinations.PluginLogScreenDestination) }) {
-                        Icon(Icons.Outlined.Article, contentDescription = stringResource(R.string.plugin_log_title))
+                        Icon(Icons.AutoMirrored.Outlined.Article, contentDescription = stringResource(R.string.plugin_log_title))
                     }
                     IconButton(onClick = { viewModel.fetchPlugins() }) {
                         Icon(Icons.Outlined.Refresh, contentDescription = stringResource(R.string.plugin_refresh))
@@ -184,7 +193,7 @@ fun PluginScreen(navigator: DestinationsNavigator) {
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
                     state = listState,
-                    contentPadding = PaddingValues(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 96.dp),
+                    contentPadding = PaddingValues(top = 8.dp, bottom = 96.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     item {
@@ -193,7 +202,10 @@ fun PluginScreen(navigator: DestinationsNavigator) {
                             totalCount = viewModel.plugins.size,
                         )
                     }
-                    items(viewModel.plugins, key = { it.id }) { plugin ->
+                    splicedLazyColumnGroup(
+                        items = viewModel.plugins,
+                        key = { _, plugin -> plugin.id },
+                    ) { _, plugin ->
                         PluginCard(
                             plugin = plugin,
                             onToggle = { enabled ->
@@ -309,8 +321,10 @@ fun PluginScreen(navigator: DestinationsNavigator) {
 @Composable
 private fun PluginSummaryCard(enabledCount: Int, totalCount: Int) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(20.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+        shape = RoundedCornerShape(32.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer
         )
@@ -356,137 +370,127 @@ private fun PluginCard(
     onViewLog: () -> Unit,
     onRemove: () -> Unit,
 ) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(20.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainer
-        )
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Surface(
-                    shape = RoundedCornerShape(12.dp),
-                    color = MaterialTheme.colorScheme.secondaryContainer
-                ) {
-                    Icon(
-                        imageVector = Icons.Outlined.Extension,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onSecondaryContainer,
-                        modifier = Modifier.padding(8.dp).size(20.dp)
-                    )
-                }
-                Spacer(Modifier.width(12.dp))
-                Column(modifier = Modifier.weight(1f)) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Surface(
+                shape = RoundedCornerShape(12.dp),
+                color = MaterialTheme.colorScheme.secondaryContainer
+            ) {
+                Icon(
+                    imageVector = Icons.Outlined.Extension,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onSecondaryContainer,
+                    modifier = Modifier.padding(8.dp).size(20.dp)
+                )
+            }
+            Spacer(Modifier.width(12.dp))
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = plugin.name,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+                Spacer(Modifier.height(2.dp))
+                val meta = buildList {
+                    add(plugin.id)
+                    if (plugin.version.isNotEmpty()) add(plugin.version)
+                    if (plugin.author.isNotEmpty()) add(plugin.author)
+                }.joinToString(" 路 ")
+                if (meta.isNotEmpty()) {
                     Text(
-                        text = plugin.name,
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.SemiBold,
+                        text = meta,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
-                    Spacer(Modifier.height(2.dp))
-                    val meta = buildList {
-                        add(plugin.id)
-                        if (plugin.version.isNotEmpty()) add(plugin.version)
-                        if (plugin.author.isNotEmpty()) add(plugin.author)
-                    }.joinToString(" · ")
-                    if (meta.isNotEmpty()) {
+                }
+            }
+            Spacer(Modifier.width(12.dp))
+            IconButton(onClick = onViewLog) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Outlined.Article,
+                    contentDescription = stringResource(R.string.plugin_log_title),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+            IconButton(onClick = onRemove) {
+                Icon(
+                    imageVector = Icons.Outlined.Delete,
+                    contentDescription = stringResource(R.string.plugin_uninstall),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+            ExpressiveSwitch(checked = plugin.enabled, onCheckedChange = onToggle)
+        }
+
+        if (plugin.description.isNotEmpty()) {
+            Spacer(Modifier.height(12.dp))
+            Text(
+                text = plugin.description,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
+
+        if (plugin.hasAction || plugin.quickAction != null || plugin.config.isNotEmpty()) {
+            Spacer(Modifier.height(16.dp))
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                if (plugin.quickAction != null) {
+                    // Prominent one-tap quick action button.
+                    FilledTonalButton(
+                        onClick = onQuickAction,
+                        modifier = Modifier.weight(1f),
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.PlayArrow,
+                            contentDescription = null,
+                            modifier = Modifier.size(16.dp)
+                        )
+                        Spacer(Modifier.width(6.dp))
                         Text(
-                            text = meta,
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            text = quickActionLabel(plugin.quickAction),
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                         )
                     }
-                }
-                Spacer(Modifier.width(12.dp))
-                IconButton(onClick = onViewLog) {
-                    Icon(
-                        imageVector = Icons.Outlined.Article,
-                        contentDescription = stringResource(R.string.plugin_log_title),
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
-                IconButton(onClick = onRemove) {
-                    Icon(
-                        imageVector = Icons.Outlined.Delete,
-                        contentDescription = stringResource(R.string.plugin_uninstall),
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
-                Switch(checked = plugin.enabled, onCheckedChange = onToggle)
-            }
-
-            if (plugin.description.isNotEmpty()) {
-                Spacer(Modifier.height(12.dp))
-                Text(
-                    text = plugin.description,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis,
-                )
-            }
-
-            if (plugin.hasAction || plugin.quickAction != null || plugin.config.isNotEmpty()) {
-                Spacer(Modifier.height(16.dp))
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    if (plugin.quickAction != null) {
-                        // Prominent one-tap quick action button.
-                        androidx.compose.material3.Button(
-                            onClick = onQuickAction,
-                            modifier = Modifier.weight(1f),
-                        ) {
-                            Icon(
-                                imageVector = Icons.Outlined.PlayArrow,
-                                contentDescription = null,
-                                modifier = Modifier.size(16.dp)
-                            )
-                            Spacer(Modifier.width(6.dp))
-                            Text(
-                                text = quickActionLabel(plugin.quickAction),
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis,
-                            )
-                        }
-                    } else if (plugin.hasAction) {
-                        androidx.compose.material3.Button(
-                            onClick = onAction,
-                            modifier = Modifier.weight(1f),
-                        ) {
-                            Icon(
-                                imageVector = Icons.Outlined.PlayArrow,
-                                contentDescription = null,
-                                modifier = Modifier.size(16.dp)
-                            )
-                            Spacer(Modifier.width(6.dp))
-                            Text(stringResource(R.string.plugin_action))
-                        }
+                } else if (plugin.hasAction) {
+                    FilledTonalButton(
+                        onClick = onAction,
+                        modifier = Modifier.weight(1f),
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.PlayArrow,
+                            contentDescription = null,
+                            modifier = Modifier.size(16.dp)
+                        )
+                        Spacer(Modifier.width(6.dp))
+                        Text(stringResource(R.string.plugin_action))
                     }
-                    if (plugin.config.isNotEmpty()) {
-                        androidx.compose.material3.OutlinedButton(
-                            onClick = onConfig,
-                            modifier = Modifier.weight(1f),
-                        ) {
-                            Icon(
-                                imageVector = Icons.Outlined.Settings,
-                                contentDescription = null,
-                                modifier = Modifier.size(16.dp)
-                            )
-                            Spacer(Modifier.width(6.dp))
-                            Text(stringResource(R.string.plugin_config))
-                        }
+                }
+                if (plugin.config.isNotEmpty()) {
+                    FilledTonalButton(
+                        onClick = onConfig,
+                        modifier = Modifier.weight(1f),
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.Settings,
+                            contentDescription = null,
+                            modifier = Modifier.size(16.dp)
+                        )
+                        Spacer(Modifier.width(6.dp))
+                        Text(stringResource(R.string.plugin_config))
                     }
                 }
             }
-
-
         }
     }
 }
@@ -562,143 +566,183 @@ private fun PluginConfigDialog(
         mutableStateMapOf<String, String>().apply { putAll(initial) }
     }
 
-    androidx.compose.material3.AlertDialog(
+    BasicAlertDialog(
         onDismissRequest = onDismiss,
-        title = {
-            Text(
-                text = stringResource(R.string.plugin_config_title, plugin.name),
-                style = MaterialTheme.typography.titleMedium,
-            )
-        },
-        text = {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-            ) {
-                plugin.config.forEach { field ->
-                    when (field.type) {
-                        "bool" -> {
-                            val stored = values[field.key]
-                            val checked = when {
-                                stored != null -> stored == "true"
-                                else -> field.default == "true"
-                            }
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                verticalAlignment = Alignment.CenterVertically,
-                            ) {
-                                Text(
-                                    text = configFieldLabel(field),
-                                    style = MaterialTheme.typography.bodyLarge,
-                                    modifier = Modifier.weight(1f),
-                                )
-                                androidx.compose.material3.Switch(
-                                    checked = checked,
-                                    onCheckedChange = { values[field.key] = it.toString() },
-                                )
-                            }
-                        }
-                        "select" -> {
-                            var expanded by remember(field.key) { mutableStateOf(false) }
-                            val current = values[field.key] ?: field.default
-                            Text(text = configFieldLabel(field), style = MaterialTheme.typography.bodyLarge)
-                            Spacer(Modifier.height(4.dp))
-                            ExposedDropdownMenuBox(
-                                expanded = expanded,
-                                onExpandedChange = { expanded = it },
-                            ) {
-                                androidx.compose.material3.OutlinedTextField(
-                                    value = current,
-                                    onValueChange = {},
-                                    readOnly = true,
-                                    modifier = Modifier.fillMaxWidth().menuAnchor(),
-                                    singleLine = true,
-                                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-                                )
-                                androidx.compose.material3.DropdownMenu(
-                                    expanded = expanded,
-                                    onDismissRequest = { expanded = false },
+        properties = DialogProperties(
+            decorFitsSystemWindows = true,
+            usePlatformDefaultWidth = false,
+        )
+    ) {
+        Surface(
+            modifier = Modifier
+                .width(310.dp)
+                .wrapContentHeight(),
+            shape = RoundedCornerShape(30.dp),
+            tonalElevation = AlertDialogDefaults.TonalElevation,
+            color = AlertDialogDefaults.containerColor,
+        ) {
+            Column(modifier = Modifier.padding(24.dp)) {
+                Text(
+                    text = stringResource(R.string.plugin_config_title, plugin.name),
+                    style = MaterialTheme.typography.headlineSmall,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                ) {
+                    plugin.config.forEach { field ->
+                        when (field.type) {
+                            "bool" -> {
+                                val stored = values[field.key]
+                                val checked = when {
+                                    stored != null -> stored == "true"
+                                    else -> field.default == "true"
+                                }
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    verticalAlignment = Alignment.CenterVertically,
                                 ) {
-                                    field.options.forEach { option ->
-                                        androidx.compose.material3.DropdownMenuItem(
-                                            text = { Text(option) },
-                                            onClick = {
-                                                values[field.key] = option
-                                                expanded = false
-                                            },
-                                        )
+                                    Text(
+                                        text = configFieldLabel(field),
+                                        style = MaterialTheme.typography.bodyLarge,
+                                        modifier = Modifier.weight(1f),
+                                    )
+                                    ExpressiveSwitch(
+                                        checked = checked,
+                                        onCheckedChange = { values[field.key] = it.toString() },
+                                    )
+                                }
+                            }
+                            "select" -> {
+                                var expanded by remember(field.key) { mutableStateOf(false) }
+                                val current = values[field.key] ?: field.default
+                                Text(text = configFieldLabel(field), style = MaterialTheme.typography.bodyLarge)
+                                Spacer(Modifier.height(4.dp))
+                                ExposedDropdownMenuBox(
+                                    expanded = expanded,
+                                    onExpandedChange = { expanded = it },
+                                ) {
+                                    androidx.compose.material3.OutlinedTextField(
+                                        value = current,
+                                        onValueChange = {},
+                                        readOnly = true,
+                                        modifier = Modifier.fillMaxWidth().menuAnchor(),
+                                        singleLine = true,
+                                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                                    )
+                                    androidx.compose.material3.DropdownMenu(
+                                        expanded = expanded,
+                                        onDismissRequest = { expanded = false },
+                                    ) {
+                                        field.options.forEach { option ->
+                                            androidx.compose.material3.DropdownMenuItem(
+                                                text = { Text(option) },
+                                                onClick = {
+                                                    values[field.key] = option
+                                                    expanded = false
+                                                },
+                                            )
+                                        }
                                     }
                                 }
                             }
-                        }
-                        else -> {
-                            Text(text = configFieldLabel(field), style = MaterialTheme.typography.bodyLarge)
-                            Spacer(Modifier.height(4.dp))
-                            androidx.compose.material3.OutlinedTextField(
-                                value = values[field.key] ?: field.default,
-                                onValueChange = { values[field.key] = it },
-                                modifier = Modifier.fillMaxWidth(),
-                                singleLine = true,
-                                keyboardOptions = if (field.type == "number") {
-                                    androidx.compose.foundation.text.KeyboardOptions(
-                                        keyboardType = androidx.compose.ui.text.input.KeyboardType.Number
-                                    )
-                                } else {
-                                    androidx.compose.foundation.text.KeyboardOptions.Default
-                                },
-                            )
+                            else -> {
+                                Text(text = configFieldLabel(field), style = MaterialTheme.typography.bodyLarge)
+                                Spacer(Modifier.height(4.dp))
+                                androidx.compose.material3.OutlinedTextField(
+                                    value = values[field.key] ?: field.default,
+                                    onValueChange = { values[field.key] = it },
+                                    modifier = Modifier.fillMaxWidth(),
+                                    singleLine = true,
+                                    keyboardOptions = if (field.type == "number") {
+                                        androidx.compose.foundation.text.KeyboardOptions(
+                                            keyboardType = androidx.compose.ui.text.input.KeyboardType.Number
+                                        )
+                                    } else {
+                                        androidx.compose.foundation.text.KeyboardOptions.Default
+                                    },
+                                )
+                            }
                         }
                     }
                 }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 24.dp),
+                    horizontalArrangement = Arrangement.End,
+                ) {
+                    TextButton(onClick = onDismiss) {
+                        Text(stringResource(android.R.string.cancel))
+                    }
+                    Spacer(Modifier.width(8.dp))
+                    TextButton(onClick = { onConfirm(values.toMap()) }) {
+                        Text(stringResource(android.R.string.ok))
+                    }
+                }
             }
-        },
-        confirmButton = {
-            androidx.compose.material3.TextButton(
-                onClick = { onConfirm(values.toMap()) }
-            ) { Text(stringResource(android.R.string.ok)) }
-        },
-        dismissButton = {
-            androidx.compose.material3.TextButton(onClick = onDismiss) {
-                Text(stringResource(android.R.string.cancel))
-            }
-        },
-    )
+            val dialogWindowProvider = LocalView.current.parent as DialogWindowProvider
+            APDialogBlurBehindUtils.setupWindowBlurListener(dialogWindowProvider.window)
+        }
+    }
 }
 
 /** Dialog that displays plugin execution log output. */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun PluginLogDialog(
     output: String,
     onDismiss: () -> Unit,
 ) {
-    androidx.compose.material3.AlertDialog(
+    BasicAlertDialog(
         onDismissRequest = onDismiss,
-        title = {
-            Text(
-                text = stringResource(R.string.plugin_log_title),
-                style = MaterialTheme.typography.titleMedium,
-            )
-        },
-        text = {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .verticalScroll(rememberScrollState()),
-            ) {
+        properties = DialogProperties(
+            decorFitsSystemWindows = true,
+            usePlatformDefaultWidth = false,
+        )
+    ) {
+        Surface(
+            modifier = Modifier
+                .width(310.dp)
+                .wrapContentHeight(),
+            shape = RoundedCornerShape(30.dp),
+            tonalElevation = AlertDialogDefaults.TonalElevation,
+            color = AlertDialogDefaults.containerColor,
+        ) {
+            Column(modifier = Modifier.padding(24.dp)) {
                 Text(
-                    text = output,
-                    style = MaterialTheme.typography.bodySmall,
-                    fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    text = stringResource(R.string.plugin_log_title),
+                    style = MaterialTheme.typography.headlineSmall,
+                    modifier = Modifier.padding(bottom = 16.dp)
                 )
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .verticalScroll(rememberScrollState()),
+                ) {
+                    Text(
+                        text = output,
+                        style = MaterialTheme.typography.bodySmall,
+                        fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 24.dp),
+                    horizontalArrangement = Arrangement.End,
+                ) {
+                    TextButton(onClick = onDismiss) {
+                        Text(stringResource(android.R.string.ok))
+                    }
+                }
             }
-        },
-        confirmButton = {
-            androidx.compose.material3.TextButton(onClick = onDismiss) {
-                Text(stringResource(android.R.string.ok))
-            }
-        },
-    )
+            val dialogWindowProvider = LocalView.current.parent as DialogWindowProvider
+            APDialogBlurBehindUtils.setupWindowBlurListener(dialogWindowProvider.window)
+        }
+    }
 }
