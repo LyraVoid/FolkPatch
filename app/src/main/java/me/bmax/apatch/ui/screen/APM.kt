@@ -1991,7 +1991,7 @@ private fun ModuleItem(
         showDialog = showFolkBannerDialog,
         onDismiss = { showFolkBannerDialog = false },
         title = folkBannerTitle,
-        showBannerSection = BackgroundConfig.isFolkBannerEnabled,
+        showBannerSection = BackgroundConfig.isBannerEnabled && BackgroundConfig.isFolkBannerEnabled,
         selectLabel = folkBannerSelect,
         clearLabel = folkBannerClear,
         hasExisting = hasFolkBanner,
