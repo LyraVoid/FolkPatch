@@ -1,0 +1,42 @@
+{
+  "id": "log-rotator",
+  "name": "Log Rotator",
+  "author": "FolkPatch",
+  "version": "1.0.0",
+  "description": "Periodically clean old logs in /data/adb/log",
+  "descriptions": {
+    "zh": "定期清理 /data/adb/log 中的旧日志",
+    "ja": "/data/adb/log の古いログを定期的に削除"
+  },
+  "license": "MIT",
+  "quick_action": {
+    "function": "clean_now",
+    "label": "Clean now",
+    "labels": {
+      "zh": "立即清理",
+      "ja": "今すぐクリーン"
+    }
+  },
+  "config": [
+    {
+      "key": "max_days",
+      "label": "Delete logs older than (days)",
+      "labels": {
+        "zh": "清理超过多少天的日志",
+        "ja": "何日前のログを削除"
+      },
+      "type": "number",
+      "default": 7
+    },
+    {
+      "key": "clean_hour",
+      "label": "Daily cleaning hour (0-23)",
+      "labels": {
+        "zh": "每日清理时间（0-23 点）",
+        "ja": "クリーニング時間（0-23時）"
+      },
+      "type": "number",
+      "default": 3
+    }
+  ]
+}
