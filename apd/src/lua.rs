@@ -308,6 +308,114 @@ pub fn set_config_lua(lua: &Lua) -> LuaResult<Function> {
     })
 }
 
+/// `list_dir(path)` — list directory entries, returns a table (array) of names.
+pub fn list_dir_lua(lua: &Lua) -> LuaResult<Function> {
+    lua.create_function(|lua, path: String| {
+        let entries = match fs::read_dir(&path) {
+            Ok(rd) => rd,
+            Err(e) => return Err(mlua::Error::external(format!("list_dir {path} failed: {e}"))),
+        };
+        let table = lua.create_table()?;
+        let mut i = 1;
+        for entry in entries.flatten() {
+            if let Some(name) = entry.file_name().to_str() {
+                table.set(i, name.to_string())?;
+                i += 1;
+            }
+        }
+        Ok(table)
+    })
+}
+
+/// `file_exists(path)` — returns true if the path exists (file or directory).
+pub fn file_exists_lua(lua: &Lua) -> LuaResult<Function> {
+    lua.create_function(|_, path: String| Ok(std::path::Path::new(&path).exists()))
+}
+
+/// `json_decode(str)` — parse a JSON string into a Lua value.
+pub fn json_decode_lua(lua: &Lua) -> LuaResult<Function> {
+    lua.create_function(|lua, s: String| {
+        let value: serde_json::Value = serde_json::from_str(&s)
+            .map_err(|e| mlua::Error::external(format!("json_decode failed: {e}")))?;
+        json_value_to_lua(lua, &value)
+    })
+}
+
+/// `json_encode(value)` — serialize a Lua value to a JSON string.
+pub fn json_encode_lua(lua: &Lua) -> LuaResult<Function> {
+    lua.create_function(|_, value: mlua::Value| {
+        let json = lua_value_to_json(&value)
+            .map_err(|e| mlua::Error::external(format!("json_encode failed: {e}")))?;
+        Ok(serde_json::to_string(&json).unwrap_or_default())
+    })
+}
+
+/// Convert a serde_json::Value into a Lua value.
+fn json_value_to_lua(lua: &Lua, value: &serde_json::Value) -> LuaResult<mlua::Value> {
+    match value {
+        serde_json::Value::Null => Ok(mlua::Value::Nil),
+        serde_json::Value::Bool(b) => Ok(mlua::Value::Boolean(*b)),
+        serde_json::Value::Number(n) => {
+            if let Some(i) = n.as_i64() {
+                Ok(mlua::Value::Integer(i))
+            } else {
+                Ok(mlua::Value::Number(n.as_f64().unwrap_or(0.0)))
+            }
+        }
+        serde_json::Value::String(s) => Ok(mlua::Value::String(lua.create_string(s)?)),
+        serde_json::Value::Array(arr) => {
+            let table = lua.create_table()?;
+            for (i, v) in arr.iter().enumerate() {
+                table.set(i + 1, json_value_to_lua(lua, v)?)?;
+            }
+            Ok(mlua::Value::Table(table))
+        }
+        serde_json::Value::Object(map) => {
+            let table = lua.create_table()?;
+            for (k, v) in map {
+                table.set(k.as_str(), json_value_to_lua(lua, v)?)?;
+            }
+            Ok(mlua::Value::Table(table))
+        }
+    }
+}
+
+/// Convert a Lua value into a serde_json::Value.
+fn lua_value_to_json(value: &mlua::Value) -> std::result::Result<serde_json::Value, String> {
+    match value {
+        mlua::Value::Nil => Ok(serde_json::Value::Null),
+        mlua::Value::Boolean(b) => Ok(serde_json::Value::Bool(*b)),
+        mlua::Value::Integer(i) => Ok(serde_json::json!(*i)),
+        mlua::Value::Number(n) => Ok(serde_json::json!(*n)),
+        mlua::Value::String(s) => Ok(serde_json::Value::String(s.to_string_lossy().to_string())),
+        mlua::Value::Table(t) => {
+            // Detect array vs object: check if keys are sequential integers starting at 1
+            let len = t.raw_len();
+            if len > 0 {
+                let mut arr = Vec::with_capacity(len);
+                for i in 1..=len {
+                    let v: mlua::Value = t.get(i).map_err(|e| e.to_string())?;
+                    arr.push(lua_value_to_json(&v)?);
+                }
+                Ok(serde_json::Value::Array(arr))
+            } else {
+                let mut map = serde_json::Map::new();
+                for pair in t.pairs::<mlua::Value, mlua::Value>() {
+                    let (k, v) = pair.map_err(|e| e.to_string())?;
+                    let key = match &k {
+                        mlua::Value::String(s) => s.to_string_lossy().to_string(),
+                        mlua::Value::Integer(i) => i.to_string(),
+                        _ => continue,
+                    };
+                    map.insert(key, lua_value_to_json(&v)?);
+                }
+                Ok(serde_json::Value::Object(map))
+            }
+        }
+        _ => Err("unsupported Lua value for JSON encoding".to_string()),
+    }
+}
+
 pub fn bind_plugin_api(lua: &Lua) -> LuaResult<()> {
     lua.globals().set("info", info_lua(lua)?)?;
     lua.globals().set("warn", warn_lua(lua)?)?;
@@ -323,6 +431,10 @@ pub fn bind_plugin_api(lua: &Lua) -> LuaResult<()> {
     lua.globals().set("start_daemon", start_daemon_lua(lua)?)?;
     lua.globals().set("get_config", get_config_lua(lua)?)?;
     lua.globals().set("set_config", set_config_lua(lua)?)?;
+    lua.globals().set("list_dir", list_dir_lua(lua)?)?;
+    lua.globals().set("file_exists", file_exists_lua(lua)?)?;
+    lua.globals().set("json_decode", json_decode_lua(lua)?)?;
+    lua.globals().set("json_encode", json_encode_lua(lua)?)?;
     Ok(())
 }
 
