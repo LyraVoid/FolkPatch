@@ -1,0 +1,48 @@
+{
+  "id": "boot-script",
+  "name": "Boot Script",
+  "author": "FolkPatch",
+  "version": "1.1.0",
+  "description": "Run custom commands at a chosen boot stage",
+  "descriptions": {
+    "zh": "在指定的启动阶段执行自定义命令",
+    "ja": "指定した起動段階でカスタムコマンドを実行"
+  },
+  "license": "MIT",
+  "quick_action": {
+    "function": "run_now",
+    "label": "Run now",
+    "labels": { "zh": "立即执行", "ja": "今すぐ実行" }
+  },
+  "config": [
+    {
+      "key": "stage",
+      "label": "Execution stage",
+      "labels": { "zh": "执行时机", "ja": "実行タイミング" },
+      "type": "select",
+      "options": ["post_fs_data", "service", "boot_completed"],
+      "default": "boot_completed"
+    },
+    {
+      "key": "wait_path",
+      "label": "Path to wait for (empty = off)",
+      "labels": { "zh": "等待就绪的路径（留空=关闭）", "ja": "待機するパス（空=無効）" },
+      "type": "text",
+      "default": "/sdcard"
+    },
+    {
+      "key": "wait_time",
+      "label": "Wait timeout (seconds, 0 = off)",
+      "labels": { "zh": "等待超时（秒，0=关闭）", "ja": "待機タイムアウト（秒、0=無効）" },
+      "type": "number",
+      "default": 0
+    },
+    {
+      "key": "commands",
+      "label": "Commands (one per line)",
+      "labels": { "zh": "命令列表（每行一条）", "ja": "コマンド（1行に1つ）" },
+      "type": "text",
+      "default": ""
+    }
+  ]
+}
