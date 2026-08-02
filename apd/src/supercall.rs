@@ -430,6 +430,28 @@ pub fn init_load_su_path(superkey: &Option<String>) {
 pub fn autoload_kpm_modules(superkey: &Option<String>, event_filter: &str) {
     use serde::Deserialize;
 
+    let recovery_mode = ["ro.bootmode", "ro.boot.mode", "ro.boot.bootmode"]
+        .iter()
+        .filter_map(|prop| crate::utils::getprop(prop))
+        .any(|value| value.eq_ignore_ascii_case("recovery"))
+        || crate::utils::getprop("ro.twrp.boot").is_some()
+        || std::path::Path::new("/sbin/twrp").exists()
+        || std::path::Path::new("/twres").exists();
+    if recovery_mode {
+        info!(
+            "[kpm_autoload] recovery environment detected, skipping event '{}'",
+            event_filter
+        );
+        return;
+    }
+    if crate::utils::is_safe_mode(superkey.clone()) {
+        info!(
+            "[kpm_autoload] safe mode detected, skipping event '{}'",
+            event_filter
+        );
+        return;
+    }
+
     #[derive(Deserialize, Default)]
     struct KpmAutoLoadEntry {
         path: String,
