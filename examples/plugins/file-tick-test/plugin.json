@@ -1,0 +1,20 @@
+{
+  "id": "file-tick-test",
+  "name": "File Tick Test",
+  "author": "FolkPatch",
+  "version": "1.0.0",
+  "description": "Every 5s check and create a test file on storage root",
+  "descriptions": {
+    "zh": "每 5 秒检查并在存储根目录创建测试文件",
+    "ja": "5秒ごとにストレージルートにテストファイルを作成"
+  },
+  "license": "MIT",
+  "quick_action": {
+    "function": "clean_now",
+    "label": "Delete test file",
+    "labels": {
+      "zh": "删除测试文件",
+      "ja": "テストファイルを削除"
+    }
+  }
+}
