@@ -484,7 +484,6 @@ private fun HeroStatusCard(
 
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         VersionInfoColumn(
                             modifier = Modifier.weight(1f),
@@ -591,6 +590,12 @@ private fun HeroStatusCard(
                     markdown = false,
                 )
             },
+            // 新增：恢复默认壁纸
+            onRestoreDefault = {
+                BackgroundManager.provisionDefaultDashboardCardBg(context)
+                showToast(context, context.getString(R.string.dashboard_card_background_restored))
+            },
+            restoreLabel = stringResource(R.string.dashboard_card_background_restore)
         )
     }
 }
@@ -772,10 +777,12 @@ private fun ModeLabelChip(label: String, contentColor: Color) {
 private fun VersionInfoColumn(
     modifier: Modifier = Modifier,
     label: String,
-    value: String
+    value: String,
+    horizontalAlignment: Alignment.Horizontal = Alignment.CenterHorizontally
 ) {
     Column(
-        modifier = modifier
+        modifier = modifier,
+        horizontalAlignment = horizontalAlignment
     ) {
         Text(
             text = label,
