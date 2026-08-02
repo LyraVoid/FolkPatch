@@ -431,7 +431,6 @@ KernelPatch 需要修補 boot 映像檔。
     <string name="plugin_refresh">重新整理</string>
     <string name="plugin_summary_title">APD Lua Plugin</string>
     <string name="plugin_summary_not_installed">APD 未安裝 · 外掛不可用</string>
-    <string name="plugin_summary_desc">已啟用 %1$d · 共 %2$d</string>
     <string name="plugin_state_enabled">已啟用</string>
     <string name="plugin_state_disabled">已停用</string>
     <string name="plugin_toggle_failed">外掛狀態修改失敗</string>

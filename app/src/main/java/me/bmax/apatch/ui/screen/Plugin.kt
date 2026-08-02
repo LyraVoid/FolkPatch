@@ -37,8 +37,6 @@ import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
@@ -211,14 +209,7 @@ fun PluginScreen(navigator: DestinationsNavigator) {
                     modifier = Modifier.fillMaxSize(),
                     state = listState,
                     contentPadding = PaddingValues(top = 8.dp, bottom = 96.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
-                    item {
-                        PluginSummaryCard(
-                            enabledCount = viewModel.plugins.count { it.enabled },
-                            totalCount = viewModel.plugins.size,
-                        )
-                    }
                     splicedLazyColumnGroup(
                         items = viewModel.plugins,
                         key = { _, plugin -> plugin.id },
@@ -342,56 +333,6 @@ fun PluginScreen(navigator: DestinationsNavigator) {
             output = output,
             onDismiss = { logOutput = null },
         )
-    }
-}
-
-@Composable
-private fun PluginSummaryCard(enabledCount: Int, totalCount: Int) {
-    val isWallpaperMode = BackgroundConfig.isCustomBackgroundEnabled
-    val opacity = if (isWallpaperMode) {
-        BackgroundConfig.customBackgroundOpacity.coerceAtLeast(0.35f)
-    } else {
-        1f
-    }
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
-        shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer.copy(
-                alpha = if (isWallpaperMode) opacity else 1f
-            )
-        )
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Icon(
-                imageVector = Icons.Outlined.Extension,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.onPrimaryContainer,
-                modifier = Modifier.size(32.dp)
-            )
-            Spacer(Modifier.width(16.dp))
-            Column {
-                Text(
-                    text = stringResource(R.string.plugin_summary_title),
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
-                    fontWeight = FontWeight.SemiBold,
-                )
-                Spacer(Modifier.height(4.dp))
-                Text(
-                    text = stringResource(R.string.plugin_summary_desc, enabledCount, totalCount),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f),
-                )
-            }
-        }
     }
 }
 

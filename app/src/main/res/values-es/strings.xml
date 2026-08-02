@@ -433,7 +433,6 @@ Aquí hay algunas posibles razones para el fallo de autenticación—por favor v
     <string name="plugin_refresh">Actualizar</string>
     <string name="plugin_summary_title">APD Lua Plugin</string>
     <string name="plugin_summary_not_installed">APD no instalado · complementos no disponibles</string>
-    <string name="plugin_summary_desc">%1$d activados · %2$d en total</string>
     <string name="plugin_state_enabled">Activado</string>
     <string name="plugin_state_disabled">Desactivado</string>
     <string name="plugin_toggle_failed">No se pudo cambiar el estado del plugin</string>

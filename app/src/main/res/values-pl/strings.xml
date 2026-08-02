@@ -394,7 +394,6 @@ Kontynuować mimo to?</string>
     <string name="plugin_refresh">Odśwież</string>
     <string name="plugin_summary_title">APD Lua Plugin</string>
     <string name="plugin_summary_not_installed">APD niezainstalowany · wtyczki niedostępne</string>
-    <string name="plugin_summary_desc">Włączone: %1$d · Łącznie: %2$d</string>
     <string name="plugin_state_enabled">Włączona</string>
     <string name="plugin_state_disabled">Wyłączona</string>
     <string name="plugin_toggle_failed">Nie udało się zmienić stanu wtyczki</string>

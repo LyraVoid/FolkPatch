@@ -431,7 +431,6 @@ Dưới đây là một số nguyên nhân có thể gây ra thất bại xác t
     <string name="plugin_refresh">Làm mới</string>
     <string name="plugin_summary_title">APD Lua Plugin</string>
     <string name="plugin_summary_not_installed">APD chưa cài · plugin không khả dụng</string>
-    <string name="plugin_summary_desc">Đã bật %1$d · Tổng %2$d</string>
     <string name="plugin_state_enabled">Đã bật</string>
     <string name="plugin_state_disabled">Đã tắt</string>
     <string name="plugin_toggle_failed">Không thể thay đổi trạng thái plugin</string>

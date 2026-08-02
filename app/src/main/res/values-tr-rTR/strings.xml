@@ -426,7 +426,6 @@ Bol şans! Ayrıca, aşağıdaki belge butonuna tıklamak kesinlikle doğru!</st
     <string name="plugin_refresh">Yenile</string>
     <string name="plugin_summary_title">APD Lua Plugin</string>
     <string name="plugin_summary_not_installed">APD yüklü değil · eklentiler kullanılamıyor</string>
-    <string name="plugin_summary_desc">%1$d etkin · %2$d toplam</string>
     <string name="plugin_state_enabled">Etkin</string>
     <string name="plugin_state_disabled">Devre dışı</string>
     <string name="plugin_toggle_failed">Eklenti durumu değiştirilemedi</string>

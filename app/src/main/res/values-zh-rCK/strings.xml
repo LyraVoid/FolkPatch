@@ -420,7 +420,6 @@ KernelPatch 这道菜需要用 boot 主料来烹饪。
     <string name="plugin_refresh">刷新菜单</string>
     <string name="plugin_summary_title">APD Lua Plugin</string>
     <string name="plugin_summary_not_installed">APD 未上灶 · 调不了味</string>
-    <string name="plugin_summary_desc">已上 %1$d 道 · 共 %2$d 道</string>
     <string name="plugin_state_enabled">已上架</string>
     <string name="plugin_state_disabled">已下架</string>
     <string name="plugin_toggle_failed">上架/下架失败</string>

@@ -443,7 +443,6 @@ KernelPatch 需要修补 boot 镜像才能工作喵。
     <string name="plugin_refresh">刷新喵</string>
     <string name="plugin_summary_title">APD Lua Plugin</string>
     <string name="plugin_summary_not_installed">APD 没装喵 · 插件不能用喵</string>
-    <string name="plugin_summary_desc">已启用 %1$d 个 · 共 %2$d 个喵</string>
     <string name="plugin_state_enabled">已启用喵</string>
     <string name="plugin_state_disabled">已停用喵</string>
     <string name="plugin_toggle_failed">插件状态修改失败喵</string>

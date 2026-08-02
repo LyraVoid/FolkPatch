@@ -440,7 +440,6 @@ Aqui estão algumas possíveis razões para a falha de autenticação—verifiqu
     <string name="plugin_refresh">Atualizar</string>
     <string name="plugin_summary_title">APD Lua Plugin</string>
     <string name="plugin_summary_not_installed">APD não instalado · plugins indisponíveis</string>
-    <string name="plugin_summary_desc">%1$d ativados · %2$d no total</string>
     <string name="plugin_state_enabled">Ativado</string>
     <string name="plugin_state_disabled">Desativado</string>
     <string name="plugin_toggle_failed">Falha ao alterar o estado do plugin</string>

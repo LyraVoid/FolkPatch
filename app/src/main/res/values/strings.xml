@@ -427,7 +427,6 @@ Here are some possible reasons for authentication failure—please check which o
     <string name="plugin_title">Plugins</string>
     <string name="plugin_refresh">Refresh</string>
     <string name="plugin_summary_title">APD Lua Plugin</string>
-    <string name="plugin_summary_desc">%1$d enabled · %2$d total</string>
     <string name="plugin_summary_not_installed">APD not installed · plugins unavailable</string>
     <string name="plugin_state_enabled">Enabled</string>
     <string name="plugin_state_disabled">Disabled</string>

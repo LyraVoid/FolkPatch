@@ -384,7 +384,6 @@ KernelPatch は boot イメージをパッチする必要があります。
     <string name="plugin_refresh">更新</string>
     <string name="plugin_summary_title">APD Lua Plugin</string>
     <string name="plugin_summary_not_installed">APD 未インストール · プラグイン利用不可</string>
-    <string name="plugin_summary_desc">有効 %1$d · 合計 %2$d</string>
     <string name="plugin_state_enabled">有効</string>
     <string name="plugin_state_disabled">無効</string>
     <string name="plugin_toggle_failed">プラグインの状態を変更できませんでした</string>
