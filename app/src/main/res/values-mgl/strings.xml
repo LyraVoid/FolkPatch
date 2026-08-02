@@ -572,6 +572,12 @@ KernelPatch 魔法阵需要 boot 核心来施展。
     <string name="online_kpm_download_complete">召唤完成: %s</string>
     <string name="online_kpm_download_notification">正在召唤%s。请查看魔法水晶球了解进度，召唤完成后请查看魔法仓库。</string>
 
+    <!-- Online Plugin Strings -->
+    <string name="online_plugin_title">在线魔法插件</string>
+    <string name="online_plugin_download_start">开始召唤: %s</string>
+    <string name="online_plugin_download_complete">召唤完成: %s</string>
+    <string name="online_plugin_download_notification">正在召唤%s。请查看魔法水晶球了解进度，召唤完成后请查看魔法仓库。</string>
+
     <!-- Online Script Strings -->
     <string name="online_script_title">在线魔法咒语</string>
     <string name="online_script_download_start">开始召唤: %s</string>

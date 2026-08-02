@@ -571,6 +571,12 @@ Berikut adalah beberapa kemungkinan penyebab kegagalan autentikasi—silakan cek
     <string name="online_kpm_download_complete">Pengunduhan selesai: %s</string>
     <string name="online_kpm_download_notification">Mengunduh %s. Periksa panel notifikasi untuk melacak kemajuan, dan folder Unduhan untuk file yang sudah selesai.</string>
 
+    <!-- Online Plugin Strings -->
+    <string name="online_plugin_title">Plugin Online</string>
+    <string name="online_plugin_download_start">Mulai mengunduh: %s</string>
+    <string name="online_plugin_download_complete">Unduhan selesai: %s</string>
+    <string name="online_plugin_download_notification">Mengunduh %s. Periksa panel notifikasi untuk melacak kemajuan, dan folder Unduhan untuk file yang sudah selesai.</string>
+
     <!-- Online Script Strings -->
     <string name="online_script_title">Skrip Online</string>
     <string name="online_script_download_start">Mulai mengunduh: %s</string>

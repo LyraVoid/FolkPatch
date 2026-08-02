@@ -564,6 +564,12 @@
     <string name="online_kpm_download_complete">祈召完成: %s</string>
     <string name="online_kpm_download_notification">正在祈召%s。请查看圣光水晶球了解进度，祈召完成后请查看圣光仓库。</string>
 
+    <!-- Online Plugin Strings -->
+    <string name="online_plugin_title">在线圣光插件</string>
+    <string name="online_plugin_download_start">开始祈召: %s</string>
+    <string name="online_plugin_download_complete">祈召完成: %s</string>
+    <string name="online_plugin_download_notification">正在祈召%s。请查看圣光水晶球了解进度，祈召完成后请查看圣光仓库。</string>
+
     <!-- Online Script Strings -->
     <string name="online_script_title">在线圣光咒语</string>
     <string name="online_script_download_start">开始祈召: %s</string>

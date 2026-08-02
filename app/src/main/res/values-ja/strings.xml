@@ -517,6 +517,12 @@ KernelPatch は boot イメージをパッチする必要があります。
     <string name="online_kpm_download_start">ダウンロードを開始中: %s</string>
     <string name="online_kpm_download_complete">ダウンロードが完了: %s</string>
     <string name="online_kpm_download_notification">「%s」をダウンロード中です。進行状況は通知パネル、完了したファイルはダウンロードフォルダでご確認ください。</string>
+
+    <!-- Online Plugin Strings -->
+    <string name="online_plugin_title">オンラインプラグイン</string>
+    <string name="online_plugin_download_start">ダウンロード開始: %s</string>
+    <string name="online_plugin_download_complete">ダウンロード完了: %s</string>
+    <string name="online_plugin_download_notification">「%s」をダウンロード中です。進行状況は通知パネル、完了したファイルはダウンロードフォルダでご確認ください。</string>
     <!-- Online Script Strings -->
     <string name="online_script_title">オンラインスクリプト</string>
     <string name="online_script_download_start">ダウンロードを開始: %s</string>

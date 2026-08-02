@@ -573,6 +573,12 @@ Here are some possible reasons for authentication failure—please check which o
     <string name="online_kpm_download_complete">Download complete: %s</string>
     <string name="online_kpm_download_notification">Downloading %s. Please check notification panel for progress and Download folder for completed file.</string>
 
+    <!-- Online Plugin Strings -->
+    <string name="online_plugin_title">Online Plugins</string>
+    <string name="online_plugin_download_start">Start downloading: %s</string>
+    <string name="online_plugin_download_complete">Download complete: %s</string>
+    <string name="online_plugin_download_notification">Downloading %s. Please check notification panel for progress and Download folder for completed file.</string>
+
     <!-- Online Script Strings -->
     <string name="online_script_title">Online Scripts</string>
     <string name="online_script_download_start">Start downloading: %s</string>

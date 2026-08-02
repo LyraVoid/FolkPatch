@@ -572,6 +572,12 @@
     <string name="online_kpm_download_complete">اكتمل التنزيل: %s</string>
     <string name="online_kpm_download_notification">جارٍ تنزيل %s. يرجى التحقق من لوحة الإشعارات للتقدم ومجلد التنزيل للملف المكتمل。</string>
 
+    <!-- Online Plugin Strings -->
+    <string name="online_plugin_title">المكونات الإضافية عبر الإنترنت</string>
+    <string name="online_plugin_download_start">بدء التنزيل: %s</string>
+    <string name="online_plugin_download_complete">اكتمل التنزيل: %s</string>
+    <string name="online_plugin_download_notification">جارٍ تنزيل %s. يرجى التحقق من لوحة الإشعارات للتقدم ومجلد التنزيل للملف المكتمل。</string>
+
     <!-- Online Script Strings -->
     <string name="online_script_title">سكربتات عبر الإنترنت</string>
     <string name="online_script_download_start">بدء التنزيل: %s</string>

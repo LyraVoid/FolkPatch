@@ -564,6 +564,12 @@ KernelPatch 大法需要以 boot 灵胎为引。
     <string name="online_kpm_download_complete">纳符功成：%s</string>
     <string name="online_kpm_download_notification">纳%s仙符中。可察仙音栏知渡劫进度，功成则视纳宝之匣。</string>
 
+    <!-- Online Plugin Strings -->
+    <string name="online_plugin_title">云上仙法插件</string>
+    <string name="online_plugin_download_start">纳仙符: %s</string>
+    <string name="online_plugin_download_complete">仙符纳成: %s</string>
+    <string name="online_plugin_download_notification">纳%s仙符中。可察仙音栏知渡劫进度，功成则视纳宝之匣。</string>
+
     <!-- Online Script Strings -->
     <string name="online_script_title">云上天道仙阵</string>
     <string name="online_script_download_start">启纳仙阵：%s</string>

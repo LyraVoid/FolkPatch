@@ -34,6 +34,7 @@ import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.PlayArrow
 import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material.icons.outlined.Storefront
 import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.ButtonDefaults
@@ -153,6 +154,9 @@ fun PluginScreen(navigator: DestinationsNavigator) {
                     }
                 },
                 actions = {
+                    IconButton(onClick = dropUnlessResumed { navigator.navigate(com.ramcosta.composedestinations.generated.destinations.OnlinePluginScreenDestination) }) {
+                        Icon(Icons.Outlined.Storefront, contentDescription = stringResource(R.string.online_plugin_title))
+                    }
                     IconButton(onClick = dropUnlessResumed { navigator.navigate(com.ramcosta.composedestinations.generated.destinations.PluginLogScreenDestination) }) {
                         Icon(Icons.AutoMirrored.Outlined.Article, contentDescription = stringResource(R.string.plugin_log_title))
                     }

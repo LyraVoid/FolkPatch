@@ -553,6 +553,12 @@ KernelPatch 附魔需要 boot 方块作为材料。
     <string name="online_kpm_download_complete">搬运完成: %s</string>
     <string name="online_kpm_download_notification">正在搬运 %s。看看通知栏的进度，下好了去下载文件夹找</string>
 
+    <!-- Online Plugin Strings -->
+    <string name="online_plugin_title">在线红石插件</string>
+    <string name="online_plugin_download_start">开始搬运: %s</string>
+    <string name="online_plugin_download_complete">搬运完成: %s</string>
+    <string name="online_plugin_download_notification">正在搬运 %s。看看通知栏的进度，下好了去下载文件夹找</string>
+
     <!-- 在线数据包 -->
     <string name="online_script_title">在线数据包市场</string>
     <string name="online_script_download_start">开始搬运数据包: %s</string>

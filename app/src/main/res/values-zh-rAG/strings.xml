@@ -577,6 +577,12 @@ KernelPatch 需要修补 boot 镜像才能工作喵。
     <string name="online_kpm_download_complete">下载完成了喵：%s</string>
     <string name="online_kpm_download_notification">正在下 %s 喵！看通知栏进度，下完看下载文件夹哦喵</string>
 
+    <!-- Online Plugin Strings -->
+    <string name="online_plugin_title">在线插件喵</string>
+    <string name="online_plugin_download_start">开始下 %s 喵</string>
+    <string name="online_plugin_download_complete">下完 %s 了喵</string>
+    <string name="online_plugin_download_notification">正在下 %s 喵！看通知栏进度，下完看下载文件夹哦喵</string>
+
     <!-- Online Script Strings -->
     <string name="online_script_title">给主人脚本喵</string>
     <string name="online_script_download_start">开始下载喵：%s</string>

@@ -565,6 +565,12 @@ KernelPatch는 boot 이미지를 패치해야 합니다.
     <string name="online_kpm_download_complete">다운로드 완료: %s</string>
     <string name="online_kpm_download_notification">%s을(를) 다운로드하는 중입니다. 진행 상황은 알림 패널에서, 완료된 파일은 Download 폴더에서 확인하세요.</string>
 
+    <!-- Online Plugin Strings -->
+    <string name="online_plugin_title">온라인 플러그인</string>
+    <string name="online_plugin_download_start">다운로드 시작: %s</string>
+    <string name="online_plugin_download_complete">다운로드 완료: %s</string>
+    <string name="online_plugin_download_notification">%s을(를) 다운로드하는 중입니다. 진행 상황은 알림 패널에서, 완료된 파일은 Download 폴더에서 확인하세요.</string>
+
     <!-- Online Script Strings -->
     <string name="online_script_title">온라인 스크립트</string>
     <string name="online_script_download_start">다운로드 시작: %s</string>

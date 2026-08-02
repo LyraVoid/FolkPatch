@@ -570,6 +570,12 @@ Dưới đây là một số nguyên nhân có thể gây ra thất bại xác t
     <string name="online_kpm_download_complete">Tải hoàn tất: %s</string>
     <string name="online_kpm_download_notification">Đang tải %s. Vui lòng xem thanh thông báo để biết tiến độ, vui lòng xem thư mục tải sau khi tải hoàn tất.</string>
 
+    <!-- Online Plugin Strings -->
+    <string name="online_plugin_title">Plugin trực tuyến</string>
+    <string name="online_plugin_download_start">Bắt đầu tải: %s</string>
+    <string name="online_plugin_download_complete">Tải hoàn tất: %s</string>
+    <string name="online_plugin_download_notification">Đang tải %s. Vui lòng xem thanh thông báo để biết tiến độ, vui lòng xem thư mục tải sau khi tải hoàn tất.</string>
+
     <!-- Online Script Strings -->
     <string name="online_script_title">Kịch bản trực tuyến</string>
     <string name="online_script_download_start">Bắt đầu tải: %s</string>
