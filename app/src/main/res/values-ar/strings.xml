@@ -436,6 +436,7 @@
     <string name="plugin_summary_desc">ممكّن %1$d · الإجمالي %2$d</string>
     <string name="plugin_state_enabled">ممكّن</string>
     <string name="plugin_state_disabled">معطّل</string>
+    <string name="plugin_toggle_failed">فشل تغيير حالة المكوّن الإضافي</string>
     <string name="plugin_empty">لا توجد مكونات إضافية مثبتة</string>
     <string name="plugin_empty_hint">ضع main.lua في /data/adb/plugins/&lt;id&gt;/ لإضافة مكوّن.</string>
     <string name="plugin_load_failed">فشل تحميل المكونات الإضافية</string>

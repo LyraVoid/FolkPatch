@@ -426,6 +426,7 @@ KernelPatch는 boot 이미지를 패치해야 합니다.
     <string name="plugin_summary_desc">%1$d개 활성 · 총 %2$d개</string>
     <string name="plugin_state_enabled">활성화됨</string>
     <string name="plugin_state_disabled">비활성화됨</string>
+    <string name="plugin_toggle_failed">플러그인 상태 변경 실패</string>
     <string name="plugin_empty">설치된 플러그인이 없습니다</string>
     <string name="plugin_empty_hint">main.lua를 /data/adb/plugins/&lt;id&gt;/에 넣어 추가하세요.</string>
     <string name="plugin_load_failed">플러그인 로드 실패</string>

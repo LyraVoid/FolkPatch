@@ -436,6 +436,7 @@ Berikut adalah beberapa kemungkinan penyebab kegagalan autentikasi—silakan cek
     <string name="plugin_summary_desc">%1$d aktif · %2$d total</string>
     <string name="plugin_state_enabled">Aktif</string>
     <string name="plugin_state_disabled">Nonaktif</string>
+    <string name="plugin_toggle_failed">Gagal mengubah status plugin</string>
     <string name="plugin_empty">Belum ada plugin terpasang</string>
     <string name="plugin_empty_hint">Letakkan main.lua di /data/adb/plugins/&lt;id&gt;/ untuk menambahnya.</string>
     <string name="plugin_load_failed">Gagal memuat plugin</string>

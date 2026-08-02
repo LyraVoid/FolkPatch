@@ -422,6 +422,7 @@ KernelPatch 这道菜需要用 boot 主料来烹饪。
     <string name="plugin_summary_desc">已上 %1$d 道 · 共 %2$d 道</string>
     <string name="plugin_state_enabled">已上架</string>
     <string name="plugin_state_disabled">已下架</string>
+    <string name="plugin_toggle_failed">上架/下架失败</string>
     <string name="plugin_empty">菜单上还没有插件</string>
     <string name="plugin_empty_hint">将 main.lua 放入 /data/adb/plugins/&lt;id&gt;/ 即可上架新菜。</string>
     <string name="plugin_load_failed">菜单加载失败</string>

@@ -433,6 +433,7 @@ KernelPatch 大法需要以 boot 灵胎为引。
     <string name="plugin_summary_desc">已启 %1$d · 共 %2$d</string>
     <string name="plugin_state_enabled">已启</string>
     <string name="plugin_state_disabled">已禁</string>
+    <string name="plugin_toggle_failed">炼成失败</string>
     <string name="plugin_empty">尚未炼成插件</string>
     <string name="plugin_empty_hint">将 main.lua 置于 /data/adb/plugins/&lt;id&gt;/ 即可炼成插件。</string>
     <string name="plugin_load_failed">插件引渡失败</string>

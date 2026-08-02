@@ -386,6 +386,7 @@ KernelPatch は boot イメージをパッチする必要があります。
     <string name="plugin_summary_desc">有効 %1$d · 合計 %2$d</string>
     <string name="plugin_state_enabled">有効</string>
     <string name="plugin_state_disabled">無効</string>
+    <string name="plugin_toggle_failed">プラグインの状態を変更できませんでした</string>
     <string name="plugin_empty">プラグインはインストールされていません</string>
     <string name="plugin_empty_hint">/data/adb/plugins/&lt;id&gt;/ に main.lua を配置すると追加できます。</string>
     <string name="plugin_load_failed">プラグインの読み込みに失敗しました</string>

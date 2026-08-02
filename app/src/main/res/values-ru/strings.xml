@@ -437,6 +437,7 @@ KernelPatch требует образ boot для патча.
     <string name="plugin_summary_desc">Включено: %1$d · Всего: %2$d</string>
     <string name="plugin_state_enabled">Включено</string>
     <string name="plugin_state_disabled">Отключено</string>
+    <string name="plugin_toggle_failed">Не удалось изменить состояние плагина</string>
     <string name="plugin_empty">Плагины не установлены</string>
     <string name="plugin_empty_hint">Поместите main.lua в /data/adb/plugins/&lt;id&gt;/ чтобы добавить плагин.</string>
     <string name="plugin_load_failed">Не удалось загрузить плагины</string>

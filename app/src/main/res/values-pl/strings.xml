@@ -396,6 +396,7 @@ Kontynuować mimo to?</string>
     <string name="plugin_summary_desc">Włączone: %1$d · Łącznie: %2$d</string>
     <string name="plugin_state_enabled">Włączona</string>
     <string name="plugin_state_disabled">Wyłączona</string>
+    <string name="plugin_toggle_failed">Nie udało się zmienić stanu wtyczki</string>
     <string name="plugin_empty">Brak zainstalowanych wtyczek</string>
     <string name="plugin_empty_hint">Umieść main.lua w /data/adb/plugins/&lt;id&gt;/ aby dodać wtyczkę.</string>
     <string name="plugin_load_failed">Nie udało się załadować wtyczek</string>

@@ -442,6 +442,7 @@ Aqui estão algumas possíveis razões para a falha de autenticação—verifiqu
     <string name="plugin_summary_desc">%1$d ativados · %2$d no total</string>
     <string name="plugin_state_enabled">Ativado</string>
     <string name="plugin_state_disabled">Desativado</string>
+    <string name="plugin_toggle_failed">Falha ao alterar o estado do plugin</string>
     <string name="plugin_empty">Nenhum plugin instalado</string>
     <string name="plugin_empty_hint">Coloque um main.lua em /data/adb/plugins/&lt;id&gt;/ para adicionar um.</string>
     <string name="plugin_load_failed">Falha ao carregar plugins</string>

@@ -226,7 +226,17 @@ fun PluginScreen(navigator: DestinationsNavigator) {
                         PluginCard(
                             plugin = plugin,
                             onToggle = { enabled ->
-                                viewModel.setPluginEnabled(plugin.id, enabled)
+                                scope.launch {
+                                    val ok = viewModel.setPluginEnabled(plugin.id, enabled)
+                                    val msg = if (ok) {
+                                        context.getString(
+                                            if (enabled) R.string.plugin_state_enabled else R.string.plugin_state_disabled
+                                        )
+                                    } else {
+                                        context.getString(R.string.plugin_toggle_failed)
+                                    }
+                                    showToast(context, msg)
+                                }
                             },
                             onAction = {
                                 scope.launch {

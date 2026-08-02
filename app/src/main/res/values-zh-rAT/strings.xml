@@ -432,6 +432,7 @@
     <string name="plugin_summary_desc">已启 %1$d · 共 %2$d</string>
     <string name="plugin_state_enabled">已启</string>
     <string name="plugin_state_disabled">已禁</string>
+    <string name="plugin_toggle_failed">祝福失败</string>
     <string name="plugin_empty">尚未祝福插件</string>
     <string name="plugin_empty_hint">将 main.lua 置于 /data/adb/plugins/&lt;id&gt;/ 即可祝福插件。</string>
     <string name="plugin_load_failed">圣光引渡失败</string>

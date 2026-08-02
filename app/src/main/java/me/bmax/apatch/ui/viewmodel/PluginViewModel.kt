@@ -169,13 +169,12 @@ class PluginViewModel : ViewModel() {
             .toList()
     }
 
-    fun setPluginEnabled(id: String, enabled: Boolean) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val success = setPluginState(id, enabled)
-            if (success) {
-                plugins = plugins.map { if (it.id == id) it.copy(enabled = enabled) else it }
-            }
+    suspend fun setPluginEnabled(id: String, enabled: Boolean): Boolean {
+        val success = withContext(Dispatchers.IO) { setPluginState(id, enabled) }
+        if (success) {
+            plugins = plugins.map { if (it.id == id) it.copy(enabled = enabled) else it }
         }
+        return success
     }
 
     fun installPluginZip(zipPath: String): Boolean =
