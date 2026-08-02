@@ -389,6 +389,7 @@ ksp {
 
 dependencies {
     implementation(libs.androidx.appcompat)
+    implementation(libs.ucrop)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.webkit)

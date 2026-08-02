@@ -1331,4 +1331,10 @@ KernelPatch 需要修补 boot 镜像。
     <string name="settings_info_copy">长按复制信息</string>
     <string name="settings_info_copy_summary">长按首页信息栏中的条目即可复制其内容</string>
     <string name="home_info_copied">%1$s 已复制</string>
+    <string name="background_crop_title">裁剪背景</string>
+    <string name="background_crop_apply">应用</string>
+    <string name="background_crop_reset">重置</string>
+    <string name="background_crop_loading">正在加载图片</string>
+    <string name="background_crop_rotation_angle">旋转</string>
+    <string name="background_crop_failed">裁剪图片失败</string>
 </resources>

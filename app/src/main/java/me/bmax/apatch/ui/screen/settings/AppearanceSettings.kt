@@ -6,7 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
-import android.provider.MediaStore
+import android.graphics.BitmapFactory
 import me.bmax.apatch.ui.component.ColorGenerationModeSelector
 import me.bmax.apatch.ui.component.SliderSettingCard
 import me.bmax.apatch.ui.component.SliderStyleConfig
@@ -15,13 +15,15 @@ import me.bmax.apatch.ui.component.ColorStylePicker
 import me.bmax.apatch.ui.theme.ColorGenerationMode
 import me.bmax.apatch.ui.theme.ColorStandard
 import me.bmax.apatch.ui.theme.ColorStyle
+import me.bmax.apatch.ui.screen.settings.crop.BackgroundCropActivity
 import me.bmax.apatch.util.ui.showToast
+import com.yalantis.ucrop.UCrop
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import java.io.File
 import androidx.annotation.StringRes
+import kotlin.math.max
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -91,7 +93,6 @@ import me.bmax.apatch.ui.screen.settings.appearance.colorNameToString
 import me.bmax.apatch.ui.screen.settings.appearance.homeLayoutStyleToString
 import me.bmax.apatch.util.PermissionUtils
 import me.bmax.apatch.util.BottomBarIconConfig
-import me.bmax.apatch.util.SafeUriResolver
 import me.bmax.apatch.util.ui.FloatingBarConfig
 import me.bmax.apatch.util.ui.APDialogBlurBehindUtils
 import me.bmax.apatch.util.ui.NavigationBarsSpacer
@@ -122,75 +123,57 @@ fun AppearanceSettingsContent(
     var pendingCropUri by remember { mutableStateOf<Uri?>(null) }
     var showCropOptionDialog by remember { mutableStateOf(false) }
 
-    // 裁剪 launcher：将选取的图片交给系统裁剪界面，返回裁剪后的 URI
-    val cropImageLauncher = rememberLauncherForActivityResult(
-        object : ActivityResultContract<Uri, Uri?>() {
-            override fun createIntent(context: Context, input: Uri): Intent {
-                val tempFile = File(context.cacheDir, "background_crop_cache").apply {
-                    parentFile?.mkdirs()
-                    delete()
-                    createNewFile()
-                    deleteOnExit()
-                }
-
-                SafeUriResolver.openInputStream(context, input).use { inputStream ->
-                    tempFile.outputStream().use { outputStream ->
-                        inputStream.copyTo(outputStream)
+    // uCrop launcher: start in-app crop activity
+    val uCropLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        val data = result.data
+        if (result.resultCode == Activity.RESULT_OK && data != null) {
+            val croppedUri = UCrop.getOutput(data)
+            if (croppedUri != null) {
+                scope.launch {
+                    loadingDialog.show()
+                    val success = when (pickingType) {
+                        "home" -> BackgroundManager.saveAndApplyHomeBackground(context, croppedUri)
+                        "kernel" -> BackgroundManager.saveAndApplyKernelBackground(context, croppedUri)
+                        "superuser" -> BackgroundManager.saveAndApplySuperuserBackground(context, croppedUri)
+                        "system" -> BackgroundManager.saveAndApplySystemModuleBackground(context, croppedUri)
+                        "settings" -> BackgroundManager.saveAndApplySettingsBackground(context, croppedUri)
+                        else -> BackgroundManager.saveAndApplyCustomBackground(context, croppedUri)
                     }
-                }
-
-                val tempUri = FileProvider.getUriForFile(
-                    context,
-                    "${context.packageName}.fileprovider",
-                    tempFile
-                )
-
-                return Intent("com.android.camera.action.CROP").apply {
-                    setDataAndType(tempUri, "image/*")
-                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                    addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-                    putExtra("crop", "true")
-
-                    val displayMetrics = context.resources.displayMetrics
-                    val screenWidth = displayMetrics.widthPixels
-                    val screenHeight = displayMetrics.heightPixels
-
-                    putExtra("aspectX", screenWidth)
-                    putExtra("aspectY", screenHeight)
-                    putExtra("outputX", screenWidth)
-                    putExtra("outputY", screenHeight)
-
-                    putExtra("return-data", false)
-                    putExtra(MediaStore.EXTRA_OUTPUT, tempUri)
+                    loadingDialog.hide()
+                    if (success) {
+                        snackBarHost.showSnackbar(message = context.getString(R.string.settings_custom_background_saved))
+                        refreshTheme.value = true
+                    } else {
+                        snackBarHost.showSnackbar(message = context.getString(R.string.settings_custom_background_error))
+                    }
+                    pickingType = null
                 }
             }
-
-            override fun parseResult(resultCode: Int, intent: Intent?): Uri? {
-                return if (resultCode == Activity.RESULT_OK) intent?.data else null
-            }
+        } else if (result.resultCode == UCrop.RESULT_ERROR) {
+            showToast(context, context.getString(R.string.background_crop_failed))
+            pickingType = null
         }
-    ) { uri: Uri? ->
-        uri?.let {
-            scope.launch {
-                loadingDialog.show()
-                val success = when (pickingType) {
-                    "home" -> BackgroundManager.saveAndApplyHomeBackground(context, it)
-                    "kernel" -> BackgroundManager.saveAndApplyKernelBackground(context, it)
-                    "superuser" -> BackgroundManager.saveAndApplySuperuserBackground(context, it)
-                    "system" -> BackgroundManager.saveAndApplySystemModuleBackground(context, it)
-                    "settings" -> BackgroundManager.saveAndApplySettingsBackground(context, it)
-                    else -> BackgroundManager.saveAndApplyCustomBackground(context, it)
-                }
-                loadingDialog.hide()
-                if (success) {
-                    snackBarHost.showSnackbar(message = context.getString(R.string.settings_custom_background_saved))
-                    refreshTheme.value = true
-                } else {
-                    snackBarHost.showSnackbar(message = context.getString(R.string.settings_custom_background_error))
-                }
-                pickingType = null
-            }
+    }
+
+    // Launch uCrop with screen aspect ratio and output capped at min(source, 4096)
+    fun launchUCrop(sourceUri: Uri) {
+        val outputUri = context.createBackgroundCropOutputUri("background_crop_ucrop")
+        val displayMetrics = context.resources.displayMetrics
+        val screenWidth = displayMetrics.widthPixels
+        val screenHeight = displayMetrics.heightPixels
+        val maxOutputSize = context.readImageMaxSide(sourceUri)?.coerceAtMost(MAX_CROP_OUTPUT_SIZE)
+            ?: max(screenWidth, screenHeight)
+        val intent = Intent(context, BackgroundCropActivity::class.java).apply {
+            putExtra(UCrop.EXTRA_INPUT_URI, sourceUri)
+            putExtra(UCrop.EXTRA_OUTPUT_URI, outputUri)
+            putExtra(UCrop.EXTRA_ASPECT_RATIO_X, screenWidth.toFloat())
+            putExtra(UCrop.EXTRA_ASPECT_RATIO_Y, screenHeight.toFloat())
+            putExtra(UCrop.EXTRA_MAX_SIZE_X, maxOutputSize)
+            putExtra(UCrop.EXTRA_MAX_SIZE_Y, maxOutputSize)
         }
+        uCropLauncher.launch(intent)
     }
 
     val pickImageLauncher = rememberLauncherForActivityResult(
@@ -218,25 +201,7 @@ fun AppearanceSettingsContent(
                     val uri = pendingCropUri!!
                     pendingCropUri = null
                     try {
-                        cropImageLauncher.launch(uri)
-                    } catch (e: ActivityNotFoundException) {
-                        showToast(context, context.getString(R.string.settings_crop_not_supported))
-                        scope.launch {
-                            loadingDialog.show()
-                            val success = when (pickingType) {
-                                "home" -> BackgroundManager.saveAndApplyHomeBackground(context, uri)
-                                "kernel" -> BackgroundManager.saveAndApplyKernelBackground(context, uri)
-                                "superuser" -> BackgroundManager.saveAndApplySuperuserBackground(context, uri)
-                                "system" -> BackgroundManager.saveAndApplySystemModuleBackground(context, uri)
-                                "settings" -> BackgroundManager.saveAndApplySettingsBackground(context, uri)
-                                else -> BackgroundManager.saveAndApplyCustomBackground(context, uri)
-                            }
-                            loadingDialog.hide()
-                            if (success) {
-                                refreshTheme.value = true
-                            }
-                            pickingType = null
-                        }
+                        launchUCrop(uri)
                     } catch (e: Exception) {
                         // 源图片 URI 已失效（如文件被删除/回收）时读取会抛 FileNotFoundException
                         showToast(context, context.getString(R.string.settings_custom_background_error))
@@ -2191,4 +2156,28 @@ fun AppearanceSettingsContent(
         )
     }
 }
+
+/** Max crop output size to prevent OOM (peak ~64MB) */
+private const val MAX_CROP_OUTPUT_SIZE = 4096
+
+private fun Context.createBackgroundCropOutputUri(prefix: String): Uri {
+    val outputFile = File(cacheDir, "${prefix}_${System.currentTimeMillis()}.jpg").apply {
+        parentFile?.mkdirs()
+        delete()
+        createNewFile()
+        deleteOnExit()
+    }
+    return FileProvider.getUriForFile(this, "${packageName}.fileprovider", outputFile)
+}
+
+/** Lightweight probe of image max side (inJustDecodeBounds, no pixel decode). */
+private fun Context.readImageMaxSide(uri: Uri): Int? = runCatching {
+    val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+    contentResolver.openInputStream(uri)?.use { input ->
+        BitmapFactory.decodeStream(input, null, bounds)
+    }
+    val width = bounds.outWidth
+    val height = bounds.outHeight
+    if (width > 0 && height > 0) max(width, height) else null
+}.getOrNull()
 

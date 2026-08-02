@@ -1382,4 +1382,10 @@ Please ensure the app is completely closed and reopened for the commands to exec
     <string name="color_style_monochrome">Monochrome</string>
     <string name="color_style_neutral">Neutral</string>
     <string name="color_style_fidelity">Fidelity</string>
+    <string name="background_crop_title">Crop background</string>
+    <string name="background_crop_apply">Apply</string>
+    <string name="background_crop_reset">Reset</string>
+    <string name="background_crop_loading">Loading image</string>
+    <string name="background_crop_rotation_angle">Rotation</string>
+    <string name="background_crop_failed">Failed to crop image</string>
 </resources>

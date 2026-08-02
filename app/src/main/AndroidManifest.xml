@@ -149,6 +149,11 @@
             android:name=".ui.CrashHandleActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".ui.screen.settings.crop.BackgroundCropActivity"
+            android:exported="false"
+            android:theme="@style/Theme.APatch" />
+
         <provider
             android:name=".util.SafeFileProvider"
             android:authorities="${applicationId}.fileprovider"
