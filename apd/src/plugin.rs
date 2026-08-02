@@ -21,6 +21,9 @@ pub struct PluginManifest {
     pub version: String,
     #[serde(default)]
     pub description: String,
+    /// Localized descriptions keyed by language code (e.g. "zh", "ja", "tr").
+    #[serde(default)]
+    pub descriptions: std::collections::HashMap<String, String>,
     #[serde(default)]
     pub license: String,
     /// Minimum FolkPatch/APatch version code required.
@@ -90,6 +93,7 @@ pub struct PluginInfo {
     pub author: String,
     pub version: String,
     pub description: String,
+    pub descriptions: std::collections::HashMap<String, String>,
     pub license: String,
     pub enabled: bool,
     pub has_manifest: bool,
@@ -332,13 +336,14 @@ pub fn list_plugins_json() -> Result<()> {
                 .as_ref()
                 .map(|_| crate::lua::plugin_has_callback(id, "action"))
                 .unwrap_or(false);
-            let (name, author, version, description, license, has_manifest, config, quick_action) =
+            let (name, author, version, description, descriptions, license, has_manifest, config, quick_action) =
                 match manifest {
                     Some(m) => (
                         m.name,
                         m.author,
                         m.version,
                         m.description,
+                        m.descriptions,
                         m.license,
                         true,
                         m.config,
@@ -349,6 +354,7 @@ pub fn list_plugins_json() -> Result<()> {
                         String::new(),
                         String::new(),
                         String::new(),
+                        std::collections::HashMap::new(),
                         String::new(),
                         false,
                         Vec::new(),
@@ -361,6 +367,7 @@ pub fn list_plugins_json() -> Result<()> {
                 author,
                 version,
                 description,
+                descriptions,
                 license,
                 enabled,
                 has_manifest,

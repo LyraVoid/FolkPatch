@@ -542,13 +542,21 @@ pub fn run_plugin_callback(id: &str, function: &str) -> Result<()> {
 /// This is the target of `apd plugin daemon`.
 pub fn run_plugin_daemon(id: &str, function: &str, interval: u64) -> Result<()> {
     let interval = interval.max(1);
+    let plugin_dir = Path::new(defs::PLUGIN_DIR).join(id);
+    let disable_file = plugin_dir.join(defs::DISABLE_FILE_NAME);
     info!("Starting plugin daemon {id}::{function} every {interval}s");
     loop {
+        // Stop if plugin is disabled or uninstalled
+        if disable_file.exists() || !plugin_dir.exists() {
+            info!("Plugin {id} disabled/removed, stopping daemon");
+            break;
+        }
         if let Err(e) = run_plugin(id, function) {
             warn!("Plugin {id} daemon iteration {function} failed: {e}");
         }
         std::thread::sleep(std::time::Duration::from_secs(interval));
     }
+    Ok(())
 }
 
 /// `start_daemon(function, interval_secs)` — spawn a background daemon process
