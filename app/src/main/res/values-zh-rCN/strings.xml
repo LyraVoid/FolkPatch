@@ -188,6 +188,8 @@
     <string name="settings_selinux_current_mode">当前: %s</string>
     <string name="settings_selinux_mode_enforcing_summary">SELinux 完全强制执行访问规则</string>
     <string name="settings_selinux_mode_permissive_summary">SELinux 仅记录违规操作,不会拒绝</string>
+    <string name="msg_selinux_permissive_warning">切换为宽容模式将关闭SELinux强制拦截，权限违规行为仅记录日志而不会直接拒绝，设备安全性会下降，是否继续？</string>
+    <string name="msg_selinux_enforcing_confirm">切换为强制模式？SELinux将启用完整权限管控，拦截所有未授权访问行为。</string>
 
     <string name="home_device_info">设备</string>
     <string name="home_system_version">系统版本</string>
@@ -873,6 +875,8 @@ KernelPatch 需要修补 boot 镜像。
     <string name="dashboard_card_background_saved">仪表盘壁纸保存成功</string>
     <string name="dashboard_card_background_error">仪表盘壁纸保存失败</string>
     <string name="dashboard_card_background_cleared">仪表盘壁纸已清除</string>
+    <string name="dashboard_card_background_restore">恢复默认壁纸</string>
+    <string name="dashboard_card_background_restored">已恢复默认壁纸</string>
     <string name="settings_dashboard_card_dual_dim">启用昼夜双暗度</string>
     <string name="settings_dashboard_card_dual_dim_desc">自动根据明暗主题调整仪表盘壁纸暗度</string>
     <string name="settings_dashboard_card_day_dim">白天模式仪表盘壁纸暗度</string>
