@@ -57,6 +57,7 @@ import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -82,6 +83,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.ConfirmResult
 import me.bmax.apatch.ui.component.ExpressiveSwitch
@@ -99,6 +101,9 @@ fun PluginScreen(navigator: DestinationsNavigator) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val confirmDialog = rememberConfirmDialog()
+
+    val state by APApplication.apStateLiveData.observeAsState(APApplication.State.UNKNOWN_STATE)
+    val apdReady = (state == APApplication.State.ANDROIDPATCH_INSTALLING || state == APApplication.State.ANDROIDPATCH_INSTALLED || state == APApplication.State.ANDROIDPATCH_NEED_UPDATE)
 
     var pendingInstallUri by remember { mutableStateOf<Uri?>(null) }
     var configPlugin by remember { mutableStateOf<PluginViewModel.PluginInfo?>(null) }
@@ -157,16 +162,18 @@ fun PluginScreen(navigator: DestinationsNavigator) {
         },
         containerColor = Color.Transparent,
         floatingActionButton = {
-            ExtendedFloatingActionButton(
-                onClick = dropUnlessResumed {
-                    val intent = Intent(Intent.ACTION_GET_CONTENT)
-                    intent.type = "application/zip"
-                    intent.addCategory(Intent.CATEGORY_OPENABLE)
-                    installLauncher.launch(intent)
-                },
-                icon = { Icon(Icons.Outlined.Add, contentDescription = null) },
-                text = { Text(stringResource(R.string.plugin_install)) },
-            )
+            if (apdReady) {
+                ExtendedFloatingActionButton(
+                    onClick = dropUnlessResumed {
+                        val intent = Intent(Intent.ACTION_GET_CONTENT)
+                        intent.type = "application/zip"
+                        intent.addCategory(Intent.CATEGORY_OPENABLE)
+                        installLauncher.launch(intent)
+                    },
+                    icon = { Icon(Icons.Outlined.Add, contentDescription = null) },
+                    text = { Text(stringResource(R.string.plugin_install)) },
+                )
+            }
         },
     ) { paddingValues ->
         val listState = rememberLazyListState()
@@ -187,8 +194,13 @@ fun PluginScreen(navigator: DestinationsNavigator) {
                 )
             }
         ) {
-            if (viewModel.plugins.isEmpty() && !viewModel.isRefreshing) {
-                EmptyPlugins(viewModel.errorMessage)
+            if (!apdReady) {
+                ApdNotInstalled()
+            } else if (viewModel.plugins.isEmpty() && !viewModel.isRefreshing) {
+                EmptyPlugins(
+                    errorMessage = viewModel.errorMessage,
+                    modifier = Modifier.fillMaxSize(),
+                )
             } else {
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
@@ -496,10 +508,10 @@ private fun PluginCard(
 }
 
 @Composable
-private fun EmptyPlugins(errorMessage: String?) {
+private fun EmptyPlugins(errorMessage: String?, modifier: Modifier = Modifier) {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
+        modifier = modifier
+            .fillMaxWidth()
             .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -521,6 +533,38 @@ private fun EmptyPlugins(errorMessage: String?) {
         Spacer(Modifier.height(8.dp))
         Text(
             text = stringResource(R.string.plugin_empty_hint),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            textAlign = TextAlign.Center,
+        )
+    }
+}
+
+/** Centered plain-text prompt shown when APD is not installed. */
+@Composable
+private fun ApdNotInstalled() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Icon(
+            imageVector = Icons.Outlined.Extension,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.size(56.dp)
+        )
+        Spacer(Modifier.height(16.dp))
+        Text(
+            text = stringResource(R.string.plugin_summary_title),
+            style = MaterialTheme.typography.titleMedium,
+            textAlign = TextAlign.Center,
+        )
+        Spacer(Modifier.height(8.dp))
+        Text(
+            text = stringResource(R.string.plugin_summary_not_installed),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center,

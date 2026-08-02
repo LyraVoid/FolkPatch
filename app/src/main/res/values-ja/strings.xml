@@ -381,7 +381,8 @@ KernelPatch は boot イメージをパッチする必要があります。
     <!-- Plugin strings -->
     <string name="plugin_title">プラグイン</string>
     <string name="plugin_refresh">更新</string>
-    <string name="plugin_summary_title">軽量 Lua プラグイン</string>
+    <string name="plugin_summary_title">APD Lua Plugin</string>
+    <string name="plugin_summary_not_installed">APD 未インストール · プラグイン利用不可</string>
     <string name="plugin_summary_desc">有効 %1$d · 合計 %2$d</string>
     <string name="plugin_state_enabled">有効</string>
     <string name="plugin_state_disabled">無効</string>

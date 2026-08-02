@@ -432,7 +432,8 @@ KernelPatch требует образ boot для патча.
     <!-- Plugin strings -->
     <string name="plugin_title">Плагины</string>
     <string name="plugin_refresh">Обновить</string>
-    <string name="plugin_summary_title">Лёгкие Lua-плагины</string>
+    <string name="plugin_summary_title">APD Lua Plugin</string>
+    <string name="plugin_summary_not_installed">APD не установлен · плагины недоступны</string>
     <string name="plugin_summary_desc">Включено: %1$d · Всего: %2$d</string>
     <string name="plugin_state_enabled">Включено</string>
     <string name="plugin_state_disabled">Отключено</string>

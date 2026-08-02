@@ -431,7 +431,8 @@
     <!-- Plugin strings -->
     <string name="plugin_title">المكونات الإضافية</string>
     <string name="plugin_refresh">تحديث</string>
-    <string name="plugin_summary_title">مكونات Lua خفيفة الوزن</string>
+    <string name="plugin_summary_title">APD Lua Plugin</string>
+    <string name="plugin_summary_not_installed">APD غير مثبت · المكونات غير متاحة</string>
     <string name="plugin_summary_desc">ممكّن %1$d · الإجمالي %2$d</string>
     <string name="plugin_state_enabled">ممكّن</string>
     <string name="plugin_state_disabled">معطّل</string>

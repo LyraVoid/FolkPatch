@@ -391,7 +391,8 @@ Kontynuować mimo to?</string>
     <!-- Plugin strings -->
     <string name="plugin_title">Wtyczki</string>
     <string name="plugin_refresh">Odśwież</string>
-    <string name="plugin_summary_title">Lekkie wtyczki Lua</string>
+    <string name="plugin_summary_title">APD Lua Plugin</string>
+    <string name="plugin_summary_not_installed">APD niezainstalowany · wtyczki niedostępne</string>
     <string name="plugin_summary_desc">Włączone: %1$d · Łącznie: %2$d</string>
     <string name="plugin_state_enabled">Włączona</string>
     <string name="plugin_state_disabled">Wyłączona</string>

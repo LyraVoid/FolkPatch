@@ -431,7 +431,8 @@ Berikut adalah beberapa kemungkinan penyebab kegagalan autentikasi—silakan cek
     <!-- Plugin strings -->
     <string name="plugin_title">Plugin</string>
     <string name="plugin_refresh">Segarkan</string>
-    <string name="plugin_summary_title">Plugin Lua ringan</string>
+    <string name="plugin_summary_title">APD Lua Plugin</string>
+    <string name="plugin_summary_not_installed">APD belum terpasang · plugin tidak tersedia</string>
     <string name="plugin_summary_desc">%1$d aktif · %2$d total</string>
     <string name="plugin_state_enabled">Aktif</string>
     <string name="plugin_state_disabled">Nonaktif</string>

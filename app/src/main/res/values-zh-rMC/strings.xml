@@ -415,7 +415,8 @@ KernelPatch 附魔需要 boot 方块作为材料。
     <!-- Plugin strings -->
     <string name="plugin_title">红石插件</string>
     <string name="plugin_refresh">刷新</string>
-    <string name="plugin_summary_title">轻量级 Lua 插件</string>
+    <string name="plugin_summary_title">APD Lua Plugin</string>
+    <string name="plugin_summary_not_installed">APD 未安装 · 插件不可用</string>
     <string name="plugin_summary_desc">已激活 %1$d · 共 %2$d</string>
     <string name="plugin_state_enabled">已激活</string>
     <string name="plugin_state_disabled">已停用</string>

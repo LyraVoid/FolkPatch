@@ -430,7 +430,8 @@ KernelPatch 魔法阵需要 boot 核心来施展。
     <!-- Plugin strings -->
     <string name="plugin_title">插件</string>
     <string name="plugin_refresh">刷新</string>
-    <string name="plugin_summary_title">轻量级 Lua 插件</string>
+    <string name="plugin_summary_title">APD Lua Plugin</string>
+    <string name="plugin_summary_not_installed">APD 未安装 · 插件不可用</string>
     <string name="plugin_summary_desc">已启用 %1$d · 共 %2$d</string>
     <string name="plugin_state_enabled">已启用</string>
     <string name="plugin_state_disabled">已停用</string>

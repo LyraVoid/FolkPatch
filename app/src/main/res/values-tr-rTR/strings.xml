@@ -423,7 +423,8 @@ Bol şans! Ayrıca, aşağıdaki belge butonuna tıklamak kesinlikle doğru!</st
     <!-- Plugin strings -->
     <string name="plugin_title">Eklentiler</string>
     <string name="plugin_refresh">Yenile</string>
-    <string name="plugin_summary_title">Hafif Lua eklentileri</string>
+    <string name="plugin_summary_title">APD Lua Plugin</string>
+    <string name="plugin_summary_not_installed">APD yüklü değil · eklentiler kullanılamıyor</string>
     <string name="plugin_summary_desc">%1$d etkin · %2$d toplam</string>
     <string name="plugin_state_enabled">Etkin</string>
     <string name="plugin_state_disabled">Devre dışı</string>

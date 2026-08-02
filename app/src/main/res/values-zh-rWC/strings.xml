@@ -428,7 +428,8 @@ KernelPatch 大法需要以 boot 灵胎为引。
     <!-- Plugin strings -->
     <string name="plugin_title">仙法插件</string>
     <string name="plugin_refresh">刷新仙册</string>
-    <string name="plugin_summary_title">轻量 Lua 仙法</string>
+    <string name="plugin_summary_title">APD Lua Plugin</string>
+    <string name="plugin_summary_not_installed">APD 未渡劫 · 仙法不可用</string>
     <string name="plugin_summary_desc">已启 %1$d · 共 %2$d</string>
     <string name="plugin_state_enabled">已启</string>
     <string name="plugin_state_disabled">已禁</string>
