@@ -948,6 +948,8 @@ Please ensure the app is completely closed and reopened for the commands to exec
     <string name="dashboard_card_background_saved">Dashboard wallpaper saved successfully</string>
     <string name="dashboard_card_background_error">Failed to save dashboard wallpaper</string>
     <string name="dashboard_card_background_cleared">Dashboard wallpaper cleared</string>
+    <string name="dashboard_card_background_restore">Restore Default</string>
+    <string name="dashboard_card_background_restored">Default wallpaper restored</string>
     <string name="settings_dashboard_card_dual_dim">Enable dual day/night dim</string>
     <string name="settings_dashboard_card_dual_dim_desc">Automatically adjust dashboard wallpaper dim for light and dark themes</string>
     <string name="settings_dashboard_card_day_dim">Day mode dashboard wallpaper dim</string>
