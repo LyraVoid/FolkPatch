@@ -4,5 +4,9 @@
   "author": "FolkPatch",
   "version": "1.0.0",
   "description": "Example plugin demonstrating the plugin API",
+  "descriptions": {
+    "zh": "演示插件 API 的示例插件",
+    "ja": "プラグインAPIを紹介するサンプルプラグイン"
+  },
   "license": "MIT"
 }
