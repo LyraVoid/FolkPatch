@@ -376,7 +376,8 @@ KernelPatch は boot イメージをパッチする必要があります。
     <string name="home_more_menu_feedback_or_suggestion">フィードバックまたは提案</string>
     <string name="home_more_menu_about">アプリについて</string>
     <string name="home_more_menu_document">ドキュメント</string>
-    <string name="home_more_menu_plugin">プラグイン</string>
+    <string name="home_more_menu_music_play">音楽を再生</string>
+    <string name="home_more_menu_music_pause">音楽を一時停止</string>
 
     <!-- Plugin strings -->
     <string name="plugin_title">プラグイン</string>

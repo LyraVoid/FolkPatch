@@ -386,7 +386,8 @@ Kontynuować mimo to?</string>
     <string name="home_more_menu_feedback_or_suggestion">Opinie bądź sugestie</string>
     <string name="home_more_menu_about">O aplikacji</string>
     <string name="home_more_menu_document">Dokumentacja</string>
-    <string name="home_more_menu_plugin">Wtyczki</string>
+    <string name="home_more_menu_music_play">Odtwórz muzykę</string>
+    <string name="home_more_menu_music_pause">Wstrzymaj muzykę</string>
 
     <!-- Plugin strings -->
     <string name="plugin_title">Wtyczki</string>

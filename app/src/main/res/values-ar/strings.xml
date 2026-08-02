@@ -426,7 +426,8 @@
     <string name="home_more_menu_about">حول</string>
     <string name="home_more_menu_document">توثيق</string>
 
-    <string name="home_more_menu_plugin">المكونات الإضافية</string>
+    <string name="home_more_menu_music_play">تشغيل الموسيقى</string>
+    <string name="home_more_menu_music_pause">إيقاف الموسيقى مؤقتًا</string>
 
     <!-- Plugin strings -->
     <string name="plugin_title">المكونات الإضافية</string>

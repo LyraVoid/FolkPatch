@@ -418,7 +418,8 @@ Bol şans! Ayrıca, aşağıdaki belge butonuna tıklamak kesinlikle doğru!</st
     <string name="home_more_menu_about">Hakkında</string>
     <string name="home_more_menu_document">Belge</string>
 
-    <string name="home_more_menu_plugin">Eklentiler</string>
+    <string name="home_more_menu_music_play">Müziği çal</string>
+    <string name="home_more_menu_music_pause">Müziği duraklat</string>
 
     <!-- Plugin strings -->
     <string name="plugin_title">Eklentiler</string>

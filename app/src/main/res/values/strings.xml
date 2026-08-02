@@ -420,7 +420,8 @@ Here are some possible reasons for authentication failure—please check which o
     <string name="home_more_menu_feedback_or_suggestion">Feedback or suggestion</string>
     <string name="home_more_menu_about">About</string>
     <string name="home_more_menu_document">Document</string>
-    <string name="home_more_menu_plugin">Plugins</string>
+    <string name="home_more_menu_music_play">Play Music</string>
+    <string name="home_more_menu_music_pause">Pause Music</string>
 
     <!-- Plugin strings -->
     <string name="plugin_title">Plugins</string>

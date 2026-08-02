@@ -432,7 +432,8 @@ Aqui estão algumas possíveis razões para a falha de autenticação—verifiqu
     <string name="home_more_menu_about">Sobre</string>
     <string name="home_more_menu_document">Documentação</string>
 
-    <string name="home_more_menu_plugin">Plugins</string>
+    <string name="home_more_menu_music_play">Reproduzir música</string>
+    <string name="home_more_menu_music_pause">Pausar música</string>
 
     <!-- Plugin strings -->
     <string name="plugin_title">Plugins</string>

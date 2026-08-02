@@ -412,7 +412,8 @@ KernelPatch 这道菜需要用 boot 主料来烹饪。
     <string name="home_more_menu_about">关于</string>
     <string name="home_more_menu_document">菜谱文档</string>
 
-    <string name="home_more_menu_plugin">菜谱插件</string>
+    <string name="home_more_menu_music_play">播放小曲</string>
+    <string name="home_more_menu_music_pause">暂停小曲</string>
 
     <!-- Plugin strings -->
     <string name="plugin_title">菜谱插件</string>

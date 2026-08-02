@@ -427,7 +427,8 @@ KernelPatch требует образ boot для патча.
     <string name="home_more_menu_about">О приложении</string>
     <string name="home_more_menu_document">Документация</string>
 
-    <string name="home_more_menu_plugin">Плагины</string>
+    <string name="home_more_menu_music_play">Воспроизвести музыку</string>
+    <string name="home_more_menu_music_pause">Поставить музыку на паузу</string>
 
     <!-- Plugin strings -->
     <string name="plugin_title">Плагины</string>

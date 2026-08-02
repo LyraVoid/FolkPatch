@@ -423,7 +423,8 @@ KernelPatch 需要修補 boot 映像檔。
     <string name="home_more_menu_about">關於</string>
     <string name="home_more_menu_document">文檔</string>
 
-    <string name="home_more_menu_plugin">外掛</string>
+    <string name="home_more_menu_music_play">播放音樂</string>
+    <string name="home_more_menu_music_pause">暫停音樂</string>
 
     <!-- Plugin strings -->
     <string name="plugin_title">外掛</string>

@@ -410,7 +410,8 @@ KernelPatch 附魔需要 boot 方块作为材料。
     <string name="home_more_menu_about">世界概况</string>
     <string name="home_more_menu_document">Wiki百科</string>
 
-    <string name="home_more_menu_plugin">红石插件</string>
+    <string name="home_more_menu_music_play">播放红石音乐</string>
+    <string name="home_more_menu_music_pause">暂停红石音乐</string>
 
     <!-- Plugin strings -->
     <string name="plugin_title">红石插件</string>

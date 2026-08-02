@@ -426,7 +426,8 @@ Berikut adalah beberapa kemungkinan penyebab kegagalan autentikasi—silakan cek
     <string name="home_more_menu_about">Tentang Aplikasi</string>
     <string name="home_more_menu_document">Dokumentasi</string>
 
-    <string name="home_more_menu_plugin">Plugin</string>
+    <string name="home_more_menu_music_play">Putar musik</string>
+    <string name="home_more_menu_music_pause">Jeda musik</string>
 
     <!-- Plugin strings -->
     <string name="plugin_title">Plugin</string>

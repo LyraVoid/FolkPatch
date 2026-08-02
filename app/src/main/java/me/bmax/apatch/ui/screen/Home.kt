@@ -530,20 +530,17 @@ private fun TopBar(
             Text(if (isCustomTitle) customAppTitle else stringResource(titleResId!!))
         }
     }, actions = {
-        if (MusicConfig.isMusicEnabled) {
-            val isPlaying by MusicManager.isPlaying.collectAsStateWithLifecycle()
-            IconButton(onClick = { MusicManager.toggle() }) {
-                Icon(
-                    imageVector = if (isPlaying) Icons.Filled.Pause else Icons.Filled.PlayArrow,
-                    contentDescription = "Music Control"
-                )
-            }
-        }
-
         IconButton(onClick = onInstallClick) {
             Icon(
                 imageVector = Icons.Filled.AutoFixHigh,
                 contentDescription = stringResource(id = R.string.mode_select_page_title)
+            )
+        }
+
+        IconButton(onClick = dropUnlessResumed { navigator.navigate(PluginScreenDestination) }) {
+            Icon(
+                imageVector = Icons.Outlined.Extension,
+                contentDescription = stringResource(R.string.plugin_title)
             )
         }
 
@@ -572,6 +569,29 @@ private fun TopBar(
                     expanded = showDropdownMoreOptions,
                     onDismissRequest = { showDropdownMoreOptions = false }
                 ) {
+                    if (MusicConfig.isMusicEnabled) {
+                        val isPlaying by MusicManager.isPlaying.collectAsStateWithLifecycle()
+                        WallpaperAwareDropdownMenuItem(
+                            text = {
+                                Text(
+                                    stringResource(
+                                        if (isPlaying) R.string.home_more_menu_music_pause
+                                        else R.string.home_more_menu_music_play
+                                    )
+                                )
+                            },
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = if (isPlaying) Icons.Filled.Pause else Icons.Filled.PlayArrow,
+                                    contentDescription = null,
+                                )
+                            },
+                            onClick = {
+                                showDropdownMoreOptions = false
+                                MusicManager.toggle()
+                            }
+                        )
+                    }
                     WallpaperAwareDropdownMenuItem(
                         text = { Text(stringResource(R.string.home_more_menu_feedback_or_suggestion)) },
                         onClick = {
@@ -583,13 +603,6 @@ private fun TopBar(
                         text = { Text(stringResource(R.string.home_more_menu_about)) },
                         onClick = {
                             navigator.navigate(AboutScreenDestination)
-                            showDropdownMoreOptions = false
-                        }
-                    )
-                    WallpaperAwareDropdownMenuItem(
-                        text = { Text(stringResource(R.string.home_more_menu_plugin)) },
-                        onClick = {
-                            navigator.navigate(PluginScreenDestination)
                             showDropdownMoreOptions = false
                         }
                     )

@@ -416,7 +416,8 @@ KernelPatch는 boot 이미지를 패치해야 합니다.
     <string name="home_more_menu_about">정보</string>
     <string name="home_more_menu_document">문서</string>
 
-    <string name="home_more_menu_plugin">플러그인</string>
+    <string name="home_more_menu_music_play">음악 재생</string>
+    <string name="home_more_menu_music_pause">음악 일시 정지</string>
 
     <!-- Plugin strings -->
     <string name="plugin_title">플러그인</string>

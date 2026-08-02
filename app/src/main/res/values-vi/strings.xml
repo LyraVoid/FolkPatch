@@ -423,7 +423,8 @@ Dưới đây là một số nguyên nhân có thể gây ra thất bại xác t
     <string name="home_more_menu_about">Về</string>
     <string name="home_more_menu_document">Tài liệu</string>
 
-    <string name="home_more_menu_plugin">Plugin</string>
+    <string name="home_more_menu_music_play">Phát nhạc</string>
+    <string name="home_more_menu_music_pause">Tạm dừng nhạc</string>
 
     <!-- Plugin strings -->
     <string name="plugin_title">Plugin</string>

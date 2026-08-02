@@ -411,7 +411,8 @@ KernelPatch 需要修补 boot 镜像。
     <string name="home_more_menu_feedback_or_suggestion">反馈或建议</string>
     <string name="home_more_menu_about">关于</string>
     <string name="home_more_menu_document">文档</string>
-    <string name="home_more_menu_plugin">插件</string>
+    <string name="home_more_menu_music_play">播放音乐</string>
+    <string name="home_more_menu_music_pause">暂停音乐</string>
 
     <!-- Plugin strings -->
     <string name="plugin_title">插件</string>

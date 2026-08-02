@@ -425,7 +425,8 @@ Aquí hay algunas posibles razones para el fallo de autenticación—por favor v
     <string name="home_more_menu_about">Acerca de</string>
     <string name="home_more_menu_document">Documentación</string>
 
-    <string name="home_more_menu_plugin">Complementos</string>
+    <string name="home_more_menu_music_play">Reproducir música</string>
+    <string name="home_more_menu_music_pause">Pausar música</string>
 
     <!-- Plugin strings -->
     <string name="plugin_title">Complementos</string>
