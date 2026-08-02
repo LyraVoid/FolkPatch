@@ -4,6 +4,10 @@
   "author": "FolkPatch",
   "version": "1.2.0",
   "description": "Periodically clears app and system caches",
+  "descriptions": {
+    "zh": "定期清理应用与系统缓存",
+    "ja": "アプリとシステムのキャッシュを定期的にクリア"
+  },
   "license": "MIT",
   "quick_action": {
     "function": "clean_now",
