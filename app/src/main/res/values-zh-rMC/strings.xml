@@ -858,6 +858,8 @@ KernelPatch 附魔需要 boot 方块作为材料。
     <string name="dashboard_card_background_saved">仪表盘壁纸保存成功</string>
     <string name="dashboard_card_background_error">仪表盘壁纸保存失败</string>
     <string name="dashboard_card_background_cleared">仪表盘壁纸已清除</string>
+    <string name="dashboard_card_background_restore">恢复默认壁纸</string>
+    <string name="dashboard_card_background_restored">已恢复默认壁纸</string>
     <string name="settings_dashboard_card_dual_dim">启用昼夜双暗度</string>
     <string name="settings_dashboard_card_dual_dim_desc">自动根据明暗主题调整仪表盘壁纸暗度</string>
     <string name="settings_dashboard_card_day_dim">白天模式仪表盘壁纸暗度</string>

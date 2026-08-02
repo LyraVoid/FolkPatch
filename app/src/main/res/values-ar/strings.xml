@@ -1284,6 +1284,8 @@
     <string name="dashboard_card_background_saved">تم حفظ خلفية لوحة القيادة بنجاح</string>
     <string name="dashboard_card_background_error">فشل حفظ خلفية لوحة القيادة</string>
     <string name="dashboard_card_background_cleared">تم مسح خلفية لوحة القيادة</string>
+    <string name="dashboard_card_background_restore">استعادة الافتراضي</string>
+    <string name="dashboard_card_background_restored">تمت استعادة خلفية لوحة القيادة</string>
     <string name="settings_dashboard_card_dual_dim">تمكين التعتيم المزدوج للنهار/الليل</string>
     <string name="settings_dashboard_card_dual_dim_desc">ضبط تعتيم خلفية لوحة القيادة تلقائياً للسمات الفاتحة والداكنة</string>
     <string name="settings_dashboard_card_day_dim">تعتيم خلفية لوحة القيادة في الوضع النهاري</string>

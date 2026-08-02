@@ -74,6 +74,7 @@ import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Download
 import androidx.compose.material.icons.outlined.Restore
+import androidx.compose.material.icons.outlined.Storefront
 import androidx.compose.material.icons.outlined.Terminal
 import androidx.compose.material.icons.automirrored.outlined.Wysiwyg
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -1178,7 +1179,7 @@ private fun TopBar(
                 navigator.navigate(OnlineModuleScreenDestination)
             }) {
                 Icon(
-                    imageVector = Icons.Filled.Download,
+                    imageVector = Icons.Outlined.Storefront,
                     contentDescription = "Online Modules"
                 )
             }

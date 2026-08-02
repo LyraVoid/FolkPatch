@@ -887,6 +887,8 @@ KernelPatch 需要修補 boot 映像檔。
     <string name="dashboard_card_background_saved">儀表板桌布儲存成功</string>
     <string name="dashboard_card_background_error">儀表板桌布儲存失敗</string>
     <string name="dashboard_card_background_cleared">儀表板桌布已清除</string>
+    <string name="dashboard_card_background_restore">恢復預設桌布</string>
+    <string name="dashboard_card_background_restored">已恢復預設桌布</string>
     <string name="settings_dashboard_card_dual_dim">啟用晝夜雙暗度</string>
     <string name="settings_dashboard_card_dual_dim_desc">自動根據明暗主題調整儀表板桌布暗度</string>
     <string name="settings_dashboard_card_day_dim">白天模式儀表板桌布暗度</string>

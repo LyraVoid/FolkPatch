@@ -54,6 +54,8 @@ import androidx.compose.material.icons.automirrored.filled.Sort
 import androidx.compose.material.icons.outlined.Code
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Settings
+\
+import androidx.compose.material.icons.outlined.Storefront
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.*
@@ -1139,7 +1141,7 @@ private fun TopBar(
                     // 下载按钮
                     IconButton(onClick = dropUnlessResumed { navigator.navigate(OnlineKPMScreenDestination) }) {
                         Icon(
-                            imageVector = Icons.Filled.Download,
+                            imageVector = Icons.Outlined.Storefront,
                             contentDescription = "Online KPM"
                         )
                     }

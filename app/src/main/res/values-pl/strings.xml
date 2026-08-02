@@ -1225,6 +1225,8 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="dashboard_card_background_saved">Tapeta pulpitu zapisana pomyślnie</string>
     <string name="dashboard_card_background_error">Nie udało się zapisać tapety pulpitu</string>
     <string name="dashboard_card_background_cleared">Tapeta pulpitu wyczyszczona</string>
+    <string name="dashboard_card_background_restore">Przywróć domyślną</string>
+    <string name="dashboard_card_background_restored">Tapeta pulpitu przywrócona</string>
     <string name="settings_dashboard_card_dual_dim">Włącz podwójne przyciemnianie dzień/noc</string>
     <string name="settings_dashboard_card_dual_dim_desc">Automatycznie dostosuj przyciemnienie tapety pulpitu do jasnych i ciemnych motywów</string>
     <string name="settings_dashboard_card_day_dim">Przyciemnienie tapety pulpitu w trybie dziennym</string>

@@ -1302,6 +1302,8 @@ Por favor, certifique-se de fechar completamente o app e reabri-lo para que os c
     <string name="dashboard_card_background_saved">Papel de parede do painel salvo com sucesso</string>
     <string name="dashboard_card_background_error">Falha ao salvar papel de parede do painel</string>
     <string name="dashboard_card_background_cleared">Papel de parede do painel limpo</string>
+    <string name="dashboard_card_background_restore">Restaurar padrão</string>
+    <string name="dashboard_card_background_restored">Papel de parede do painel restaurado</string>
     <string name="settings_dashboard_card_dual_dim">Ativar escurecimento duplo dia/noite</string>
     <string name="settings_dashboard_card_dual_dim_desc">Ajustar automaticamente o escurecimento do papel de parede do painel para temas claro e escuro</string>
     <string name="settings_dashboard_card_day_dim">Escurecimento do papel de parede do painel no modo dia</string>

@@ -1228,6 +1228,8 @@ KernelPatch は boot イメージをパッチする必要があります。
     <string name="dashboard_card_background_saved">ダッシュボード壁紙を保存しました</string>
     <string name="dashboard_card_background_error">ダッシュボード壁紙の保存に失敗</string>
     <string name="dashboard_card_background_cleared">ダッシュボード壁紙をクリアしました</string>
+    <string name="dashboard_card_background_restore">デフォルトに戻す</string>
+    <string name="dashboard_card_background_restored">ダッシュボード壁紙を復元しました</string>
     <string name="settings_dashboard_card_dual_dim">昼/夜デュアル調光を有効化</string>
     <string name="settings_dashboard_card_dual_dim_desc">ライトテーマとダークテーマに応じてダッシュボード壁紙の暗さを自動調整</string>
     <string name="settings_dashboard_card_day_dim">昼モードのダッシュボード壁紙の暗さ</string>

@@ -1305,6 +1305,8 @@ KernelPatch требует образ boot для патча.
     <string name="dashboard_card_background_saved">Обои панели успешно сохранены</string>
     <string name="dashboard_card_background_error">Не удалось сохранить обои панели</string>
     <string name="dashboard_card_background_cleared">Обои панели очищены</string>
+    <string name="dashboard_card_background_restore">Восстановить по умолчанию</string>
+    <string name="dashboard_card_background_restored">Обои панели восстановлены</string>
     <string name="settings_dashboard_card_dual_dim">Включить двойное затемнение день/ночь</string>
     <string name="settings_dashboard_card_dual_dim_desc">Автоматически регулировать затемнение обоев панели для светлой и тёмной темы</string>
     <string name="settings_dashboard_card_day_dim">Затемнение обоев панели в дневном режиме</string>

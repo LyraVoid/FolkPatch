@@ -1306,6 +1306,8 @@ Komutların çalışması için uygulamanın tamamen kapatılıp yeniden açıld
     <string name="dashboard_card_background_saved">Panel duvar kağıdı başarıyla kaydedildi</string>
     <string name="dashboard_card_background_error">Panel duvar kağıdı kaydedilemedi</string>
     <string name="dashboard_card_background_cleared">Panel duvar kağıdı temizlendi</string>
+    <string name="dashboard_card_background_restore">Varsayılanı geri yükle</string>
+    <string name="dashboard_card_background_restored">Panel duvar kağıdı geri yüklendi</string>
     <string name="settings_dashboard_card_dual_dim">Çift gün/gece karartmayı etkinleştir</string>
     <string name="settings_dashboard_card_dual_dim_desc">Açık ve koyu temalar için panel duvar kağıdı karartmasını otomatik ayarla</string>
     <string name="settings_dashboard_card_day_dim">Gündüz modunda panel duvar kağıdı karartması</string>
