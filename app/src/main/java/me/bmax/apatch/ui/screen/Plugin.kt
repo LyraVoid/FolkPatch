@@ -433,7 +433,7 @@ private fun PluginCard(
         if (plugin.description.isNotEmpty()) {
             Spacer(Modifier.height(12.dp))
             Text(
-                text = plugin.description,
+                text = pluginDescription(plugin),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 maxLines = 2,
@@ -551,6 +551,13 @@ private fun configFieldLabel(field: PluginViewModel.PluginConfigField): String {
 private fun quickActionLabel(action: PluginViewModel.PluginQuickAction): String {
     val locale = androidx.compose.ui.platform.LocalConfiguration.current.locales[0]?.language ?: "en"
     return action.labels[locale]?.ifBlank { null } ?: action.label
+}
+
+/** Choose the display description for a plugin based on the system locale. */
+@Composable
+private fun pluginDescription(plugin: PluginViewModel.PluginInfo): String {
+    val locale = androidx.compose.ui.platform.LocalConfiguration.current.locales[0]?.language ?: "en"
+    return plugin.descriptions[locale]?.ifBlank { null } ?: plugin.description
 }
 
 /** Dialog that lets the user edit a plugin's config fields. */
