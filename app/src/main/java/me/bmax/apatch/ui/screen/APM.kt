@@ -1174,7 +1174,7 @@ private fun TopBar(
         searchText = searchQuery,
         onSearchTextChange = onSearchQueryChange,
         onClearClick = { onSearchQueryChange("") },
-        leadingActions = {
+        dropdownContent = {
             androidx.compose.material3.IconButton(onClick = {
                 navigator.navigate(OnlineModuleScreenDestination)
             }) {
@@ -1183,8 +1183,6 @@ private fun TopBar(
                     contentDescription = "Online Modules"
                 )
             }
-        },
-        dropdownContent = {
             androidx.compose.material3.IconButton(onClick = { showMenu = true }) {
                 Icon(Icons.Filled.MoreVert, contentDescription = "More")
                 WallpaperAwareDropdownMenu(

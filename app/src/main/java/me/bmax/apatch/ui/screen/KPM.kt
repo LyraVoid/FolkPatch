@@ -54,7 +54,6 @@ import androidx.compose.material.icons.automirrored.filled.Sort
 import androidx.compose.material.icons.outlined.Code
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Settings
-\
 import androidx.compose.material.icons.outlined.Storefront
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
@@ -1138,18 +1137,18 @@ private fun TopBar(
                 visible = !onSearch
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    // 下载按钮
-                    IconButton(onClick = dropUnlessResumed { navigator.navigate(OnlineKPMScreenDestination) }) {
-                        Icon(
-                            imageVector = Icons.Outlined.Storefront,
-                            contentDescription = "Online KPM"
-                        )
-                    }
                     // 搜索按钮
                     IconButton(onClick = { onSearch = true }) {
                         Icon(
                             imageVector = Icons.Filled.Search,
                             contentDescription = "Search"
+                        )
+                    }
+                    // 下载按钮
+                    IconButton(onClick = dropUnlessResumed { navigator.navigate(OnlineKPMScreenDestination) }) {
+                        Icon(
+                            imageVector = Icons.Outlined.Storefront,
+                            contentDescription = "Online KPM"
                         )
                     }
                     // 自定义排序按钮（无模块时隐藏）

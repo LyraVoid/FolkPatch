@@ -23,6 +23,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.PlayArrow
+import androidx.compose.material.icons.outlined.Storefront
 import androidx.compose.material3.*
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.*
@@ -139,11 +140,11 @@ fun ScriptLibraryScreen(navigator: DestinationsNavigator) {
                     }
                 },
                 actions = {
-                    IconButton(onClick = { navigator.navigate(OnlineScriptScreenDestination) }) {
-                        Icon(Icons.Default.Download, contentDescription = stringResource(R.string.online_script_title))
-                    }
                     IconButton(onClick = { showAddDialog = true }) {
                         Icon(Icons.Default.Add, contentDescription = stringResource(R.string.script_library_add))
+                    }
+                    IconButton(onClick = { navigator.navigate(OnlineScriptScreenDestination) }) {
+                        Icon(Icons.Outlined.Storefront, contentDescription = stringResource(R.string.online_script_title))
                     }
                 }
             )
