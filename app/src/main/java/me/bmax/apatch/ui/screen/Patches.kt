@@ -158,6 +158,7 @@ fun Patches(mode: PatchesViewModel.PatchMode) {
                 if ((mode == PatchesViewModel.PatchMode.PATCH_ONLY || mode == PatchesViewModel.PatchMode.RESTORE) && viewModel.kimgInfo.banner.isEmpty()) {
                     SelectFileButton(
                         text = stringResource(id = R.string.patch_select_bootimg_btn),
+                        opaque = true,
                         onSelected = { data, uri ->
                             Log.d(TAG, "select boot.img, data: $data, uri: $uri")
                             viewModel.copyAndParseBootimg(uri)
@@ -176,6 +177,7 @@ fun Patches(mode: PatchesViewModel.PatchMode) {
                 if (viewModel.useCustomKPImg && !viewModel.patching && !viewModel.patchdone) {
                     SelectFileButton(
                         text = stringResource(id = R.string.patch_select_kpimg_btn),
+                        opaque = true,
                         onSelected = { _, uri -> viewModel.setCustomKPImg(uri) }
                     )
                 }
