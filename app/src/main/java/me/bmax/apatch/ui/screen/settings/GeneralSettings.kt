@@ -386,9 +386,19 @@ fun GeneralSettingsContent(
                 description = newAppProfileEnabledSummary,
                 checked = newAppProfileEnabled,
                 onCheckedChange = {
-                    newAppProfileEnabled = it
                     if (it) {
-                        prefs.edit { putBoolean(APApplication.PREF_NEW_APP_PROFILE_ENABLED, true) }
+                        val targetMode = prefs.getInt(APApplication.PREF_AUTO_EXCLUDE_NEW_APPS, 0)
+                        val result = runCatching { Natives.setNewAppProfileMode(targetMode) }.getOrDefault(-1L)
+                        if (result == 0L) {
+                            newAppProfileEnabled = true
+                            prefs.edit { putBoolean(APApplication.PREF_NEW_APP_PROFILE_ENABLED, true) }
+                        } else {
+                            newAppProfileEnabled = false
+                            showToast(
+                                context,
+                                context.getString(R.string.settings_new_app_profile_update_failed, result.toString())
+                            )
+                        }
                     } else {
                         runCatching { Natives.setNewAppProfileMode(0) }
                         newAppProfileMode = 0
