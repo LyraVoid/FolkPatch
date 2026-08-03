@@ -33,10 +33,12 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -56,6 +58,9 @@ import coil.request.ImageRequest
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.splicedLazyColumnGroup
 import me.bmax.apatch.util.SuAuditLog
@@ -68,20 +73,34 @@ import java.util.Locale
 @Composable
 fun SuAuditLogScreen(navigator: DestinationsNavigator) {
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
     var showClearDialog by remember { mutableStateOf(false) }
     var selectedTab by remember { mutableIntStateOf(0) }
 
-    var kernelEntries by remember { mutableStateOf(SuAuditLog.getKernelEntries()) }
-    var appEntries by remember { mutableStateOf(SuAuditLog.getAppEntries()) }
+    var kernelEntries by remember { mutableStateOf<List<SuAuditLog.AuditEntry.KernelEntry>>(emptyList()) }
+    var appEntries by remember { mutableStateOf<List<SuAuditLog.AuditEntry.AppEntry>>(emptyList()) }
+
+    LaunchedEffect(Unit) {
+        withContext(Dispatchers.IO) {
+            kernelEntries = SuAuditLog.getKernelEntries()
+            appEntries = SuAuditLog.getAppEntries()
+        }
+    }
 
     if (showClearDialog) {
         SuAuditClearDialog(
             onDismiss = { showClearDialog = false },
             onConfirm = {
                 SuAuditLog.clearEntries()
-                kernelEntries = SuAuditLog.getKernelEntries()
-                appEntries = SuAuditLog.getAppEntries()
+                kernelEntries = emptyList()
+                appEntries = emptyList()
                 showClearDialog = false
+                scope.launch {
+                    withContext(Dispatchers.IO) {
+                        kernelEntries = SuAuditLog.getKernelEntries()
+                        appEntries = SuAuditLog.getAppEntries()
+                    }
+                }
             }
         )
     }
