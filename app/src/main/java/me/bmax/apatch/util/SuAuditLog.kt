@@ -77,7 +77,11 @@ object SuAuditLog {
             return emptyList()
         }
 
-        if (jsonStr.isEmpty() || jsonStr == "[]") return emptyList()
+        if (jsonStr.isEmpty() || jsonStr == "[]") {
+            Log.w(TAG, "getKernelEntries: kernel returned empty: '${jsonStr.take(200)}'")
+            return emptyList()
+        }
+        Log.d(TAG, "getKernelEntries: raw=${jsonStr.take(400)}")
 
         val entries = mutableListOf<AuditEntry.KernelEntry>()
         try {
@@ -97,9 +101,10 @@ object SuAuditLog {
                 )
             }
         } catch (e: JSONException) {
-            Log.e(TAG, "Failed to parse kernel audit log", e)
+            Log.e(TAG, "Failed to parse kernel audit log: $jsonStr", e)
         }
 
+        Log.d(TAG, "getKernelEntries: parsed ${entries.size} entries")
         return entries.filter { it.uid != 0 }
     }
 
