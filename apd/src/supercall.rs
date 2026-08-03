@@ -319,6 +319,25 @@ pub fn refresh_ap_package_list(skey: &CStr, mutex: &Arc<Mutex<()>>) {
 
     let package_configs = read_ap_package_config();
 
+    // The manager is the recovery path for APD. Never leave its UID in the
+    // kernel exclude list, even if an older auto-profile pass added it.
+    if let Ok(manager_pkg) = std::fs::read_to_string(crate::defs::MANAGER_PACKAGE_FILE) {
+        let manager_pkg = manager_pkg.trim();
+        if !manager_pkg.is_empty() {
+            if let Ok(packages) = std::fs::read_to_string("/data/system/packages.list") {
+                if let Some(uid) = packages.lines().find_map(|line| {
+                    let mut fields = line.split_whitespace();
+                    (fields.next() == Some(manager_pkg))
+                        .then(|| fields.next()?.parse::<i64>().ok())
+                        .flatten()
+                }) {
+                    let rc = sc_set_ap_mod_exclude(skey, uid, 0);
+                    info!("[refresh_su_list] Clearing manager exclude {} ({}) result={}", manager_pkg, uid, rc);
+                }
+            }
+        }
+    }
+
     let num = sc_su_uid_nums(skey);
     if num < 0 {
         error!("[refresh_su_list] Error getting number of UIDs: {}", num);
@@ -478,18 +497,32 @@ pub fn autoload_kpm_modules(superkey: &Option<String>, event_filter: &str) {
     let content = match std::fs::read_to_string(config_path) {
         Ok(c) => c,
         Err(e) => {
-            set_retry_flag(crate::defs::KPM_AUTOLOAD_RETRY_FILE, false, "kpm_autoload");
-            info!(
-                "[kpm_autoload] config not found or unreadable ({}): {}",
-                config_path, e
-            );
-            return;
+            // A file copied into the managed autoload directory is itself a
+            // valid configuration. This also recovers from an interrupted UI
+            // save where the KPM was copied before the JSON was written.
+            let discovered: Vec<String> = std::fs::read_dir(crate::defs::FP_KPMS_AUTOLOAD_DIR)
+                .ok()
+                .into_iter()
+                .flatten()
+                .filter_map(Result::ok)
+                .map(|entry| entry.path())
+                .filter(|path| path.extension().is_some_and(|ext| ext.eq_ignore_ascii_case("kpm")))
+                .map(|path| path.to_string_lossy().into_owned())
+                .collect();
+            if discovered.is_empty() {
+                set_retry_flag(crate::defs::KPM_AUTOLOAD_RETRY_FILE, false, "kpm_autoload");
+                info!("[kpm_autoload] config not found or unreadable ({}): {}", config_path, e);
+                return;
+            }
+            info!("[kpm_autoload] config missing, discovered {} KPM file(s)", discovered.len());
+            format!(r#"{{"enabled":true,"kpmPaths":{}}}"#, serde_json::to_string(&discovered).unwrap_or_default())
         }
     };
 
     let config: KpmAutoLoadConfig = match serde_json::from_str(&content) {
         Ok(c) => c,
         Err(e) => {
+            set_retry_flag(crate::defs::KPM_AUTOLOAD_RETRY_FILE, true, "kpm_autoload");
             warn!("[kpm_autoload] failed to parse config: {}", e);
             return;
         }

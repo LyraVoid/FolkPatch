@@ -114,11 +114,26 @@ fun KpmAutoLoadConfigScreen(navigator: DestinationsNavigator) {
                 }
 
                 if (importedPath != null && importedPath.endsWith(".kpm", ignoreCase = true) && importedPath !in kpmEntriesList.map { it.path }) {
-                    kpmEntriesList = kpmEntriesList + KpmAutoLoadEntry(path = importedPath)
-                    updateJsonString(kpmEntriesList, isEnabled) { newJson ->
+                    val updatedEntries = kpmEntriesList + KpmAutoLoadEntry(path = importedPath)
+                    val saved = withContext(Dispatchers.IO) {
+                        KpmAutoLoadManager.saveConfig(
+                            context,
+                            KpmAutoLoadConfig(enabled = isEnabled, entries = updatedEntries)
+                        )
+                    }
+                    if (saved) {
+                        kpmEntriesList = updatedEntries
+                    }
+                    updateJsonString(updatedEntries, isEnabled) { newJson ->
                         jsonString = newJson
                     }
-                    showToast(context, context.getString(R.string.kpm_autoload_save_success))
+                    showToast(
+                        context,
+                        context.getString(
+                            if (saved) R.string.kpm_autoload_save_success
+                            else R.string.kpm_autoload_save_failed
+                        )
+                    )
                 } else if (importedPath == null) {
                     showToast(context, context.getString(R.string.kpm_autoload_file_not_found))
                 }

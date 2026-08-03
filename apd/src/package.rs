@@ -49,6 +49,13 @@ fn write_known_user_packages(packages: &HashSet<String>) -> io::Result<()> {
     std::fs::write(defs::AUTO_EXCLUDE_KNOWN_PACKAGES_FILE, content)
 }
 
+fn manager_package() -> Option<String> {
+    std::fs::read_to_string(defs::MANAGER_PACKAGE_FILE)
+        .ok()
+        .map(|pkg| pkg.trim().to_owned())
+        .filter(|pkg| !pkg.is_empty())
+}
+
 fn list_user_packages() -> HashSet<String> {
     let commands: [(&str, &[&str]); 2] = [
         ("cmd", &["package", "list", "packages", "-3"]),
@@ -92,6 +99,7 @@ pub fn sync_auto_exclude_new_apps(
 
     let known_user_packages = read_known_user_packages();
     let known_initialized = Path::new(defs::AUTO_EXCLUDE_KNOWN_PACKAGES_FILE).exists();
+    let manager_pkg = manager_package();
     let mut changed = false;
 
     if mode != 0 && known_initialized {
@@ -101,6 +109,10 @@ pub fn sync_auto_exclude_new_apps(
             .collect();
 
         for pkg in new_packages {
+            if manager_pkg.as_deref() == Some(pkg.as_str()) {
+                info!("[auto_exclude] Skipping manager package {}", pkg);
+                continue;
+            }
             let Some(&uid) = uid_map.get(&pkg) else {
                 warn!("[auto_exclude] Missing uid for package {}, skip", pkg);
                 continue;

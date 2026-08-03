@@ -104,8 +104,17 @@ fun FunctionSettingsScreen(navigator: DestinationsNavigator, highlightKey: Strin
                 val prefs = APApplication.sharedPreferences
                 isKernelSpoofEnabled = prefs.getBoolean(APApplication.PREF_UTS_SPOOF_ENABLED, false)
                     && checkUtsSpoofEnabled()
-                kernelSpoofVersion = prefs.getString(APApplication.PREF_UTS_SPOOF_RELEASE, "") ?: ""
-                kernelSpoofBuildTime = prefs.getString(APApplication.PREF_UTS_SPOOF_VERSION, "") ?: ""
+                var savedRelease = prefs.getString(APApplication.PREF_UTS_SPOOF_RELEASE, "") ?: ""
+                var savedBuildTime = prefs.getString(APApplication.PREF_UTS_SPOOF_VERSION, "") ?: ""
+                if (savedRelease.isBlank() && savedBuildTime.isBlank()) {
+                    // First use: seed the fields with the real values so the
+                    // toggle never applies a silent no-op spoof.
+                    val uname = Os.uname()
+                    savedRelease = uname.release
+                    savedBuildTime = uname.version
+                }
+                kernelSpoofVersion = savedRelease
+                kernelSpoofBuildTime = savedBuildTime
                 val umountConfig = UmountConfigManager.loadConfig(context)
                 isUmountEnabled = umountConfig.enabled
                 umountPaths = umountConfig.paths
@@ -241,10 +250,17 @@ fun FunctionSettingsScreen(navigator: DestinationsNavigator, highlightKey: Strin
                             prefs.edit().putBoolean(APApplication.PREF_UTS_SPOOF_ENABLED, enabled).apply()
                             if (enabled) {
                                 setUtsSpoofEnabled(true)
-                                val savedRelease = prefs.getString(APApplication.PREF_UTS_SPOOF_RELEASE, "") ?: ""
-                                val savedVersion = prefs.getString(APApplication.PREF_UTS_SPOOF_VERSION, "") ?: ""
-                                writeUtsSpoofConfig(savedRelease, savedVersion)
-                                Natives.utsSet(savedRelease.ifBlank { null }, savedVersion.ifBlank { null })
+                                var release = kernelSpoofVersion
+                                var buildTime = kernelSpoofBuildTime
+                                if (release.isBlank() && buildTime.isBlank()) {
+                                    val uname = Os.uname()
+                                    release = uname.release
+                                    buildTime = uname.version
+                                    kernelSpoofVersion = release
+                                    kernelSpoofBuildTime = buildTime
+                                }
+                                writeUtsSpoofConfig(release, buildTime)
+                                Natives.utsSet(release.ifBlank { null }, buildTime.ifBlank { null })
                                 withContext(Dispatchers.Main) {
                                     snackBarHost.showSnackbar(context.getString(R.string.kernel_spoof_enabled))
                                 }

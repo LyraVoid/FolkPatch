@@ -19,6 +19,7 @@ pub const UTS_SPOOF_RETRY_FILE: &str = concatcp!(ADB_DIR, ".uts_spoof_retry");
 pub const DAEMON_PATH: &str = concatcp!(ADB_DIR, "apd");
 pub const AUTO_EXCLUDE_KNOWN_PACKAGES_FILE: &str =
     concatcp!(WORKING_DIR, "auto_exclude_known_packages");
+pub const MANAGER_PACKAGE_FILE: &str = concatcp!(WORKING_DIR, "manager_package");
 
 pub const PATHHIDE_DIR: &str = concatcp!(ADB_DIR, "fp/pathhide/");
 pub const PATHHIDE_ENABLE_FILE: &str = concatcp!(ADB_DIR, "fp/pathhide/enabled");
