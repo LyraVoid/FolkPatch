@@ -11,7 +11,7 @@
 
 FolkPatch - A Root management tool focused on interface optimization and feature extension
 
-Get started quickly with our comprehensive documentation. Whether it's installation, module management, or custom settings, the documentation covers everything you need to successfully use FolkPatch.
+Built on KernelPatch, FolkPatch delivers a stable Root experience along with a brand-new interface and a three-tier extension system: APM / KPM / Plugins. Get started quickly with our comprehensive documentation — installation, module management, plugin development, and personalization, all in one place.
 
 [📚 Read Full Documentation](https://fp.mysqil.com/) →
 
@@ -48,47 +48,50 @@ Get started quickly with our comprehensive documentation. Whether it's installat
 - [x] Interface visual details and dynamic effects enhancement
 - [x] Support for manually disabling automatic update checks, giving users control over version upgrades
 
-### 📦 Module Related
-- [x] APM: Magisk-like module system, supports batch flashing and full backup
-- [x] KPM: Kernel module system (supports inline-hook and syscall-table-hook), supports automatic loading
-- [x] Download popular APM or KPM through the store
+### 📦 Modules & Extension System
 
-### 🧩 Plugin System (Lua)
+FolkPatch provides a three-tier extension system covering customization needs from kernel to user space:
 
-Plugins are lightweight extensions sitting between APM and KPM: no system file modification, no kernel injection — just Lua callbacks running in the `apd` lifecycle.
+- [x] **APM**: Magisk-like module system, supports batch flashing and full backup
+- [x] **KPM**: Kernel module system (supports inline-hook and syscall-table-hook), supports automatic loading
+- [x] **Plugins (APD Lua Plugin)**: Lightweight Lua script extensions, sitting between APM and KPM
+- [x] Download popular APMs, KPMs and plugins through the built-in store
 
-- Storage: `/data/adb/plugins/<id>/`
-- Package: zip containing `plugin.json` (manifest) + `main.lua` (entry script)
-- Features: enable/disable, quick actions, user config UI, persistent execution logs (exportable)
-- API: `exec`, `getprop`, `setprop`, `read_file`, `write_file`, `sysctl`, `chmod`, `mkdir`, `rm`, `start_daemon`, `get_config`, `set_config`
-- Lifecycle: `post_fs_data`, `service`, `boot_completed`, plus optional `main` daemon
-- Examples: `examples/plugins/hello-plugin/` and `examples/plugins/cache-cleaner/`
+### 🧩 Plugin System (APD Lua Plugin)
 
-```sh
-apd plugin list / install / uninstall / enable / disable / run / action / log / clear-log
-```
+Plugins are FolkPatch's lightweight user-space extensions, positioned between APM (system-level modules) and KPM (kernel-level modules): no system file modification, no kernel injection — just Lua scripts running in the `apd` lifecycle. Unlike traditional modules, plugins take effect immediately after installation without a reboot, and are much easier to develop.
+
+Supported capabilities:
+
+- Enable/disable switch
+- Quick actions and user configuration UI
+- Scheduled daemon tasks (background polling)
+- Persistent execution logs with viewing, exporting and sharing
+
+For the full plugin documentation (package format, API, lifecycle, management commands), see:
+
+- 🇬🇧 English: https://fp.mysqil.com/en/modules/plugin/
+- 🇨🇳 中文: https://fp.mysqil.com/modules/plugin/
 
 ### ⚡ Technical Features
-- [x] Based on [KernelPatch](https://github.com/bmax121/KernelPatch/)
+- [x] Based on [KernelPatch](https://github.com/LyraVoid/KernelPatch/)
 
 ## 🚀 Download & Install
 
-### 📦 Installation Guide
+1. **Download:**
+   Get the latest installation package from the [Releases page](https://github.com/LyraVoid/FolkPatch/releases/latest)
 
-1. **Download & Install:**
-   Download the latest installation package from the [Releases page](https://github.com/LyraVoid/FolkPatch/releases/latest)
-
-2. **Install App:**
-   Install the latest installation package to your Android device
+2. **Install:**
+   Install the package on your Android device and follow the in-app guide
 
 3. **Get Started:**
-   Read https://fp.mysqil.com/
+   Read the [full documentation](https://fp.mysqil.com/) for module management, plugin development and more
 
 ## 🙏 Open Source Credits
 
 This project is based on the following open source projects:
 
-- [KernelPatch](https://github.com/bmax121/KernelPatch/) - Core component
+- [KernelPatch](https://github.com/LyraVoid/KernelPatch/) - Core component
 - [Magisk](https://github.com/topjohnwu/Magisk) - magiskpolicy
 - [KernelSU](https://github.com/tiann/KernelSU) - App UI and Magisk-like module support
 - [Sukisu-Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra) - Referenced some interface designs
@@ -104,6 +107,7 @@ This project is based on the following open source projects:
 - Distribution implies that you grant all users the relevant patents involved in the use of the project
 - This software is provided "as is", without any warranty. The original author is not responsible for any losses caused by using this software
 - Any violation of the above terms will automatically terminate your GPLv3 license. At that time, you will lose the legal right to distribute FolkPatch. The original author reserves the right to pursue copyright infringement liability (including but not limited to applying for injunctions to stop infringement, economic compensation, and removing infringing projects)
+
 ## 💬 Community & Discussion
 
 ### FolkPatch Discussion & Communication
