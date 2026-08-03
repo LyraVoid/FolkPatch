@@ -753,8 +753,18 @@ object BackgroundConfig {
      */
     fun load(context: Context) {
         val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        val uri = prefs.getString(KEY_CUSTOM_BACKGROUND_URI, null)
-        val enabled = prefs.getBoolean(KEY_CUSTOM_BACKGROUND_ENABLED, false)
+        var dirty = false
+        fun String?.staleOrNull(): String? {
+            if (!FsUtils.isFileUriAvailable(this)) {
+                dirty = true
+                Log.w(TAG, "Stale background reference cleared (file missing): $this")
+                return null
+            }
+            return this
+        }
+
+        val uri = prefs.getString(KEY_CUSTOM_BACKGROUND_URI, null)?.staleOrNull()
+        val enabled = prefs.getBoolean(KEY_CUSTOM_BACKGROUND_ENABLED, false) && uri != null
         val opacity = prefs.getFloat(KEY_CUSTOM_BACKGROUND_OPACITY, 0.5f)
         val blur = prefs.getFloat(KEY_CUSTOM_BACKGROUND_BLUR, 0.2f)
         val dim = prefs.getFloat(KEY_CUSTOM_BACKGROUND_DIM, 0.0f)
@@ -762,12 +772,12 @@ object BackgroundConfig {
         val dayDim = prefs.getFloat(KEY_CUSTOM_BACKGROUND_DAY_DIM, 0.0f)
         val nightDim = prefs.getFloat(KEY_CUSTOM_BACKGROUND_NIGHT_DIM, 0.5f)
         
-        val videoUri = prefs.getString(KEY_VIDEO_BACKGROUND_URI, null)
-        val videoEnabled = prefs.getBoolean(KEY_VIDEO_BACKGROUND_ENABLED, false)
+        val videoUri = prefs.getString(KEY_VIDEO_BACKGROUND_URI, null)?.staleOrNull()
+        val videoEnabled = prefs.getBoolean(KEY_VIDEO_BACKGROUND_ENABLED, false) && videoUri != null
         val videoVol = prefs.getFloat(KEY_VIDEO_VOLUME, 0f)
 
-        val gridUri = prefs.getString(KEY_GRID_WORKING_CARD_BACKGROUND_URI, null)
-        val gridEnabled = prefs.getBoolean(KEY_GRID_WORKING_CARD_BACKGROUND_ENABLED, false)
+        val gridUri = prefs.getString(KEY_GRID_WORKING_CARD_BACKGROUND_URI, null)?.staleOrNull()
+        val gridEnabled = prefs.getBoolean(KEY_GRID_WORKING_CARD_BACKGROUND_ENABLED, false) && gridUri != null
         val gridOpacity = prefs.getFloat(KEY_GRID_WORKING_CARD_BACKGROUND_OPACITY, 1.0f)
         val gridDim = prefs.getFloat(KEY_GRID_WORKING_CARD_BACKGROUND_DIM, 0.3f)
         val gridDualOpacityEnabled = prefs.getBoolean(KEY_GRID_WORKING_CARD_DUAL_OPACITY_ENABLED, false)
@@ -792,26 +802,26 @@ object BackgroundConfig {
         val effectiveApiSource = if (folkBannerApiSourceValue.isNotBlank()) folkBannerApiSourceValue else bannerApiSourceValue
 
         val multiEnabled = prefs.getBoolean(KEY_MULTI_BACKGROUND_ENABLED, false)
-        val homeUri = prefs.getString(KEY_HOME_BACKGROUND_URI, null)
-        val kernelUri = prefs.getString(KEY_KERNEL_BACKGROUND_URI, null)
-        val superuserUri = prefs.getString(KEY_SUPERUSER_BACKGROUND_URI, null)
-        val systemModuleUri = prefs.getString(KEY_SYSTEM_MODULE_BACKGROUND_URI, null)
-        val settingsUri = prefs.getString(KEY_SETTINGS_BACKGROUND_URI, null)
+        val homeUri = prefs.getString(KEY_HOME_BACKGROUND_URI, null)?.staleOrNull()
+        val kernelUri = prefs.getString(KEY_KERNEL_BACKGROUND_URI, null)?.staleOrNull()
+        val superuserUri = prefs.getString(KEY_SUPERUSER_BACKGROUND_URI, null)?.staleOrNull()
+        val systemModuleUri = prefs.getString(KEY_SYSTEM_MODULE_BACKGROUND_URI, null)?.staleOrNull()
+        val settingsUri = prefs.getString(KEY_SETTINGS_BACKGROUND_URI, null)?.staleOrNull()
 
         val advancedTitleStyleEnabled = prefs.getBoolean(KEY_ADVANCED_TITLE_STYLE_ENABLED, false)
-        val titleImageUriValue = prefs.getString(KEY_TITLE_IMAGE_URI, null)
+        val titleImageUriValue = prefs.getString(KEY_TITLE_IMAGE_URI, null)?.staleOrNull()
         val titleDayOpacity = prefs.getFloat(KEY_TITLE_IMAGE_DAY_OPACITY, 1.0f)
         val titleNightOpacity = prefs.getFloat(KEY_TITLE_IMAGE_NIGHT_OPACITY, 1.0f)
         val titleDim = prefs.getFloat(KEY_TITLE_IMAGE_DIM, 0.0f)
         val titleOffsetX = prefs.getFloat(KEY_TITLE_IMAGE_OFFSET_X, 0f)
 
-        val focusCardKernelBg = prefs.getString(KEY_FOCUS_CARD_KERNEL_BG_URI, null)
-        val focusCardAppBg = prefs.getString(KEY_FOCUS_CARD_APP_BG_URI, null)
-        val focusCardDeviceBg = prefs.getString(KEY_FOCUS_CARD_DEVICE_BG_URI, null)
-        val focusCardStorageBg = prefs.getString(KEY_FOCUS_CARD_STORAGE_BG_URI, null)
+        val focusCardKernelBg = prefs.getString(KEY_FOCUS_CARD_KERNEL_BG_URI, null)?.staleOrNull()
+        val focusCardAppBg = prefs.getString(KEY_FOCUS_CARD_APP_BG_URI, null)?.staleOrNull()
+        val focusCardDeviceBg = prefs.getString(KEY_FOCUS_CARD_DEVICE_BG_URI, null)?.staleOrNull()
+        val focusCardStorageBg = prefs.getString(KEY_FOCUS_CARD_STORAGE_BG_URI, null)?.staleOrNull()
         val hasFocusCardWallpaper = focusCardKernelBg != null || focusCardAppBg != null ||
             focusCardDeviceBg != null || focusCardStorageBg != null
-        val focusCardBackgroundEnabled = prefs.getBoolean(KEY_FOCUS_CARD_BACKGROUND_ENABLED, hasFocusCardWallpaper)
+        val focusCardBackgroundEnabled = prefs.getBoolean(KEY_FOCUS_CARD_BACKGROUND_ENABLED, hasFocusCardWallpaper) && hasFocusCardWallpaper
         val focusCardDim = prefs.getFloat(KEY_FOCUS_CARD_BG_DIM, 0.3f)
         val focusCardDualDim = prefs.getBoolean(KEY_FOCUS_CARD_DUAL_DIM_ENABLED, false)
         val focusCardDayDim = prefs.getFloat(KEY_FOCUS_CARD_DAY_DIM, focusCardDim)
@@ -821,8 +831,8 @@ object BackgroundConfig {
         val focusCardDayOpacity = prefs.getFloat(KEY_FOCUS_CARD_DAY_OPACITY, focusCardOpacity)
         val focusCardNightOpacity = prefs.getFloat(KEY_FOCUS_CARD_NIGHT_OPACITY, focusCardOpacity)
 
-        val dashboardCardBg = prefs.getString(KEY_DASHBOARD_CARD_BG_URI, null)
-        val dashboardCardEnabled = prefs.getBoolean(KEY_DASHBOARD_CARD_BACKGROUND_ENABLED, true)
+        val dashboardCardBg = prefs.getString(KEY_DASHBOARD_CARD_BG_URI, null)?.staleOrNull()
+        val dashboardCardEnabled = prefs.getBoolean(KEY_DASHBOARD_CARD_BACKGROUND_ENABLED, true) && dashboardCardBg != null
         val dashboardCardDim = prefs.getFloat(KEY_DASHBOARD_CARD_BG_DIM, 0.3f)
         val dashboardCardDualDim = prefs.getBoolean(KEY_DASHBOARD_CARD_DUAL_DIM_ENABLED, true)
         val dashboardCardDayDim = prefs.getFloat(KEY_DASHBOARD_CARD_DAY_DIM, 0.15f)
@@ -923,6 +933,12 @@ object BackgroundConfig {
         isNavBarGlassSpecularEnabled = navBarGlassSpecularEnabled
         isNavBarGlassInnerGlowEnabled = navBarGlassInnerGlowEnabled
         isNavBarGlassBorderEnabled = navBarGlassBorderEnabled
+
+        // 有失效引用被清除时持久化，避免下次启动再次读到同样的陈旧状态。
+        if (dirty) {
+            Log.w(TAG, "Background config self-healed: cleared stale file references")
+            save(context)
+        }
     }
     
     /**

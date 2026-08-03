@@ -19,6 +19,7 @@ import me.bmax.apatch.util.APatchCli
 import me.bmax.apatch.util.verifyAppSignature
 import me.bmax.apatch.ui.theme.MusicConfig
 import me.bmax.apatch.util.MusicManager
+import me.bmax.apatch.util.BottomBarIconConfig
 import me.bmax.apatch.util.Version
 import me.bmax.apatch.util.getRootShell
 import me.bmax.apatch.util.rootShellForResult
@@ -354,6 +355,7 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
         me.bmax.apatch.ui.theme.VibrationConfig.load(this)
         me.bmax.apatch.ui.theme.BackgroundConfig.load(this)
         me.bmax.apatch.ui.theme.FontConfig.load(this)
+        BottomBarIconConfig.sanitizeStaleReferences(this)
         me.bmax.apatch.util.ui.FloatingBarConfig.load(this)
         MusicManager.init(this)
 

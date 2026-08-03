@@ -162,4 +162,27 @@ object BottomBarIconConfig {
         }
         notifyChanged()
     }
+
+    /**
+     * 清理引用已失效（本地文件缺失）的自定义图标配置。
+     * 图标文件被删除后若不清理，配置会一直指向不存在的文件。
+     */
+    fun sanitizeStaleReferences(context: Context) {
+        val destNames = listOf("Home", "KModule", "SuperUser", "AModule", "Settings")
+        val prefs = APApplication.sharedPreferences
+        var dirty = false
+        destNames.forEach { name ->
+            val uri = prefs.getString(PREF_PREFIX + name, null) ?: return@forEach
+            if (!FsUtils.isFileUriAvailable(uri)) {
+                prefs.edit { remove(PREF_PREFIX + name) }
+                File(context.filesDir, "nav_icon_$name.png").takeIf { it.exists() }?.delete()
+                dirty = true
+            }
+        }
+        if (dirty) {
+            val anyLeft = destNames.any { prefs.getString(PREF_PREFIX + it, null) != null }
+            prefs.edit { putBoolean("nav_icon_custom_enabled", anyLeft) }
+            notifyChanged()
+        }
+    }
 }

@@ -1,6 +1,7 @@
 package me.bmax.apatch.ui.theme
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -53,6 +54,149 @@ internal object ThemeIO {
         val digest = MessageDigest.getInstance("SHA-256")
         val bytes = digest.digest(KEY_STR.toByteArray())
         return SecretKeySpec(bytes, "AES")
+    }
+
+    /**
+     * 从流中完整读取 buffer，ContentProvider 的流可能分块返回，
+     * 单次 read() 不能保证读满，否则主题文件会被误判为不完整。
+     */
+    private fun readFully(input: java.io.InputStream, buffer: ByteArray): Int {
+        var total = 0
+        while (total < buffer.size) {
+            val read = input.read(buffer, total, buffer.size - total)
+            if (read < 0) break
+            total += read
+        }
+        return total
+    }
+
+    // 主题导入可能触碰的 filesDir 文件模式（用于回滚时清理新建文件）
+    private val IMPORT_TOUCHED_BASES = listOf(
+        "background", "grid_working_card_background",
+        "background_home", "background_kernel", "background_superuser",
+        "background_system_module", "background_settings",
+        "video_background", "title_image",
+        "focus_card_kernel_bg", "focus_card_app_bg",
+        "focus_card_device_bg", "focus_card_storage_bg",
+        "dashboard_card_bg"
+    )
+    private val IMPORT_TOUCHED_EXTENSIONS = listOf(".jpg", ".png", ".gif", ".webp", ".mp4", ".webm", ".mkv")
+
+    private fun isImportTouchedFile(file: File): Boolean {
+        val name = file.name
+        if (name.startsWith("nav_icon_") && name.endsWith(".png")) return true
+        if (name.startsWith("custom_font_") && name.endsWith(".ttf")) return true
+        return IMPORT_TOUCHED_BASES.any { base ->
+            name.startsWith(base) && IMPORT_TOUCHED_EXTENSIONS.any { name.endsWith(it) }
+        }
+    }
+
+    /**
+     * 主题导入快照：应用前备份所有会被修改的 prefs 与文件。
+     * 导入中途失败时通过 [restore] 恢复到导入前状态，避免留下半应用配置。
+     */
+    private class ImportRollback(
+        private val prefsBackups: List<Pair<SharedPreferences, Map<String, Any?>>>,
+        private val fileBackups: List<Pair<File, File>>
+    ) {
+        @Suppress("UNCHECKED_CAST")
+        private fun restorePrefs(prefs: SharedPreferences, snapshot: Map<String, Any?>) {
+            val editor = prefs.edit().clear()
+            snapshot.forEach { (key, value) ->
+                when (value) {
+                    is String -> editor.putString(key, value)
+                    is Boolean -> editor.putBoolean(key, value)
+                    is Int -> editor.putInt(key, value)
+                    is Long -> editor.putLong(key, value)
+                    is Float -> editor.putFloat(key, value)
+                    is Set<*> -> editor.putStringSet(key, value as Set<String>)
+                }
+            }
+            editor.apply()
+        }
+
+        fun cleanup() {
+            fileBackups.firstOrNull()?.first?.parentFile?.let { backupRoot ->
+                FsUtils.deleteQuietly(backupRoot)
+            }
+        }
+
+        fun restore(context: Context) {
+            try {
+                // 1. 恢复 prefs（含主配置、背景、音乐、音效、字体、主题商店）
+                prefsBackups.forEach { (prefs, snapshot) ->
+                    restorePrefs(prefs, snapshot)
+                }
+                // 2. 删除导入过程中新建/覆盖的 filesDir 文件
+                val filesDir = context.filesDir
+                filesDir.listFiles()?.forEach { file ->
+                    if (isImportTouchedFile(file)) FsUtils.deleteQuietly(file)
+                }
+                // 3. 恢复音乐/音效目录
+                listOf("music", "sound_effects").forEach { dirName ->
+                    val dir = File(filesDir, dirName)
+                    if (dir.exists()) dir.deleteRecursively()
+                }
+                // 4. 从备份恢复原文件
+                fileBackups.forEach { (backup, original) ->
+                    if (backup.isDirectory) {
+                        FsUtils.ensureDirectory(original)
+                        backup.copyRecursively(original, overwrite = true)
+                    } else {
+                        FsUtils.hardenedCopy(backup, original)
+                    }
+                }
+                // 5. 内存状态与恢复后的 prefs 对齐
+                BackgroundConfig.load(context)
+                MusicConfig.load(context)
+                SoundEffectConfig.load(context)
+                FontConfig.load(context)
+                BottomBarIconConfig.notifyChanged()
+                Log.w(TAG, "Theme import rolled back to previous state")
+            } catch (e: Exception) {
+                Log.e(TAG, "Theme import rollback failed", e)
+            } finally {
+                cleanup()
+            }
+        }
+
+        companion object {
+            fun capture(context: Context): ImportRollback {
+                val prefsBackups = listOf(
+                    APApplication.SP_NAME,
+                    "background_settings",
+                    "music_settings",
+                    "sound_effect_settings",
+                    "font_settings",
+                    "theme_store_prefs"
+                ).map { name ->
+                    val prefs = context.getSharedPreferences(name, Context.MODE_PRIVATE)
+                    prefs to HashMap<String, Any?>(prefs.all)
+                }
+
+                val backupDir = File(context.cacheDir, "theme_rollback_${System.currentTimeMillis()}")
+                FsUtils.ensureDirectory(backupDir)
+                val fileBackups = mutableListOf<Pair<File, File>>()
+                var index = 0
+                val filesDir = context.filesDir
+                filesDir.listFiles()?.forEach { file ->
+                    if (isImportTouchedFile(file)) {
+                        val dest = File(backupDir, "f${index++}")
+                        if (file.isDirectory) file.copyRecursively(dest) else file.copyTo(dest)
+                        fileBackups.add(dest to file)
+                    }
+                }
+                listOf("music", "sound_effects").forEach { dirName ->
+                    val dir = File(filesDir, dirName)
+                    if (dir.exists()) {
+                        val dest = File(backupDir, "d${index++}")
+                        dir.copyRecursively(dest)
+                        fileBackups.add(dest to dir)
+                    }
+                }
+                return ImportRollback(prefsBackups, fileBackups)
+            }
+        }
     }
 
     suspend fun exportTheme(context: Context, uri: Uri, metadata: ThemeMetadata): Boolean {
@@ -428,7 +572,7 @@ internal object ThemeIO {
                 SafeUriResolver.openInputStream(context, uri)?.use { `is` ->
                     // Read IV
                     val iv = ByteArray(16)
-                    if (`is`.read(iv) != 16) return@withContext null
+                    if (readFully(`is`, iv) != 16) return@withContext null
 
                     val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
                     cipher.init(Cipher.DECRYPT_MODE, getSecretKey(), IvParameterSpec(iv))
@@ -491,7 +635,7 @@ internal object ThemeIO {
                 SafeUriResolver.openInputStream(context, uri)?.use { `is` ->
                     // Read IV (first 16 bytes of the encrypted file)
                     val iv = ByteArray(16)
-                    val ivBytesRead = `is`.read(iv)
+                    val ivBytesRead = readFully(`is`, iv)
                     if (ivBytesRead != 16) {
                         val msg = if (ivBytesRead <= 0) {
                             "Theme file is empty or unreadable"
@@ -636,6 +780,9 @@ internal object ThemeIO {
                 val soundEffectFilename = json.optString("soundEffectFilename", "")
                 val soundEffectScope = json.optString("soundEffectScope", SoundEffectConfig.SCOPE_GLOBAL)
 
+                // 2b. 应用前快照当前状态，导入失败时整体回滚，避免留下半应用配置。
+                val rollback = ImportRollback.capture(context)
+                try {
                 // 3. Apply Background
                 BackgroundConfig.setCustomBackgroundOpacityValue(backgroundOpacity)
                 BackgroundConfig.setCustomBackgroundBlurValue(backgroundBlur)
@@ -669,7 +816,14 @@ internal object ThemeIO {
                         }
                     }
                     if (!bgFound) {
-                        // Fallback logic if needed, or disable background
+                        // Theme declares wallpaper but archive has no image:
+                        // clear stale files/URI instead of keeping a broken reference.
+                        for (oldExt in extensions) {
+                            val oldFile = File(context.filesDir, "background$oldExt")
+                            if (oldFile.exists()) oldFile.delete()
+                        }
+                        BackgroundConfig.updateCustomBackgroundUri(null)
+                        BackgroundConfig.setCustomBackgroundEnabledState(false)
                     }
                 } else {
                      // Maybe clear if we want to enforce theme state exactly
@@ -691,6 +845,7 @@ internal object ThemeIO {
                 
                 if (isGridWorkingCardBackgroundEnabled) {
                     val extensions = listOf(".jpg", ".png", ".gif", ".webp")
+                    var bgFound = false
                     for (ext in extensions) {
                         val bgFile = File(cacheDir, "grid_working_card_background$ext")
                         if (bgFile.exists()) {
@@ -707,8 +862,17 @@ internal object ThemeIO {
                                 .appendQueryParameter("t", System.currentTimeMillis().toString())
                                 .build()
                              BackgroundConfig.updateGridWorkingCardBackgroundUri(fileUri.toString())
+                             bgFound = true
                              break
                         }
+                    }
+                    if (!bgFound) {
+                        for (oldExt in extensions) {
+                            val oldFile = File(context.filesDir, "grid_working_card_background$oldExt")
+                            if (oldFile.exists()) oldFile.delete()
+                        }
+                        BackgroundConfig.updateGridWorkingCardBackgroundUri(null)
+                        BackgroundConfig.setGridWorkingCardBackgroundEnabledState(false)
                     }
                 }
                 
@@ -770,6 +934,7 @@ internal object ThemeIO {
 
                 if (isVideoBackgroundEnabled) {
                     val extensions = listOf(".mp4", ".webm", ".mkv")
+                    var videoFound = false
                     for (ext in extensions) {
                         val videoFile = File(cacheDir, "video_background$ext")
                         if (videoFile.exists()) {
@@ -783,8 +948,12 @@ internal object ThemeIO {
                             BackgroundConfig.updateVideoBackgroundUri(fileUri)
                             // Restore enabled state as clearVideoBackground resets it
                             BackgroundConfig.setVideoBackgroundEnabledState(true)
+                            videoFound = true
                             break
                         }
+                    }
+                    if (!videoFound) {
+                        BackgroundManager.clearVideoBackground(context)
                     }
                 }
 
@@ -797,6 +966,7 @@ internal object ThemeIO {
 
                 if (isAdvancedTitleStyleEnabled) {
                     val extensions = listOf(".jpg", ".png", ".gif", ".webp")
+                    var titleFound = false
                     for (ext in extensions) {
                         val titleImageFile = File(cacheDir, "title_image$ext")
                         if (titleImageFile.exists()) {
@@ -813,8 +983,16 @@ internal object ThemeIO {
                                 .appendQueryParameter("t", System.currentTimeMillis().toString())
                                 .build()
                             BackgroundConfig.updateTitleImageUri(fileUri.toString())
+                            titleFound = true
                             break
                         }
+                    }
+                    if (!titleFound) {
+                        for (oldExt in extensions) {
+                            val oldFile = File(context.filesDir, "title_image$oldExt")
+                            if (oldFile.exists()) oldFile.delete()
+                        }
+                        BackgroundConfig.updateTitleImageUri(null)
                     }
                 } else {
                     // Clear title image if disabled in theme
@@ -1029,7 +1207,13 @@ internal object ThemeIO {
                 // 6. Refresh Theme
                 refreshTheme.postValue(true)
                 
+                rollback.cleanup()
                 true
+                } catch (e: Exception) {
+                    Log.e(TAG, "Import failed, rolling back: ${e.message ?: e.javaClass.simpleName}", e)
+                    rollback.restore(context)
+                    false
+                }
             } catch (e: Exception) {
                 Log.e(TAG, "Import failed: ${e.message ?: e.javaClass.simpleName}", e)
                 false

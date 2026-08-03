@@ -1,6 +1,7 @@
 package me.bmax.apatch.util
 
 import android.util.Log
+import android.net.Uri
 import java.io.File
 import java.io.IOException
 
@@ -77,5 +78,31 @@ object FsUtils {
         if (!deleted) {
             Log.w(TAG, "Failed to delete: ${file.absolutePath}")
         }
+    }
+
+    /**
+     * 从持久化的 file:// URI 中提取本地文件路径。
+     * 非 file:// 的 URI（如 content://）返回 null，表示无法用本地路径校验。
+     */
+    fun localPathFromUri(uriString: String?): String? {
+        if (uriString.isNullOrBlank()) return null
+        return runCatching {
+            val uri = Uri.parse(uriString)
+            if (uri.scheme == "file") uri.path else null
+        }.getOrNull()
+    }
+
+    /**
+     * 校验持久化的文件 URI 是否仍然指向存在的本地文件。
+     * - URI 为空/非本地文件 URI：视为可用（不做破坏性清理）；
+     * - file:// URI 指向的文件缺失或为空：视为失效，调用方应清除对应配置。
+     */
+    fun isFileUriAvailable(uriString: String?): Boolean {
+        val path = localPathFromUri(uriString) ?: return true
+        if (path.isBlank()) return true
+        return runCatching {
+            val file = File(path)
+            file.isFile && file.length() > 0L
+        }.getOrDefault(true)
     }
 }

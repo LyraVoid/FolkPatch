@@ -36,6 +36,10 @@ import kotlinx.coroutines.withContext
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.Natives
 import me.bmax.apatch.R
+import me.bmax.apatch.ui.theme.BackgroundManager
+import me.bmax.apatch.ui.theme.FontConfig
+import me.bmax.apatch.ui.theme.MusicConfig
+import me.bmax.apatch.ui.theme.SoundEffectConfig
 import me.bmax.apatch.util.*
 import me.bmax.apatch.util.ui.APDialogBlurBehindUtils
 import me.bmax.apatch.util.ui.showToast
@@ -950,6 +954,24 @@ fun CleanStorageDialog(showDialog: MutableState<Boolean>) {
                                         dir.mkdirs()
                                     }
                                     context.cacheDir?.listFiles()?.forEach { it.deleteRecursively() }
+                                    MusicConfig.clearMusic(context)
+                                    SoundEffectConfig.clearSoundEffect(context)
+                                    SoundEffectConfig.clearStartupSound(context)
+                                    SoundEffectConfig.save(context)
+                                    FontConfig.clearFont(context)
+                                    BottomBarIconConfig.resetAll()
+                                    BackgroundManager.clearCustomBackground(context)
+                                    BackgroundManager.clearVideoBackground(context)
+                                    BackgroundManager.clearGridWorkingCardBackground(context)
+                                    BackgroundManager.clearHomeBackground(context)
+                                    BackgroundManager.clearKernelBackground(context)
+                                    BackgroundManager.clearSuperuserBackground(context)
+                                    BackgroundManager.clearSystemModuleBackground(context)
+                                    BackgroundManager.clearSettingsBackground(context)
+                                    BackgroundManager.clearTitleImage(context)
+                                    BackgroundManager.clearAllFocusCardBackgrounds(context)
+                                    BackgroundManager.clearDashboardCardBackground(context)
+                                    BackgroundManager.provisionDefaultDashboardCardBg(context)
                                 }.isSuccess
                             }
                             showToast(context, if (success) R.string.settings_clean_storage_done else R.string.failure)
