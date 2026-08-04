@@ -937,7 +937,7 @@
     <string name="settings_category_general_summary">天使语韵、圣光更新、结界律令、神域调整</string>
     <string name="settings_category_appearance_summary">圣光主题、天使色彩、神殿布局、圣域背景、神文字体</string>
     <string name="settings_category_behavior_summary">万维除错、降临仪式、圣殿展示</string>
-    <string name="settings_category_security_summary">天使印记、圣光密钥管理</string>
+    <string name="settings_category_security_summary">天使印鉴认证与魔法阵操作验证</string>
     <string name="settings_category_backup_summary">本地圣典、云端圣典、WebDAV</string>
     <string name="settings_category_module_summary">魔法信息、天使排列、批量降临</string>
     <string name="settings_category_function_summary">FolkPatch隐匿、卸载圣侍</string>

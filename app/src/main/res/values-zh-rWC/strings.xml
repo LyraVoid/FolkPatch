@@ -953,7 +953,7 @@ KernelPatch 大法需要以 boot 灵胎为引。
     <string name="settings_category_general_summary">凡尘语韵、天道更新、仙界禁令、乾坤调整</string>
     <string name="settings_category_appearance_summary">道韵主题、灵光色彩、仙阵布局、虚幻背景、符文字体</string>
     <string name="settings_category_behavior_summary">万维除错、阵法植入、仙府显影</string>
-    <string name="settings_category_security_summary">仙灵印记、万法密钥管理</string>
+    <string name="settings_category_security_summary">仙纹核验与仙符操作验证</string>
     <string name="settings_category_backup_summary">本地拓印、云端仙录、WebDAV传功</string>
     <string name="settings_category_module_summary">悟道信息、仙序排列、批量灌顶</string>
     <string name="settings_category_function_summary">FolkPatch隐匿、卸载仙侍</string>

@@ -941,7 +941,7 @@ KernelPatch 这道菜需要用 boot 主料来烹饪。
     <string name="settings_category_general_summary">菜单语言、新菜更新、厨房规矩、餐厅调整</string>
     <string name="settings_category_appearance_summary">菜单主题、颜色、布局、背景、字体</string>
     <string name="settings_category_behavior_summary">Web调试、上菜行为、招牌展示</string>
-    <string name="settings_category_security_summary">顾客认证、传世秘方管理</string>
+    <string name="settings_category_security_summary">应用认证与招牌菜操作验证</string>
     <string name="settings_category_backup_summary">本地留份、云端留份、WebDAV</string>
     <string name="settings_category_module_summary">招牌菜信息、排序、批量上菜</string>
     <string name="settings_category_function_summary">FolkPatch隐身、Umount服务</string>

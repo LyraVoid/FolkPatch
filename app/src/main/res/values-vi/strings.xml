@@ -955,7 +955,7 @@ Cần đảm bảo phần mềm thoát hoàn toàn vào mới sẽ thực thi l�
     <string name="settings_category_general_summary">Ngôn ngữ, cập nhật, SELinux, tinh chỉnh hệ thống</string>
     <string name="settings_category_appearance_summary">Chủ đề, màu sắc, bố cục, nền, phông chữ</string>
     <string name="settings_category_behavior_summary">Gỡ lỗi Web, hành vi cài đặt, hiển thị trang chủ</string>
-    <string name="settings_category_security_summary">Sinh trắc học, quản lý siêu khóa</string>
+    <string name="settings_category_security_summary">Xác thực ứng dụng và xác minh thao tác mô-đun</string>
     <string name="settings_category_backup_summary">Sao lưu cục bộ, sao lưu đám mây, WebDAV</string>
     <string name="settings_category_module_summary">Thông tin mô-đun, sắp xếp, cài đặt hàng loạt</string>
     <string name="settings_category_function_summary">Ẩn FolkPatch, dịch vụ Umount</string>

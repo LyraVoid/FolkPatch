@@ -956,7 +956,7 @@ KernelPatch 魔法阵需要 boot 核心来施展。
     <string name="settings_category_general_summary">魔法语韵、魔法更新、结界律令、魔法世界调整</string>
     <string name="settings_category_appearance_summary">魔法主题、星光色彩、魔法阵布局、梦境背景、魔法符文字体</string>
     <string name="settings_category_behavior_summary">万维除错、魔法植入、魔法殿堂展示</string>
-    <string name="settings_category_security_summary">魔法印记、万法密钥管理</string>
+    <string name="settings_category_security_summary">魔法印鉴认证与魔法阵操作验证</string>
     <string name="settings_category_backup_summary">本地魔法书、云端魔法书、WebDAV</string>
     <string name="settings_category_module_summary">魔法信息、星序排列、批量施法</string>
     <string name="settings_category_function_summary">FolkPatch隐匿、卸载魔法侍从</string>

@@ -953,7 +953,7 @@ Por favor, certifique-se de fechar completamente o app e reabri-lo para que os c
     <string name="settings_category_general_summary">Idioma, atualizações, SELinux, ajustes do sistema</string>
     <string name="settings_category_appearance_summary">Tema, cores, layout, fundo, fontes</string>
     <string name="settings_category_behavior_summary">Depuração Web, comportamento de instalação, exibição inicial</string>
-    <string name="settings_category_security_summary">Biometria, gerenciamento de superchave</string>
+    <string name="settings_category_security_summary">Autenticação do aplicativo e verificação de operações de módulos</string>
     <string name="settings_category_backup_summary">Backup local, backup na nuvem, WebDAV</string>
     <string name="settings_category_module_summary">Informações do módulo, classificação, instalação em lote</string>
     <string name="settings_category_function_summary">Ocultar FolkPatch, serviço Umount</string>

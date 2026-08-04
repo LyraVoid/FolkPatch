@@ -907,7 +907,7 @@ KernelPatch は boot イメージをパッチする必要があります。
     <string name="settings_category_general_summary">言語、アップデート、SELinux、システム調整</string>
     <string name="settings_category_appearance_summary">テーマ、色、レイアウト、背景、フォント</string>
     <string name="settings_category_behavior_summary">Webデバッグ、インストール動作、ホーム表示</string>
-    <string name="settings_category_security_summary">生体認証、スーパーキー管理</string>
+    <string name="settings_category_security_summary">アプリ認証とモジュール操作の検証</string>
     <string name="settings_category_backup_summary">ローカルバックアップ、クラウドバックアップ、WebDAV</string>
     <string name="settings_category_module_summary">モジュール情報、並べ替え、一括インストール</string>
     <string name="settings_category_function_summary">FolkPatch非表示、Umountサービス</string>

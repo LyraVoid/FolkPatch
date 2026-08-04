@@ -959,7 +959,7 @@ Komutların çalışması için uygulamanın tamamen kapatılıp yeniden açıld
     <string name="settings_category_general_summary">Dil, güncellemeler, SELinux, sistem ayarları</string>
     <string name="settings_category_appearance_summary">Tema, renkler, düzen, arka plan, yazı tipleri</string>
     <string name="settings_category_behavior_summary">Web hata ayıklama, kurulum davranışı, ana sayfa görüntüsü</string>
-    <string name="settings_category_security_summary">Biyometrik, süper anahtar yönetimi</string>
+    <string name="settings_category_security_summary">Uygulama kimlik doğrulaması ve modül işlem doğrulaması</string>
     <string name="settings_category_backup_summary">Yerel yedekleme, bulut yedekleme, WebDAV</string>
     <string name="settings_category_module_summary">Modül bilgisi, sıralama, toplu kurulum</string>
     <string name="settings_category_function_summary">FolkPatch Gizle, Umount hizmeti</string>

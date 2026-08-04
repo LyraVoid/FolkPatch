@@ -981,7 +981,7 @@ KernelPatch는 boot 이미지를 패치해야 합니다.
     <string name="settings_category_general_summary">언어, 업데이트, SELinux, 시스템 조정</string>
     <string name="settings_category_appearance_summary">테마, 색상, 레이아웃, 배경, 글꼴</string>
     <string name="settings_category_behavior_summary">웹 디버깅, 설치 동작, 홈 표시</string>
-    <string name="settings_category_security_summary">생체 인식, 슈퍼키 관리</string>
+    <string name="settings_category_security_summary">앱 인증 및 모듈 작업 검증</string>
     <string name="settings_category_backup_summary">로컬 백업, 클라우드 백업, WebDAV</string>
     <string name="settings_category_module_summary">모듈 정보, 정렬, 일괄 설치</string>
     <string name="settings_category_function_summary">FolkPatch 숨기기, Umount 서비스</string>

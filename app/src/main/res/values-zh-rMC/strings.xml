@@ -991,7 +991,7 @@ KernelPatch 附魔需要 boot 方块作为材料。
     <string name="settings_category_general_summary">语言、更新、SELinux、服务器调整</string>
     <string name="settings_category_appearance_summary">资源包主题、颜色、布局、背景皮肤、字体</string>
     <string name="settings_category_behavior_summary">Web调试、安装行为、主世界显示</string>
-    <string name="settings_category_security_summary">生物识别、OP密钥管理</string>
+    <string name="settings_category_security_summary">应用认证与模组操作验证</string>
     <string name="settings_category_backup_summary">本地存档、云端存档、WebDAV</string>
     <string name="settings_category_module_summary">模组信息、排序、批量安装</string>
     <string name="settings_category_function_summary">FolkPatch隐藏、Umount服务</string>

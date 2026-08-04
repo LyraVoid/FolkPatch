@@ -1082,7 +1082,7 @@ Please ensure the app is completely closed and reopened for the commands to exec
     <string name="settings_category_general_summary">Language, updates, SELinux, system tweaks</string>
     <string name="settings_category_appearance_summary">Theme, colors, layout, background, fonts</string>
     <string name="settings_category_behavior_summary">Web debugging, install behavior, home display</string>
-    <string name="settings_category_security_summary">Biometric, superkey management</string>
+    <string name="settings_category_security_summary">App authentication and module operation verification</string>
     <string name="settings_category_backup_summary">Local backup, cloud backup, WebDAV</string>
     <string name="settings_category_module_summary">Module info, sorting, batch install</string>
     <string name="settings_category_function_summary">FolkPatch Hide, Umount service</string>

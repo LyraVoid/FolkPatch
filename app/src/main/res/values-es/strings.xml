@@ -948,7 +948,7 @@ Por ejemplo, los KPM que previenen la modificación de particiones solo pueden u
     <string name="settings_category_general_summary">Idioma, actualizaciones, SELinux, ajustes del sistema</string>
     <string name="settings_category_appearance_summary">Tema, colores, diseño, fondo, fuentes</string>
     <string name="settings_category_behavior_summary">Depuración web, comportamiento de instalación, pantalla de inicio</string>
-    <string name="settings_category_security_summary">Biometría, gestión de superclaves</string>
+    <string name="settings_category_security_summary">Autenticación de la aplicación y verificación de operaciones de módulos</string>
     <string name="settings_category_backup_summary">Copia de seguridad local, en la nube, WebDAV</string>
     <string name="settings_category_module_summary">Info de módulos, ordenación, instalación por lotes</string>
     <string name="settings_category_function_summary">Ocultar FolkPatch, servicio Umount</string>

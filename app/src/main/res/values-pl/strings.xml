@@ -879,7 +879,7 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="settings_category_general_summary">Język, aktualizacje, SELinux, dostosowania systemu</string>
     <string name="settings_category_appearance_summary">Motyw, kolory, układ, tło, czcionki</string>
     <string name="settings_category_behavior_summary">Debugowanie WWW, zachowanie instalacji, ekran główny</string>
-    <string name="settings_category_security_summary">Biometria, zarządzanie superkluczami</string>
+    <string name="settings_category_security_summary">Uwierzytelnianie aplikacji i weryfikacja operacji modułów</string>
     <string name="settings_category_backup_summary">Lokalna kopia zapasowa, kopia w chmurze, WebDAV</string>
     <string name="settings_category_module_summary">Informacje o modułach, sortowanie, instalacja wsadowa</string>
     <string name="settings_category_function_summary">Ukryj FolkPatch, usługa Umount</string>

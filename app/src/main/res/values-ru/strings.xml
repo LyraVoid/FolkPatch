@@ -960,7 +960,7 @@ KernelPatch требует образ boot для патча.
     <string name="settings_category_general_summary">Язык, обновления, SELinux, системные настройки</string>
     <string name="settings_category_appearance_summary">Тема, цвета, макет, фон, шрифты</string>
     <string name="settings_category_behavior_summary">Отладка Web, поведение установки, отображение на главном</string>
-    <string name="settings_category_security_summary">Биометрия, управление суперключами</string>
+    <string name="settings_category_security_summary">Аутентификация приложения и проверка операций с модулями</string>
     <string name="settings_category_backup_summary">Локальное резервное копирование, облачное, WebDAV</string>
     <string name="settings_category_module_summary">Информация о модулях, сортировка, пакетная установка</string>
     <string name="settings_category_function_summary">Скрытие FolkPatch, служба Umount</string>

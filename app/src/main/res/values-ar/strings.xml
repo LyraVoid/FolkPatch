@@ -959,7 +959,7 @@
     <string name="settings_category_general_summary">اللغة، التحديثات، SELinux، تعديلات النظام</string>
     <string name="settings_category_appearance_summary">السمة، الألوان، التخطيط، الخلفية، الخطوط</string>
     <string name="settings_category_behavior_summary">تصحيح أخطاء الويب، سلوك التثبيت، عرض الشاشة الرئيسية</string>
-    <string name="settings_category_security_summary">القياسات الحيوية، إدارة المفاتيح الفائقة</string>
+    <string name="settings_category_security_summary">مصادقة التطبيق والتحقق من عمليات الوحدات</string>
     <string name="settings_category_backup_summary">نسخ احتياطي محلي، سحابي، WebDAV</string>
     <string name="settings_category_module_summary">معلومات الوحدات، الفرز، التثبيت الدفعي</string>
     <string name="settings_category_function_summary">إخفاء FolkPatch، خدمة Umount</string>

@@ -937,7 +937,7 @@ Pastikan aplikasi ditutup sepenuhnya dan dimulai ulang untuk menjalankan perinta
     <string name="settings_category_general_summary">Bahasa, pembaruan, SELinux, penyesuaian sistem</string>
     <string name="settings_category_appearance_summary">Tema, warna, tata letak, latar belakang, font</string>
     <string name="settings_category_behavior_summary">Debug Web, perilaku pemasangan, tampilan beranda</string>
-    <string name="settings_category_security_summary">Biometrik, manajemen superkey</string>
+    <string name="settings_category_security_summary">Autentikasi aplikasi dan verifikasi operasi modul</string>
     <string name="settings_category_backup_summary">Cadangan lokal, cadangan awan, WebDAV</string>
     <string name="settings_category_module_summary">Info modul, pengurutan, pemasangan batch</string>
     <string name="settings_category_function_summary">Sembunyikan FolkPatch, layanan Umount</string>
