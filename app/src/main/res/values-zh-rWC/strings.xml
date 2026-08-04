@@ -593,9 +593,9 @@ KernelPatch 大法需要以 boot 灵胎为引。
     <string name="dpi_confirm_message">将仙器DPI从%1$s更改为%2$s？</string>
     <string name="settings_magic_mount">Folk Mount API</string>
     <string name="settings_magic_mount_summary">启内建仙符挂载系统</string>
-    <string name="settings_new_app_profile_enabled">新仙器默认道法</string>
-    <string name="settings_new_app_profile_enabled_summary">开启后，新仙器会按所选道法自动炼化</string>
-    <string name="settings_new_app_profile_mode">新仙器默认道法</string>
+    <string name="settings_new_app_profile_enabled">新仙器自动认主</string>
+    <string name="settings_new_app_profile_enabled_summary">开启后，新炼化的仙器会自动套用下方预设的认主模式</string>
+    <string name="settings_new_app_profile_mode">默认认主模式</string>
     <string name="settings_new_app_profile_normal">凡体</string>
     <string name="settings_new_app_profile_root">超凡</string>
     <string name="settings_new_app_profile_exclude">驱逐</string>

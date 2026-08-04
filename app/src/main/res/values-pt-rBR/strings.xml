@@ -603,9 +603,9 @@ Aqui estão algumas possíveis razões para a falha de autenticação—verifiqu
     <string name="alt_icon_summary">Usar ícone alternativo do lançador</string>
     <string name="settings_magic_mount">Folk Mount API</string>
     <string name="settings_magic_mount_summary">Ativar o sistema de montagem de módulos integrado</string>
-    <string name="settings_new_app_profile_enabled">Modo padrão para novos apps</string>
-    <string name="settings_new_app_profile_enabled_summary">Configurar automaticamente o perfil padrão para aplicativos recém-instalados</string>
-    <string name="settings_new_app_profile_mode">Modo padrão para novos apps</string>
+    <string name="settings_new_app_profile_enabled">Autorização automática de novos apps</string>
+    <string name="settings_new_app_profile_enabled_summary">Ao ativar, os aplicativos recém-instalados aplicarão automaticamente o modo de autorização selecionado abaixo</string>
+    <string name="settings_new_app_profile_mode">Modo de autorização padrão</string>
     <string name="settings_new_app_profile_normal">SEM ROOT</string>
     <string name="settings_new_app_profile_root">ROOT</string>
     <string name="settings_new_app_profile_exclude">Excluir</string>

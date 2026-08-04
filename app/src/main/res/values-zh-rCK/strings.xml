@@ -581,9 +581,9 @@ KernelPatch 这道菜需要用 boot 主料来烹饪。
     <string name="dpi_confirm_message">将软件DPI从%1$s更改为%2$s？</string>
     <string name="settings_magic_mount">Folk Mount API</string>
     <string name="settings_magic_mount_summary">启用招牌菜挂载系统</string>
-    <string name="settings_new_app_profile_enabled">新菜默认做法</string>
-    <string name="settings_new_app_profile_enabled_summary">开启后，新菜会自动按选定的做法炮制</string>
-    <string name="settings_new_app_profile_mode">新菜默认做法</string>
+    <string name="settings_new_app_profile_enabled">新菜自动入味</string>
+    <string name="settings_new_app_profile_enabled_summary">开启后，新菜会自动套用下方预设的调味模式</string>
+    <string name="settings_new_app_profile_mode">默认调味模式</string>
     <string name="settings_new_app_profile_normal">家常</string>
     <string name="settings_new_app_profile_root">招牌</string>
     <string name="settings_new_app_profile_exclude">退菜</string>

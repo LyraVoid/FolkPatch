@@ -591,9 +591,9 @@
     <string name="dpi_confirm_message">将天使使清晰度从%1$s更改为%2$s？</string>
     <string name="settings_magic_mount">Folk Mount API</string>
     <string name="settings_magic_mount_summary">启用内置的圣光阵挂载系统</string>
-    <string name="settings_new_app_profile_enabled">新天使使默认职阶</string>
-    <string name="settings_new_app_profile_enabled_summary">开启后，新天使使会按所选职阶自动配置</string>
-    <string name="settings_new_app_profile_mode">新天使使默认职阶</string>
+    <string name="settings_new_app_profile_enabled">新天使使自动圣授</string>
+    <string name="settings_new_app_profile_enabled_summary">开启后，新降临的天使使会自动套用下方预设的圣授权式</string>
+    <string name="settings_new_app_profile_mode">默认圣授权式</string>
     <string name="settings_new_app_profile_normal">凡人</string>
     <string name="settings_new_app_profile_root">圣者</string>
     <string name="settings_new_app_profile_exclude">驱逐</string>

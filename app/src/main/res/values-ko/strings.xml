@@ -605,9 +605,9 @@ KernelPatch는 boot 이미지를 패치해야 합니다.
     <string name="dpi_confirm_message">앱 DPI를 %1$s에서 %2$s(으)로 변경하시겠습니까?</string>
     <string name="settings_magic_mount">Folk 마운트 API</string>
     <string name="settings_magic_mount_summary">내장된 모듈 마운트 시스템을 활성화합니다.</string>
-    <string name="settings_new_app_profile_enabled">새 앱 기본 모드</string>
-    <string name="settings_new_app_profile_enabled_summary">새로 설치된 앱의 기본 프로필을 자동으로 구성합니다</string>
-    <string name="settings_new_app_profile_mode">새 앱의 기본 모드</string>
+    <string name="settings_new_app_profile_enabled">새 앱 자동 승인</string>
+    <string name="settings_new_app_profile_enabled_summary">활성화하면 새로 설치된 앱에 아래에서 설정한 승인 모드가 자동으로 적용됩니다</string>
+    <string name="settings_new_app_profile_mode">기본 승인 모드</string>
     <string name="settings_new_app_profile_normal">루트 없음</string>
     <string name="settings_new_app_profile_root">루트</string>
     <string name="settings_new_app_profile_exclude">제외</string>

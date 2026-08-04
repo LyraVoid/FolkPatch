@@ -596,9 +596,9 @@ Berikut adalah beberapa kemungkinan penyebab kegagalan autentikasi—silakan cek
     <string name="dpi_confirm_message">Ubah DPI aplikasi dari %1$s ke %2$s?</string>
     <string name="settings_magic_mount">Folk Mount API</string>
     <string name="settings_magic_mount_summary">Aktifkan sistem pemasangan modul bawaan</string>
-    <string name="settings_new_app_profile_enabled">Mode Default untuk Aplikasi Baru</string>
-    <string name="settings_new_app_profile_enabled_summary">Konfigurasi otomatis profil default untuk aplikasi yang baru diinstal</string>
-    <string name="settings_new_app_profile_mode">Mode default untuk aplikasi baru</string>
+    <string name="settings_new_app_profile_enabled">Otorisasi Otomatis untuk Aplikasi Baru</string>
+    <string name="settings_new_app_profile_enabled_summary">Saat diaktifkan, aplikasi yang baru diinstal akan otomatis menerapkan mode otorisasi yang dipilih di bawah</string>
+    <string name="settings_new_app_profile_mode">Mode Otorisasi Default</string>
     <string name="settings_new_app_profile_normal">TANPA ROOT</string>
     <string name="settings_new_app_profile_root">ROOT</string>
     <string name="settings_new_app_profile_exclude">Kecualikan</string>

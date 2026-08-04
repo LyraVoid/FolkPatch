@@ -580,9 +580,9 @@ KernelPatch 附魔需要 boot 方块作为材料。
     <string name="dpi_confirm_message">将渲染距离从%1$s更改为%2$s？</string>
     <string name="settings_magic_mount">Folk Mount API</string>
     <string name="settings_magic_mount_summary">开启内置的模组区块挂载系统</string>
-    <string name="settings_new_app_profile_enabled">新模组默认模式</string>
-    <string name="settings_new_app_profile_enabled_summary">开启后，新安装的模组会根据下方选择的模式自动配置</string>
-    <string name="settings_new_app_profile_mode">新模组默认模式</string>
+    <string name="settings_new_app_profile_enabled">新模组自动授权</string>
+    <string name="settings_new_app_profile_enabled_summary">开启后，新安装的模组会自动套用下方预设的授权模式</string>
+    <string name="settings_new_app_profile_mode">默认授权模式</string>
     <string name="settings_new_app_profile_normal">生存</string>
     <string name="settings_new_app_profile_root">创造</string>
     <string name="settings_new_app_profile_exclude">移除</string>
