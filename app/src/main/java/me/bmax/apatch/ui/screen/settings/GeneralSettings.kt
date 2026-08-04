@@ -381,7 +381,7 @@ fun GeneralSettingsContent(
         item(key = "general_new_app_profile_enabled", visible = kPatchReady) {
             ToggleSettingCard(
                 flat = flat,
-                icon = Icons.Filled.Block,
+                icon = Icons.Filled.AppRegistration,
                 title = newAppProfileEnabledTitle,
                 description = newAppProfileEnabledSummary,
                 checked = newAppProfileEnabled,
@@ -402,6 +402,7 @@ fun GeneralSettingsContent(
                     } else {
                         runCatching { Natives.setNewAppProfileMode(0) }
                         newAppProfileMode = 0
+                        newAppProfileEnabled = false
                         prefs.edit {
                             putBoolean(APApplication.PREF_NEW_APP_PROFILE_ENABLED, false)
                             putInt(APApplication.PREF_AUTO_EXCLUDE_NEW_APPS, 0)
@@ -417,7 +418,7 @@ fun GeneralSettingsContent(
                     modifier = Modifier.fillMaxWidth().padding(16.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(imageVector = Icons.Filled.Block, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(24.dp))
+                    Icon(imageVector = Icons.Filled.SettingsApplications, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(24.dp))
                     Spacer(Modifier.width(16.dp))
                     Column {
                         Text(
