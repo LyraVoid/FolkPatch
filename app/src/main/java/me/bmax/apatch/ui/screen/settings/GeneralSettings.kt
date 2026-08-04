@@ -402,6 +402,7 @@ fun GeneralSettingsContent(
                     } else {
                         runCatching { Natives.setNewAppProfileMode(0) }
                         newAppProfileMode = 0
+                        newAppProfileEnabled = false
                         prefs.edit {
                             putBoolean(APApplication.PREF_NEW_APP_PROFILE_ENABLED, false)
                             putInt(APApplication.PREF_AUTO_EXCLUDE_NEW_APPS, 0)
