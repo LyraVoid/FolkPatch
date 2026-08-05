@@ -520,6 +520,7 @@ KernelPatch требует образ boot для патча.
     <string name="loading_scripts">Поиск скриптов…</string>
     <string name="loading_themes">Загрузка тем…</string>
     <string name="loading_apis">Загрузка источников API…</string>
+    <string name="retry">Повторить</string>
 
     <string name="about_app_desc">Реализация Root на основе KernelPatch, позволяющая перехватывать функции ядра без перекомпиляции ядра.</string>
     <string name="about_powered_by">Работает на %1$s</string>

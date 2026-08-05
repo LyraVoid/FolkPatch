@@ -516,6 +516,7 @@ Dưới đây là một số nguyên nhân có thể gây ra thất bại xác t
     <string name="loading_scripts">Đang tìm kiếm tập lệnh…</string>
     <string name="loading_themes">Đang tải chủ đề…</string>
     <string name="loading_apis">Đang tải nguồn API…</string>
+    <string name="retry">Thử lại</string>
 
     <string name="about_app_desc">Cài đặt Root dựa trên KernelPatch, cho phép hook hàm nhân mà không cần biên dịch lại nhân.</string>
     <string name="about_powered_by">Được hỗ trợ bởi %1$s</string>
@@ -528,41 +529,45 @@ Dưới đây là một số nguyên nhân có thể gây ra thất bại xác t
     <string name="online_module_download_notification">Đang tải %s. Vui lòng xem thanh thông báo để biết tiến độ, vui lòng xem thư mục tải sau khi tải hoàn tất.</string>
 
     <!-- Online Module Source Strings -->
-    <string name="online_module_source_official">Official</string>
-    <string name="online_module_source_cluster">Repository Cluster</string>
-    <string name="online_module_source_custom">Custom Repository</string>
-    <string name="online_module_source_title">Module Source</string>
-    <string name="online_module_repo_url_title">Repository URL</string>
+    <string name="online_module_source_official">Nguồn chính thức</string>
+    <string name="online_module_source_cluster">Cụm kho lưu trữ</string>
+    <string name="online_module_source_custom">Kho lưu trữ tùy chỉnh</string>
+    <string name="online_module_source_title">Nguồn mô-đun</string>
+    <string name="online_module_repo_url_title">URL kho lưu trữ</string>
     <string name="online_module_repo_url_hint">https://example.com/modules.json</string>
-    <string name="online_module_repo_settings">Repository Settings</string>
+    <string name="online_module_repo_settings">Cài đặt kho lưu trữ</string>
 
     <!-- Repo Module Detail Strings -->
-    <string name="repo_module_detail_links">Links</string>
-    <string name="repo_module_detail_homepage">Homepage</string>
-    <string name="repo_module_detail_source">Source Code</string>
-    <string name="repo_module_detail_support">Support</string>
-    <string name="repo_module_detail_versions">Version History</string>
-    <string name="repo_module_detail_download">Download &amp; Install</string>
-    <string name="repo_module_detail_by_author">by %1$s</string>
-    <string name="online_module_repo_browse_title">Browse Repositories</string>
-    <string name="online_module_view_modules">View Modules</string>
-    <string name="online_module_select_repo_hint">Select a repository to browse modules</string>
-    <string name="online_module_enter_url_hint">Enter repository URL</string>
-    <string name="online_module_invalid_url">Please enter a valid URL</string>
-    <string name="online_module_explore_repos">Explore Repositories</string>
-    <string name="online_module_repo_count">%1$d repositories</string>
-    <string name="online_module_module_count">%1$d+ modules</string>
-    <string name="online_module_select_repo">Select a repository</string>
-    <string name="online_module_enter_url_manually">Enter URL manually</string>
-    <string name="online_module_default_repo">Default Repository</string>
-    <string name="online_module_repo_list_title">Repository List</string>
-    <string name="online_module_load_error">Failed to load, please refresh and try again</string>
-    <string name="online_module_no_search_results">No matching modules found</string>
-    <string name="online_module_module_detail_download_count">Downloads: %1$s</string>
-    <string name="online_module_module_detail_last_update">Last update: %1$s</string>
-    <string name="online_module_module_detail_version">Version: %1$s</string>
-    <string name="online_module_module_detail_size">Size: %1$s</string>
-    <string name="online_module_module_detail_author">Author: %1$s</string>
+    <string name="repo_module_detail_links">Liên kết</string>
+    <string name="repo_module_detail_homepage">Trang chủ</string>
+    <string name="repo_module_detail_source">Mã nguồn</string>
+    <string name="repo_module_detail_support">Hỗ trợ</string>
+    <string name="repo_module_detail_versions">Lịch sử phiên bản</string>
+    <string name="repo_module_detail_download">Tải xuống và cài đặt</string>
+    <string name="repo_module_detail_by_author">bởi %1$s</string>
+    <string name="online_module_repo_browse_title">Duyệt kho lưu trữ</string>
+    <string name="online_module_view_modules">Xem mô-đun</string>
+    <string name="online_module_select_repo_hint">Chọn kho lưu trữ để duyệt mô-đun</string>
+    <string name="online_module_enter_url_hint">Nhập URL kho lưu trữ</string>
+    <string name="online_module_invalid_url">Vui lòng nhập URL hợp lệ</string>
+    <string name="online_module_explore_repos">Khám phá kho lưu trữ</string>
+    <string name="online_module_repo_count">%1$d kho lưu trữ</string>
+    <string name="online_module_module_count">%1$d+ mô-đun</string>
+    <string name="online_module_select_repo">Chọn kho lưu trữ</string>
+    <string name="online_module_enter_url_manually">Nhập URL thủ công</string>
+    <string name="online_module_default_repo">Kho lưu trữ mặc định</string>
+    <string name="online_module_repo_list_title">Danh sách kho lưu trữ</string>
+    <string name="online_module_load_error">Tải không thành công, vui lòng làm mới và thử lại</string>
+    <string name="online_module_no_search_results">Không tìm thấy mô-đun phù hợp</string>
+    <string name="online_module_module_detail_download_count">Lượt tải: %1$s</string>
+    <string name="online_module_module_detail_last_update">Cập nhật lần cuối: %1$s</string>
+    <string name="online_module_module_detail_version">Phiên bản: %1$s</string>
+    <string name="online_module_module_detail_size">Kích thước: %1$s</string>
+    <string name="online_module_module_detail_author">Tác giả: %1$s</string>
+    <string name="online_module_module_detail_description">Mô tả: %1$s</string>
+    <string name="online_module_module_detail_suitable">Phù hợp với: %1$s</string>
+    <string name="online_module_module_detail_changelog">Nhật ký thay đổi: %1$s</string>
+    <string name="online_module_module_detail_instructions">Hướng dẫn: %1$s</string>
 
     <!-- Online KPM Strings -->
     <string name="online_kpm_title">Module nhân trực tuyến</string>

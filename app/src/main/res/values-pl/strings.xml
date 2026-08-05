@@ -475,41 +475,45 @@ Kontynuować mimo to?</string>
     <string name="online_module_download_notification">Pobieranie %s. Sprawdź panel powiadomień o postępach i folder Pobrane dla ukończonego pliku.</string>
 
     <!-- Online Module Source Strings -->
-    <string name="online_module_source_official">Official</string>
-    <string name="online_module_source_cluster">Repository Cluster</string>
-    <string name="online_module_source_custom">Custom Repository</string>
-    <string name="online_module_source_title">Module Source</string>
-    <string name="online_module_repo_url_title">Repository URL</string>
+    <string name="online_module_source_official">Źródło oficjalne</string>
+    <string name="online_module_source_cluster">Klaster repozytoriów</string>
+    <string name="online_module_source_custom">Repozytorium niestandardowe</string>
+    <string name="online_module_source_title">Źródło modułów</string>
+    <string name="online_module_repo_url_title">Adres URL repozytorium</string>
     <string name="online_module_repo_url_hint">https://example.com/modules.json</string>
-    <string name="online_module_repo_settings">Repository Settings</string>
+    <string name="online_module_repo_settings">Ustawienia repozytorium</string>
 
     <!-- Repo Module Detail Strings -->
-    <string name="repo_module_detail_links">Links</string>
-    <string name="repo_module_detail_homepage">Homepage</string>
-    <string name="repo_module_detail_source">Source Code</string>
-    <string name="repo_module_detail_support">Support</string>
-    <string name="repo_module_detail_versions">Version History</string>
-    <string name="repo_module_detail_download">Download &amp; Install</string>
-    <string name="repo_module_detail_by_author">by %1$s</string>
-    <string name="online_module_repo_browse_title">Browse Repositories</string>
-    <string name="online_module_view_modules">View Modules</string>
-    <string name="online_module_select_repo_hint">Select a repository to browse modules</string>
-    <string name="online_module_enter_url_hint">Enter repository URL</string>
-    <string name="online_module_invalid_url">Please enter a valid URL</string>
-    <string name="online_module_explore_repos">Explore Repositories</string>
-    <string name="online_module_repo_count">%1$d repositories</string>
-    <string name="online_module_module_count">%1$d+ modules</string>
-    <string name="online_module_select_repo">Select a repository</string>
-    <string name="online_module_enter_url_manually">Enter URL manually</string>
-    <string name="online_module_default_repo">Default Repository</string>
-    <string name="online_module_repo_list_title">Repository List</string>
-    <string name="online_module_load_error">Failed to load, please refresh and try again</string>
-    <string name="online_module_no_search_results">No matching modules found</string>
-    <string name="online_module_module_detail_download_count">Downloads: %1$s</string>
-    <string name="online_module_module_detail_last_update">Last update: %1$s</string>
-    <string name="online_module_module_detail_version">Version: %1$s</string>
-    <string name="online_module_module_detail_size">Size: %1$s</string>
-    <string name="online_module_module_detail_author">Author: %1$s</string>
+    <string name="repo_module_detail_links">Linki</string>
+    <string name="repo_module_detail_homepage">Strona główna</string>
+    <string name="repo_module_detail_source">Kod źródłowy</string>
+    <string name="repo_module_detail_support">Wsparcie</string>
+    <string name="repo_module_detail_versions">Historia wersji</string>
+    <string name="repo_module_detail_download">Pobierz i zainstaluj</string>
+    <string name="repo_module_detail_by_author">autor: %1$s</string>
+    <string name="online_module_repo_browse_title">Przeglądaj repozytoria</string>
+    <string name="online_module_view_modules">Zobacz moduły</string>
+    <string name="online_module_select_repo_hint">Wybierz repozytorium, aby przeglądać moduły</string>
+    <string name="online_module_enter_url_hint">Wprowadź adres URL repozytorium</string>
+    <string name="online_module_invalid_url">Wprowadź prawidłowy adres URL</string>
+    <string name="online_module_explore_repos">Odkrywaj repozytoria</string>
+    <string name="online_module_repo_count">%1$d repozytoriów</string>
+    <string name="online_module_module_count">%1$d+ modułów</string>
+    <string name="online_module_select_repo">Wybierz repozytorium</string>
+    <string name="online_module_enter_url_manually">Wprowadź adres URL ręcznie</string>
+    <string name="online_module_default_repo">Domyślne repozytorium</string>
+    <string name="online_module_repo_list_title">Lista repozytoriów</string>
+    <string name="online_module_load_error">Nie udało się załadować, odśwież i spróbuj ponownie</string>
+    <string name="online_module_no_search_results">Nie znaleziono pasujących modułów</string>
+    <string name="online_module_module_detail_download_count">Pobrania: %1$s</string>
+    <string name="online_module_module_detail_last_update">Ostatnia aktualizacja: %1$s</string>
+    <string name="online_module_module_detail_version">Wersja: %1$s</string>
+    <string name="online_module_module_detail_size">Rozmiar: %1$s</string>
+    <string name="online_module_module_detail_author">Autor: %1$s</string>
+    <string name="online_module_module_detail_description">Opis: %1$s</string>
+    <string name="online_module_module_detail_suitable">Odpowiednie dla: %1$s</string>
+    <string name="online_module_module_detail_changelog">Dziennik zmian: %1$s</string>
+    <string name="online_module_module_detail_instructions">Instrukcje: %1$s</string>
 
     <!-- Online KPM Strings -->
     <string name="online_kpm_title">Moduły jądra online</string>
@@ -1095,6 +1099,7 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="loading_scripts">Wyszukiwanie skryptów…</string>
     <string name="loading_themes">Ładowanie motywów…</string>
     <string name="loading_apis">Ładowanie źródeł API…</string>
+    <string name="retry">Ponów próbę</string>
     <string name="app_title_fpatch">FPatch</string>
     <string name="app_title_folkpatch">FolkPatch</string>
     <string name="app_title_kernelpatch">KernelPatch</string>

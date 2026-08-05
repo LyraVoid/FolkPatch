@@ -515,6 +515,7 @@ KernelPatch 需要修補 boot 映像檔。
     <string name="loading_scripts">正在尋找腳本…</string>
     <string name="loading_themes">正在載入主題…</string>
     <string name="loading_apis">正在載入 API 來源…</string>
+    <string name="retry">重試</string>
 
     <string name="about_app_desc">基於 KernelPatch 的 Root 實現，無需重新編譯內核的同時，允許 Hook 內核函數。</string>
     <string name="about_powered_by">由 %1$s 提供支援</string>

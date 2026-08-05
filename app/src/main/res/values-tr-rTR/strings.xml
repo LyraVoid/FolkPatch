@@ -506,6 +506,7 @@ Bol şans! Ayrıca, aşağıdaki belge butonuna tıklamak kesinlikle doğru!</st
     <string name="loading_scripts">Betikler aranıyor…</string>
     <string name="loading_themes">Temalar yükleniyor…</string>
     <string name="loading_apis">API kaynakları yükleniyor…</string>
+    <string name="retry">Yeniden dene</string>
 
     <string name="about_app_desc">Çekirdeği yeniden derlemeden kernel modüllerini ve kernel fonksiyon hook’larını destekleyen, kernel tabanlı bir root çözümü.</string>
     <string name="about_powered_by">%1$s tarafından desteklenmektedir</string>
@@ -518,41 +519,45 @@ Bol şans! Ayrıca, aşağıdaki belge butonuna tıklamak kesinlikle doğru!</st
     <string name="online_module_download_notification">%s indiriliyor. İlerleme için bildirim panelini, tamamlanan dosya için İndirilenler klasörünü kontrol edin.</string>
 
     <!-- Online Module Source Strings -->
-    <string name="online_module_source_official">Official</string>
-    <string name="online_module_source_cluster">Repository Cluster</string>
-    <string name="online_module_source_custom">Custom Repository</string>
-    <string name="online_module_source_title">Module Source</string>
-    <string name="online_module_repo_url_title">Repository URL</string>
+    <string name="online_module_source_official">Resmî kaynak</string>
+    <string name="online_module_source_cluster">Depo kümesi</string>
+    <string name="online_module_source_custom">Özel depo</string>
+    <string name="online_module_source_title">Modül kaynağı</string>
+    <string name="online_module_repo_url_title">Depo URL’si</string>
     <string name="online_module_repo_url_hint">https://example.com/modules.json</string>
-    <string name="online_module_repo_settings">Repository Settings</string>
+    <string name="online_module_repo_settings">Depo ayarları</string>
 
     <!-- Repo Module Detail Strings -->
-    <string name="repo_module_detail_links">Links</string>
-    <string name="repo_module_detail_homepage">Homepage</string>
-    <string name="repo_module_detail_source">Source Code</string>
-    <string name="repo_module_detail_support">Support</string>
-    <string name="repo_module_detail_versions">Version History</string>
-    <string name="repo_module_detail_download">Download &amp; Install</string>
-    <string name="repo_module_detail_by_author">by %1$s</string>
-    <string name="online_module_repo_browse_title">Browse Repositories</string>
-    <string name="online_module_view_modules">View Modules</string>
-    <string name="online_module_select_repo_hint">Select a repository to browse modules</string>
-    <string name="online_module_enter_url_hint">Enter repository URL</string>
-    <string name="online_module_invalid_url">Please enter a valid URL</string>
-    <string name="online_module_explore_repos">Explore Repositories</string>
-    <string name="online_module_repo_count">%1$d repositories</string>
-    <string name="online_module_module_count">%1$d+ modules</string>
-    <string name="online_module_select_repo">Select a repository</string>
-    <string name="online_module_enter_url_manually">Enter URL manually</string>
-    <string name="online_module_default_repo">Default Repository</string>
-    <string name="online_module_repo_list_title">Repository List</string>
-    <string name="online_module_load_error">Failed to load, please refresh and try again</string>
-    <string name="online_module_no_search_results">No matching modules found</string>
-    <string name="online_module_module_detail_download_count">Downloads: %1$s</string>
-    <string name="online_module_module_detail_last_update">Last update: %1$s</string>
-    <string name="online_module_module_detail_version">Version: %1$s</string>
-    <string name="online_module_module_detail_size">Size: %1$s</string>
-    <string name="online_module_module_detail_author">Author: %1$s</string>
+    <string name="repo_module_detail_links">Bağlantılar</string>
+    <string name="repo_module_detail_homepage">Ana sayfa</string>
+    <string name="repo_module_detail_source">Kaynak kodu</string>
+    <string name="repo_module_detail_support">Destek</string>
+    <string name="repo_module_detail_versions">Sürüm geçmişi</string>
+    <string name="repo_module_detail_download">İndir ve kur</string>
+    <string name="repo_module_detail_by_author">%1$s tarafından</string>
+    <string name="online_module_repo_browse_title">Depolara göz at</string>
+    <string name="online_module_view_modules">Modülleri görüntüle</string>
+    <string name="online_module_select_repo_hint">Modüllere göz atmak için bir depo seçin</string>
+    <string name="online_module_enter_url_hint">Depo URL’sini girin</string>
+    <string name="online_module_invalid_url">Lütfen geçerli bir URL girin</string>
+    <string name="online_module_explore_repos">Depoları keşfet</string>
+    <string name="online_module_repo_count">%1$d depo</string>
+    <string name="online_module_module_count">%1$d+ modül</string>
+    <string name="online_module_select_repo">Bir depo seçin</string>
+    <string name="online_module_enter_url_manually">URL’yi elle gir</string>
+    <string name="online_module_default_repo">Varsayılan depo</string>
+    <string name="online_module_repo_list_title">Depo listesi</string>
+    <string name="online_module_load_error">Yüklenemedi, lütfen yenileyip tekrar deneyin</string>
+    <string name="online_module_no_search_results">Eşleşen modül bulunamadı</string>
+    <string name="online_module_module_detail_download_count">İndirme sayısı: %1$s</string>
+    <string name="online_module_module_detail_last_update">Son güncelleme: %1$s</string>
+    <string name="online_module_module_detail_version">Sürüm: %1$s</string>
+    <string name="online_module_module_detail_size">Boyut: %1$s</string>
+    <string name="online_module_module_detail_author">Yazar: %1$s</string>
+    <string name="online_module_module_detail_description">Açıklama: %1$s</string>
+    <string name="online_module_module_detail_suitable">Uygun: %1$s</string>
+    <string name="online_module_module_detail_changelog">Değişiklik günlüğü: %1$s</string>
+    <string name="online_module_module_detail_instructions">Kullanım talimatları: %1$s</string>
 
     <!-- Online KPM Strings -->
     <string name="online_kpm_title">Çevrim İçi Kernel Modülleri</string>

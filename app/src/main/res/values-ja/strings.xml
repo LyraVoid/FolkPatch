@@ -460,6 +460,7 @@ KernelPatch は boot イメージをパッチする必要があります。
     <string name="loading_scripts">スクリプトを検索中…</string>
     <string name="loading_themes">テーマを読み込み中…</string>
     <string name="loading_apis">APIソースを読み込み中…</string>
+    <string name="retry">再試行</string>
     <string name="about_app_desc">KernelPatch ベースの root 実装、カーネルをリコンパイルせずにカーネル関数フックを可能にします。</string>
     <string name="about_powered_by">Powered by %1$s</string>
     <string name="about_telegram_group">Telegram グループ</string>

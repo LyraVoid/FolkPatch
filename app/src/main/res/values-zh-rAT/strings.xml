@@ -510,6 +510,7 @@
     <string name="loading_scripts">正在查找脚本…</string>
     <string name="loading_themes">正在加载主题…</string>
     <string name="loading_apis">正在加载 API 法门…</string>
+    <string name="retry">重试</string>
 
     <string name="about_app_desc">一个基于灵魂核心的圣光化身解决方案，支持灵魂晶石和灵魂函数hook，无需重新锻造灵魂核心。</string>
     <string name="about_powered_by">由%1$s提供圣光力量</string>
@@ -522,41 +523,45 @@
     <string name="online_module_download_notification">正在祈召%s。请查看圣光水晶球了解进度，祈召完成后请查看圣光仓库。</string>
 
     <!-- Online Module Source Strings -->
-    <string name="online_module_source_official">Official</string>
-    <string name="online_module_source_cluster">Repository Cluster</string>
-    <string name="online_module_source_custom">Custom Repository</string>
-    <string name="online_module_source_title">Module Source</string>
-    <string name="online_module_repo_url_title">Repository URL</string>
+    <string name="online_module_source_official">圣庭官方</string>
+    <string name="online_module_source_cluster">圣光仓库集群</string>
+    <string name="online_module_source_custom">自设圣光仓库</string>
+    <string name="online_module_source_title">圣光之源</string>
+    <string name="online_module_repo_url_title">圣光仓库地址</string>
     <string name="online_module_repo_url_hint">https://example.com/modules.json</string>
-    <string name="online_module_repo_settings">Repository Settings</string>
+    <string name="online_module_repo_settings">圣光仓库设置</string>
 
     <!-- Repo Module Detail Strings -->
-    <string name="repo_module_detail_links">Links</string>
-    <string name="repo_module_detail_homepage">Homepage</string>
-    <string name="repo_module_detail_source">Source Code</string>
-    <string name="repo_module_detail_support">Support</string>
-    <string name="repo_module_detail_versions">Version History</string>
-    <string name="repo_module_detail_download">Download &amp; Install</string>
-    <string name="repo_module_detail_by_author">by %1$s</string>
-    <string name="online_module_repo_browse_title">Browse Repositories</string>
-    <string name="online_module_view_modules">View Modules</string>
-    <string name="online_module_select_repo_hint">Select a repository to browse modules</string>
-    <string name="online_module_enter_url_hint">Enter repository URL</string>
-    <string name="online_module_invalid_url">Please enter a valid URL</string>
-    <string name="online_module_explore_repos">Explore Repositories</string>
-    <string name="online_module_repo_count">%1$d repositories</string>
-    <string name="online_module_module_count">%1$d+ modules</string>
-    <string name="online_module_select_repo">Select a repository</string>
-    <string name="online_module_enter_url_manually">Enter URL manually</string>
-    <string name="online_module_default_repo">Default Repository</string>
-    <string name="online_module_repo_list_title">Repository List</string>
-    <string name="online_module_load_error">Failed to load, please refresh and try again</string>
-    <string name="online_module_no_search_results">No matching modules found</string>
-    <string name="online_module_module_detail_download_count">Downloads: %1$s</string>
-    <string name="online_module_module_detail_last_update">Last update: %1$s</string>
-    <string name="online_module_module_detail_version">Version: %1$s</string>
-    <string name="online_module_module_detail_size">Size: %1$s</string>
-    <string name="online_module_module_detail_author">Author: %1$s</string>
+    <string name="repo_module_detail_links">圣光链接</string>
+    <string name="repo_module_detail_homepage">圣域主页</string>
+    <string name="repo_module_detail_source">圣光源码</string>
+    <string name="repo_module_detail_support">圣光反馈</string>
+    <string name="repo_module_detail_versions">圣光版本史</string>
+    <string name="repo_module_detail_download">祈召并施展</string>
+    <string name="repo_module_detail_by_author">作者：%1$s</string>
+    <string name="online_module_repo_browse_title">浏览圣光仓库</string>
+    <string name="online_module_view_modules">查看圣光阵</string>
+    <string name="online_module_select_repo_hint">选择圣光仓库以浏览圣光阵</string>
+    <string name="online_module_enter_url_hint">输入圣光仓库地址</string>
+    <string name="online_module_invalid_url">请输入有效的圣光地址</string>
+    <string name="online_module_explore_repos">探索圣光仓库</string>
+    <string name="online_module_repo_count">%1$d 座圣光仓库</string>
+    <string name="online_module_module_count">%1$d+ 座圣光阵</string>
+    <string name="online_module_select_repo">选择圣光仓库</string>
+    <string name="online_module_enter_url_manually">手动输入圣光地址</string>
+    <string name="online_module_default_repo">默认圣光仓库</string>
+    <string name="online_module_repo_list_title">圣光仓库列表</string>
+    <string name="online_module_load_error">祈召失败，请刷新再试</string>
+    <string name="online_module_no_search_results">未找到匹配的圣光阵</string>
+    <string name="online_module_module_detail_download_count">下载次数：%1$s</string>
+    <string name="online_module_module_detail_last_update">最后更新：%1$s</string>
+    <string name="online_module_module_detail_version">版本：%1$s</string>
+    <string name="online_module_module_detail_size">大小：%1$s</string>
+    <string name="online_module_module_detail_author">作者：%1$s</string>
+    <string name="online_module_module_detail_description">描述：%1$s</string>
+    <string name="online_module_module_detail_suitable">适用于：%1$s</string>
+    <string name="online_module_module_detail_changelog">更新日志：%1$s</string>
+    <string name="online_module_module_detail_instructions">使用说明：%1$s</string>
 
     <!-- Online KPM Strings -->
     <string name="online_kpm_title">在线灵魂晶石</string>

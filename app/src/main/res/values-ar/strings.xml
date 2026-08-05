@@ -514,6 +514,7 @@
     <string name="loading_scripts">جارٍ البحث عن البرامج النصية…</string>
     <string name="loading_themes">جارٍ تحميل السمات…</string>
     <string name="loading_apis">جارٍ تحميل مصادر واجهة برمجة التطبيقات…</string>
+    <string name="retry">إعادة المحاولة</string>
 
     <string name="about_app_desc">تطبيق Root مبني على KernelPatch، يسمح بخطاف وظائف النواة دون إعادة تجميع النواة.</string>
     <string name="about_powered_by">مدعوم من %1$s</string>
@@ -526,45 +527,45 @@
     <string name="online_module_download_notification">جارٍ تنزيل %s. يرجى التحقق من لوحة الإشعارات للتقدم ومجلد التنزيل للملف المكتمل.</string>
 
     <!-- Online Module Source Strings -->
-    <string name="online_module_source_official">Official</string>
-    <string name="online_module_source_cluster">Repository Cluster</string>
-    <string name="online_module_source_custom">Custom Repository</string>
-    <string name="online_module_source_title">Module Source</string>
-    <string name="online_module_repo_url_title">Repository URL</string>
+    <string name="online_module_source_official">المصدر الرسمي</string>
+    <string name="online_module_source_cluster">مجموعة المستودعات</string>
+    <string name="online_module_source_custom">مستودع مخصص</string>
+    <string name="online_module_source_title">مصدر الوحدات</string>
+    <string name="online_module_repo_url_title">عنوان المستودع</string>
     <string name="online_module_repo_url_hint">https://example.com/modules.json</string>
-    <string name="online_module_repo_settings">Repository Settings</string>
+    <string name="online_module_repo_settings">إعدادات المستودع</string>
 
     <!-- Repo Module Detail Strings -->
-    <string name="repo_module_detail_links">Links</string>
-    <string name="repo_module_detail_homepage">Homepage</string>
-    <string name="repo_module_detail_source">Source Code</string>
-    <string name="repo_module_detail_support">Support</string>
-    <string name="repo_module_detail_versions">Version History</string>
-    <string name="repo_module_detail_download">Download &amp; Install</string>
-    <string name="repo_module_detail_by_author">by %1$s</string>
-    <string name="online_module_repo_browse_title">Browse Repositories</string>
-    <string name="online_module_view_modules">View Modules</string>
-    <string name="online_module_select_repo_hint">Select a repository to browse modules</string>
-    <string name="online_module_enter_url_hint">Enter repository URL</string>
-    <string name="online_module_invalid_url">Please enter a valid URL</string>
-    <string name="online_module_explore_repos">Explore Repositories</string>
-    <string name="online_module_repo_count">%1$d repositories</string>
-    <string name="online_module_module_count">%1$d+ modules</string>
-    <string name="online_module_select_repo">Select a repository</string>
-    <string name="online_module_enter_url_manually">Enter URL manually</string>
-    <string name="online_module_default_repo">Default Repository</string>
-    <string name="online_module_repo_list_title">Repository List</string>
-    <string name="online_module_load_error">Failed to load, please refresh and try again</string>
-    <string name="online_module_no_search_results">No matching modules found</string>
-    <string name="online_module_module_detail_download_count">Downloads: %1$s</string>
-    <string name="online_module_module_detail_last_update">Last update: %1$s</string>
-    <string name="online_module_module_detail_version">Version: %1$s</string>
-    <string name="online_module_module_detail_size">Size: %1$s</string>
-    <string name="online_module_module_detail_author">Author: %1$s</string>
-    <string name="online_module_module_detail_description">Description: %1$s</string>
-    <string name="online_module_module_detail_suitable">Suitable for: %1$s</string>
-    <string name="online_module_module_detail_changelog">Changelog: %1$s</string>
-    <string name="online_module_module_detail_instructions">Instructions: %1$s</string>
+    <string name="repo_module_detail_links">الروابط</string>
+    <string name="repo_module_detail_homepage">الصفحة الرئيسية</string>
+    <string name="repo_module_detail_source">الكود المصدري</string>
+    <string name="repo_module_detail_support">الدعم</string>
+    <string name="repo_module_detail_versions">سجل الإصدارات</string>
+    <string name="repo_module_detail_download">تنزيل وتثبيت</string>
+    <string name="repo_module_detail_by_author">بواسطة %1$s</string>
+    <string name="online_module_repo_browse_title">تصفح المستودعات</string>
+    <string name="online_module_view_modules">عرض الوحدات</string>
+    <string name="online_module_select_repo_hint">اختر مستودعًا لتصفح الوحدات</string>
+    <string name="online_module_enter_url_hint">أدخل عنوان المستودع</string>
+    <string name="online_module_invalid_url">يرجى إدخال عنوان صالح</string>
+    <string name="online_module_explore_repos">استكشاف المستودعات</string>
+    <string name="online_module_repo_count">%1$d مستودعات</string>
+    <string name="online_module_module_count">%1$d+ وحدة</string>
+    <string name="online_module_select_repo">اختر مستودعًا</string>
+    <string name="online_module_enter_url_manually">إدخال العنوان يدويًا</string>
+    <string name="online_module_default_repo">المستودع الافتراضي</string>
+    <string name="online_module_repo_list_title">قائمة المستودعات</string>
+    <string name="online_module_load_error">فشل التحميل، يرجى التحديث والمحاولة مرة أخرى</string>
+    <string name="online_module_no_search_results">لم يتم العثور على وحدات مطابقة</string>
+    <string name="online_module_module_detail_download_count">عدد التنزيلات: %1$s</string>
+    <string name="online_module_module_detail_last_update">آخر تحديث: %1$s</string>
+    <string name="online_module_module_detail_version">الإصدار: %1$s</string>
+    <string name="online_module_module_detail_size">الحجم: %1$s</string>
+    <string name="online_module_module_detail_author">المؤلف: %1$s</string>
+    <string name="online_module_module_detail_description">الوصف: %1$s</string>
+    <string name="online_module_module_detail_suitable">مناسب لـ: %1$s</string>
+    <string name="online_module_module_detail_changelog">سجل التغييرات: %1$s</string>
+    <string name="online_module_module_detail_instructions">تعليمات الاستخدام: %1$s</string>
 
     <!-- Online KPM Strings -->
     <string name="online_kpm_title">وحدات النواة عبر الإنترنت</string>

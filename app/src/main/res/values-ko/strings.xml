@@ -505,6 +505,7 @@ KernelPatch는 boot 이미지를 패치해야 합니다.
     <string name="loading_scripts">스크립트 검색 중…</string>
     <string name="loading_themes">테마 불러오는 중…</string>
     <string name="loading_apis">API 소스 불러오는 중…</string>
+    <string name="retry">다시 시도</string>
 
     <string name="about_app_desc">KernelPatch를 기반으로 한 Root 구현체로, 커널을 다시 컴파일할 필요 없이 커널 함수 후킹을 허용합니다.</string>
     <string name="about_powered_by">%1$s 제공</string>
