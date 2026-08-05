@@ -530,6 +530,33 @@ fun GeneralSettingsContent(
         )
         }
 
+        item(key = "general_sucompat", visible = kPatchReady && aPatchReady) {
+            var sucompatEnabled by remember { mutableStateOf(prefs.getBoolean("sucompat_enabled", false)) }
+            ToggleSettingCard(
+                flat = flat,
+                icon = Icons.Filled.FeaturedPlayList,
+                title = stringResource(id = R.string.settings_sucompat),
+                description = stringResource(id = R.string.settings_sucompat_summary),
+                checked = sucompatEnabled,
+                onCheckedChange = { enabled ->
+                    scope.launch {
+                        val result = if (enabled) {
+                            // Enable: create marker file and register hooks via supercall
+                            rootShellForResult("touch ${APApplication.SUCOMPAT_FILE}")
+                            Natives.controlFeature("sucompat_extra", true)
+                        } else {
+                            // Disable: remove marker file and unregister hooks via supercall
+                            rootShellForResult("rm -f ${APApplication.SUCOMPAT_FILE}")
+                            Natives.controlFeature("sucompat_extra", false)
+                        }
+                        if (result == 0L) {
+                            sucompatEnabled = enabled
+                            prefs.edit().putBoolean("sucompat_enabled", enabled).apply()
+                        }
+                    }
+                }
+            )
+        }
         item(key = "general_reset_su_path", visible = kPatchReady) {
             ExpressiveCard(flat = flat, onClick = { showResetSuPathDialog.value = true }) {
                 Row(

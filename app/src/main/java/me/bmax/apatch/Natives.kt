@@ -302,4 +302,10 @@ object Natives {
     fun getApiToken(context: Context): String {
         return nativeGetApiToken(context)
     }
+
+    @FastNative
+    private external fun nativeControlFeature(superKey: String, featureName: String, state: Int): Long
+    fun controlFeature(featureName: String, enable: Boolean): Long {
+        return nativeControlFeature(APApplication.superKey, featureName, if (enable) 1 else 0)
+    }
 }

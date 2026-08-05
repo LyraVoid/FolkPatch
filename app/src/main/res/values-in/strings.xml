@@ -73,6 +73,8 @@
     <string name="settings_global_namespace_mode">Mode Ruang Nama Global</string>
     <string name="settings_global_namespace_mode_summary">Semua sesi root menggunakan ruang mount global</string>
     <string name="settings_clear_super_key_dialog">Apakah Anda yakin ingin melanjutkan?</string>
+    <string name="settings_sucompat">Legacy su compatibility</string>
+    <string name="settings_sucompat_summary">Enable path_probe hooks for legacy su compatibility</string>
 
     <string name="su_exclude_all_title">Kecualikan semua</string>
     <string name="su_exclude_all_confirm">Apakah Anda yakin ingin mengecualikan semua aplikasi tanpa hak root?</string>

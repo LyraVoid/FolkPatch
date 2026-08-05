@@ -723,4 +723,19 @@ static inline long sc_netisolate_uid_clear(const char *key)
     return syscall(__NR_supercall, key, ver_and_cmd(key, SUPERCALL_NETISOLATE_UID_CLEAR));
 }
 
+/**
+ * @brief Enable or disable a kernel feature (e.g. "sucompat_extra" / "path_probe")
+ *
+ * @param key : superkey
+ * @param name : feature name
+ * @param state : 1 to enable, 0 to disable, <0 to query
+ * @return long : 0 if succeed, -ENOENT if unknown feature
+ */
+static inline long sc_control_feature(const char *key, const char *name, int state)
+{
+    if (!key || !key[0]) return -EINVAL;
+    if (!name || !name[0]) return -EINVAL;
+    return syscall(__NR_supercall, key, ver_and_cmd(key, SUPERCALL_CONTROL_FEATURE), name, (long)state);
+}
+
 #endif

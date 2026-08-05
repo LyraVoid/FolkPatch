@@ -68,6 +68,8 @@
     <string name="settings_global_namespace_mode">全局命名空间模式喵</string>
     <string name="settings_global_namespace_mode_summary">所有root会话都用全局挂载哒，不要乱改哦喵！</string>
     <string name="settings_clear_super_key_dialog">真的要继续嘛？不要后悔哦喵！</string>
+    <string name="settings_sucompat">旧版 su 兼容喵</string>
+    <string name="settings_sucompat_summary">开启 path_probe 钩子就能兼容旧版 su 啦喵！</string>
 
     <string name="home_learn_apatch">了解一下FolkPatch呗喵</string>
     <string name="home_click_to_learn_apatch">快戳人家喵！看看FolkPatch能干什么喵</string>

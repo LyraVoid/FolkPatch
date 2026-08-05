@@ -73,6 +73,8 @@
     <string name="settings_global_namespace_mode">全域命名空間模式</string>
     <string name="settings_global_namespace_mode_summary">所有 Root 工作階段將會全域掛載命名空間</string>
     <string name="settings_clear_super_key_dialog">確定要繼續嗎？</string>
+    <string name="settings_sucompat">Legacy su compatibility</string>
+    <string name="settings_sucompat_summary">Enable path_probe hooks for legacy su compatibility</string>
 
     <string name="home_learn_apatch">深入了解 FolkPatch</string>
     <string name="home_click_to_learn_apatch">學習有關 FolkPatch 的功能及使用方式</string>

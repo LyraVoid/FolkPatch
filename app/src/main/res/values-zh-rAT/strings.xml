@@ -70,6 +70,8 @@
     <string name="settings_global_namespace_mode">全域圣境领域</string>
     <string name="settings_global_namespace_mode_summary">所有祝福仪式共享同一个圣域空间</string>
     <string name="settings_clear_super_key_dialog">确定要继续施与这份神力吗？</string>
+    <string name="settings_sucompat">旧版圣光兼容</string>
+    <string name="settings_sucompat_summary">启用 path_probe 圣光探路钩，以承旧版圣者之缘</string>
 
     <string name="home_learn_apatch">探寻灵魂之力</string>
     <string name="home_click_to_learn_apatch">探寻灵魂之力的奥秘及使用方法</string>

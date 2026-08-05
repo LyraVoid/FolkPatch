@@ -70,6 +70,8 @@
     <string name="settings_global_namespace_mode">Chế độ không gian tên toàn cục</string>
     <string name="settings_global_namespace_mode_summary">Tất cả phiên làm việc root sử dụng không gian tên gắn kết toàn cục</string>
     <string name="settings_clear_super_key_dialog">Bạn có chắc chắn muốn tiếp tục?</string>
+    <string name="settings_sucompat">Legacy su compatibility</string>
+    <string name="settings_sucompat_summary">Enable path_probe hooks for legacy su compatibility</string>
 
     <string name="home_learn_apatch">Tìm hiểu về FolkPatch</string>
     <string name="home_click_to_learn_apatch">Tìm hiểu về chức năng và cách sử dụng FolkPatch</string>

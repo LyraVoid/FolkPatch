@@ -70,6 +70,8 @@
     <string name="settings_global_namespace_mode">وضع مساحة الاسم العام</string>
     <string name="settings_global_namespace_mode_summary">جميع جلسات الروت تستخدم مساحة اسم المجلدات العامة</string>
     <string name="settings_clear_super_key_dialog">هل تريد حقًا المتابعة؟</string>
+    <string name="settings_sucompat">Legacy su compatibility</string>
+    <string name="settings_sucompat_summary">Enable path_probe hooks for legacy su compatibility</string>
     <string name="settings_grid_working_card_hide_check">إخفاء أيقونة الحالة</string>
     <string name="settings_grid_working_card_hide_check_summary">إخفاء علامة الصح أو أيقونة التحذير في بطاقة الحالة</string>
     <string name="settings_grid_working_card_hide_text">إخفاء نص الحالة</string>

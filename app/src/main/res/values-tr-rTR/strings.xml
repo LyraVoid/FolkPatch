@@ -68,6 +68,8 @@
     <string name="settings_global_namespace_mode">Global ad alanı modu</string>
     <string name="settings_global_namespace_mode_summary">Tüm root oturumları global mount ad alanını kullanır</string>
     <string name="settings_clear_super_key_dialog">Gerçekten devam etmek istiyor musunuz?</string>
+    <string name="settings_sucompat">Eski su uyumluluğu</string>
+    <string name="settings_sucompat_summary">Eski su uyumluluğu için path_probe kancalarını etkinleştir</string>
     <string name="settings_grid_working_card_hide_check">Durum simgesini gizle</string>
     <string name="settings_grid_working_card_hide_check_summary">Çalışma kartındaki onay veya uyarı simgesini gizle</string>
     <string name="settings_grid_working_card_hide_text">Durum metnini gizle</string>

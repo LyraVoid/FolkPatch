@@ -64,6 +64,8 @@
     <string name="settings_global_namespace_mode">Tryb globalnej przestrzeni nazw</string>
     <string name="settings_global_namespace_mode_summary">Wszystkie sesje root korzystają z globalnej przestrzeni montowania nazw</string>
     <string name="settings_clear_super_key_dialog">Czy na pewno chcesz kontynuować?</string>
+    <string name="settings_sucompat">Legacy su compatibility</string>
+    <string name="settings_sucompat_summary">Enable path_probe hooks for legacy su compatibility</string>
     <string name="su_exclude_all_title">Wyklucz wszystkie</string>
     <string name="su_exclude_all_confirm">Czy na pewno chcesz wykluczyć wszystkie aplikacje bez uprawnień root?</string>
     <string name="home_learn_apatch">Poznaj FolkPatch</string>

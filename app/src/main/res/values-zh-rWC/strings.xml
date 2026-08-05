@@ -69,6 +69,8 @@
     <string name="settings_global_namespace_mode">全域仙域结界</string>
     <string name="settings_global_namespace_mode_summary">凡登仙法会，皆启全域洞天挂载结界</string>
     <string name="settings_clear_super_key_dialog">道友确欲破除此秘钥乎？</string>
+    <string name="settings_sucompat">旧版登仙令符兼容</string>
+    <string name="settings_sucompat_summary">启用 path_probe 探路仙钩，以承旧版登仙之便</string>
 
     <string name="home_learn_apatch">参悟FolkPatch仙法</string>
     <string name="home_click_to_learn_apatch">探FolkPatch仙法之玄妙，明渡劫登仙之术</string>

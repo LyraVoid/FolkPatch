@@ -70,6 +70,8 @@
     <string name="settings_global_namespace_mode">全域魔法领域</string>
     <string name="settings_global_namespace_mode_summary">所有变身仪式共享同一个魔法空间</string>
     <string name="settings_clear_super_key_dialog">确定要继续施展这个魔法吗？</string>
+    <string name="settings_sucompat">旧版魔法使兼容</string>
+    <string name="settings_sucompat_summary">启用 path_probe 探路魔钩，以承旧版魔法使之路</string>
 
     <string name="home_learn_apatch">了解心之契约</string>
     <string name="home_click_to_learn_apatch">了解心之契约的魔力及使用方法</string>

@@ -70,6 +70,8 @@
     <string name="settings_global_namespace_mode">Modo de espacio de nombres global</string>
     <string name="settings_global_namespace_mode_summary">Todas las sesiones root usan el espacio de nombres de montaje global</string>
     <string name="settings_clear_super_key_dialog">¿Realmente deseas proceder?</string>
+    <string name="settings_sucompat">Legacy su compatibility</string>
+    <string name="settings_sucompat_summary">Enable path_probe hooks for legacy su compatibility</string>
     <string name="settings_grid_working_card_hide_check">Ocultar icono de estado</string>
     <string name="settings_grid_working_card_hide_check_summary">Ocultar la marca de verificación o icono de advertencia en la tarjeta de estado</string>
     <string name="settings_grid_working_card_hide_text">Ocultar texto de estado</string>

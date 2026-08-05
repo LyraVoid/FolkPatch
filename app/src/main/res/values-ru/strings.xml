@@ -73,6 +73,8 @@
     <string name="settings_global_namespace_mode">Глобальный режим пространства имён</string>
     <string name="settings_global_namespace_mode_summary">Все root-сессии используют глобальное пространство монтирования</string>
     <string name="settings_clear_super_key_dialog">Вы действительно хотите продолжить?</string>
+    <string name="settings_sucompat">Legacy su compatibility</string>
+    <string name="settings_sucompat_summary">Enable path_probe hooks for legacy su compatibility</string>
 
     <string name="su_exclude_all_title">Исключить все</string>
     <string name="su_exclude_all_confirm">Вы уверены, что хотите исключить все приложения без root-прав?</string>

@@ -60,6 +60,8 @@
     <string name="settings_global_namespace_mode">グローバル名前空間モード</string>
     <string name="settings_global_namespace_mode_summary">すべてのルートセッションはグローバルマウント名前空間を使用します。</string>
     <string name="settings_clear_super_key_dialog">続行してもよろしいですか？</string>
+    <string name="settings_sucompat">Legacy su compatibility</string>
+    <string name="settings_sucompat_summary">Enable path_probe hooks for legacy su compatibility</string>
     <string name="settings_grid_working_card_hide_check">ステータスアイコンを非表示</string>
     <string name="settings_grid_working_card_hide_check_summary">動作中のカードのチェックマークまは警告アイコンを非表示にします。</string>
     <string name="settings_grid_working_card_hide_text">ステータステキストを非表示</string>

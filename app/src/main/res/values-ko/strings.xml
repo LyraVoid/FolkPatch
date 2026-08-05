@@ -68,6 +68,8 @@
     <string name="settings_global_namespace_mode">전역 네임스페이스 모드</string>
     <string name="settings_global_namespace_mode_summary">모든 Root 세션이 전역 마운트 네임스페이스를 사용합니다.</string>
     <string name="settings_clear_super_key_dialog">계속할까요?</string>
+    <string name="settings_sucompat">Legacy su compatibility</string>
+    <string name="settings_sucompat_summary">Enable path_probe hooks for legacy su compatibility</string>
     <string name="settings_grid_working_card_hide_check">상태 아이콘 숨김</string>
     <string name="settings_grid_working_card_hide_check_summary">작업 카드에서 확인 또는 경고 아이콘을 숨깁니다.</string>
     <string name="settings_grid_working_card_hide_text">상태 텍스트 숨김</string>

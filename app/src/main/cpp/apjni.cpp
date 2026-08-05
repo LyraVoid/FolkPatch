@@ -196,6 +196,20 @@ jlong nativeUnloadKernelPatchModule(JNIEnv *env, jobject /* this */, jstring sup
     return rc;
 }
 
+jlong nativeControlFeature(JNIEnv *env, jobject /* this */, jstring super_key_jstr, jstring feature_name_jstr, jint state) {
+    ensureSuperKeyNonNull(super_key_jstr);
+
+    const auto super_key = JUTFString(env, super_key_jstr);
+    const auto feature_name = JUTFString(env, feature_name_jstr);
+
+    long rc = sc_control_feature(super_key.get(), feature_name.get(), (int)state);
+    if (rc < 0) [[unlikely]] {
+        LOGE("nativeControlFeature error: %ld", rc);
+    }
+
+    return rc;
+}
+
 jlong nativeKernelPatchModuleNum(JNIEnv *env, jobject /* this */, jstring super_key_jstr) {
     ensureSuperKeyNonNull(super_key_jstr);
 
@@ -586,6 +600,7 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void * /*reserved*/) {
         {"nativeRevokeSu", "(Ljava/lang/String;I)J", reinterpret_cast<void *>(&nativeRevokeSu)},
         {"nativeSuPath", "(Ljava/lang/String;)Ljava/lang/String;", reinterpret_cast<void *>(&nativeSuPath)},
         {"nativeResetSuPath", "(Ljava/lang/String;Ljava/lang/String;)Z", reinterpret_cast<void *>(&nativeResetSuPath)},
+        {"nativeControlFeature", "(Ljava/lang/String;Ljava/lang/String;I)J", reinterpret_cast<void *>(&nativeControlFeature)},
         {"nativeUtsSet", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)J", reinterpret_cast<void *>(&nativeUtsSet)},
         {"nativeUtsReset", "(Ljava/lang/String;)J", reinterpret_cast<void *>(&nativeUtsReset)},
         {"nativePathHideAdd", "(Ljava/lang/String;Ljava/lang/String;)J", reinterpret_cast<void *>(&nativePathHideAdd)},
