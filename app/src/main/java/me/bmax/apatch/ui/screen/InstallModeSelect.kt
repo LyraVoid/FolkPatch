@@ -16,6 +16,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,6 +31,7 @@ import androidx.compose.material.icons.filled.AutoFixHigh
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.FileUpload
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -67,7 +69,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.SplicedColumnGroup
-import me.bmax.apatch.ui.component.WarningCard
 import me.bmax.apatch.ui.component.rememberConfirmDialog
 import me.bmax.apatch.ui.viewmodel.PatchesViewModel
 import me.bmax.apatch.util.getFileNameFromUri
@@ -331,20 +332,22 @@ private fun SelectInstallMethod(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         if (jailbreakBlocked) {
-            Box(Modifier.padding(12.dp)) {
-                WarningCard(
-                    message = stringResource(R.string.jailbreak_no_patch),
-                    color = MaterialTheme.colorScheme.outlineVariant,
-                )
-            }
+            InstallStatusItem(
+                text = stringResource(R.string.jailbreak_no_patch),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .widthIn(max = 720.dp)
+                    .padding(horizontal = 16.dp, vertical = 4.dp),
+            )
         }
         if (!rootAvailable) {
-            Box(Modifier.padding(12.dp)) {
-                WarningCard(
-                    message = stringResource(R.string.home_install_unknown_summary),
-                    color = MaterialTheme.colorScheme.outlineVariant,
-                )
-            }
+            InstallStatusItem(
+                text = stringResource(R.string.home_install_unknown_summary),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .widthIn(max = 720.dp)
+                    .padding(horizontal = 16.dp, vertical = 4.dp),
+            )
         }
         Column(
             modifier = Modifier
@@ -405,7 +408,8 @@ private fun SelectInstallMethod(
                 }
 
                 // Select a boot to restore to boot partition
-                item(key = "restore") {
+                // TODO(TEMPORARY): re-enable the restore entry when jailbreak mode is exited.
+                if (!jailbreakBlocked) item(key = "restore") {
                     ListItem(
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent),
                         leadingContent = {
@@ -475,6 +479,39 @@ private fun SelectInstallMethod(
                 style = MaterialTheme.typography.bodyMedium
             )
         }
+    }
+}
+
+@Composable
+private fun InstallStatusItem(
+    text: String,
+    modifier: Modifier = Modifier,
+) {
+    Surface(
+        modifier = modifier,
+        color = MaterialTheme.colorScheme.surfaceContainer,
+        contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        shape = MaterialTheme.shapes.large,
+    ) {
+        ListItem(
+            modifier = Modifier
+                .defaultMinSize(minHeight = 80.dp)
+                .padding(vertical = 6.dp),
+            colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+            leadingContent = {
+                Icon(
+                    imageVector = Icons.Outlined.Info,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                )
+            },
+            headlineContent = {
+                Text(
+                    text = text,
+                    style = MaterialTheme.typography.bodyLarge,
+                )
+            },
+        )
     }
 }
 
