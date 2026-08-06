@@ -680,15 +680,27 @@ fun isSELinuxPermissive(): Boolean {
         out.firstOrNull()?.trim()?.equals("Permissive", ignoreCase = true) == true
 }
 
-/** Whether jailbreak mode is active (the ko has been loaded and a marker written). */
+/** Whether jailbreak mode is active in the current boot. */
 fun isJailbreakMode(): Boolean {
-    return runCatching { SuFile(APApplication.JAILBREAK_FILE).exists() }.getOrDefault(false)
+    val hasMarker = runCatching { SuFile(APApplication.JAILBREAK_FILE).exists() }.getOrDefault(false)
+    if (!hasMarker) return false
+
+    // The marker persists across full reboots, while a late-loaded module does not.
+    // A boot-patched KernelPatch can therefore coexist with a stale marker after the
+    // user flashes boot.img from fastboot. Only treat the marker as active when the
+    // runtime module is still loaded in this boot.
+    val runtimeModuleLoaded = File("/sys/module/kernelpatch").exists()
+    if (!runtimeModuleLoaded && Natives.nativeReady(APApplication.superKey)) {
+        clearJailbreakMarker()
+        Log.i(TAG, "removed stale jailbreak marker after boot-patched KernelPatch was detected")
+    }
+    return runtimeModuleLoaded
 }
 
 /**
  * Whether patching/installing is blocked by jailbreak mode.
- * A jailbreak marker is removed on a real KernelPatch installation, so the marker alone
- * reliably indicates jailbreak mode is active (regardless of the runtime kp state).
+ * The persistent marker is validated against the runtime module so a stale marker left
+ * after flashing a patched boot image cannot block patching.
  */
 fun isJailbreakPatchBlocked(): Boolean {
     return isJailbreakMode()
