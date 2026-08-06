@@ -26,6 +26,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
+import me.bmax.apatch.apApp
 import me.bmax.apatch.ui.component.chart.ModulePieChart
 import me.bmax.apatch.ui.component.chart.rememberPieSliceDataFromCounts
 import me.bmax.apatch.ui.component.chart.SystemAreaChart
@@ -52,6 +53,14 @@ fun HomeScreenStats(
     val timeSeries by viewModel.timeSeriesData.collectAsStateWithLifecycle()
 
     val isJailbreak = LocalHomeJailbreakState.current.isActive
+
+    // Check if update notification is blocked (including when jailbreak mode is active)
+    val kpState = if (kpState == APApplication.State.KERNELPATCH_NEED_UPDATE && (apApp.isKernelPatchUpdateBlocked() || isJailbreak)) {
+        APApplication.State.KERNELPATCH_INSTALLED
+    } else {
+        kpState
+    }
+
     val showCoreCards = kpState != APApplication.State.UNKNOWN_STATE || isJailbreak
     if (showCoreCards) {
         LaunchedEffect(Unit) {

@@ -77,8 +77,9 @@ fun HomeScreenV3(
 ) {
     val scrollState = rememberScrollState()
     
-    // Check if update notification is blocked
-    val kpState = if (kpState == APApplication.State.KERNELPATCH_NEED_UPDATE && apApp.isKernelPatchUpdateBlocked()) {
+    // Check if update notification is blocked (including when jailbreak mode is active)
+    val isJailbreak = LocalHomeJailbreakState.current.isActive
+    val kpState = if (kpState == APApplication.State.KERNELPATCH_NEED_UPDATE && (apApp.isKernelPatchUpdateBlocked() || isJailbreak)) {
         APApplication.State.KERNELPATCH_INSTALLED
     } else {
         kpState

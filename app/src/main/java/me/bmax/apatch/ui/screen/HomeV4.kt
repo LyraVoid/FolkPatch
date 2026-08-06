@@ -160,7 +160,8 @@ fun HomeScreenV4(
     apState: APApplication.State
 ) {
     // 检查是否屏蔽更新通知
-    val kpStateResolved = if (kpState == APApplication.State.KERNELPATCH_NEED_UPDATE && apApp.isKernelPatchUpdateBlocked()) {
+    val isJailbreak = LocalHomeJailbreakState.current.isActive
+    val kpStateResolved = if (kpState == APApplication.State.KERNELPATCH_NEED_UPDATE && (apApp.isKernelPatchUpdateBlocked() || isJailbreak)) {
         APApplication.State.KERNELPATCH_INSTALLED
     } else {
         kpState
