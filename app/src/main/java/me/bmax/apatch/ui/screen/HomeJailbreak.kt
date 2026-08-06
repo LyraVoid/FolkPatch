@@ -1,0 +1,96 @@
+package me.bmax.apatch.ui.screen
+
+import android.content.Context
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.repeatOnLifecycle
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import me.bmax.apatch.R
+import me.bmax.apatch.util.installJailbreak
+import me.bmax.apatch.util.isJailbreakMode
+import me.bmax.apatch.util.isSELinuxPermissive
+import me.bmax.apatch.util.softReboot
+import me.bmax.apatch.util.ui.showToast
+
+@Stable
+internal class HomeJailbreakState(
+    private val context: Context,
+    private val scope: CoroutineScope,
+) {
+    var isActive by mutableStateOf(false)
+        private set
+    var isPermissive by mutableStateOf(false)
+        private set
+    var isLoading by mutableStateOf(true)
+        private set
+    var isTriggering by mutableStateOf(false)
+        private set
+
+    suspend fun refresh() {
+        val (active, permissive) = withContext(Dispatchers.IO) {
+            isJailbreakMode() to isSELinuxPermissive()
+        }
+        isActive = active
+        isPermissive = permissive
+        isLoading = false
+    }
+
+    fun performPrimaryAction() {
+        if (isActive) {
+            softReboot()
+            return
+        }
+        if (isTriggering) return
+
+        scope.launch {
+            isTriggering = true
+            val started = withContext(Dispatchers.IO) { installJailbreak() }
+            showToast(
+                context,
+                if (started) R.string.jailbreak_triggered else R.string.settings_jailbreak_failed,
+            )
+            if (started) {
+                var attempts = 0
+                while (!isActive && attempts < 15) {
+                    delay(1_000)
+                    refresh()
+                    attempts++
+                }
+            }
+            isTriggering = false
+        }
+    }
+}
+
+internal val LocalHomeJailbreakState = staticCompositionLocalOf<HomeJailbreakState> {
+    error("Home jailbreak state is not available")
+}
+
+@Composable
+internal fun ProvideHomeJailbreakState(content: @Composable () -> Unit) {
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val state = remember(context, scope) { HomeJailbreakState(context, scope) }
+
+    androidx.compose.runtime.LaunchedEffect(state, lifecycleOwner) {
+        lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            state.refresh()
+        }
+    }
+    CompositionLocalProvider(LocalHomeJailbreakState provides state, content = content)
+}

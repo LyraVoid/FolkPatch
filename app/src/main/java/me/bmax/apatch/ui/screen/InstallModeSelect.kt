@@ -14,6 +14,7 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -44,6 +45,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -61,12 +63,16 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.PatchesDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.SplicedColumnGroup
+import me.bmax.apatch.ui.component.WarningCard
 import me.bmax.apatch.ui.component.rememberConfirmDialog
 import me.bmax.apatch.ui.viewmodel.PatchesViewModel
 import me.bmax.apatch.util.getFileNameFromUri
 import me.bmax.apatch.util.isABDevice
+import me.bmax.apatch.util.isJailbreakMode
 import me.bmax.apatch.util.rootAvailable
 
 var selectedBootImage: Uri? = null
@@ -139,6 +145,10 @@ private fun SelectInstallMethod(
     val context = LocalContext.current
     val rootAvailable = rootAvailable()
     val isAbDevice = isABDevice()
+    var jailbreakBlocked by remember { mutableStateOf(false) }
+    LaunchedEffect(Unit) {
+        jailbreakBlocked = withContext(Dispatchers.IO) { isJailbreakMode() }
+    }
 
     // KP Install Options
     val kpOptions = mutableListOf<InstallMethod>(InstallMethod.SelectFile(), InstallMethod.SelectKPImg())
@@ -273,9 +283,8 @@ private fun SelectInstallMethod(
             is InstallMethod.DirectInstallToInactiveSlot -> {
                 confirmDialog.showConfirm(dialogTitle, dialogContent)
             }
-            
             is InstallMethod.Restore -> {
-                 selectedBootImage = null
+                selectedBootImage = null
                 selectRestoreImageLauncher.launch(
                     Intent(Intent.ACTION_GET_CONTENT).apply {
                         type = "application/octet-stream"
@@ -321,6 +330,22 @@ private fun SelectInstallMethod(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        if (jailbreakBlocked) {
+            Box(Modifier.padding(12.dp)) {
+                WarningCard(
+                    message = stringResource(R.string.jailbreak_no_patch),
+                    color = MaterialTheme.colorScheme.outlineVariant,
+                )
+            }
+        }
+        if (!rootAvailable) {
+            Box(Modifier.padding(12.dp)) {
+                WarningCard(
+                    message = stringResource(R.string.home_install_unknown_summary),
+                    color = MaterialTheme.colorScheme.outlineVariant,
+                )
+            }
+        }
         Column(
             modifier = Modifier
                 .weight(1f)
@@ -331,7 +356,7 @@ private fun SelectInstallMethod(
         ) {
             SplicedColumnGroup {
                 // KernelPatch Patching/Installing
-                item(key = "kp_install") {
+                if (!jailbreakBlocked) item(key = "kp_install") {
                     ListItem(
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent),
                         leadingContent = {

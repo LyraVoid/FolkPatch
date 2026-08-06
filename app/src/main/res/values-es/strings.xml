@@ -70,8 +70,8 @@
     <string name="settings_global_namespace_mode">Modo de espacio de nombres global</string>
     <string name="settings_global_namespace_mode_summary">Todas las sesiones root usan el espacio de nombres de montaje global</string>
     <string name="settings_clear_super_key_dialog">¿Realmente deseas proceder?</string>
-    <string name="settings_sucompat">Legacy su compatibility</string>
-    <string name="settings_sucompat_summary">Enable path_probe hooks for legacy su compatibility</string>
+    <string name="settings_sucompat">Compatibilidad su heredada</string>
+    <string name="settings_sucompat_summary">Activar compatibilidad su heredada (para cuando su no funciona)</string>
     <string name="settings_grid_working_card_hide_check">Ocultar icono de estado</string>
     <string name="settings_grid_working_card_hide_check_summary">Ocultar la marca de verificación o icono de advertencia en la tarjeta de estado</string>
     <string name="settings_grid_working_card_hide_text">Ocultar texto de estado</string>
@@ -157,7 +157,7 @@
     <string name="kpatch_shadow_path_title">kpatch</string>
     <string name="home_auth_key_title">Ingresar SuperKey</string>
     <string name="home_auth_key_desc">Iniciar tras certificación</string>
-    <string name="home_kpatch_info_title">Info</string>
+    <string name="home_kpatch_info_title">Información</string>
 
     <string name="home_ap_cando_install">Instalar</string>
 
@@ -184,7 +184,7 @@
     <string name="patch_item_kpimg">kpimg</string>
     <string name="patch_item_kpimg_version">Versión:</string>
     <string name="patch_item_kpimg_comile_time">Hora:</string>
-    <string name="patch_item_kpimg_config">Config:</string>
+    <string name="patch_item_kpimg_config">Configuración:</string>
     <string name="patch_item_new_extra_kpm">Incrustar nuevo</string>
     <string name="patch_item_existed_extra_kpm">Existente</string>
     <string name="patch_item_extra_name">Nombre:</string>
@@ -244,7 +244,7 @@
     <string name="kpm_version">Versión</string>
     <string name="kpm_license">Licencia</string>
     <string name="kpm_author">Autor</string>
-    <string name="kpm_desc">Desc</string>
+    <string name="kpm_desc">Descripción</string>
     <string name="kpm_args">Args</string>
 
     <string name="su_title">Superusuario</string>
@@ -1332,4 +1332,14 @@ Por ejemplo, los KPM que previenen la modificación de particiones solo pueden u
     <string name="settings_info_copy">Mantener pulsado para copiar información</string>
     <string name="settings_info_copy_summary">Mantén pulsado un elemento del panel de información de inicio para copiar su contenido</string>
     <string name="home_info_copied">%1$s copiado</string>
+    <string name="settings_jailbreak_mode">Modo jailbreak</string>
+    <string name="settings_jailbreak_mode_summary">Carga el módulo KernelPatch en un kernel original. No se permite parchear en este modo.</string>
+    <string name="settings_jailbreak_soft_reboot">Reinicio suave</string>
+    <string name="settings_jailbreak_soft_reboot_message">El módulo se ha cargado. ¿Reiniciar el sistema ahora?</string>
+    <string name="settings_jailbreak_loaded">Módulo de jailbreak cargado</string>
+    <string name="settings_jailbreak_failed">No se pudo cargar el módulo de jailbreak</string>
+    <string name="jailbreak_no_patch">No se permite parchear en modo jailbreak.</string>
+    <string name="jailbreak">Jailbreak</string>
+    <string name="jailbreak_triggered">Jailbreak activado. Espera a obtener root y reinicia en modo suave.</string>
+    <string name="reboot_soft">Reinicio suave</string>
 </resources>

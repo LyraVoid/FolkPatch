@@ -13,6 +13,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.LockOpen
 import androidx.compose.material.icons.outlined.Android
 import androidx.compose.material.icons.outlined.BatteryStd
 import androidx.compose.material.icons.outlined.Extension
@@ -206,22 +207,37 @@ private fun KernelPatchCard(
     mountImplement: String,
     modifier: Modifier = Modifier
 ) {
+    val jailbreakState = LocalHomeJailbreakState.current
+    val isJailbreak = jailbreakState.isActive
+    val isPermissive = jailbreakState.isPermissive
     MagiskStyleCard(
-        title = "KernelPatch",
-        icon = Icons.Outlined.Extension,
-        actionText = when (kpState) {
-            APApplication.State.KERNELPATCH_NEED_UPDATE -> stringResource(R.string.home_kp_cando_update)
-            APApplication.State.UNKNOWN_STATE -> stringResource(R.string.kpm_install)
+        title = if (isJailbreak) stringResource(R.string.settings_jailbreak_mode) else "KernelPatch",
+        icon = if (isJailbreak) Icons.Filled.LockOpen else Icons.Outlined.Extension,
+        actionText = when {
+            isJailbreak -> stringResource(R.string.reboot_soft)
+            kpState == APApplication.State.KERNELPATCH_NEED_UPDATE -> stringResource(R.string.home_kp_cando_update)
+            kpState == APApplication.State.UNKNOWN_STATE && isPermissive -> stringResource(R.string.jailbreak)
             else -> stringResource(R.string.kpm_install)
         },
-        showAction = kpState != APApplication.State.KERNELPATCH_INSTALLED,
+        showAction = isJailbreak || kpState != APApplication.State.KERNELPATCH_INSTALLED,
+        actionEnabled = !jailbreakState.isTriggering,
         isWallpaperMode = isWallpaperMode,
         onActionClick = {
-            navigator.navigate(InstallModeSelectScreenDestination)
+            if (isJailbreak || kpState == APApplication.State.UNKNOWN_STATE && isPermissive) {
+                jailbreakState.performPrimaryAction()
+            } else {
+                navigator.navigate(InstallModeSelectScreenDestination)
+            }
         },
         modifier = modifier,
         cardId = BackgroundConfig.FOCUS_CARD_KERNEL
     ) {
+        if (isJailbreak) {
+            InfoRow(
+                label = stringResource(R.string.settings_jailbreak_mode),
+                value = stringResource(R.string.settings_jailbreak_mode_summary)
+            )
+        }
         InfoRow(
             label = stringResource(R.string.home_kpatch_version),
             value = if (kpState != APApplication.State.UNKNOWN_STATE) Version.installedKPVString() else stringResource(R.string.home_not_installed)

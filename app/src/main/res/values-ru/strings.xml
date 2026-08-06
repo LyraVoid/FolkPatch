@@ -73,8 +73,8 @@
     <string name="settings_global_namespace_mode">Глобальный режим пространства имён</string>
     <string name="settings_global_namespace_mode_summary">Все root-сессии используют глобальное пространство монтирования</string>
     <string name="settings_clear_super_key_dialog">Вы действительно хотите продолжить?</string>
-    <string name="settings_sucompat">Legacy su compatibility</string>
-    <string name="settings_sucompat_summary">Enable path_probe hooks for legacy su compatibility</string>
+    <string name="settings_sucompat">Совместимость со старым su</string>
+    <string name="settings_sucompat_summary">Включить совместимость со старым su (если su не работает)</string>
 
     <string name="su_exclude_all_title">Исключить все</string>
     <string name="su_exclude_all_confirm">Вы уверены, что хотите исключить все приложения без root-прав?</string>
@@ -139,7 +139,7 @@
     <string name="patch_start_patch_btn">Начать</string>
     <string name="patch_start_unpatch_btn">Удалить патч</string>
     <string name="patch_item_error">!!ОШИБКА!!</string>
-    <string name="patch_item_bootimg">bootimg</string>
+    <string name="patch_item_bootimg">Образ boot</string>
     <string name="patch_item_bootimg_slot">Слот:</string>
     <string name="patch_item_bootimg_dev">Устройство:</string>
     <string name="patch_item_kernel">Ядро</string>
@@ -1329,4 +1329,14 @@ KernelPatch требует образ boot для патча.
     <string name="settings_info_copy">Долгое нажатие для копирования</string>
     <string name="settings_info_copy_summary">Долгое нажатие на элемент информационной панели главного экрана копирует его содержимое</string>
     <string name="home_info_copied">%1$s скопировано</string>
+    <string name="settings_jailbreak_mode">Режим джейлбрейка</string>
+    <string name="settings_jailbreak_mode_summary">Загружает модуль KernelPatch на стоковое ядро. В этом режиме патчинг запрещён.</string>
+    <string name="settings_jailbreak_soft_reboot">Мягкая перезагрузка</string>
+    <string name="settings_jailbreak_soft_reboot_message">Модуль загружен. Перезапустить систему сейчас?</string>
+    <string name="settings_jailbreak_loaded">Модуль джейлбрейка загружен</string>
+    <string name="settings_jailbreak_failed">Не удалось загрузить модуль джейлбрейка</string>
+    <string name="jailbreak_no_patch">В режиме джейлбрейка патчинг запрещён.</string>
+    <string name="jailbreak">Джейлбрейк</string>
+    <string name="jailbreak_triggered">Jailbreak активирован. Дождитесь получения root, затем выполните мягкую перезагрузку.</string>
+    <string name="reboot_soft">Мягкая перезагрузка</string>
 </resources>

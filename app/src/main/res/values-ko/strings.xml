@@ -68,8 +68,8 @@
     <string name="settings_global_namespace_mode">전역 네임스페이스 모드</string>
     <string name="settings_global_namespace_mode_summary">모든 Root 세션이 전역 마운트 네임스페이스를 사용합니다.</string>
     <string name="settings_clear_super_key_dialog">계속할까요?</string>
-    <string name="settings_sucompat">Legacy su compatibility</string>
-    <string name="settings_sucompat_summary">Enable path_probe hooks for legacy su compatibility</string>
+    <string name="settings_sucompat">레거시 su 호환성</string>
+    <string name="settings_sucompat_summary">레거시 su 호환성 활성화 (su가 작동하지 않을 때)</string>
     <string name="settings_grid_working_card_hide_check">상태 아이콘 숨김</string>
     <string name="settings_grid_working_card_hide_check_summary">작업 카드에서 확인 또는 경고 아이콘을 숨깁니다.</string>
     <string name="settings_grid_working_card_hide_text">상태 텍스트 숨김</string>
@@ -1343,4 +1343,14 @@ KernelPatch는 boot 이미지를 패치해야 합니다.
     <string name="settings_info_copy">길게 눌러 정보 복사</string>
     <string name="settings_info_copy_summary">홈 정보 카드의 항목을 길게 누르면 내용이 복사됩니다</string>
     <string name="home_info_copied">%1$s 복사됨</string>
+    <string name="settings_jailbreak_mode">탈옥 모드</string>
+    <string name="settings_jailbreak_mode_summary">순정 커널에 KernelPatch 모듈을 로드합니다. 이 모드에서는 패치가 허용되지 않습니다.</string>
+    <string name="settings_jailbreak_soft_reboot">소프트 리부팅</string>
+    <string name="settings_jailbreak_soft_reboot_message">모듈이 로드되었습니다. 지금 시스템을 재부팅할까요?</string>
+    <string name="settings_jailbreak_loaded">탈옥 모듈 로드됨</string>
+    <string name="settings_jailbreak_failed">탈옥 모듈을 로드하지 못했습니다</string>
+    <string name="jailbreak_no_patch">탈옥 모드에서는 패치가 허용되지 않습니다.</string>
+    <string name="jailbreak">탈옥</string>
+    <string name="jailbreak_triggered">탈옥이 시작되었습니다. 루트 권한을 기다린 후 소프트 리부팅하세요.</string>
+    <string name="reboot_soft">소프트 리부팅</string>
 </resources>

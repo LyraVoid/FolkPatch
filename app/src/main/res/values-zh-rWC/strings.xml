@@ -1312,4 +1312,14 @@ KernelPatch 大法需要以 boot 灵胎为引。
     <string name="settings_info_copy">长按拓印信息</string>
     <string name="settings_info_copy_summary">长按洞府首页信息栏之条目，即可拓印其内容</string>
     <string name="home_info_copied">%1$s 已拓印</string>
+    <string name="settings_jailbreak_mode">破禁模式</string>
+    <string name="settings_jailbreak_mode_summary">在原生内核上炼入 KernelPatch 仙符。该模式下不允许炼符补道。</string>
+    <string name="settings_jailbreak_soft_reboot">灵台重启</string>
+    <string name="settings_jailbreak_soft_reboot_message">仙符已炼入，是否立即灵台重启？</string>
+    <string name="settings_jailbreak_loaded">破禁仙符已炼入</string>
+    <string name="settings_jailbreak_failed">破禁仙符炼入败陨</string>
+    <string name="jailbreak_no_patch">破禁模式下不允许炼符补道。</string>
+    <string name="jailbreak">破禁</string>
+    <string name="jailbreak_triggered">破禁已触发，待取得 root 仙根后灵台重启。</string>
+    <string name="reboot_soft">灵台重启</string>
 </resources>

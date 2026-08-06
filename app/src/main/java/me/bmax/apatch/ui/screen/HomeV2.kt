@@ -7,7 +7,9 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.LockOpen
 import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material.icons.outlined.RestartAlt
 import androidx.compose.material.icons.outlined.Android
 import androidx.compose.material.icons.outlined.Extension
 import androidx.compose.material3.*
@@ -47,7 +49,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.ui.input.pointer.pointerInput
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import me.bmax.apatch.ui.component.BackgroundOptionsDialog
 import me.bmax.apatch.ui.component.rememberConfirmDialog
 import me.bmax.apatch.ui.theme.BackgroundManager
@@ -195,6 +199,10 @@ fun StatusCardBig(
     val context = androidx.compose.ui.platform.LocalContext.current
     val isWorking = kpState == APApplication.State.KERNELPATCH_INSTALLED
     val isUpdate = kpState == APApplication.State.KERNELPATCH_NEED_UPDATE || kpState == APApplication.State.KERNELPATCH_NEED_REBOOT
+
+    val jailbreakState = LocalHomeJailbreakState.current
+    val isJailbreak = jailbreakState.isActive
+    val isPermissive = jailbreakState.isPermissive
     
     val prefs = APApplication.sharedPreferences
     val darkThemeFollowSys = prefs.getBoolean("night_mode_follow_sys", false)
@@ -208,7 +216,9 @@ fun StatusCardBig(
     // Colors
     val useCustomGridBg = BackgroundConfig.isGridWorkingCardBackgroundEnabled && !BackgroundConfig.gridWorkingCardBackgroundUri.isNullOrEmpty()
     
-    val (baseContainerColor, baseContentColor) = if (BackgroundConfig.isCustomBackgroundEnabled) {
+    val (baseContainerColor, baseContentColor) = if (isJailbreak) {
+         MaterialTheme.colorScheme.tertiaryContainer to MaterialTheme.colorScheme.onTertiaryContainer
+    } else if (BackgroundConfig.isCustomBackgroundEnabled) {
          val opacity = BackgroundConfig.customBackgroundOpacity
          val container = MaterialTheme.colorScheme.primary.copy(alpha = opacity)
          val content = if (opacity <= 0.1f) {
@@ -268,12 +278,24 @@ fun StatusCardBig(
                 if (isLongPressEnabled) {
                     Modifier.pointerInput(Unit) {
                         detectTapGestures(
-                            onTap = { onClick() },
+                            onTap = {
+                                if (isJailbreak || kpState == APApplication.State.UNKNOWN_STATE && isPermissive) {
+                                    jailbreakState.performPrimaryAction()
+                                } else {
+                                    onClick()
+                                }
+                            },
                             onLongPress = { showCardOptionsDialog = true }
                         )
                     }
                 } else {
-                    Modifier.clickable { onClick() }
+                    Modifier.clickable {
+                        if (isJailbreak || kpState == APApplication.State.UNKNOWN_STATE && isPermissive) {
+                            jailbreakState.performPrimaryAction()
+                        } else {
+                            onClick()
+                        }
+                    }
                 }
             ),
         shape = RoundedCornerShape(20.dp),
@@ -329,11 +351,12 @@ fun StatusCardBig(
                 Column(modifier = Modifier.align(Alignment.BottomStart)) {
                     if (!BackgroundConfig.isGridWorkingCardTextHidden) {
                         Text(
-                            text = when(kpState) {
-                                APApplication.State.KERNELPATCH_INSTALLED -> stringResource(R.string.home_working)
-                                APApplication.State.KERNELPATCH_NEED_UPDATE -> stringResource(R.string.home_kp_need_update)
-                                APApplication.State.KERNELPATCH_NEED_REBOOT -> stringResource(R.string.home_ap_cando_reboot)
-                                APApplication.State.UNKNOWN_STATE -> stringResource(R.string.home_install_unknown)
+                            text = when {
+                                isJailbreak -> stringResource(R.string.settings_jailbreak_mode)
+                                kpState == APApplication.State.KERNELPATCH_INSTALLED -> stringResource(R.string.home_working)
+                                kpState == APApplication.State.KERNELPATCH_NEED_UPDATE -> stringResource(R.string.home_kp_need_update)
+                                kpState == APApplication.State.KERNELPATCH_NEED_REBOOT -> stringResource(R.string.home_ap_cando_reboot)
+                                kpState == APApplication.State.UNKNOWN_STATE -> stringResource(R.string.home_install_unknown)
                                 else -> stringResource(R.string.home_not_installed)
                             },
                             style = MaterialTheme.typography.titleLarge,
@@ -341,7 +364,7 @@ fun StatusCardBig(
                             color = contentColor
                         )
                     }
-                    if (isWorking && !BackgroundConfig.isGridWorkingCardModeHidden) {
+                    if (!isJailbreak && isWorking && !BackgroundConfig.isGridWorkingCardModeHidden) {
                         Spacer(Modifier.height(4.dp))
                         val customText = BackgroundConfig.getCustomBadgeText()
                         Text(
@@ -350,13 +373,33 @@ fun StatusCardBig(
                             color = contentColor.copy(alpha = 0.8f)
                         )
                     }
+                    if (isJailbreak) {
+                        Spacer(Modifier.height(4.dp))
+                        Text(
+                            text = stringResource(R.string.reboot_soft),
+                            style = MaterialTheme.typography.labelMedium,
+                            color = contentColor.copy(alpha = 0.78f),
+                        )
+                    } else if (kpState == APApplication.State.UNKNOWN_STATE && isPermissive) {
+                        Spacer(Modifier.height(4.dp))
+                        Text(
+                            text = stringResource(R.string.jailbreak),
+                            style = MaterialTheme.typography.labelMedium,
+                            color = contentColor.copy(alpha = 0.78f),
+                        )
+                    }
                 } // End of Column
             }
             
             // Icon
             if (!BackgroundConfig.isGridWorkingCardCheckHidden) {
                 Icon(
-                    imageVector = if (isWorking) Icons.Filled.CheckCircle else Icons.Filled.Warning,
+                    imageVector = when {
+                        jailbreakState.isTriggering -> Icons.Outlined.RestartAlt
+                        isJailbreak -> Icons.Filled.LockOpen
+                        isWorking -> Icons.Filled.CheckCircle
+                        else -> Icons.Filled.Warning
+                    },
                     contentDescription = null,
                     modifier = Modifier
                         .align(Alignment.TopEnd)

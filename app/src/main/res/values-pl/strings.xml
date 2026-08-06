@@ -64,7 +64,7 @@
     <string name="settings_global_namespace_mode">Tryb globalnej przestrzeni nazw</string>
     <string name="settings_global_namespace_mode_summary">Wszystkie sesje root korzystają z globalnej przestrzeni montowania nazw</string>
     <string name="settings_clear_super_key_dialog">Czy na pewno chcesz kontynuować?</string>
-    <string name="settings_sucompat">Legacy su compatibility</string>
+    <string name="settings_sucompat">Zgodność ze starym su</string>
     <string name="settings_sucompat_summary">Enable path_probe hooks for legacy su compatibility</string>
     <string name="su_exclude_all_title">Wyklucz wszystkie</string>
     <string name="su_exclude_all_confirm">Czy na pewno chcesz wykluczyć wszystkie aplikacje bez uprawnień root?</string>
@@ -183,7 +183,7 @@
     <string name="kpm_author">Autor</string>
     <string name="kpm_desc">Opis</string>
     <string name="kpm_args">Argumenty</string>
-    <string name="su_title">Superuser</string>
+    <string name="su_title">Superużytkownik</string>
     <string name="su_selinux_via_hook">Omiń przez hak</string>
     <string name="su_pkg_excluded_label">Wyklucz</string>
     <string name="su_pkg_excluded_setting_title">Wyklucz modyfikacje</string>
@@ -1253,4 +1253,14 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="settings_info_copy">Przytrzymaj, aby skopiować informacje</string>
     <string name="settings_info_copy_summary">Przytrzymaj element panelu informacji na ekranie głównym, aby skopiować jego zawartość</string>
     <string name="home_info_copied">Skopiowano %1$s</string>
+    <string name="settings_jailbreak_mode">Tryb jailbreak</string>
+    <string name="settings_jailbreak_mode_summary">Ładuje moduł KernelPatch na niezmodyfikowanym jądrze. W tym trybie patchowanie jest niedozwolone.</string>
+    <string name="settings_jailbreak_soft_reboot">Miękki restart</string>
+    <string name="settings_jailbreak_soft_reboot_message">Moduł został załadowany. Czy teraz zrestartować system?</string>
+    <string name="settings_jailbreak_loaded">Moduł jailbreak załadowany</string>
+    <string name="settings_jailbreak_failed">Nie udało się załadować modułu jailbreak</string>
+    <string name="jailbreak_no_patch">Patchowanie jest niedozwolone w trybie jailbreak.</string>
+    <string name="jailbreak">Jailbreak</string>
+    <string name="jailbreak_triggered">Jailbreak uruchomiony. Poczekaj na root, a następnie wykonaj miękki restart.</string>
+    <string name="reboot_soft">Miękki restart</string>
 </resources>

@@ -73,8 +73,8 @@
     <string name="settings_global_namespace_mode">全域命名空間模式</string>
     <string name="settings_global_namespace_mode_summary">所有 Root 工作階段將會全域掛載命名空間</string>
     <string name="settings_clear_super_key_dialog">確定要繼續嗎？</string>
-    <string name="settings_sucompat">Legacy su compatibility</string>
-    <string name="settings_sucompat_summary">Enable path_probe hooks for legacy su compatibility</string>
+    <string name="settings_sucompat">舊版 su 相容性</string>
+    <string name="settings_sucompat_summary">啟用舊版su兼容(適用於su不生效)</string>
 
     <string name="home_learn_apatch">深入了解 FolkPatch</string>
     <string name="home_click_to_learn_apatch">學習有關 FolkPatch 的功能及使用方式</string>
@@ -1327,4 +1327,14 @@ KernelPatch 需要修補 boot 映像檔。
     <string name="settings_info_copy">長按複製資訊</string>
     <string name="settings_info_copy_summary">長按首頁資訊欄中的條目即可複製其內容</string>
     <string name="home_info_copied">%1$s 已複製</string>
+    <string name="settings_jailbreak_mode">越獄模式</string>
+    <string name="settings_jailbreak_mode_summary">在未修補的核心上載入 KernelPatch 模組。該模式下不允許修補。</string>
+    <string name="settings_jailbreak_soft_reboot">軟重啟</string>
+    <string name="settings_jailbreak_soft_reboot_message">模組已載入，是否立即重啟框架？</string>
+    <string name="settings_jailbreak_loaded">越獄模組已載入</string>
+    <string name="settings_jailbreak_failed">越獄模組載入失敗</string>
+    <string name="jailbreak_no_patch">越獄模式下不允許修補。</string>
+    <string name="jailbreak">越獄</string>
+    <string name="jailbreak_triggered">越獄已觸發，等待取得 root 後軟重啟。</string>
+    <string name="reboot_soft">軟重啟</string>
 </resources>

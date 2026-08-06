@@ -1312,4 +1312,14 @@ KernelPatch 附魔需要 boot 方块作为材料。
     <string name="settings_info_copy">长按复制信息</string>
     <string name="settings_info_copy_summary">长按主界面信息栏中的条目即可复制其内容</string>
     <string name="home_info_copied">%1$s 已复制</string>
+    <string name="settings_jailbreak_mode">解封模式</string>
+    <string name="settings_jailbreak_mode_summary">在原生内核上加载 KernelPatch 模组。该模式下不允许锻造修补。</string>
+    <string name="settings_jailbreak_soft_reboot">快速重生</string>
+    <string name="settings_jailbreak_soft_reboot_message">模组已加载，要现在快速重生吗？</string>
+    <string name="settings_jailbreak_loaded">解封模组已加载</string>
+    <string name="settings_jailbreak_failed">解封模组加载失败，你死了！</string>
+    <string name="jailbreak_no_patch">解封模式下不允许锻造修补。</string>
+    <string name="jailbreak">解封</string>
+    <string name="jailbreak_triggered">解封已触发，等拿到 OP 权限就快速重生。</string>
+    <string name="reboot_soft">快速重生</string>
 </resources>

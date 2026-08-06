@@ -69,7 +69,7 @@
     <string name="settings_global_namespace_mode_summary">All root sessions use the global mount namespace</string>
     <string name="settings_clear_super_key_dialog">Do you really want to proceed?</string>
     <string name="settings_sucompat">Legacy su compatibility</string>
-    <string name="settings_sucompat_summary">Enable path_probe hooks for legacy su compatibility</string>
+    <string name="settings_sucompat_summary">"Enable legacy su compatibility (for when su doesn't work)"</string>
     <string name="settings_grid_working_card_hide_check">Hide status icon</string>
     <string name="settings_grid_working_card_hide_check_summary">Hide the checkmark or warning icon on the working card</string>
     <string name="settings_grid_working_card_hide_text">Hide status text</string>
@@ -1384,4 +1384,14 @@ Please ensure the app is completely closed and reopened for the commands to exec
     <string name="color_style_monochrome">Monochrome</string>
     <string name="color_style_neutral">Neutral</string>
     <string name="color_style_fidelity">Fidelity</string>
+    <string name="settings_jailbreak_mode">Jailbreak mode</string>
+    <string name="settings_jailbreak_mode_summary">"Load the KernelPatch module on a stock kernel. Patching is not allowed in this mode."</string>
+    <string name="settings_jailbreak_soft_reboot">Soft reboot</string>
+    <string name="settings_jailbreak_soft_reboot_message">"The module has been loaded. Restart the framework now?"</string>
+    <string name="settings_jailbreak_loaded">Jailbreak module loaded</string>
+    <string name="settings_jailbreak_failed">Failed to load jailbreak module</string>
+    <string name="jailbreak_no_patch">Patching is not allowed in jailbreak mode.</string>
+    <string name="jailbreak">Jailbreak</string>
+    <string name="jailbreak_triggered">Jailbreak triggered. Wait for root, then soft reboot.</string>
+    <string name="reboot_soft">Soft reboot</string>
 </resources>

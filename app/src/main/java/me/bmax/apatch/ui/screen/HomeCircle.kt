@@ -14,7 +14,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material.icons.automirrored.outlined.Help
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.LockOpen
 import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material.icons.outlined.RestartAlt
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -83,8 +85,6 @@ fun HomeScreenCircle(
             .padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        val context = LocalContext.current
-        
         if (BackgroundConfig.isCustomBackgroundEnabled) {
             Spacer(Modifier.height(0.dp))
         }
@@ -93,7 +93,7 @@ fun HomeScreenCircle(
         StatusCardCircle(kpState, apState, navigator, showUninstallDialog)
 
         // Superuser and Module Cards
-        val showCoreCards = kpState != APApplication.State.UNKNOWN_STATE
+        val showCoreCards = kpState != APApplication.State.UNKNOWN_STATE || LocalHomeJailbreakState.current.isActive
         if (showCoreCards) {
             LaunchedEffect(Unit) {
                 AppData.DataRefreshManager.ensureCountsLoaded()
@@ -216,8 +216,18 @@ fun StatusCardCircle(
     val isWorking = kpState == APApplication.State.KERNELPATCH_INSTALLED
     val isUpdate = kpState == APApplication.State.KERNELPATCH_NEED_UPDATE || kpState == APApplication.State.KERNELPATCH_NEED_REBOOT
     val classicEmojiEnabled = BackgroundConfig.isListWorkingCardModeHidden
-    
-    val finalContainerColor = if (isWorking) {
+
+    val jailbreakState = LocalHomeJailbreakState.current
+    val isJailbreak = jailbreakState.isActive
+    val isPermissive = jailbreakState.isPermissive
+
+    val finalContainerColor = if (isJailbreak) {
+        if (BackgroundConfig.isCustomBackgroundEnabled) {
+            MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = BackgroundConfig.customBackgroundOpacity)
+        } else {
+            MaterialTheme.colorScheme.tertiaryContainer
+        }
+    } else if (isWorking) {
         if (BackgroundConfig.isCustomBackgroundEnabled) {
             MaterialTheme.colorScheme.primaryContainer.copy(alpha = BackgroundConfig.customBackgroundOpacity)
         } else {
@@ -230,26 +240,41 @@ fun StatusCardCircle(
             MaterialTheme.colorScheme.errorContainer
         }
     }
-    
+
     TonalCard(containerColor = finalContainerColor) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable { 
-                    if (isWorking) {
-                        if (apState == APApplication.State.ANDROIDPATCH_INSTALLED) {
-                            showUninstallDialog.value = true
+                .clickable {
+                    when {
+                        isJailbreak -> jailbreakState.performPrimaryAction()
+                        isWorking -> {
+                            if (apState == APApplication.State.ANDROIDPATCH_INSTALLED) {
+                                showUninstallDialog.value = true
+                            }
                         }
-                    } else {
-                        navigator.navigate(com.ramcosta.composedestinations.generated.destinations.InstallModeSelectScreenDestination)
+                        else -> navigator.navigate(com.ramcosta.composedestinations.generated.destinations.InstallModeSelectScreenDestination)
                     }
                 }
-                .padding(24.dp), 
+                .padding(24.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            if (isWorking) {
+            if (isJailbreak) {
+                Icon(Icons.Filled.LockOpen, stringResource(R.string.settings_jailbreak_mode))
+                Column(Modifier.padding(start = 20.dp).weight(1f)) {
+                    Text(
+                        text = stringResource(R.string.settings_jailbreak_mode),
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                    Spacer(Modifier.height(4.dp))
+                    Text(
+                        text = stringResource(R.string.settings_jailbreak_mode_summary),
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
+            } else if (isWorking) {
                  Icon(Icons.Outlined.CheckCircle, stringResource(R.string.home_working))
-                 Column(Modifier.padding(start = 20.dp)) {
+                 Column(Modifier.padding(start = 20.dp).weight(1f)) {
                      val isFull = apState == APApplication.State.ANDROIDPATCH_INSTALLED
                     val modeTextTitle = if (isFull) "Full" else "Half"
                     val modeTextCaps = if (isFull) "FULL" else "HALF"
@@ -265,7 +290,7 @@ fun StatusCardCircle(
                             style = MaterialTheme.typography.titleMedium
                         )
                         Spacer(Modifier.width(8.dp))
-                        
+
                        // Full/Half Label
                       if (!classicEmojiEnabled) {
                           ModeLabelText(label = modeText)
@@ -282,9 +307,9 @@ fun StatusCardCircle(
                  // Not installed or error
                  val icon = if (isUpdate) Icons.Outlined.SystemUpdate else Icons.Outlined.Warning
                  val title = if (isUpdate) stringResource(R.string.home_kp_need_update) else stringResource(R.string.home_not_installed)
-                 
+
                  Icon(icon, title)
-                 Column(Modifier.padding(start = 20.dp)) {
+                 Column(Modifier.padding(start = 20.dp).weight(1f)) {
                      Text(
                          text = title,
                          style = MaterialTheme.typography.titleMedium
@@ -295,6 +320,21 @@ fun StatusCardCircle(
                          style = MaterialTheme.typography.bodyMedium
                      )
                  }
+            }
+            if (isJailbreak || kpState == APApplication.State.UNKNOWN_STATE && isPermissive) {
+                IconButton(
+                    onClick = jailbreakState::performPrimaryAction,
+                    enabled = !jailbreakState.isTriggering,
+                ) {
+                    if (jailbreakState.isTriggering) {
+                        CircularProgressIndicator(Modifier.size(22.dp), strokeWidth = 2.dp)
+                    } else {
+                        Icon(
+                            imageVector = if (isJailbreak) Icons.Outlined.RestartAlt else Icons.Filled.LockOpen,
+                            contentDescription = stringResource(if (isJailbreak) R.string.reboot_soft else R.string.jailbreak),
+                        )
+                    }
+                }
             }
         }
     }

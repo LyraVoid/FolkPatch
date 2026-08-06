@@ -25,6 +25,7 @@ import androidx.compose.material.icons.filled.Security
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Tune
+import androidx.compose.material.icons.filled.LockOpen
 import androidx.compose.material.icons.filled.MusicNote
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.outlined.Info
@@ -73,6 +74,29 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.SplicedColumnGroup
+import android.widget.Toast
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AlertDialogDefaults
+import androidx.compose.material3.BasicAlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.Surface
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.window.DialogProperties
+import androidx.compose.ui.window.DialogWindowProvider
+import androidx.core.content.edit
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import me.bmax.apatch.ui.component.SwitchItem
+import me.bmax.apatch.util.installJailbreak
+import me.bmax.apatch.util.rootShellForResult
+import me.bmax.apatch.util.softReboot
+import me.bmax.apatch.util.ui.APDialogBlurBehindUtils
 import me.bmax.apatch.util.ui.NavigationBarsSpacer
 
 import com.ramcosta.composedestinations.generated.destinations.GeneralSettingsScreenDestination
@@ -90,6 +114,7 @@ import com.ramcosta.composedestinations.generated.destinations.SettingsSearchScr
 @OptIn(ExperimentalMaterial3Api::class)
 fun SettingScreen(navigator: DestinationsNavigator) {
     val state by APApplication.apStateLiveData.observeAsState(APApplication.State.UNKNOWN_STATE)
+    val kPatchReady = state != APApplication.State.UNKNOWN_STATE
     val aPatchReady =
         (state == APApplication.State.ANDROIDPATCH_INSTALLING || state == APApplication.State.ANDROIDPATCH_INSTALLED || state == APApplication.State.ANDROIDPATCH_NEED_UPDATE)
 
@@ -97,6 +122,10 @@ fun SettingScreen(navigator: DestinationsNavigator) {
     val canAuthenticate = remember { BiometricUtils.isBiometricAvailable(context) }
 
     var showDevDialog by rememberSaveable { mutableStateOf(false) }
+    val showJailbreakSoftRebootDialog = remember { mutableStateOf(false) }
+    if (showJailbreakSoftRebootDialog.value) {
+        JailbreakSoftRebootDialog(showJailbreakSoftRebootDialog)
+    }
 
     DeveloperInfo(
         showDialog = showDevDialog
@@ -139,6 +168,48 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
         ) {
             item { Spacer(Modifier.height(8.dp)) }
+
+            // Jailbreak mode
+            item {
+                if (kPatchReady && aPatchReady) {
+                    val context = LocalContext.current
+                    val scope = rememberCoroutineScope()
+                    val prefs = APApplication.sharedPreferences
+                    val jailbreakFailedMsg = stringResource(R.string.settings_jailbreak_failed)
+                    val jailbreakTriggeredMsg = stringResource(R.string.jailbreak_triggered)
+                    var jailbreakEnabled by rememberSaveable {
+                        mutableStateOf(prefs.getBoolean("jailbreak_enabled", false))
+                    }
+                    SwitchItem(
+                        icon = Icons.Filled.LockOpen,
+                        title = stringResource(R.string.settings_jailbreak_mode),
+                        summary = stringResource(R.string.settings_jailbreak_mode_summary),
+                        checked = jailbreakEnabled,
+                        onCheckedChange = { enabled ->
+                            scope.launch(Dispatchers.IO) {
+                                if (enabled) {
+                                    val success = installJailbreak()
+                                    withContext(Dispatchers.Main) {
+                                        if (success) {
+                                            jailbreakEnabled = true
+                                            prefs.edit { putBoolean("jailbreak_enabled", true) }
+                                            Toast.makeText(context, jailbreakTriggeredMsg, Toast.LENGTH_SHORT)
+                                                .show()
+                                            showJailbreakSoftRebootDialog.value = true
+                                        } else {
+                                            Toast.makeText(context, jailbreakFailedMsg, Toast.LENGTH_SHORT)
+                                                .show()
+                                        }
+                                    }
+                                } else {
+                                    rootShellForResult("rm -f ${APApplication.JAILBREAK_FILE}")
+                                    prefs.edit { putBoolean("jailbreak_enabled", false) }
+                                    jailbreakEnabled = false
+                                }
+                            }
+                        })
+                }
+            }
 
             item {
                 SplicedColumnGroup {
@@ -375,6 +446,67 @@ fun DeveloperInfo(
 
                 Spacer(modifier = Modifier.height(16.dp))
             }
+        }
+    }
+}
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun JailbreakSoftRebootDialog(showDialog: MutableState<Boolean>) {
+    BasicAlertDialog(
+        onDismissRequest = { showDialog.value = false }, properties = DialogProperties(
+            decorFitsSystemWindows = true,
+            usePlatformDefaultWidth = false,
+        )
+    ) {
+        Surface(
+            modifier = Modifier
+                .width(310.dp)
+                .wrapContentHeight(),
+            shape = RoundedCornerShape(30.dp),
+            tonalElevation = AlertDialogDefaults.TonalElevation,
+            color = AlertDialogDefaults.containerColor,
+        ) {
+            Column(modifier = Modifier.padding(PaddingValues(all = 24.dp))) {
+                Box(
+                    Modifier
+                        .padding(PaddingValues(bottom = 16.dp))
+                        .align(Alignment.Start)
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.settings_jailbreak_soft_reboot),
+                        style = MaterialTheme.typography.headlineSmall
+                    )
+                }
+                Box(
+                    Modifier
+                        .padding(PaddingValues(bottom = 12.dp))
+                        .align(Alignment.Start)
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.settings_jailbreak_soft_reboot_message),
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End
+                ) {
+                    TextButton(onClick = { showDialog.value = false }) {
+                        Text(stringResource(id = android.R.string.cancel))
+                    }
+
+                    Button(onClick = {
+                        showDialog.value = false
+                        softReboot()
+                    }) {
+                        Text(stringResource(id = R.string.settings_jailbreak_soft_reboot))
+                    }
+                }
+            }
+            val dialogWindowProvider = LocalView.current.parent as DialogWindowProvider
+            APDialogBlurBehindUtils.setupWindowBlurListener(dialogWindowProvider.window)
         }
     }
 }

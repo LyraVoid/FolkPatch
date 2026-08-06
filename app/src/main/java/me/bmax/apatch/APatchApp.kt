@@ -119,6 +119,8 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
         const val NETISOLATE_DIR = "/data/adb/fp/netisolate/"
         const val NETISOLATE_ENABLE_FILE = "/data/adb/fp/netisolate/enabled"
         const val NETISOLATE_UIDS_FILE = "/data/adb/fp/netisolate/uids"
+        const val JAILBREAK_FILE = APATCH_FOLDER + "jailbreak"
+        const val JAILBREAK_KO_PATH = APATCH_FOLDER + "kernelpatch.ko"
         const val KPMS_DIR = APATCH_FOLDER + "kpms/"
 
         @Deprecated("Use SHA256 comparison instead")
@@ -345,6 +347,12 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
 
     override fun onCreate() {
         super.onCreate()
+        // The app-zygote for the jailbreak MagicaService runs without a UserManager,
+        // so shared prefs and other context-dependent setup are unavailable there.
+        // AppZygotePreload drives the jailbreak via JNI directly; skip init here.
+        if (getSystemService(Context.USER_SERVICE) == null) {
+            return
+        }
         apApp = this
         sharedPreferences = getSharedPreferences(SP_NAME, Context.MODE_PRIVATE)
 

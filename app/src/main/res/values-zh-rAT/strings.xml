@@ -1316,4 +1316,14 @@
     <string name="settings_info_copy">长按抄录圣典信息</string>
     <string name="settings_info_copy_summary">长按主页信息栏中的条目即可抄录其内容</string>
     <string name="home_info_copied">%1$s 已抄录完毕</string>
+    <string name="settings_jailbreak_mode">圣辉解禁模式</string>
+    <string name="settings_jailbreak_mode_summary">在原生内核上降下 KernelPatch 圣光。该模式下不允许神术修补。</string>
+    <string name="settings_jailbreak_soft_reboot">圣翼轻旋</string>
+    <string name="settings_jailbreak_soft_reboot_message">圣光已降临，是否立即圣翼轻旋？</string>
+    <string name="settings_jailbreak_loaded">圣辉解禁已降临</string>
+    <string name="settings_jailbreak_failed">圣辉解禁降临失败</string>
+    <string name="jailbreak_no_patch">圣辉解禁模式下不允许神术修补。</string>
+    <string name="jailbreak">圣辉解禁</string>
+    <string name="jailbreak_triggered">圣辉解禁已触发，等待获得神恩后圣翼轻旋。</string>
+    <string name="reboot_soft">圣翼轻旋</string>
 </resources>

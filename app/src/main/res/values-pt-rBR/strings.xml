@@ -70,8 +70,8 @@
     <string name="settings_global_namespace_mode">Modo Namespace Global</string>
     <string name="settings_global_namespace_mode_summary">Todas as sessões root usam o namespace de montagem global</string>
     <string name="settings_clear_super_key_dialog">Você realmente deseja prosseguir?</string>
-    <string name="settings_sucompat">Legacy su compatibility</string>
-    <string name="settings_sucompat_summary">Enable path_probe hooks for legacy su compatibility</string>
+    <string name="settings_sucompat">Compatibilidade su legada</string>
+    <string name="settings_sucompat_summary">Ativar compatibilidade su (para quando su não funciona)</string>
     <string name="settings_grid_working_card_hide_check">Ocultar ícone de status</string>
     <string name="settings_grid_working_card_hide_check_summary">Ocultar o ícone de confirmação ou aviso no cartão de status</string>
     <string name="settings_grid_working_card_hide_text">Ocultar texto de status</string>
@@ -1330,4 +1330,14 @@ Por favor, certifique-se de fechar completamente o app e reabri-lo para que os c
     <string name="settings_info_copy">Toque longo para copiar informações</string>
     <string name="settings_info_copy_summary">Toque e segure um item do painel de informações da tela inicial para copiar seu conteúdo</string>
     <string name="home_info_copied">%1$s copiado</string>
+    <string name="settings_jailbreak_mode">Modo jailbreak</string>
+    <string name="settings_jailbreak_mode_summary">Carrega o módulo KernelPatch em um kernel original. Não é permitido fazer patch neste modo.</string>
+    <string name="settings_jailbreak_soft_reboot">Reinicialização suave</string>
+    <string name="settings_jailbreak_soft_reboot_message">O módulo foi carregado. Reiniciar o sistema agora?</string>
+    <string name="settings_jailbreak_loaded">Módulo de jailbreak carregado</string>
+    <string name="settings_jailbreak_failed">Falha ao carregar o módulo de jailbreak</string>
+    <string name="jailbreak_no_patch">Não é permitido fazer patch no modo jailbreak.</string>
+    <string name="jailbreak">Jailbreak</string>
+    <string name="jailbreak_triggered">Jailbreak acionado. Aguarde o root e, em seguida, reinicie em modo suave.</string>
+    <string name="reboot_soft">Reinicialização suave</string>
 </resources>

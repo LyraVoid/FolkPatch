@@ -60,8 +60,8 @@
     <string name="settings_global_namespace_mode">グローバル名前空間モード</string>
     <string name="settings_global_namespace_mode_summary">すべてのルートセッションはグローバルマウント名前空間を使用します。</string>
     <string name="settings_clear_super_key_dialog">続行してもよろしいですか？</string>
-    <string name="settings_sucompat">Legacy su compatibility</string>
-    <string name="settings_sucompat_summary">Enable path_probe hooks for legacy su compatibility</string>
+    <string name="settings_sucompat">レガシー su 互換性</string>
+    <string name="settings_sucompat_summary">レガシーsu互換性を有効にする（suが機能しない場合）</string>
     <string name="settings_grid_working_card_hide_check">ステータスアイコンを非表示</string>
     <string name="settings_grid_working_card_hide_check_summary">動作中のカードのチェックマークまは警告アイコンを非表示にします。</string>
     <string name="settings_grid_working_card_hide_text">ステータステキストを非表示</string>
@@ -162,8 +162,8 @@
     <string name="home_fingerprint">フィンガープリント</string>
     <string name="home_selinux_status">SELinux ステータス</string>
     <string name="home_selinux_status_disabled">無効</string>
-    <string name="home_selinux_status_enforcing">Enforcing</string>
-    <string name="home_selinux_status_permissive">Permissive</string>
+    <string name="home_selinux_status_enforcing">強制</string>
+    <string name="home_selinux_status_permissive">許容</string>
     <string name="home_selinux_status_unknown">不明</string>
     <string name="settings_selinux_mode">SELinux モード</string>
     <string name="settings_selinux_mode_summary">SELinux の Enforcing モードを選択します。</string>
@@ -464,7 +464,7 @@ KernelPatch は boot イメージをパッチする必要があります。
     <string name="loading_apis">APIソースを読み込み中…</string>
     <string name="retry">再試行</string>
     <string name="about_app_desc">KernelPatch ベースの root 実装、カーネルをリコンパイルせずにカーネル関数フックを可能にします。</string>
-    <string name="about_powered_by">Powered by %1$s</string>
+    <string name="about_powered_by">%1$s が提供しています</string>
     <string name="about_telegram_group">Telegram グループ</string>
     <string name="github">GitHub</string>
     <string name="telegram">Telegram</string>
@@ -1252,4 +1252,14 @@ KernelPatch は boot イメージをパッチする必要があります。
     <string name="settings_info_copy">長押しで情報をコピー</string>
     <string name="settings_info_copy_summary">ホーム画面の情報欄の項目を長押しすると内容をコピーできます。</string>
     <string name="home_info_copied">%1$sをコピーしました。</string>
+    <string name="settings_jailbreak_mode">ジェイルブレイクモード</string>
+    <string name="settings_jailbreak_mode_summary">純正カーネルに KernelPatch モジュールを読み込みます。このモードではパッチ適用はできません。</string>
+    <string name="settings_jailbreak_soft_reboot">ソフトリブート</string>
+    <string name="settings_jailbreak_soft_reboot_message">モジュールが読み込まれました。今すぐシステムを再起動しますか？</string>
+    <string name="settings_jailbreak_loaded">ジェイルブレイクモジュールを読み込みました</string>
+    <string name="settings_jailbreak_failed">ジェイルブレイクモジュールを読み込めませんでした</string>
+    <string name="jailbreak_no_patch">ジェイルブレイクモードではパッチ適用はできません。</string>
+    <string name="jailbreak">ジェイルブレイク</string>
+    <string name="jailbreak_triggered">ジェイルブレイクを実行しました。rootを取得するまでお待ちください。その後、ソフトリブートします。</string>
+    <string name="reboot_soft">ソフトリブート</string>
 </resources>

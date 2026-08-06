@@ -1315,4 +1315,14 @@ KernelPatch 魔法阵需要 boot 核心来施展。
     <string name="settings_info_copy">长按抄录信息</string>
     <string name="settings_info_copy_summary">长按首页信息栏中的条目即可抄录其内容</string>
     <string name="home_info_copied">%1$s 已抄录完毕</string>
+    <string name="settings_jailbreak_mode">解封模式</string>
+    <string name="settings_jailbreak_mode_summary">在原生内核上加载 KernelPatch 心之契约。该模式下不允许施展修补魔法。</string>
+    <string name="settings_jailbreak_soft_reboot">轻灵重生</string>
+    <string name="settings_jailbreak_soft_reboot_message">心之契约已加载，是否立即轻灵重生？</string>
+    <string name="settings_jailbreak_loaded">解封契约已加载</string>
+    <string name="settings_jailbreak_failed">解封契约加载失败</string>
+    <string name="jailbreak_no_patch">解封模式下不允许施展修补魔法。</string>
+    <string name="jailbreak">解封</string>
+    <string name="jailbreak_triggered">解封已触发，等待获得魔法使权能后轻灵重生。</string>
+    <string name="reboot_soft">轻灵重生</string>
 </resources>

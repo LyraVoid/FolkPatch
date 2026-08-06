@@ -70,8 +70,8 @@
     <string name="settings_global_namespace_mode">وضع مساحة الاسم العام</string>
     <string name="settings_global_namespace_mode_summary">جميع جلسات الروت تستخدم مساحة اسم المجلدات العامة</string>
     <string name="settings_clear_super_key_dialog">هل تريد حقًا المتابعة؟</string>
-    <string name="settings_sucompat">Legacy su compatibility</string>
-    <string name="settings_sucompat_summary">Enable path_probe hooks for legacy su compatibility</string>
+    <string name="settings_sucompat">توافق su القديم</string>
+    <string name="settings_sucompat_summary">تفعيل توافق su القديم (لحالات عدم عمل su)</string>
     <string name="settings_grid_working_card_hide_check">إخفاء أيقونة الحالة</string>
     <string name="settings_grid_working_card_hide_check_summary">إخفاء علامة الصح أو أيقونة التحذير في بطاقة الحالة</string>
     <string name="settings_grid_working_card_hide_text">إخفاء نص الحالة</string>
@@ -1317,4 +1317,14 @@
     <string name="settings_info_copy">النسخ بالضغط المطول</string>
     <string name="settings_info_copy_summary">اضغط مطولاً على عنصر في لوحة معلومات الشاشة الرئيسية لنسخ محتواه</string>
     <string name="home_info_copied">تم نسخ %1$s</string>
+    <string name="settings_jailbreak_mode">وضع كسر الحماية</string>
+    <string name="settings_jailbreak_mode_summary">قم بتحميل وحدة KernelPatch على نواة أصلية. لا يُسمح بالتثبيت في هذا الوضع.</string>
+    <string name="settings_jailbreak_soft_reboot">إعادة تشغيل ناعمة</string>
+    <string name="settings_jailbreak_soft_reboot_message">تم تحميل الوحدة. هل تريد إعادة تشغيل الإطار الآن؟</string>
+    <string name="settings_jailbreak_loaded">تم تحميل وحدة كسر الحماية</string>
+    <string name="settings_jailbreak_failed">فشل تحميل وحدة كسر الحماية</string>
+    <string name="jailbreak_no_patch">لا يُسمح بالتثبيت في وضع كسر الحماية.</string>
+    <string name="jailbreak">كسر الحماية</string>
+    <string name="jailbreak_triggered">تم تفعيل كسر الحماية. انتظر الحصول على صلاحيات الجذر ثم قم بإعادة تشغيل ناعمة.</string>
+    <string name="reboot_soft">إعادة تشغيل ناعمة</string>
 </resources>

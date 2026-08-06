@@ -70,8 +70,8 @@
     <string name="settings_global_namespace_mode">Chế độ không gian tên toàn cục</string>
     <string name="settings_global_namespace_mode_summary">Tất cả phiên làm việc root sử dụng không gian tên gắn kết toàn cục</string>
     <string name="settings_clear_super_key_dialog">Bạn có chắc chắn muốn tiếp tục?</string>
-    <string name="settings_sucompat">Legacy su compatibility</string>
-    <string name="settings_sucompat_summary">Enable path_probe hooks for legacy su compatibility</string>
+    <string name="settings_sucompat">Tương thích su cũ</string>
+    <string name="settings_sucompat_summary">Bật tương thích su cũ (cho khi su không hoạt động)</string>
 
     <string name="home_learn_apatch">Tìm hiểu về FolkPatch</string>
     <string name="home_click_to_learn_apatch">Tìm hiểu về chức năng và cách sử dụng FolkPatch</string>
@@ -133,7 +133,7 @@
     <string name="patch_start_patch_btn">Bắt đầu</string>
     <string name="patch_start_unpatch_btn">Khôi phục</string>
     <string name="patch_item_error">!!Lỗi!!</string>
-    <string name="patch_item_bootimg">bootimg</string>
+    <string name="patch_item_bootimg">Ảnh boot</string>
     <string name="patch_item_bootimg_slot">Slot:</string>
     <string name="patch_item_bootimg_dev">Thiết bị:</string>
     <string name="patch_item_kernel">Nhân</string>
@@ -1328,4 +1328,14 @@ Cần đảm bảo phần mềm thoát hoàn toàn vào mới sẽ thực thi l�
     <string name="settings_info_copy">Nhấn giữ để sao chép thông tin</string>
     <string name="settings_info_copy_summary">Nhấn giữ một mục trong bảng thông tin trang chủ để sao chép nội dung</string>
     <string name="home_info_copied">Đã sao chép %1$s</string>
+    <string name="settings_jailbreak_mode">Chế độ jailbreak</string>
+    <string name="settings_jailbreak_mode_summary">Tải mô-đun KernelPatch trên kernel gốc. Không được phép vá trong chế độ này.</string>
+    <string name="settings_jailbreak_soft_reboot">Khởi động lại mềm</string>
+    <string name="settings_jailbreak_soft_reboot_message">Đã tải mô-đun. Khởi động lại hệ thống ngay bây giờ?</string>
+    <string name="settings_jailbreak_loaded">Đã tải mô-đun jailbreak</string>
+    <string name="settings_jailbreak_failed">Không thể tải mô-đun jailbreak</string>
+    <string name="jailbreak_no_patch">Không được phép vá trong chế độ jailbreak.</string>
+    <string name="jailbreak">Jailbreak</string>
+    <string name="jailbreak_triggered">Đã kích hoạt jailbreak. Chờ lấy quyền root, sau đó khởi động lại mềm.</string>
+    <string name="reboot_soft">Khởi động lại mềm</string>
 </resources>

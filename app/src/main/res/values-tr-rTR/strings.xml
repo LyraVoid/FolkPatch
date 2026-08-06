@@ -1334,4 +1334,14 @@ Komutların çalışması için uygulamanın tamamen kapatılıp yeniden açıld
     <string name="settings_info_copy">Bilgiyi kopyalamak için basılı tutun</string>
     <string name="settings_info_copy_summary">İçeriğini kopyalamak için ana ekrandaki bilgi kartındaki bir öğeyi basılı tutun</string>
     <string name="home_info_copied">%1$s kopyalandı</string>
+    <string name="settings_jailbreak_mode">Jailbreak modu</string>
+    <string name="settings_jailbreak_mode_summary">KernelPatch modülünü orijinal çekirdeğe yükler. Bu modda yama yapmaya izin verilmez.</string>
+    <string name="settings_jailbreak_soft_reboot">Yumuşak yeniden başlatma</string>
+    <string name="settings_jailbreak_soft_reboot_message">Modül yüklendi. Sistem şimdi yeniden başlatılsın mı?</string>
+    <string name="settings_jailbreak_loaded">Jailbreak modülü yüklendi</string>
+    <string name="settings_jailbreak_failed">Jailbreak modülü yüklenemedi</string>
+    <string name="jailbreak_no_patch">Jailbreak modunda yama yapmaya izin verilmez.</string>
+    <string name="jailbreak">Jailbreak</string>
+    <string name="jailbreak_triggered">Jailbreak tetiklendi. Root bekleyin, ardından yumuşak yeniden başlatma yapın.</string>
+    <string name="reboot_soft">Yumuşak yeniden başlatma</string>
 </resources>

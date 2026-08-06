@@ -1313,4 +1313,14 @@ KernelPatch 这道菜需要用 boot 主料来烹饪。
     <string name="settings_info_copy">长按复制菜谱信息</string>
     <string name="settings_info_copy_summary">长按后厨首页信息栏中的条目即可复制其内容</string>
     <string name="home_info_copied">%1$s 已复制</string>
+    <string name="settings_jailbreak_mode">解禁模式</string>
+    <string name="settings_jailbreak_mode_summary">在原生内核上加载 KernelPatch 秘方。该模式下不允许动火修补。</string>
+    <string name="settings_jailbreak_soft_reboot">小火回锅</string>
+    <string name="settings_jailbreak_soft_reboot_message">秘方已下锅，是否现在小火回锅？</string>
+    <string name="settings_jailbreak_loaded">解禁秘方已下锅</string>
+    <string name="settings_jailbreak_failed">解禁秘方下锅翻车了</string>
+    <string name="jailbreak_no_patch">解禁模式下不允许动火修补。</string>
+    <string name="jailbreak">解禁</string>
+    <string name="jailbreak_triggered">解禁已触发，等拿到 root 就小火回锅。</string>
+    <string name="reboot_soft">小火回锅</string>
 </resources>

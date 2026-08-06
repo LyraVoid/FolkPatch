@@ -14,7 +14,7 @@
     <string name="failure">Gagal</string>
 
     <string name="patch_warnning">Pemasangan memiliki risiko. Pastikan Anda memiliki cadangan data.</string>
-    <string name="patch">Patch</string>
+    <string name="patch">Tambalan</string>
 
     <string name="kernel_patch">KernelPatch</string>
     <string name="android_patch">AndroidPatch</string>
@@ -73,8 +73,8 @@
     <string name="settings_global_namespace_mode">Mode Ruang Nama Global</string>
     <string name="settings_global_namespace_mode_summary">Semua sesi root menggunakan ruang mount global</string>
     <string name="settings_clear_super_key_dialog">Apakah Anda yakin ingin melanjutkan?</string>
-    <string name="settings_sucompat">Legacy su compatibility</string>
-    <string name="settings_sucompat_summary">Enable path_probe hooks for legacy su compatibility</string>
+    <string name="settings_sucompat">Kompatibilitas su lama</string>
+    <string name="settings_sucompat_summary">Aktifkan kompatibilitas su lama (untuk saat su tidak berfungsi)</string>
 
     <string name="su_exclude_all_title">Kecualikan semua</string>
     <string name="su_exclude_all_confirm">Apakah Anda yakin ingin mengecualikan semua aplikasi tanpa hak root?</string>
@@ -127,10 +127,10 @@
     <string name="home_ap_cando_uninstall">Hapus Instalasi</string>
     <string name="home_ap_cando_reboot">Mulai Ulang</string>
 
-    <string name="patch_title">Patch</string>
+    <string name="patch_title">Tambalan</string>
 
     <string name="patch_config_title">Patch</string>
-    <string name="patch_mode_bootimg_patch">Mode: Patch</string>
+    <string name="patch_mode_bootimg_patch">Mode: Tambalan</string>
     <string name="patch_mode_patch_and_install">Mode: Patch dan instal</string>
     <string name="patch_mode_install_to_next_slot">Mode: Instal ke slot tidak aktif (Setelah OTA)</string>
     <string name="patch_mode_uninstall_patch">Mode: Hapus Instalasi KPatch</string>
@@ -139,7 +139,7 @@
     <string name="patch_start_patch_btn">Mulai</string>
     <string name="patch_start_unpatch_btn">Hapus Patch</string>
     <string name="patch_item_error">!!KESALAHAN!!</string>
-    <string name="patch_item_bootimg">bootimg</string>
+    <string name="patch_item_bootimg">Citra boot</string>
     <string name="patch_item_bootimg_slot">Slot:</string>
     <string name="patch_item_bootimg_dev">Perangkat:</string>
     <string name="patch_item_kernel">Kernel</string>
@@ -1311,4 +1311,14 @@ Pastikan aplikasi ditutup sepenuhnya dan dimulai ulang untuk menjalankan perinta
     <string name="settings_info_copy">Tekan lama untuk menyalin info</string>
     <string name="settings_info_copy_summary">Tekan lama item di panel info beranda untuk menyalin isinya</string>
     <string name="home_info_copied">%1$s disalin</string>
+    <string name="settings_jailbreak_mode">Mode jailbreak</string>
+    <string name="settings_jailbreak_mode_summary">Muat modul KernelPatch pada kernel asli. Patching tidak diizinkan dalam mode ini.</string>
+    <string name="settings_jailbreak_soft_reboot">Reboot lembut</string>
+    <string name="settings_jailbreak_soft_reboot_message">Modul telah dimuat. Restart framework sekarang?</string>
+    <string name="settings_jailbreak_loaded">Modul jailbreak dimuat</string>
+    <string name="settings_jailbreak_failed">Gagal memuat modul jailbreak</string>
+    <string name="jailbreak_no_patch">Patching tidak diizinkan dalam mode jailbreak.</string>
+    <string name="jailbreak">Jailbreak</string>
+    <string name="jailbreak_triggered">Jailbreak dipicu. Tunggu root, lalu lakukan reboot lembut.</string>
+    <string name="reboot_soft">Reboot lembut</string>
 </resources>
