@@ -22,6 +22,7 @@ const __NR_SUPERCALL: c_long = 45;
 const SUPERCALL_SU: c_long = 0x1010;
 const SUPERCALL_KSTORAGE_WRITE: c_long = 0x1041;
 const SUPERCALL_KSTORAGE_READ: c_long = 0x1042;
+const SUPERCALL_CONTROL_FEATURE: c_long = 0x1046;
 const SUPERCALL_SU_GRANT_UID: c_long = 0x1100;
 const SUPERCALL_SU_REVOKE_UID: c_long = 0x1101;
 const SUPERCALL_SU_NUMS: c_long = 0x1102;
@@ -214,6 +215,41 @@ fn sc_su_reset_path(key: &CStr, path: &CStr) -> c_long {
             ver_and_cmd(SUPERCALL_SU_RESET_PATH),
             path.as_ptr(),
         ) as c_long
+    }
+}
+
+fn sc_control_feature(key: &CStr, name: &CStr, enable: bool) -> c_long {
+    if key.to_bytes().is_empty() || name.to_bytes().is_empty() {
+        return (-EINVAL).into();
+    }
+    unsafe {
+        syscall(
+            __NR_SUPERCALL,
+            key.as_ptr(),
+            ver_and_cmd(SUPERCALL_CONTROL_FEATURE),
+            name.as_ptr(),
+            if enable { 1i64 } else { 0i64 },
+        ) as c_long
+    }
+}
+
+pub fn apply_sucompat(superkey: &Option<String>) {
+    if !std::path::Path::new(crate::defs::SUCOMPAT_FILE).exists() {
+        info!("[sucompat] disabled, skipping");
+        return;
+    }
+
+    let Some(key) = convert_superkey(superkey) else {
+        warn!("[sucompat] no superkey available");
+        return;
+    };
+    let name = CStr::from_bytes_with_nul(b"sucompat_extra\0")
+        .expect("sucompat feature name must be valid");
+    let rc = sc_control_feature(&key, name, true);
+    if rc < 0 {
+        warn!("[sucompat] restore failed: {}", rc);
+    } else {
+        info!("[sucompat] restored from persistent config");
     }
 }
 

@@ -205,6 +205,7 @@ pub fn on_post_data_fs(superkey: Option<String>) -> Result<()> {
     supercall::autoload_kpm_modules(&superkey, "post-fs-data");
 
     init_load_su_path(&superkey);
+    supercall::apply_sucompat(&superkey);
 
     let mut sepol = get_policy_main(&["magiskpolicy".to_string(), "--live".to_string()])?;
     sepol.magisk_rules();
@@ -361,6 +362,8 @@ pub fn on_services(superkey: Option<String>) -> Result<()> {
     let key_len = superkey.as_ref().map(|s| s.len()).unwrap_or(0);
     info!("[diag:services] ENTER superkey_present={} key_len={}", superkey.is_some(), key_len);
 
+    supercall::apply_sucompat(&superkey);
+
     if Path::new(defs::UTS_SPOOF_RETRY_FILE).exists() {
         info!("Retrying deferred UTS spoof apply from services stage");
         supercall::apply_uts_spoof(&superkey);
@@ -404,6 +407,8 @@ pub fn on_boot_completed(superkey: Option<String>) -> Result<()> {
     let key_len = superkey.as_ref().map(|s| s.len()).unwrap_or(0);
     info!("[diag:boot_completed] ENTER superkey_present={} key_len={}", superkey.is_some(), key_len);
 
+    supercall::apply_sucompat(&superkey);
+
     // Clear UTS spoof boot safety flag — boot completed successfully
     if Path::new(defs::UTS_SPOOF_BOOT_PENDING).exists() {
         let _ = std::fs::remove_file(defs::UTS_SPOOF_BOOT_PENDING);
@@ -444,6 +449,8 @@ pub fn on_manager_boot_completed(superkey: Option<String>) -> Result<()> {
     });
 
     info!("[diag:manager_boot] superkey_present={} key_len_after={}", superkey.is_some(), superkey.as_ref().map(|s| s.len()).unwrap_or(0));
+
+    supercall::apply_sucompat(&superkey);
 
     if Path::new(defs::UTS_SPOOF_BOOT_PENDING).exists() {
         let _ = std::fs::remove_file(defs::UTS_SPOOF_BOOT_PENDING);
