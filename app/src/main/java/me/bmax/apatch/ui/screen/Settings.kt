@@ -20,6 +20,7 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Cloud
 import androidx.compose.material.icons.filled.Coffee
 import androidx.compose.material.icons.filled.Extension
+import androidx.compose.material.icons.outlined.Extension
 import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material.icons.filled.Security
 import androidx.compose.material.icons.filled.Settings
@@ -84,6 +85,7 @@ import com.ramcosta.composedestinations.generated.destinations.ModuleSettingsScr
 import com.ramcosta.composedestinations.generated.destinations.FunctionSettingsScreenDestination
 import com.ramcosta.composedestinations.generated.destinations.MultimediaSettingsScreenDestination
 import com.ramcosta.composedestinations.generated.destinations.SettingsSearchScreenDestination
+import com.ramcosta.composedestinations.generated.destinations.PluginScreenDestination
 
 @Destination<RootGraph>
 @Composable
@@ -118,6 +120,9 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                 actions = {
                     IconButton(onClick = dropUnlessResumed { navigator.navigate(SettingsSearchScreenDestination) }) {
                         Icon(Icons.Filled.Search, contentDescription = "Search")
+                    }
+                    IconButton(onClick = dropUnlessResumed { navigator.navigate(PluginScreenDestination) }) {
+                        Icon(Icons.Outlined.Extension, contentDescription = stringResource(R.string.plugin_title))
                     }
                     IconButton(onClick = { showDevDialog = true }) {
                         Icon(Icons.Outlined.Info, contentDescription = stringResource(R.string.about))

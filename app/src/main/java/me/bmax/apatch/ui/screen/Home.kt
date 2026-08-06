@@ -117,7 +117,6 @@ import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.AboutScreenDestination
 import com.ramcosta.composedestinations.generated.destinations.InstallModeSelectScreenDestination
 import com.ramcosta.composedestinations.generated.destinations.PatchesDestination
-import com.ramcosta.composedestinations.generated.destinations.PluginScreenDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -542,13 +541,6 @@ private fun TopBar(
             Icon(
                 imageVector = Icons.Filled.AutoFixHigh,
                 contentDescription = stringResource(id = R.string.mode_select_page_title)
-            )
-        }
-
-        IconButton(onClick = dropUnlessResumed { navigator.navigate(PluginScreenDestination) }) {
-            Icon(
-                imageVector = Icons.Outlined.Extension,
-                contentDescription = stringResource(R.string.plugin_title)
             )
         }
 
