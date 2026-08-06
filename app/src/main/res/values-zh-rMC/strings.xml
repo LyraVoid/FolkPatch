@@ -199,6 +199,7 @@
 
     <string name="kpm">红石组件</string>
     <string name="kpm_kp_not_installed">基岩核心还没打补丁呢</string>
+    <string name="kpm_jailbreak_temporarily_unavailable">解封模式下，红石组件暂时无法充能。</string>
     <string name="kpm_add_kpm">扔进红石组件</string>
     <string name="kpm_load">给红石充能</string>
     <string name="kpm_install">安装红石</string>

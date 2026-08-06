@@ -204,6 +204,7 @@
 
     <string name="kpm">KPM</string>
     <string name="kpm_kp_not_installed">KernelPatch가 설치되지 않음</string>
+    <string name="kpm_jailbreak_temporarily_unavailable">탈옥 모드에서는 커널 모듈을 일시적으로 사용할 수 없습니다.</string>
     <string name="kpm_add_kpm">KPM 추가</string>
     <string name="kpm_load">로드</string>
     <string name="kpm_install">설치</string>

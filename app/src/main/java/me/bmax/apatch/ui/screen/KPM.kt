@@ -166,6 +166,7 @@ import me.bmax.apatch.util.kpmBannerStorage
 import me.bmax.apatch.util.SafeUriResolver
 import me.bmax.apatch.util.getFileNameFromUri
 import me.bmax.apatch.util.CustomModuleInfo
+import me.bmax.apatch.util.isJailbreakMode
 import me.bmax.apatch.util.kpmCustomModuleInfoStorage
 import me.bmax.apatch.ui.component.BackgroundOptionsDialog
 import me.bmax.apatch.ui.component.ModuleInfoData
@@ -180,6 +181,32 @@ private lateinit var targetKPMToControl: KPModel.KPMInfo
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun KPModuleScreen(navigator: DestinationsNavigator) {
+    var jailbreakMode by remember { mutableStateOf<Boolean?>(null) }
+    LaunchedEffect(Unit) {
+        jailbreakMode = withContext(Dispatchers.IO) { isJailbreakMode() }
+    }
+
+    // TODO(TEMPORARY): Remove this guard when KPM support in jailbreak mode is ready.
+    if (jailbreakMode != false) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(12.dp),
+            contentAlignment = Alignment.Center,
+        ) {
+            if (jailbreakMode == null) {
+                CircularProgressIndicator()
+            } else {
+                Text(
+                    text = stringResource(R.string.kpm_jailbreak_temporarily_unavailable),
+                    style = MaterialTheme.typography.titleMedium,
+                    textAlign = TextAlign.Center,
+                )
+            }
+        }
+        return
+    }
+
     val state by APApplication.apStateLiveData.observeAsState(APApplication.State.UNKNOWN_STATE)
     if (state == APApplication.State.UNKNOWN_STATE) {
         Column(

@@ -164,6 +164,7 @@
     <string name="home_apatch_version">Wersja FolkPatch</string>
     <string name="kpm">Moduły KP</string>
     <string name="kpm_kp_not_installed">KernelPatch jest niezainstalowany</string>
+    <string name="kpm_jailbreak_temporarily_unavailable">Moduły jądra są tymczasowo niedostępne w trybie jailbreak.</string>
     <string name="kpm_add_kpm">Dodaj KPM</string>
     <string name="kpm_load">Załaduj</string>
     <string name="kpm_install">Instaluj</string>

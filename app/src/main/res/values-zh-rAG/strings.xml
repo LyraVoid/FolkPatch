@@ -198,6 +198,7 @@
 
     <string name="kpm">内核模块</string>
     <string name="kpm_kp_not_installed">内核补丁还没装喵！</string>
+    <string name="kpm_jailbreak_temporarily_unavailable">越狱模式下内核模块暂时不能用啦喵！</string>
     <string name="kpm_add_kpm">加KPM喵！</string>
     <string name="kpm_load">加载一下喵！</string>
     <string name="kpm_install">安装喵！</string>

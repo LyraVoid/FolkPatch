@@ -183,6 +183,7 @@
 
     <string name="kpm">心之结晶</string>
     <string name="kpm_kp_not_installed">心之契约尚未觉醒</string>
+    <string name="kpm_jailbreak_temporarily_unavailable">解封模式下，心之结晶暂时无法召唤。</string>
     <string name="kpm_add_kpm">添加心之结晶</string>
     <string name="kpm_load">激活</string>
     <string name="kpm_install">契约</string>

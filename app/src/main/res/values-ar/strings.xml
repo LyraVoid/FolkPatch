@@ -227,6 +227,7 @@
 
     <string name="kpm">وحدة KP</string>
     <string name="kpm_kp_not_installed">KernelPatch غير مثبت</string>
+    <string name="kpm_jailbreak_temporarily_unavailable">وحدات النواة غير متاحة مؤقتًا في وضع كسر الحماية.</string>
     <string name="kpm_add_kpm">إضافة وحدة KP</string>
     <string name="kpm_load">تحميل</string>
     <string name="kpm_install">تثبيت</string>

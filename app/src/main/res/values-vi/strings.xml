@@ -183,6 +183,7 @@
 
     <string name="kpm">Module nhân</string>
     <string name="kpm_kp_not_installed">Chưa cài đặt bản vá nhân</string>
+    <string name="kpm_jailbreak_temporarily_unavailable">Các mô-đun kernel tạm thời không khả dụng trong chế độ jailbreak.</string>
     <string name="kpm_add_kpm">Thêm KPM</string>
     <string name="kpm_load">Tải</string>
     <string name="kpm_install">Cài đặt</string>

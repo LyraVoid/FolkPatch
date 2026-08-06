@@ -183,6 +183,7 @@
 
     <string name="kpm">核心模組</string>
     <string name="kpm_kp_not_installed">KernelPatch 尚未安裝</string>
+    <string name="kpm_jailbreak_temporarily_unavailable">越獄模式下暫時無法使用核心模組。</string>
     <string name="kpm_add_kpm">新增 KPM</string>
     <string name="kpm_load">匯入</string>
     <string name="kpm_install">安裝</string>

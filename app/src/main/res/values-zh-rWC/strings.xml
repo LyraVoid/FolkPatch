@@ -181,6 +181,7 @@
 
     <string name="kpm">道核仙符</string>
     <string name="kpm_kp_not_installed">未凝炼道核符箓</string>
+    <string name="kpm_jailbreak_temporarily_unavailable">破禁模式下，道核仙符暂时无法引符入道。</string>
     <string name="kpm_add_kpm">纳新仙符KPM</string>
     <string name="kpm_load">引符入道</string>
     <string name="kpm_install">凝符入体</string>

@@ -206,6 +206,7 @@
 
     <string name="kpm">KPModule</string>
     <string name="kpm_kp_not_installed">KernelPatch yüklü değil</string>
+    <string name="kpm_jailbreak_temporarily_unavailable">Çekirdek modülleri jailbreak modunda geçici olarak kullanılamıyor.</string>
     <string name="kpm_add_kpm">KPM Ekle</string>
     <string name="kpm_load">Yükle</string>
     <string name="kpm_install">Kur</string>
