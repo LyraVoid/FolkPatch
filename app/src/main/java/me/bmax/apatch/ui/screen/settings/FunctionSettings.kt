@@ -89,6 +89,7 @@ fun FunctionSettingsContent(
     aPatchReady: Boolean,
     jailbreakEnabled: Boolean,
     onJailbreakChange: (Boolean) -> Unit,
+    jailbreakAvailable: Boolean = true,
     isHideServiceEnabled: Boolean,
     onHideServiceChange: (Boolean) -> Unit,
     isKernelSpoofEnabled: Boolean,
@@ -131,7 +132,7 @@ fun FunctionSettingsContent(
     val umountServiceSummary = stringResource(id = R.string.settings_umount_service_summary)
 
     SplicedColumnGroup(flat = flat, highlightKey = highlightKey) {
-        item(key = "function_jailbreak", visible = kPatchReady && aPatchReady) {
+        item(key = "function_jailbreak", visible = kPatchReady && aPatchReady && jailbreakAvailable) {
             ToggleSettingCard(
                 flat = flat,
                 icon = Icons.Filled.LockOpen,

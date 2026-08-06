@@ -72,7 +72,7 @@ import me.bmax.apatch.ui.component.rememberConfirmDialog
 import me.bmax.apatch.ui.viewmodel.PatchesViewModel
 import me.bmax.apatch.util.getFileNameFromUri
 import me.bmax.apatch.util.isABDevice
-import me.bmax.apatch.util.isJailbreakMode
+import me.bmax.apatch.util.isJailbreakPatchBlocked
 import me.bmax.apatch.util.rootAvailable
 
 var selectedBootImage: Uri? = null
@@ -147,7 +147,7 @@ private fun SelectInstallMethod(
     val isAbDevice = isABDevice()
     var jailbreakBlocked by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) {
-        jailbreakBlocked = withContext(Dispatchers.IO) { isJailbreakMode() }
+        jailbreakBlocked = withContext(Dispatchers.IO) { isJailbreakPatchBlocked() }
     }
 
     // KP Install Options

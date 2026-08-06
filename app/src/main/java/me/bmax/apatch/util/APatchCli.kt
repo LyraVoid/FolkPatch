@@ -22,6 +22,7 @@ import com.topjohnwu.superuser.io.SuFile
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.APApplication.Companion.SUPERCMD
 import me.bmax.apatch.BuildConfig
+import me.bmax.apatch.Natives
 import me.bmax.apatch.R
 import me.bmax.apatch.apApp
 import me.bmax.apatch.ui.screen.MODULE_TYPE
@@ -647,6 +648,13 @@ fun extractJailbreakKo(): File? {
  * and runs `late-load` (loads the module, applies Magisk policy, marks jailbreak).
  */
 fun installJailbreak(): Boolean {
+    // Do not load the jailbreak module if the KernelPatch supercall interface is
+    // already available: either a real KernelPatch is installed, or the jailbreak
+    // module is already loaded. Loading it again would conflict / stack a duplicate.
+    if (Natives.nativeReady(APApplication.superKey)) {
+        Log.i(TAG, "installJailbreak skipped: KernelPatch interface already ready")
+        return false
+    }
     val ko = extractJailbreakKo() ?: return false
     if (!ko.exists() || ko.length() == 0L) {
         Log.e(TAG, "extracted jailbreak ko is missing or empty")
@@ -675,6 +683,28 @@ fun isSELinuxPermissive(): Boolean {
 /** Whether jailbreak mode is active (the ko has been loaded and a marker written). */
 fun isJailbreakMode(): Boolean {
     return runCatching { SuFile(APApplication.JAILBREAK_FILE).exists() }.getOrDefault(false)
+}
+
+/**
+ * Whether patching/installing is blocked by jailbreak mode.
+ * A jailbreak marker is removed on a real KernelPatch installation, so the marker alone
+ * reliably indicates jailbreak mode is active (regardless of the runtime kp state).
+ */
+fun isJailbreakPatchBlocked(): Boolean {
+    return isJailbreakMode()
+}
+
+/**
+ * True when a real KernelPatch is installed to boot (the supercall interface is ready
+ * and there is no jailbreak marker). Used to avoid offering jailbreak on a patched device.
+ */
+fun isRealKernelPatchInstalled(): Boolean {
+    return !isJailbreakMode() && Natives.nativeReady(APApplication.superKey)
+}
+
+/** Remove the jailbreak marker file, e.g. after a real KernelPatch installation succeeds. */
+fun clearJailbreakMarker(): Boolean {
+    return rootShellForResult("rm -f ${APApplication.JAILBREAK_FILE}").isSuccess
 }
 
 fun hasMagisk(): Boolean {

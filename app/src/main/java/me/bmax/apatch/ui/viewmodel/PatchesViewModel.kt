@@ -33,6 +33,7 @@ import me.bmax.apatch.util.createRootShellSafe
 import me.bmax.apatch.util.inputStream
 import me.bmax.apatch.util.shellForResult
 import me.bmax.apatch.util.writeTo
+import me.bmax.apatch.util.clearJailbreakMarker
 import org.ini4j.Ini
 import java.io.BufferedReader
 import java.io.File
@@ -624,6 +625,7 @@ class PatchesViewModel : ViewModel() {
                 logs.add("- Reboot to finish the installation...")
                 needReboot = true
                 APApplication.markNeedReboot()
+                clearJailbreakMarker()
             } else if (mode == PatchMode.INSTALL_TO_NEXT_SLOT) {
                 logs.add("- Connecting boot hal...")
                 val bootctlStatus = getShell().newJob().add(
@@ -669,6 +671,7 @@ class PatchesViewModel : ViewModel() {
                 logs.add("- Reboot to finish the installation...")
                 needReboot = true
                 APApplication.markNeedReboot()
+                clearJailbreakMarker()
             } else if (mode == PatchMode.PATCH_ONLY) {
                 val newBootFile = patchDir.getChildFile("new-boot.img")
                 val outDir = getSafeDownloadsDir(apApp)

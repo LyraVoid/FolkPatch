@@ -81,7 +81,7 @@ import me.bmax.apatch.ui.component.WarningCard
 import me.bmax.apatch.ui.viewmodel.KPModel
 import me.bmax.apatch.ui.viewmodel.PatchesViewModel
 import me.bmax.apatch.util.Version
-import me.bmax.apatch.util.isJailbreakMode
+import me.bmax.apatch.util.isJailbreakPatchBlocked
 import me.bmax.apatch.util.reboot
 import me.bmax.apatch.util.ui.APDialogBlurBehindUtils
 
@@ -92,7 +92,7 @@ private const val TAG = "Patches"
 fun Patches(mode: PatchesViewModel.PatchMode) {
     var jailbreakBlocked by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) {
-        jailbreakBlocked = withContext(Dispatchers.IO) { isJailbreakMode() }
+        jailbreakBlocked = withContext(Dispatchers.IO) { isJailbreakPatchBlocked() }
     }
 
     if (jailbreakBlocked) {

@@ -35,8 +35,12 @@ internal class HomeJailbreakState(
     private val context: Context,
     private val scope: CoroutineScope,
 ) {
-    var isActive by mutableStateOf(false)
-        private set
+    private var detectedActive by mutableStateOf(false)
+    // Jailbreak mode is determined solely by the marker file. A real KernelPatch
+    // installation clears the marker, so as long as the marker exists (no real patch)
+    // the UI keeps showing jailbreak mode, even after a soft reboot that flips kpState.
+    val isActive: Boolean
+        get() = detectedActive
     var isPermissive by mutableStateOf(false)
         private set
     var isLoading by mutableStateOf(true)
@@ -50,7 +54,7 @@ internal class HomeJailbreakState(
         val (active, permissive) = withContext(Dispatchers.IO) {
             isJailbreakMode() to isSELinuxPermissive()
         }
-        isActive = active
+        detectedActive = active
         isPermissive = permissive
         isLoading = false
     }

@@ -50,6 +50,7 @@ import me.bmax.apatch.ui.component.UmountConfigManager
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.util.isHideServiceEnabled as checkHideServiceEnabled
 import me.bmax.apatch.util.installJailbreak
+import me.bmax.apatch.util.isRealKernelPatchInstalled
 import me.bmax.apatch.util.rootShellForResult
 import me.bmax.apatch.util.restartFramework
 import me.bmax.apatch.util.isUtsSpoofEnabled as checkUtsSpoofEnabled
@@ -250,6 +251,7 @@ fun FunctionSettingsScreen(navigator: DestinationsNavigator, highlightKey: Strin
                     kPatchReady = kPatchReady,
                     aPatchReady = aPatchReady,
                     jailbreakEnabled = jailbreakEnabled,
+                    jailbreakAvailable = !isRealKernelPatchInstalled(),
                     onJailbreakChange = { enabled ->
                         scope.launch(Dispatchers.IO) {
                             if (enabled) {
