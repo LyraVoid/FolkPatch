@@ -165,6 +165,7 @@ import me.bmax.apatch.ui.viewmodel.APModuleViewModel
 import me.bmax.apatch.util.DownloadListener
 import me.bmax.apatch.util.download
 import me.bmax.apatch.util.hasMagisk
+import me.bmax.apatch.util.isJailbreakMode
 import me.bmax.apatch.util.ModuleShortcut
 import me.bmax.apatch.util.getRootShell
 import me.bmax.apatch.util.reboot
@@ -875,13 +876,17 @@ private fun ModuleList(
                                     isChecked = checked
                                     viewModel.fetchModuleList()
 
-                                    val result = snackBarHost.showSnackbar(
-                                        message = rebootToApply,
-                                        actionLabel = reboot,
-                                        duration = SnackbarDuration.Long
-                                    )
-                                    if (result == SnackbarResult.ActionPerformed) {
-                                        reboot()
+                                    // In jailbreak mode a full reboot would unload the
+                                    // runtime-loaded module, so apply without the prompt.
+                                    if (!withContext(Dispatchers.IO) { isJailbreakMode() }) {
+                                        val result = snackBarHost.showSnackbar(
+                                            message = rebootToApply,
+                                            actionLabel = reboot,
+                                            duration = SnackbarDuration.Long
+                                        )
+                                        if (result == SnackbarResult.ActionPerformed) {
+                                            reboot()
+                                        }
                                     }
                                 } else {
                                     val message = if (isChecked) failedDisable else failedEnable
@@ -1036,13 +1041,17 @@ private fun ModuleList(
                                                 isChecked = checked
                                                 viewModel.fetchModuleList()
 
-                                                val result = snackBarHost.showSnackbar(
-                                                    message = rebootToApply,
-                                                    actionLabel = reboot,
-                                                    duration = SnackbarDuration.Long
-                                                )
-                                                if (result == SnackbarResult.ActionPerformed) {
-                                                    reboot()
+                                                // In jailbreak mode a full reboot would unload the
+                                                // runtime-loaded module, so apply without the prompt.
+                                                if (!withContext(Dispatchers.IO) { isJailbreakMode() }) {
+                                                    val result = snackBarHost.showSnackbar(
+                                                        message = rebootToApply,
+                                                        actionLabel = reboot,
+                                                        duration = SnackbarDuration.Long
+                                                    )
+                                                    if (result == SnackbarResult.ActionPerformed) {
+                                                        reboot()
+                                                    }
                                                 }
                                             } else {
                                                 val message = if (isChecked) failedDisable else failedEnable
@@ -1104,13 +1113,17 @@ private fun ModuleList(
                                                 isChecked = checked
                                                 viewModel.fetchModuleList()
 
-                                                val result = snackBarHost.showSnackbar(
-                                                    message = rebootToApply,
-                                                    actionLabel = reboot,
-                                                    duration = SnackbarDuration.Long
-                                                )
-                                                if (result == SnackbarResult.ActionPerformed) {
-                                                    reboot()
+                                                // In jailbreak mode a full reboot would unload the
+                                                // runtime-loaded module, so apply without the prompt.
+                                                if (!withContext(Dispatchers.IO) { isJailbreakMode() }) {
+                                                    val result = snackBarHost.showSnackbar(
+                                                        message = rebootToApply,
+                                                        actionLabel = reboot,
+                                                        duration = SnackbarDuration.Long
+                                                    )
+                                                    if (result == SnackbarResult.ActionPerformed) {
+                                                        reboot()
+                                                    }
                                                 }
                                             } else {
                                                 val message = if (isChecked) failedDisable else failedEnable
