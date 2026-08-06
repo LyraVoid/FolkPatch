@@ -218,7 +218,12 @@ fun StatusCardBig(
     val useCustomGridBg = BackgroundConfig.isGridWorkingCardBackgroundEnabled && !BackgroundConfig.gridWorkingCardBackgroundUri.isNullOrEmpty()
     
     val (baseContainerColor, baseContentColor) = if (isJailbreak) {
-         MaterialTheme.colorScheme.tertiaryContainer to MaterialTheme.colorScheme.onTertiaryContainer
+         val containerColor = if (BackgroundConfig.isCustomBackgroundEnabled) {
+             MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = BackgroundConfig.customBackgroundOpacity)
+         } else {
+             MaterialTheme.colorScheme.tertiaryContainer
+         }
+         containerColor to MaterialTheme.colorScheme.onTertiaryContainer
     } else if (BackgroundConfig.isCustomBackgroundEnabled) {
          val opacity = BackgroundConfig.customBackgroundOpacity
          val container = MaterialTheme.colorScheme.primary.copy(alpha = opacity)
@@ -374,7 +379,7 @@ fun StatusCardBig(
                             color = contentColor.copy(alpha = 0.8f)
                         )
                     }
-                    if (isJailbreak) {
+                    if (isJailbreak && !BackgroundConfig.isGridWorkingCardTextHidden) {
                         Spacer(Modifier.height(4.dp))
                         Text(
                             text = stringResource(R.string.reboot_soft),

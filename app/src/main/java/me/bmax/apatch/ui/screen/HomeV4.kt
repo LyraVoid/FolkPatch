@@ -392,8 +392,14 @@ private fun HeroStatusCard(
     // 渐变背景
     val gradientBrush = Brush.linearGradient(
         colors = listOf(
-            if (isWorking) containerColor.copy(alpha = breathAlpha) else containerColor,
-            containerColor.copy(alpha = 0.8f)
+            containerColor.copy(
+                alpha = (if (isWorking) breathAlpha else 1f) *
+                    if (BackgroundConfig.isCustomBackgroundEnabled) BackgroundConfig.customBackgroundOpacity else 1f
+            ),
+            containerColor.copy(
+                alpha = 0.8f *
+                    if (BackgroundConfig.isCustomBackgroundEnabled) BackgroundConfig.customBackgroundOpacity else 1f
+            )
         )
     )
 

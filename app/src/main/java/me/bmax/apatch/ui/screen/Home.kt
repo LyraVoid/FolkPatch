@@ -681,7 +681,14 @@ private fun KStatusCard(
     val isJailbreak = jailbreakState.isActive
 
     val (cardBackgroundColor, cardContentColor) = when {
-        isJailbreak -> MaterialTheme.colorScheme.tertiaryContainer to MaterialTheme.colorScheme.onTertiaryContainer
+        isJailbreak -> {
+            val containerColor = if (BackgroundConfig.isCustomBackgroundEnabled) {
+                MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = BackgroundConfig.customBackgroundOpacity)
+            } else {
+                MaterialTheme.colorScheme.tertiaryContainer
+            }
+            containerColor to MaterialTheme.colorScheme.onTertiaryContainer
+        }
 
         kpState == APApplication.State.KERNELPATCH_INSTALLED -> {
             if (BackgroundConfig.isCustomBackgroundEnabled) {
