@@ -1321,6 +1321,8 @@ KernelPatch 需要修补 boot 镜像才能工作喵。
     <string name="settings_jailbreak_mode_summary">在原生内核上加载 KernelPatch 模块喵。这个模式下不能修补啦喵！</string>
     <string name="settings_jailbreak_soft_reboot">软重启喵！</string>
     <string name="settings_jailbreak_soft_reboot_message">模块已经加载好啦喵，要现在重启框架吗喵？</string>
+    <string name="settings_jailbreak_restart_framework">重启框架喵！</string>
+    <string name="settings_jailbreak_restart_framework_message">模块已经加载好啦喵，要现在重启 Android 框架吗喵？这个操作会软重启设备喵，只重启框架，不会重启内核喵！</string>
     <string name="settings_jailbreak_loaded">越狱模块加载成功喵！</string>
     <string name="settings_jailbreak_failed">呜喵... 越狱模块加载失败啦...</string>
     <string name="jailbreak_no_patch">越狱模式下不能修补啦喵！</string>

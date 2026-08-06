@@ -1315,6 +1315,8 @@ Pastikan aplikasi ditutup sepenuhnya dan dimulai ulang untuk menjalankan perinta
     <string name="settings_jailbreak_mode_summary">Muat modul KernelPatch pada kernel asli. Patching tidak diizinkan dalam mode ini.</string>
     <string name="settings_jailbreak_soft_reboot">Reboot lembut</string>
     <string name="settings_jailbreak_soft_reboot_message">Modul telah dimuat. Restart framework sekarang?</string>
+    <string name="settings_jailbreak_restart_framework">Restart framework</string>
+    <string name="settings_jailbreak_restart_framework_message">Modul telah dimuat. Restart framework Android sekarang? Operasi ini akan melakukan soft reboot perangkat (hanya restart framework, bukan kernel).</string>
     <string name="settings_jailbreak_loaded">Modul jailbreak dimuat</string>
     <string name="settings_jailbreak_failed">Gagal memuat modul jailbreak</string>
     <string name="jailbreak_no_patch">Patching tidak diizinkan dalam mode jailbreak.</string>

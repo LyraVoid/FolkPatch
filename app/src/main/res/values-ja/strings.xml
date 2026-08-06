@@ -1256,6 +1256,8 @@ KernelPatch は boot イメージをパッチする必要があります。
     <string name="settings_jailbreak_mode_summary">純正カーネルに KernelPatch モジュールを読み込みます。このモードではパッチ適用はできません。</string>
     <string name="settings_jailbreak_soft_reboot">ソフトリブート</string>
     <string name="settings_jailbreak_soft_reboot_message">モジュールが読み込まれました。今すぐシステムを再起動しますか？</string>
+    <string name="settings_jailbreak_restart_framework">フレームワークを再起動</string>
+    <string name="settings_jailbreak_restart_framework_message">モジュールが読み込まれました。今すぐ Android フレームワークを再起動しますか？この操作はデバイスをソフトリブートします（フレームワークのみ再起動し、カーネルは再起動しません）。</string>
     <string name="settings_jailbreak_loaded">ジェイルブレイクモジュールを読み込みました</string>
     <string name="settings_jailbreak_failed">ジェイルブレイクモジュールを読み込めませんでした</string>
     <string name="jailbreak_no_patch">ジェイルブレイクモードではパッチ適用はできません。</string>

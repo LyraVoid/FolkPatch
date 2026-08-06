@@ -1320,6 +1320,8 @@
     <string name="settings_jailbreak_mode_summary">在原生内核上降下 KernelPatch 圣光。该模式下不允许神术修补。</string>
     <string name="settings_jailbreak_soft_reboot">圣翼轻旋</string>
     <string name="settings_jailbreak_soft_reboot_message">圣光已降临，是否立即圣翼轻旋？</string>
+    <string name="settings_jailbreak_restart_framework">圣翼重启框架</string>
+    <string name="settings_jailbreak_restart_framework_message">圣光已降临，是否立即重启 Android 框架？此举将圣翼轻旋，仅重启框架，不会重启内核。</string>
     <string name="settings_jailbreak_loaded">圣辉解禁已降临</string>
     <string name="settings_jailbreak_failed">圣辉解禁降临失败</string>
     <string name="jailbreak_no_patch">圣辉解禁模式下不允许神术修补。</string>

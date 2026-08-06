@@ -1332,6 +1332,8 @@ Cần đảm bảo phần mềm thoát hoàn toàn vào mới sẽ thực thi l�
     <string name="settings_jailbreak_mode_summary">Tải mô-đun KernelPatch trên kernel gốc. Không được phép vá trong chế độ này.</string>
     <string name="settings_jailbreak_soft_reboot">Khởi động lại mềm</string>
     <string name="settings_jailbreak_soft_reboot_message">Đã tải mô-đun. Khởi động lại hệ thống ngay bây giờ?</string>
+    <string name="settings_jailbreak_restart_framework">Khởi động lại framework</string>
+    <string name="settings_jailbreak_restart_framework_message">Đã tải mô-đun. Khởi động lại framework Android ngay bây giờ? Thao tác này sẽ khởi động lại mềm thiết bị (chỉ khởi động lại framework, không khởi động lại kernel).</string>
     <string name="settings_jailbreak_loaded">Đã tải mô-đun jailbreak</string>
     <string name="settings_jailbreak_failed">Không thể tải mô-đun jailbreak</string>
     <string name="jailbreak_no_patch">Không được phép vá trong chế độ jailbreak.</string>

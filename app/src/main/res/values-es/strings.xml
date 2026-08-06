@@ -1336,6 +1336,8 @@ Por ejemplo, los KPM que previenen la modificación de particiones solo pueden u
     <string name="settings_jailbreak_mode_summary">Carga el módulo KernelPatch en un kernel original. No se permite parchear en este modo.</string>
     <string name="settings_jailbreak_soft_reboot">Reinicio suave</string>
     <string name="settings_jailbreak_soft_reboot_message">El módulo se ha cargado. ¿Reiniciar el sistema ahora?</string>
+    <string name="settings_jailbreak_restart_framework">Reiniciar framework</string>
+    <string name="settings_jailbreak_restart_framework_message">El módulo se ha cargado. ¿Reiniciar el framework de Android ahora? Esta operación hará un reinicio suave del dispositivo (solo reinicia el framework, no el kernel).</string>
     <string name="settings_jailbreak_loaded">Módulo de jailbreak cargado</string>
     <string name="settings_jailbreak_failed">No se pudo cargar el módulo de jailbreak</string>
     <string name="jailbreak_no_patch">No se permite parchear en modo jailbreak.</string>

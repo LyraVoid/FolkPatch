@@ -1333,6 +1333,8 @@ KernelPatch требует образ boot для патча.
     <string name="settings_jailbreak_mode_summary">Загружает модуль KernelPatch на стоковое ядро. В этом режиме патчинг запрещён.</string>
     <string name="settings_jailbreak_soft_reboot">Мягкая перезагрузка</string>
     <string name="settings_jailbreak_soft_reboot_message">Модуль загружен. Перезапустить систему сейчас?</string>
+    <string name="settings_jailbreak_restart_framework">Перезапустить framework</string>
+    <string name="settings_jailbreak_restart_framework_message">Модуль загружен. Перезапустить Android framework сейчас? Эта операция выполнит мягкую перезагрузку устройства (перезапустит только framework, не ядро).</string>
     <string name="settings_jailbreak_loaded">Модуль джейлбрейка загружен</string>
     <string name="settings_jailbreak_failed">Не удалось загрузить модуль джейлбрейка</string>
     <string name="jailbreak_no_patch">В режиме джейлбрейка патчинг запрещён.</string>

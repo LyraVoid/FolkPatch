@@ -1321,6 +1321,8 @@
     <string name="settings_jailbreak_mode_summary">قم بتحميل وحدة KernelPatch على نواة أصلية. لا يُسمح بالتثبيت في هذا الوضع.</string>
     <string name="settings_jailbreak_soft_reboot">إعادة تشغيل ناعمة</string>
     <string name="settings_jailbreak_soft_reboot_message">تم تحميل الوحدة. هل تريد إعادة تشغيل الإطار الآن؟</string>
+    <string name="settings_jailbreak_restart_framework">إعادة تشغيل الإطار</string>
+    <string name="settings_jailbreak_restart_framework_message">تم تحميل الوحدة. هل تريد إعادة تشغيل إطار Android الآن؟ ستؤدي هذه العملية إلى إعادة تشغيل ناعمة للجهاز (إعادة تشغيل الإطار فقط، وليس النواة).</string>
     <string name="settings_jailbreak_loaded">تم تحميل وحدة كسر الحماية</string>
     <string name="settings_jailbreak_failed">فشل تحميل وحدة كسر الحماية</string>
     <string name="jailbreak_no_patch">لا يُسمح بالتثبيت في وضع كسر الحماية.</string>

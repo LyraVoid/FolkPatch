@@ -1316,6 +1316,8 @@ KernelPatch 大法需要以 boot 灵胎为引。
     <string name="settings_jailbreak_mode_summary">在原生内核上炼入 KernelPatch 仙符。该模式下不允许炼符补道。</string>
     <string name="settings_jailbreak_soft_reboot">灵台重启</string>
     <string name="settings_jailbreak_soft_reboot_message">仙符已炼入，是否立即灵台重启？</string>
+    <string name="settings_jailbreak_restart_framework">灵台重启框架</string>
+    <string name="settings_jailbreak_restart_framework_message">仙符已炼入，是否立即重启 Android 框架？此举将灵台重启，仅重启框架，不会重启内核。</string>
     <string name="settings_jailbreak_loaded">破禁仙符已炼入</string>
     <string name="settings_jailbreak_failed">破禁仙符炼入败陨</string>
     <string name="jailbreak_no_patch">破禁模式下不允许炼符补道。</string>

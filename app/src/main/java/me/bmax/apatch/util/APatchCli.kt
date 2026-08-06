@@ -596,7 +596,7 @@ fun runAPModuleAction(
 
 fun reboot(reason: String = "") {
     if (reason == "soft_reboot") {
-        softReboot()
+        restartFramework()
         return
     }
     if (reason == "recovery") {
@@ -607,8 +607,8 @@ fun reboot(reason: String = "") {
         .add("/system/bin/svc power reboot $reason || /system/bin/reboot $reason").exec()
 }
 
-/** Soft reboot: restart the Android framework while keeping runtime-loaded modules. */
-fun softReboot() {
+/** Restart Android userspace while keeping runtime-loaded kernel modules active. */
+fun restartFramework() {
     getRootShell().newJob().add("${APApplication.APD_PATH} soft-reboot").exec()
 }
 

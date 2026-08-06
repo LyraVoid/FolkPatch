@@ -1317,6 +1317,8 @@ KernelPatch 这道菜需要用 boot 主料来烹饪。
     <string name="settings_jailbreak_mode_summary">在原生内核上加载 KernelPatch 秘方。该模式下不允许动火修补。</string>
     <string name="settings_jailbreak_soft_reboot">小火回锅</string>
     <string name="settings_jailbreak_soft_reboot_message">秘方已下锅，是否现在小火回锅？</string>
+    <string name="settings_jailbreak_restart_framework">回锅重启框架</string>
+    <string name="settings_jailbreak_restart_framework_message">秘方已下锅，是否现在重启 Android 框架？此举将小火回锅，只回锅框架，不会重启内核。</string>
     <string name="settings_jailbreak_loaded">解禁秘方已下锅</string>
     <string name="settings_jailbreak_failed">解禁秘方下锅翻车了</string>
     <string name="jailbreak_no_patch">解禁模式下不允许动火修补。</string>

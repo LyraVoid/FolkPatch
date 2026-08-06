@@ -8,12 +8,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -47,6 +49,9 @@ import me.bmax.apatch.ui.component.UmountConfig
 import me.bmax.apatch.ui.component.UmountConfigManager
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.util.isHideServiceEnabled as checkHideServiceEnabled
+import me.bmax.apatch.util.installJailbreak
+import me.bmax.apatch.util.rootShellForResult
+import me.bmax.apatch.util.restartFramework
 import me.bmax.apatch.util.isUtsSpoofEnabled as checkUtsSpoofEnabled
 import me.bmax.apatch.util.setUtsSpoofEnabled
 import me.bmax.apatch.util.writeUtsSpoofConfig
@@ -93,6 +98,10 @@ fun FunctionSettingsScreen(navigator: DestinationsNavigator, highlightKey: Strin
     var isPathHideFilterSystem by rememberSaveable { mutableStateOf(false) }
     val showFilterSystemWarningDialog = rememberSaveable { mutableStateOf(false) }
     var selectedUids by rememberSaveable { mutableStateOf(emptySet<Int>()) }
+    var jailbreakEnabled by rememberSaveable {
+        mutableStateOf(APApplication.sharedPreferences.getBoolean("jailbreak_enabled", false))
+    }
+    var showJailbreakSoftRebootDialog by rememberSaveable { mutableStateOf(false) }
 
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
@@ -240,6 +249,34 @@ fun FunctionSettingsScreen(navigator: DestinationsNavigator, highlightKey: Strin
                 FunctionSettingsContent(
                     kPatchReady = kPatchReady,
                     aPatchReady = aPatchReady,
+                    jailbreakEnabled = jailbreakEnabled,
+                    onJailbreakChange = { enabled ->
+                        scope.launch(Dispatchers.IO) {
+                            if (enabled) {
+                                val success = installJailbreak()
+                                withContext(Dispatchers.Main) {
+                                    if (success) {
+                                        jailbreakEnabled = true
+                                        APApplication.sharedPreferences.edit()
+                                            .putBoolean("jailbreak_enabled", true)
+                                            .apply()
+                                        showToast(context, R.string.jailbreak_triggered)
+                                        showJailbreakSoftRebootDialog = true
+                                    } else {
+                                        showToast(context, R.string.settings_jailbreak_failed)
+                                    }
+                                }
+                            } else {
+                                rootShellForResult("rm -f ${APApplication.JAILBREAK_FILE}")
+                                APApplication.sharedPreferences.edit()
+                                    .putBoolean("jailbreak_enabled", false)
+                                    .apply()
+                                withContext(Dispatchers.Main) {
+                                    jailbreakEnabled = false
+                                }
+                            }
+                        }
+                    },
                     isHideServiceEnabled = isHideServiceEnabled,
                     onHideServiceChange = { isHideServiceEnabled = it },
                     isKernelSpoofEnabled = isKernelSpoofEnabled,
@@ -507,6 +544,29 @@ fun FunctionSettingsScreen(navigator: DestinationsNavigator, highlightKey: Strin
                             context.getString(R.string.path_hide_filter_system_enabled)
                         )
                     }
+                }
+            },
+        )
+    }
+
+    if (showJailbreakSoftRebootDialog) {
+        AlertDialog(
+            onDismissRequest = { showJailbreakSoftRebootDialog = false },
+            title = { Text(stringResource(R.string.settings_jailbreak_restart_framework)) },
+            text = { Text(stringResource(R.string.settings_jailbreak_restart_framework_message)) },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showJailbreakSoftRebootDialog = false
+                        restartFramework()
+                    },
+                ) {
+                    Text(stringResource(R.string.settings_jailbreak_restart_framework))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showJailbreakSoftRebootDialog = false }) {
+                    Text(stringResource(android.R.string.cancel))
                 }
             },
         )

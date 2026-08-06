@@ -1319,6 +1319,8 @@ KernelPatch 魔法阵需要 boot 核心来施展。
     <string name="settings_jailbreak_mode_summary">在原生内核上加载 KernelPatch 心之契约。该模式下不允许施展修补魔法。</string>
     <string name="settings_jailbreak_soft_reboot">轻灵重生</string>
     <string name="settings_jailbreak_soft_reboot_message">心之契约已加载，是否立即轻灵重生？</string>
+    <string name="settings_jailbreak_restart_framework">轻灵重生框架</string>
+    <string name="settings_jailbreak_restart_framework_message">心之契约已加载，是否立即重启 Android 框架？此举将轻灵重生，仅重启框架，不会重启内核。</string>
     <string name="settings_jailbreak_loaded">解封契约已加载</string>
     <string name="settings_jailbreak_failed">解封契约加载失败</string>
     <string name="jailbreak_no_patch">解封模式下不允许施展修补魔法。</string>

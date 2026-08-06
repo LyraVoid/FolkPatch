@@ -1388,6 +1388,8 @@ Please ensure the app is completely closed and reopened for the commands to exec
     <string name="settings_jailbreak_mode_summary">"Load the KernelPatch module on a stock kernel. Patching is not allowed in this mode."</string>
     <string name="settings_jailbreak_soft_reboot">Soft reboot</string>
     <string name="settings_jailbreak_soft_reboot_message">"The module has been loaded. Restart the framework now?"</string>
+    <string name="settings_jailbreak_restart_framework">Restart framework</string>
+    <string name="settings_jailbreak_restart_framework_message">The module has been loaded. Restart the Android framework now? This will soft reboot the device (restart the framework only, not the kernel).</string>
     <string name="settings_jailbreak_loaded">Jailbreak module loaded</string>
     <string name="settings_jailbreak_failed">Failed to load jailbreak module</string>
     <string name="jailbreak_no_patch">Patching is not allowed in jailbreak mode.</string>

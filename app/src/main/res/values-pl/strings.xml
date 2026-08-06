@@ -1257,6 +1257,8 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="settings_jailbreak_mode_summary">Ładuje moduł KernelPatch na niezmodyfikowanym jądrze. W tym trybie patchowanie jest niedozwolone.</string>
     <string name="settings_jailbreak_soft_reboot">Miękki restart</string>
     <string name="settings_jailbreak_soft_reboot_message">Moduł został załadowany. Czy teraz zrestartować system?</string>
+    <string name="settings_jailbreak_restart_framework">Zrestartuj framework</string>
+    <string name="settings_jailbreak_restart_framework_message">Moduł został załadowany. Czy teraz zrestartować framework Androida? Ta operacja wykona miękki restart urządzenia (restartuje tylko framework, nie jądro).</string>
     <string name="settings_jailbreak_loaded">Moduł jailbreak załadowany</string>
     <string name="settings_jailbreak_failed">Nie udało się załadować modułu jailbreak</string>
     <string name="jailbreak_no_patch">Patchowanie jest niedozwolone w trybie jailbreak.</string>

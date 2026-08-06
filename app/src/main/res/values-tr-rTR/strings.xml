@@ -1338,6 +1338,8 @@ Komutların çalışması için uygulamanın tamamen kapatılıp yeniden açıld
     <string name="settings_jailbreak_mode_summary">KernelPatch modülünü orijinal çekirdeğe yükler. Bu modda yama yapmaya izin verilmez.</string>
     <string name="settings_jailbreak_soft_reboot">Yumuşak yeniden başlatma</string>
     <string name="settings_jailbreak_soft_reboot_message">Modül yüklendi. Sistem şimdi yeniden başlatılsın mı?</string>
+    <string name="settings_jailbreak_restart_framework">"Framework'ü yeniden başlat"</string>
+    <string name="settings_jailbreak_restart_framework_message">Modül yüklendi. Android framework şimdi yeniden başlatılsın mı? Bu işlem cihazı yumuşak yeniden başlatır (yalnızca framework yeniden başlatılır, çekirdek değil).</string>
     <string name="settings_jailbreak_loaded">Jailbreak modülü yüklendi</string>
     <string name="settings_jailbreak_failed">Jailbreak modülü yüklenemedi</string>
     <string name="jailbreak_no_patch">Jailbreak modunda yama yapmaya izin verilmez.</string>

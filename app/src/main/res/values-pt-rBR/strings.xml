@@ -1334,6 +1334,8 @@ Por favor, certifique-se de fechar completamente o app e reabri-lo para que os c
     <string name="settings_jailbreak_mode_summary">Carrega o módulo KernelPatch em um kernel original. Não é permitido fazer patch neste modo.</string>
     <string name="settings_jailbreak_soft_reboot">Reinicialização suave</string>
     <string name="settings_jailbreak_soft_reboot_message">O módulo foi carregado. Reiniciar o sistema agora?</string>
+    <string name="settings_jailbreak_restart_framework">Reiniciar framework</string>
+    <string name="settings_jailbreak_restart_framework_message">O módulo foi carregado. Reiniciar o framework do Android agora? Esta operação fará uma reinicialização suave do dispositivo (reinicia apenas o framework, não o kernel).</string>
     <string name="settings_jailbreak_loaded">Módulo de jailbreak carregado</string>
     <string name="settings_jailbreak_failed">Falha ao carregar o módulo de jailbreak</string>
     <string name="jailbreak_no_patch">Não é permitido fazer patch no modo jailbreak.</string>

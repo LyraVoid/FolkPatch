@@ -1331,6 +1331,8 @@ KernelPatch 需要修補 boot 映像檔。
     <string name="settings_jailbreak_mode_summary">在未修補的核心上載入 KernelPatch 模組。該模式下不允許修補。</string>
     <string name="settings_jailbreak_soft_reboot">軟重啟</string>
     <string name="settings_jailbreak_soft_reboot_message">模組已載入，是否立即重啟框架？</string>
+    <string name="settings_jailbreak_restart_framework">重啟框架</string>
+    <string name="settings_jailbreak_restart_framework_message">模組已載入，是否立即重啟 Android 框架？此操作將軟重啟裝置（僅重啟框架，不會重啟核心）。</string>
     <string name="settings_jailbreak_loaded">越獄模組已載入</string>
     <string name="settings_jailbreak_failed">越獄模組載入失敗</string>
     <string name="jailbreak_no_patch">越獄模式下不允許修補。</string>

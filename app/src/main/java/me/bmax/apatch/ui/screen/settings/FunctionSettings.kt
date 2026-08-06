@@ -25,6 +25,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.FolderOff
 import androidx.compose.material.icons.filled.Memory
+import androidx.compose.material.icons.filled.LockOpen
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.filled.HideSource
@@ -86,6 +87,8 @@ import me.bmax.apatch.util.setHideServiceEnabled
 fun FunctionSettingsContent(
     kPatchReady: Boolean,
     aPatchReady: Boolean,
+    jailbreakEnabled: Boolean,
+    onJailbreakChange: (Boolean) -> Unit,
     isHideServiceEnabled: Boolean,
     onHideServiceChange: (Boolean) -> Unit,
     isKernelSpoofEnabled: Boolean,
@@ -128,6 +131,17 @@ fun FunctionSettingsContent(
     val umountServiceSummary = stringResource(id = R.string.settings_umount_service_summary)
 
     SplicedColumnGroup(flat = flat, highlightKey = highlightKey) {
+        item(key = "function_jailbreak", visible = kPatchReady && aPatchReady) {
+            ToggleSettingCard(
+                flat = flat,
+                icon = Icons.Filled.LockOpen,
+                title = stringResource(R.string.settings_jailbreak_mode),
+                description = stringResource(R.string.settings_jailbreak_mode_summary),
+                checked = jailbreakEnabled,
+                onCheckedChange = onJailbreakChange,
+            )
+        }
+
         item(key = "function_hide_service", visible = kPatchReady && aPatchReady) {
             ToggleSettingCard(
                 flat = flat,

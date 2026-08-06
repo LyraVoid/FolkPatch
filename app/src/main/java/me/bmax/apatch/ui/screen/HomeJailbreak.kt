@@ -1,6 +1,9 @@
 package me.bmax.apatch.ui.screen
 
 import android.content.Context
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Stable
@@ -11,6 +14,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.repeatOnLifecycle
@@ -23,7 +27,7 @@ import me.bmax.apatch.R
 import me.bmax.apatch.util.installJailbreak
 import me.bmax.apatch.util.isJailbreakMode
 import me.bmax.apatch.util.isSELinuxPermissive
-import me.bmax.apatch.util.softReboot
+import me.bmax.apatch.util.restartFramework
 import me.bmax.apatch.util.ui.showToast
 
 @Stable
@@ -39,6 +43,8 @@ internal class HomeJailbreakState(
         private set
     var isTriggering by mutableStateOf(false)
         private set
+    var showRebootConfirmation by mutableStateOf(false)
+        private set
 
     suspend fun refresh() {
         val (active, permissive) = withContext(Dispatchers.IO) {
@@ -51,7 +57,7 @@ internal class HomeJailbreakState(
 
     fun performPrimaryAction() {
         if (isActive) {
-            softReboot()
+            showRebootConfirmation = true
             return
         }
         if (isTriggering) return
@@ -74,6 +80,15 @@ internal class HomeJailbreakState(
             isTriggering = false
         }
     }
+
+    fun confirmSoftReboot() {
+        showRebootConfirmation = false
+        restartFramework()
+    }
+
+    fun dismissSoftRebootConfirmation() {
+        showRebootConfirmation = false
+    }
 }
 
 internal val LocalHomeJailbreakState = staticCompositionLocalOf<HomeJailbreakState> {
@@ -92,5 +107,24 @@ internal fun ProvideHomeJailbreakState(content: @Composable () -> Unit) {
             state.refresh()
         }
     }
-    CompositionLocalProvider(LocalHomeJailbreakState provides state, content = content)
+    CompositionLocalProvider(LocalHomeJailbreakState provides state) {
+        content()
+        if (state.showRebootConfirmation) {
+            AlertDialog(
+                onDismissRequest = state::dismissSoftRebootConfirmation,
+                title = { Text(stringResource(R.string.settings_jailbreak_soft_reboot)) },
+                text = { Text(stringResource(R.string.settings_jailbreak_soft_reboot_message)) },
+                confirmButton = {
+                    TextButton(onClick = state::confirmSoftReboot) {
+                        Text(stringResource(android.R.string.ok))
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = state::dismissSoftRebootConfirmation) {
+                        Text(stringResource(android.R.string.cancel))
+                    }
+                },
+            )
+        }
+    }
 }
