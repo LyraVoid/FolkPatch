@@ -780,7 +780,7 @@ private fun KStatusCard(
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Text(
                                     text = if (BackgroundConfig.isListWorkingCardModeHidden) {
-                                        stringResource(R.string.home_working) + "??"
+                                        stringResource(R.string.home_working) + "😋"
                                     } else {
                                         stringResource(R.string.home_working)
                                     },
