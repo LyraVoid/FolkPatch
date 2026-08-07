@@ -37,7 +37,7 @@ fun download(
 
     val query = DownloadManager.Query()
     query.setFilterByStatus(DownloadManager.STATUS_RUNNING or DownloadManager.STATUS_PAUSED or DownloadManager.STATUS_PENDING)
-    downloadManager.query(query).use { cursor ->
+    downloadManager.query(query)?.use { cursor ->
         while (cursor.moveToNext()) {
             val uri = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_URI))
             val localUri = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI))
@@ -90,16 +90,17 @@ fun DownloadListener(context: Context, onDownloaded: (Uri) -> Unit) {
                     val query = DownloadManager.Query().setFilterById(id)
                     val downloadManager =
                         context?.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-                    val cursor = downloadManager.query(query)
-                    if (cursor.moveToFirst()) {
-                        val status = cursor.getInt(
-                            cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)
-                        )
-                        if (status == DownloadManager.STATUS_SUCCESSFUL) {
-                            val uri = cursor.getString(
-                                cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI)
+                    downloadManager.query(query)?.use { cursor ->
+                        if (cursor.moveToFirst()) {
+                            val status = cursor.getInt(
+                                cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)
                             )
-                            onDownloaded(Uri.parse(uri))
+                            if (status == DownloadManager.STATUS_SUCCESSFUL) {
+                                val uri = cursor.getString(
+                                    cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI)
+                                )
+                                onDownloaded(Uri.parse(uri))
+                            }
                         }
                     }
                 }
