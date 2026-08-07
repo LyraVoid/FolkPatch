@@ -102,7 +102,6 @@ import kotlinx.coroutines.launch
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.Natives
 import me.bmax.apatch.R
-import me.bmax.apatch.apApp
 import me.bmax.apatch.ui.navigation.LocalBottomBarVisible
 import me.bmax.apatch.ui.navigation.LocalIsFloatingNavMode
 import me.bmax.apatch.ui.navigation.fabNavBottomClearance
@@ -232,7 +231,7 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
         viewModel.exitSelectionMode()
     }
 
-    val filteredApps = viewModel.appList.filter { it.packageName != apApp.packageName }
+    val filteredApps = viewModel.appList
 
     Scaffold(
         topBar = {
@@ -248,8 +247,8 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
                 SearchAppBar(
                     title = { Text(stringResource(R.string.su_title)) },
                     searchText = viewModel.search,
-                    onSearchTextChange = { viewModel.search = it },
-                    onClearClick = { viewModel.search = "" },
+                    onSearchTextChange = { viewModel.updateSearch(it) },
+                    onClearClick = { viewModel.updateSearch("") },
                     leadingActions = {
                         IconButton(onClick = {
                             viewModel.enterSelectionMode()

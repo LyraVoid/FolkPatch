@@ -16,6 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
 import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.Dispatchers
@@ -45,10 +46,14 @@ import kotlin.coroutines.resumeWithException
 
 import android.net.Uri
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
 
+@OptIn(FlowPreview::class)
 class SuperUserViewModel : ViewModel() {
     companion object {
         private const val TAG = "SuperUserViewModel"
@@ -76,10 +81,32 @@ class SuperUserViewModel : ViewModel() {
         val labelLower: String by lazy { label.lowercase() }
         val packageNameLower: String by lazy { packageName.lowercase() }
         val labelPinyin: String by lazy { HanziToPinyin.getInstance().toPinyinString(label) }
+        val isSystemApp: Boolean by lazy {
+            (packageInfo.applicationInfo!!.flags and ApplicationInfo.FLAG_SYSTEM) != 0
+        }
     }
 
+    // search：即时回显输入框内容；searchQuery：防抖后用于列表过滤，
+    // 避免每敲一个字符就在主线程对全部应用全量过滤一次导致卡顿
     var search by mutableStateOf("")
+        private set
+    private var searchQuery by mutableStateOf("")
+
+    fun updateSearch(value: String) {
+        search = value
+    }
+
     var showSystemApps by mutableStateOf(false)
+
+    init {
+        viewModelScope.launch {
+            snapshotFlow { search }
+                .debounce(250)
+                .distinctUntilChanged()
+                .collect { searchQuery = it }
+        }
+    }
+
     var isRefreshing by mutableStateOf(false)
         private set
 
@@ -134,10 +161,11 @@ class SuperUserViewModel : ViewModel() {
     }
 
     val appList by derivedStateOf {
-        val q = search.trim().lowercase()
+        val q = searchQuery.trim().lowercase()
         sortedList.filter {
-            it.uid == 2000 // Always show shell
-                    || showSystemApps || it.packageInfo.applicationInfo!!.flags.and(ApplicationInfo.FLAG_SYSTEM) == 0
+            it.packageName != apApp.packageName &&
+                    (it.uid == 2000 // Always show shell
+                            || showSystemApps || !it.isSystemApp)
         }.filter {
             q.isEmpty() || it.labelLower.contains(q) || it.packageNameLower.contains(q)
                     || it.labelPinyin.contains(q)
