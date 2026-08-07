@@ -61,7 +61,6 @@ import androidx.compose.material.icons.outlined.Download
 import androidx.compose.material.icons.outlined.Memory
 import androidx.compose.material.icons.outlined.RestartAlt
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
@@ -392,72 +391,6 @@ private fun getRebootOptions(): List<RebootOption> = listOf(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun RebootDialog(
-    show: Boolean,
-    onDismiss: () -> Unit,
-    onReboot: (String) -> Unit
-) {
-    if (!show) return
-
-    val options = getRebootOptions()
-
-    BasicAlertDialog(onDismissRequest = onDismiss) {
-        Surface(
-            shape = RoundedCornerShape(28.dp),
-            color = MaterialTheme.colorScheme.surfaceContainerHigh
-        ) {
-            Column(modifier = Modifier.padding(24.dp)) {
-                Column(
-                    modifier = Modifier.padding(top = 4.dp),
-                    verticalArrangement = Arrangement.spacedBy(2.dp)
-                ) {
-                    options.forEach { option ->
-                        Surface(
-                            shape = RoundedCornerShape(16.dp),
-                            color = MaterialTheme.colorScheme.surfaceContainerLowest,
-                            onClick = {
-                                onDismiss()
-                                onReboot(option.reason)
-                            }
-                        ) {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(horizontal = 16.dp, vertical = 12.dp),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Box(
-                                    modifier = Modifier
-                                        .size(40.dp)
-                                        .background(
-                                            color = MaterialTheme.colorScheme.secondaryContainer,
-                                            shape = CircleShape
-                                        ),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    Icon(
-                                        imageVector = option.icon,
-                                        contentDescription = null,
-                                        modifier = Modifier.size(20.dp),
-                                        tint = MaterialTheme.colorScheme.onSecondaryContainer
-                                    )
-                                }
-                                Spacer(modifier = Modifier.width(16.dp))
-                                Text(
-                                    text = stringResource(option.titleRes),
-                                    style = MaterialTheme.typography.bodyLarge
-                                )
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
 private fun TopBar(
     onInstallClick: () -> Unit, navigator: DestinationsNavigator, kpState: APApplication.State
 ) {
@@ -545,18 +478,34 @@ private fun TopBar(
         }
 
         if (kpState != APApplication.State.UNKNOWN_STATE) {
-            IconButton(onClick = { showDropdownReboot = true }) {
-                Icon(
-                    imageVector = Icons.Filled.PowerSettingsNew,
-                    contentDescription = stringResource(id = R.string.reboot)
-                )
+            Box {
+                IconButton(onClick = { showDropdownReboot = true }) {
+                    Icon(
+                        imageVector = Icons.Filled.PowerSettingsNew,
+                        contentDescription = stringResource(id = R.string.reboot)
+                    )
+                }
+                WallpaperAwareDropdownMenu(
+                    expanded = showDropdownReboot,
+                    onDismissRequest = { showDropdownReboot = false }
+                ) {
+                    getRebootOptions().forEach { option ->
+                        WallpaperAwareDropdownMenuItem(
+                            text = { Text(stringResource(option.titleRes)) },
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = option.icon,
+                                    contentDescription = null,
+                                )
+                            },
+                            onClick = {
+                                showDropdownReboot = false
+                                reboot(option.reason)
+                            }
+                        )
+                    }
+                }
             }
-
-            RebootDialog(
-                show = showDropdownReboot,
-                onDismiss = { showDropdownReboot = false },
-                onReboot = { reason -> reboot(reason) }
-            )
         }
 
         Box {
