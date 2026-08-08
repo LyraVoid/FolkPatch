@@ -49,7 +49,6 @@ fun AppearanceSettingsScreen(navigator: DestinationsNavigator, highlightKey: Str
 
     val snackBarHost = LocalSnackbarHost.current
     val flat = BackgroundConfig.isCustomBackgroundEnabled || BackgroundConfig.settingsBackgroundUri != null
-    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val prefs = APApplication.sharedPreferences
 
     val themeModeKey = "theme_mode"
@@ -63,15 +62,14 @@ fun AppearanceSettingsScreen(navigator: DestinationsNavigator, highlightKey: Str
                     IconButton(onClick = { navigator.popBackStack() }) {
                         Icon(Icons.AutoMirrored.Outlined.ArrowBack, contentDescription = "Back")
                     }
-                },
-                scrollBehavior = scrollBehavior,
+                }
             )
         },
         containerColor = Color.Transparent,
         snackbarHost = { SnackbarHost(snackBarHost) },
     ) { paddingValues ->
         LazyColumn(
-            modifier = Modifier.padding(paddingValues).nestedScroll(scrollBehavior.nestedScrollConnection),
+            modifier = Modifier.padding(paddingValues),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             item {

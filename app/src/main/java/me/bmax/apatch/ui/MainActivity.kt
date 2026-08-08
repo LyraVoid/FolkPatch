@@ -700,7 +700,7 @@ class MainActivity : AppCompatActivity() {
 
                 val currentBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentRoute = currentBackStackEntry?.destination?.route
-
+                val homeRoute = bottomBarRoutes.first()
 
                 // Show bottom bar logic: hide when scrolling down in floating mode,
                 // plus 3s auto-hide after last interaction.
@@ -807,6 +807,13 @@ class MainActivity : AppCompatActivity() {
                                     LocalBottomBarVisible provides bottomBarVisibleState,
                                     LocalIsFloatingNavMode provides isFloatingMode
                                 ) {
+                                    BackHandler(enabled = currentRoute in bottomBarRoutes && currentRoute != homeRoute) {
+                                        navController.navigate(homeRoute) {
+                                            popUpTo(NavGraphs.root.route) { saveState = true }
+                                            launchSingleTop = true
+                                            restoreState = true
+                                        }
+                                    }
                                     DestinationsNavHost(
                                         modifier = Modifier.weight(1f).then(baseContentModifier),
                                         navGraph = NavGraphs.root,
@@ -842,7 +849,6 @@ class MainActivity : AppCompatActivity() {
                                 // Back press on a non-home tab returns to the home tab
                                 // with the floating bar reset; back on the home tab keeps
                                 // the system default (predictive back) behavior
-                                val homeRoute = bottomBarRoutes.first()
                                 BackHandler(enabled = currentRoute in bottomBarRoutes && currentRoute != homeRoute) {
                                     resetBottomBarFully()
                                     navController.navigate(homeRoute) {

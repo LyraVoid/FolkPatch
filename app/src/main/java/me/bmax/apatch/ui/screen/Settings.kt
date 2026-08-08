@@ -105,7 +105,6 @@ fun SettingScreen(navigator: DestinationsNavigator) {
         showDevDialog = false
     }
 
-    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
     Scaffold(
         topBar = {
@@ -127,8 +126,7 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                     IconButton(onClick = { showDevDialog = true }) {
                         Icon(Icons.Outlined.Info, contentDescription = stringResource(R.string.about))
                     }
-                },
-                scrollBehavior = scrollBehavior,
+                }
             )
         },
         containerColor = Color.Transparent,
@@ -137,7 +135,6 @@ fun SettingScreen(navigator: DestinationsNavigator) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .nestedScroll(scrollBehavior.nestedScrollConnection),
         ) {
             item { Spacer(Modifier.height(8.dp)) }
 
