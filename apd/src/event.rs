@@ -283,11 +283,9 @@ pub fn on_post_data_fs(superkey: Option<String>) -> Result<()> {
     if module::load_sepolicy_rule().is_err() {
         warn!("load sepolicy.rule failed");
     }
-    if Path::new(defs::MAGIC_MOUNT_FILE).exists() {
-        info!("Magic Mount mode enabled");
-        if let Err(e) = crate::magic_mount::magic_mount() {
-            log::error!("Magic Mount failed: {}", e);
-        }
+    let magic_mount_enabled = Path::new(defs::MAGIC_MOUNT_FILE).exists();
+    if magic_mount_enabled {
+        info!("Folk Mount API enabled; deferring mount to post-mount");
     } else {
         info!("Magic Mount disabled");
         if let Err(e) = metamodule::exec_mount_script(module_dir) {
@@ -317,6 +315,12 @@ pub fn on_post_data_fs(superkey: Option<String>) -> Result<()> {
     let _ = fs::remove_file(module_update_flag);
 
     run_stage("post-mount", superkey.clone(), true);
+
+    if magic_mount_enabled
+        && let Err(e) = crate::magic_mount::magic_mount(defs::AP_OVERLAY_SOURCE)
+    {
+        log::error!("Folk Mount failed: {e}");
+    }
 
     report_kernel(superkey, "post-fs-data", "after")?;
 

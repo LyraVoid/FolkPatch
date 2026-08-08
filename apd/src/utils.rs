@@ -244,3 +244,7 @@ pub fn get_tmp_path() -> &'static str {
     }
     ""
 }
+
+pub fn get_magic_mount_work_dir() -> String {
+    format!("{}/workdir/", get_tmp_path())
+}

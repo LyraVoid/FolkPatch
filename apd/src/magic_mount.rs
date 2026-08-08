@@ -18,16 +18,12 @@ use rustix::{
 };
 
 use crate::{
-    defs::{
-        AP_MAGIC_MOUNT_SOURCE, DISABLE_FILE_NAME, MODULE_DIR, REMOVE_FILE_NAME,
-        SKIP_MOUNT_FILE_NAME,
-    },
+    defs::{DISABLE_FILE_NAME, MODULE_DIR, SKIP_MOUNT_FILE_NAME},
     magic_mount::NodeFileType::{Directory, RegularFile, Symlink, Whiteout},
     restorecon::{lgetfilecon, lsetfilecon},
-    utils::ensure_dir_exists,
+    utils::{ensure_dir_exists, get_magic_mount_work_dir},
 };
 
-const REPLACE_DIR_FILE_NAME: &str = ".replace";
 const REPLACE_DIR_XATTR: &str = "trusted.overlay.opaque";
 
 #[derive(PartialEq, Eq, Hash, Clone, Debug)]
@@ -39,15 +35,15 @@ enum NodeFileType {
 }
 
 impl NodeFileType {
-    fn from_file_type(file_type: FileType) -> Self {
+    fn from_file_type(file_type: FileType) -> Option<Self> {
         if file_type.is_file() {
-            RegularFile
+            Some(RegularFile)
         } else if file_type.is_dir() {
-            Directory
+            Some(Directory)
         } else if file_type.is_symlink() {
-            Symlink
+            Some(Symlink)
         } else {
-            Whiteout
+            None
         }
     }
 
@@ -59,7 +55,7 @@ impl NodeFileType {
             Whiteout => real_path.exists(),
             _ => match real_path.symlink_metadata() {
                 Ok(metadata) => {
-                    let real_type = Self::from_file_type(metadata.file_type());
+                    let real_type = Self::from_file_type(metadata.file_type()).unwrap_or(Whiteout);
                     real_type != *self || real_type == Symlink
                 }
                 Err(_) => true,
@@ -106,19 +102,6 @@ impl Node {
         Ok(has_file)
     }
 
-    fn dir_is_replace<P>(path: P) -> bool
-    where
-        P: AsRef<Path>,
-    {
-        if let Ok(v) = lgetxattr(&path, REPLACE_DIR_XATTR)
-            && String::from_utf8_lossy(&v) == "y"
-        {
-            return true;
-        }
-
-        path.as_ref().join(REPLACE_DIR_FILE_NAME).exists()
-    }
-
     fn new_root<T: ToString>(name: T) -> Self {
         Node {
             name: name.to_string(),
@@ -137,22 +120,23 @@ impl Node {
         if let Ok(metadata) = entry.metadata() {
             let path = entry.path();
             let file_type = if metadata.file_type().is_char_device() && metadata.rdev() == 0 {
-                NodeFileType::Whiteout
+                Some(NodeFileType::Whiteout)
             } else {
                 NodeFileType::from_file_type(metadata.file_type())
             };
-            let replace = file_type == NodeFileType::Directory && Self::dir_is_replace(&path);
-            if replace {
-                log::debug!("{} need replace", path.display());
+            if let Some(file_type) = file_type {
+                let replace = file_type == NodeFileType::Directory
+                    && lgetxattr(&path, REPLACE_DIR_XATTR)
+                        .is_ok_and(|v| String::from_utf8_lossy(&v) == "y");
+                return Some(Self {
+                    name: name.to_string(),
+                    file_type,
+                    children: HashMap::default(),
+                    module_path: Some(path),
+                    replace,
+                    skip: false,
+                });
             }
-            return Some(Self {
-                name: name.to_string(),
-                file_type,
-                children: HashMap::default(),
-                module_path: Some(path),
-                replace,
-                skip: false,
-            });
         }
 
         None
@@ -165,27 +149,14 @@ fn collect_module_files() -> Result<Option<Node>> {
     let module_root = Path::new(MODULE_DIR);
     let mut has_file = false;
 
-    log::debug!("begin collect module files: {}", module_root.display());
-
     for entry in module_root.read_dir()?.flatten() {
         if !entry.file_type()?.is_dir() {
             continue;
         }
 
-        let id = entry.file_name().to_str().unwrap().to_string();
-        log::debug!("processing new module: {id}");
-
-        let prop = entry.path().join("module.prop");
-        if !prop.exists() {
-            log::debug!("skipped module {id}, because not found module.prop");
-            continue;
-        }
-
         if entry.path().join(DISABLE_FILE_NAME).exists()
-            || entry.path().join(REMOVE_FILE_NAME).exists()
             || entry.path().join(SKIP_MOUNT_FILE_NAME).exists()
         {
-            log::debug!("skipped module {id}, due to disable/remove/skip_mount");
             continue;
         }
 
@@ -455,16 +426,14 @@ fn do_magic_mount<P: AsRef<Path>, WP: AsRef<Path>>(
                 mount_bind(&work_dir_path, &work_dir_path).context("bind self")?;
             }
             if path.exists() && !current.replace {
-                process_existing_entries(
-                    &path,
-                    &work_dir_path,
-                    &mut current.children,
-                    has_tmpfs,
-                )?;
+                process_existing_entries(&path, &work_dir_path, &mut current.children, has_tmpfs)?;
             }
             if current.replace {
                 if current.module_path.is_none() {
-                    bail!("dir {} is declared as replaced but it is root!", path.display());
+                    bail!(
+                        "dir {} is declared as replaced but it is root!",
+                        path.display()
+                    );
                 }
                 log::debug!("dir {} is replaced", path.display());
             }
@@ -480,12 +449,38 @@ fn do_magic_mount<P: AsRef<Path>, WP: AsRef<Path>>(
     Ok(())
 }
 
-pub fn magic_mount() -> Result<()> {
+fn mount_tmp(mount_source: &str) -> Result<()> {
+    let tmp_dir = PathBuf::from("/debug_ramdisk");
+    log::info!("mount_dir: {}", tmp_dir.display());
+    mount(
+        mount_source,
+        &tmp_dir,
+        "tmpfs",
+        MountFlags::empty(),
+        None,
+    )
+    .context("mount tmp")?;
+    mount_change(&tmp_dir, MountPropagationFlags::PRIVATE).context("make tmp private")?;
+    Ok(())
+}
+
+pub fn magic_mount(mount_source: &str) -> Result<()> {
     if let Some(root) = collect_module_files()? {
         log::debug!("collected: {:#?}", root);
-        let tmp_dir = PathBuf::from(AP_MAGIC_MOUNT_SOURCE);
+        let tmp_dir = PathBuf::from(get_magic_mount_work_dir());
+        log::info!("mount_dir: {}", tmp_dir.display());
+        if tmp_dir.to_string_lossy().contains("ramdisk") {
+            mount_tmp(mount_source)?;
+        }
         ensure_dir_exists(&tmp_dir)?;
-        mount("tmpfs", &tmp_dir, "tmpfs", MountFlags::empty(), None).context("mount tmp")?;
+        mount(
+            mount_source,
+            &tmp_dir,
+            "tmpfs",
+            MountFlags::empty(),
+            None,
+        )
+        .context("mount tmp")?;
         mount_change(&tmp_dir, MountPropagationFlags::PRIVATE).context("make tmp private")?;
         let result = do_magic_mount("/", &tmp_dir, root, false);
         if let Err(e) = unmount(&tmp_dir, UnmountFlags::DETACH) {
