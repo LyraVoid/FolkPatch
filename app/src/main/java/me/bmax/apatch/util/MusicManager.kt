@@ -1,8 +1,11 @@
 package me.bmax.apatch.util
 
+import android.app.ActivityManager
+import android.app.Application
 import android.content.Context
 import android.media.MediaPlayer
 import android.net.Uri
+import android.os.Build
 import android.util.Log
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -37,6 +40,10 @@ object MusicManager : DefaultLifecycleObserver {
     val duration: StateFlow<Int> = _duration.asStateFlow()
 
     fun init(ctx: Context) {
+        // 仅主进程管理背景音乐：WebUIActivity 位于独立 ":webui" 进程，
+        // 若在子进程初始化会创建第二个 MediaPlayer 与主进程实例重叠播放
+        if (!isMainProcess(ctx)) return
+
         context = ctx.applicationContext
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
         
@@ -44,6 +51,17 @@ object MusicManager : DefaultLifecycleObserver {
         if (MusicConfig.isMusicEnabled && MusicConfig.isAutoPlayEnabled) {
             prepareAndPlay()
         }
+    }
+
+    private fun isMainProcess(ctx: Context): Boolean {
+        val processName = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            Application.getProcessName()
+        } else {
+            val am = ctx.getSystemService(Context.ACTIVITY_SERVICE) as? ActivityManager ?: return true
+            val pid = android.os.Process.myPid()
+            am.runningAppProcesses?.find { it.pid == pid }?.processName
+        }
+        return processName == null || processName == ctx.packageName
     }
 
     private fun startProgressUpdater() {

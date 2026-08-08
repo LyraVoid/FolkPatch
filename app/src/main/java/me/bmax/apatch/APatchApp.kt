@@ -364,13 +364,15 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
         me.bmax.apatch.ui.theme.BackgroundConfig.load(this)
         me.bmax.apatch.ui.theme.FontConfig.load(this)
         me.bmax.apatch.util.ui.FloatingBarConfig.load(this)
-        MusicManager.init(this)
 
         superKey = "su"
         val processName = getProcessNameCompat()
         if (processName.endsWith(":root") || processName.endsWith(":webui")) {
             return
         }
+        // 背景音乐仅在主进程初始化：WebUIActivity 位于独立 ":webui" 进程，
+        // 若在子进程初始化会创建第二个 MediaPlayer，与主进程实例重叠播放
+        MusicManager.init(this)
         bypassHiddenApiRestrictions()
         Log.d(TAG, "APApplication onCreate started")
 
