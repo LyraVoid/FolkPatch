@@ -1047,7 +1047,8 @@ fun getZygiskImplement(): String {
         "zygisknext",
         "rezygisk",
         "neozygisk",
-        "shirokozygisk"
+        "shirokozygisk",
+        "onyxzygisk"
     )
 
     for (moduleId in zygiskModuleIds) {

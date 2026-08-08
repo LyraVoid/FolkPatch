@@ -40,7 +40,8 @@ class APModuleViewModel : ViewModel() {
             "zygisknext",
             "rezygisk",
             "neozygisk",
-            "shirokozygisk"
+            "shirokozygisk",
+            "onyxzygisk"
         )
     }
 
