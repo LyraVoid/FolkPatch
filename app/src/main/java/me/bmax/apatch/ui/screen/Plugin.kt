@@ -94,6 +94,7 @@ import me.bmax.apatch.ui.component.rememberConfirmDialog
 import me.bmax.apatch.ui.component.splicedLazyColumnGroup
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.ui.viewmodel.PluginViewModel
+import me.bmax.apatch.util.pickLocalizedString
 import me.bmax.apatch.util.ui.APDialogBlurBehindUtils
 import me.bmax.apatch.util.ui.showToast
 
@@ -596,22 +597,22 @@ private fun loadConfigValues(
 /** Choose the display label for a config field based on the system locale. */
 @Composable
 private fun configFieldLabel(field: PluginViewModel.PluginConfigField): String {
-    val locale = androidx.compose.ui.platform.LocalConfiguration.current.locales[0]?.language ?: "en"
-    return field.labels[locale]?.ifBlank { null } ?: field.label
+    val locale = androidx.compose.ui.platform.LocalConfiguration.current.locales[0]
+    return pickLocalizedString(field.labels, locale) ?: field.label
 }
 
 /** Choose the display label for a quick action based on the system locale. */
 @Composable
 private fun quickActionLabel(action: PluginViewModel.PluginQuickAction): String {
-    val locale = androidx.compose.ui.platform.LocalConfiguration.current.locales[0]?.language ?: "en"
-    return action.labels[locale]?.ifBlank { null } ?: action.label
+    val locale = androidx.compose.ui.platform.LocalConfiguration.current.locales[0]
+    return pickLocalizedString(action.labels, locale) ?: action.label
 }
 
 /** Choose the display description for a plugin based on the system locale. */
 @Composable
 private fun pluginDescription(plugin: PluginViewModel.PluginInfo): String {
-    val locale = androidx.compose.ui.platform.LocalConfiguration.current.locales[0]?.language ?: "en"
-    return plugin.descriptions[locale]?.ifBlank { null } ?: plugin.description
+    val locale = androidx.compose.ui.platform.LocalConfiguration.current.locales[0]
+    return pickLocalizedString(plugin.descriptions, locale) ?: plugin.description
 }
 
 /** Dialog that lets the user edit a plugin's config fields. */
