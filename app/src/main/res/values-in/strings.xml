@@ -189,7 +189,6 @@
 
     <string name="kpm">KPModule</string>
     <string name="kpm_kp_not_installed">KernelPatch tidak terinstal</string>
-    <string name="kpm_jailbreak_temporarily_unavailable">Modul kernel untuk sementara tidak tersedia dalam mode jailbreak.</string>
     <string name="kpm_add_kpm">Tambahkan KPM</string>
     <string name="kpm_load">Muat</string>
     <string name="kpm_install">Instal</string>

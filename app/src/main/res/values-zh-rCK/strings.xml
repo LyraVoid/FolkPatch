@@ -199,7 +199,6 @@
 
     <string name="kpm">特制酱料</string>
     <string name="kpm_kp_not_installed">未添加秘制酱料</string>
-    <string name="kpm_jailbreak_temporarily_unavailable">解禁模式下，特制酱料暂时无法烹制。</string>
     <string name="kpm_add_kpm">添加酱料</string>
     <string name="kpm_load">添加</string>
     <string name="kpm_install">安装</string>

@@ -182,7 +182,6 @@
 
     <string name="kpm">灵魂晶石</string>
     <string name="kpm_kp_not_installed">灵魂之力尚未开启</string>
-    <string name="kpm_jailbreak_temporarily_unavailable">圣辉解禁模式下，灵魂晶石暂时沉眠。</string>
     <string name="kpm_add_kpm">添加灵魂晶石</string>
     <string name="kpm_load">唤醒</string>
     <string name="kpm_install">祝祷</string>

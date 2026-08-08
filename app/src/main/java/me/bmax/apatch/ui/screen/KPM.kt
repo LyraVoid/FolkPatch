@@ -186,27 +186,6 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
         jailbreakMode = withContext(Dispatchers.IO) { isJailbreakMode() }
     }
 
-    // TODO(TEMPORARY): Remove this guard when KPM support in jailbreak mode is ready.
-    if (jailbreakMode != false) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(12.dp),
-            contentAlignment = Alignment.Center,
-        ) {
-            if (jailbreakMode == null) {
-                CircularProgressIndicator()
-            } else {
-                Text(
-                    text = stringResource(R.string.kpm_jailbreak_temporarily_unavailable),
-                    style = MaterialTheme.typography.titleMedium,
-                    textAlign = TextAlign.Center,
-                )
-            }
-        }
-        return
-    }
-
     val state by APApplication.apStateLiveData.observeAsState(APApplication.State.UNKNOWN_STATE)
     if (state == APApplication.State.UNKNOWN_STATE) {
         Column(
@@ -395,27 +374,31 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
                         }
                     },
                 ) {
-                    // 自动配置 (Auto Config) — top
-                    FloatingActionButtonMenuItem(
-                        onClick = dropUnlessResumed {
-                            expanded = false
-                            navigator.navigate(KpmAutoLoadConfigScreenDestination)
-                        },
-                        icon = { Icon(Icons.Outlined.Settings, contentDescription = null, modifier = Modifier.size(18.dp)) },
-                        text = { Text(text = autoLoadConfig, style = MaterialTheme.typography.bodyMedium) },
-                    )
-                    // 嵌入 (Embed)
-                    FloatingActionButtonMenuItem(
-                        onClick = {
-                            expanded = false
-                            scope.launch {
-                                if (!checkStrongBiometric()) return@launch
-                                navigator.navigate(PatchesDestination(PatchesViewModel.PatchMode.PATCH_AND_INSTALL))
-                            }
-                        },
-                        icon = { Icon(Icons.Outlined.Code, contentDescription = null, modifier = Modifier.size(18.dp)) },
-                        text = { Text(text = moduleEmbed, style = MaterialTheme.typography.bodyMedium) },
-                    )
+                    // Jailbreak mode only supports loading, so auto-load config and
+                    // embedding (which needs boot patching) are hidden there.
+                    if (jailbreakMode != true) {
+                        // 自动配置 (Auto Config) — top
+                        FloatingActionButtonMenuItem(
+                            onClick = dropUnlessResumed {
+                                expanded = false
+                                navigator.navigate(KpmAutoLoadConfigScreenDestination)
+                            },
+                            icon = { Icon(Icons.Outlined.Settings, contentDescription = null, modifier = Modifier.size(18.dp)) },
+                            text = { Text(text = autoLoadConfig, style = MaterialTheme.typography.bodyMedium) },
+                        )
+                        // 嵌入 (Embed)
+                        FloatingActionButtonMenuItem(
+                            onClick = {
+                                expanded = false
+                                scope.launch {
+                                    if (!checkStrongBiometric()) return@launch
+                                    navigator.navigate(PatchesDestination(PatchesViewModel.PatchMode.PATCH_AND_INSTALL))
+                                }
+                            },
+                            icon = { Icon(Icons.Outlined.Code, contentDescription = null, modifier = Modifier.size(18.dp)) },
+                            text = { Text(text = moduleEmbed, style = MaterialTheme.typography.bodyMedium) },
+                        )
+                    }
                     // 加载 (Load)
                     FloatingActionButtonMenuItem(
                         onClick = {

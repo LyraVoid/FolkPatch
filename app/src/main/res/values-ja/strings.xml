@@ -179,7 +179,6 @@
     <string name="home_apatch_version">FolkPatch バージョン</string>
     <string name="kpm">KP モジュール</string>
     <string name="kpm_kp_not_installed">KernelPatch はインストールされていません</string>
-    <string name="kpm_jailbreak_temporarily_unavailable">ジェイルブレイクモードでは、カーネルモジュールを一時的に利用できません。</string>
     <string name="kpm_add_kpm">KPM を追加</string>
     <string name="kpm_load">読み込み</string>
     <string name="kpm_install">インストール</string>

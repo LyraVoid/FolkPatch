@@ -189,7 +189,6 @@
 
     <string name="kpm">KPModule</string>
     <string name="kpm_kp_not_installed">KernelPatch не установлен</string>
-    <string name="kpm_jailbreak_temporarily_unavailable">Модули ядра временно недоступны в режиме джейлбрейка.</string>
     <string name="kpm_add_kpm">Добавить KPM</string>
     <string name="kpm_load">Загрузить</string>
     <string name="kpm_install">Установить</string>
