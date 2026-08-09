@@ -10,6 +10,10 @@
     <!-- 用于访问外部存储上的媒体文件 -->
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- Shizuku API: 使本应用能被 Shizuku Server 识别并推送 Binder -->
+    <uses-permission
+        android:name="moe.shizuku.manager.permission.API_V23"
+        tools:ignore="ProtectedPermissions" />
     <uses-permission
         android:name="android.permission.QUERY_ALL_PACKAGES"
         tools:ignore="QueryAllPackagesPermission" />
@@ -150,6 +154,21 @@
             android:name=".ui.CrashHandleActivity"
             android:exported="false" />
 
+        <!-- Shizuku 授权确认界面：由 Shizuku Server（root）以 INTERACT_ACROSS_USERS_FULL 权限拉起 -->
+        <activity
+            android:name=".ui.ShizukuPermissionActivity"
+            android:directBootAware="true"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL"
+            android:theme="@style/Theme.APatch.Permission">
+            <intent-filter>
+                <action android:name="${applicationId}.intent.action.REQUEST_PERMISSION" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <provider
             android:name=".util.SafeFileProvider"
             android:authorities="${applicationId}.fileprovider"
@@ -159,6 +178,15 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+        <!-- ShizukuProvider: 接收 Shizuku Server 推送的 Binder，用于状态检测 -->
+        <provider
+            android:name="rikka.shizuku.ShizukuProvider"
+            android:authorities="${applicationId}.shizuku"
+            android:multiprocess="false"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
 
         <service
             android:name=".services.RootServices"

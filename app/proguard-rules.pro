@@ -36,6 +36,14 @@
 -keep class me.bmax.apatch.IAPRootService { *; }
 -keep class me.bmax.apatch.IAPRootService$Stub { *; }
 -keep class rikka.parcelablelist.ParcelableListSlice { *; }
+
+# Keep Shizuku server built-in (app_process launches by class name, must not be obfuscated)
+-keep class rikka.shizuku.server.** { *; }
+-keep class moe.shizuku.server.** { *; }
+-keep class moe.shizuku.api.BinderContainer { *; }
+-keep class moe.shizuku.common.util.** { *; }
+-keep class rikka.rish.** { *; }
+-keep class rikka.hidden.compat.** { *; }
 # Keep ScriptInfo for Gson serialization in release
 -keep class me.bmax.apatch.data.ScriptInfo { *; }
 -keepclassmembers class me.bmax.apatch.data.ScriptInfo { *; }

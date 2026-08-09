@@ -147,6 +147,7 @@ object SettingsRegistry {
             // === Function ===
             add(SettingEntry("function_jailbreak", R.string.settings_jailbreak_mode, R.string.settings_jailbreak_mode_summary, SettingCategory.FUNCTION))
             add(SettingEntry("function_hide_service", R.string.settings_hide_service, R.string.settings_hide_service_summary, SettingCategory.FUNCTION))
+            add(SettingEntry("function_shizuku", R.string.settings_shizuku_service, R.string.settings_shizuku_service_summary, SettingCategory.FUNCTION))
             add(SettingEntry("function_umount", R.string.settings_umount_service, R.string.settings_umount_service_summary, SettingCategory.FUNCTION))
             add(SettingEntry("function_kernel_spoof", R.string.settings_kernel_spoof, R.string.settings_kernel_spoof_summary, SettingCategory.FUNCTION))
             add(SettingEntry("function_path_hide", R.string.settings_path_hide, R.string.settings_path_hide_summary, SettingCategory.FUNCTION))

@@ -611,7 +611,25 @@ Berikut adalah beberapa kemungkinan penyebab kegagalan autentikasi—silakan cek
     <string name="settings_new_app_profile_exclude">Kecualikan</string>
     <string name="settings_hide_service">FolkPatch Hide</string>
     <string name="settings_hide_service_summary">Sembunyikan status buka kunci bootloader sampai tingkat tertentu</string>
-    <string name="settings_app_title">Judul Aplikasi</string>
+
+    <string name="settings_shizuku_service">Layanan Shizuku</string>
+    <string name="settings_shizuku_service_summary">Menyediakan akses API tingkat ADB untuk aplikasi yang mendukung Shizuku (layanan bawaan, tanpa aplikasi pihak ketiga)</string>
+    <string name="settings_shizuku_service_running">Server Shizuku sedang berjalan</string>
+    <string name="settings_shizuku_started">Layanan Shizuku dimulai</string>
+    <string name="settings_shizuku_start_failed">Gagal memulai layanan Shizuku</string>
+    <string name="settings_shizuku_stopped">Layanan Shizuku dihentikan</string>
+    <string name="settings_shizuku_stop_failed">Gagal menghentikan layanan Shizuku</string>
+    <string name="shizuku_permission_title">Izinkan %1$s menggunakan Shizuku?</string>
+    <string name="shizuku_permission_message">Aplikasi akan dapat memanggil API sistem dengan hak root melalui Shizuku.</string>
+    <string name="shizuku_permission_allow">Izinkan</string>
+    <string name="shizuku_permission_allow_once">Sekali saja</string>
+    <string name="shizuku_permission_deny">Tolak</string>
+    <string name="shizuku_permission_allow_summary">Berikan akses permanen</string>
+    <string name="shizuku_permission_allow_once_summary">Izinkan hanya untuk kali ini</string>
+    <string name="shizuku_permission_deny_summary">Tolak akses</string>
+    <string name="shizuku_permission_binder_timeout">Tidak dapat terhubung ke layanan Shizuku, mulai ulang layanan dan coba lagi</string>
+    <string name="shizuku_management_update_failed">Gagal memperbarui otorisasi</string>
+<string name="settings_app_title">Judul Aplikasi</string>
     <string name="app_title_custom">Kustom</string>
     <string name="settings_custom_app_title">Atur nama aplikasi</string>
     <string name="custom_app_title_dialog_title">Nama aplikasi kustom</string>

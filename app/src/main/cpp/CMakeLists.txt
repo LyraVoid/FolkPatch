@@ -27,3 +27,17 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
 target_link_libraries(${PROJECT_NAME} PRIVATE log)
 target_compile_options(${PROJECT_NAME} PRIVATE -flto)
 target_link_options(${PROJECT_NAME} PRIVATE "-Wl,--build-id=none" "-Wl,-icf=all,--lto-O3" "-Wl,-s,-x,--gc-sections" "-Wl,--no-undefined")
+
+# Shizuku server 内置：rish 交互 shell 的 native 库（librish.so）
+# 供 app_process 运行的 rikka.shizuku.server.ShizukuService 通过 System.load 加载
+add_library(rish SHARED
+        rish/main.cpp
+        rish/pts.cpp
+        rish/rikka_rish_RishTerminal.cpp
+        rish/rikka_rish_RishHost.cpp)
+target_compile_options(rish PRIVATE -fno-exceptions -fno-rtti -ffunction-sections -fdata-sections)
+target_link_libraries(rish PRIVATE log)
+if (NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
+    add_custom_command(TARGET rish POST_BUILD
+            COMMAND ${CMAKE_STRIP} --remove-section=.comment "$<TARGET_FILE:rish>")
+endif ()

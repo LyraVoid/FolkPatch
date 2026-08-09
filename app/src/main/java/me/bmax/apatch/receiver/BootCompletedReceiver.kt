@@ -6,6 +6,7 @@ import android.content.Intent
 import android.util.Log
 import kotlin.concurrent.thread
 import me.bmax.apatch.util.ApdExecResult
+import me.bmax.apatch.util.ShizukuServiceManager
 import me.bmax.apatch.util.execApdBootFallback
 
 class BootCompletedReceiver : BroadcastReceiver() {
@@ -15,6 +16,38 @@ class BootCompletedReceiver : BroadcastReceiver() {
         }
 
         val pendingResult = goAsync()
+
+        // Shizuku 服务自启（独立线程，不阻塞 apd 逻辑）：开关开启时拉起内置 shizuku-server
+        if (ShizukuServiceManager.isEnabled()) {
+            thread(name = "fp-shizuku-autostart", isDaemon = true) {
+                // 开机早期 root/系统服务未完全就绪，先等待 root 可用（最长 90s）
+                if (!ShizukuServiceManager.waitForRoot(90_000L)) {
+                    Log.w(TAG, "Shizuku auto-start skipped: root not available within 90s")
+                    return@thread
+                }
+                // 首次 BOOT_COMPLETED 时系统仍较繁忙，留出缓冲再启动
+                Thread.sleep(5_000L)
+                var shizukuStarted = false
+                for (attempt in 1..6) {
+                    if (attempt > 1) {
+                        Thread.sleep(15_000L)
+                    }
+                    try {
+                        if (ShizukuServiceManager.isServerRunning() || ShizukuServiceManager.start(context)) {
+                            Log.i(TAG, "Shizuku server auto-start succeeded on attempt $attempt")
+                            shizukuStarted = true
+                            break
+                        }
+                    } catch (t: Throwable) {
+                        Log.w(TAG, "Shizuku auto-start attempt $attempt failed", t)
+                    }
+                }
+                if (!shizukuStarted) {
+                    Log.w(TAG, "Shizuku server auto-start failed after all attempts")
+                }
+            }
+        }
+
         thread(name = "fp-boot-fallback") {
             try {
                 val retryDelaysMs = longArrayOf(0L, 15_000L, 30_000L)

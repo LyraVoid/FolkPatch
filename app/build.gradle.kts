@@ -15,6 +15,7 @@ plugins {
     alias(libs.plugins.lsplugin.apksign)
     alias(libs.plugins.lsplugin.resopt)
     alias(libs.plugins.lsplugin.cmaker)
+    alias(libs.plugins.refine)
     id("kotlin-parcelize")
 }
 
@@ -469,6 +470,14 @@ dependencies {
     implementation(libs.com.github.topjohnwu.libsu.io)
 
     implementation(libs.dev.rikka.rikkax.parcelablelist)
+
+    implementation(libs.dev.rikka.shizuku.api)
+    implementation(libs.dev.rikka.shizuku.provider)
+
+    // Shizuku server 内置所需：hidden API 兼容库与 refine 运行时
+    implementation(libs.dev.rikka.hidden.compat)
+    compileOnly(libs.dev.rikka.hidden.stub)
+    implementation(libs.dev.rikka.refine.runtime)
 
     implementation(libs.io.coil.kt.coil.compose)
     implementation(libs.io.coil.kt.coil.gif)

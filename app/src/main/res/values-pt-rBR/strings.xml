@@ -618,7 +618,25 @@ Aqui estão algumas possíveis razões para a falha de autenticação—verifiqu
     <string name="settings_new_app_profile_exclude">Excluir</string>
     <string name="settings_hide_service">FolkPatch Hide</string>
     <string name="settings_hide_service_summary">Ocultar o status de desbloqueio do bootloader em certa medida</string>
-    <string name="settings_app_title">Título do App</string>
+
+    <string name="settings_shizuku_service">Serviço Shizuku</string>
+    <string name="settings_shizuku_service_summary">Fornece acesso à API de nível ADB para aplicativos compatíveis com Shizuku (serviço integrado, sem apps de terceiros)</string>
+    <string name="settings_shizuku_service_running">O servidor Shizuku está em execução</string>
+    <string name="settings_shizuku_started">Serviço Shizuku iniciado</string>
+    <string name="settings_shizuku_start_failed">Falha ao iniciar o serviço Shizuku</string>
+    <string name="settings_shizuku_stopped">Serviço Shizuku interrompido</string>
+    <string name="settings_shizuku_stop_failed">Falha ao interromper o serviço Shizuku</string>
+    <string name="shizuku_permission_title">Permitir que %1$s use o Shizuku?</string>
+    <string name="shizuku_permission_message">O aplicativo poderá chamar APIs do sistema com privilégios de root através do Shizuku.</string>
+    <string name="shizuku_permission_allow">Permitir</string>
+    <string name="shizuku_permission_allow_once">Apenas uma vez</string>
+    <string name="shizuku_permission_deny">Negar</string>
+    <string name="shizuku_permission_allow_summary">Conceder acesso permanente</string>
+    <string name="shizuku_permission_allow_once_summary">Permitir apenas desta vez</string>
+    <string name="shizuku_permission_deny_summary">Negar acesso</string>
+    <string name="shizuku_permission_binder_timeout">Não foi possível conectar ao serviço Shizuku. Reinicie o serviço e tente novamente.</string>
+    <string name="shizuku_management_update_failed">Falha ao atualizar a autorização</string>
+<string name="settings_app_title">Título do App</string>
     <string name="app_title_custom">Personalizado</string>
     <string name="settings_custom_app_title">Definir nome do app</string>
     <string name="custom_app_title_dialog_title">Nome personalizado do app</string>

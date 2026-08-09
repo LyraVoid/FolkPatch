@@ -606,7 +606,25 @@
     <string name="settings_new_app_profile_exclude">驱逐</string>
     <string name="settings_hide_service">FolkPatch Hide</string>
     <string name="settings_hide_service_summary">以圣光遮蔽Bootloader解锁状态</string>
-    <string name="settings_app_title">天使使名称</string>
+
+    <string name="settings_shizuku_service">Shizuku 圣泉</string>
+    <string name="settings_shizuku_service_summary">为信奉 Shizuku 的应用降下 ADB 级 API 圣光（内置圣泉，无需外物）</string>
+    <string name="settings_shizuku_service_running">Shizuku 圣泉奔涌中</string>
+    <string name="settings_shizuku_started">Shizuku 圣泉已涌动</string>
+    <string name="settings_shizuku_start_failed">Shizuku 圣泉涌动失败</string>
+    <string name="settings_shizuku_stopped">Shizuku 圣泉已平息</string>
+    <string name="settings_shizuku_stop_failed">Shizuku 圣泉平息失败</string>
+    <string name="shizuku_permission_title">是否赐福 %1$s 使用 Shizuku？</string>
+    <string name="shizuku_permission_message">该应用将通过 Shizuku 以 root 圣权调用系统 API</string>
+    <string name="shizuku_permission_allow">赐福</string>
+    <string name="shizuku_permission_allow_once">仅此一瞬</string>
+    <string name="shizuku_permission_deny">拒绝赐福</string>
+    <string name="shizuku_permission_allow_summary">永久授予访问权限</string>
+    <string name="shizuku_permission_allow_once_summary">仅此一瞬</string>
+    <string name="shizuku_permission_deny_summary">拒绝赐予访问</string>
+    <string name="shizuku_permission_binder_timeout">无法连接 Shizuku 服务，请重启服务后重试</string>
+    <string name="shizuku_management_update_failed">授权更新失败</string>
+<string name="settings_app_title">天使使名称</string>
     <string name="app_title_custom">自定义圣名</string>
     <string name="settings_custom_app_title">设置天使使名称</string>
     <string name="custom_app_title_dialog_title">自定义天使使名称</string>

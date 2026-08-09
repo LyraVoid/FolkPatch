@@ -611,7 +611,25 @@ KernelPatch 需要修補 boot 映像檔。
     <string name="settings_new_app_profile_exclude">排除</string>
     <string name="settings_hide_service">FolkPatch Hide</string>
     <string name="settings_hide_service_summary">一定程度上隱藏Bootloader解鎖狀態</string>
-    <string name="settings_app_title">應用程式標題</string>
+
+    <string name="settings_shizuku_service">Shizuku 服務</string>
+    <string name="settings_shizuku_service_summary">為支援 Shizuku 的應用程式提供 ADB 等級的 API 存取（內建服務，無需安裝任何第三方應用程式）</string>
+    <string name="settings_shizuku_service_running">Shizuku 服務執行中</string>
+    <string name="settings_shizuku_started">Shizuku 服務已啟動</string>
+    <string name="settings_shizuku_start_failed">Shizuku 服務啟動失敗</string>
+    <string name="settings_shizuku_stopped">Shizuku 服務已停止</string>
+    <string name="settings_shizuku_stop_failed">Shizuku 服務停止失敗</string>
+    <string name="shizuku_permission_title">允許 %1$s 使用 Shizuku 嗎？</string>
+    <string name="shizuku_permission_message">該應用程式將透過 Shizuku 以 root 權限呼叫系統 API</string>
+    <string name="shizuku_permission_allow">允許</string>
+    <string name="shizuku_permission_allow_once">僅此一次</string>
+    <string name="shizuku_permission_deny">拒絕</string>
+    <string name="shizuku_permission_allow_summary">永久授予存取權限</string>
+    <string name="shizuku_permission_allow_once_summary">僅本次允許使用</string>
+    <string name="shizuku_permission_deny_summary">拒絕授予存取權限</string>
+    <string name="shizuku_permission_binder_timeout">無法連接 Shizuku 服務，請重新啟動服務後再試</string>
+    <string name="shizuku_management_update_failed">授權更新失敗</string>
+<string name="settings_app_title">應用程式標題</string>
     <string name="app_title_custom">自訂</string>
     <string name="settings_custom_app_title">設定應用程式名稱</string>
     <string name="custom_app_title_dialog_title">自訂應用程式名稱</string>

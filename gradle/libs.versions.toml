@@ -13,6 +13,9 @@ vico = "2.0.0-alpha.13"
 liquid = "1.1.1"
 material3 = "1.5.0-alpha17"
 materialKolor = "4.1.1"
+shizuku = "13.1.5"
+hiddenApi = "4.4.0"
+refine = "4.4.0"
 
 [plugins]
 agp-app = { id = "com.android.application", version.ref = "agp" }
@@ -23,6 +26,7 @@ lsplugin-apksign = { id = "org.lsposed.lsplugin.apksign", version = "1.4" }
 lsplugin-resopt = { id = "org.lsposed.lsplugin.resopt", version = "1.6" }
 lsplugin-cmaker = { id = "org.lsposed.lsplugin.cmaker", version = "1.2" }
 kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+refine = { id = "dev.rikka.tools.refine", version.ref = "refine" }
 
 [libraries]
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version = "1.7.1" }
@@ -52,6 +56,13 @@ com-github-topjohnwu-libsu-nio = { group = "com.github.topjohnwu.libsu", name = 
 com-github-topjohnwu-libsu-io = { group = "com.github.topjohnwu.libsu", name = "io", version.ref = "libsu" }
 
 dev-rikka-rikkax-parcelablelist = { module = "dev.rikka.rikkax.parcelablelist:parcelablelist", version = "2.0.1" }
+
+dev-rikka-shizuku-api = { group = "dev.rikka.shizuku", name = "api", version.ref = "shizuku" }
+dev-rikka-shizuku-provider = { group = "dev.rikka.shizuku", name = "provider", version.ref = "shizuku" }
+
+dev-rikka-hidden-compat = { group = "dev.rikka.hidden", name = "compat", version.ref = "hiddenApi" }
+dev-rikka-hidden-stub = { group = "dev.rikka.hidden", name = "stub", version.ref = "hiddenApi" }
+dev-rikka-refine-runtime = { group = "dev.rikka.tools.refine", name = "runtime", version.ref = "refine" }
 
 io-coil-kt-coil-compose = { group = "io.coil-kt", name = "coil-compose", version = "2.7.0" }
 io-coil-kt-coil-gif = { group = "io.coil-kt", name = "coil-gif", version = "2.7.0" }

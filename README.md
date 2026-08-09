@@ -97,6 +97,7 @@ FolkPatch 提供三层扩展能力，覆盖从内核到用户态的各类定制�
 - [Sukisu-Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra) - 参考一些界面的设计
 - [APatch](https://github.com/bmax121/APatch) - 上游分支
 - [MMRL](https://github.com/MMRLApp/MMRL) - 模块仓库数据格式参考和数据源
+- [Shizuku](https://github.com/RikkaApps/Shizuku) - 内置 Shizuku 服务
 
 ## 📄 许可证
 

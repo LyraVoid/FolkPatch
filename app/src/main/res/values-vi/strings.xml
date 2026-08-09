@@ -612,7 +612,25 @@ Dưới đây là một số nguyên nhân có thể gây ra thất bại xác t
     <string name="settings_new_app_profile_exclude">Loại trừ</string>
     <string name="settings_hide_service">FolkPatch Hide</string>
     <string name="settings_hide_service_summary">Ẩn trạng thái mở khóa bootloader ở một mức độ nhất định</string>
-    <string name="settings_app_title">Tên ứng dụng</string>
+
+    <string name="settings_shizuku_service">Dịch vụ Shizuku</string>
+    <string name="settings_shizuku_service_summary">Cung cấp quyền truy cập API cấp ADB cho các ứng dụng hỗ trợ Shizuku (dịch vụ tích hợp, không cần ứng dụng bên thứ ba)</string>
+    <string name="settings_shizuku_service_running">Máy chủ Shizuku đang chạy</string>
+    <string name="settings_shizuku_started">Dịch vụ Shizuku đã khởi động</string>
+    <string name="settings_shizuku_start_failed">Khởi động dịch vụ Shizuku thất bại</string>
+    <string name="settings_shizuku_stopped">Dịch vụ Shizuku đã dừng</string>
+    <string name="settings_shizuku_stop_failed">Dừng dịch vụ Shizuku thất bại</string>
+    <string name="shizuku_permission_title">Cho phép %1$s sử dụng Shizuku?</string>
+    <string name="shizuku_permission_message">Ứng dụng sẽ có thể gọi API hệ thống với quyền root thông qua Shizuku.</string>
+    <string name="shizuku_permission_allow">Cho phép</string>
+    <string name="shizuku_permission_allow_once">Chỉ một lần</string>
+    <string name="shizuku_permission_deny">Từ chối</string>
+    <string name="shizuku_permission_allow_summary">Cấp quyền truy cập vĩnh viễn</string>
+    <string name="shizuku_permission_allow_once_summary">Chỉ cho phép lần này</string>
+    <string name="shizuku_permission_deny_summary">Từ chối truy cập</string>
+    <string name="shizuku_permission_binder_timeout">Không thể kết nối với dịch vụ Shizuku. Vui lòng khởi động lại dịch vụ và thử lại.</string>
+    <string name="shizuku_management_update_failed">Không thể cập nhật ủy quyền</string>
+<string name="settings_app_title">Tên ứng dụng</string>
     <string name="app_title_custom">Tùy chỉnh</string>
     <string name="settings_custom_app_title">Đặt tên ứng dụng</string>
     <string name="custom_app_title_dialog_title">Tên ứng dụng tùy chỉnh</string>

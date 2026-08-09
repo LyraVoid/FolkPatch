@@ -616,7 +616,25 @@ KernelPatch는 boot 이미지를 패치해야 합니다.
     <string name="settings_new_app_profile_exclude">제외</string>
     <string name="settings_hide_service">FolkPatch 숨김</string>
     <string name="settings_hide_service_summary">부트로더 잠금 해제 상태를 어느 정도 숨깁니다.</string>
-    <!-- Umount Service -->
+
+    <string name="settings_shizuku_service">Shizuku 서비스</string>
+    <string name="settings_shizuku_service_summary">Shizuku를 지원하는 앱에 ADB 수준 API 접근을 제공합니다 (내장 서비스, 타사 앱 불필요)</string>
+    <string name="settings_shizuku_service_running">Shizuku 서버 실행 중</string>
+    <string name="settings_shizuku_started">Shizuku 서비스가 시작되었습니다</string>
+    <string name="settings_shizuku_start_failed">Shizuku 서비스 시작 실패</string>
+    <string name="settings_shizuku_stopped">Shizuku 서비스가 중지되었습니다</string>
+    <string name="settings_shizuku_stop_failed">Shizuku 서비스 중지 실패</string>
+    <string name="shizuku_permission_title">%1$s의 Shizuku 사용을 허용할까요?</string>
+    <string name="shizuku_permission_message">이 앱은 Shizuku를 통해 root 권한으로 시스템 API를 호출할 수 있게 됩니다.</string>
+    <string name="shizuku_permission_allow">허용</string>
+    <string name="shizuku_permission_allow_once">한 번만</string>
+    <string name="shizuku_permission_deny">거부</string>
+    <string name="shizuku_permission_allow_summary">영구 액세스 허용</string>
+    <string name="shizuku_permission_allow_once_summary">이번에만 허용</string>
+    <string name="shizuku_permission_deny_summary">액세스 거부</string>
+    <string name="shizuku_permission_binder_timeout">Shizuku 서비스에 연결할 수 없습니다. 서비스를 다시 시작한 후 다시 시도해 주세요</string>
+    <string name="shizuku_management_update_failed">권한 업데이트에 실패했습니다</string>
+<!-- Umount Service -->
     <string name="settings_umount_service">Umount Service</string>
     <string name="settings_umount_service_summary">부팅 시 자동으로 마운트 해제할 마운트 지점을 구성합니다.</string>
     <string name="umount_config_title">Umount 구성</string>

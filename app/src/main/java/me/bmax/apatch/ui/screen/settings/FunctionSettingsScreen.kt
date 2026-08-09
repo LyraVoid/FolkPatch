@@ -73,7 +73,10 @@ import me.bmax.apatch.util.ui.LocalSnackbarHost
 import me.bmax.apatch.util.ui.NavigationBarsSpacer
 import androidx.compose.ui.platform.LocalContext
 import me.bmax.apatch.util.ui.showToast
+import me.bmax.apatch.util.ShizukuServiceManager
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.delay
+import com.ramcosta.composedestinations.generated.destinations.ShizukuManagementScreenDestination
 
 @OptIn(FlowPreview::class, ExperimentalMaterial3Api::class)
 @Destination<RootGraph>
@@ -101,6 +104,12 @@ fun FunctionSettingsScreen(navigator: DestinationsNavigator, highlightKey: Strin
         mutableStateOf(APApplication.sharedPreferences.getBoolean("jailbreak_enabled", false))
     }
     var showJailbreakSoftRebootDialog by rememberSaveable { mutableStateOf(false) }
+
+    // Shizuku 服务开关状态
+    var isShizukuEnabled by rememberSaveable {
+        mutableStateOf(ShizukuServiceManager.isEnabled())
+    }
+    var isShizukuRunning by rememberSaveable { mutableStateOf(false) }
 
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
@@ -223,6 +232,38 @@ fun FunctionSettingsScreen(navigator: DestinationsNavigator, highlightKey: Strin
 
     val snackBarHost = LocalSnackbarHost.current
     val flat = BackgroundConfig.isCustomBackgroundEnabled || BackgroundConfig.settingsBackgroundUri != null
+
+    // 初始化 Shizuku 状态
+    LaunchedEffect(kPatchReady, aPatchReady) {
+        if (kPatchReady && aPatchReady) {
+            withContext(Dispatchers.IO) {
+                isShizukuRunning = ShizukuServiceManager.isServerRunning()
+            }
+        }
+    }
+
+    // 周期轮询 Shizuku 运行状态（pingBinder 无 root 开销，失败时回退 root 检查）
+    LaunchedEffect(kPatchReady, aPatchReady) {
+        if (!(kPatchReady && aPatchReady)) return@LaunchedEffect
+        while (true) {
+            delay(8000)
+            withContext(Dispatchers.IO) {
+                val running = ShizukuServiceManager.isServerRunning()
+                withContext(Dispatchers.Main) {
+                    isShizukuRunning = running
+                }
+            }
+        }
+    }
+
+    fun refreshShizukuState() {
+        scope.launch(Dispatchers.IO) {
+            val running = ShizukuServiceManager.isServerRunning()
+            withContext(Dispatchers.Main) {
+                isShizukuRunning = running
+            }
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -521,6 +562,46 @@ fun FunctionSettingsScreen(navigator: DestinationsNavigator, highlightKey: Strin
                                 niSelectedUids = newSet
                             }
                         }
+                    },
+                    isShizukuEnabled = isShizukuEnabled,
+                    isShizukuRunning = isShizukuRunning,
+                    onShizukuToggle = { enabled ->
+                        if (enabled) {
+                            scope.launch(Dispatchers.IO) {
+                                val success = ShizukuServiceManager.start(context)
+                                if (success) {
+                                    ShizukuServiceManager.setEnabled(true)
+                                }
+                                withContext(Dispatchers.Main) {
+                                    isShizukuEnabled = success
+                                    snackBarHost.showSnackbar(
+                                        context.getString(
+                                            if (success) R.string.settings_shizuku_started
+                                            else R.string.settings_shizuku_start_failed
+                                        )
+                                    )
+                                    refreshShizukuState()
+                                }
+                            }
+                        } else {
+                            scope.launch(Dispatchers.IO) {
+                                val success = ShizukuServiceManager.stop()
+                                ShizukuServiceManager.setEnabled(false)
+                                withContext(Dispatchers.Main) {
+                                    isShizukuEnabled = false
+                                    snackBarHost.showSnackbar(
+                                        context.getString(
+                                            if (success) R.string.settings_shizuku_stopped
+                                            else R.string.settings_shizuku_stop_failed
+                                        )
+                                    )
+                                    refreshShizukuState()
+                                }
+                            }
+                        }
+                    },
+                    onShizukuManage = {
+                        navigator.navigate(ShizukuManagementScreenDestination)
                     },
                 )
             }

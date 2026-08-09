@@ -31,6 +31,7 @@ import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.filled.HideSource
 import androidx.compose.material.icons.filled.PersonPin
 import androidx.compose.material.icons.filled.WifiOff
+import androidx.compose.material.icons.outlined.WaterDrop
 import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Button
@@ -122,6 +123,10 @@ fun FunctionSettingsContent(
     onNetIsolateChange: (Boolean) -> Unit,
     niSelectedUids: Set<Int>,
     onNiUidToggle: (Int) -> Unit,
+    isShizukuEnabled: Boolean,
+    isShizukuRunning: Boolean,
+    onShizukuToggle: (Boolean) -> Unit,
+    onShizukuManage: () -> Unit,
     flat: Boolean = false,
     highlightKey: String? = null,
 ) {
@@ -155,6 +160,32 @@ fun FunctionSettingsContent(
                     onHideServiceChange(it)
                 }
             )
+        }
+
+        item(key = "function_shizuku", visible = kPatchReady && aPatchReady) {
+            val shizukuSummary = if (isShizukuRunning) {
+                stringResource(id = R.string.settings_shizuku_service_running)
+            } else {
+                stringResource(id = R.string.settings_shizuku_service_summary)
+            }
+            Column {
+                ToggleSettingCard(
+                    flat = flat,
+                    icon = Icons.Outlined.WaterDrop,
+                    title = stringResource(id = R.string.settings_shizuku_service),
+                    description = shizukuSummary,
+                    checked = isShizukuEnabled,
+                    onCheckedChange = onShizukuToggle,
+                )
+                AnimatedVisibility(visible = isShizukuEnabled && isShizukuRunning) {
+                    TextButton(
+                        onClick = onShizukuManage,
+                        modifier = Modifier.fillMaxWidth(),
+                    ) {
+                        Text(stringResource(R.string.shizuku_manage_apps))
+                    }
+                }
+            }
         }
 
         item(key = "function_umount", visible = kPatchReady && aPatchReady) {

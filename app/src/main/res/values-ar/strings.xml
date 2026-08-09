@@ -612,7 +612,25 @@
     <string name="settings_new_app_profile_exclude">استبعاد</string>
     <string name="settings_hide_service">FolkPatch Hide</string>
     <string name="settings_hide_service_summary">إخفاء حالة فتح قفل محمل الإقلاع إلى حد ما</string>
-    <string name="settings_app_title">عنوان التطبيق</string>
+
+    <string name="settings_shizuku_service">خدمة Shizuku</string>
+    <string name="settings_shizuku_service_summary">توفير وصول إلى واجهة برمجة التطبيقات بمستوى ADB للتطبيقات التي تدعم Shizuku (خدمة مدمجة، لا تتطلب تطبيقًا خارجيًا)</string>
+    <string name="settings_shizuku_service_running">خادم Shizuku قيد التشغيل</string>
+    <string name="settings_shizuku_started">تم بدء خدمة Shizuku</string>
+    <string name="settings_shizuku_start_failed">فشل بدء خدمة Shizuku</string>
+    <string name="settings_shizuku_stopped">تم إيقاف خدمة Shizuku</string>
+    <string name="settings_shizuku_stop_failed">فشل إيقاف خدمة Shizuku</string>
+    <string name="shizuku_permission_title">السماح لـ %1$s باستخدام Shizuku؟</string>
+    <string name="shizuku_permission_message">سيمكن التطبيق من استدعاء واجهات برمجة تطبيقات النظام بصلاحيات الجذر عبر Shizuku.</string>
+    <string name="shizuku_permission_allow">السماح</string>
+    <string name="shizuku_permission_allow_once">مرة واحدة فقط</string>
+    <string name="shizuku_permission_deny">رفض</string>
+    <string name="shizuku_permission_allow_summary">منح وصول دائم</string>
+    <string name="shizuku_permission_allow_once_summary">السماح لهذه المرة فقط</string>
+    <string name="shizuku_permission_deny_summary">رفض الوصول</string>
+    <string name="shizuku_permission_binder_timeout">تعذّر الاتصال بخدمة Shizuku، يرجى إعادة تشغيل الخدمة والمحاولة مجددًا</string>
+    <string name="shizuku_management_update_failed">تعذّر تحديث التصريح</string>
+<string name="settings_app_title">عنوان التطبيق</string>
     <string name="app_title_custom">مخصص</string>
     <string name="settings_custom_app_title">تعيين اسم التطبيق</string>
     <string name="custom_app_title_dialog_title">اسم التطبيق المخصص</string>

@@ -596,7 +596,25 @@ KernelPatch 这道菜需要用 boot 主料来烹饪。
     <string name="settings_new_app_profile_exclude">退菜</string>
     <string name="settings_hide_service">FolkPatch Hide</string>
     <string name="settings_hide_service_summary">把Bootloader解锁状态藏起来呗</string>
-    <string name="settings_app_title">软件名</string>
+
+    <string name="settings_shizuku_service">Shizuku 服务</string>
+    <string name="settings_shizuku_service_summary">给支持 Shizuku 的应用端上 ADB 级 API 这盘菜（自家厨房出品，不用去别家点菜）</string>
+    <string name="settings_shizuku_service_running">Shizuku 正在锅里咕嘟咕嘟</string>
+    <string name="settings_shizuku_started">Shizuku 开火啦</string>
+    <string name="settings_shizuku_start_failed">Shizuku 没点着火</string>
+    <string name="settings_shizuku_stopped">Shizuku 关火啦</string>
+    <string name="settings_shizuku_stop_failed">Shizuku 火关不掉</string>
+    <string name="shizuku_permission_title">让 %1$s 尝尝 Shizuku 的菜？</string>
+    <string name="shizuku_permission_message">这应用要通过 Shizuku 拿 root 大勺炒系统 API 的菜</string>
+    <string name="shizuku_permission_allow">上菜</string>
+    <string name="shizuku_permission_allow_once">只尝一口</string>
+    <string name="shizuku_permission_deny">撤菜</string>
+    <string name="shizuku_permission_allow_summary">永久让用</string>
+    <string name="shizuku_permission_allow_once_summary">就这顿让用</string>
+    <string name="shizuku_permission_deny_summary">不让用了哈</string>
+    <string name="shizuku_permission_binder_timeout">连不上 Shizuku 服务，重新开一下服务再试哈</string>
+    <string name="shizuku_management_update_failed">授权没更新成哈</string>
+<string name="settings_app_title">软件名</string>
     <string name="app_title_custom">自个儿起</string>
     <string name="settings_custom_app_title">设置软件名</string>
     <string name="custom_app_title_dialog_title">自定义软件名</string>

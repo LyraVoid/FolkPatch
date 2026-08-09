@@ -618,7 +618,25 @@ KernelPatch требует образ boot для патча.
     <string name="settings_new_app_profile_exclude">Исключить</string>
     <string name="settings_hide_service">FolkPatch Hide</string>
     <string name="settings_hide_service_summary">Скрывать статус разблокировки загрузчика в некоторой степени</string>
-    <string name="settings_app_title">Заголовок приложения</string>
+
+    <string name="settings_shizuku_service">Служба Shizuku</string>
+    <string name="settings_shizuku_service_summary">Предоставляет доступ к API уровня ADB для приложений, поддерживающих Shizuku (встроенная служба, сторонние приложения не требуются)</string>
+    <string name="settings_shizuku_service_running">Сервер Shizuku запущен</string>
+    <string name="settings_shizuku_started">Служба Shizuku запущена</string>
+    <string name="settings_shizuku_start_failed">Не удалось запустить службу Shizuku</string>
+    <string name="settings_shizuku_stopped">Служба Shizuku остановлена</string>
+    <string name="settings_shizuku_stop_failed">Не удалось остановить службу Shizuku</string>
+    <string name="shizuku_permission_title">Разрешить %1$s использовать Shizuku?</string>
+    <string name="shizuku_permission_message">Приложение сможет вызывать системные API с правами root через Shizuku.</string>
+    <string name="shizuku_permission_allow">Разрешить</string>
+    <string name="shizuku_permission_allow_once">Один раз</string>
+    <string name="shizuku_permission_deny">Запретить</string>
+    <string name="shizuku_permission_allow_summary">Предоставить постоянный доступ</string>
+    <string name="shizuku_permission_allow_once_summary">Разрешить только в этот раз</string>
+    <string name="shizuku_permission_deny_summary">Запретить доступ</string>
+    <string name="shizuku_permission_binder_timeout">Не удалось подключиться к сервису Shizuku. Перезапустите сервис и попробуйте снова.</string>
+    <string name="shizuku_management_update_failed">Не удалось обновить разрешение</string>
+<string name="settings_app_title">Заголовок приложения</string>
     <string name="app_title_custom">Пользовательский</string>
     <string name="settings_custom_app_title">Задать имя приложения</string>
     <string name="custom_app_title_dialog_title">Пользовательское имя приложения</string>

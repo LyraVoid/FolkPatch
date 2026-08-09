@@ -556,7 +556,25 @@ Kontynuować mimo to?</string>
     <string name="settings_new_app_profile_exclude">Wyklucz</string>
     <string name="settings_hide_service">Ukryj FolkPatch</string>
     <string name="settings_hide_service_summary">Ukryj status odblokowania bootloadera w pewnym stopniu</string>
-    <string name="settings_app_title">Tytuł aplikacji</string>
+
+    <string name="settings_shizuku_service">Usługa Shizuku</string>
+    <string name="settings_shizuku_service_summary">Zapewnia dostęp do API na poziomie ADB dla aplikacji obsługujących Shizuku (wbudowana usługa, nie wymaga aplikacji innych firm)</string>
+    <string name="settings_shizuku_service_running">Serwer Shizuku działa</string>
+    <string name="settings_shizuku_started">Usługa Shizuku uruchomiona</string>
+    <string name="settings_shizuku_start_failed">Nie udało się uruchomić usługi Shizuku</string>
+    <string name="settings_shizuku_stopped">Usługa Shizuku zatrzymana</string>
+    <string name="settings_shizuku_stop_failed">Nie udało się zatrzymać usługi Shizuku</string>
+    <string name="shizuku_permission_title">Zezwolić aplikacji %1$s na używanie Shizuku?</string>
+    <string name="shizuku_permission_message">Aplikacja będzie mogła wywoływać API systemowe z uprawnieniami root przez Shizuku.</string>
+    <string name="shizuku_permission_allow">Zezwól</string>
+    <string name="shizuku_permission_allow_once">Tylko raz</string>
+    <string name="shizuku_permission_deny">Odmów</string>
+    <string name="shizuku_permission_allow_summary">Przyznaj stały dostęp</string>
+    <string name="shizuku_permission_allow_once_summary">Zezwól tylko tym razem</string>
+    <string name="shizuku_permission_deny_summary">Odmów dostępu</string>
+    <string name="shizuku_permission_binder_timeout">Nie można połączyć się z usługą Shizuku. Uruchom ją ponownie i spróbuj ponownie.</string>
+    <string name="shizuku_management_update_failed">Nie udało się zaktualizować uprawnień</string>
+<string name="settings_app_title">Tytuł aplikacji</string>
     <string name="app_title_custom">Niestandardowy</string>
     <string name="settings_custom_app_title">Ustaw nazwę aplikacji</string>
     <string name="custom_app_title_dialog_title">Niestandardowa nazwa aplikacji</string>

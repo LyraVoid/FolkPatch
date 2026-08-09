@@ -615,7 +615,25 @@ Bol şans! Ayrıca, aşağıdaki belge butonuna tıklamak kesinlikle doğru!</st
     <string name="settings_new_app_profile_exclude">Hariç tut</string>
     <string name="settings_hide_service">FolkPatch Hide</string>
     <string name="settings_hide_service_summary">Bootloader kilidi açık durumunu bir ölçüde gizle</string>
-    <string name="settings_app_title">Uygulama Başlığı</string>
+
+    <string name="settings_shizuku_service">Shizuku Hizmeti</string>
+    <string name="settings_shizuku_service_summary">Shizuku destekleyen uygulamalar için ADB düzeyinde API erişimi sağlar (yerleşik hizmet, üçüncü taraf uygulama gerekmez)</string>
+    <string name="settings_shizuku_service_running">Shizuku sunucusu çalışıyor</string>
+    <string name="settings_shizuku_started">Shizuku hizmeti başlatıldı</string>
+    <string name="settings_shizuku_start_failed">Shizuku hizmeti başlatılamadı</string>
+    <string name="settings_shizuku_stopped">Shizuku hizmeti durduruldu</string>
+    <string name="settings_shizuku_stop_failed">Shizuku hizmeti durdurulamadı</string>
+    <string name="shizuku_permission_title">%1$s uygulamasının Shizuku kullanmasına izin verilsin mi?</string>
+    <string name="shizuku_permission_message">Uygulama, Shizuku aracılığıyla root ayrıcalıklarıyla sistem API\'lerini çağırabilecek.</string>
+    <string name="shizuku_permission_allow">İzin ver</string>
+    <string name="shizuku_permission_allow_once">Yalnızca bir kez</string>
+    <string name="shizuku_permission_deny">Reddet</string>
+    <string name="shizuku_permission_allow_summary">Kalıcı erişim ver</string>
+    <string name="shizuku_permission_allow_once_summary">Yalnızca bu kez izin ver</string>
+    <string name="shizuku_permission_deny_summary">Erişimi reddet</string>
+    <string name="shizuku_permission_binder_timeout">Shizuku hizmetine bağlanılamadı. Lütfen hizmeti yeniden başlatıp tekrar deneyin.</string>
+    <string name="shizuku_management_update_failed">Yetkilendirme güncellenemedi</string>
+<string name="settings_app_title">Uygulama Başlığı</string>
     <string name="app_title_custom">Özel</string>
     <string name="settings_custom_app_title">Uygulama adını ayarla</string>
     <string name="custom_app_title_dialog_title">Özel uygulama adı</string>

@@ -97,6 +97,7 @@ FolkPatch はカーネルからユーザー空間まで、あらゆるカスタ�
 - [Sukisu-Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra) - 一部のインターフェースデザインを参照
 - [APatch](https://github.com/bmax121/APatch) - 上流ブランチ
 - [MMRL](https://github.com/MMRLApp/MMRL) - モジュールリポジトリのデータ形式参考およびデータソース
+- [Shizuku](https://github.com/RikkaApps/Shizuku) - 組み込み Shizuku サービス
 
 ## 📄 ライセンス
 

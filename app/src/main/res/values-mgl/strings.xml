@@ -614,7 +614,25 @@ KernelPatch 魔法阵需要 boot 核心来施展。
     <string name="settings_new_app_profile_exclude">驱逐</string>
     <string name="settings_hide_service">FolkPatch Hide</string>
     <string name="settings_hide_service_summary">用魔法阵隐藏Bootloader解锁状态</string>
-    <string name="settings_app_title">魔法使名称</string>
+
+    <string name="settings_shizuku_service">Shizuku 魔法服务</string>
+    <string name="settings_shizuku_service_summary">为支持 Shizuku 的应用展开 ADB 级魔法阵（内置法阵，无需外借法器）</string>
+    <string name="settings_shizuku_service_running">Shizuku 魔法阵运转中</string>
+    <string name="settings_shizuku_started">Shizuku 魔法已生效</string>
+    <string name="settings_shizuku_start_failed">Shizuku 魔法释放失败</string>
+    <string name="settings_shizuku_stopped">Shizuku 魔法已消散</string>
+    <string name="settings_shizuku_stop_failed">Shizuku 魔法驱散失败</string>
+    <string name="shizuku_permission_title">允许 %1$s 施展 Shizuku 魔法？</string>
+    <string name="shizuku_permission_message">该应用将通过 Shizuku 以 root 魔力调用系统 API 魔法阵</string>
+    <string name="shizuku_permission_allow">允许施法</string>
+    <string name="shizuku_permission_allow_once">仅施放一次</string>
+    <string name="shizuku_permission_deny">禁止施法</string>
+    <string name="shizuku_permission_allow_summary">永久授予访问权限</string>
+    <string name="shizuku_permission_allow_once_summary">仅本次会话允许使用</string>
+    <string name="shizuku_permission_deny_summary">拒绝授予访问权限</string>
+    <string name="shizuku_permission_binder_timeout">无法连接 Shizuku 服务，请重启服务后重试</string>
+    <string name="shizuku_management_update_failed">授权更新失败</string>
+<string name="settings_app_title">魔法使名称</string>
     <string name="app_title_custom">自定义魔法名</string>
     <string name="settings_custom_app_title">设置魔法使名称</string>
     <string name="custom_app_title_dialog_title">自定义魔法使名称</string>
