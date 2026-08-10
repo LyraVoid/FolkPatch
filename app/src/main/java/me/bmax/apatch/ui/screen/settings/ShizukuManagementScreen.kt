@@ -144,7 +144,10 @@ fun ShizukuManagementScreen(navigator: DestinationsNavigator) {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
             ) {
-                Text(stringResource(R.string.shizuku_management_unavailable))
+                Text(
+                    text = stringResource(R.string.shizuku_management_unavailable),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
                 Spacer(Modifier.height(16.dp))
                 Button(onClick = { scope.launch { loadApps() } }) {
                     Text(stringResource(R.string.retry))
@@ -155,7 +158,10 @@ fun ShizukuManagementScreen(navigator: DestinationsNavigator) {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
             ) {
-                Text(stringResource(R.string.shizuku_management_empty))
+                Text(
+                    text = stringResource(R.string.shizuku_management_empty),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
                 Spacer(Modifier.height(16.dp))
                 Button(onClick = { scope.launch { loadApps() } }) {
                     Text(stringResource(R.string.retry))
