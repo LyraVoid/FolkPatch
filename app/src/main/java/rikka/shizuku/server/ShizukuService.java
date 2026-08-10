@@ -173,6 +173,8 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
     public void exit() {
         enforceManagerPermission("exit");
         LOGGER.i("exit");
+        // 立即写盘，避免延迟写入未执行时授权状态丢失。
+        configManager.flush();
         System.exit(0);
     }
 

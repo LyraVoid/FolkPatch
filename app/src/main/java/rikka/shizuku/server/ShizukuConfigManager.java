@@ -37,8 +37,6 @@ public class ShizukuConfigManager extends ConfigManager {
             .setVersion(ShizukuConfig.LATEST_VERSION)
             .create();
 
-    private static final long WRITE_DELAY = 10 * 1000;
-
     private static final File FILE = new File("/data/user_de/0/com.android.shell/shizuku.json");
     private static final AtomicFile ATOMIC_FILE = new AtomicFile(FILE);
 
@@ -195,14 +193,21 @@ public class ShizukuConfigManager extends ConfigManager {
     }
 
     private void scheduleWriteLocked() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            if (HandlerKt.getWorkerHandler().hasCallbacks(mWriteRunner)) {
-                return;
-            }
-        } else {
+        // 立即异步落盘：本实现中 PMS 运行时权限无法被授予（server 以非特权身份运行），
+        // shizuku.json 是唯一的授权权威，不能依赖 10s 延迟，否则重启会丢失授权。
+        HandlerKt.getWorkerHandler().removeCallbacks(mWriteRunner);
+        HandlerKt.getWorkerHandler().post(mWriteRunner);
+    }
+
+    /**
+     * 立即同步写盘。server 退出/重启前调用，避免延迟写入（默认 10s）尚未执行时
+     * 进程被终止导致授权状态丢失。
+     */
+    public void flush() {
+        synchronized (this) {
             HandlerKt.getWorkerHandler().removeCallbacks(mWriteRunner);
         }
-        HandlerKt.getWorkerHandler().postDelayed(mWriteRunner, WRITE_DELAY);
+        write(config);
     }
 
     private ShizukuConfig.PackageEntry findLocked(int uid) {
