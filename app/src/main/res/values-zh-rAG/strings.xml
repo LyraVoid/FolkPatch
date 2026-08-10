@@ -1,7 +1,19 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">FolkPatch</string>
     <string name="app_name_fpatch">FPatch</string>
+    <string name="app_title_apatch">APatch</string>
+    <string name="app_title_apatch_folk">APatch Folk</string>
+    <string name="app_title_apatchx">APatch X</string>
+    <string name="app_title_folkpatch">FolkPatch</string>
+    <string name="app_title_fpatch">FPatch</string>
+    <string name="app_title_kernelpatch">KernelPatch</string>
+    <string name="app_title_kernelsu">KernelSU</string>
+    <string name="app_title_magicpatch">MagicPatch</string>
+    <string name="app_title_superpatch">SuperPatch</string>
+    <string name="app_title_superroot">SuperRoot</string>
+    <string name="app_title_supersu">SuperSU</string>
+    <string name="app_title_superuser">Superuser</string>
 
     <string name="desktop_app_name">桌面上的名字喵</string>
 
@@ -17,10 +29,10 @@
     <string name="android_patch">系统补丁哒</string>
 
     <string name="settings_nav_layout_title">导航布局设置喵</string>
-    <string name="settings_nav_layout_summary">隐藏东西喵，不要一直问人家怎么弄啦喵</string>
+    <string name="settings_nav_layout_summary">想藏掉哪个就藏掉哪个喵，别老来问人家怎么弄啦喵</string>
     <string name="settings_nav_scheme">导航方案设置喵</string>
     <string name="settings_nav_mode">导航栏模式喵</string>
-    <string name="settings_nav_mode_summary">选择导航栏的显示方式喵</string>
+    <string name="settings_nav_mode_summary">挑一个导航栏的显示方式喵</string>
     <string name="settings_nav_mode_auto">自动传统导航栏 喵</string>
     <string name="settings_nav_mode_bottom">始终底部导航栏 喵</string>
     <string name="settings_nav_mode_rail">始终侧边导航栏 喵</string>
@@ -29,24 +41,24 @@
     <string name="settings_show_kpm">显示内核模块喵</string>
     <string name="settings_show_superuser">显示超级用户喵</string>
     <string name="settings_floating_auto_hide">自动隐藏悬浮底栏喵</string>
-    <string name="settings_floating_auto_hide_summary">3秒没操作就自动藏起来喵</string>
+    <string name="settings_floating_auto_hide_summary">3秒没动静就自己躲起来喵</string>
     <string name="settings_floating_swipe_hide">滑动隐藏悬浮底栏喵</string>
     <string name="settings_floating_swipe_hide_summary">往下滑藏起来，往上滑亮出来喵</string>
     <string name="settings_navbar_glass_effect">毛玻璃效果喵</string>
-    <string name="settings_navbar_glass_effect_summary">给悬浮导航栏加上毛玻璃效果喵</string>
+    <string name="settings_navbar_glass_effect_summary">给悬浮导航栏抹上毛玻璃效果喵</string>
     <string name="settings_navbar_glass_blur_strength">模糊强度喵</string>
     <string name="settings_navbar_glass_transparency">背景透明度喵</string>
     <string name="settings_navbar_glass_highlight_strength">高光强度喵</string>
     <string name="settings_navbar_glass_specular">镜面反射喵</string>
-    <string name="settings_navbar_glass_specular_summary">在导航栏顶部启用镜面高光效果喵</string>
+    <string name="settings_navbar_glass_specular_summary">在导航栏顶部开镜面高光效果喵</string>
     <string name="settings_navbar_glass_inner_glow">内发光喵</string>
-    <string name="settings_navbar_glass_inner_glow_summary">在导航栏底部启用微光效果喵</string>
+    <string name="settings_navbar_glass_inner_glow_summary">在导航栏底部开一圈微光效果喵</string>
     <string name="settings_navbar_glass_border">玻璃边框喵</string>
-    <string name="settings_navbar_glass_border_summary">在导航栏周围启用微妙的边框描边喵</string>
+    <string name="settings_navbar_glass_border_summary">在导航栏周围描一圈淡淡的边框喵</string>
     <string name="settings_compact_rounded_bar">紧凑圆角风格喵</string>
-    <string name="settings_compact_rounded_bar_summary">使用圆角紧凑间距的浮动底栏喵</string>
+    <string name="settings_compact_rounded_bar_summary">用圆角紧凑间距的浮动底栏喵</string>
     <string name="settings_stats_top_layout">顶部布局喵</string>
-    <string name="settings_stats_top_layout_summary">选择顶部信息卡片样式喵</string>
+    <string name="settings_stats_top_layout_summary">挑一个顶部信息卡片的样式喵</string>
     <string name="settings_stats_top_layout_list">列表样式喵</string>
     <string name="settings_stats_top_layout_grid">网格样式喵</string>
     <string name="settings_block_kernelpatch_update">不要提示内核补丁更新啦喵</string>
@@ -189,6 +201,8 @@
     <string name="settings_selinux_current_mode">现在是喵：%s</string>
     <string name="settings_selinux_mode_enforcing_summary">SELinux会严格按规则来哒，不要违规哦喵！</string>
     <string name="settings_selinux_mode_permissive_summary">SELinux只会记违规，不会拦着你的喵</string>
+    <string name="msg_selinux_permissive_warning">切到宽松模式会把SELinux的强制检查关掉喵，违规只会被记录、不会被拦下来，安全性会下降喵。还要继续吗喵？</string>
+    <string name="msg_selinux_enforcing_confirm">要切到强制模式吗喵？SELinux会严格按规则执行，没授权的访问全都会拦下来哦喵。</string>
 
     <string name="home_device_info">设备信息喵</string>
     <string name="home_system_version">你的系统喵</string>
@@ -228,7 +242,7 @@
 
     <!-- 超级用户应用操作弹窗 -->
     <string name="su_app_action_title">应用操作喵</string>
-    <string name="su_app_action_content">请选择一个动作来对应用执行喵</string>
+    <string name="su_app_action_content">选一个动作要对哪个应用做喵</string>
     <string name="su_app_action_launch">启动应用喵</string>
     <string name="su_app_action_force_stop">强行停止喵</string>
     <string name="su_app_action_launch_success">正在启动 %s 喵</string>
@@ -236,15 +250,15 @@
     <string name="su_app_action_failed">操作失败了喵: %s</string>
 
     <!-- SU Audit Log -->
-    <string name="su_audit_log_title">授权日志</string>
-    <string name="su_audit_log_empty">暂无授权记录</string>
-    <string name="su_audit_log_clear">清除日志</string>
-    <string name="su_audit_log_clear_confirm">确认清除所有授权记录？</string>
-    <string name="su_audit_action_grant">已授权</string>
-    <string name="su_audit_action_revoke">已撤销</string>
-    <string name="su_audit_action_exclude">已排除</string>
-    <string name="su_audit_tab_usage">使用记录</string>
-    <string name="su_audit_tab_operations">操作记录</string>
+    <string name="su_audit_log_title">授权日志喵</string>
+    <string name="su_audit_log_empty">还没有授权记录喵</string>
+    <string name="su_audit_log_clear">清除日志喵</string>
+    <string name="su_audit_log_clear_confirm">确定要把所有授权记录都清掉喵？</string>
+    <string name="su_audit_action_grant">已授权喵</string>
+    <string name="su_audit_action_revoke">已撤销喵</string>
+    <string name="su_audit_action_exclude">已排除喵</string>
+    <string name="su_audit_tab_usage">使用记录喵</string>
+    <string name="su_audit_tab_operations">操作记录喵</string>
 
     <string name="su_pkg_excluded_setting_title">改排除设置喵</string>
     <string name="su_pkg_excluded_setting_summary">开这个，FolkPatch就能恢复这应用改过的文件哒喵！</string>
@@ -507,6 +521,7 @@ KernelPatch 需要修补 boot 镜像才能工作喵。
     <string name="deep_purple_theme">深紫色喵</string>
     <string name="green_theme">绿色喵</string>
     <string name="indigo_theme">靛青色喵</string>
+    <string name="ink_wash_theme">水墨主题喵</string>
     <string name="light_blue_theme">浅蓝色喵</string>
     <string name="light_green_theme">浅绿色喵</string>
     <string name="lime_theme">酸橙色喵</string>
@@ -649,11 +664,12 @@ KernelPatch 需要修补 boot 镜像才能工作喵。
     <string name="shizuku_management_root_access">最高权限喵</string>
     <string name="shizuku_management_allowed_title">Shizuku 访问喵</string>
     <string name="shizuku_management_root_access_desc">以 root 身份跑命令喵。关掉就降成 shell（UID 2000），读不了受保护的数据喵~</string>
-    <string name="shizuku_management_badge_allowed">已允</string>
-    <string name="shizuku_management_badge_denied">未允</string>
+    <string name="shizuku_management_badge_allowed">已允喵</string>
+    <string name="shizuku_management_badge_denied">未允喵</string>
     <string name="shizuku_management_badge_root">ROOT</string>
     <string name="shizuku_management_badge_shell">SHELL</string>
-<string name="settings_app_title">应用名字喵</string>
+    <string name="shizuku_manage_apps">管一管授权的应用喵</string>
+    <string name="settings_app_title">应用名字喵</string>
     <string name="app_title_custom">自定义喵</string>
     <string name="settings_custom_app_title">设置应用名字喵</string>
     <string name="custom_app_title_dialog_title">自定义应用名称喵</string>
@@ -802,8 +818,12 @@ KernelPatch 需要修补 boot 镜像才能工作喵。
 
     <string name="kpm_autoload_add_kpm">加KPM喵！</string>
     <string name="kpm_autoload_remove_kpm">删掉喵！</string>
-    <string name="kpm_autoload_edit_kpm">编辑</string>
-    <string name="kpm_autoload_edit_dialog_title">编辑 KPM</string>    <string name="kpm_autoload_event_label">事件:</string>    <string name="kpm_autoload_args_label">参数:</string>    <string name="kpm_autoload_event_service">service</string>    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
+    <string name="kpm_autoload_edit_kpm">编辑喵</string>
+    <string name="kpm_autoload_edit_dialog_title">编辑 KPM 喵</string>
+    <string name="kpm_autoload_event_label">事件喵：</string>
+    <string name="kpm_autoload_args_label">参数喵：</string>
+    <string name="kpm_autoload_event_service">service</string>
+    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
     <string name="kpm_autoload_kpm_list_title">内核补丁模块列表喵</string>
     <string name="kpm_autoload_no_kpm_added">没加内核补丁模块喵！</string>
     <string name="kpm_autoload_kpm_path">KPM路径喵</string>
@@ -950,9 +970,9 @@ KernelPatch 需要修补 boot 镜像才能工作喵。
 
     <string name="settings_theme_mode">模式配置喵</string>
     <string name="settings_theme_mode_summary">在内置主题商店和浏览器兼容模式之间切换喵</string>
-    <string name="theme_mode_builtin">内置模式</string>
+    <string name="theme_mode_builtin">内置模式喵</string>
     <string name="theme_mode_builtin_desc">使用内置主题商店浏览、下载和应用主题喵</string>
-    <string name="theme_mode_compat">兼容模式</string>
+    <string name="theme_mode_compat">兼容模式喵</string>
     <string name="theme_mode_compat_desc">使用浏览器直接下载主题喵（适用于导入有问题的设备）</string>
     <string name="theme_mode_onboarding_title">选择主题模式喵</string>
     <string name="theme_mode_onboarding_msg">您希望如何浏览和安装主题呢喵？可以在设置中随时更改哒</string>
@@ -972,8 +992,8 @@ KernelPatch 需要修补 boot 镜像才能工作喵。
     <string name="settings_appearance_night_mode_summary">深色主题和颜色配置喵</string>
     <string name="settings_amoled_theme">AMOLED 纯黑主题喵</string>
     <string name="settings_amoled_theme_desc">为深色模式使用纯黑背景喵</string>
-    <string name="settings_switch_icon">启用按钮指示器</string>
-    <string name="settings_switch_icon_desc">为开关按钮添加状态指示图标</string>
+    <string name="settings_switch_icon">启用按钮指示器喵</string>
+    <string name="settings_switch_icon_desc">为开关按钮添加状态指示图标喵</string>
     <string name="settings_discrete_slider">离散滑块喵</string>
     <string name="settings_discrete_slider_desc">在滑块轨道上显示刻度标记喵</string>
     <string name="settings_category_behavior">行为喵</string>
@@ -1058,6 +1078,12 @@ KernelPatch 需要修补 boot 镜像才能工作喵。
     <string name="settings_list_info_show_icons_summary">在信息卡片中为每个信息项显示前置图标喵</string>
     <string name="settings_custom_badge_text">自选角标文字喵</string>
     <string name="settings_custom_badge_text_summary">修改角标的文字显示，仅供娱乐喵</string>
+    <string name="settings_custom_badge_text_built_in">内置喵</string>
+    <string name="settings_custom_badge_text_full_half">Full/Half（默认）</string>
+    <string name="settings_custom_badge_text_gki">GKI</string>
+    <string name="settings_custom_badge_text_lkm">LKM</string>
+    <string name="settings_custom_badge_text_n_gki">N-GKI</string>
+    <string name="settings_custom_badge_text_oki">OKI</string>
 
     <!-- Install Mode Select -->
     <string name="kp_install_methods">KernelPatch修补/安装喵</string>
@@ -1067,6 +1093,10 @@ KernelPatch 需要修补 boot 镜像才能工作喵。
     <string name="su_restore_list">还原列表喵</string>
     <string name="backup_success">备份成功啦喵！</string>
     <string name="restore_success">还原成功啦喵！</string>
+    <string name="backup_failed">备份失败了喵：%s</string>
+    <string name="restore_failed">还原失败了喵：%s</string>
+    <string name="delete_success">删掉啦喵！</string>
+    <string name="delete_failed">删除失败了喵：%s</string>
 
     <!-- Badge Count Settings -->
     <string name="enable_badge_count">角标统计设置喵</string>
@@ -1127,6 +1157,18 @@ KernelPatch 需要修补 boot 镜像才能工作喵。
     <string name="close">关闭喵</string>
     <string name="settings_backup_password">备份密码喵</string>
     <string name="settings_backup_password_hint">输入备份密码喵</string>
+    <string name="settings_auto_backup">自动备份喵</string>
+    <string name="settings_auto_backup_summary">每天自动备份一次喵</string>
+    <string name="settings_backup_now">现在备份喵！</string>
+    <string name="settings_restore_backup">还原备份喵</string>
+    <string name="settings_delete_remote_backup">删云端备份喵</string>
+    <string name="settings_encrypt_backup">加密备份喵</string>
+    <string name="settings_encrypt_backup_summary">用密码把备份文件加密起来喵</string>
+    <string name="settings_test_webdav">测一下 WebDAV 连接喵</string>
+    <string name="settings_webdav_url">WebDAV 地址喵</string>
+    <string name="settings_webdav_username">WebDAV 用户名喵</string>
+    <string name="settings_webdav_password">WebDAV 密码喵</string>
+    <string name="delete_remote_backup_confirm">确定要把云端备份删掉吗喵？删了可找不回来哦！</string>
 
     <string name="patch_output_written_to"> 修补成功喵，文件输出到 </string>
     <string name="patch_write_failed"> 修补失败喵，发生了致命错误</string>
@@ -1173,7 +1215,7 @@ KernelPatch 需要修补 boot 镜像才能工作喵。
     <string name="umount_config_paths_label">挂载点路径（每行一个）喵</string>
     <string name="umount_config_paths_placeholder">/system/vendor/app\n/system/vendor/priv-app</string>
     <string name="umount_config_paths_helper">每行输入一个需要卸载的挂载点路径喵</string>
-    <string name="umount_config_save">保存</string>
+    <string name="umount_config_save">保存喵</string>
     <string name="umount_config_save_confirm">确认保存配置喵？</string>
     <string name="umount_config_save_success">配置保存成功喵</string>
     <string name="umount_config_save_failed">配置保存失败喵</string>
@@ -1212,6 +1254,10 @@ KernelPatch 需要修补 boot 镜像才能工作喵。
     <string name="theme_download_finalizing">正在完成喵...</string>
     <string name="settings_predictive_back">预测性返回手势喵</string>
     <string name="settings_predictive_back_summary">启用 Android 14+ 的预测性返回手势动画喵</string>
+    <string name="theme_download">下载喵</string>
+    <string name="theme_install">安装喵</string>
+    <string name="theme_install_failed">安装失败了喵</string>
+    <string name="theme_install_success">安装成功啦喵！</string>
 
     <string name="home_device_status_battery_charging">充电中喵</string>
     <string name="home_device_status_cpu_temp">CPU温度喵</string>
@@ -1242,6 +1288,7 @@ KernelPatch 需要修补 boot 镜像才能工作喵。
     <string name="settings_path_hide">路径隐藏喵</string>
     <string name="settings_path_hide_summary">在内核层面隐藏文件和目录不让应用看到喵</string>
     <string name="path_hide_paths_label">隐藏路径（每行一个）喵</string>
+    <string name="path_hide_paths_placeholder">/storage/emulated/0/file.txt\n/storage/emulated/0/folder</string>
 
     <string name="path_hide_paths_helper">每行输入一个路径喵，匹配的路径会返回文件不存在喵</string>
     <string name="path_hide_save">保存喵</string>
@@ -1319,6 +1366,13 @@ KernelPatch 需要修补 boot 镜像才能工作喵。
     <string name="settings_focus_card_device">设备状态卡片喵</string>
     <string name="settings_focus_card_storage">存储卡片喵</string>
     <string name="settings_focus_card_wallpaper_selected">已设置壁纸喵</string>
+    <string name="focus_card_background_title">卡片壁纸喵</string>
+    <string name="focus_card_background_clear">清卡片壁纸喵</string>
+    <string name="focus_card_background_clear_confirm">确定要清掉这张卡片的壁纸吗喵？</string>
+    <string name="focus_card_background_saved">卡片壁纸存好了喵</string>
+    <string name="focus_card_background_error">卡片壁纸存失败了喵</string>
+    <string name="focus_card_background_cleared">卡片壁纸清掉了喵</string>
+    <string name="focus_card_permission_required">要先给存储权限才能选壁纸喵！</string>
     <string name="dashboard_card_background_title">仪表盘卡片壁纸喵</string>
     <string name="settings_dashboard_card_background">仪表盘卡片壁纸喵</string>
     <string name="settings_dashboard_card_background_enabled">仪表盘壁纸已开启喵，长按仪表盘卡片管理壁纸喵</string>
