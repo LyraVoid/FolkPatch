@@ -25,7 +25,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
-import com.ramcosta.composedestinations.generated.destinations.PluginScreenDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
@@ -66,7 +65,6 @@ fun ModuleSettingsScreen(navigator: DestinationsNavigator, highlightKey: String?
                     aPatchReady = aPatchReady,
                     flat = flat,
                     highlightKey = highlightKey,
-                    onOpenPlugins = { navigator.navigate(PluginScreenDestination) },
                 )
             }
             item { Spacer(Modifier.height(8.dp)) }
