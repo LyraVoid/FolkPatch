@@ -41,6 +41,15 @@
 -keep class rikka.shizuku.server.** { *; }
 -keep class moe.shizuku.server.** { *; }
 -keep class moe.shizuku.api.BinderContainer { *; }
+# ServiceStarter is launched by app_process via a hardcoded class-name string in
+# the generated user-service command; obfuscating it breaks UserService launch.
+-keep class moe.shizuku.starter.** { *; }
+
+# Custom Shizuku provider (referenced by the manifest)
+-keep class me.bmax.apatch.util.ShizukuManagerProvider { *; }
+
+# Legacy REQUEST_BINDER broadcast receiver (referenced by the manifest)
+-keep class me.bmax.apatch.receiver.ShizukuReceiver { *; }
 -keep class moe.shizuku.common.util.** { *; }
 -keep class rikka.rish.** { *; }
 -keep class rikka.hidden.compat.** { *; }
