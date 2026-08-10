@@ -416,6 +416,11 @@ tasks.configureEach {
     if (name == "mergeDebugJniLibFolders" || name == "mergeReleaseJniLibFolders") {
         dependsOn("buildApd")
     }
+    // fpdrop 由 CMake 编译并经 POST_BUILD 拷贝到 src/main/assets，
+    // 需在 assets 合并前完成，否则首次构建会缺文件。
+    if (name == "mergeDebugAssets" || name == "mergeReleaseAssets") {
+        dependsOn("externalNativeBuildDebug", "externalNativeBuildRelease")
+    }
 }
 
 tasks.register<Exec>("cargoClean") {

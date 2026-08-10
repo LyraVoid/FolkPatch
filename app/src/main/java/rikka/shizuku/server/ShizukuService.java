@@ -112,6 +112,9 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
         configManager = getConfigManager();
         clientManager = getClientManager();
 
+        // 分权控制：user service 启动时按调用方 uid 的 shellOnly 标记决定是否降权到 shell
+        getUserServiceManager().setConfigManager(configManager);
+
         ApkChangedObservers.start(ai.sourceDir, () -> {
             if (getManagerApplicationInfo() == null) {
                 LOGGER.w("manager app is uninstalled in user 0, exiting...");
@@ -477,7 +480,21 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
             }
 
         }
-        return new ParcelableListSlice<>(list);
+
+        // 克隆/多用户下同名应用会以不同 uid（差 100000*userId）出现多次，按包名去重，
+        // 优先保留主用户（低 userId）的实例，避免列表重复且跨用户图标/标签加载失败。
+        java.util.LinkedHashMap<String, PackageInfo> deduped = new java.util.LinkedHashMap<>();
+        for (PackageInfo pi : list) {
+            if (pi.applicationInfo == null) continue;
+            PackageInfo existing = deduped.get(pi.packageName);
+            if (existing == null) {
+                deduped.put(pi.packageName, pi);
+            } else if (UserHandleCompat.getUserId(pi.applicationInfo.uid)
+                    < UserHandleCompat.getUserId(existing.applicationInfo.uid)) {
+                deduped.put(pi.packageName, pi);
+            }
+        }
+        return new ParcelableListSlice<>(new ArrayList<>(deduped.values()));
     }
 
     @Override
@@ -489,6 +506,32 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
             ParcelableListSlice<PackageInfo> result = getApplications(userId);
             reply.writeNoException();
             result.writeToParcel(reply, android.os.Parcelable.PARCELABLE_WRITE_RETURN_VALUE);
+            return true;
+        } else if (code == ServerConstants.BINDER_TRANSACTION_getShellOnly) {
+            data.enforceInterface(ShizukuApiConstants.BINDER_DESCRIPTOR);
+            if (UserHandleCompat.getAppId(Binder.getCallingUid()) != managerAppId) {
+                throw new SecurityException("getShellOnly is allowed to be called only from the manager");
+            }
+            int uid = data.readInt();
+            reply.writeNoException();
+            reply.writeInt(configManager.getShellOnly(uid) ? 1 : 0);
+            return true;
+        } else if (code == ServerConstants.BINDER_TRANSACTION_setShellOnly) {
+            data.enforceInterface(ShizukuApiConstants.BINDER_DESCRIPTOR);
+            if (UserHandleCompat.getAppId(Binder.getCallingUid()) != managerAppId) {
+                throw new SecurityException("setShellOnly is allowed to be called only from the manager");
+            }
+            int uid = data.readInt();
+            boolean shellOnly = data.readInt() != 0;
+            configManager.setShellOnly(uid, shellOnly);
+            // user service 是独立常驻进程，按启动时的权限运行；改开关后主动销毁，
+            // 让该应用重新连接时以新权限（root / shell）重建，避免"重启才生效"。
+            for (ClientRecord record : clientManager.findClients(uid)) {
+                getUserServiceManager().removeUserServicesForPackage(record.packageName);
+                LOGGER.i("setShellOnly(%d, %s): restart user services for %s",
+                        uid, Boolean.toString(shellOnly), record.packageName);
+            }
+            reply.writeNoException();
             return true;
         }
         return super.onTransact(code, data, reply, flags);

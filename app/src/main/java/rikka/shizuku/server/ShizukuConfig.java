@@ -25,12 +25,16 @@ public class ShizukuConfig {
         @SerializedName("flags")
         public int flags;
 
+        @SerializedName("shellOnly")
+        public boolean shellOnly;
+
         @SerializedName("packages")
         public List<String> packages;
 
         public PackageEntry(int uid, int flags) {
             this.uid = uid;
             this.flags = flags;
+            this.shellOnly = false;
             this.packages = new ArrayList<>();
         }
 

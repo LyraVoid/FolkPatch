@@ -581,7 +581,21 @@ KernelPatch は boot イメージをパッチする必要があります。
     <string name="shizuku_permission_allow_once_summary">今回のみ許可</string>
     <string name="shizuku_permission_deny_summary">アクセスを拒否</string>
     <string name="shizuku_permission_binder_timeout">Shizuku サービスに接続できません。サービスを再起動して再試行してください</string>
+    <string name="shizuku_management_title">Shizuku 権限管理</string>
+    <string name="shizuku_management_empty">Shizuku 対応アプリが見つかりません</string>
+    <string name="shizuku_management_unavailable">Shizuku サービスが実行されていません</string>
+    <string name="shizuku_management_load_failed">権限付与済みアプリの読み込みに失敗しました</string>
+    <string name="shizuku_management_uid">UID %1$d</string>
+    <string name="shizuku_management_granted">許可済み</string>
+    <string name="shizuku_management_denied">未許可</string>
     <string name="shizuku_management_update_failed">認可の更新に失敗しました</string>
+    <string name="shizuku_management_root_access">Root アクセス</string>
+    <string name="shizuku_management_allowed_title">Shizuku アクセス</string>
+    <string name="shizuku_management_root_access_desc">コマンドを root として実行します。オフにすると shell（UID 2000）として実行され、保護されたデータを読み取れません。</string>
+    <string name="shizuku_management_badge_allowed">許可</string>
+    <string name="shizuku_management_badge_denied">拒否</string>
+    <string name="shizuku_management_badge_root">ROOT</string>
+    <string name="shizuku_management_badge_shell">SHELL</string>
 <!-- Umount Service -->
     <string name="settings_umount_service">Umount Service</string>
     <string name="settings_umount_service_summary">起動時に自動アンマウントするマウントポイントを構成します。</string>

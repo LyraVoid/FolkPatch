@@ -16,9 +16,11 @@ import android.content.pm.PackageInfo;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.system.Os;
 import android.text.format.DateUtils;
 import android.util.ArrayMap;
 
+import java.io.File;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,7 +45,14 @@ public abstract class UserServiceManager {
     private final Map<String, UserServiceRecord> userServiceRecords = Collections.synchronizedMap(new ArrayMap<>());
     private final Map<String, List<UserServiceRecord>> packageUserServiceRecords = Collections.synchronizedMap(new ArrayMap<>());
 
+    private ConfigManager configManager;
+
     public UserServiceManager() {
+    }
+
+    /** 注入 ConfigManager，用于分权控制（user service 是否按调用方标记降权执行）。 */
+    public void setConfigManager(ConfigManager configManager) {
+        this.configManager = configManager;
     }
 
     public PackageInfo ensureCallingPackageForUserService(String packageName, int appId, int userId) {
@@ -218,9 +227,23 @@ public abstract class UserServiceManager {
         LOGGER.v("Starting process for service record %s (%s)...", key, token);
 
         String cmd = getUserServiceStartCmd(record, key, token, packageName, classname, processNameSuffix, callingUid, use32Bits && AbiUtil.has32Bit(), debug);
+
+        // 分权控制：server 以 root 运行时，对标记 shellOnly 的应用，其 user service 进程降权为 shell 运行
+        boolean shellOnly = configManager != null
+                && configManager.isShellOnly(callingUid)
+                && Os.getuid() == 0
+                && new File("/data/local/tmp/fpdrop").canExecute();
+
         int exitCode;
         try {
-            java.lang.Process process = Runtime.getRuntime().exec("sh");
+            java.lang.Process process;
+            if (shellOnly) {
+                LOGGER.i("startUserService: downgrade uid %d to shell (2000)", callingUid);
+                // fpdrop 真正降为 shell 权限（uid/gid=2000、capability 清空），脚本经 stdin 执行
+                process = Runtime.getRuntime().exec(new String[]{"/data/local/tmp/fpdrop", "2000", "2000", "--", "sh"});
+            } else {
+                process = Runtime.getRuntime().exec("sh");
+            }
             OutputStream os = process.getOutputStream();
             os.write(cmd.getBytes());
             os.flush();

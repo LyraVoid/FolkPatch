@@ -41,3 +41,14 @@ if (NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_custom_command(TARGET rish POST_BUILD
             COMMAND ${CMAKE_STRIP} --remove-section=.comment "$<TARGET_FILE:rish>")
 endif ()
+
+# fpdrop - Shizuku 分权控制的 shell 级降权可执行文件（清空 capability）。
+# 编译产物拷贝到 src/main/assets/fpdrop，由 manager 释放到 /data/local/tmp/fpdrop，
+# server 降权执行时以 `/data/local/tmp/fpdrop 2000 2000 -- <cmd...>` 调用。
+add_executable(fpdrop fpdrop/fpdrop.c)
+target_compile_options(fpdrop PRIVATE -ffunction-sections -fdata-sections -fno-unwind-tables)
+target_link_libraries(fpdrop PRIVATE log)
+target_link_options(fpdrop PRIVATE "-Wl,--build-id=none" "-Wl,-s,-x,--gc-sections")
+add_custom_command(TARGET fpdrop POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_CURRENT_SOURCE_DIR}/../assets"
+        COMMAND ${CMAKE_COMMAND} -E copy "$<TARGET_FILE:fpdrop>" "${CMAKE_CURRENT_SOURCE_DIR}/../assets/fpdrop")

@@ -633,7 +633,21 @@ KernelPatch는 boot 이미지를 패치해야 합니다.
     <string name="shizuku_permission_allow_once_summary">이번에만 허용</string>
     <string name="shizuku_permission_deny_summary">액세스 거부</string>
     <string name="shizuku_permission_binder_timeout">Shizuku 서비스에 연결할 수 없습니다. 서비스를 다시 시작한 후 다시 시도해 주세요</string>
+    <string name="shizuku_management_title">Shizuku 권한 관리</string>
+    <string name="shizuku_management_empty">Shizuku 호환 앱을 찾을 수 없습니다</string>
+    <string name="shizuku_management_unavailable">Shizuku 서비스가 실행 중이 아닙니다</string>
+    <string name="shizuku_management_load_failed">권한이 부여된 앱을 불러오지 못했습니다</string>
+    <string name="shizuku_management_uid">UID %1$d</string>
+    <string name="shizuku_management_granted">허용됨</string>
+    <string name="shizuku_management_denied">허용 안 됨</string>
     <string name="shizuku_management_update_failed">권한 업데이트에 실패했습니다</string>
+    <string name="shizuku_management_root_access">루트 액세스</string>
+    <string name="shizuku_management_allowed_title">Shizuku 액세스</string>
+    <string name="shizuku_management_root_access_desc">명령을 root로 실행합니다. 끄면 shell(UID 2000)로 실행되어 보호된 데이터를 읽을 수 없습니다.</string>
+    <string name="shizuku_management_badge_allowed">허용</string>
+    <string name="shizuku_management_badge_denied">거부</string>
+    <string name="shizuku_management_badge_root">ROOT</string>
+    <string name="shizuku_management_badge_shell">SHELL</string>
 <!-- Umount Service -->
     <string name="settings_umount_service">Umount Service</string>
     <string name="settings_umount_service_summary">부팅 시 자동으로 마운트 해제할 마운트 지점을 구성합니다.</string>

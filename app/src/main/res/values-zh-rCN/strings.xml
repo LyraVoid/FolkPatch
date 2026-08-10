@@ -619,6 +619,13 @@ KernelPatch 需要修补 boot 镜像。
     <string name="shizuku_management_granted">已允许</string>
     <string name="shizuku_management_denied">未允许</string>
     <string name="shizuku_management_update_failed">授权更新失败</string>
+    <string name="shizuku_management_root_access">Root 权限</string>
+    <string name="shizuku_management_allowed_title">Shizuku 访问</string>
+    <string name="shizuku_management_root_access_desc">以 root 权限运行命令。关闭后将以 shell（UID 2000）运行，无法读取受保护数据。</string>
+    <string name="shizuku_management_badge_allowed">已授权</string>
+    <string name="shizuku_management_badge_denied">未授权</string>
+    <string name="shizuku_management_badge_root">ROOT</string>
+    <string name="shizuku_management_badge_shell">SHELL</string>
     <string name="shizuku_permission_title">允许 %1$s 使用 Shizuku 吗？</string>
     <string name="shizuku_permission_message">该应用将通过 Shizuku 以 root 权限调用系统 API</string>
     <string name="shizuku_permission_allow">允许</string>

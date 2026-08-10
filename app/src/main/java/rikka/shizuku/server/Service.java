@@ -307,19 +307,52 @@ public abstract class Service<
     public final IRemoteProcess newProcess(String[] cmd, String[] env, String dir) {
         enforceCallingPermission("newProcess");
 
-        LOGGER.d("newProcess: uid=%d, cmd=%s, env=%s, dir=%s", Binder.getCallingUid(), Arrays.toString(cmd), Arrays.toString(env), dir);
+        int callingUid = Binder.getCallingUid();
+        LOGGER.d("newProcess: uid=%d, cmd=%s, env=%s, dir=%s", callingUid, Arrays.toString(cmd), Arrays.toString(env), dir);
+
+        // 分权控制：server 以 root 运行时，对标记 shellOnly 的应用降权为 shell (uid 2000) 执行，
+        // 避免部分应用（如 MT 管理器）在 root 权限下卡死；未标记的应用保持 root 能力。
+        String[] execCmd = cmd;
+        if (Os.getuid() == 0 && getConfigManager().isShellOnly(callingUid) && canUseFpDrop()) {
+            LOGGER.i("newProcess: downgrade uid %d to shell (2000)", callingUid);
+            execCmd = buildShellOnlyCommand(cmd);
+        }
 
         java.lang.Process process;
         try {
-            process = Runtime.getRuntime().exec(cmd, env, dir != null ? new File(dir) : null);
+            process = Runtime.getRuntime().exec(execCmd, env, dir != null ? new File(dir) : null);
         } catch (IOException e) {
             throw new IllegalStateException(e.getMessage());
         }
 
-        ClientRecord clientRecord = clientManager.findClient(Binder.getCallingUid(), Binder.getCallingPid());
+        ClientRecord clientRecord = clientManager.findClient(callingUid, Binder.getCallingPid());
         IBinder token = clientRecord != null ? clientRecord.client.asBinder() : null;
 
         return new RemoteProcessHolder(process, token);
+    }
+
+    /**
+     * fpdrop 降权工具是否可用。缺失（如手动启动 server）时降级为直接以当前身份执行，
+     * 避免因工具未部署导致命令执行失败。
+     */
+    private static boolean canUseFpDrop() {
+        File fpDrop = new File("/data/local/tmp/fpdrop");
+        return fpDrop.isFile() && fpDrop.canExecute();
+    }
+
+    /**
+     * 把 cmd 包装为 `fpdrop 2000 2000 -- <cmd>`：真正降为 shell 权限执行
+     * （uid/gid=2000 且清空 capability），避免 APatch `su 2000` 保留特权 cap
+     * 导致降权形同虚设。
+     */
+    private static String[] buildShellOnlyCommand(String[] cmd) {
+        String[] out = new String[cmd.length + 4];
+        out[0] = "/data/local/tmp/fpdrop";
+        out[1] = "2000";
+        out[2] = "2000";
+        out[3] = "--";
+        System.arraycopy(cmd, 0, out, 4, cmd.length);
+        return out;
     }
 
     @CallSuper

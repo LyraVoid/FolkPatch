@@ -5,9 +5,11 @@ import android.content.pm.PackageInfo
 import android.os.Parcel
 import android.util.Log
 import me.bmax.apatch.APApplication
+import me.bmax.apatch.apApp
 import rikka.parcelablelist.ParcelableListSlice
 import rikka.shizuku.Shizuku
 import rikka.shizuku.server.ServerConstants
+import java.io.File
 
 /**
  * Shizuku 服务管理器。
@@ -99,6 +101,10 @@ object ShizukuServiceManager {
                 Log.e(TAG, "start failed: root not available")
                 return false
             }
+            if (!ensureFpDrop()) {
+                Log.e(TAG, "start failed: cannot deploy fpdrop")
+                return false
+            }
             val apkPath = context.applicationInfo.sourceDir
             if (apkPath.isBlank()) {
                 Log.e(TAG, "start failed: apk path is blank")
@@ -155,6 +161,32 @@ object ShizukuServiceManager {
      * 等待 root 可用（开机早期或 root 授权未就绪时 root shell 可能尚未就绪）。
      * @return timeoutMs 内 root 是否可用
      */
+    /**
+     * 释放降权工具 fpdrop 到 /data/local/tmp（root 可执行）。
+     * server 对标记 shellOnly 的应用执行命令时用 fpdrop 真正降为 shell 权限。
+     */
+    private fun ensureFpDrop(): Boolean {
+        return try {
+            val bytes = contextForAssets().assets.open("fpdrop").readBytes()
+            val local = File(contextForAssets().cacheDir, "fpdrop")
+            local.writeBytes(bytes)
+            val result = getRootShell().newJob()
+                .add("mkdir -p /data/local/tmp")
+                .add("cp '$local.absolutePath' /data/local/tmp/fpdrop")
+                .add("chmod 755 /data/local/tmp/fpdrop")
+                .exec()
+            if (!result.isSuccess) {
+                Log.e(TAG, "ensureFpDrop failed: ${result.err.joinToString()}")
+            }
+            result.isSuccess
+        } catch (t: Throwable) {
+            Log.e(TAG, "ensureFpDrop crashed", t)
+            false
+        }
+    }
+
+    private fun contextForAssets(): Context = apApp
+
     fun waitForRoot(timeoutMs: Long): Boolean {
         val deadline = System.currentTimeMillis() + timeoutMs
         while (System.currentTimeMillis() < deadline) {
@@ -236,5 +268,55 @@ object ShizukuServiceManager {
 
     fun setAllowed(uid: Int, allowed: Boolean) {
         Shizuku.updateFlagsForUid(uid, MASK_PERMISSION, if (allowed) FLAG_ALLOWED else 0)
+    }
+
+    /**
+     * 分权控制：该 uid 的应用是否降级为 shell (uid 2000) 执行。
+     * 仅当 server 以 root 运行时才有区分意义；shell 模式下所有命令天然是 shell 权限。
+     */
+    fun getShellOnly(uid: Int): Boolean {
+        if (!Shizuku.pingBinder()) return false
+        val data = Parcel.obtain()
+        val reply = Parcel.obtain()
+        return try {
+            data.writeInterfaceToken("moe.shizuku.server.IShizukuService")
+            data.writeInt(uid)
+            Shizuku.getBinder()!!.transact(ServerConstants.BINDER_TRANSACTION_getShellOnly, data, reply, 0)
+            reply.readException()
+            reply.readInt() != 0
+        } catch (t: Throwable) {
+            Log.e(TAG, "getShellOnly failed", t)
+            false
+        } finally {
+            reply.recycle()
+            data.recycle()
+        }
+    }
+
+    fun setShellOnly(uid: Int, shellOnly: Boolean) {
+        if (!Shizuku.pingBinder()) return
+        val data = Parcel.obtain()
+        val reply = Parcel.obtain()
+        try {
+            data.writeInterfaceToken("moe.shizuku.server.IShizukuService")
+            data.writeInt(uid)
+            data.writeInt(if (shellOnly) 1 else 0)
+            Shizuku.getBinder()!!.transact(ServerConstants.BINDER_TRANSACTION_setShellOnly, data, reply, 0)
+            reply.readException()
+        } catch (t: Throwable) {
+            Log.e(TAG, "setShellOnly failed", t)
+        } finally {
+            reply.recycle()
+            data.recycle()
+        }
+    }
+
+    /** server 是否以 root (uid 0) 运行（决定分权开关是否有意义）。 */
+    fun isRootServer(): Boolean {
+        return try {
+            Shizuku.pingBinder() && Shizuku.getUid() == 0
+        } catch (t: Throwable) {
+            false
+        }
     }
 }

@@ -642,6 +642,13 @@ Here are some possible reasons for authentication failure—please check which o
     <string name="shizuku_management_granted">Allowed</string>
     <string name="shizuku_management_denied">Not allowed</string>
     <string name="shizuku_management_update_failed">Failed to update authorization</string>
+    <string name="shizuku_management_root_access">Root access</string>
+    <string name="shizuku_management_allowed_title">Shizuku access</string>
+    <string name="shizuku_management_root_access_desc">Run commands as root. Turn off to run as shell (UID 2000), which cannot read protected data.</string>
+    <string name="shizuku_management_badge_allowed">ALLOWED</string>
+    <string name="shizuku_management_badge_denied">DENIED</string>
+    <string name="shizuku_management_badge_root">ROOT</string>
+    <string name="shizuku_management_badge_shell">SHELL</string>
     <string name="shizuku_permission_title">Allow %1$s to use Shizuku?</string>
     <string name="shizuku_permission_message">The app will be able to call system APIs with root privileges through Shizuku.</string>
     <string name="shizuku_permission_allow">Allow</string>

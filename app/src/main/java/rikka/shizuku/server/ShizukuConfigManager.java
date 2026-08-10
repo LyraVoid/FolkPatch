@@ -269,4 +269,32 @@ public class ShizukuConfigManager extends ConfigManager {
             removeLocked(uid);
         }
     }
+
+    @Override
+    public boolean isShellOnly(int uid) {
+        ShizukuConfig.PackageEntry entry = find(uid);
+        return entry != null && entry.shellOnly;
+    }
+
+    /** 读取分权标记（manager-only 调用）。 */
+    public boolean getShellOnly(int uid) {
+        ShizukuConfig.PackageEntry entry = find(uid);
+        return entry != null && entry.shellOnly;
+    }
+
+    /** 设置分权标记（manager-only 调用）：true 表示该 uid 降级为 shell 权限执行。 */
+    public void setShellOnly(int uid, boolean shellOnly) {
+        synchronized (this) {
+            ShizukuConfig.PackageEntry entry = findLocked(uid);
+            if (entry == null) {
+                entry = new ShizukuConfig.PackageEntry(uid, 0);
+                config.packages.add(entry);
+            }
+            if (entry.shellOnly == shellOnly) {
+                return;
+            }
+            entry.shellOnly = shellOnly;
+            scheduleWriteLocked();
+        }
+    }
 }
