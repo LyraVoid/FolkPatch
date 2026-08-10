@@ -35,9 +35,14 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 import kotlin.collections.ArraysKt;
 import moe.shizuku.api.BinderContainer;
@@ -82,6 +87,52 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
         return PackageManagerApis.getApplicationInfoNoThrow(MANAGER_APPLICATION_ID, 0, 0);
     }
 
+    /**
+     * server 端自部署降权工具 fpdrop 到 /data/local/tmp。
+     * 已存在且可执行时跳过；否则从 manager APK 的 assets 中提取写入（原子 rename），
+     * 失败仅记录日志，不影响 server 启动（fpdrop 缺失时 newProcess 降级为直接执行）。
+     */
+    private static void ensureFpDrop() {
+        File fpDrop = new File("/data/local/tmp/fpdrop");
+        if (fpDrop.isFile() && fpDrop.canExecute()) {
+            return;
+        }
+        try {
+            ApplicationInfo ai = getManagerApplicationInfo();
+            if (ai == null || ai.sourceDir == null) {
+                LOGGER.w("ensureFpDrop: no manager apk path");
+                return;
+            }
+            try (ZipFile zip = new ZipFile(ai.sourceDir)) {
+                ZipEntry entry = zip.getEntry("assets/fpdrop");
+                if (entry == null) {
+                    LOGGER.w("ensureFpDrop: assets/fpdrop not found in " + ai.sourceDir);
+                    return;
+                }
+                File tmp = new File("/data/local/tmp/fpdrop.tmp");
+                try (InputStream in = zip.getInputStream(entry); FileOutputStream out = new FileOutputStream(tmp)) {
+                    byte[] buf = new byte[8192];
+                    int n;
+                    while ((n = in.read(buf)) != -1) {
+                        out.write(buf, 0, n);
+                    }
+                }
+                if (!tmp.setExecutable(true, false) || !tmp.setReadable(true, false)) {
+                    LOGGER.w("ensureFpDrop: failed to set exec/read permission");
+                }
+                if (!tmp.renameTo(fpDrop)) {
+                    LOGGER.w("ensureFpDrop: rename to " + fpDrop + " failed");
+                    //noinspection ResultOfMethodCallIgnored
+                    tmp.delete();
+                    return;
+                }
+                LOGGER.i("fpdrop deployed by server to " + fpDrop);
+            }
+        } catch (Throwable tr) {
+            LOGGER.w(tr, "ensureFpDrop (server)");
+        }
+    }
+
     @SuppressWarnings({"FieldCanBeLocal"})
     private final Handler mainHandler = new Handler(Looper.myLooper());
     //private final Context systemContext = HiddenApiBridge.getSystemContext();
@@ -114,6 +165,10 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
 
         // 分权控制：user service 启动时按调用方 uid 的 shellOnly 标记决定是否降权到 shell
         getUserServiceManager().setConfigManager(configManager);
+
+        // server 端自部署降权工具 fpdrop：manager 提前部署失败（如 /data/local/tmp 不可写、
+        // root shell 读 app cache 被拒等）时，由 server（root）直接兜底，保证分权可用。
+        ensureFpDrop();
 
         ApkChangedObservers.start(ai.sourceDir, () -> {
             if (getManagerApplicationInfo() == null) {

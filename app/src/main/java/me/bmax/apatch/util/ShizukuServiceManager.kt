@@ -3,13 +3,13 @@ package me.bmax.apatch.util
 import android.content.Context
 import android.content.pm.PackageInfo
 import android.os.Parcel
+import android.util.Base64
 import android.util.Log
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.apApp
 import rikka.parcelablelist.ParcelableListSlice
 import rikka.shizuku.Shizuku
 import rikka.shizuku.server.ServerConstants
-import java.io.File
 
 /**
  * Shizuku 服务管理器。
@@ -101,9 +101,10 @@ object ShizukuServiceManager {
                 Log.e(TAG, "start failed: root not available")
                 return false
             }
+            // 部署降权工具 fpdrop。失败不阻塞启动：server 端在 fpdrop 缺失时会
+            // 降级为直接以当前身份执行命令，功能可用（仅分权不生效）。
             if (!ensureFpDrop()) {
-                Log.e(TAG, "start failed: cannot deploy fpdrop")
-                return false
+                Log.w(TAG, "fpdrop deploy failed, Shizuku will run without per-app root control")
             }
             val apkPath = context.applicationInfo.sourceDir
             if (apkPath.isBlank()) {
@@ -162,21 +163,23 @@ object ShizukuServiceManager {
      * @return timeoutMs 内 root 是否可用
      */
     /**
-     * 释放降权工具 fpdrop 到 /data/local/tmp（root 可执行）。
-     * server 对标记 shellOnly 的应用执行命令时用 fpdrop 真正降为 shell 权限。
+     * 部署降权工具 fpdrop 到 /data/local/tmp（root 可执行）。
+     * 用 base64 经内存直写，避免 root shell 读取 app 私有 cache（app_data_file）
+     * 被部分 su 实现（如 KernelSU/KernelPatch 的受限 context）拒绝。
      */
     private fun ensureFpDrop(): Boolean {
         return try {
             val bytes = contextForAssets().assets.open("fpdrop").readBytes()
-            val local = File(contextForAssets().cacheDir, "fpdrop")
-            local.writeBytes(bytes)
+            val b64 = Base64.encodeToString(bytes, Base64.NO_WRAP)
             val result = getRootShell().newJob()
                 .add("mkdir -p /data/local/tmp")
-                .add("cp '$local.absolutePath' /data/local/tmp/fpdrop")
+                .add("echo '$b64' | base64 -d > /data/local/tmp/fpdrop")
                 .add("chmod 755 /data/local/tmp/fpdrop")
                 .exec()
             if (!result.isSuccess) {
                 Log.e(TAG, "ensureFpDrop failed: ${result.err.joinToString()}")
+            } else {
+                Log.i(TAG, "fpdrop deployed (${bytes.size} bytes)")
             }
             result.isSuccess
         } catch (t: Throwable) {
