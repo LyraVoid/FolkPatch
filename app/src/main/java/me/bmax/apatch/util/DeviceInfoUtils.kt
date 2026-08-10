@@ -24,23 +24,28 @@ fun getSELinuxStatus(): String {
 
     LaunchedEffect(Unit) {
         withContext(Dispatchers.IO) {
-            val shell = Shell.Builder.create().build("sh")
-            val list = ArrayList<String>()
-            val result = shell.newJob().add("getenforce").to(list, list).exec()
-            val output = result.out.joinToString("\n").trim()
-            shell.close()
+            try {
+                val shell = Shell.Builder.create().build("sh")
+                val list = ArrayList<String>()
+                val result = shell.newJob().add("getenforce").to(list, list).exec()
+                val output = result.out.joinToString("\n").trim()
+                shell.close()
 
-            status = if (result.isSuccess) {
-                when (output) {
-                    "Enforcing" -> enforcing
-                    "Permissive" -> permissive
-                    "Disabled" -> disabled
-                    else -> unknown
+                status = if (result.isSuccess) {
+                    when (output) {
+                        "Enforcing" -> enforcing
+                        "Permissive" -> permissive
+                        "Disabled" -> disabled
+                        else -> unknown
+                    }
+                } else if (output.endsWith("Permission denied")) {
+                    enforcing
+                } else {
+                    unknown
                 }
-            } else if (output.endsWith("Permission denied")) {
-                enforcing
-            } else {
-                unknown
+            } catch (e: Exception) {
+                Log.e("DeviceInfoUtils", "Failed to get SELinux status", e)
+                status = unknown
             }
         }
     }

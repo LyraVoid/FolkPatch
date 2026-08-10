@@ -128,7 +128,12 @@ fun createRootShell(globalMnt: Boolean = false): Shell {
                 }
             } catch (e: Throwable) {
                 Log.e(TAG, "retry su failed: ", e)
-                return buildWithTimeout(builder, "sh")
+                try {
+                    buildWithTimeout(builder, "sh")
+                } catch (e2: Throwable) {
+                    Log.e(TAG, "final sh fallback failed: ", e2)
+                    throw IOException("Unable to create any shell", e2)
+                }
             }
         }
     }
@@ -154,14 +159,28 @@ object APatchCli {
     private var _globalMntShell: Shell? = null
 
     val SHELL: Shell
-        get() = _shell ?: createRootShellSafe(false).also { _shell = it }
+        get() = _shell ?: try {
+            createRootShellSafe(false).also { _shell = it }
+        } catch (e: Throwable) {
+            Log.e(TAG, "Failed to create SHELL", e)
+            throw e
+        }
 
     val GLOBAL_MNT_SHELL: Shell
-        get() = _globalMntShell ?: createRootShellSafe(true).also { _globalMntShell = it }
+        get() = _globalMntShell ?: try {
+            createRootShellSafe(true).also { _globalMntShell = it }
+        } catch (e: Throwable) {
+            Log.e(TAG, "Failed to create GLOBAL_MNT_SHELL", e)
+            throw e
+        }
 
     fun refresh() {
         val old = _shell
-        _shell = createRootShellSafe(false)
+        try {
+            _shell = createRootShellSafe(false)
+        } catch (e: Throwable) {
+            Log.e(TAG, "Failed to refresh shell", e)
+        }
         try { old?.close() } catch (_: Throwable) {}
     }
 }
@@ -175,7 +194,12 @@ internal fun createRootShellSafe(globalMnt: Boolean = false): Shell {
             Shell.Builder.create().setInitializers(RootShellInitializer::class.java).build("sh")
         } catch (e2: Throwable) {
             Log.e(TAG, "Even sh fallback failed, returning non-root shell", e2)
-            Shell.Builder.create().build("sh")
+            try {
+                Shell.Builder.create().build("sh")
+            } catch (e3: Throwable) {
+                Log.e(TAG, "All shell creation failed, app may not function correctly", e3)
+                throw IOException("Unable to create any shell. Root functionality is unavailable.", e3)
+            }
         }
     }
 }
@@ -673,11 +697,17 @@ fun installJailbreak(): Boolean {
 
 /** Whether the SELinux mode is permissive (getenforce), the prerequisite for jailbreak. */
 fun isSELinuxPermissive(): Boolean {
-    val shell = Shell.Builder.create().build("sh")
-    val out = ArrayList<String>()
-    val result = shell.newJob().add("getenforce").to(out, ArrayList()).exec()
-    return result.isSuccess &&
-        out.firstOrNull()?.trim()?.equals("Permissive", ignoreCase = true) == true
+    return try {
+        val shell = Shell.Builder.create().build("sh")
+        val out = ArrayList<String>()
+        val result = shell.newJob().add("getenforce").to(out, ArrayList()).exec()
+        shell.close()
+        result.isSuccess &&
+            out.firstOrNull()?.trim()?.equals("Permissive", ignoreCase = true) == true
+    } catch (e: Exception) {
+        Log.e(TAG, "Failed to check SELinux status", e)
+        false
+    }
 }
 
 /** Whether jailbreak mode is active in the current boot. */

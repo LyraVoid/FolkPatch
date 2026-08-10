@@ -51,12 +51,17 @@ internal class HomeJailbreakState(
         private set
 
     suspend fun refresh() {
-        val (active, permissive) = withContext(Dispatchers.IO) {
-            isJailbreakMode() to isSELinuxPermissive()
+        try {
+            val (active, permissive) = withContext(Dispatchers.IO) {
+                isJailbreakMode() to isSELinuxPermissive()
+            }
+            detectedActive = active
+            isPermissive = permissive
+        } catch (e: Exception) {
+            android.util.Log.e("HomeJailbreak", "Failed to refresh state", e)
+        } finally {
+            isLoading = false
         }
-        detectedActive = active
-        isPermissive = permissive
-        isLoading = false
     }
 
     fun performPrimaryAction() {
