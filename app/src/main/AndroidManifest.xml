@@ -10,18 +10,13 @@
     <!-- 用于访问外部存储上的媒体文件 -->
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <!-- Shizuku API: 使本应用能被 Shizuku Server 识别并推送 Binder -->
+    <!-- Shizuku API: 使本应用能被 Shizuku Server 识别并推送 Binder。
+         注意：不能声明同名 <permission>——官方 Shizuku (moe.shizuku.privileged.api)
+         已声明该权限，重复声明会导致 INSTALL_FAILED_DUPLICATE_PERMISSION。
+         权限检查不依赖它：user-service 进程（shell uid）因 uid 与 server 相同而放行，
+         授权状态以 shizuku.json (ConfigManager) 为权威。 -->
     <uses-permission
         android:name="moe.shizuku.manager.permission.API_V23"
-        tools:ignore="ProtectedPermissions" />
-
-    <!-- Define the Shizuku API permission. Mirror the official Shizuku definition
-         (dangerous): without it the permission does not exist in PMS, and it must be
-         dynamically grantable for the permission check fallback to work. -->
-    <permission
-        android:name="moe.shizuku.manager.permission.API_V23"
-        android:label="Shizuku API"
-        android:protectionLevel="dangerous"
         tools:ignore="ProtectedPermissions" />
     <uses-permission
         android:name="android.permission.QUERY_ALL_PACKAGES"
