@@ -1360,12 +1360,12 @@ object BackgroundManager {
 
     /**
      * 部署内置默认仪表盘卡片壁纸（首次安装/主题重置时调用）
-     * 将 res/raw/dashboard_card_bg_default.webp 复制到内部存储并更新配置
+     * 将 res/raw/dashboard_card_bg_default.png 复制到内部存储并更新配置
      */
     fun provisionDefaultDashboardCardBg(context: Context): Boolean {
         try {
             clearOldFiles(context, DASHBOARD_CARD_BG_FILENAME)
-            val targetFile = File(context.filesDir, "$DASHBOARD_CARD_BG_FILENAME.webp")
+            val targetFile = File(context.filesDir, "$DASHBOARD_CARD_BG_FILENAME.png")
             context.resources.openRawResource(R.raw.dashboard_card_bg_default).use { input ->
                 FileOutputStream(targetFile).use { output ->
                     input.copyTo(output)
