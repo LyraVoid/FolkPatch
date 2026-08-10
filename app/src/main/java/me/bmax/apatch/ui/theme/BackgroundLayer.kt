@@ -85,7 +85,8 @@ fun BackgroundLayer(
     
     // Video Background Logic
     // Only show video if Custom Background is enabled AND Video Background is enabled
-    if (BackgroundConfig.isCustomBackgroundEnabled && BackgroundConfig.isVideoBackgroundEnabled && !BackgroundConfig.videoBackgroundUri.isNullOrEmpty()) {
+    val videoBackgroundUri = BackgroundConfig.videoBackgroundUri
+    if (BackgroundConfig.isCustomBackgroundEnabled && BackgroundConfig.isVideoBackgroundEnabled && !videoBackgroundUri.isNullOrEmpty()) {
         var mediaPlayer by remember { mutableStateOf<android.media.MediaPlayer?>(null) }
         var videoView by remember { mutableStateOf<VideoView?>(null) }
 
@@ -100,7 +101,7 @@ fun BackgroundLayer(
             }
         }
 
-        key(BackgroundConfig.videoBackgroundUri) {
+        key(videoBackgroundUri) {
             AndroidView(
                 factory = { ctx ->
                     object : VideoView(ctx) {
@@ -114,7 +115,7 @@ fun BackgroundLayer(
                             ViewGroup.LayoutParams.MATCH_PARENT,
                             ViewGroup.LayoutParams.MATCH_PARENT
                         )
-                        setVideoPath(BackgroundConfig.videoBackgroundUri)
+                        setVideoPath(videoBackgroundUri)
                         setOnPreparedListener { mp ->
                             mp.isLooping = true
                             mp.setVideoScalingMode(android.media.MediaPlayer.VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING)
