@@ -120,12 +120,24 @@ pub fn get_policy_main(args: &[String]) -> Result<SePolicy> {
     Ok(sepol)
 }
 
+/// Mirror upstream Magisk socket IPC rules so root helpers reachable over a
+/// socket stay reachable from app domains.
+pub fn apply_folkpatch_extra_rules(sepol: &mut SePolicy) {
+    sepol.load_rules(
+        "allow domain magisk unix_stream_socket connectto\n\
+         allow domain magisk unix_stream_socket getopt\n\
+         allow domain magisk unix_stream_socket setopt\n\
+         allow domain magisk unix_stream_socket getattr",
+    );
+}
+
 /// Load the live SELinux policy, apply Magisk rules and push it into the kernel.
 /// Equivalent to `magiskpolicy --magisk --live`.
 pub fn apply_magisk_policy_live() -> Result<()> {
     let mut sepol =
         get_policy_main(&["magiskpolicy".to_string(), "--live".to_string()]).context("Cannot load policy")?;
     sepol.magisk_rules();
+    apply_folkpatch_extra_rules(&mut sepol);
     sepol
         .to_file("/sys/fs/selinux/load")
         .context("Cannot apply policy")?;

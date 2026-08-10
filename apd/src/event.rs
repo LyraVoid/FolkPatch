@@ -1,4 +1,4 @@
-use crate::sepolicy::get_policy_main;
+use crate::sepolicy::{apply_folkpatch_extra_rules, get_policy_main};
 use anyhow::{Context, Result};
 use libc::SIGPWR;
 use log::{info, warn};
@@ -209,6 +209,7 @@ pub fn on_post_data_fs(superkey: Option<String>) -> Result<()> {
 
     let mut sepol = get_policy_main(&["magiskpolicy".to_string(), "--live".to_string()])?;
     sepol.magisk_rules();
+    apply_folkpatch_extra_rules(&mut sepol);
     sepol
         .to_file("/sys/fs/selinux/load")
         .context("Cannot apply policy")?;
