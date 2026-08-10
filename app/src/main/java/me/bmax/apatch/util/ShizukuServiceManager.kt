@@ -111,8 +111,13 @@ object ShizukuServiceManager {
                 "-Dshizuku.library.path=\"$libraryPath\" " +
                 "/system/bin --nice-name=$SERVER_PROCESS_NAME $SERVER_CLASS " +
                 ">/dev/null 2>&1 &"
-            // 不同 su 实现/版本的降权语法存在差异，逐一尝试
+            // 不同 su 实现/版本的降权语法存在差异，逐一尝试。
+            // 优先使用 -M（全局 mount namespace）：APatch su 默认在隔离 namespace
+            // 启动子进程，导致 server 看不到 /data/user_de/0/com.android.shell/，
+            // config（授权记录）读不到也写不进，重启后授权全部丢失。
             val candidates = arrayOf(
+                "su -M 2000 -c '$inner'",
+                "su 2000 -M -c '$inner'",
                 "su 2000 -c '$inner'",
                 "su - 2000 -c '$inner'",
             )
