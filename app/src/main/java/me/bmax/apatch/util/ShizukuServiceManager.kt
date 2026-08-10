@@ -112,10 +112,12 @@ object ShizukuServiceManager {
                 "/system/bin --nice-name=$SERVER_PROCESS_NAME $SERVER_CLASS " +
                 ">/dev/null 2>&1 &"
             // 不同 su 实现/版本的降权语法存在差异，逐一尝试。
-            // 优先使用 -M（全局 mount namespace）：APatch su 默认在隔离 namespace
-            // 启动子进程，导致 server 看不到 /data/user_de/0/com.android.shell/，
-            // config（授权记录）读不到也写不进，重启后授权全部丢失。
+            // 首选以 root (uid 0) 启动 server：与官方 Shizuku root 模式一致，
+            // 使通过 Shizuku 执行的命令具备 root 权限（可读取 /data 等受保护目录）。
+            // root 启动的 app_process 直接处于全局 mount namespace，config 读写正常。
+            // 降级到 shell (uid 2000) 时用 -M 进入全局 namespace 以保证 config 可写。
             val candidates = arrayOf(
+                "su -c '$inner'",
                 "su -M 2000 -c '$inner'",
                 "su 2000 -M -c '$inner'",
                 "su 2000 -c '$inner'",
