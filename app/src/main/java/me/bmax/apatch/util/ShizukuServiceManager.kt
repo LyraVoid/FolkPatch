@@ -322,4 +322,112 @@ object ShizukuServiceManager {
             false
         }
     }
+
+    // ==================== 日志读取 ====================
+
+    /** server 持久化日志文件路径（与 shizuku.json 同级，跨重启保留）。 */
+    private const val SERVER_LOG_FILE = "/data/user_de/0/com.android.shell/shizuku_folk.log"
+    private const val SERVER_LOG_FILE_BACKUP = "/data/user_de/0/com.android.shell/shizuku_folk.log.1"
+
+    /** server 日志在 logcat 中的 tag（Logger 的 tag），用于补充抓取更完整的上下文。 */
+    private val LOGCAT_TAGS = arrayOf(
+        "Service", "ConfigManager", "ClientManager", "UserServiceManager",
+        "ShizukuService", "Starter", "AppProcess",
+    )
+
+    /**
+     * 读取 server 持久化日志。
+     *
+     * 优先走 binder（server 存活时最快、含内存缓冲的最新行）；binder 不可达时
+     * 回退到 root 直接读日志文件——这样即使 server 崩溃/无法启动，也能看到上次
+     * 会话留下的日志（排查"配置为什么消失""server 为什么起不来"的关键）。
+     */
+    fun getServerLog(): String {
+        if (Shizuku.pingBinder()) {
+            val viaBinder = getLogViaBinder()
+            if (viaBinder != null) return viaBinder
+        }
+        return readLogFileViaRoot()
+    }
+
+    private fun getLogViaBinder(): String? {
+        val data = Parcel.obtain()
+        val reply = Parcel.obtain()
+        return try {
+            data.writeInterfaceToken("moe.shizuku.server.IShizukuService")
+            Shizuku.getBinder()!!.transact(ServerConstants.BINDER_TRANSACTION_getLog, data, reply, 0)
+            reply.readException()
+            reply.readString().orEmpty()
+        } catch (t: Throwable) {
+            Log.e(TAG, "getLog via binder failed", t)
+            null
+        } finally {
+            reply.recycle()
+            data.recycle()
+        }
+    }
+
+    /** root 直接读取日志文件（含轮转备份），server 不可达时的兜底。 */
+    private fun readLogFileViaRoot(): String {
+        return try {
+            val out = ArrayList<String>()
+            val err = ArrayList<String>()
+            getRootShell().newJob()
+                .add("cat $SERVER_LOG_FILE_BACKUP 2>/dev/null; cat $SERVER_LOG_FILE 2>/dev/null")
+                .to(out, err)
+                .exec()
+            out.joinToString("\n")
+        } catch (t: Throwable) {
+            Log.e(TAG, "readLogFileViaRoot failed", t)
+            ""
+        }
+    }
+
+    /**
+     * 抓取 logcat 中与 Shizuku server 相关 tag 的实时日志，补充 binder/文件之外的
+     * 系统侧上下文（如 ART/zygote abort、SELinux denial 等启动早期问题）。
+     */
+    fun getLogcat(): String {
+        return try {
+            val out = ArrayList<String>()
+            val err = ArrayList<String>()
+            val filter = LOGCAT_TAGS.joinToString(" ") { "$it:V" }
+            getRootShell().newJob()
+                .add("logcat -d -v time -t 2000 $filter *:S 2>/dev/null")
+                .to(out, err)
+                .exec()
+            out.joinToString("\n")
+        } catch (t: Throwable) {
+            Log.e(TAG, "getLogcat failed", t)
+            ""
+        }
+    }
+
+    /** 清空 server 持久化日志（binder 优先，兜底 root 删文件）。 */
+    fun clearServerLog(): Boolean {
+        if (Shizuku.pingBinder()) {
+            val data = Parcel.obtain()
+            val reply = Parcel.obtain()
+            try {
+                data.writeInterfaceToken("moe.shizuku.server.IShizukuService")
+                Shizuku.getBinder()!!.transact(ServerConstants.BINDER_TRANSACTION_clearLog, data, reply, 0)
+                reply.readException()
+                return true
+            } catch (t: Throwable) {
+                Log.e(TAG, "clearLog via binder failed", t)
+            } finally {
+                reply.recycle()
+                data.recycle()
+            }
+        }
+        return try {
+            getRootShell().newJob()
+                .add("rm -f $SERVER_LOG_FILE $SERVER_LOG_FILE_BACKUP")
+                .exec()
+                .isSuccess
+        } catch (t: Throwable) {
+            Log.e(TAG, "clearServerLog via root failed", t)
+            false
+        }
+    }
 }

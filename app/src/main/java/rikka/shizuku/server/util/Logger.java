@@ -139,6 +139,8 @@ public class Logger {
         if (LOGGER != null) {
             LOGGER.info(msg);
         }
+        // 汇聚到持久化日志，供 manager 端读取与"配置为什么消失"之类问题排查。
+        ServerLog.append(priority, tag, msg);
         return Log.println(priority, tag, msg);
     }
 }

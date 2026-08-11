@@ -17,4 +17,10 @@ public class ServerConstants {
 
     /** manager-only：设置某 uid 的分权（shellOnly）标记 */
     public static final int BINDER_TRANSACTION_setShellOnly = 10003;
+
+    /** manager-only：读取 server 持久化日志（返回文本） */
+    public static final int BINDER_TRANSACTION_getLog = 10004;
+
+    /** manager-only：清空 server 持久化日志 */
+    public static final int BINDER_TRANSACTION_clearLog = 10005;
 }
