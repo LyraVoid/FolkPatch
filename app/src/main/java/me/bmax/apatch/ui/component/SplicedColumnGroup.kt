@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -160,15 +161,16 @@ fun SplicedColumnGroup(
                             val isHighlighted = highlightKey != null && itemData.key?.toString() == highlightKey
                             val itemFocusRequester = remember { FocusRequester() }
 
-                            Column(
+                            Surface(
                                 modifier = Modifier
                                     .padding(top = currentTopPadding)
-                                    .clip(shape)
-                                    .background(containerColor, shape)
                                     .then(
                                         if (isHighlighted) Modifier.focusRequester(itemFocusRequester).focusable()
                                         else Modifier
                                     ),
+                                shape = shape,
+                                color = containerColor,
+                                tonalElevation = 0.dp,
                             ) {
                                 var highlightAlpha by remember { mutableStateOf(0f) }
 

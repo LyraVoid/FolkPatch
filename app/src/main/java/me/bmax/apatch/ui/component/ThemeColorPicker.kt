@@ -42,6 +42,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.annotation.StringRes
 import me.bmax.apatch.R
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.material3.ripple
+import androidx.compose.runtime.remember
 
 data class ThemeColorOption(
     val key: String,
@@ -112,6 +115,7 @@ fun ThemeColorPicker(
                             isSelected = isDynamicColorEnabled,
                             isDynamic = true,
                             onClick = onDynamicColorSelected,
+                            isDarkTheme = isDarkTheme,
                         )
                     }
                 }
@@ -123,6 +127,7 @@ fun ThemeColorPicker(
                         isSelected = !isDynamicColorEnabled && selectedColorKey == theme.key,
                         isDynamic = false,
                         onClick = { onColorSelected(theme.key) },
+                        isDarkTheme = isDarkTheme,
                     )
                 }
             }
@@ -146,6 +151,7 @@ private fun ThemeColorCircle(
     isSelected: Boolean,
     isDynamic: Boolean,
     onClick: () -> Unit,
+    isDarkTheme: Boolean,
 ) {
     val scale by animateFloatAsState(
         targetValue = if (isSelected) 1.1f else 1f,
@@ -159,7 +165,6 @@ private fun ThemeColorCircle(
     val shape = if (isSelected) MaterialShapes.Cookie9Sided.toShape() else CircleShape
 
     Column(
-        modifier = Modifier.clickable(onClick = onClick),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
@@ -168,6 +173,17 @@ private fun ThemeColorCircle(
                 .size(56.dp)
                 .scale(scale)
                 .clip(shape)
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = ripple(
+                        bounded = true,
+                        color = if (isDarkTheme) { 
+                            Color.Black.copy(alpha = 0.50f)
+                        } else {
+                            Color.White.copy(alpha = 0.90f)
+                        }
+                    )
+                ) { onClick() }
                 .background(color = displayColor)
                 .then(
                     if (isDynamic) {
