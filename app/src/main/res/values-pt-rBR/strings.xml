@@ -650,6 +650,17 @@ Aqui estão algumas possíveis razões para a falha de autenticação—verifiqu
     <string name="shizuku_management_badge_denied">NEGADO</string>
     <string name="shizuku_management_badge_root">ROOT</string>
     <string name="shizuku_management_badge_shell">SHELL</string>
+    <string name="shizuku_log_title">Logs do Shizuku</string>
+    <string name="shizuku_log_empty">Sem logs</string>
+    <string name="shizuku_log_refresh">Atualizar</string>
+    <string name="shizuku_log_clear">Limpar logs</string>
+    <string name="shizuku_log_cleared">Logs limpos</string>
+    <string name="shizuku_log_export">Exportar logs</string>
+    <string name="shizuku_log_copy">Copiar</string>
+    <string name="shizuku_log_copied">Copiado para a área de transferência</string>
+    <string name="shizuku_log_source_server">Log do servidor</string>
+    <string name="shizuku_log_source_logcat">Logcat</string>
+    <string name="shizuku_log_search_hint">Pesquisar logs</string>
 <string name="settings_app_title">Título do App</string>
     <string name="app_title_custom">Personalizado</string>
     <string name="settings_custom_app_title">Definir nome do app</string>

@@ -596,6 +596,17 @@ KernelPatch は boot イメージをパッチする必要があります。
     <string name="shizuku_management_badge_denied">拒否</string>
     <string name="shizuku_management_badge_root">ROOT</string>
     <string name="shizuku_management_badge_shell">SHELL</string>
+    <string name="shizuku_log_title">Shizuku ログ</string>
+    <string name="shizuku_log_empty">ログはありません</string>
+    <string name="shizuku_log_refresh">更新</string>
+    <string name="shizuku_log_clear">ログを消去</string>
+    <string name="shizuku_log_cleared">ログを消去しました</string>
+    <string name="shizuku_log_export">ログをエクスポート</string>
+    <string name="shizuku_log_copy">コピー</string>
+    <string name="shizuku_log_copied">クリップボードにコピーしました</string>
+    <string name="shizuku_log_source_server">サーバーログ</string>
+    <string name="shizuku_log_source_logcat">Logcat</string>
+    <string name="shizuku_log_search_hint">ログを検索</string>
 <!-- Umount Service -->
     <string name="settings_umount_service">Umount Service</string>
     <string name="settings_umount_service_summary">起動時に自動アンマウントするマウントポイントを構成します。</string>

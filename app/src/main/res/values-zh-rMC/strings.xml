@@ -627,6 +627,17 @@ KernelPatch 附魔需要 boot 方块作为材料。
     <string name="shizuku_management_badge_denied">未授权</string>
     <string name="shizuku_management_badge_root">ROOT</string>
     <string name="shizuku_management_badge_shell">SHELL</string>
+    <string name="shizuku_log_title">Shizuku 冒险日志</string>
+    <string name="shizuku_log_empty">暂无冒险记录</string>
+    <string name="shizuku_log_refresh">重新加载</string>
+    <string name="shizuku_log_clear">清空记录</string>
+    <string name="shizuku_log_cleared">记录已清空</string>
+    <string name="shizuku_log_export">导出记录</string>
+    <string name="shizuku_log_copy">抄写</string>
+    <string name="shizuku_log_copied">已抄写至剪贴板</string>
+    <string name="shizuku_log_source_server">服务器日志</string>
+    <string name="shizuku_log_source_logcat">Logcat</string>
+    <string name="shizuku_log_search_hint">查找记录</string>
 <string name="settings_app_title">应用名称</string>
     <string name="app_title_custom">自定义</string>
     <string name="settings_custom_app_title">设置应用名字</string>

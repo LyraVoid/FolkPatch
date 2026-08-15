@@ -628,6 +628,17 @@ KernelPatch 这道菜需要用 boot 主料来烹饪。
     <string name="shizuku_management_badge_denied">不上菜</string>
     <string name="shizuku_management_badge_root">ROOT</string>
     <string name="shizuku_management_badge_shell">SHELL</string>
+    <string name="shizuku_log_title">Shizuku 烹饪日志</string>
+    <string name="shizuku_log_empty">暂无烹饪记录</string>
+    <string name="shizuku_log_refresh">重烹</string>
+    <string name="shizuku_log_clear">清灶</string>
+    <string name="shizuku_log_cleared">灶台已净</string>
+    <string name="shizuku_log_export">装盘</string>
+    <string name="shizuku_log_copy">抄录</string>
+    <string name="shizuku_log_copied">已抄录至剪贴板</string>
+    <string name="shizuku_log_source_server">后厨日志</string>
+    <string name="shizuku_log_source_logcat">Logcat</string>
+    <string name="shizuku_log_search_hint">翻找记录</string>
 <string name="settings_app_title">软件名</string>
     <string name="app_title_custom">自个儿起</string>
     <string name="settings_custom_app_title">设置软件名</string>

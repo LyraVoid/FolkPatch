@@ -638,6 +638,17 @@
     <string name="shizuku_management_badge_denied">已拒</string>
     <string name="shizuku_management_badge_root">ROOT</string>
     <string name="shizuku_management_badge_shell">SHELL</string>
+    <string name="shizuku_log_title">Shizuku 神谕日志</string>
+    <string name="shizuku_log_empty">暂无神谕日志</string>
+    <string name="shizuku_log_refresh">重览</string>
+    <string name="shizuku_log_clear">焚卷</string>
+    <string name="shizuku_log_cleared">神谕已焚</string>
+    <string name="shizuku_log_export">誊录</string>
+    <string name="shizuku_log_copy">拓印</string>
+    <string name="shizuku_log_copied">已拓印至剪贴板</string>
+    <string name="shizuku_log_source_server">神谕端日志</string>
+    <string name="shizuku_log_source_logcat">Logcat</string>
+    <string name="shizuku_log_search_hint">检索神谕</string>
 <string name="settings_app_title">天使使名称</string>
     <string name="app_title_custom">自定义圣名</string>
     <string name="settings_custom_app_title">设置天使使名称</string>

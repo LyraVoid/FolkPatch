@@ -588,6 +588,17 @@ Kontynuować mimo to?</string>
     <string name="shizuku_management_badge_denied">ODMOWA</string>
     <string name="shizuku_management_badge_root">ROOT</string>
     <string name="shizuku_management_badge_shell">SHELL</string>
+    <string name="shizuku_log_title">Logi Shizuku</string>
+    <string name="shizuku_log_empty">Brak logów</string>
+    <string name="shizuku_log_refresh">Odśwież</string>
+    <string name="shizuku_log_clear">Wyczyść logi</string>
+    <string name="shizuku_log_cleared">Logi wyczyszczone</string>
+    <string name="shizuku_log_export">Eksportuj logi</string>
+    <string name="shizuku_log_copy">Kopiuj</string>
+    <string name="shizuku_log_copied">Skopiowano do schowka</string>
+    <string name="shizuku_log_source_server">Log serwera</string>
+    <string name="shizuku_log_source_logcat">Logcat</string>
+    <string name="shizuku_log_search_hint">Szukaj w logach</string>
 <string name="settings_app_title">Tytuł aplikacji</string>
     <string name="app_title_custom">Niestandardowy</string>
     <string name="settings_custom_app_title">Ustaw nazwę aplikacji</string>

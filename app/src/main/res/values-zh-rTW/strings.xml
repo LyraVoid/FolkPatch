@@ -643,6 +643,17 @@ KernelPatch 需要修補 boot 映像檔。
     <string name="shizuku_management_badge_denied">已拒絕</string>
     <string name="shizuku_management_badge_root">ROOT</string>
     <string name="shizuku_management_badge_shell">SHELL</string>
+    <string name="shizuku_log_title">Shizuku 日誌</string>
+    <string name="shizuku_log_empty">暫無日誌</string>
+    <string name="shizuku_log_refresh">重新整理</string>
+    <string name="shizuku_log_clear">清空日誌</string>
+    <string name="shizuku_log_cleared">日誌已清空</string>
+    <string name="shizuku_log_export">匯出日誌</string>
+    <string name="shizuku_log_copy">複製</string>
+    <string name="shizuku_log_copied">已複製到剪貼簿</string>
+    <string name="shizuku_log_source_server">服務端日誌</string>
+    <string name="shizuku_log_source_logcat">Logcat</string>
+    <string name="shizuku_log_search_hint">搜尋日誌</string>
 <string name="settings_app_title">應用程式標題</string>
     <string name="app_title_custom">自訂</string>
     <string name="settings_custom_app_title">設定應用程式名稱</string>

@@ -650,6 +650,17 @@ KernelPatch требует образ boot для патча.
     <string name="shizuku_management_badge_denied">ОТКЛОНЕНО</string>
     <string name="shizuku_management_badge_root">ROOT</string>
     <string name="shizuku_management_badge_shell">SHELL</string>
+    <string name="shizuku_log_title">Журналы Shizuku</string>
+    <string name="shizuku_log_empty">Нет журналов</string>
+    <string name="shizuku_log_refresh">Обновить</string>
+    <string name="shizuku_log_clear">Очистить журналы</string>
+    <string name="shizuku_log_cleared">Журналы очищены</string>
+    <string name="shizuku_log_export">Экспорт журналов</string>
+    <string name="shizuku_log_copy">Копировать</string>
+    <string name="shizuku_log_copied">Скопировано в буфер обмена</string>
+    <string name="shizuku_log_source_server">Журнал сервера</string>
+    <string name="shizuku_log_source_logcat">Logcat</string>
+    <string name="shizuku_log_search_hint">Поиск по журналам</string>
 <string name="settings_app_title">Заголовок приложения</string>
     <string name="app_title_custom">Пользовательский</string>
     <string name="settings_custom_app_title">Задать имя приложения</string>

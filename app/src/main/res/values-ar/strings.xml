@@ -644,6 +644,17 @@
     <string name="shizuku_management_badge_denied">مرفوض</string>
     <string name="shizuku_management_badge_root">ROOT</string>
     <string name="shizuku_management_badge_shell">SHELL</string>
+    <string name="shizuku_log_title">سجلات Shizuku</string>
+    <string name="shizuku_log_empty">لا توجد سجلات</string>
+    <string name="shizuku_log_refresh">تحديث</string>
+    <string name="shizuku_log_clear">مسح السجلات</string>
+    <string name="shizuku_log_cleared">تم مسح السجلات</string>
+    <string name="shizuku_log_export">تصدير السجلات</string>
+    <string name="shizuku_log_copy">نسخ</string>
+    <string name="shizuku_log_copied">تم النسخ إلى الحافظة</string>
+    <string name="shizuku_log_source_server">سجل الخادم</string>
+    <string name="shizuku_log_source_logcat">Logcat</string>
+    <string name="shizuku_log_search_hint">البحث في السجلات</string>
 <string name="settings_app_title">عنوان التطبيق</string>
     <string name="app_title_custom">مخصص</string>
     <string name="settings_custom_app_title">تعيين اسم التطبيق</string>

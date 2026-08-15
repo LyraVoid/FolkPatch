@@ -647,6 +647,17 @@ Bol şans! Ayrıca, aşağıdaki belge butonuna tıklamak kesinlikle doğru!</st
     <string name="shizuku_management_badge_denied">REDDEDİLDİ</string>
     <string name="shizuku_management_badge_root">ROOT</string>
     <string name="shizuku_management_badge_shell">SHELL</string>
+    <string name="shizuku_log_title">Shizuku günlükleri</string>
+    <string name="shizuku_log_empty">Günlük yok</string>
+    <string name="shizuku_log_refresh">Yenile</string>
+    <string name="shizuku_log_clear">Günlükleri temizle</string>
+    <string name="shizuku_log_cleared">Günlükler temizlendi</string>
+    <string name="shizuku_log_export">Günlükleri dışa aktar</string>
+    <string name="shizuku_log_copy">Kopyala</string>
+    <string name="shizuku_log_copied">Panoya kopyalandı</string>
+    <string name="shizuku_log_source_server">Sunucu günlüğü</string>
+    <string name="shizuku_log_source_logcat">Logcat</string>
+    <string name="shizuku_log_search_hint">Günlüklerde ara</string>
 <string name="settings_app_title">Uygulama Başlığı</string>
     <string name="app_title_custom">Özel</string>
     <string name="settings_custom_app_title">Uygulama adını ayarla</string>

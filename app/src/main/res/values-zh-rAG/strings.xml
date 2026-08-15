@@ -668,6 +668,17 @@ KernelPatch 需要修补 boot 镜像才能工作喵。
     <string name="shizuku_management_badge_denied">未允喵</string>
     <string name="shizuku_management_badge_root">ROOT</string>
     <string name="shizuku_management_badge_shell">SHELL</string>
+    <string name="shizuku_log_title">Shizuku 日志喵</string>
+    <string name="shizuku_log_empty">没有日志喵</string>
+    <string name="shizuku_log_refresh">刷新喵</string>
+    <string name="shizuku_log_clear">清空日志喵</string>
+    <string name="shizuku_log_cleared">日志已清空喵</string>
+    <string name="shizuku_log_export">导出日志喵</string>
+    <string name="shizuku_log_copy">复制喵</string>
+    <string name="shizuku_log_copied">已复制到剪贴板喵</string>
+    <string name="shizuku_log_source_server">服务端日志喵</string>
+    <string name="shizuku_log_source_logcat">Logcat</string>
+    <string name="shizuku_log_search_hint">搜索日志喵</string>
     <string name="shizuku_manage_apps">管一管授权的应用喵</string>
     <string name="settings_app_title">应用名字喵</string>
     <string name="app_title_custom">自定义喵</string>

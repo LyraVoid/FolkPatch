@@ -643,6 +643,17 @@ Aquí hay algunas posibles razones para el fallo de autenticación—por favor v
     <string name="shizuku_management_badge_denied">DENEGADO</string>
     <string name="shizuku_management_badge_root">ROOT</string>
     <string name="shizuku_management_badge_shell">SHELL</string>
+    <string name="shizuku_log_title">Registros de Shizuku</string>
+    <string name="shizuku_log_empty">Sin registros</string>
+    <string name="shizuku_log_refresh">Actualizar</string>
+    <string name="shizuku_log_clear">Borrar registros</string>
+    <string name="shizuku_log_cleared">Registros borrados</string>
+    <string name="shizuku_log_export">Exportar registros</string>
+    <string name="shizuku_log_copy">Copiar</string>
+    <string name="shizuku_log_copied">Copiado al portapapeles</string>
+    <string name="shizuku_log_source_server">Registro del servidor</string>
+    <string name="shizuku_log_source_logcat">Logcat</string>
+    <string name="shizuku_log_search_hint">Buscar registros</string>
 <string name="settings_app_title">Título de la App</string>
     <string name="app_title_custom">Personalizado</string>
     <string name="settings_custom_app_title">Establecer nombre de la app</string>

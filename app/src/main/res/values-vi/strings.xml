@@ -644,6 +644,17 @@ Dưới đây là một số nguyên nhân có thể gây ra thất bại xác t
     <string name="shizuku_management_badge_denied">TỪ CHỐI</string>
     <string name="shizuku_management_badge_root">ROOT</string>
     <string name="shizuku_management_badge_shell">SHELL</string>
+    <string name="shizuku_log_title">Nhật ký Shizuku</string>
+    <string name="shizuku_log_empty">Không có nhật ký</string>
+    <string name="shizuku_log_refresh">Làm mới</string>
+    <string name="shizuku_log_clear">Xóa nhật ký</string>
+    <string name="shizuku_log_cleared">Đã xóa nhật ký</string>
+    <string name="shizuku_log_export">Xuất nhật ký</string>
+    <string name="shizuku_log_copy">Sao chép</string>
+    <string name="shizuku_log_copied">Đã sao chép vào bộ nhớ tạm</string>
+    <string name="shizuku_log_source_server">Nhật ký máy chủ</string>
+    <string name="shizuku_log_source_logcat">Logcat</string>
+    <string name="shizuku_log_search_hint">Tìm kiếm nhật ký</string>
 <string name="settings_app_title">Tên ứng dụng</string>
     <string name="app_title_custom">Tùy chỉnh</string>
     <string name="settings_custom_app_title">Đặt tên ứng dụng</string>

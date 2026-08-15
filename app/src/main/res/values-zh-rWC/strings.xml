@@ -640,6 +640,17 @@ KernelPatch 大法需要以 boot 灵胎为引。
     <string name="shizuku_management_badge_denied">已拒</string>
     <string name="shizuku_management_badge_root">ROOT</string>
     <string name="shizuku_management_badge_shell">SHELL</string>
+    <string name="shizuku_log_title">Shizuku 渡劫日志</string>
+    <string name="shizuku_log_empty">暂无渡劫记录</string>
+    <string name="shizuku_log_refresh">重新推演</string>
+    <string name="shizuku_log_clear">封存</string>
+    <string name="shizuku_log_cleared">已封存</string>
+    <string name="shizuku_log_export">誊录</string>
+    <string name="shizuku_log_copy">摹写</string>
+    <string name="shizuku_log_copied">已摹写至剪贴板</string>
+    <string name="shizuku_log_source_server">天机阁日志</string>
+    <string name="shizuku_log_source_logcat">Logcat</string>
+    <string name="shizuku_log_search_hint">探寻记录</string>
 <string name="settings_app_title">仙器名讳</string>
     <string name="app_title_custom">自赐名讳</string>
     <string name="settings_custom_app_title">设置仙器名讳</string>

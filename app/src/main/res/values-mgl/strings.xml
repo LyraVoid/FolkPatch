@@ -646,6 +646,17 @@ KernelPatch 魔法阵需要 boot 核心来施展。
     <string name="shizuku_management_badge_denied">已拒</string>
     <string name="shizuku_management_badge_root">ROOT</string>
     <string name="shizuku_management_badge_shell">SHELL</string>
+    <string name="shizuku_log_title">Shizuku 魔法记录</string>
+    <string name="shizuku_log_empty">暂无魔法记录</string>
+    <string name="shizuku_log_refresh">重铸</string>
+    <string name="shizuku_log_clear">净化记录</string>
+    <string name="shizuku_log_cleared">记录已净化</string>
+    <string name="shizuku_log_export">誊录</string>
+    <string name="shizuku_log_copy">复刻</string>
+    <string name="shizuku_log_copied">已复刻至剪贴板</string>
+    <string name="shizuku_log_source_server">施法端记录</string>
+    <string name="shizuku_log_source_logcat">Logcat</string>
+    <string name="shizuku_log_search_hint">查找魔法记录</string>
 <string name="settings_app_title">魔法使名称</string>
     <string name="app_title_custom">自定义魔法名</string>
     <string name="settings_custom_app_title">设置魔法使名称</string>

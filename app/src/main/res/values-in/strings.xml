@@ -643,6 +643,17 @@ Berikut adalah beberapa kemungkinan penyebab kegagalan autentikasi—silakan cek
     <string name="shizuku_management_badge_denied">DITOLAK</string>
     <string name="shizuku_management_badge_root">ROOT</string>
     <string name="shizuku_management_badge_shell">SHELL</string>
+    <string name="shizuku_log_title">Log Shizuku</string>
+    <string name="shizuku_log_empty">Tidak ada log</string>
+    <string name="shizuku_log_refresh">Segarkan</string>
+    <string name="shizuku_log_clear">Hapus log</string>
+    <string name="shizuku_log_cleared">Log dihapus</string>
+    <string name="shizuku_log_export">Ekspor log</string>
+    <string name="shizuku_log_copy">Salin</string>
+    <string name="shizuku_log_copied">Disalin ke papan klip</string>
+    <string name="shizuku_log_source_server">Log server</string>
+    <string name="shizuku_log_source_logcat">Logcat</string>
+    <string name="shizuku_log_search_hint">Cari log</string>
 <string name="settings_app_title">Judul Aplikasi</string>
     <string name="app_title_custom">Kustom</string>
     <string name="settings_custom_app_title">Atur nama aplikasi</string>

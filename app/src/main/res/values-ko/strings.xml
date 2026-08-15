@@ -648,6 +648,17 @@ KernelPatch는 boot 이미지를 패치해야 합니다.
     <string name="shizuku_management_badge_denied">거부</string>
     <string name="shizuku_management_badge_root">ROOT</string>
     <string name="shizuku_management_badge_shell">SHELL</string>
+    <string name="shizuku_log_title">Shizuku 로그</string>
+    <string name="shizuku_log_empty">로그 없음</string>
+    <string name="shizuku_log_refresh">새로고침</string>
+    <string name="shizuku_log_clear">로그 지우기</string>
+    <string name="shizuku_log_cleared">로그가 지워졌습니다</string>
+    <string name="shizuku_log_export">로그 내보내기</string>
+    <string name="shizuku_log_copy">복사</string>
+    <string name="shizuku_log_copied">클립보드에 복사됨</string>
+    <string name="shizuku_log_source_server">서버 로그</string>
+    <string name="shizuku_log_source_logcat">Logcat</string>
+    <string name="shizuku_log_search_hint">로그 검색</string>
 <!-- Umount Service -->
     <string name="settings_umount_service">Umount Service</string>
     <string name="settings_umount_service_summary">부팅 시 자동으로 마운트 해제할 마운트 지점을 구성합니다.</string>
