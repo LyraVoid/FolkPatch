@@ -34,7 +34,7 @@ fun getGitDescribe(): String {
 }
 
 fun getVersionCode(): Int {
-    return 115019
+    return 115020
 }
 
 fun getbranch(): String {
