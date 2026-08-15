@@ -145,7 +145,9 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
 
         HandlerUtil.setMainHandler(mainHandler);
 
-        LOGGER.i("starting server...");
+        LOGGER.i("======== shizuku server session start ========");
+        LOGGER.i("starting server... uid=%d pid=%d secontext=%s",
+                OsUtils.getUid(), OsUtils.getPid(), OsUtils.getSELinuxContext());
 
         waitSystemService("package");
         waitSystemService(Context.ACTIVITY_SERVICE);
@@ -586,6 +588,23 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
                 LOGGER.i("setShellOnly(%d, %s): restart user services for %s",
                         uid, Boolean.toString(shellOnly), record.packageName);
             }
+            reply.writeNoException();
+            return true;
+        } else if (code == ServerConstants.BINDER_TRANSACTION_getLog) {
+            data.enforceInterface(ShizukuApiConstants.BINDER_DESCRIPTOR);
+            if (UserHandleCompat.getAppId(Binder.getCallingUid()) != managerAppId) {
+                throw new SecurityException("getLog is allowed to be called only from the manager");
+            }
+            reply.writeNoException();
+            reply.writeString(rikka.shizuku.server.util.ServerLog.dump());
+            return true;
+        } else if (code == ServerConstants.BINDER_TRANSACTION_clearLog) {
+            data.enforceInterface(ShizukuApiConstants.BINDER_DESCRIPTOR);
+            if (UserHandleCompat.getAppId(Binder.getCallingUid()) != managerAppId) {
+                throw new SecurityException("clearLog is allowed to be called only from the manager");
+            }
+            rikka.shizuku.server.util.ServerLog.clear();
+            LOGGER.i("log cleared by manager");
             reply.writeNoException();
             return true;
         }

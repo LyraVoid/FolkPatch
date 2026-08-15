@@ -19,6 +19,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
+import androidx.compose.material.icons.automirrored.outlined.Article
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.outlined.Shield
 import androidx.compose.material3.Button
@@ -54,6 +55,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
+import com.ramcosta.composedestinations.generated.destinations.ShizukuLogScreenDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -128,6 +130,16 @@ fun ShizukuManagementScreen(navigator: DestinationsNavigator) {
                 navigationIcon = {
                     IconButton(onClick = navigator::popBackStack) {
                         Icon(Icons.AutoMirrored.Outlined.ArrowBack, contentDescription = null)
+                    }
+                },
+                actions = {
+                    IconButton(onClick = {
+                        navigator.navigate(ShizukuLogScreenDestination)
+                    }) {
+                        Icon(
+                            Icons.AutoMirrored.Outlined.Article,
+                            contentDescription = stringResource(R.string.shizuku_log_title),
+                        )
                     }
                 },
             )

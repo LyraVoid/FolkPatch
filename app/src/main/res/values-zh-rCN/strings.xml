@@ -626,6 +626,17 @@ KernelPatch 需要修补 boot 镜像。
     <string name="shizuku_management_badge_denied">未授权</string>
     <string name="shizuku_management_badge_root">ROOT</string>
     <string name="shizuku_management_badge_shell">SHELL</string>
+    <string name="shizuku_log_title">Shizuku 日志</string>
+    <string name="shizuku_log_empty">暂无日志</string>
+    <string name="shizuku_log_refresh">刷新</string>
+    <string name="shizuku_log_clear">清空日志</string>
+    <string name="shizuku_log_cleared">日志已清空</string>
+    <string name="shizuku_log_export">导出日志</string>
+    <string name="shizuku_log_copy">复制</string>
+    <string name="shizuku_log_copied">已复制到剪贴板</string>
+    <string name="shizuku_log_source_server">服务端日志</string>
+    <string name="shizuku_log_source_logcat">Logcat</string>
+    <string name="shizuku_log_search_hint">搜索日志</string>
     <string name="shizuku_permission_title">允许 %1$s 使用 Shizuku 吗？</string>
     <string name="shizuku_permission_message">该应用将通过 Shizuku 以 root 权限调用系统 API</string>
     <string name="shizuku_permission_allow">允许</string>

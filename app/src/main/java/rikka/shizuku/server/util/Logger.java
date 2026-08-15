@@ -139,6 +139,9 @@ public class Logger {
         if (LOGGER != null) {
             LOGGER.info(msg);
         }
+        // Sink into the persistent log so the manager can read it for troubleshooting
+        // (e.g. "why did my config disappear" across restarts).
+        ServerLog.append(priority, tag, msg);
         return Log.println(priority, tag, msg);
     }
 }

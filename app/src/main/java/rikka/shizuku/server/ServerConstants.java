@@ -17,4 +17,10 @@ public class ServerConstants {
 
     /** manager-only：设置某 uid 的分权（shellOnly）标记 */
     public static final int BINDER_TRANSACTION_setShellOnly = 10003;
+
+    /** manager-only: read the server's persisted log (returns text) */
+    public static final int BINDER_TRANSACTION_getLog = 10004;
+
+    /** manager-only: clear the server's persisted log */
+    public static final int BINDER_TRANSACTION_clearLog = 10005;
 }

@@ -322,4 +322,113 @@ object ShizukuServiceManager {
             false
         }
     }
+
+    // ==================== Log reading ====================
+
+    /** Path of the server's persisted log file (same directory as shizuku.json; survives restarts). */
+    private const val SERVER_LOG_FILE = "/data/user_de/0/com.android.shell/shizuku_folk.log"
+    private const val SERVER_LOG_FILE_BACKUP = "/data/user_de/0/com.android.shell/shizuku_folk.log.1"
+
+    /** Logcat tags used by the server's Logger, for grabbing extra context. */
+    private val LOGCAT_TAGS = arrayOf(
+        "Service", "ConfigManager", "ClientManager", "UserServiceManager",
+        "ShizukuService", "Starter", "AppProcess",
+    )
+
+    /**
+     * Reads the server's persisted log.
+     *
+     * Prefers the binder (fastest while the server is alive, includes the latest lines from the
+     * memory buffer); when the binder is unreachable it falls back to reading the log file directly
+     * via root — so even if the server crashed or failed to start, the log left by the previous
+     * session is still visible (key to troubleshooting "config disappeared" / "server won't start").
+     */
+    fun getServerLog(): String {
+        if (Shizuku.pingBinder()) {
+            val viaBinder = getLogViaBinder()
+            if (viaBinder != null) return viaBinder
+        }
+        return readLogFileViaRoot()
+    }
+
+    private fun getLogViaBinder(): String? {
+        val data = Parcel.obtain()
+        val reply = Parcel.obtain()
+        return try {
+            data.writeInterfaceToken("moe.shizuku.server.IShizukuService")
+            Shizuku.getBinder()!!.transact(ServerConstants.BINDER_TRANSACTION_getLog, data, reply, 0)
+            reply.readException()
+            reply.readString().orEmpty()
+        } catch (t: Throwable) {
+            Log.e(TAG, "getLog via binder failed", t)
+            null
+        } finally {
+            reply.recycle()
+            data.recycle()
+        }
+    }
+
+    /** Fallback when the server is unreachable: read the log files (including the rotated backup) directly via root. */
+    private fun readLogFileViaRoot(): String {
+        return try {
+            val out = ArrayList<String>()
+            val err = ArrayList<String>()
+            getRootShell().newJob()
+                .add("cat $SERVER_LOG_FILE_BACKUP 2>/dev/null; cat $SERVER_LOG_FILE 2>/dev/null")
+                .to(out, err)
+                .exec()
+            out.joinToString("\n")
+        } catch (t: Throwable) {
+            Log.e(TAG, "readLogFileViaRoot failed", t)
+            ""
+        }
+    }
+
+    /**
+     * Grabs live logcat entries for the Shizuku server's tags, adding system-side context
+     * beyond the binder/file logs (e.g. ART/zygote aborts, SELinux denials in early startup).
+     */
+    fun getLogcat(): String {
+        return try {
+            val out = ArrayList<String>()
+            val err = ArrayList<String>()
+            val filter = LOGCAT_TAGS.joinToString(" ") { "$it:V" }
+            getRootShell().newJob()
+                .add("logcat -d -v time -t 2000 $filter *:S 2>/dev/null")
+                .to(out, err)
+                .exec()
+            out.joinToString("\n")
+        } catch (t: Throwable) {
+            Log.e(TAG, "getLogcat failed", t)
+            ""
+        }
+    }
+
+    /** Clears the server's persisted log (binder first, falls back to deleting the files via root). */
+    fun clearServerLog(): Boolean {
+        if (Shizuku.pingBinder()) {
+            val data = Parcel.obtain()
+            val reply = Parcel.obtain()
+            try {
+                data.writeInterfaceToken("moe.shizuku.server.IShizukuService")
+                Shizuku.getBinder()!!.transact(ServerConstants.BINDER_TRANSACTION_clearLog, data, reply, 0)
+                reply.readException()
+                return true
+            } catch (t: Throwable) {
+                Log.e(TAG, "clearLog via binder failed", t)
+            } finally {
+                reply.recycle()
+                data.recycle()
+            }
+        }
+        return try {
+            getRootShell().newJob()
+                .add("rm -f $SERVER_LOG_FILE $SERVER_LOG_FILE_BACKUP")
+                .exec()
+                .isSuccess
+        } catch (t: Throwable) {
+            Log.e(TAG, "clearServerLog via root failed", t)
+            false
+        }
+    }
 }

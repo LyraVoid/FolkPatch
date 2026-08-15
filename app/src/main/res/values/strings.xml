@@ -649,6 +649,17 @@ Here are some possible reasons for authentication failure—please check which o
     <string name="shizuku_management_badge_denied">DENIED</string>
     <string name="shizuku_management_badge_root">ROOT</string>
     <string name="shizuku_management_badge_shell">SHELL</string>
+    <string name="shizuku_log_title">Shizuku logs</string>
+    <string name="shizuku_log_empty">No logs</string>
+    <string name="shizuku_log_refresh">Refresh</string>
+    <string name="shizuku_log_clear">Clear logs</string>
+    <string name="shizuku_log_cleared">Logs cleared</string>
+    <string name="shizuku_log_export">Export logs</string>
+    <string name="shizuku_log_copy">Copy</string>
+    <string name="shizuku_log_copied">Copied to clipboard</string>
+    <string name="shizuku_log_source_server">Server log</string>
+    <string name="shizuku_log_source_logcat">Logcat</string>
+    <string name="shizuku_log_search_hint">Search logs</string>
     <string name="shizuku_permission_title">Allow %1$s to use Shizuku?</string>
     <string name="shizuku_permission_message">The app will be able to call system APIs with root privileges through Shizuku.</string>
     <string name="shizuku_permission_allow">Allow</string>
