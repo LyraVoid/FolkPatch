@@ -21,6 +21,8 @@ import com.topjohnwu.superuser.nio.ExtendedFile
 import com.topjohnwu.superuser.nio.FileSystemManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.BuildConfig
 import me.bmax.apatch.R
@@ -90,6 +92,10 @@ class PatchesViewModel : ViewModel() {
     private fun getShell(): Shell {
         return shell ?: createRootShellSafe(false).also { shell = it }
     }
+
+    // Serializes work that mutates patchDir: prepare() wipes it, so a concurrent
+    // copyAndParseBootimg/embedKPM must wait instead of racing or being dropped.
+    private val workMutex = Mutex()
 
     private fun prepare() {
         val sh = getShell()
@@ -224,19 +230,21 @@ class PatchesViewModel : ViewModel() {
 
     fun copyAndParseBootimg(uri: Uri) {
         viewModelScope.launch(Dispatchers.IO) {
-            if (running) return@launch
-            running = true
-            try {
-                uri.inputStream().buffered().use { src ->
-                    srcBoot.also {
-                        src.copyAndCloseOut(it.newOutputStream())
+            workMutex.withLock {
+                if (running) return@withLock
+                running = true
+                try {
+                    uri.inputStream().buffered().use { src ->
+                        srcBoot.also {
+                            src.copyAndCloseOut(it.newOutputStream())
+                        }
                     }
+                } catch (e: IOException) {
+                    Log.e(TAG, "copy boot image error: $e")
                 }
-            } catch (e: IOException) {
-                Log.e(TAG, "copy boot image error: $e")
+                parseBootimg(srcBoot.path)
+                running = false
             }
-            parseBootimg(srcBoot.path)
-            running = false
         }
     }
 
@@ -274,8 +282,9 @@ class PatchesViewModel : ViewModel() {
 
     fun prepare(mode: PatchMode) {
         viewModelScope.launch(Dispatchers.IO) {
-            if (prepared) return@launch
-            prepared = true
+            workMutex.withLock {
+                if (prepared) return@withLock
+                prepared = true
 
             running = true
             try {
@@ -310,7 +319,6 @@ class PatchesViewModel : ViewModel() {
                         error += "Copy selected boot image error: ${e.message}\n"
                     }
                 }
-
                 if (mode != PatchMode.UNPATCH) {
                     parseKpimg()
                 }
@@ -328,20 +336,24 @@ class PatchesViewModel : ViewModel() {
 
     fun embedKPM(uri: Uri) {
         viewModelScope.launch(Dispatchers.IO) {
-            if (running) return@launch
-            running = true
-            error = ""
+            workMutex.withLock {
+                if (running) return@withLock
+                running = true
+                error = ""
 
-            val rand = (1..4).map { ('a'..'z').random() }.joinToString("")
-            val kpmFileName = "${rand}.kpm"
-            val kpmFile: ExtendedFile = patchDir.getChildFile(kpmFileName)
+                val rand = (1..4).map { ('a'..'z').random() }.joinToString("")
+                val kpmFileName = "${rand}.kpm"
+                val kpmFile: ExtendedFile = patchDir.getChildFile(kpmFileName)
 
-            Log.i(TAG, "copy kpm to: " + kpmFile.path)
-            try {
-                uri.inputStream().buffered().use { src ->
-                    kpmFile.also {
-                        src.copyAndCloseOut(it.newOutputStream())
+                Log.i(TAG, "copy kpm to: " + kpmFile.path)
+                try {
+                    uri.inputStream().buffered().use { src ->
+                        kpmFile.also {
+                            src.copyAndCloseOut(it.newOutputStream())
+                        }
                     }
+                } catch (e: IOException) {
+                    Log.e(TAG, "Copy kpm error: $e")
                 }
 
                 // Auto Backup Logic
