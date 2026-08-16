@@ -36,9 +36,6 @@ object Version {
         if (BuildConfig.DEBUG_FAKE_ROOT) {
             return "2024-05-20 12:00:00"
         }
-        var shell: Shell = createRootShell()
-        var kimgInfo = mutableStateOf(KPModel.KImgInfo("", false))
-        var kpimgInfo = mutableStateOf(KPModel.KPImgInfo("", "", "", "", ""))
         val patchDir: ExtendedFile = FileSystemManager.getLocal().getFile(apApp.filesDir.parent, "check")
         patchDir.deleteRecursively()
         patchDir.mkdirs()
@@ -62,28 +59,20 @@ object Version {
             val dest = File(patchDir, script)
             apApp.assets.open(script).writeTo(dest)
         }
-        val result = shellForResult(
-            shell, "cd $patchDir", "./kptools -l -k kpimg"
-        )
 
-        if (result.isSuccess) {
-            try {
+        createRootShell().use { shell ->
+            val result = shellForResult(
+                shell, "cd $patchDir", "./kptools -l -k kpimg"
+            )
+
+            if (result.isSuccess) {
                 val ini = Ini(StringReader(result.out.joinToString("\n")))
                 val kpimg = ini["kpimg"]
                 if (kpimg != null) {
-                    kpimgInfo.value = KPModel.KPImgInfo(
-                        kpimg["version"].toString(),
-                        kpimg["compile_time"].toString(),
-                        kpimg["config"].toString(),
-                        APApplication.superKey,     // current key
-                        kpimg["root_superkey"].toString()      // possibly empty
-                    )
                     return kpimg["compile_time"].toString()
                 }
-            } catch (e: Exception) {
-                Log.e("Version", "getKpImg INI error: ${e.message}")
             }
-        } 
+        }
 
         return "unknown"
     }
