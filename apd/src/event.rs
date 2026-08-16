@@ -93,7 +93,7 @@ fn setup_logging() -> Result<()> {
                 "-f",
                 &logcat_path,
                 "logcatcher-bootlog:S",
-                "&",
+
             ])
             .spawn()
     };
