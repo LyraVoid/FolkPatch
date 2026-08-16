@@ -252,6 +252,9 @@ pub fn on_post_data_fs(superkey: Option<String>) -> Result<()> {
         // we should still mount modules.img to `/data/adb/modules` in safe mode
         // becuase we may need to operate the module dir in safe mode
         warn!("safe mode, skip common post-fs-data.d scripts");
+        // Not redundant with the disable below: ensure_binaries /
+        // handle_updated_modules can still fail with `?` before reaching it,
+        // and returning early with modules left enabled risks a bootloop.
         disable_all_modules_safe();
     } else {
         // Then exec common post-fs-data scripts
