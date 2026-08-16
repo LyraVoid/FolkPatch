@@ -27,8 +27,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -57,6 +60,12 @@ fun LanguagePickerScreen(navigator: DestinationsNavigator) {
     val flat = BackgroundConfig.isCustomBackgroundEnabled || BackgroundConfig.settingsBackgroundUri != null
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val languageList = remember { languages.toList() }
+
+    var lastSelectedIndex by remember { mutableStateOf(-1) }
+    
+    LaunchedEffect(currentLocale) {
+        lastSelectedIndex = -1
+    }
 
     Scaffold(
         topBar = {
@@ -90,7 +99,9 @@ fun LanguagePickerScreen(navigator: DestinationsNavigator) {
                 items = languageList,
                 key = { index, _ -> languagesValues[index] },
             ) { index, item ->
-                val isSelected = if (index == 0) {
+                val isSelected = if (lastSelectedIndex != -1) {
+                    lastSelectedIndex == index
+                } else if (index == 0) {
                     currentLocale == null || currentLocale.isEmpty()
                 } else {
                     currentLocale == languagesValues[index]
@@ -100,6 +111,8 @@ fun LanguagePickerScreen(navigator: DestinationsNavigator) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .clickable {
+                            lastSelectedIndex = index
+                            
                             if (index == 0) {
                                 AppCompatDelegate.setApplicationLocales(
                                     LocaleListCompat.getEmptyLocaleList()
@@ -117,7 +130,7 @@ fun LanguagePickerScreen(navigator: DestinationsNavigator) {
                         Icon(
                             imageVector = Icons.Filled.Translate,
                             contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                            tint = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.size(24.dp),
                         )
                     } else {

@@ -76,9 +76,20 @@ fun GeneralSettingsContent(
     val loadingDialog = rememberLoadingDialog()
 
     val languageTitle = stringResource(id = R.string.settings_app_language)
-    val languageValue = AppCompatDelegate.getApplicationLocales()[0]?.displayLanguage?.replaceFirstChar {
-        if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
-    } ?: stringResource(id = R.string.system_default)
+    val languageValue = remember {
+        val locale = AppCompatDelegate.getApplicationLocales()[0]
+        if (locale == null) {
+            context.getString(R.string.system_default)
+        } else {
+            val languageTag = locale.toLanguageTag()
+            val languages = context.resources.getStringArray(R.array.languages)
+            val languagesValues = context.resources.getStringArray(R.array.languages_values)
+            
+            // 查找匹配的索引，直接用语言列表的名字
+            val index = languagesValues.indexOf(languageTag)
+            if (index >= 0) languages[index] else languageTag
+        }
+    }
 
     val updateTitle = stringResource(id = R.string.settings_check_update)
 
