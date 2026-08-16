@@ -635,14 +635,12 @@ private fun AppItemLegacy(
                 onClick = {
                     if (selectionMode) {
                         onToggleSelection?.invoke()
-                    } else if (!rootGranted) {
-                        showEditProfile = !showEditProfile
                     } else {
-                        rootGranted = false
-                        config.allow = 0
-                        Natives.revokeSu(app.uid)
-                        PkgConfig.changeConfig(config)
-                        SuAuditLog.logRevoke(app.packageName, app.uid)
+                        // Tapping the row only toggles the profile editor;
+                        // granting or revoking root goes through the Switch
+                        // alone so a stray tap can never strip an app's root
+                        // access.
+                        showEditProfile = !showEditProfile
                     }
                 },
                 onLongClick = {
