@@ -301,12 +301,10 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
     val webUILauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
     ) { viewModel.fetchModuleList() }
-    //TODO: FIXME -> val isSafeMode = Natives.getSafeMode()
-    val isSafeMode = false
     val hasMagisk by produceState(initialValue = false) {
         value = withContext(Dispatchers.IO) { hasMagisk() }
     }
-    val hideInstallButton = isSafeMode || hasMagisk
+    val hideInstallButton = hasMagisk
 
     val moduleListState = rememberLazyListState()
 
