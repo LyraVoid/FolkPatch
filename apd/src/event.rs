@@ -26,7 +26,7 @@ use crate::{
     utils::{self, switch_cgroups},
 };
 
-pub fn report_kernel(superkey: Option<String>, event: &str, state: &str) -> Result<()> {
+pub fn report_kernel(superkey: Option<String>, event: &str, state: &str) {
     let args = vec![
         superkey.unwrap_or_else(|| "su".to_string()),
         "event".to_string(),
@@ -34,8 +34,13 @@ pub fn report_kernel(superkey: Option<String>, event: &str, state: &str) -> Resu
         state.to_string(),
     ];
     let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-    let _ = utils::run_command("truncate", &args_ref, None)?.wait()?;
-    Ok(())
+    // Best-effort notification to the kernel; a failed report must not abort
+    // boot stages such as post-fs-data.
+    if let Err(e) = utils::run_command("truncate", &args_ref, None)
+        .and_then(|mut child| child.wait().map_err(anyhow::Error::from))
+    {
+        warn!("report kernel event {event}/{state} failed: {e}");
+    }
 }
 
 fn setup_fp_directories() -> Result<()> {
@@ -194,9 +199,7 @@ pub fn on_post_data_fs(superkey: Option<String>) -> Result<()> {
     info!("[diag:post_fs_data] ENTER superkey_present={} key_len={} preview='{}..'", superkey.is_some(), key_len, key_preview);
 
     utils::umask(0);
-    if let Err(e) = report_kernel(superkey.clone(), "post-fs-data", "before") {
-        warn!("report_kernel post-fs-data before failed: {e}");
-    }
+    report_kernel(superkey.clone(), "post-fs-data", "before");
 
     if let Err(e) = setup_fp_directories() {
         warn!("setup_fp_directories failed: {e}");
@@ -230,7 +233,7 @@ pub fn on_post_data_fs(superkey: Option<String>) -> Result<()> {
 
     if utils::has_magisk() {
         warn!("Magisk detected, skip post-fs-data!");
-        report_kernel(superkey.clone(), "post-fs-data", "after")?;
+        report_kernel(superkey.clone(), "post-fs-data", "after");
         return Ok(());
     }
 
@@ -323,7 +326,7 @@ pub fn on_post_data_fs(superkey: Option<String>) -> Result<()> {
         log::error!("Folk Mount failed: {e}");
     }
 
-    report_kernel(superkey, "post-fs-data", "after")?;
+    report_kernel(superkey, "post-fs-data", "after");
 
     env::set_current_dir("/").with_context(|| "failed to chdir to /")?;
 
@@ -559,9 +562,7 @@ pub fn start_uid_listener() -> Result<()> {
             let skey = CStr::from_bytes_with_nul(b"su\0")
                 .expect("[start_uid_listener] CStr::from_bytes_with_nul failed");
             refresh_ap_package_list(&skey, &mutex);
-            report_kernel(None, "uid_listener", "package-list-updated").unwrap_or_else(|e| {
-                warn!("Failed to report kernel about package list update: {e}");
-            });
+            report_kernel(None, "uid_listener", "package-list-updated");
         } else if !debounce {
             thread::sleep(Duration::from_secs(1));
             debounce = true;
