@@ -61,6 +61,8 @@
     <string name="reboot_download">Reboot to Download</string>
     <string name="reboot_edl">Reboot to EDL</string>
     <string name="reboot_fastbootd">Reboot to FastbootD</string>
+    <string name="reboot_download_confirm">Reboot into Download mode? The device will boot into the firmware flashing interface.</string>
+    <string name="reboot_edl_confirm">Reboot into EDL (Emergency Download) mode? The screen will stay black and the device can only be recovered with a deep flash tool.</string>
     <string name="about">About</string>
     <string name="developer_and_maintainer">Developer | Maintainer</string>
     <string name="settings_app_language">Language</string>
