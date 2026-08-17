@@ -50,6 +50,7 @@ fun GeneralSettingsScreen(navigator: DestinationsNavigator, highlightKey: String
     val aPatchReady = (state == APApplication.State.ANDROIDPATCH_INSTALLING || state == APApplication.State.ANDROIDPATCH_INSTALLED || state == APApplication.State.ANDROIDPATCH_NEED_UPDATE)
 
     var isGlobalNamespaceEnabled by rememberSaveable { mutableStateOf(false) }
+    var namespaceLoaded by remember { mutableStateOf(false) }
     var isMagicMountEnabled by rememberSaveable { mutableStateOf(false) }
     var currentSELinuxMode by rememberSaveable { mutableStateOf("Unknown") }
 
@@ -60,6 +61,7 @@ fun GeneralSettingsScreen(navigator: DestinationsNavigator, highlightKey: String
                 isMagicMountEnabled = checkMagicMountEnabled()
                 currentSELinuxMode = getSELinuxMode()
             }
+            namespaceLoaded = true
         }
     }
 
@@ -91,6 +93,7 @@ fun GeneralSettingsScreen(navigator: DestinationsNavigator, highlightKey: String
                     currentSELinuxMode = currentSELinuxMode,
                     onSELinuxModeChange = { currentSELinuxMode = it },
                     isGlobalNamespaceEnabled = isGlobalNamespaceEnabled,
+                    namespaceLoaded = namespaceLoaded,
                     onGlobalNamespaceChange = { isGlobalNamespaceEnabled = it },
                     isMagicMountEnabled = isMagicMountEnabled,
                     onMagicMountChange = { isMagicMountEnabled = it },
