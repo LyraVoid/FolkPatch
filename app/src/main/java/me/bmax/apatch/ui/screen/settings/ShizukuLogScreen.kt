@@ -17,12 +17,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.automirrored.outlined.Article
 import androidx.compose.material.icons.outlined.ContentCopy
 import androidx.compose.material.icons.outlined.DeleteSweep
+import androidx.compose.material.icons.outlined.MoreVert
 import androidx.compose.material.icons.outlined.Refresh
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.Share
@@ -37,6 +39,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -67,6 +70,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.bmax.apatch.R
+import me.bmax.apatch.ui.component.SplicedColumnGroup
+import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenu
+import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenuItem
 import me.bmax.apatch.util.ShizukuServiceManager
 import me.bmax.apatch.util.ui.showToast
 import java.io.File
@@ -117,6 +123,7 @@ fun ShizukuLogScreen(navigator: DestinationsNavigator) {
     var query by remember { mutableStateOf("") }
     // Active level filter; an empty set means show all.
     var activeLevels by remember { mutableStateOf<Set<Char>>(emptySet()) }
+    var showMenu by remember { mutableStateOf(false) }
 
     val listState = rememberLazyListState()
 
@@ -166,59 +173,81 @@ fun ShizukuLogScreen(navigator: DestinationsNavigator) {
                     }
                 },
                 actions = {
-                    IconButton(onClick = { refresh() }) {
-                        Icon(Icons.Outlined.Refresh, contentDescription = stringResource(R.string.shizuku_log_refresh))
+                    IconButton(onClick = { showMenu = !showMenu }) {
+                        Icon(Icons.Outlined.MoreVert, contentDescription = null)
                     }
-                    IconButton(onClick = {
-                        val text = visibleLines.joinToString("\n") { it.text }
-                        if (text.isBlank()) {
-                            showToast(context, context.getString(R.string.shizuku_log_empty))
-                        } else {
-                            clipboard.setText(AnnotatedString(text))
-                            showToast(context, context.getString(R.string.shizuku_log_copied))
-                        }
-                    }) {
-                        Icon(Icons.Outlined.ContentCopy, contentDescription = stringResource(R.string.shizuku_log_copy))
-                    }
-                    IconButton(onClick = {
-                        scope.launch {
-                            val text = withContext(Dispatchers.IO) {
-                                buildString {
-                                    append("==== Shizuku server log ====\n")
-                                    append(ShizukuServiceManager.getServerLog())
-                                    append("\n\n==== logcat (shizuku tags) ====\n")
-                                    append(ShizukuServiceManager.getLogcat())
+                    WallpaperAwareDropdownMenu(
+                        expanded = showMenu,
+                        onDismissRequest = { showMenu = false },
+                    ) {
+                        WallpaperAwareDropdownMenuItem(
+                            text = { Text(stringResource(R.string.shizuku_log_refresh)) },
+                            leadingIcon = { Icon(Icons.Outlined.Refresh, contentDescription = null) },
+                            onClick = {
+                                showMenu = false
+                                refresh()
+                            },
+                        )
+                        WallpaperAwareDropdownMenuItem(
+                            text = { Text(stringResource(R.string.shizuku_log_copy)) },
+                            leadingIcon = { Icon(Icons.Outlined.ContentCopy, contentDescription = null) },
+                            onClick = {
+                                showMenu = false
+                                val text = visibleLines.joinToString("\n") { it.text }
+                                if (text.isBlank()) {
+                                    showToast(context, context.getString(R.string.shizuku_log_empty))
+                                } else {
+                                    clipboard.setText(AnnotatedString(text))
+                                    showToast(context, context.getString(R.string.shizuku_log_copied))
                                 }
-                            }
-                            if (text.isBlank()) {
-                                showToast(context, context.getString(R.string.shizuku_log_empty))
-                                return@launch
-                            }
-                            val file = File(context.cacheDir, "shizuku_log.txt")
-                            file.writeText(text)
-                            val uri = FileProvider.getUriForFile(
-                                context, "${context.packageName}.fileprovider", file
-                            )
-                            val shareIntent = Intent(Intent.ACTION_SEND).apply {
-                                type = "text/plain"
-                                putExtra(Intent.EXTRA_STREAM, uri)
-                                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                            }
-                            context.startActivity(
-                                Intent.createChooser(shareIntent, context.getString(R.string.shizuku_log_export))
-                            )
-                        }
-                    }) {
-                        Icon(Icons.Outlined.Share, contentDescription = stringResource(R.string.shizuku_log_export))
-                    }
-                    IconButton(onClick = {
-                        scope.launch {
-                            withContext(Dispatchers.IO) { ShizukuServiceManager.clearServerLog() }
-                            showToast(context, context.getString(R.string.shizuku_log_cleared))
-                            refresh()
-                        }
-                    }) {
-                        Icon(Icons.Outlined.DeleteSweep, contentDescription = stringResource(R.string.shizuku_log_clear))
+                            },
+                        )
+                        WallpaperAwareDropdownMenuItem(
+                            text = { Text(stringResource(R.string.shizuku_log_export)) },
+                            leadingIcon = { Icon(Icons.Outlined.Share, contentDescription = null) },
+                            onClick = {
+                                showMenu = false
+                                scope.launch {
+                                    val text = withContext(Dispatchers.IO) {
+                                        buildString {
+                                            append("==== Shizuku server log ====\n")
+                                            append(ShizukuServiceManager.getServerLog())
+                                            append("\n\n==== logcat (shizuku tags) ====\n")
+                                            append(ShizukuServiceManager.getLogcat())
+                                        }
+                                    }
+                                    if (text.isBlank()) {
+                                        showToast(context, context.getString(R.string.shizuku_log_empty))
+                                        return@launch
+                                    }
+                                    val file = File(context.cacheDir, "shizuku_log.txt")
+                                    file.writeText(text)
+                                    val uri = FileProvider.getUriForFile(
+                                        context, "${context.packageName}.fileprovider", file
+                                    )
+                                    val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                                        type = "text/plain"
+                                        putExtra(Intent.EXTRA_STREAM, uri)
+                                        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                                    }
+                                    context.startActivity(
+                                        Intent.createChooser(shareIntent, context.getString(R.string.shizuku_log_export))
+                                    )
+                                }
+                            },
+                        )
+                        WallpaperAwareDropdownMenuItem(
+                            text = { Text(stringResource(R.string.shizuku_log_clear)) },
+                            leadingIcon = { Icon(Icons.Outlined.DeleteSweep, contentDescription = null) },
+                            onClick = {
+                                showMenu = false
+                                scope.launch {
+                                    withContext(Dispatchers.IO) { ShizukuServiceManager.clearServerLog() }
+                                    showToast(context, context.getString(R.string.shizuku_log_cleared))
+                                    refresh()
+                                }
+                            },
+                        )
                     }
                 },
                 scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
@@ -227,62 +256,75 @@ fun ShizukuLogScreen(navigator: DestinationsNavigator) {
         containerColor = Color.Transparent,
     ) { padding ->
         Column(modifier = Modifier.fillMaxSize().padding(padding)) {
-            // Source switch
-            SingleChoiceSegmentedButtonRow(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-            ) {
-                SegmentedButton(
-                    selected = source == LogSource.SERVER,
-                    onClick = { source = LogSource.SERVER },
-                    shape = SegmentedButtonDefaults.itemShape(index = 0, count = 2),
-                ) { Text(stringResource(R.string.shizuku_log_source_server)) }
-                SegmentedButton(
-                    selected = source == LogSource.LOGCAT,
-                    onClick = { source = LogSource.LOGCAT },
-                    shape = SegmentedButtonDefaults.itemShape(index = 1, count = 2),
-                ) { Text(stringResource(R.string.shizuku_log_source_logcat)) }
-            }
-
-            // Level filter
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .horizontalScroll(rememberScrollState())
-                    .padding(horizontal = 16.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                LEVELS.forEach { level ->
-                    FilterChip(
-                        selected = level in activeLevels,
-                        onClick = {
-                            activeLevels = if (level in activeLevels) {
-                                activeLevels - level
-                            } else {
-                                activeLevels + level
+            // 1) Source switch + level filters, grouped into one spliced card.
+            SplicedColumnGroup(flat = true) {
+                    item(key = "source") {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp, vertical = 12.dp),
+                        ) {
+                            SingleChoiceSegmentedButtonRow(
+                                modifier = Modifier.fillMaxWidth(),
+                            ) {
+                                SegmentedButton(
+                                    selected = source == LogSource.SERVER,
+                                    onClick = { source = LogSource.SERVER },
+                                    shape = SegmentedButtonDefaults.itemShape(index = 0, count = 2),
+                                ) { Text(stringResource(R.string.shizuku_log_source_server)) }
+                                SegmentedButton(
+                                    selected = source == LogSource.LOGCAT,
+                                    onClick = { source = LogSource.LOGCAT },
+                                    shape = SegmentedButtonDefaults.itemShape(index = 1, count = 2),
+                                ) { Text(stringResource(R.string.shizuku_log_source_logcat)) }
                             }
-                        },
-                        label = { Text(level.toString(), color = levelColor(level)) },
-                    )
+                        }
+                    }
+                    item(key = "levels") {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .horizontalScroll(rememberScrollState())
+                                .padding(horizontal = 16.dp, vertical = 4.dp),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        ) {
+                            LEVELS.forEach { level ->
+                                FilterChip(
+                                    selected = level in activeLevels,
+                                    onClick = {
+                                        activeLevels = if (level in activeLevels) {
+                                            activeLevels - level
+                                        } else {
+                                            activeLevels + level
+                                        }
+                                    },
+                                    label = { Text(level.toString(), color = levelColor(level)) },
+                                )
+                            }
+                        }
+                    }
+                    item(key = "search") {
+                        OutlinedTextField(
+                            value = query,
+                            onValueChange = { query = it },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp, vertical = 8.dp),
+                            singleLine = true,
+                            leadingIcon = { Icon(Icons.Outlined.Search, contentDescription = null) },
+                            placeholder = { Text(stringResource(R.string.shizuku_log_search_hint)) },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                        )
                 }
             }
 
-            // Search
-            OutlinedTextField(
-                value = query,
-                onValueChange = { query = it },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-                singleLine = true,
-                leadingIcon = { Icon(Icons.Outlined.Search, contentDescription = null) },
-                placeholder = { Text(stringResource(R.string.shizuku_log_search_hint)) },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-            )
-
+            // 2) Log body: a single rounded container in the app's card style,
+            // filling the remaining height like a standard manager log page.
             when {
-                isLoading -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                isLoading -> Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center,
+                ) {
                     CircularProgressIndicator()
                 }
                 visibleLines.isEmpty() -> Column(
@@ -303,23 +345,33 @@ fun ShizukuLogScreen(navigator: DestinationsNavigator) {
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
-                else -> LazyColumn(
-                    state = listState,
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
-                ) {
-                    items(visibleLines) { line ->
-                        Text(
-                            text = line.text,
-                            style = MaterialTheme.typography.bodySmall,
-                            fontFamily = FontFamily.Monospace,
-                            fontSize = 11.sp,
-                            color = levelColor(line.level),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .horizontalScroll(rememberScrollState())
-                                .padding(vertical = 1.dp),
-                        )
+                else -> Box(modifier = Modifier.fillMaxSize().padding(bottom = 8.dp)) {
+                    Surface(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(horizontal = 16.dp),
+                        shape = RoundedCornerShape(16.dp),
+                        color = MaterialTheme.colorScheme.surfaceContainer,
+                    ) {
+                        LazyColumn(
+                            state = listState,
+                            modifier = Modifier.fillMaxSize(),
+                            contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
+                        ) {
+                            items(visibleLines) { line ->
+                                Text(
+                                    text = line.text,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    fontFamily = FontFamily.Monospace,
+                                    fontSize = 11.sp,
+                                    color = levelColor(line.level),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .horizontalScroll(rememberScrollState())
+                                        .padding(vertical = 1.dp),
+                                )
+                            }
+                        }
                     }
                 }
             }
