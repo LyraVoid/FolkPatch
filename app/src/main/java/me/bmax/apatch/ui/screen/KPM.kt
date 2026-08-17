@@ -106,6 +106,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
 import androidx.activity.compose.BackHandler
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.viewModelScope
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.InstallScreenDestination
@@ -674,31 +675,9 @@ suspend fun loadModule(loadingDialog: LoadingDialogHandle, uri: Uri, args: Strin
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun KPMControlDialog(showDialog: MutableState<Boolean>) {
+fun KPMControlDialog(showDialog: MutableState<Boolean>, onConfirm: (String) -> Unit) {
     var controlParam by remember { mutableStateOf("") }
     var enable by remember { mutableStateOf(false) }
-    val scope = rememberCoroutineScope()
-    val loadingDialog = rememberLoadingDialog()
-    val context = LocalContext.current
-    val outMsgStringRes = stringResource(id = R.string.kpm_control_outMsg)
-    val okStringRes = stringResource(id = R.string.kpm_control_ok)
-    val failedStringRes = stringResource(id = R.string.kpm_control_failed)
-
-    lateinit var controlResult: Natives.KPMCtlRes
-
-    suspend fun onModuleControl(module: KPModel.KPMInfo) {
-        loadingDialog.withLoading {
-            withContext(Dispatchers.IO) {
-                controlResult = Natives.kernelPatchModuleControl(module.name, controlParam)
-            }
-        }
-
-        if (controlResult.rc >= 0) {
-            showToast(context, "$okStringRes\n${outMsgStringRes}: ${controlResult.outMsg}")
-        } else {
-            showToast(context, "$failedStringRes\n${outMsgStringRes}: ${controlResult.outMsg}")
-        }
-    }
 
     BasicAlertDialog(
         onDismissRequest = { showDialog.value = false }, properties = DialogProperties(
@@ -766,7 +745,9 @@ fun KPMControlDialog(showDialog: MutableState<Boolean>) {
                     Button(onClick = {
                         showDialog.value = false
 
-                        scope.launch { onModuleControl(targetKPMToControl) }
+                        // Run the control on the caller's scope: this dialog
+                        // leaves composition here, cancelling any scope it owns.
+                        onConfirm(controlParam)
 
                     }, enabled = enable) {
                         Text(stringResource(id = android.R.string.ok))
@@ -802,10 +783,32 @@ private fun KPModuleList(
 
     val confirmDialog = rememberConfirmDialog()
     val loadingDialog = rememberLoadingDialog()
+    val outMsgStringRes = stringResource(id = R.string.kpm_control_outMsg)
+    val okStringRes = stringResource(id = R.string.kpm_control_ok)
+    val failedStringRes = stringResource(id = R.string.kpm_control_failed)
+
+    // Run on the caller's (ViewModel) scope: KPMControlDialog leaves
+    // composition on OK, cancelling any scope it owns.
+    suspend fun onModuleControl(module: KPModel.KPMInfo, param: String) {
+        lateinit var controlResult: Natives.KPMCtlRes
+        loadingDialog.withLoading {
+            withContext(Dispatchers.IO) {
+                controlResult = Natives.kernelPatchModuleControl(module.name, param)
+            }
+        }
+
+        if (controlResult.rc >= 0) {
+            showToast(context, "$okStringRes\n${outMsgStringRes}: ${controlResult.outMsg}")
+        } else {
+            showToast(context, "$failedStringRes\n${outMsgStringRes}: ${controlResult.outMsg}")
+        }
+    }
 
     val showKPMControlDialog = remember { mutableStateOf(false) }
     if (showKPMControlDialog.value) {
-        KPMControlDialog(showDialog = showKPMControlDialog)
+        KPMControlDialog(showDialog = showKPMControlDialog, onConfirm = { param ->
+            viewModel.viewModelScope.launch { onModuleControl(targetKPMToControl, param) }
+        })
     }
 
     suspend fun onModuleUninstall(module: KPModel.KPMInfo) {
