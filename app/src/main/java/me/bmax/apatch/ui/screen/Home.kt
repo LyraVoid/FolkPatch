@@ -133,6 +133,7 @@ import me.bmax.apatch.ui.viewmodel.PatchesViewModel
 import me.bmax.apatch.util.Version
 import me.bmax.apatch.util.Version.getManagerVersion
 import me.bmax.apatch.util.getSELinuxStatus
+import me.bmax.apatch.util.migrateStockBootBackup
 import me.bmax.apatch.util.reboot
 import me.bmax.apatch.util.ui.APDialogBlurBehindUtils
 import me.bmax.apatch.util.ui.HomeBottomSpacer
@@ -163,6 +164,12 @@ fun HomeScreen(navigator: DestinationsNavigator) {
 
     val kpState by APApplication.kpStateLiveData.observeAsState(APApplication.State.UNKNOWN_STATE)
     val apState by APApplication.apStateLiveData.observeAsState(APApplication.State.UNKNOWN_STATE)
+
+    // Pick up a stock boot backup left behind by a manually flashed PATCH_ONLY
+    // install; see migrateStockBootBackup.
+    LaunchedEffect(Unit) {
+        withContext(Dispatchers.IO) { migrateStockBootBackup() }
+    }
 
     SideEffect {
         if (kpState != APApplication.State.UNKNOWN_STATE) {

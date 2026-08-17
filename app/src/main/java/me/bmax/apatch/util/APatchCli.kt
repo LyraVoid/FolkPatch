@@ -368,11 +368,19 @@ suspend fun listModules(): String = withContext(Dispatchers.IO) {
         Log.e(TAG, "listModules failed: ${e.message}")
         ArrayList<String>()
     }
-    withNewRootShell {
-        newJob().add("cp /data/user/*/me.bmax.apatch/patch/ori.img /data/adb/ap/ && rm /data/user/*/me.bmax.apatch/patch/ori.img")
-            .to(ArrayList(), null).exec()
-    }
     return@withContext out.joinToString("\n").ifBlank { "[]" }
+}
+
+// Devices patched via PATCH_ONLY and flashed manually (e.g. fastboot) never go
+// through the patch-completion handoff, so their stock boot backup is still in
+// the app-private patch dir. Move it next to apd once root is available;
+// idempotent and a no-op when nothing is pending.
+fun migrateStockBootBackup() {
+    withNewRootShell {
+        newJob().add(
+            "cp /data/user/*/me.yuki.folk/patch/ori.img /data/adb/ap/ 2>/dev/null && rm -f /data/user/*/me.yuki.folk/patch/ori.img; true"
+        ).exec()
+    }
 }
 
 fun toggleModule(id: String, enable: Boolean): Boolean {
