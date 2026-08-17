@@ -378,7 +378,7 @@ suspend fun listModules(): String = withContext(Dispatchers.IO) {
 fun migrateStockBootBackup() {
     withNewRootShell {
         newJob().add(
-            "cp /data/user/*/me.yuki.folk/patch/ori.img /data/adb/ap/ 2>/dev/null && rm -f /data/user/*/me.yuki.folk/patch/ori.img; true"
+            "mkdir -p /data/adb/ap && cp /data/user/*/me.yuki.folk/patch/ori.img /data/adb/ap/ 2>/dev/null && rm -f /data/user/*/me.yuki.folk/patch/ori.img; true"
         ).exec()
     }
 }
