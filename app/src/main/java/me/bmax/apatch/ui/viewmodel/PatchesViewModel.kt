@@ -97,6 +97,8 @@ class PatchesViewModel : ViewModel() {
     // copyAndParseBootimg/embedKPM must wait instead of racing or being dropped.
     private val workMutex = Mutex()
 
+    private var entryMode: PatchMode = PatchMode.PATCH_ONLY
+
     private fun prepare() {
         val sh = getShell()
         sh.newJob().add("rm -rf ${patchDir.path}").exec()
@@ -231,6 +233,7 @@ class PatchesViewModel : ViewModel() {
     fun copyAndParseBootimg(uri: Uri) {
         viewModelScope.launch(Dispatchers.IO) {
             workMutex.withLock {
+                if (!ensurePrepared()) return@withLock
                 if (running) return@withLock
                 running = true
                 try {
@@ -239,11 +242,12 @@ class PatchesViewModel : ViewModel() {
                             src.copyAndCloseOut(it.newOutputStream())
                         }
                     }
+                    parseBootimg(srcBoot.path)
                 } catch (e: IOException) {
                     Log.e(TAG, "copy boot image error: $e")
+                } finally {
+                    running = false
                 }
-                parseBootimg(srcBoot.path)
-                running = false
             }
         }
     }
@@ -280,66 +284,79 @@ class PatchesViewModel : ViewModel() {
         running = false
     }
 
-    fun prepare(mode: PatchMode) {
-        viewModelScope.launch(Dispatchers.IO) {
-            workMutex.withLock {
-                if (prepared) return@withLock
-                prepared = true
+    // Runs the one-time initialization with the caller already holding
+    // workMutex. Every patchDir consumer funnels through this so ordering does
+    // not depend on which fire-and-forget coroutine grabs the lock first.
+    // Returns false when initialization failed; callers must not touch
+    // patchDir in that case.
+    private suspend fun ensurePrepared(): Boolean {
+        if (prepared) return true
+        running = true
+        try {
+            prepare()
 
-            running = true
-            try {
-                prepare()
-
-                if (selectedKPImg != null && mode == PatchMode.PATCH_ONLY) {
-                    try {
-                        val kpimgFile = File(patchDir, "kpimg")
-                        selectedKPImg!!.inputStream().buffered().use { src ->
-                            kpimgFile.also {
-                                src.copyAndCloseOut(it.outputStream())
-                            }
+            if (selectedKPImg != null && entryMode == PatchMode.PATCH_ONLY) {
+                try {
+                    val kpimgFile = File(patchDir, "kpimg")
+                    selectedKPImg!!.inputStream().buffered().use { src ->
+                        kpimgFile.also {
+                            src.copyAndCloseOut(it.outputStream())
                         }
-                        customKPImgFileName = getFileNameFromUri(apApp, selectedKPImg!!) ?: "kpimg"
-                        useCustomKPImg = true
-                    } catch (e: IOException) {
-                        Log.e(TAG, "Copy custom kpimg error: $e")
-                        error += "Copy custom kpimg error: ${e.message}\n"
                     }
+                    customKPImgFileName = getFileNameFromUri(apApp, selectedKPImg!!) ?: "kpimg"
+                    useCustomKPImg = true
+                } catch (e: IOException) {
+                    Log.e(TAG, "Copy custom kpimg error: $e")
+                    error += "Copy custom kpimg error: ${e.message}\n"
                 }
-
-                if (selectedBootImage != null && (mode == PatchMode.PATCH_ONLY || mode == PatchMode.RESTORE)) {
-                    try {
-                        selectedBootImage!!.inputStream().buffered().use { src ->
-                            srcBoot.also {
-                                src.copyAndCloseOut(it.newOutputStream())
-                            }
-                        }
-                        parseBootimg(srcBoot.path)
-                    } catch (e: IOException) {
-                        Log.e(TAG, "Copy selected boot image error: $e")
-                        error += "Copy selected boot image error: ${e.message}\n"
-                    }
-                }
-                if (mode != PatchMode.UNPATCH) {
-                    parseKpimg()
-                }
-                if (mode == PatchMode.PATCH_AND_INSTALL || mode == PatchMode.UNPATCH || mode == PatchMode.INSTALL_TO_NEXT_SLOT) {
-                    extractAndParseBootimg(mode)
-                }
-            } catch (e: Exception) {
-                Log.e(TAG, "Prepare failed", e)
-                error = "Initialization failed: ${e.message}"
-            } finally {
-                running = false
             }
+
+            if (selectedBootImage != null && (entryMode == PatchMode.PATCH_ONLY || entryMode == PatchMode.RESTORE)) {
+                try {
+                    selectedBootImage!!.inputStream().buffered().use { src ->
+                        srcBoot.also {
+                            src.copyAndCloseOut(it.newOutputStream())
+                        }
+                    }
+                    parseBootimg(srcBoot.path)
+                } catch (e: IOException) {
+                    Log.e(TAG, "Copy selected boot image error: $e")
+                    error += "Copy selected boot image error: ${e.message}\n"
+                }
+            }
+
+            if (entryMode != PatchMode.UNPATCH) {
+                parseKpimg()
+            }
+            if (entryMode == PatchMode.PATCH_AND_INSTALL || entryMode == PatchMode.UNPATCH || entryMode == PatchMode.INSTALL_TO_NEXT_SLOT) {
+                extractAndParseBootimg(entryMode)
+            }
+            prepared = true
+            return true
+        } catch (e: Exception) {
+            Log.e(TAG, "prepare failed", e)
+            error = "prepare failed: ${e.message}\n"
+            return false
+        } finally {
+            running = false
+        }
+    }
+
+    fun prepare(mode: PatchMode) {
+        entryMode = mode
+        viewModelScope.launch(Dispatchers.IO) {
+            workMutex.withLock { ensurePrepared() }
         }
     }
 
     fun embedKPM(uri: Uri) {
         viewModelScope.launch(Dispatchers.IO) {
             workMutex.withLock {
+                if (!ensurePrepared()) return@withLock
                 if (running) return@withLock
                 running = true
                 error = ""
+                try {
 
                 val rand = (1..4).map { ('a'..'z').random() }.joinToString("")
                 val kpmFileName = "${rand}.kpm"
@@ -372,112 +389,127 @@ class PatchesViewModel : ViewModel() {
                     }
                 }
 
-            } catch (e: IOException) {
-                Log.e(TAG, "Copy kpm error: $e")
-            }
+                val result = shellForResult(
+                    getShell(), "cd $patchDir", "./kptools -l -M ${kpmFile.path}"
+                )
 
-            val result = shellForResult(
-                getShell(), "cd $patchDir", "./kptools -l -M ${kpmFile.path}"
-            )
-
-            if (result.isSuccess) {
-                try {
-                    val ini = Ini(StringReader(result.out.joinToString("\n")))
-                    val kpm = ini["kpm"]
-                    if (kpm != null) {
-                        val kpmInfo = KPModel.KPMInfo(
-                            KPModel.ExtraType.KPM,
-                            kpm["name"].toString(),
-                            KPModel.TriggerEvent.PRE_KERNEL_INIT.event,
-                            "",
-                            kpm["version"].toString(),
-                            kpm["license"].toString(),
-                            kpm["author"].toString(),
-                            kpm["description"].toString(),
-                        )
-                        newExtras.add(kpmInfo)
-                        newExtrasFileName.add(kpmFileName)
+                if (result.isSuccess) {
+                    try {
+                        val ini = Ini(StringReader(result.out.joinToString("\n")))
+                        val kpm = ini["kpm"]
+                        if (kpm != null) {
+                            val kpmInfo = KPModel.KPMInfo(
+                                KPModel.ExtraType.KPM,
+                                kpm["name"].toString(),
+                                KPModel.TriggerEvent.PRE_KERNEL_INIT.event,
+                                "",
+                                kpm["version"].toString(),
+                                kpm["license"].toString(),
+                                kpm["author"].toString(),
+                                kpm["description"].toString(),
+                            )
+                            newExtras.add(kpmInfo)
+                            newExtrasFileName.add(kpmFileName)
+                        }
+                    } catch (e: Exception) {
+                        Log.e(TAG, "embedKPM INI error: ${e.message}")
+                        error = "Invalid KPM: parse error\n"
                     }
-                } catch (e: Exception) {
-                    Log.e(TAG, "embedKPM INI error: ${e.message}")
-                    error = "Invalid KPM: parse error\n"
+                } else {
+                    error = "Invalid KPM\n"
                 }
-            } else {
-                error = "Invalid KPM\n"
+                } finally {
+                    running = false
+                }
             }
-            running = false
         }
     }
 
     fun setCustomKPImg(uri: Uri) {
         viewModelScope.launch(Dispatchers.IO) {
-            if (running) return@launch
-            running = true
-            error = ""
+            workMutex.withLock {
+                if (!ensurePrepared()) return@withLock
+                if (running) return@withLock
+                running = true
+                error = ""
 
-            val kpimgFile = File(patchDir, "kpimg")
-            try {
-                uri.inputStream().buffered().use { src ->
-                    kpimgFile.also {
-                        src.copyAndCloseOut(it.outputStream())
+                val kpimgFile = File(patchDir, "kpimg")
+                var copyFailed = false
+                try {
+                    uri.inputStream().buffered().use { src ->
+                        kpimgFile.also {
+                            src.copyAndCloseOut(it.outputStream())
+                        }
                     }
+                } catch (e: IOException) {
+                    Log.e(TAG, "Copy custom kpimg error: $e")
+                    error = "Copy custom kpimg error: ${e.message}\n"
+                    copyFailed = true
+                } finally {
+                    running = false
                 }
-            } catch (e: IOException) {
-                Log.e(TAG, "Copy custom kpimg error: $e")
-                error = "Copy custom kpimg error: ${e.message}\n"
-                running = false
-                return@launch
-            }
 
-            customKPImgFileName = getFileNameFromUri(apApp, uri) ?: "kpimg"
-            useCustomKPImg = true
-            parseKpimg()
-            running = false
+                if (!copyFailed) {
+                    customKPImgFileName = getFileNameFromUri(apApp, uri) ?: "kpimg"
+                    useCustomKPImg = true
+                    parseKpimg()
+                }
+            }
         }
     }
 
     fun doUnpatch() {
         viewModelScope.launch(Dispatchers.IO) {
-            patching = true
-            patchLog = ""
-            Log.i(TAG, "starting unpatching...")
+            entryMode = PatchMode.UNPATCH
+            workMutex.withLock {
+                if (!ensurePrepared()) return@withLock
+                patching = true
+                patchLog = ""
+                Log.i(TAG, "starting unpatching...")
+                try {
 
-            val logs = object : CallbackList<String>() {
-                override fun onAddElement(e: String?) {
-                    patchLog += e
-                    Log.i(TAG, "" + e)
-                    patchLog += "\n"
+                val logs = object : CallbackList<String>() {
+                    override fun onAddElement(e: String?) {
+                        patchLog += e
+                        Log.i(TAG, "" + e)
+                        patchLog += "\n"
+                    }
                 }
+
+                val result = getShell().newJob().add(
+                    "export ASH_STANDALONE=1",
+                    "cd $patchDir",
+                    "cp /data/adb/ap/ori.img new-boot.img",
+                    "./busybox sh ./boot_unpatch.sh $bootDev",
+                    "rm -f ${APApplication.APD_PATH}",
+                    "rm -rf ${APApplication.APATCH_FOLDER}",
+                ).to(logs, logs).exec()
+
+                if (result.isSuccess) {
+                    logs.add(" Unpatch successful")
+                    needReboot = true
+                    APApplication.markNeedReboot()
+                } else {
+                    logs.add(" Unpatched failed")
+                    error = result.err.joinToString("\n")
+                }
+                logs.add("****************************")
+
+                patchdone = true
+            } finally {
+                patching = false
             }
-
-            val result = getShell().newJob().add(
-                "export ASH_STANDALONE=1",
-                "cd $patchDir",
-                "cp /data/adb/ap/ori.img new-boot.img",
-                "./busybox sh ./boot_unpatch.sh $bootDev",
-                "rm -f ${APApplication.APD_PATH}",
-                "rm -rf ${APApplication.APATCH_FOLDER}",
-            ).to(logs, logs).exec()
-
-            if (result.isSuccess) {
-                logs.add(" Unpatch successful")
-                needReboot = true
-                APApplication.markNeedReboot()
-            } else {
-                logs.add(" Unpatched failed")
-                error = result.err.joinToString("\n")
-            }
-            logs.add("****************************")
-
-            patchdone = true
-            patching = false
         }
     }
+}
     fun doPatch(mode: PatchMode, useKey: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
-            patching = true
-            Log.d(TAG, "starting patching...")
-
+            entryMode = mode
+            workMutex.withLock {
+                if (!ensurePrepared()) return@withLock
+                patching = true
+                Log.d(TAG, "starting patching...")
+                try {
             val apVer = Version.getManagerVersion().second
             val rand = (1..4).map { ('a'..'z').random() }.joinToString("")
             val outFilename = "folk_patched_${apVer}_${BuildConfig.buildKPV}_${rand}.img"
@@ -706,8 +738,11 @@ class PatchesViewModel : ViewModel() {
             }
             logs.add("****************************")
             patchdone = true
-            patching = false
+            } finally {
+                patching = false
+            }
         }
+    }
     }
 
     @RequiresApi(Build.VERSION_CODES.Q)

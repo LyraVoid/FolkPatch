@@ -798,9 +798,9 @@ private fun KPModuleList(
         }
 
         if (controlResult.rc >= 0) {
-            showToast(context, "$okStringRes\n${outMsgStringRes}: ${controlResult.outMsg}")
+            showToast(apApp, "$okStringRes\n${outMsgStringRes}: ${controlResult.outMsg}")
         } else {
-            showToast(context, "$failedStringRes\n${outMsgStringRes}: ${controlResult.outMsg}")
+            showToast(apApp, "$failedStringRes\n${outMsgStringRes}: ${controlResult.outMsg}")
         }
     }
 

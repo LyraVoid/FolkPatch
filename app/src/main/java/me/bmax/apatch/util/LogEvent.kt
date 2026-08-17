@@ -32,7 +32,7 @@ suspend fun getBugreportFile(context: Context): File = withContext(Dispatchers.I
     val packageConfigFile = File(bugreportDir, "package_config")
     val kernelConfig = File(bugreportDir, "defconfig")
 
-    return tryGetRootShell().use { shell ->
+    tryGetRootShell().use { shell ->
         shell.newJob().add("dmesg > ${dmesgFile.absolutePath}").exec()
         shell.newJob().add("logcat -d > ${logcatFile.absolutePath}").exec()
         shell.newJob().add("tar -czf ${tombstonesFile.absolutePath} -C /data/tombstones .").exec()
