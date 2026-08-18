@@ -186,6 +186,9 @@
     <string name="kpm_install">凝符入体</string>
     <string name="kpm_embed">嵌符入道核</string>
     <string name="kpm_embedded">符已入道核</string>
+    <string name="kpm_installed">符已入道</string>
+    <string name="kpm_disabled">符已封印（重启后生效）</string>
+    <string name="kpm_embedded_unload_invalid">已入道核的仙符无法废去；重启后仍会保持。</string>
     <string name="kpm_loaded">符已入道</string>
     <string name="kpm_load_toast_succ">引符入道功成</string>
     <string name="kpm_load_toast_failed">引符入道败陨</string>

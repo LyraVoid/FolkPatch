@@ -122,7 +122,8 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
         const val NETISOLATE_UIDS_FILE = "/data/adb/fp/netisolate/uids"
         const val JAILBREAK_FILE = APATCH_FOLDER + "jailbreak"
         const val JAILBREAK_KO_PATH = APATCH_FOLDER + "kernelpatch.ko"
-        const val KPMS_DIR = APATCH_FOLDER + "kpms/"
+        /** Persisted, file-backed KPMs. Each module lives in <id>/<id>.kpm. */
+        const val KPMS_DIR = APATCH_FOLDER + "kpm/"
 
         @Deprecated("Use SHA256 comparison instead")
         const val APATCH_VERSION_PATH = APATCH_FOLDER + "version"

@@ -27,6 +27,7 @@ import me.bmax.apatch.APApplication
 import me.bmax.apatch.BuildConfig
 import me.bmax.apatch.R
 import me.bmax.apatch.apApp
+import me.bmax.apatch.ui.viewmodel.safeKpmModuleId
 import me.bmax.apatch.util.Version
 import me.bmax.apatch.util.getSafeDownloadsDir
 import me.bmax.apatch.util.copyAndClose
@@ -214,6 +215,8 @@ class PatchesViewModel : ViewModel() {
                                     extra["license"].toString(),
                                     extra["author"].toString(),
                                     extra["description"].toString(),
+                                    moduleId = safeKpmModuleId(name),
+                                    loadSource = "embedded",
                                 )
                                 existedExtras.add(kpmInfo)
                             }
@@ -407,6 +410,8 @@ class PatchesViewModel : ViewModel() {
                                 kpm["license"].toString(),
                                 kpm["author"].toString(),
                                 kpm["description"].toString(),
+                                moduleId = safeKpmModuleId(kpm["name"].toString()),
+                                loadSource = "embedded",
                             )
                             newExtras.add(kpmInfo)
                             newExtrasFileName.add(kpmFileName)

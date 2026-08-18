@@ -187,6 +187,9 @@
     <string name="kpm_install">祝祷</string>
     <string name="kpm_embed">融合</string>
     <string name="kpm_embedded">已融合</string>
+    <string name="kpm_installed">已唤醒</string>
+    <string name="kpm_disabled">已沉睡（重启后生效）</string>
+    <string name="kpm_embedded_unload_invalid">已融合的灵魂晶石无法解除；重启后仍会保持。</string>
     <string name="kpm_loaded">已唤醒</string>
     <string name="kpm_load_toast_succ">唤醒成功</string>
     <string name="kpm_load_toast_failed">唤醒失败</string>

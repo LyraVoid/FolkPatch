@@ -204,6 +204,9 @@
     <string name="kpm_install">安装</string>
     <string name="kpm_embed">融入</string>
     <string name="kpm_embedded">已融入</string>
+    <string name="kpm_installed">已加料</string>
+    <string name="kpm_disabled">已封存（重启后生效）</string>
+    <string name="kpm_embedded_unload_invalid">已融入的酱料不能撤下；重启后仍会保持。</string>
     <string name="kpm_loaded">已加料</string>
     <string name="kpm_load_toast_succ">酱料添加成功</string>
     <string name="kpm_load_toast_failed">酱料添加失败</string>

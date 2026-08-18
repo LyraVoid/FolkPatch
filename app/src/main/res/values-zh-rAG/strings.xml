@@ -217,6 +217,9 @@
     <string name="kpm_install">安装喵！</string>
     <string name="kpm_embed">嵌进去喵！</string>
     <string name="kpm_embedded">已嵌进去喵</string>
+    <string name="kpm_installed">已加载喵</string>
+    <string name="kpm_disabled">已禁用喵（重启后生效喵）</string>
+    <string name="kpm_embedded_unload_invalid">嵌进去的喵不能卸掉哦；重启后还是会生效喵。</string>
     <string name="kpm_loaded">已加载喵</string>
     <string name="kpm_load_toast_succ">加载成功啦喵！</string>
     <string name="kpm_load_toast_failed">加载失败了喵...</string>
