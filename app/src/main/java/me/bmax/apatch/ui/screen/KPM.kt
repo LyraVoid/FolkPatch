@@ -304,6 +304,7 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
             val context = LocalContext.current
 
             val moduleLoad = stringResource(id = R.string.kpm_load)
+            val moduleInstall = stringResource(id = R.string.kpm_install)
             val moduleEmbed = stringResource(id = R.string.kpm_embed)
             val successToastText = stringResource(id = R.string.kpm_load_toast_succ)
             val failToastText = stringResource(id = R.string.kpm_load_toast_failed)
@@ -406,6 +407,18 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
                             text = { Text(text = moduleEmbed, style = MaterialTheme.typography.bodyMedium) },
                         )
                     }
+                    // 安装 (Install): copy into the boot-time loader dir without loading
+                    FloatingActionButtonMenuItem(
+                        onClick = {
+                            expanded = false
+                            val intent = Intent(Intent.ACTION_GET_CONTENT)
+                            intent.type = "*/*"
+                            intent.addCategory(Intent.CATEGORY_OPENABLE)
+                            selectInstallKpmLauncher.launch(intent)
+                        },
+                        icon = { Icon(Icons.Outlined.Settings, contentDescription = null, modifier = Modifier.size(18.dp)) },
+                        text = { Text(text = moduleInstall, style = MaterialTheme.typography.bodyMedium) },
+                    )
                     // 加载 (Load)
                     FloatingActionButtonMenuItem(
                         onClick = {
