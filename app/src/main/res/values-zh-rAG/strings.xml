@@ -82,6 +82,11 @@
     <string name="settings_clear_super_key_dialog">真的要继续嘛？不要后悔哦喵！</string>
     <string name="settings_sucompat">旧版 su 兼容喵</string>
     <string name="settings_sucompat_summary">开启 path_probe 钩子就能兼容旧版 su 啦喵！</string>
+    <string name="settings_selinux_hide">隐藏SELinux修改喵（测试）</string>
+    <string name="settings_selinux_hide_summary">把SELinux的改动藏起来，不让用户进程发现喵（这功能可能不太稳喵）。安全模式会关掉它喵。</string>
+    <string name="settings_selinux_hide_warning_title">警告喵</string>
+    <string name="settings_selinux_hide_warning_below_5_10">这功能只在5.10及以上的内核测过喵，低版本内核可能不稳喵。</string>
+    <string name="settings_selinux_hide_warning_non_gki">非GKI内核风险更大喵，可能会开不了机喵，记得先备份数据喵。</string>
 
     <string name="home_learn_apatch">了解一下FolkPatch呗喵</string>
     <string name="home_click_to_learn_apatch">快戳人家喵！看看FolkPatch能干什么喵</string>

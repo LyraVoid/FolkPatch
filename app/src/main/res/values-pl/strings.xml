@@ -66,6 +66,11 @@
     <string name="settings_clear_super_key_dialog">Czy na pewno chcesz kontynuować?</string>
     <string name="settings_sucompat">Zgodność ze starym su</string>
     <string name="settings_sucompat_summary">Enable path_probe hooks for legacy su compatibility</string>
+    <string name="settings_selinux_hide">Ukryj modyfikację SELinux (Test)</string>
+    <string name="settings_selinux_hide_summary">Ukrywa zmiany SELinux przed wykryciem przez procesy użytkownika (ta funkcja może być niestabilna). Tryb bezpieczny może wyłączyć tę funkcję.</string>
+    <string name="settings_selinux_hide_warning_title">Ostrzeżenie</string>
+    <string name="settings_selinux_hide_warning_below_5_10">Ta funkcja jest testowana tylko na jądrze 5.10 i nowszym i może być niestabilna na starszych wersjach jądra.</string>
+    <string name="settings_selinux_hide_warning_non_gki">Jądra inne niż GKI niosą większe ryzyko i mogą spowodować błąd uruchamiania. Upewnij się, że masz kopię zapasową danych.</string>
     <string name="su_exclude_all_title">Wyklucz wszystkie</string>
     <string name="su_exclude_all_confirm">Czy na pewno chcesz wykluczyć wszystkie aplikacje bez uprawnień root?</string>
     <string name="home_learn_apatch">Poznaj FolkPatch</string>

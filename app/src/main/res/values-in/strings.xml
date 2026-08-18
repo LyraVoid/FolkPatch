@@ -75,6 +75,11 @@
     <string name="settings_clear_super_key_dialog">Apakah Anda yakin ingin melanjutkan?</string>
     <string name="settings_sucompat">Kompatibilitas su lama</string>
     <string name="settings_sucompat_summary">Aktifkan kompatibilitas su lama (untuk saat su tidak berfungsi)</string>
+    <string name="settings_selinux_hide">Sembunyikan modifikasi SELinux (Uji Coba)</string>
+    <string name="settings_selinux_hide_summary">Menyembunyikan perubahan SELinux agar tidak terdeteksi oleh proses pengguna (fitur ini mungkin tidak stabil). Mode aman dapat menonaktifkan fitur ini.</string>
+    <string name="settings_selinux_hide_warning_title">Peringatan</string>
+    <string name="settings_selinux_hide_warning_below_5_10">Fitur ini hanya diuji pada kernel 5.10 ke atas dan mungkin tidak stabil pada versi kernel yang lebih rendah.</string>
+    <string name="settings_selinux_hide_warning_non_gki">Kernel non-GKI memiliki risiko yang lebih besar dan dapat menyebabkan kegagalan boot. Pastikan data Anda sudah dicadangkan.</string>
 
     <string name="su_exclude_all_title">Kecualikan semua</string>
     <string name="su_exclude_all_confirm">Apakah Anda yakin ingin mengecualikan semua aplikasi tanpa hak root?</string>

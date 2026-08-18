@@ -70,6 +70,11 @@
     <string name="settings_clear_super_key_dialog">大厨，真要继续干？</string>
     <string name="settings_sucompat">旧版 su 菜谱兼容</string>
     <string name="settings_sucompat_summary">启用 path_probe 后厨探路钩，就能兼容旧版 su 菜谱</string>
+    <string name="settings_selinux_hide">隐藏卫生检查记录（测试）</string>
+    <string name="settings_selinux_hide_summary">把后厨的整改记录藏起来，不让食客进程看到（这做法可能不稳）。安全模式会暂停这招。</string>
+    <string name="settings_selinux_hide_warning_title">大厨警告</string>
+    <string name="settings_selinux_hide_warning_below_5_10">这招只在5.10及以上的灶台上试过，老灶台可能不稳。</string>
+    <string name="settings_selinux_hide_warning_non_gki">非GKI灶台风险更大，可能直接熄火，记得先存好食材。</string>
 
     <string name="home_learn_apatch">了解 FolkPatch 餐厅</string>
     <string name="home_click_to_learn_apatch">了解 FolkPatch 餐厅的功能及烹饪使用方法</string>

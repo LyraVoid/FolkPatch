@@ -75,6 +75,11 @@
     <string name="settings_clear_super_key_dialog">確定要繼續嗎？</string>
     <string name="settings_sucompat">舊版 su 相容性</string>
     <string name="settings_sucompat_summary">啟用舊版su兼容(適用於su不生效)</string>
+    <string name="settings_selinux_hide">隱藏SELinux修改（測試）</string>
+    <string name="settings_selinux_hide_summary">隱藏 SELinux 的修改以防止被使用者程序偵測到（此功能可能不穩定）。安全模式可停用此功能。</string>
+    <string name="settings_selinux_hide_warning_title">警告</string>
+    <string name="settings_selinux_hide_warning_below_5_10">此功能僅在 5.10 及以上內核測試過，在較低的內核版本上可能不穩定。</string>
+    <string name="settings_selinux_hide_warning_non_gki">非 GKI 內核風險更大，可能導致無法開機。請確保已備份資料。</string>
 
     <string name="home_learn_apatch">深入了解 FolkPatch</string>
     <string name="home_click_to_learn_apatch">學習有關 FolkPatch 的功能及使用方式</string>

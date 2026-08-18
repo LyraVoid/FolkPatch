@@ -71,6 +71,11 @@
     <string name="settings_clear_super_key_dialog">道友确欲破除此秘钥乎？</string>
     <string name="settings_sucompat">旧版登仙令符兼容</string>
     <string name="settings_sucompat_summary">启用 path_probe 探路仙钩，以承旧版登仙之便</string>
+    <string name="settings_selinux_hide">隐藏禁守令修改（测试）</string>
+    <string name="settings_selinux_hide_summary">隐藏天道禁守令的变更，防被凡尘进程窥破（此法或有不稳）。安全模式可封印此法。</string>
+    <string name="settings_selinux_hide_warning_title">天机示警</string>
+    <string name="settings_selinux_hide_warning_below_5_10">此法仅在 5.10 及以上道基验证过，道基低微者或有不稳。</string>
+    <string name="settings_selinux_hide_warning_non_gki">非GKI道基风险更大，或致无法入道，请确保已备份灵识。</string>
 
     <string name="home_learn_apatch">参悟FolkPatch仙法</string>
     <string name="home_click_to_learn_apatch">探FolkPatch仙法之玄妙，明渡劫登仙之术</string>

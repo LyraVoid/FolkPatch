@@ -72,6 +72,11 @@
     <string name="settings_clear_super_key_dialog">Você realmente deseja prosseguir?</string>
     <string name="settings_sucompat">Compatibilidade su legada</string>
     <string name="settings_sucompat_summary">Ativar compatibilidade su (para quando su não funciona)</string>
+    <string name="settings_selinux_hide">Ocultar modificação do SELinux (Teste)</string>
+    <string name="settings_selinux_hide_summary">Oculta as alterações do SELinux para não serem detectadas por processos do usuário (este recurso pode ser instável). O modo de segurança pode desativar este recurso.</string>
+    <string name="settings_selinux_hide_warning_title">Aviso</string>
+    <string name="settings_selinux_hide_warning_below_5_10">Este recurso só foi testado em kernels 5.10 ou superiores e pode ser instável em versões inferiores.</string>
+    <string name="settings_selinux_hide_warning_non_gki">Kernels não-GKI apresentam um risco maior e podem causar falha na inicialização. Certifique-se de que seus dados estão com backup.</string>
     <string name="settings_grid_working_card_hide_check">Ocultar ícone de status</string>
     <string name="settings_grid_working_card_hide_check_summary">Ocultar o ícone de confirmação ou aviso no cartão de status</string>
     <string name="settings_grid_working_card_hide_text">Ocultar texto de status</string>

@@ -71,6 +71,11 @@
     <string name="settings_clear_super_key_dialog">你确定吗？这操作比扔末影珍珠还刺激，不可逆的！</string>
     <string name="settings_sucompat">旧版 OP 兼容</string>
     <string name="settings_sucompat_summary">启用 path_probe 探路钩，兼容旧版 OP 指令</string>
+    <string name="settings_selinux_hide">隐藏游戏规则修改（测试）</string>
+    <string name="settings_selinux_hide_summary">把规则改动藏起来，不让玩家进程发现（这功能可能不稳）。安全模式会关掉它。</string>
+    <string name="settings_selinux_hide_warning_title">警告</string>
+    <string name="settings_selinux_hide_warning_below_5_10">这功能只在5.10及以上的服务器测过，旧服务器可能不稳。</string>
+    <string name="settings_selinux_hide_warning_non_gki">非GKI服务器风险更大，可能导致服务器崩溃，记得先备份存档。</string>
 
     <string name="home_learn_apatch">探索 FolkPatch 这片大陆</string>
     <string name="home_click_to_learn_apatch">看看 FolkPatch 能在你的世界里搞出什么花样</string>
