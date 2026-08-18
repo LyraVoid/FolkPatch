@@ -9,7 +9,6 @@ import java.io.FileInputStream
 
 plugins {
     alias(libs.plugins.agp.app)
-    alias(libs.plugins.kotlin)
     alias(libs.plugins.kotlin.compose.compiler)
     alias(libs.plugins.ksp)
     alias(libs.plugins.lsplugin.apksign)
@@ -488,6 +487,8 @@ dependencies {
     implementation(libs.io.coil.kt.coil.gif)
 
     implementation(libs.kotlinx.coroutines.core)
+
+    implementation(libs.okhttp)
 
     implementation(libs.me.zhanghai.android.appiconloader.coil)
 

@@ -1,5 +1,5 @@
 [versions]
-agp = "8.13.2"
+agp = "9.3.1"
 kotlin = "2.4.10"
 ksp = "2.3.10"
 compose-bom = "2025.11.01"
@@ -68,6 +68,8 @@ io-coil-kt-coil-compose = { group = "io.coil-kt", name = "coil-compose", version
 io-coil-kt-coil-gif = { group = "io.coil-kt", name = "coil-gif", version = "2.7.0" }
 
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version = "1.11.0" }
+
+okhttp = { module = "com.squareup.okhttp3:okhttp", version = "5.5.0" }
 
 me-zhanghai-android-appiconloader-coil = { group = "me.zhanghai.android.appiconloader", name = "appiconloader-coil", version = "1.5.0" }
 

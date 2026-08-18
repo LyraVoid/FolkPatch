@@ -9,7 +9,7 @@ use notify::{
 use signal_hook::{consts::signal::*, iterator::Signals};
 use std::process::Stdio;
 use std::{
-    env, fs,
+    env, ffi::CStr, fs,
     os::unix::{fs::PermissionsExt, process::CommandExt},
     path::{Path, PathBuf},
     process::Command,
