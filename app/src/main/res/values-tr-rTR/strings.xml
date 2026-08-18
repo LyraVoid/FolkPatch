@@ -739,30 +739,7 @@ Bol şans! Ayrıca, aşağıdaki belge butonuna tıklamak kesinlikle doğru!</st
     <string name="settings_video_volume">Video Sesi</string>
     
     <!-- KPM AutoLoad Strings -->
-    <string name="kpm_autoload_title">KPM Otomatik Yükleme</string>
-    <string name="kpm_autoload_enabled">Otomatik yüklemeyi etkinleştir</string>
-    <string name="kpm_autoload_enabled_summary">Cihaz açıldığında KPM modüllerini otomatik olarak yükle</string>
-    <string name="kpm_autoload_json_config">JSON Yapılandırması</string>
-    <string name="kpm_autoload_json_label">Yapılandırma JSON’u</string>
-    <string name="kpm_autoload_json_placeholder">{
-  "enabled": true,
-  "kpmPaths": [
-    "/path/to/module1.kpm",
-    "/path/to/module2.kpm"
-  ]
-}</string>
-    <string name="kpm_autoload_json_error">Geçersiz JSON formatı</string>
-    <string name="kpm_autoload_json_helper">KPM dosya yollarını içeren geçerli bir JSON girin</string>
-    <string name="kpm_autoload_save">Yapılandırmayı Kaydet</string>
-    <string name="kpm_autoload_save_confirm">Otomatik yükleme yapılandırması kaydedilsin mi?</string>
-    <string name="kpm_autoload_save_success">Yapılandırma başarıyla kaydedildi</string>
-    <string name="kpm_autoload_save_failed">Yapılandırma kaydedilemedi</string>
-    <string name="kpm_autoload_visual_mode">Görsel Mod</string>
-    <string name="kpm_autoload_json_mode">JSON Modu</string>
-    <string name="kpm_autoload_add_kpm">KPM Ekle</string>
-    <string name="kpm_autoload_remove_kpm">Kaldır</string>
-    <string name="kpm_autoload_edit_kpm">Editar</string>
-    <string name="kpm_autoload_edit_dialog_title">Editar KPM</string>    <string name="kpm_autoload_event_label">Evento:</string>    <string name="kpm_autoload_args_label">Argumentos:</string>    <string name="kpm_autoload_event_service">service</string>    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
+    
     
     <!-- Module Backup/Restore Strings -->
     <string name="apm_copy_list_title">Listeyi Kopyala</string>
@@ -802,19 +779,7 @@ Bol şans! Ayrıca, aşağıdaki belge butonuna tıklamak kesinlikle doğru!</st
     <string name="welcome_got_it">Basla</string>
 
 
-    <string name="kpm_autoload_kpm_list_title">KPM Modülleri</string>
-    <string name="kpm_autoload_no_kpm_added">Eklenmiş KPM modülü yok</string>
-    <string name="kpm_autoload_kpm_path">KPM Yolu</string>
-    <string name="kpm_autoload_file_not_found">Dosya bulunamadı</string>
-    <string name="kpm_autoload_select_kpm_file">KPM Dosyası Seç</string>
-    <string name="kpm_autoload_first_time_title">KPM Otomatik Yükleme Hakkında</string>
-    <string name="kpm_autoload_first_time_message">Bu özellik, yapılandırılmış tüm KPM’leri geçici olarak önyükleme sırasında otomatik yüklemenizi sağlar. Bu yaklaşım, doğrudan çekirdeğe gömmeye kıyasla daha pratiktir.
-
-Örneğin, bölüm değişikliklerini engelleyen KPM’ler yalnızca geçici olarak kullanılabilir; çünkü gömme işlemi açılış hatalarına neden olabilir. Ya da BOOT bölümünü değiştirmek istemiyorsanız, bu yapılandırmayı kullanarak modülleri hızlıca yükleyebilirsiniz.
-
-Komutların çalışması için uygulamanın tamamen kapatılıp yeniden açıldığından emin olun. Genellikle önyükleme sırasında da yükleme yapılır. Yöneticinin bir süre siyah ekran göstermesi normaldir! Bu yöntem tamamen arka planda yükleme kullanır; modüllerin doğru şekilde yüklenip yüklenmediğini kontrol etmek için manuel olarak aşağı kaydırıp yenilemeyi unutmayın!</string>
-    <string name="kpm_autoload_first_time_confirm">Anladım</string>
-    <string name="kpm_autoload_do_not_show_again">Bir daha gösterme</string>
+    
 
     <!-- Hide Settings Strings -->
     <string name="home_hide_su_path">su çalıştırılabilir yolunu gizle</string>
@@ -828,8 +793,6 @@ Komutların çalışması için uygulamanın tamamen kapatılıp yeniden açıld
     <string name="home_hide_zygisk_summary">Bilgi kartında Zygisk uygulamasını gizle</string>
     <string name="home_hide_mount_summary">Bilgi kartında mount uygulamasını gizle</string>
 
-    <string name="kpm_page_first_time_title">Uyarı</string>
-    <string name="kpm_page_first_time_message">Kernel modülleri Boot uygulamasını doğrudan değiştirir. Sistem modüllerinin aksine, iyi bir kurtarma mekanizmasına sahip değildirler. Sorun oluşursa yalnızca Fastboot’a girerek düzeltme yapabilirsiniz. Boot’a gömmeden önce sorun olmadığından emin olmak için önce modülü yüklemeniz önerilir. Bir modül yalnızca yüklenerek kullanılabiliyorsa, otomatik KPM modülü yükleme özelliğini deneyebilirsiniz. Kernel modüllerini anlamıyorsanız lütfen bu özelliği kullanmayın!</string>
 
 
     <!-- Auto Backup Strings -->

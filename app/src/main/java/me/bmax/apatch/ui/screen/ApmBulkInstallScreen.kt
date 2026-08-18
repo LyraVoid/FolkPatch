@@ -165,7 +165,7 @@ fun ApmBulkInstallScreen(navigator: DestinationsNavigator, initialUris: ArrayLis
                             onCheckedChange = { dontShowAgain = it }
                         )
                         Text(
-                            text = stringResource(R.string.kpm_autoload_do_not_show_again),
+                            text = stringResource(R.string.dont_show_again),
                             style = MaterialTheme.typography.bodySmall,
                             modifier = Modifier.padding(start = 8.dp)
                         )
@@ -181,7 +181,7 @@ fun ApmBulkInstallScreen(navigator: DestinationsNavigator, initialUris: ArrayLis
                             }
                             showFirstTimeDialog = false
                         }) {
-                            Text(stringResource(R.string.kpm_autoload_first_time_confirm))
+                            Text(stringResource(R.string.got_it))
                         }
                     }
                 }

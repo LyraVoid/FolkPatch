@@ -714,21 +714,7 @@ KernelPatch 需要修補 boot 映像檔。
     <string name="su_exclude_all_title">批次排除</string>
     <string name="su_exclude_all_confirm">確定要將所有未授權 Root 的應用程式設為排除嗎？</string>
     <!-- KPM AutoLoad Strings -->
-    <string name="kpm_autoload_title">KPM 自動載入</string>
-    <string name="kpm_autoload_enabled">啟用自動載入</string>
-    <string name="kpm_autoload_enabled_summary">開機時自動載入 KPM 模組</string>
-    <string name="kpm_autoload_json_config">JSON 設定</string>
-    <string name="kpm_autoload_json_label">JSON 設定</string>
-    <string name="kpm_autoload_json_placeholder">{
-  "enabled": true,
-  "kpmPaths": [
-    "/path/to/module1.kpm",
-    "/path/to/module2.kpm"
-  ]
-}</string>
-    <string name="kpm_autoload_json_error">無效的 JSON 格式</string>
-    <string name="kpm_autoload_json_helper">輸入有效的 JSON，包含 KPM 檔案路徑陣列</string>
-    <string name="kpm_autoload_save">儲存設定</string>
+    
     <string name="settings_grid_working_card_hide_check">隱藏狀態圖示</string>
     <string name="settings_grid_working_card_hide_check_summary">隱藏工作卡片上的勾選或警告圖示</string>
     <string name="settings_grid_working_card_hide_text">隱藏狀態文字</string>
@@ -749,37 +735,9 @@ KernelPatch 需要修補 boot 映像檔。
     <string name="settings_grid_working_card_dual_opacity_desc">根據亮色和暗色主題自動調整卡片透明度</string>
     <string name="settings_grid_working_card_day_opacity">白天模式卡片透明度</string>
     <string name="settings_grid_working_card_night_opacity">夜晚模式卡片透明度</string>
-    <string name="kpm_autoload_save_confirm">儲存自動載入設定？</string>
-    <string name="kpm_autoload_save_success">設定儲存成功</string>
-    <string name="kpm_autoload_save_failed">設定儲存失敗</string>
-    <string name="kpm_autoload_visual_mode">可視化模式</string>
-    <string name="kpm_autoload_json_mode">JSON 模式</string>
-    <string name="kpm_autoload_add_kpm">新增 KPM</string>
-    <string name="kpm_autoload_remove_kpm">移除</string>
-    <string name="kpm_autoload_edit_kpm">編輯</string>
-    <string name="kpm_autoload_edit_dialog_title">編輯 KPM</string>    <string name="kpm_autoload_event_label">事件:</string>    <string name="kpm_autoload_args_label">參數:</string>    <string name="kpm_autoload_event_service">service</string>    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
-    <string name="kpm_autoload_kpm_list_title">KPM 模組列表</string>
-    <string name="kpm_autoload_no_kpm_added">未新增 KPM 模組</string>
-    <string name="kpm_autoload_kpm_path">KPM 路徑</string>
-    <string name="kpm_autoload_file_not_found">檔案未找到</string>
-    <string name="kpm_autoload_select_kpm_file">選擇 KPM 檔案</string>
-    <string name="kpm_autoload_first_time_title">關於 KPM 自動載入</string>
-    <string name="kpm_autoload_first_time_message">此功能可在開機時，自動以「臨時方式」載入設定中的所有 KPM 模組。相較於直接將模組嵌入至核心，這種方式更方便且安全。
+    
 
-例如某些用於防止分割區被修改的 KPM 模組，僅能以臨時載入方式使用，若直接嵌入至核心，可能會導致裝置無法開機。若您不希望修改或破壞 Boot 分割區，也可透過此功能快速載入所需模組。
-
-請確保應用程式已完全結束後重新啟動，系統才會執行載入指令。一般情況下，裝置開機時也會自動載入模組。管理器在啟動時短暫黑畫面屬於正常現象，此功能採用純背景載入機制，請於進入後手動下拉重新整理，以確認模組是否已成功載入。</string>
-    <string name="kpm_autoload_first_time_confirm">好</string>
-    <string name="kpm_autoload_do_not_show_again">不再顯示</string>
-
-    <string name="kpm_page_first_time_title">警告</string>
-    <string name="kpm_page_first_time_message">核心模組會直接修改 Boot 分割區，與系統模組不同，核心模組不具備完善的救援機制，一旦發生問題，僅能透過 Fastboot 模式進行修復。
-
-建議先以臨時載入方式測試模組的穩定性，確認運作正常後，再將模組嵌入至 Boot 分割區。
-
-若該模組僅支援臨時載入，可改用 KPM 自動載入功能。
-
-若您不熟悉核心模組的運作原理，請勿使用此功能。</string>
+    
 
     <!-- APM Bulk Install Strings -->
     <string name="apm_bulk_install_title">系統模組批次安裝</string>

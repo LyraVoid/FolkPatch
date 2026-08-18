@@ -741,26 +741,7 @@ KernelPatch 这道菜需要用 boot 主料来烹饪。
     <string name="home_hide_zygisk_summary">在信息卡片中隐藏 Zygisk 实现信息</string>
     <string name="home_hide_mount_summary">在信息卡片中隐藏上菜实现信息</string>
     <!-- KPM AutoLoad Strings -->
-    <string name="kpm_autoload_title">酱料自动添加</string>
-    <string name="kpm_autoload_enabled">启用自动添加</string>
-    <string name="kpm_autoload_enabled_summary">开餐时自动添加酱料</string>
-    <string name="kpm_autoload_json_config">JSON 菜谱配置</string>
-    <string name="kpm_autoload_json_label">JSON 菜谱配置</string>
-    <string name="kpm_autoload_json_placeholder">{
-  "enabled": true,
-  "kpmPaths": [
-    "/path/to/module1.kpm",
-    "/path/to/module2.kpm"
-  ]
-}</string>
-    <string name="kpm_autoload_json_error">无效的 JSON 菜谱格式</string>
-    <string name="kpm_autoload_json_helper">输入有效的 JSON 菜谱，包含酱料文件路径数组</string>
-    <string name="kpm_autoload_save">保存菜谱配置</string>
-    <string name="kpm_autoload_save_confirm">保存自动添加菜谱配置？</string>
-    <string name="kpm_autoload_save_success">菜谱配置保存成功</string>
-    <string name="kpm_autoload_save_failed">菜谱配置保存失败</string>
-    <string name="kpm_autoload_visual_mode">可视化烹饪模式</string>
-    <string name="kpm_autoload_json_mode">JSON 菜谱模式</string>
+    
 
     <!-- APM Bulk Install Strings -->
     <string name="apm_bulk_install_title">招牌菜批量烹饪</string>
@@ -795,26 +776,8 @@ KernelPatch 这道菜需要用 boot 主料来烹饪。
     <string name="welcome_skip">跳过</string>
     <string name="welcome_got_it">开饭！</string>
 
-    <string name="kpm_autoload_add_kpm">添加酱料</string>
-    <string name="kpm_autoload_remove_kpm">删除</string>
-    <string name="kpm_autoload_edit_kpm">编辑</string>
-    <string name="kpm_autoload_edit_dialog_title">编辑 KPM</string>    <string name="kpm_autoload_event_label">事件:</string>    <string name="kpm_autoload_args_label">参数:</string>    <string name="kpm_autoload_event_service">service</string>    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
-    <string name="kpm_autoload_kpm_list_title">酱料列表</string>
-    <string name="kpm_autoload_no_kpm_added">未添加酱料</string>
-    <string name="kpm_autoload_kpm_path">酱料路径</string>
-    <string name="kpm_autoload_file_not_found">菜谱文件未找到</string>
-    <string name="kpm_autoload_select_kpm_file">选择酱料菜谱文件</string>
-    <string name="kpm_autoload_first_time_title">关于酱料自动添加</string>
-    <string name="kpm_autoload_first_time_message">这个功能可以让你开机自动临时添加菜谱配置文件的全部酱料，这种方案相比于直接融入核心食材更加方便。
+    
 
-例如，功能为防止分区被修改的酱料，这种酱料只能临时添加使用，但是融入会导致不开机。或者你不想破坏 BOOT 分区就可以使用这个菜谱配置快速载入酱料。
-
-需要确保餐厅软件完全退出进入才会执行命令，一般来说开机进入也是会添加的，管理器黑屏一段时间属于正常现象,使用的是纯后台的记添加方案,记得手动上滑刷新看看是否正确添加！</string>
-    <string name="kpm_autoload_first_time_confirm">知道了</string>
-    <string name="kpm_autoload_do_not_show_again">不再显示</string>
-
-    <string name="kpm_page_first_time_title">警告</string>
-    <string name="kpm_page_first_time_message">核心酱料是直接修改 Boot 的实现，它不像招牌菜一样有很好的救砖机制，出问题只能进入 Fastboot 去修复。建议先添加酱料没有问题再融入到 Boot。如果是只能添加使用的酱料，可以尝试使用自动酱料添加功能。如果你不了解核心酱料，请不要使用本烹饪功能！</string>
     <!-- Module Backup/Restore Strings -->
     <string name="apm_copy_list_title">复制列表</string>
     <string name="apm_copy_list_success">招牌菜列表已复制</string>

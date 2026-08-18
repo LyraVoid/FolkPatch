@@ -752,26 +752,7 @@ KernelPatch 魔法阵需要 boot 核心来施展。
     <string name="settings_grid_working_card_day_opacity">日间魔力透明</string>
     <string name="settings_grid_working_card_night_opacity">月间魔力透明</string>
     <!-- KPM AutoLoad Strings -->
-    <string name="kpm_autoload_title">心之结晶自动觉醒</string>
-    <string name="kpm_autoload_enabled">启用结晶自主觉醒</string>
-    <string name="kpm_autoload_enabled_summary">开机时自动激活心之结晶</string>
-    <string name="kpm_autoload_json_config">星界咒语配置</string>
-    <string name="kpm_autoload_json_label">星界咒语</string>
-    <string name="kpm_autoload_json_placeholder">{
-  "enabled": true,
-  "kpmPaths": [
-    "/path/to/crystal1.kpm",
-    "/path/to/crystal2.kpm"
-  ]
-}</string>
-    <string name="kpm_autoload_json_error">无效的星界咒语格式</string>
-    <string name="kpm_autoload_json_helper">输入有效的星界咒语，包含心之结晶文件路径数组</string>
-    <string name="kpm_autoload_save">保存咒语配置</string>
-    <string name="kpm_autoload_save_confirm">保存自动激活咒语配置？</string>
-    <string name="kpm_autoload_save_success">咒语配置保存成功</string>
-    <string name="kpm_autoload_save_failed">咒语配置保存失败</string>
-    <string name="kpm_autoload_visual_mode">可视化咒语模式</string>
-    <string name="kpm_autoload_json_mode">星界咒语模式</string>
+    
 
     <!-- APM Bulk Install Strings -->
     <string name="apm_bulk_install_title">星之魔法阵批量契约</string>
@@ -806,26 +787,8 @@ KernelPatch 魔法阵需要 boot 核心来施展。
     <string name="welcome_skip">跳过</string>
     <string name="welcome_got_it">开始</string>
 
-    <string name="kpm_autoload_add_kpm">添加心之结晶</string>
-    <string name="kpm_autoload_remove_kpm">解除</string>
-    <string name="kpm_autoload_edit_kpm">编辑魔法咒语</string>
-    <string name="kpm_autoload_edit_dialog_title">编辑心之结晶</string>    <string name="kpm_autoload_event_label">触发事件:</string>    <string name="kpm_autoload_args_label">咒语参数:</string>    <string name="kpm_autoload_event_service">service</string>    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
-    <string name="kpm_autoload_kpm_list_title">心之结晶列表</string>
-    <string name="kpm_autoload_no_kpm_added">未添加心之结晶</string>
-    <string name="kpm_autoload_kpm_path">心之结晶路径</string>
-    <string name="kpm_autoload_file_not_found">未找到魔法文件</string>
-    <string name="kpm_autoload_select_kpm_file">选择心之结晶文件</string>
-    <string name="kpm_autoload_first_time_title">关于心之结晶自动觉醒</string>
-    <string name="kpm_autoload_first_time_message">这个功能可以让你觉醒时自动临时激活咒语配置文件的全部心之结晶，这种方案相比于直接融合到心之核心更加方便。
+    
 
-例如，功能为防止魔法容器被修改的心之结晶，这种心之结晶只能临时激活使用，但是融合会导致无法觉醒。或者你不想破坏心之核心就可以使用这个咒语配置快速激活结晶。
-
-需要确保魔法工坊完全退出进入才会执行咒语，一般来说觉醒进入也是会激活的，工坊黑屏一段时间属于正常现象，使用的是纯后台的咒语激活方案，记得手动刷新看看是否正确激活！</string>
-    <string name="kpm_autoload_first_time_confirm">了解了</string>
-    <string name="kpm_autoload_do_not_show_again">不再显示</string>
-
-    <string name="kpm_page_first_time_title">魔法警告</string>
-    <string name="kpm_page_first_time_message">心之结晶是直接修改心之核心的实现，它不像星之魔法阵一样有很好的恢复机制，出问题只能进入召唤阵去修复。建议先激活结晶没有问题再融合到心之核心。如果是只能激活使用的结晶，可以尝试使用自动心之结晶激活功能。如果你不了解心之结晶，请不要使用本功能！</string>
     <!-- Module Backup/Restore Strings -->
     <string name="apm_copy_list_title">抄录魔法名录</string>
     <string name="apm_copy_list_success">名录已抄录完毕</string>

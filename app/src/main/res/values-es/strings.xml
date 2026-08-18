@@ -738,30 +738,7 @@ Aquí hay algunas posibles razones para el fallo de autenticación—por favor v
     <string name="settings_video_volume">Volumen del Video</string>
     
     <!-- KPM AutoLoad Strings -->
-    <string name="kpm_autoload_title">Auto-carga de KPM</string>
-    <string name="kpm_autoload_enabled">Habilitar auto-carga</string>
-    <string name="kpm_autoload_enabled_summary">Cargar módulos KPM automáticamente al iniciar el dispositivo</string>
-    <string name="kpm_autoload_json_config">Configuración JSON</string>
-    <string name="kpm_autoload_json_label">JSON de Configuración</string>
-    <string name="kpm_autoload_json_placeholder">{
-  "enabled": true,
-  "kpmPaths": [
-    "/ruta/al/modulo1.kpm",
-    "/ruta/al/modulo2.kpm"
-  ]
-}</string>
-    <string name="kpm_autoload_json_error">Formato JSON inválido</string>
-    <string name="kpm_autoload_json_helper">Ingresa un JSON válido con un array de rutas de archivos KPM</string>
-    <string name="kpm_autoload_save">Guardar Configuración</string>
-    <string name="kpm_autoload_save_confirm">¿Guardar configuración de auto-carga?</string>
-    <string name="kpm_autoload_save_success">Configuración guardada con éxito</string>
-    <string name="kpm_autoload_save_failed">Error al guardar configuración</string>
-    <string name="kpm_autoload_visual_mode">Modo Visual</string>
-    <string name="kpm_autoload_json_mode">Modo JSON</string>
-    <string name="kpm_autoload_add_kpm">Añadir KPM</string>
-    <string name="kpm_autoload_remove_kpm">Eliminar</string>
-    <string name="kpm_autoload_edit_kpm">Editar</string>
-    <string name="kpm_autoload_edit_dialog_title">Editar KPM</string>    <string name="kpm_autoload_event_label">Evento:</string>    <string name="kpm_autoload_args_label">Argumentos:</string>    <string name="kpm_autoload_event_service">service</string>    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
+    
     
     <!-- Module Backup/Restore Strings -->
     <string name="apm_copy_list_title">Copiar lista</string>
@@ -801,19 +778,7 @@ Aquí hay algunas posibles razones para el fallo de autenticación—por favor v
     <string name="welcome_got_it">Empezar</string>
 
 
-    <string name="kpm_autoload_kpm_list_title">Módulos KPM</string>
-    <string name="kpm_autoload_no_kpm_added">No se añadieron módulos KPM</string>
-    <string name="kpm_autoload_kpm_path">Ruta KPM</string>
-    <string name="kpm_autoload_file_not_found">Archivo no encontrado</string>
-    <string name="kpm_autoload_select_kpm_file">Seleccionar Archivo KPM</string>
-    <string name="kpm_autoload_first_time_title">Acerca de Auto-carga KPM</string>
-    <string name="kpm_autoload_first_time_message">Esta función te permite cargar automáticamente todos los KPM configurados temporalmente al arrancar. Este enfoque es más conveniente que incrustarlos directamente en el kernel.
-
-Por ejemplo, los KPM que previenen la modificación de particiones solo pueden usarse temporalmente, ya que incrustarlos podría causar fallos de arranque. O si no quieres modificar la partición BOOT, puedes usar esta configuración para cargar módulos rápidamente.
-
-¡Por favor asegúrate de cerrar completamente la app y reabrirla para que los comandos se ejecuten. Generalmente, también cargará al arrancar. Es normal que el gestor tenga una pantalla negra por un periodo de tiempo! ¡Esto usa un método de carga puramente en segundo plano, recuerda deslizar hacia abajo para actualizar y verificar si los módulos se cargaron correctamente!</string>
-    <string name="kpm_autoload_first_time_confirm">Entendido</string>
-    <string name="kpm_autoload_do_not_show_again">No mostrar de nuevo</string>
+    
 
     <!-- Hide Settings Strings -->
     <string name="home_hide_su_path">Ocultar ruta del ejecutable su</string>
@@ -827,8 +792,6 @@ Por ejemplo, los KPM que previenen la modificación de particiones solo pueden u
     <string name="home_hide_mount_summary">Ocultar implementación de montaje en la tarjeta de info</string>
     <string name="home_hide_fingerprint_summary">Ocultar huella digital en la tarjeta de info</string>
 
-    <string name="kpm_page_first_time_title">Advertencia</string>
-    <string name="kpm_page_first_time_message">Los módulos de kernel modifican directamente la implementación del Boot. A diferencia de los módulos del sistema, carecen de un buen mecanismo de recuperación. Si surgen problemas, solo puedes arreglarlos entrando en Fastboot. Se recomienda cargar el módulo primero para asegurar que no haya problemas antes de incrustarlo en el Boot. ¡Si un módulo solo puede usarse cargándolo, puedes probar la función de carga automática de módulos KPM. ¡Si no entiendes los módulos de kernel, por favor no uses esta función!</string>
 
     <!-- Auto Backup Strings -->
     <string name="settings_auto_backup_module">Auto-respaldo de Módulos del Sistema</string>

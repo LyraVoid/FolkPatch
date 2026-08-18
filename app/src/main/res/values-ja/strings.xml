@@ -700,30 +700,7 @@ KernelPatch は boot イメージをパッチする必要があります。
     <string name="settings_video_background_enabled">動画の背景が有効化されています</string>
     <string name="settings_video_volume">動画の音量</string>
     <!-- KPM AutoLoad Strings -->
-    <string name="kpm_autoload_title">KPM を自動で読み込み</string>
-    <string name="kpm_autoload_enabled">自動で読み込みが有効化されています</string>
-    <string name="kpm_autoload_enabled_summary">端末の起動時に KP モジュールを自動で読み込みます。</string>
-    <string name="kpm_autoload_json_config">JSON を構成</string>
-    <string name="kpm_autoload_json_label">JSON を構成します</string>
-    <string name="kpm_autoload_json_placeholder">{
-  \"enabled\": true,
-  \"kpmPaths\": [
-    \"/path/to/module1.kpm\",
-    \"/path/to/module2.kpm\"
-  ]
-}</string>
-    <string name="kpm_autoload_json_error">無効な JSON 形式</string>
-    <string name="kpm_autoload_json_helper">KPM ファイルパスの配列を含む有効な JSON ファイルを入力してください</string>
-    <string name="kpm_autoload_save">構成を保存</string>
-    <string name="kpm_autoload_save_confirm">自動で読み込みの構成を保存しますか？</string>
-    <string name="kpm_autoload_save_success">構成の保存が成功しました。</string>
-    <string name="kpm_autoload_save_failed">構成の保存が失敗しました。</string>
-    <string name="kpm_autoload_visual_mode">視覚モード</string>
-    <string name="kpm_autoload_json_mode">JSON モード</string>
-    <string name="kpm_autoload_add_kpm">KPM を追加</string>
-    <string name="kpm_autoload_remove_kpm">削除</string>
-    <string name="kpm_autoload_edit_kpm">編集</string>
-    <string name="kpm_autoload_edit_dialog_title">KPM を編集</string>    <string name="kpm_autoload_event_label">イベント:</string>    <string name="kpm_autoload_args_label">引数:</string>    <string name="kpm_autoload_event_service">service</string>    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
+    
     <!-- Module Backup/Restore Strings -->
     <string name="apm_copy_list_title">リストをコピー</string>
     <string name="apm_copy_list_success">モジュールのリストをコピーしました。</string>
@@ -760,19 +737,7 @@ KernelPatch は boot イメージをパッチする必要があります。
     <string name="welcome_skip">スキップ</string>
     <string name="welcome_got_it">始める</string>
 
-    <string name="kpm_autoload_kpm_list_title">KP モジュール</string>
-    <string name="kpm_autoload_no_kpm_added">KP モジュールが追加されていません</string>
-    <string name="kpm_autoload_kpm_path">KPM のパス</string>
-    <string name="kpm_autoload_file_not_found">ファイルがありません</string>
-    <string name="kpm_autoload_select_kpm_file">KPM ファイルを選択</string>
-    <string name="kpm_autoload_first_time_title">KPM の自動読み込みについて</string>
-    <string name="kpm_autoload_first_time_message">この機能を使用すると、設定済みのすべての KPM を起動時に自動で一時的に読み込めます。この方法は、カーネルに直接埋め込むよりも便利です。
-
-例えば、パーティションの変更を禁止する KPM は、埋め込みによって起動に失敗する可能性があるため、一時的にしか使用できません。または、boot パーティションを変更したくない場合は、この設定を使用してモジュールを迅速に読み込めます。
-
-コマンドを実行するには、アプリを完全に閉じて再起動してください。起動時で通常に読み込まれます。マネージャーの画面が一時的に暗転するのは正常です！これは純粋なバックグラウンドでの読み込み方式を使用しているため、手動で下にスワイプして更新してモジュールが正しく読み込まれているか確認してください！</string>
-    <string name="kpm_autoload_first_time_confirm">理解しました</string>
-    <string name="kpm_autoload_do_not_show_again">再度表示しない</string>
+    
     <!-- Hide Settings Strings -->
     <string name="home_hide_su_path">su 実行可能パスを非表示</string>
     <string name="home_hide_kpatch_version">Kernel Patch バージョンを非表示</string>
@@ -784,8 +749,6 @@ KernelPatch は boot イメージをパッチする必要があります。
     <string name="home_hide_fingerprint_summary">フィンガープリント情報のカードを非表示にします。</string>
     <string name="home_hide_zygisk_summary">Zygisk の実装情報のカードを非表示</string>
     <string name="home_hide_mount_summary">マウントの実装情報のカードを非表示</string>
-    <string name="kpm_page_first_time_title">警告</string>
-    <string name="kpm_page_first_time_message">カーネルモジュールは boot 実装を直接的に変更します。システムモジュールとは異なり、優れた復旧メカニズムが備わっていないため fastboot を起動して修正するしか方法がありません。boot に埋め込む前に、モジュールを読み込んで問題がないことを確認しておくことを推奨します。読み込まないと使用できないモジュールの場合は、KPM の自動読み込み機能を試すことができます。カーネルモジュールについてよく理解していない場合は、この機能を使用しないでください！</string>
     <!-- Auto Backup Strings -->
     <string name="settings_auto_backup_module">システムモジュールを自動でバックアップ</string>
     <string name="settings_auto_backup_module_summary">インストール時にモジュールファイルを自動でプライベートディレクトリにバックアップします。</string>

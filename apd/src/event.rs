@@ -47,11 +47,6 @@ fn setup_fp_directories() -> Result<()> {
         Path::new("/data/adb/fp"),
         0o755,
     )?;
-    utils::ensure_dir_with_perms(
-        Path::new(defs::FP_KPMS_AUTOLOAD_DIR),
-        Path::new(defs::FP_KPMS_DIR),
-        0o755,
-    )?;
     Ok(())
 }
 
@@ -202,8 +197,6 @@ pub fn on_post_data_fs(superkey: Option<String>) -> Result<()> {
     if let Err(e) = setup_fp_directories() {
         warn!("setup_fp_directories failed: {e}");
     }
-
-    supercall::autoload_kpm_modules(&superkey, "post-fs-data");
 
     init_load_su_path(&superkey);
     supercall::apply_sucompat(&superkey);
@@ -378,13 +371,6 @@ pub fn on_services(superkey: Option<String>) -> Result<()> {
         supercall::apply_uts_spoof(&superkey);
     }
 
-    if Path::new(defs::KPM_AUTOLOAD_RETRY_FILE).exists() {
-        info!("Retrying deferred KPM auto-load from services stage");
-        supercall::autoload_kpm_modules(&superkey, "post-fs-data");
-    }
-
-    supercall::autoload_kpm_modules(&superkey, "service");
-
     run_stage("service", superkey, false);
 
     Ok(())
@@ -436,12 +422,6 @@ pub fn on_boot_completed(superkey: Option<String>) -> Result<()> {
         supercall::apply_uts_spoof(&superkey);
     }
 
-    if Path::new(defs::KPM_AUTOLOAD_RETRY_FILE).exists() {
-        info!("Retrying deferred KPM auto-load from boot-completed stage");
-        supercall::autoload_kpm_modules(&superkey, "post-fs-data");
-        supercall::autoload_kpm_modules(&superkey, "service");
-    }
-
     exec_fpd_umount();
 
     run_uid_monitor();
@@ -484,10 +464,6 @@ pub fn on_manager_boot_completed(superkey: Option<String>) -> Result<()> {
         info!("Manager boot fallback: applying netisolate");
         supercall::apply_netisolate(&superkey);
     }
-
-    info!("Manager boot fallback: retrying KPM auto-load");
-    supercall::autoload_kpm_modules(&superkey, "post-fs-data");
-    supercall::autoload_kpm_modules(&superkey, "service");
 
     if Path::new(defs::HIDE_SERVICE_FILE).exists() {
         info!("Manager boot fallback: retrying fpd -hide");

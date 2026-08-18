@@ -740,26 +740,7 @@ KernelPatch 附魔需要 boot 方块作为材料。
     <string name="home_hide_zygisk_summary">在信息面板里藏起Zygisk实现</string>
     <string name="home_hide_mount_summary">在信息面板里藏起挂载实现</string>
     <!-- KPM 自动加载 -->
-    <string name="kpm_autoload_title">红石组件自动充能</string>
-    <string name="kpm_autoload_enabled">开启自动充能</string>
-    <string name="kpm_autoload_enabled_summary">世界加载时自动给红石组件充能</string>
-    <string name="kpm_autoload_json_config">JSON配置</string>
-    <string name="kpm_autoload_json_label">JSON配置</string>
-    <string name="kpm_autoload_json_placeholder">{
-  "enabled": true,
-  "kpmPaths": [
-    "/path/to/module1.kpm",
-    "/path/to/module2.kpm"
-  ]
-}</string>
-    <string name="kpm_autoload_json_error">无效的JSON格式</string>
-    <string name="kpm_autoload_json_helper">输入有效的JSON，包含红石组件文件路径数组</string>
-    <string name="kpm_autoload_save">保存配置</string>
-    <string name="kpm_autoload_save_confirm">保存自动充能配方？</string>
-    <string name="kpm_autoload_save_success">配方保存成功</string>
-    <string name="kpm_autoload_save_failed">配方保存失败</string>
-    <string name="kpm_autoload_visual_mode">可视化模式</string>
-    <string name="kpm_autoload_json_mode">JSON配方模式</string>
+    
 
     <!-- 模组批量安装 -->
     <string name="apm_bulk_install_title">模组批量合成</string>
@@ -794,26 +775,8 @@ KernelPatch 附魔需要 boot 方块作为材料。
     <string name="welcome_skip">跳过</string>
     <string name="welcome_got_it">开始游戏</string>
 
-    <string name="kpm_autoload_add_kpm">添加红石组件</string>
-    <string name="kpm_autoload_remove_kpm">删除</string>
-    <string name="kpm_autoload_edit_kpm">编辑</string>
-    <string name="kpm_autoload_edit_dialog_title">编辑 KPM</string>    <string name="kpm_autoload_event_label">事件:</string>    <string name="kpm_autoload_args_label">参数:</string>    <string name="kpm_autoload_event_service">service</string>    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
-    <string name="kpm_autoload_kpm_list_title">红石组件列表</string>
-    <string name="kpm_autoload_no_kpm_added">未添加红石组件</string>
-    <string name="kpm_autoload_kpm_path">红石组件路径</string>
-    <string name="kpm_autoload_file_not_found">文件未找到</string>
-    <string name="kpm_autoload_select_kpm_file">选择红石组件文件</string>
-    <string name="kpm_autoload_first_time_title">关于红石组件自动充能</string>
-    <string name="kpm_autoload_first_time_message">这个功能可以让你重生时自动给配置里的所有红石组件充能，比直接嵌进基岩核心方便多了。
+    
 
-比如，防止区块被修改的红石组件只能临时充能用，嵌进去会导致设备变砖无法重生。或者你不想破坏BOOT区块，也可以用这个方式快速充能。
-
-注意：必须完全退出应用再重新进入才会触发充能。重生时一般也会自动充能的，管理器黑屏一会儿是正常的，用的纯后台充能方案，记得下拉刷新区块看看红石亮没亮！</string>
-    <string name="kpm_autoload_first_time_confirm">懂了</string>
-    <string name="kpm_autoload_do_not_show_again">别再弹了</string>
-
-    <string name="kpm_page_first_time_title">警告：危险操作！</string>
-    <string name="kpm_page_first_time_message">红石组件是直接改Boot区块的硬核操作，不像模组那样有救砖机制。出了问题只能进Fastboot修。建议先临时充能测试没问题再嵌进Boot。如果是只能临时充能的组件，可以用自动充能功能。如果你不懂红石组件，千万别碰！</string>
     <!-- 模组备份/恢复 -->
     <string name="apm_copy_list_title">复制列表</string>
     <string name="apm_copy_list_success">模组列表已复制</string>

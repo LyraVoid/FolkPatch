@@ -758,30 +758,7 @@ KernelPatch는 boot 이미지를 패치해야 합니다.
     <string name="settings_video_volume">비디오 음량</string>
     
     <!-- KPM AutoLoad Strings -->
-    <string name="kpm_autoload_title">KPM 자동 로드</string>
-    <string name="kpm_autoload_enabled">자동 로드 활성화</string>
-    <string name="kpm_autoload_enabled_summary">기기 부팅 시 자동으로 KPM 모듈을 로드합니다.</string>
-    <string name="kpm_autoload_json_config">JSON 구성</string>
-    <string name="kpm_autoload_json_label">구성 JSON</string>
-    <string name="kpm_autoload_json_placeholder">{
-  "enabled": true,
-  "kpmPaths": [
-    "/path/to/module1.kpm",
-    "/path/to/module2.kpm"
-  ]
-}</string>
-    <string name="kpm_autoload_json_error">잘못된 JSON 형식</string>
-    <string name="kpm_autoload_json_helper">KPM 파일 경로 배열을 포함한 유효한 JSON을 입력하세요.</string>
-    <string name="kpm_autoload_save">구성 저장</string>
-    <string name="kpm_autoload_save_confirm">자동 로드 구성을 저장할까요?</string>
-    <string name="kpm_autoload_save_success">구성 저장됨</string>
-    <string name="kpm_autoload_save_failed">구성 저장 실패</string>
-    <string name="kpm_autoload_visual_mode">시각 모드</string>
-    <string name="kpm_autoload_json_mode">JSON 모드</string>
-    <string name="kpm_autoload_add_kpm">KPM 추가</string>
-    <string name="kpm_autoload_remove_kpm">제거</string>
-    <string name="kpm_autoload_edit_kpm">편집</string>
-    <string name="kpm_autoload_edit_dialog_title">KPM 편집</string>    <string name="kpm_autoload_event_label">이벤트:</string>    <string name="kpm_autoload_args_label">매개변수:</string>    <string name="kpm_autoload_event_service">service</string>    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
+    
     
     <!-- Module Backup/Restore Strings -->
     <string name="apm_copy_list_title">목록 복사</string>
@@ -821,19 +798,7 @@ KernelPatch는 boot 이미지를 패치해야 합니다.
     <string name="welcome_got_it">시작하기</string>
 
 
-    <string name="kpm_autoload_kpm_list_title">KPM 모듈</string>
-    <string name="kpm_autoload_no_kpm_added">추가된 KPM 모듈 없음</string>
-    <string name="kpm_autoload_kpm_path">KPM 경로</string>
-    <string name="kpm_autoload_file_not_found">파일을 찾을 수 없음</string>
-    <string name="kpm_autoload_select_kpm_file">KPM 파일 선택</string>
-    <string name="kpm_autoload_first_time_title">KPM 자동 로드 정보</string>
-    <string name="kpm_autoload_first_time_message">구성된 모든 KPM을 부팅 시 임시로 자동 로드할 수 있는 기능입니다. 이 방법은 커널에 직접 포함하는 것보다 편리합니다.
-
-예를 들어 파티션 수정을 방지하는 KPM은 임시로만 사용할 수 있으며, 삽입할 경우 부팅 오류가 발생할 수 있습니다. Boot 파티션을 수정하지 않으려면 이 구성을 사용하여 모듈을 빠르게 로드할 수 있습니다.
-
-명령이 실행되려면 앱을 완전히 닫았다가 다시 열어야 합니다. 일반적으로 부팅 시 로드됩니다. 매니저 화면이 잠시 검게 나타나는 것은 정상입니다! 이는 순수 백그라운드 로딩 방식을 사용하므로 모듈이 올바르게 로드되었는지 수동으로 아래로 스와이프하여 새로고침하세요!</string>
-    <string name="kpm_autoload_first_time_confirm">확인</string>
-    <string name="kpm_autoload_do_not_show_again">다시 보지 않기</string>
+    
 
     <!-- Hide Settings Strings -->
     <string name="home_hide_su_path">su 실행 파일 경로 숨김</string>
@@ -847,8 +812,6 @@ KernelPatch는 boot 이미지를 패치해야 합니다.
     <string name="home_hide_zygisk_summary">정보 카드에서 Zygisk 구현을 숨깁니다.</string>
     <string name="home_hide_mount_summary">정보 카드에서 마운트 구현을 숨깁니다.</string>
 
-    <string name="kpm_page_first_time_title">경고</string>
-    <string name="kpm_page_first_time_message">커널 모듈은 Boot 구현을 직접 수정합니다. 시스템 모듈과 달리 복구 메커니즘이 좋지 않습니다. 문제가 발생하면 Fastboot 모드에 진입해서만 해결할 수 있습니다. 모듈을 Boot에 포함하기 전에 먼저 로드하여 문제가 없는지 확인하는 것이 좋습니다. 로드해서만 사용할 수 있는 모듈이라면 자동 KPM 모듈 로드 기능을 사용해 보세요. 커널 모듈에 대해 잘 모른다면 이 기능을 사용하지 마세요!</string>
     
     
     <!-- Auto Backup Strings -->

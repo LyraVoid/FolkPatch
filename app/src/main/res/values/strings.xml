@@ -816,33 +816,7 @@ Here are some possible reasons for authentication failure—please check which o
     <string name="settings_video_volume">Video Volume</string>
     
     <!-- KPM AutoLoad Strings -->
-    <string name="kpm_autoload_title">KPM Auto-Load</string>
-    <string name="kpm_autoload_enabled">Enable auto-load</string>
-    <string name="kpm_autoload_enabled_summary">Automatically load KPM modules on boot</string>
-    <string name="kpm_autoload_json_config">JSON Configuration</string>
-    <string name="kpm_autoload_json_label">Configuration JSON</string>
-    <string name="kpm_autoload_json_placeholder">{
-  "enabled": true,
-  "kpmEntries": [
-    {
-      "path": "/data/adb/fp/kpms/autoload/module1.kpm",
-      "event": "service",
-      "args": ""
-    }
-  ]
-}</string>
-    <string name="kpm_autoload_json_error">Invalid JSON format</string>
-    <string name="kpm_autoload_json_helper">Enter valid JSON using kpmEntries; paths must point to imported files in /data/adb/fp/kpms/autoload</string>
-    <string name="kpm_autoload_save">Save Configuration</string>
-    <string name="kpm_autoload_save_confirm">Save auto-load configuration?</string>
-    <string name="kpm_autoload_save_success">Configuration saved successfully</string>
-    <string name="kpm_autoload_save_failed">Failed to save configuration</string>
-    <string name="kpm_autoload_visual_mode">Visual Mode</string>
-    <string name="kpm_autoload_json_mode">JSON Mode</string>
-    <string name="kpm_autoload_add_kpm">Add KPM</string>
-    <string name="kpm_autoload_remove_kpm">Remove</string>
-    <string name="kpm_autoload_edit_kpm">Editar</string>
-    <string name="kpm_autoload_edit_dialog_title">Editar KPM</string>    <string name="kpm_autoload_event_label">Evento:</string>    <string name="kpm_autoload_args_label">Argumentos:</string>    <string name="kpm_autoload_event_service">service</string>    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
+    
     
     <!-- Module Backup/Restore Strings -->
     <string name="apm_copy_list_title">Copy List</string>
@@ -881,19 +855,10 @@ Here are some possible reasons for authentication failure—please check which o
     <string name="welcome_skip">Skip</string>
     <string name="welcome_got_it">Get Started</string>
 
-    <string name="kpm_autoload_kpm_list_title">KPM Modules</string>
-    <string name="kpm_autoload_no_kpm_added">No KPM modules added</string>
-    <string name="kpm_autoload_kpm_path">KPM Path</string>
-    <string name="kpm_autoload_file_not_found">File not found</string>
-    <string name="kpm_autoload_select_kpm_file">Select KPM File</string>
-    <string name="kpm_autoload_first_time_title">About KPM Auto-Load</string>
-    <string name="kpm_autoload_first_time_message">This feature allows you to automatically load all configured KPMs temporarily on boot. This approach is more convenient than embedding directly into the kernel.
+    
 
-For example, KPMs that prevent partition modification can only be used temporarily, as embedding may cause boot failures. Or if you don\'t want to modify the BOOT partition, you can use this configuration to quickly load modules.
-
-Please ensure the app is completely closed and reopened for the commands to execute. Generally, it will also load on boot. It is normal for the manager to have a black screen for a period of time! This uses a pure background loading method, remember to manually swipe down to refresh and check if the modules are loaded correctly!</string>
-    <string name="kpm_autoload_first_time_confirm">Got it</string>
-    <string name="kpm_autoload_do_not_show_again">Don\'t show again</string>
+    <string name="dont_show_again">Don\'t show again</string>
+    <string name="got_it">Got it</string>
 
     <!-- Hide Settings Strings -->
     <string name="home_hide_su_path">Hide su executable path</string>
@@ -907,8 +872,6 @@ Please ensure the app is completely closed and reopened for the commands to exec
     <string name="home_hide_zygisk_summary">Hide Zygisk implementation in info card</string>
     <string name="home_hide_mount_summary">Hide mount implementation in info card</string>
 
-    <string name="kpm_page_first_time_title">Warning</string>
-    <string name="kpm_page_first_time_message">Kernel modules directly modify the Boot implementation. Unlike system modules, they lack a good recovery mechanism. If issues arise, you can only fix them by entering Fastboot. It is recommended to load the module first to ensure there are no problems before embedding it into Boot. If a module can only be used by loading, you can try the automatic KPM module loading feature. If you do not understand kernel modules, please do not use this feature!</string>
     
     
     <!-- Auto Backup Strings -->

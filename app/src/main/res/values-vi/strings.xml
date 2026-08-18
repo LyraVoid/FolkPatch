@@ -761,26 +761,7 @@ Dưới đây là một số nguyên nhân có thể gây ra thất bại xác t
     <string name="home_hide_mount_summary">Ẩn triển khai gắn kết trong thẻ thông tin</string>
     <string name="home_hide_fingerprint_summary">Ẩn thông tin vân tay trong thẻ thông tin</string>
     <!-- KPM AutoLoad Strings -->
-    <string name="kpm_autoload_title">Tải tự động KPM</string>
-    <string name="kpm_autoload_enabled">Bật tải tự động</string>
-    <string name="kpm_autoload_enabled_summary">Tự động tải module KPM khi khởi động máy</string>
-    <string name="kpm_autoload_json_config">Cấu hình JSON</string>
-    <string name="kpm_autoload_json_label">Cấu hình JSON</string>
-    <string name="kpm_autoload_json_placeholder">{
-  "enabled": true,
-  "kpmPaths": [
-    "/path/to/module1.kpm",
-    "/path/to/module2.kpm"
-  ]
-}</string>
-    <string name="kpm_autoload_json_error">Định dạng JSON không hợp lệ</string>
-    <string name="kpm_autoload_json_helper">Nhập JSON hợp lệ, bao gồm mảng đường dẫn tệp KPM</string>
-    <string name="kpm_autoload_save">Lưu cấu hình</string>
-    <string name="kpm_autoload_save_confirm">Lưu cấu hình tải tự động?</string>
-    <string name="kpm_autoload_save_success">Lưu cấu hình thành công</string>
-    <string name="kpm_autoload_save_failed">Lưu cấu hình thất bại</string>
-    <string name="kpm_autoload_visual_mode">Chế độ trực quan</string>
-    <string name="kpm_autoload_json_mode">Chế độ JSON</string>
+    
 
     <!-- APM Bulk Install Strings -->
     <string name="apm_bulk_install_title">Cài đặt hàng loạt module hệ thống</string>
@@ -815,26 +796,8 @@ Dưới đây là một số nguyên nhân có thể gây ra thất bại xác t
     <string name="welcome_skip">Bo qua</string>
     <string name="welcome_got_it">Bat dau</string>
 
-    <string name="kpm_autoload_add_kpm">Thêm KPM</string>
-    <string name="kpm_autoload_remove_kpm">Xóa</string>
-    <string name="kpm_autoload_edit_kpm">Editar</string>
-    <string name="kpm_autoload_edit_dialog_title">Editar KPM</string>    <string name="kpm_autoload_event_label">Evento:</string>    <string name="kpm_autoload_args_label">Argumentos:</string>    <string name="kpm_autoload_event_service">service</string>    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
-    <string name="kpm_autoload_kpm_list_title">Danh sách module KPM</string>
-    <string name="kpm_autoload_no_kpm_added">Chưa thêm module KPM</string>
-    <string name="kpm_autoload_kpm_path">Đường dẫn KPM</string>
-    <string name="kpm_autoload_file_not_found">Không tìm thấy tệp</string>
-    <string name="kpm_autoload_select_kpm_file">Chọn tệp KPM</string>
-    <string name="kpm_autoload_first_time_title">Về Tải tự động KPM</string>
-    <string name="kpm_autoload_first_time_message">Tính năng này cho phép bạn tự động tải tạm thời tất cả KPM trong tệp cấu hình khi khởi động máy. Phương án này thuận tiện hơn so với việc nhúng trực tiếp vào nhân.
+    
 
-Ví dụ, KPM có chức năng ngăn phân vùng bị sửa đổi, KPM loại này chỉ có thể tải tạm thời sử dụng, nhưng việc nhúng sẽ gây ra không khởi động được máy. Hoặc bạn không muốn phá hủy phân vùng BOOT thì có thể sử dụng cấu hình này để tải module nhanh chóng.
-
-Cần đảm bảo phần mềm thoát hoàn toàn vào mới sẽ thực thi lệnh, thường来说 khi vào máy khi khởi động cũng sẽ tải, trình quản lý màn hình đen một thời gian là hiện tượng bình thường, sử dụng phương án tải ghi ở nền thuần túy, nhớ vuốt lên thủ công để làm mới xem đã tải đúng chưa!</string>
-    <string name="kpm_autoload_first_time_confirm">Đã hiểu</string>
-    <string name="kpm_autoload_do_not_show_again">Không hiển thị lại</string>
-
-    <string name="kpm_page_first_time_title">Cảnh báo</string>
-    <string name="kpm_page_first_time_message">Module nhân là thực hiện sửa đổi trực tiếp Boot, nó không có cơ chế cứu khôi tốt như module hệ thống, nếu có vấn đề chỉ có thể vào Fastboot để sửa chữa. Khuyên bạn nên tải module trước khi không có vấn đề thì mới nhúng vào Boot. Nếu là module chỉ có thể tải sử dụng, có thể thử sử dụng chức năng tải tự động module KPM. Nếu bạn không hiểu về module nhân, vui lòng không sử dụng chức năng này!</string>
     <!-- Module Backup/Restore Strings -->
     <string name="apm_copy_list_title">Sao chép danh sách</string>
     <string name="apm_copy_list_success">Đã sao chép danh sách mô-đun</string>

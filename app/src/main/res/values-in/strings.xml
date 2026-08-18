@@ -712,20 +712,7 @@ Berikut adalah beberapa kemungkinan penyebab kegagalan autentikasi—silakan cek
 
     <string name="settings_launcher_icon">Ikon Peluncur</string>
 
-    <string name="kpm_autoload_title">Muat Otomatis KPM</string>
-    <string name="kpm_autoload_enabled">Aktifkan muat otomatis</string>
-    <string name="kpm_autoload_enabled_summary">Muat modul KPM secara otomatis saat perangkat booting</string>
-    <string name="kpm_autoload_json_config">Konfigurasi JSON</string>
-    <string name="kpm_autoload_json_label">Konfigurasi JSON</string>
-    <string name="kpm_autoload_json_placeholder">{
-  "enabled": true,
-  "kpmPaths": [
-    "/path/to/module1.kpm",
-    "/path/to/module2.kpm"
-  ]
-}</string>
-    <string name="kpm_autoload_json_error">Format JSON tidak valid</string>
-    <string name="kpm_autoload_json_helper">Masukkan JSON yang valid dengan array jalur file KPM</string>
+    
     <string name="settings_grid_working_card_hide_check">Sembunyikan ikon status</string>
     <string name="settings_grid_working_card_hide_check_summary">Sembunyikan tanda centang atau ikon peringatan pada kartu kerja</string>
     <string name="settings_grid_working_card_hide_text">Sembunyikan teks status</string>
@@ -746,29 +733,7 @@ Berikut adalah beberapa kemungkinan penyebab kegagalan autentikasi—silakan cek
     <string name="settings_grid_working_card_dual_opacity_desc">Otomatis menyesuaikan transparansi kartu untuk tema terang dan gelap</string>
     <string name="settings_grid_working_card_day_opacity">Transparansi kartu mode siang</string>
     <string name="settings_grid_working_card_night_opacity">Transparansi kartu mode malam</string>
-    <string name="kpm_autoload_save">Simpan konfigurasi</string>
-    <string name="kpm_autoload_save_confirm">Simpan konfigurasi muat otomatis?</string>
-    <string name="kpm_autoload_save_success">Konfigurasi berhasil disimpan</string>
-    <string name="kpm_autoload_save_failed">Gagal menyimpan konfigurasi</string>
-    <string name="kpm_autoload_visual_mode">Mode Visual</string>
-    <string name="kpm_autoload_json_mode">Mode JSON</string>
-    <string name="kpm_autoload_add_kpm">Tambahkan KPM</string>
-    <string name="kpm_autoload_remove_kpm">Hapus</string>
-    <string name="kpm_autoload_edit_kpm">Editar</string>
-    <string name="kpm_autoload_edit_dialog_title">Editar KPM</string>    <string name="kpm_autoload_event_label">Evento:</string>    <string name="kpm_autoload_args_label">Argumentos:</string>    <string name="kpm_autoload_event_service">service</string>    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
-    <string name="kpm_autoload_kpm_list_title">Modul KPM</string>
-    <string name="kpm_autoload_no_kpm_added">Tidak ada modul KPM yang ditambahkan</string>
-    <string name="kpm_autoload_kpm_path">Jalur KPM</string>
-    <string name="kpm_autoload_file_not_found">File tidak ditemukan</string>
-    <string name="kpm_autoload_select_kpm_file">Pilih file KPM</string>
-    <string name="kpm_autoload_first_time_title">Tentang Muat Otomatis KPM</string>
-    <string name="kpm_autoload_first_time_message">Fitur ini memungkinkan Anda memuat semua KPM yang dikonfigurasi secara otomatis untuk sementara waktu saat boot. Pendekatan ini lebih nyaman daripada menyematkannya langsung ke kernel.
-
-Misalnya, KPM yang mencegah modifikasi partisi hanya dapat digunakan untuk sementara waktu, karena penyematan dapat menyebabkan kegagalan boot. Atau jika Anda tidak ingin memodifikasi partisi BOOT, Anda dapat menggunakan konfigurasi ini untuk memuat modul dengan cepat.
-
-Pastikan aplikasi ditutup sepenuhnya dan dimulai ulang untuk menjalankan perintah. Ini juga akan dimuat saat boot normal. Adalah normal jika manajer mengalami layar hitam untuk beberapa saat! Ini menggunakan metode pemuatan latar belakang yang bersih, jangan lupa untuk menarik ke bawah secara manual untuk menyegarkan dan memeriksa apakah modul dimuat dengan benar!</string>
-    <string name="kpm_autoload_first_time_confirm">Mengerti</string>
-    <string name="kpm_autoload_do_not_show_again">Jangan tampilkan lagi</string>
+    
 
     <string name="apm_bulk_install_title">Instalasi Massal Modul Sistem</string>
     <string name="apm_bulk_install_list_title">Daftar Modul</string>
@@ -814,8 +779,6 @@ Pastikan aplikasi ditutup sepenuhnya dan dimulai ulang untuk menjalankan perinta
     <string name="home_hide_mount_summary">Sembunyikan implementasi pemasangan di kartu informasi</string>
     <string name="home_hide_fingerprint_summary">Sembunyikan sidik jari di kartu informasi</string>
 
-    <string name="kpm_page_first_time_title">Peringatan</string>
-    <string name="kpm_page_first_time_message">Modul Kernel secara langsung memodifikasi implementasi BOOT. Tidak seperti modul sistem, mereka tidak memiliki mekanisme pemulihan yang baik. Jika ada masalah, Anda hanya dapat memperbaikinya dengan masuk ke Fastboot. Disarankan untuk memuat modul terlebih dahulu untuk memastikan tidak ada masalah sebelum menyematkannya ke BOOT. Jika modul hanya dapat digunakan dengan pemuatan, Anda dapat mencoba fitur muat otomatis modul KPM. Jika Anda tidak memahami modul kernel, jangan gunakan fitur ini!</string>
     <string name="apm_copy_list_title">Salin daftar</string>
     <string name="apm_copy_list_success">Daftar modul disalin</string>
 

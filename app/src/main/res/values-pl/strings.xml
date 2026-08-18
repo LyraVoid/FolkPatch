@@ -652,9 +652,6 @@ Kontynuować mimo to?</string>
     <string name="settings_title_image_dim">Przyciemnienie tła</string>
     <string name="settings_title_image_offset_x">Pozycja pozioma</string>
     <!-- KPM AutoLoad Strings -->
-    <string name="kpm_autoload_title">Automatyczne ładowanie KPM</string>
-    <string name="kpm_autoload_enabled">Włącz automatyczne ładowanie</string>
-    <string name="kpm_autoload_enabled_summary">Automatycznie ładuj moduły KPM przy uruchomieniu urządzenia</string>
     <string name="settings_grid_working_card_hide_check">Ukryj ikonę statusu</string>
     <string name="settings_grid_working_card_hide_check_summary">Ukryj znacznik wyboru lub ikonę ostrzeżenia na karcie roboczej</string>
     <string name="settings_grid_working_card_hide_text">Ukryj tekst statusu</string>
@@ -675,40 +672,8 @@ Kontynuować mimo to?</string>
     <string name="settings_grid_working_card_dual_opacity_desc">Automatyczne dostosowanie przezroczystości karty dla jasnych i ciemnych motywów</string>
     <string name="settings_grid_working_card_day_opacity">Przezroczystość karty w trybie dziennym</string>
     <string name="settings_grid_working_card_night_opacity">Przezroczystość karty w trybie nocnym</string>
-    <string name="kpm_autoload_json_config">Konfiguracja JSON</string>
-    <string name="kpm_autoload_json_label">Konfiguracja JSON</string>
-    <string name="kpm_autoload_json_placeholder">{
-  "enabled": true,
-  "kpmPaths": [
-    "/sciezka/do/modulu1.kpm",
-    "/sciezka/do/modulu2.kpm"
-  ]
-}</string>
-    <string name="kpm_autoload_json_error">Nieprawidłowy format JSON</string>
-    <string name="kpm_autoload_json_helper">Wprowadź poprawny format JSON z tablicą ścieżek do plików KPM</string>
-    <string name="kpm_autoload_save">Zapisz konfigurację</string>
-    <string name="kpm_autoload_save_confirm">Zapisać konfigurację automatycznego ładowania?</string>
-    <string name="kpm_autoload_save_success">Konfiguracja zapisana pomyślnie</string>
-    <string name="kpm_autoload_save_failed">Nie udało się zapisać konfiguracji</string>
-    <string name="kpm_autoload_visual_mode">Tryb wizualny</string>
-    <string name="kpm_autoload_json_mode">Tryb JSON</string>
-    <string name="kpm_autoload_add_kpm">Dodaj KPM</string>
-    <string name="kpm_autoload_remove_kpm">Usuń</string>
-    <string name="kpm_autoload_edit_kpm">Editar</string>
-    <string name="kpm_autoload_edit_dialog_title">Editar KPM</string>    <string name="kpm_autoload_event_label">Evento:</string>    <string name="kpm_autoload_args_label">Argumentos:</string>    <string name="kpm_autoload_event_service">service</string>    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
-    <string name="kpm_autoload_kpm_list_title">Lista modułów KPM</string>
-    <string name="kpm_autoload_no_kpm_added">Nie dodano żadnych modułów KPM</string>
-    <string name="kpm_autoload_kpm_path">Ścieżka KPM</string>
-    <string name="kpm_autoload_file_not_found">Nie znaleziono pliku</string>
-    <string name="kpm_autoload_select_kpm_file">Wybierz plik KPM</string>
-    <string name="kpm_autoload_first_time_title">O automatycznym ładowaniu KPM</string>
-    <string name="kpm_autoload_first_time_message">Ta funkcja pozwala automatycznie tymczasowo załadować wszystkie skonfigurowane KPM przy starcie. To podejście jest bardziej wygodne niż bezpośrednie osadzanie w jądrze.
-
-Na przykład, KPM, które zapobiegają modyfikacji partycji mogą być używane tylko tymczasowo, ponieważ osadzanie może spowodować awarię rozruchu. Lub jeśli nie chcesz modyfikować partycji BOOT, możesz użyć tej konfiguracji do szybkiego ładowania modułów.
-
-Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby polecenia zostały wykonane. Zazwyczaj ładowanie następuje również przy starcie. Czasowe czarny ekran menedżera jest normalnym zjawiskiem! Używana jest czysto后台owa metoda ładowania, pamiętaj, aby ręcznie przesunąć w dół, aby odświeżyć i sprawdzić, czy moduły zostały poprawnie załadowane!</string>
-    <string name="kpm_autoload_first_time_confirm">Rozumiem</string>
-    <string name="kpm_autoload_do_not_show_again">Nie pokazuj ponownie</string>
+    
+    
     <!-- APM Bulk Install Strings -->
     <string name="apm_bulk_install_title">Instalacja zbiorcza modułów systemowych</string>
     <string name="apm_bulk_install_list_title">Lista modułów</string>
@@ -753,8 +718,6 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="home_hide_zygisk_summary">Ukryj implementację Zygisk w karcie informacyjnej</string>
     <string name="home_hide_mount_summary">Ukryj implementację montowania w karcie informacyjnej</string>
     <string name="home_hide_fingerprint_summary">Ukryj odcisk palca w karcie informacyjnej</string>
-    <string name="kpm_page_first_time_title">Ostrzeżenie</string>
-    <string name="kpm_page_first_time_message">Moduły jądra bezpośrednio modyfikują implementację rozruchu (Boot). W przeciwieństwie do modułów systemowych, nie posiadają one dobrego mechanizmu ratunkowego. Jeśli pojawią się problemy, można je naprawić tylko wchodząc w tryb Fastboot. Zaleca się najpierw załadować moduł, aby upewnić się, że nie ma problemów przed osadzeniem go w Boot. Jeśli moduł może być używany tylko przez ładowanie, możesz wypróbować funkcję automatycznego ładowania modułów KPM. Jeśli nie rozumiesz modułów jądra, nie używaj tej funkcji!</string>
     <!-- Module Backup/Restore Strings -->
     <string name="apm_copy_list_title">Kopiuj listę</string>
     <string name="apm_copy_list_success">Lista modułów skopiowana</string>

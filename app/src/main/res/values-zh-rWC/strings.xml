@@ -747,43 +747,8 @@ KernelPatch 大法需要以 boot 灵胎为引。
     <string name="settings_grid_working_card_day_opacity">白昼卡片透法</string>
     <string name="settings_grid_working_card_night_opacity">夜晚卡片透法</string>
     <!-- KPM AutoLoad Strings -->
-    <string name="kpm_autoload_title">道核仙符自动引符</string>
-    <string name="kpm_autoload_enabled">启自动引符</string>
-    <string name="kpm_autoload_enabled_summary">重铸仙躯时，自动引道核仙符入道</string>
-    <string name="kpm_autoload_json_config">JSON天机典式</string>
-    <string name="kpm_autoload_json_label">JSON天机典式</string>
-    <string name="kpm_autoload_json_placeholder">{
-  "enabled": true,
-  "kpmPaths": [
-    "/path/to/module1.kpm",
-    "/path/to/module2.kpm"
-  ]
-}</string>
-    <string name="kpm_autoload_json_error">JSON天机典式非正</string>
-    <string name="kpm_autoload_json_helper">输正之JSON天机典式，含道核仙符文卷路之数组</string>
-    <string name="kpm_autoload_save">存天机典式</string>
-    <string name="kpm_autoload_save_confirm">存自动引符之天机典式？</string>
-    <string name="kpm_autoload_save_success">天机典式已存</string>
-    <string name="kpm_autoload_save_failed">存天机典式败陨</string>
-    <string name="kpm_autoload_visual_mode">可视渡劫之式</string>
-    <string name="kpm_autoload_json_mode">JSON天机之式</string>
-    <string name="kpm_autoload_add_kpm">纳新道核仙符</string>
-    <string name="kpm_autoload_remove_kpm">祛符出典</string>
-    <string name="kpm_autoload_edit_kpm">编辑</string>
-    <string name="kpm_autoload_edit_dialog_title">编辑 KPM</string>    <string name="kpm_autoload_event_label">事件:</string>    <string name="kpm_autoload_args_label">参数:</string>    <string name="kpm_autoload_event_service">service</string>    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
-    <string name="kpm_autoload_kpm_list_title">道核仙符列</string>
-    <string name="kpm_autoload_no_kpm_added">未纳道核仙符</string>
-    <string name="kpm_autoload_kpm_path">道核仙符之路</string>
-    <string name="kpm_autoload_file_not_found">仙符文卷未觅</string>
-    <string name="kpm_autoload_select_kpm_file">择道核仙符文卷</string>
-    <string name="kpm_autoload_first_time_title">论道核仙符自动引符</string>
-    <string name="kpm_autoload_first_time_message">此仙能可令重铸仙躯时自动临时引天机典式文卷之诸道核仙符，此法较之直嵌道核，更便渡劫也。
-
-譬如，防仙域分区被改之道核仙符，唯可临时引符用之，嵌之则仙器不启。或不欲损BOOT仙域，可藉此天机典式速引符入道。
-
-必使凡器尽退再入，方行渡劫之令。大抵重铸入仙府，亦能引符。仙府辖器黑屏片时，乃渡劫常态也，用纯后台引符之法，宜手动上滑刷新仙域，察其是否引符入道！</string>
-    <string name="kpm_autoload_first_time_confirm">贫道已知</string>
-    <string name="kpm_autoload_do_not_show_again">毋复显渡劫警言</string>
+    
+    
 
     <!-- APM Bulk Install Strings -->
     <string name="apm_bulk_install_title">天道仙符批量引符</string>
@@ -819,8 +784,6 @@ KernelPatch 大法需要以 boot 灵胎为引。
     <string name="welcome_got_it">步入仙途</string>
 
 
-    <string name="kpm_page_first_time_title">渡劫警言</string>
-    <string name="kpm_page_first_time_message">道核仙符者，直改仙躯Boot之法也，不若天道仙符有救砖之策，有天劫则唯入Fastboot仙台修之。宜先引符入道，无天劫再嵌于仙躯Boot。若仙符唯可引符用之，可试自动道核仙符引符之能。若未谙道核仙符，毋用此渡劫之能！</string>
     <!-- Module Backup/Restore Strings -->
     <string name="apm_copy_list_title">抄录卷宗</string>
     <string name="apm_copy_list_success">名录已拓印</string>

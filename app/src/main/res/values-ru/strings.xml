@@ -738,43 +738,8 @@ KernelPatch требует образ boot для патча.
     <string name="settings_grid_working_card_night_opacity">Прозрачность карточки в ночном режиме</string>
     
     <!-- KPM AutoLoad Strings -->
-    <string name="kpm_autoload_title">Автозагрузка KPM</string>
-    <string name="kpm_autoload_enabled">Включить автозагрузку</string>
-    <string name="kpm_autoload_enabled_summary">Автоматически загружать модули KPM при загрузке устройства</string>
-    <string name="kpm_autoload_json_config">Конфигурация JSON</string>
-    <string name="kpm_autoload_json_label">Конфигурация JSON</string>
-    <string name="kpm_autoload_json_placeholder">{
-  "enabled": true,
-  "kpmPaths": [
-    "/path/to/module1.kpm",
-    "/path/to/module2.kpm"
-  ]
-}</string>
-    <string name="kpm_autoload_json_error">Неверный формат JSON</string>
-    <string name="kpm_autoload_json_helper">Введите валидный JSON с массивом путей к KPM файлам</string>
-    <string name="kpm_autoload_save">Сохранить конфигурацию</string>
-    <string name="kpm_autoload_save_confirm">Сохранить конфигурацию автозагрузки?</string>
-    <string name="kpm_autoload_save_success">Конфигурация успешно сохранена</string>
-    <string name="kpm_autoload_save_failed">Не удалось сохранить конфигурацию</string>
-    <string name="kpm_autoload_visual_mode">Визуальный режим</string>
-    <string name="kpm_autoload_json_mode">Режим JSON</string>
-    <string name="kpm_autoload_add_kpm">Добавить KPM</string>
-    <string name="kpm_autoload_remove_kpm">Удалить</string>
-    <string name="kpm_autoload_edit_kpm">Editar</string>
-    <string name="kpm_autoload_edit_dialog_title">Editar KPM</string>    <string name="kpm_autoload_event_label">Evento:</string>    <string name="kpm_autoload_args_label">Argumentos:</string>    <string name="kpm_autoload_event_service">service</string>    <string name="kpm_autoload_event_post_fs_data">post-fs-data</string>
-    <string name="kpm_autoload_kpm_list_title">Модули KPM</string>
-    <string name="kpm_autoload_no_kpm_added">Нет добавленных модулей KPM</string>
-    <string name="kpm_autoload_kpm_path">Путь к KPM</string>
-    <string name="kpm_autoload_file_not_found">Файл не найден</string>
-    <string name="kpm_autoload_select_kpm_file">Выбрать файл KPM</string>
-    <string name="kpm_autoload_first_time_title">О автозагрузке KPM</string>
-    <string name="kpm_autoload_first_time_message">Эта функция позволяет автоматически загружать все настроенные KPM временно при загрузке. Этот подход более удобен, чем встраивание напрямую в ядро.
-
-Например, KPM, которые предотвращают модификацию разделов, могут использоваться только временно, так как встраивание может вызвать отказы загрузки. Или если вы не хотите изменять раздел BOOT, вы можете использовать эту конфигурацию для быстрой загрузки модулей.
-
-Пожалуйста, убедитесь, что приложение полностью закрыто и перезапущено для выполнения команд. Обычно это также загружается при загрузке. Нормально, если менеджер имеет чёрный экран в течение некоторого времени! Это использует чистый фоновый метод загрузки, не забудьте вручную потянуть вниз для обновления и проверки, правильно ли загружены модули!</string>
-    <string name="kpm_autoload_first_time_confirm">Понятно</string>
-    <string name="kpm_autoload_do_not_show_again">Не показывать снова</string>
+    
+    
 
     <!-- APM Bulk Install Strings -->
     <string name="apm_bulk_install_title">Массовая установка системных модулей</string>
@@ -822,8 +787,6 @@ KernelPatch требует образ boot для патча.
     <string name="home_hide_mount_summary">Скрыть реализацию монтирования в информационной карточке</string>
     <string name="home_hide_fingerprint_summary">Скрыть отпечаток в информационной карточке</string>
 
-    <string name="kpm_page_first_time_title">Предупреждение</string>
-    <string name="kpm_page_first_time_message">Модули ядра напрямую изменяют реализацию BOOT. В отличие от системных модулей, они не имеют хорошего механизма восстановления. Если возникнут проблемы, вы можете исправить их только войдя в Fastboot. Рекомендуется сначала загрузить модуль, чтобы убедиться, что нет проблем, перед встраиванием его в BOOT. Если модуль можно использовать только загрузкой, вы можете попробовать функцию автоматической загрузки модулей KPM. Если вы не понимаете модули ядра, пожалуйста, не используйте эту функцию!</string>
     <!-- Module Backup/Restore Strings -->
     <string name="apm_copy_list_title">Копировать список</string>
     <string name="apm_copy_list_success">Список модулей скопирован</string>
