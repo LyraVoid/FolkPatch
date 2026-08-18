@@ -20,6 +20,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -574,6 +575,61 @@ fun GeneralSettingsContent(
                 }
             )
         }
+        item(key = "general_selinux_hide", visible = kPatchReady && aPatchReady) {
+            val kernelVersion = remember { getKernelVersionCode() }
+            val kernelSupported = (kernelVersion ?: 0) >= 419
+            val isGki = remember { isGkiKernel() }
+            var selinuxHideEnabled by rememberSaveable {
+                mutableStateOf(prefs.getBoolean("selinux_hide_enabled", false))
+            }
+            val showSelinuxHideWarning = remember { mutableStateOf(false) }
+
+            fun applySelinuxHide(enabled: Boolean) {
+                scope.launch(Dispatchers.IO) {
+                    val command = if (enabled) {
+                        "touch ${APApplication.SELINUX_HIDE_FILE}"
+                    } else {
+                        "rm -f ${APApplication.SELINUX_HIDE_FILE}"
+                    }
+                    val result = rootShellForResult(command)
+                    if (result.isSuccess) {
+                        selinuxHideEnabled = enabled
+                        prefs.edit().putBoolean("selinux_hide_enabled", enabled).apply()
+                    }
+                }
+            }
+
+            ToggleSettingCard(
+                flat = flat,
+                icon = Icons.Filled.Security,
+                title = stringResource(id = R.string.settings_selinux_hide),
+                description = stringResource(id = R.string.settings_selinux_hide_summary),
+                checked = selinuxHideEnabled,
+                onCheckedChange = { enabled ->
+                    if (enabled) {
+                        // Only tested on 5.10+, and non-GKI carries a bigger risk, so warn first.
+                        val below510 = (kernelVersion ?: 0) < 510
+                        if (below510 || !isGki) {
+                            showSelinuxHideWarning.value = true
+                        } else {
+                            applySelinuxHide(true)
+                        }
+                    } else {
+                        applySelinuxHide(false)
+                    }
+                },
+                enabled = kernelSupported,
+            )
+
+            if (showSelinuxHideWarning.value) {
+                SelinuxHideWarningDialog(
+                    showDialog = showSelinuxHideWarning,
+                    kernelVersion = kernelVersion,
+                    isGki = isGki,
+                    onConfirm = { applySelinuxHide(true) },
+                )
+            }
+        }
         item(key = "general_reset_su_path", visible = kPatchReady) {
             ExpressiveCard(flat = flat, onClick = { showResetSuPathDialog.value = true }) {
                 Row(
@@ -832,6 +888,69 @@ fun GeneralSettingsContent(
         NewAppProfileModeDialog(showNewAppProfileModeDialog, newAppProfileMode) { mode ->
             newAppProfileMode = mode
             prefs.edit { putInt(APApplication.PREF_AUTO_EXCLUDE_NEW_APPS, mode) }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SelinuxHideWarningDialog(
+    showDialog: MutableState<Boolean>,
+    kernelVersion: Int?,
+    isGki: Boolean,
+    onConfirm: () -> Unit,
+) {
+    BasicAlertDialog(
+        onDismissRequest = { showDialog.value = false },
+        properties = DialogProperties(
+            decorFitsSystemWindows = true,
+            usePlatformDefaultWidth = false,
+        )
+    ) {
+        Surface(
+            modifier = Modifier
+                .width(310.dp)
+                .wrapContentHeight(),
+            shape = RoundedCornerShape(30.dp),
+            tonalElevation = AlertDialogDefaults.TonalElevation,
+            color = AlertDialogDefaults.containerColor,
+        ) {
+            Column(modifier = Modifier.padding(PaddingValues(all = 24.dp))) {
+                Text(
+                    text = stringResource(id = R.string.settings_selinux_hide_warning_title),
+                    style = MaterialTheme.typography.headlineSmall,
+                    modifier = Modifier.padding(bottom = 16.dp),
+                )
+                if ((kernelVersion ?: 0) < 510) {
+                    Text(
+                        text = stringResource(id = R.string.settings_selinux_hide_warning_below_5_10),
+                        style = MaterialTheme.typography.bodyMedium,
+                        modifier = Modifier.padding(bottom = 8.dp),
+                    )
+                }
+                if (!isGki) {
+                    Text(
+                        text = stringResource(id = R.string.settings_selinux_hide_warning_non_gki),
+                        style = MaterialTheme.typography.bodyMedium,
+                        modifier = Modifier.padding(bottom = 16.dp),
+                    )
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End,
+                ) {
+                    TextButton(onClick = { showDialog.value = false }) {
+                        Text(stringResource(id = android.R.string.cancel))
+                    }
+                    Spacer(Modifier.width(8.dp))
+                    Button(onClick = {
+                        showDialog.value = false
+                        onConfirm()
+                    }) {
+                        Text(stringResource(id = android.R.string.ok))
+                    }
+                }
+            }
         }
     }
 }
