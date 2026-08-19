@@ -227,6 +227,7 @@
     <string name="kpm_embedded_unload_invalid">嵌进去的喵不能卸掉哦；重启后还是会生效喵。</string>
     <string name="kpm_loaded">已加载喵</string>
     <string name="kpm_load_toast_succ">加载成功啦喵！</string>
+    <string name="kpm_install_toast_succ">安装成功啦喵！重启后生效喵～</string>
     <string name="kpm_load_toast_failed">加载失败了喵...</string>
     <string name="kpm_unload_confirm">要把%s模块卸掉嘛喵？不要后悔哦</string>
     <string name="kpm_unload">卸掉喵！</string>

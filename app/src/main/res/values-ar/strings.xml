@@ -239,6 +239,7 @@
     <string name="kpm_embedded">مضمن</string>
     <string name="kpm_loaded">محمل</string>
     <string name="kpm_load_toast_succ">نجح التحميل</string>
+    <string name="kpm_install_toast_succ">تم التثبيت بنجاح؛ يسري بعد إعادة التشغيل</string>
     <string name="kpm_load_toast_failed">فشل التحميل</string>
     <string name="kpm_unload_confirm">إلغاء تحميل وحدة %s؟</string>
     <string name="kpm_unload">إلغاء التحميل</string>

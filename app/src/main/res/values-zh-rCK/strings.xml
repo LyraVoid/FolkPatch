@@ -214,6 +214,7 @@
     <string name="kpm_embedded_unload_invalid">已融入的酱料不能撤下；重启后仍会保持。</string>
     <string name="kpm_loaded">已加料</string>
     <string name="kpm_load_toast_succ">酱料添加成功</string>
+    <string name="kpm_install_toast_succ">备菜完成，下锅（重启）后上菜</string>
     <string name="kpm_load_toast_failed">酱料添加失败</string>
     <string name="kpm_unload_confirm">撤下 %s 酱料？</string>
     <string name="kpm_unload">撤下</string>

@@ -198,6 +198,7 @@
     <string name="kpm_embedded_unload_invalid">融合的心之结晶无法拆解；重启后仍会保持。</string>
     <string name="kpm_loaded">已激活</string>
     <string name="kpm_load_toast_succ">激活成功</string>
+    <string name="kpm_install_toast_succ">安装成功，魔晶充能后生效</string>
     <string name="kpm_load_toast_failed">激活失败</string>
     <string name="kpm_unload_confirm">卸载%s心之结晶？</string>
     <string name="kpm_unload">解除契约</string>

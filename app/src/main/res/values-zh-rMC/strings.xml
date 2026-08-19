@@ -214,6 +214,7 @@
     <string name="kpm_embedded_unload_invalid">嵌入基岩的红石组件无法拆除；重启后仍会保持。</string>
     <string name="kpm_loaded">已充能</string>
     <string name="kpm_load_toast_succ">红石充能成功！亮了！</string>
+    <string name="kpm_install_toast_succ">方块放置成功！重启后生效！</string>
     <string name="kpm_load_toast_failed">红石充能失败…没反应</string>
     <string name="kpm_unload_confirm">把 %s 红石组件拆了？</string>
     <string name="kpm_unload">拆除红石</string>

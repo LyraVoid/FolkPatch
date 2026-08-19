@@ -216,6 +216,7 @@
     <string name="kpm_embedded">삽입됨</string>
     <string name="kpm_loaded">로드됨</string>
     <string name="kpm_load_toast_succ">로드됨</string>
+    <string name="kpm_install_toast_succ">성공적으로 설치됨. 재부팅 후 적용됩니다</string>
     <string name="kpm_load_toast_failed">로드 실패</string>
     <string name="kpm_unload_confirm">%s 모듈을 언로드할까요?</string>
     <string name="kpm_unload">언로드</string>

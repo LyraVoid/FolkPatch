@@ -239,6 +239,7 @@
     <string name="kpm_embedded">Embutido</string>
     <string name="kpm_loaded">Carregado</string>
     <string name="kpm_load_toast_succ">Carregado com sucesso</string>
+    <string name="kpm_install_toast_succ">Instalado com sucesso; entra em vigor após reiniciar</string>
     <string name="kpm_load_toast_failed">Falha ao carregar</string>
     <string name="kpm_unload_confirm">Descarregar módulo %s?</string>
     <string name="kpm_unload">Descarregar</string>

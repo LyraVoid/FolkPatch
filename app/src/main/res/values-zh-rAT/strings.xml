@@ -197,6 +197,7 @@
     <string name="kpm_embedded_unload_invalid">已融合的灵魂晶石无法解除；重启后仍会保持。</string>
     <string name="kpm_loaded">已唤醒</string>
     <string name="kpm_load_toast_succ">唤醒成功</string>
+    <string name="kpm_install_toast_succ">安装完成，圣境重启后降世</string>
     <string name="kpm_load_toast_failed">唤醒失败</string>
     <string name="kpm_unload_confirm">解除%s灵魂晶石？</string>
     <string name="kpm_unload">解除祝福</string>

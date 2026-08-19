@@ -196,6 +196,7 @@
     <string name="kpm_embedded_unload_invalid">已入道核的仙符无法废去；重启后仍会保持。</string>
     <string name="kpm_loaded">符已入道</string>
     <string name="kpm_load_toast_succ">引符入道功成</string>
+    <string name="kpm_install_toast_succ">封符入册功成，重启后天道方行</string>
     <string name="kpm_load_toast_failed">引符入道败陨</string>
     <string name="kpm_unload_confirm">欲废去%s仙符？</string>
     <string name="kpm_unload">废符出体</string>
