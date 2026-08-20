@@ -29,18 +29,18 @@ object PkgConfig {
              * 避免配置文件中的一行坏数据导致整个应用崩溃（见 IndexOutOfBoundsException）。
              */
             fun fromLine(line: String): Config? {
-                val sp = line.split(",")
-                if (sp.size < 6) {
-                    Log.w(TAG, "Skipping malformed config line (expected >=6 fields, got ${sp.size}): $line")
-                    return null
-                }
-                return try {
-                    val profile = Natives.Profile(sp[3].toInt(), sp[4].toInt(), sp[5])
-                    Config(sp[0], sp[1].toInt(), sp[2].toInt(), profile)
-                } catch (e: NumberFormatException) {
-                    Log.w(TAG, "Skipping config line with non-numeric field: $line", e)
-                    null
-                }
+                val sp = line.split(',', limit = 6)
+                if (sp.size < 6) return null
+                val pkg = sp[0].trim()
+                val exclude = sp[1].trim().toIntOrNull()
+                val allow = sp[2].trim().toIntOrNull()
+                val uid = sp[3].trim().toIntOrNull()
+                val toUid = sp[4].trim().toIntOrNull()
+                val scontext = sp[5].trim()
+                if (pkg.isEmpty() || exclude == null || allow == null ||
+                    uid == null || toUid == null || scontext.isEmpty()
+                ) return null
+                return Config(pkg, exclude, allow, Natives.Profile(uid, toUid, scontext))
             }
         }
 
@@ -57,7 +57,7 @@ object PkgConfig {
         val configs = HashMap<Int, Config>()
         val file = File(APApplication.PACKAGE_CONFIG_FILE)
         if (file.exists()) {
-            file.readLines().drop(1).filter { it.isNotEmpty() }.forEach {
+            file.readLines().filter { it.isNotBlank() }.forEach {
                 Log.d(TAG, it)
                 val p = Config.fromLine(it) ?: return@forEach // 跳过格式异常的行
                 if (!p.isDefault()) {
