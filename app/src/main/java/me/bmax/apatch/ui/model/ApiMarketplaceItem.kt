@@ -16,7 +16,9 @@ data class ApiMarketplaceItem(
      * Get localized description based on current locale
      */
     fun getLocalizedDescription(): String {
-        return if (Locale.getDefault().language == "zh") {
+        val language = Locale.getDefault().language
+        // mgl（魔法少女）本质是简体中文变体，与 zh 同样使用中文描述
+        return if (language == "zh" || language == "mgl") {
             description
         } else {
             descriptionEn

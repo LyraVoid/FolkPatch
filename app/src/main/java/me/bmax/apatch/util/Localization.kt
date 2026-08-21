@@ -6,7 +6,7 @@ import java.util.Locale
  * 从多语言映射中选择与系统 locale 最匹配的文本。
  *
  * 回退链（参考 Android Locale 解析规则）：
- * 1. 精确完整标签（如 "zh-CN"、"zh-Hans-CN"、"zh_TW"）
+ * 1. 精确完整标签（如 "zh-CN"、"zh-Hans-CN"、"zh_TW"、"mgl"）
  * 2. 精确语言代码（如 "zh"）
  * 3. 同一语言族的变体键（如 "zh-Hans"、"zh_CN"、"zh-rCN"）：
  *    - 优先匹配与系统地区(region)一致的键
@@ -16,6 +16,10 @@ import java.util.Locale
  *
  * 解决简体中文变体（zh-CN）环境下，插件只提供 "zh-CN"/"zh-Hans" 等
  * 变体键或只有普通 "zh" 键时，直接显示默认语言（英文）的问题。
+ *
+ * mgl（魔法少女）本质是简体中文主题变体，但其语言代码不是 "zh"，
+ * 精确命中 "mgl" 键后，其余回退一律按 "zh" 参与匹配，避免插件
+ * 只提供 "zh"/"zh-CN" 等中文键时在插件页面直接显示英文。
  */
 fun pickLocalizedString(map: Map<String, String>, locale: Locale?): String? {
     if (map.isEmpty()) return null
@@ -29,8 +33,15 @@ fun pickLocalizedString(map: Map<String, String>, locale: Locale?): String? {
     // 2) 精确语言代码，如 "zh"
     valueOf(loc.language)?.let { return it }
 
-    val lang = loc.language
-    if (lang.isEmpty()) return null
+    val rawLang = loc.language
+    if (rawLang.isEmpty()) return null
+
+    // mgl（魔法少女）本质是中文变体："mgl" 键未命中后按 "zh" 回退，
+    // 使插件只提供 "zh"/"zh-CN" 等中文键时也能显示中文而非英文。
+    val lang = if (rawLang == "mgl") "zh" else rawLang
+    if (lang != rawLang) {
+        valueOf(lang)?.let { return it }
+    }
 
     // 3) 同语言族变体键：如 "zh-Hans"、"zh_CN"、"zh-rCN"
     val variants = map.entries.filter { (k, v) ->
