@@ -1,5 +1,22 @@
 use std::{env, fs::File, io::Write, path::Path, process::Command};
 
+// app/src/main/cpp/version is the single source of the KernelPatch version;
+// both this crate and the root build.gradle.kts derive their copy from it.
+fn get_kp_version() -> (u32, u32, u32) {
+    let header = std::fs::read_to_string("../app/src/main/cpp/version")
+        .expect("Failed to read ../app/src/main/cpp/version");
+    let parse = |name: &str| -> u32 {
+        header
+            .lines()
+            .find_map(|line| {
+                line.strip_prefix(format!("#define {name} ").as_str())
+                    .and_then(|v| v.trim().parse().ok())
+            })
+            .unwrap_or_else(|| panic!("{name} not found in app/src/main/cpp/version"))
+    };
+    (parse("MAJOR"), parse("MINOR"), parse("PATCH"))
+}
+
 fn get_git_version() -> Result<(u32, String), std::io::Error> {
     // Try to get version code from environment variable first
     let version_code: u32 = if let Ok(env_version_code) = env::var("APATCH_VERSION_CODE") {
@@ -33,6 +50,7 @@ fn main() {
     // update VersionCode when git repository change
     println!("cargo:rerun-if-changed=../.git/HEAD");
     println!("cargo:rerun-if-changed=../.git/refs/");
+    println!("cargo:rerun-if-changed=../app/src/main/cpp/version");
 
     let (code, name) = match get_git_version() {
         Ok((code, name)) => (code, name),
@@ -55,4 +73,17 @@ fn main() {
         .expect("Failed to create VERSION_NAME")
         .write_all(name.trim().as_bytes())
         .expect("Failed to write VERSION_NAME");
+
+    let (major, minor, patch) = get_kp_version();
+    File::create(Path::new(out_dir).join("kp_version.rs"))
+        .expect("Failed to create kp_version.rs")
+        .write_all(
+            format!(
+                "pub const KP_MAJOR: i64 = {major};\n\
+                 pub const KP_MINOR: i64 = {minor};\n\
+                 pub const KP_PATCH: i64 = {patch};\n"
+            )
+            .as_bytes(),
+        )
+        .expect("Failed to write kp_version.rs");
 }
