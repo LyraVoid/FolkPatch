@@ -25,6 +25,12 @@ use crate::{
 };
 
 pub fn report_kernel(superkey: Option<String>, event: &str, state: &str) {
+    let rc = supercall::report_kernel_event(&superkey, event, state);
+    if rc == 0 {
+        return;
+    }
+    warn!("direct kernel event {event}/{state} failed: {rc}; falling back to SUPERCMD");
+
     let args = [
         superkey.unwrap_or("su".to_string()),
         "event".to_string(),

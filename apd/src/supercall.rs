@@ -34,6 +34,7 @@ const SUPERCALL_KPM_LOAD: c_long = 0x1020;
 
 const SUPERCALL_UTS_SET: c_long = 0x1050;
 const SUPERCALL_UTS_RESET: c_long = 0x1051;
+const SUPERCALL_REPORT_EVENT: c_long = 0x1080;
 
 const SUPERCALL_PATHHIDE_ENABLE: c_long = 0x1064;
 const SUPERCALL_PATHHIDE_ADD: c_long = 0x1060;
@@ -63,6 +64,27 @@ fn ver_and_cmd(cmd: c_long) -> c_long {
         .try_into()
         .unwrap();
     ((version_code as c_long) << 32) | (0x1158 << 16) | (cmd & 0xFFFF)
+}
+
+pub fn report_kernel_event(superkey: &Option<String>, event: &str, state: &str) -> c_long {
+    let Some(key) = convert_superkey(superkey) else {
+        return (-EINVAL).into();
+    };
+    let Ok(event) = CString::new(event) else {
+        return (-EINVAL).into();
+    };
+    let Ok(state) = CString::new(state) else {
+        return (-EINVAL).into();
+    };
+    unsafe {
+        syscall(
+            __NR_SUPERCALL,
+            key.as_ptr(),
+            ver_and_cmd(SUPERCALL_REPORT_EVENT),
+            event.as_ptr(),
+            state.as_ptr(),
+        ) as c_long
+    }
 }
 
 fn sc_su_revoke_uid(key: &CStr, uid: uid_t) -> c_long {
