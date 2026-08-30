@@ -581,7 +581,8 @@ class PatchesViewModel : ViewModel() {
             val superkey = if (useKey && this@PatchesViewModel.superkey.isNotEmpty()) {
                 this@PatchesViewModel.superkey
             } else {
-                "su"
+                val chars = ('a'..'z') + ('A'..'Z') + ('0'..'9')
+                (1..16).map { chars.random() }.joinToString("")
             }
 
             if (installDirectly) {

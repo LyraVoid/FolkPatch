@@ -367,7 +367,9 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
         me.bmax.apatch.ui.theme.FontConfig.load(this)
         me.bmax.apatch.util.ui.FloatingBarConfig.load(this)
 
-        superKey = "su"
+        val charSet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ%@!"
+        superKey = (1..16).map { charSet.random() }.joinToString("")
+
         val processName = getProcessNameCompat()
         if (processName.endsWith(":root") || processName.endsWith(":webui")) {
             return
