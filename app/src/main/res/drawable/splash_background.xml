@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Legacy windowBackground for Theme.Splash.
+     Used on API < 31 (compat path) and as the pre-splash flash window on all APIs.
+     Solid @color/splash_background (night-qualified) + centered launcher foreground,
+     so old devices show the app icon instead of the generic APK placeholder. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/splash_background" />
+    <item>
+        <bitmap
+            android:gravity="center"
+            android:src="@mipmap/splash_foreground" />
+    </item>
+</layer-list>

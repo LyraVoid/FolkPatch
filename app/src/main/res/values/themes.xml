@@ -8,6 +8,13 @@
 
     <style name="Theme.Splash" parent="Theme.SplashScreen">
         <item name="postSplashScreenTheme">@style/Theme.APatch</item>
+        <!-- Compat + platform splash attrs. Without these, API 31+ auto-uses the
+             launcher icon (looks fine), but API 26-30 falls back to a black window
+             with the generic APK placeholder icon in the center. -->
+        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="windowSplashScreenBackground">@color/splash_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/splash_foreground</item>
+        <item name="windowSplashScreenIconBackgroundColor">@color/splash_background</item>
     </style>
 
     <style name="Theme.APatch.WebUI" parent="Theme.APatch">

@@ -2,4 +2,7 @@
 <resources>
     <color name="ic_launcher_superroot_background">#019486</color>
     <color name="about_icon_background">#ffffff</color>
+    <!-- Splash background (light): matches launcher background so the icon
+         bleeds edge-to-edge, Kitsune/Magisk style. Night override in values-night. -->
+    <color name="splash_background">#FFFFFF</color>
 </resources>
