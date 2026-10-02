@@ -241,33 +241,14 @@ kotlin {
     }
 }
 
-// -PkernelPatchArtifacts=/absolute/path/to/artifacts packages nonempty local
-// kpimg-android and kptools-android. Omit it to restore published binaries.
-// This override applies to Boot-mode assets; jailbreak KO downloads are separate.
 fun registerDownloadTask(
-    taskName: String, srcUrl: String, destPath: String, project: Project, version: String? = null,
-    localArtifact: String? = null
+    taskName: String, srcUrl: String, destPath: String, project: Project, version: String? = null
 ) {
-    // Resolve project-relative paths during configuration, before task execution.
-    val localDir = project.providers.gradleProperty("kernelPatchArtifacts").orNull
-    val localSource = if (localDir != null && localArtifact != null) {
-        File(project.file(localDir), localArtifact)
-    } else {
-        null
-    }
     project.tasks.register(taskName) {
         val destFile = File(destPath)
         val versionFile = File("$destPath.version")
 
         doLast {
-            if (localSource != null) {
-                val source = localSource
-                check(source.isFile && source.length() > 0) { "Missing local KernelPatch artifact: $source" }
-                destFile.parentFile.mkdirs()
-                source.copyTo(destFile, overwrite = true)
-                versionFile.writeText("local")
-                return@doLast
-            }
             var forceDownload = false
             if (version != null) {
                 if (!versionFile.exists() || versionFile.readText().trim() != version) {
@@ -275,9 +256,9 @@ fun registerDownloadTask(
                 }
             }
 
-            if (!destFile.exists() || forceDownload || ArtifactDownload.isFileUpdated(srcUrl, destFile)) {
+            if (!destFile.exists() || forceDownload || isFileUpdated(srcUrl, destFile)) {
                 println(" - Downloading $srcUrl to ${destFile.absolutePath}")
-                ArtifactDownload.downloadFile(srcUrl, destFile)
+                downloadFile(srcUrl, destFile)
                 if (version != null) {
                     versionFile.writeText(version)
                 }
@@ -289,19 +270,16 @@ fun registerDownloadTask(
     }
 }
 
-// Task actions call a standalone helper rather than capturing the Gradle script.
-object ArtifactDownload {
-    fun isFileUpdated(url: String, localFile: File): Boolean {
-        val connection = URI.create(url).toURL().openConnection()
-        val remoteLastModified = connection.getHeaderFieldDate("Last-Modified", 0L)
-        return remoteLastModified > localFile.lastModified()
-    }
+fun isFileUpdated(url: String, localFile: File): Boolean {
+    val connection = URI.create(url).toURL().openConnection()
+    val remoteLastModified = connection.getHeaderFieldDate("Last-Modified", 0L)
+    return remoteLastModified > localFile.lastModified()
+}
 
-    fun downloadFile(url: String, destFile: File) {
-        URI.create(url).toURL().openStream().use { input ->
-            destFile.outputStream().use { output ->
-                input.copyTo(output)
-            }
+fun downloadFile(url: String, destFile: File) {
+    URI.create(url).toURL().openStream().use { input ->
+        destFile.outputStream().use { output ->
+            input.copyTo(output)
         }
     }
 }
@@ -334,8 +312,7 @@ registerDownloadTask(
     srcUrl = "https://github.com/LyraVoid/KernelPatch/releases/download/$kernelPatchVersion/kpimg-android",
     destPath = "${project.projectDir}/src/main/assets/kpimg",
     project = project,
-    version = kernelPatchVersion,
-    localArtifact = "kpimg-android"
+    version = kernelPatchVersion
 )
 
 registerDownloadTask(
@@ -343,8 +320,7 @@ registerDownloadTask(
     srcUrl = "https://github.com/LyraVoid/KernelPatch/releases/download/$kernelPatchVersion/kptools-android",
     destPath = "${project.projectDir}/libs/arm64-v8a/libkptools.so",
     project = project,
-    version = kernelPatchVersion,
-    localArtifact = "kptools-android"
+    version = kernelPatchVersion
 )
 
 // Compat kp version less than 0.10.7

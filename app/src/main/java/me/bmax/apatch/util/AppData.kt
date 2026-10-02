@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.withContext
 import me.bmax.apatch.Natives
 import org.json.JSONArray
-import java.util.concurrent.Semaphore
 
 /**
  * AppData - Data management center for badge counts
@@ -18,46 +17,19 @@ import java.util.concurrent.Semaphore
 object AppData {
     private const val TAG = "AppData"
     private const val NATIVE_CALL_TIMEOUT_MS = 5_000L
-    // Each query has its own limit: a stuck su query must not block KPM counts.
-    private val superuserQueryPermit = Semaphore(1)
-    private val kernelQueryPermit = Semaphore(1)
 
     /**
      * Run a potentially blocking native call with a timeout fallback.
      * Since JNI syscalls cannot be cancelled by coroutines, we use a thread + join(timeout).
      */
-    private fun <T> runNativeWithTimeout(
-        timeoutMs: Long,
-        defaultValue: T,
-        queryName: String,
-        permit: Semaphore,
-        block: () -> T,
-    ): T {
-        // A timeout cannot cancel a JNI syscall. Keep its permit until the
-        // worker actually exits so repeated refreshes cannot accumulate threads.
-        if (!permit.tryAcquire()) {
-            Log.w(TAG, "$queryName query still running; keeping the last known count")
-            return defaultValue
-        }
+    private fun <T> runNativeWithTimeout(timeoutMs: Long, defaultValue: T, block: () -> T): T {
         var result: T? = null
-        val t = try {
-            Thread {
-                try {
-                    result = block()
-                } finally {
-                    permit.release()
-                }
-            }.apply {
-                name = "native-call-$queryName"
-                start()
-            }
-        } catch (e: Throwable) {
-            permit.release()
-            throw e
-        }
+        val t = Thread { result = block() }
+        t.name = "native-call-timeout"
+        t.start()
         t.join(timeoutMs)
         return if (t.isAlive) {
-            Log.w(TAG, "$queryName query timed out after ${timeoutMs}ms; keeping the last known count")
+            Log.w(TAG, "Native call timed out after ${timeoutMs}ms")
             defaultValue
         } else {
             result ?: defaultValue
@@ -148,18 +120,13 @@ object AppData {
      * Note: Minus 1 to exclude the APatch manager itself from the count
      */
     private fun getSuperuserCount(): Int {
-        return runNativeWithTimeout(
-            NATIVE_CALL_TIMEOUT_MS,
-            DataRefreshManager.superuserCount.value,
-            "superuser",
-            superuserQueryPermit,
-        ) {
+        return runNativeWithTimeout(NATIVE_CALL_TIMEOUT_MS, 0) {
             try {
                 val uids = Natives.suUids()
                 (uids.size - 1).coerceAtLeast(0)
             } catch (e: Exception) {
                 Log.e(TAG, "Failed to get superuser count", e)
-                DataRefreshManager.superuserCount.value
+                0
             }
         }
     }
@@ -182,18 +149,14 @@ object AppData {
      * Get kernel module count
      */
     private fun getKernelModuleCount(): Int {
-        return runNativeWithTimeout(
-            NATIVE_CALL_TIMEOUT_MS,
-            DataRefreshManager.kernelModuleCount.value,
-            "kernel-module",
-            kernelQueryPermit,
-        ) {
+        return runNativeWithTimeout(NATIVE_CALL_TIMEOUT_MS, 0) {
             try {
                 Natives.kernelPatchModuleNum().toInt()
             } catch (e: Exception) {
                 Log.e(TAG, "Failed to get kernel module count", e)
-                DataRefreshManager.kernelModuleCount.value
+                0
             }
         }
     }
 }
+

@@ -12,7 +12,7 @@ use std::{
 
 use anyhow::{Ok, Result, bail};
 use libc::{
-    EINTR, SIG_BLOCK, SIGWINCH, TIOCGWINSZ, TIOCSWINSZ, fork,
+    EINTR, SIG_BLOCK, SIG_UNBLOCK, SIGWINCH, TIOCGWINSZ, TIOCSWINSZ, fork,
     pthread_sigmask, sigaddset, sigemptyset, sigset_t, sigwait, waitpid, winsize,
 };
 use rustix::{
@@ -45,42 +45,22 @@ fn watch_sigwinch_async(slave: RawFd) {
     unsafe {
         sigemptyset(winch.as_mut_ptr());
         sigaddset(winch.as_mut_ptr(), SIGWINCH);
-        let rc = pthread_sigmask(SIG_BLOCK, winch.as_mut_ptr(), null_mut());
-        if rc != 0 {
-            log::warn!(
-                "Cannot block SIGWINCH: {}",
-                std::io::Error::from_raw_os_error(rc)
-            );
-            return;
-        }
+        pthread_sigmask(SIG_BLOCK, winch.as_mut_ptr(), null_mut());
     }
 
     thread::spawn(move || unsafe {
         let mut winch = MaybeUninit::<sigset_t>::uninit();
         sigemptyset(winch.as_mut_ptr());
         sigaddset(winch.as_mut_ptr(), SIGWINCH);
-        // The listener inherits the blocked SIGWINCH mask required by sigwait.
+        pthread_sigmask(SIG_UNBLOCK, winch.as_mut_ptr(), null_mut());
         let mut sig: c_int = 0;
         loop {
             let mut w = MaybeUninit::<winsize>::uninit();
             if libc::ioctl(1, TIOCGWINSZ, w.as_mut_ptr()) < 0 {
-                let error = std::io::Error::last_os_error();
-                if error.raw_os_error() == Some(EINTR) {
-                    continue;
-                }
-                log::warn!("Stopping window-size listener: TIOCGWINSZ failed: {error}");
-                break;
+                continue;
             }
             libc::ioctl(slave, TIOCSWINSZ, w.as_mut_ptr());
-            let rc = sigwait(winch.as_mut_ptr(), &mut sig);
-            if rc != 0 {
-                if rc == EINTR {
-                    continue;
-                }
-                log::warn!(
-                    "Stopping window-size listener: sigwait failed: {}",
-                    std::io::Error::from_raw_os_error(rc)
-                );
+            if sigwait(winch.as_mut_ptr(), &mut sig) != 0 {
                 break;
             }
         }
