@@ -57,11 +57,17 @@ set +x
   fi
 fi
 
-if [ ! $(./kptools -i kernel -f | grep CONFIG_KALLSYMS=y) ]; then
+kallsyms_out=$(./kptools -i kernel -f 2>&1)
+kallsyms_rc=$?
+if [ "$kallsyms_rc" -ne 0 ]; then
+	printf '%s\n' "$kallsyms_out" >&2
+	exit "$kallsyms_rc"
+fi
+if ! printf '%s\n' "$kallsyms_out" | grep -q CONFIG_KALLSYMS=y; then
 	echo "- Patcher has Aborted!"
 	echo "- APatch requires CONFIG_KALLSYMS to be Enabled."
 	echo "- But your kernel seems NOT enabled it."
-	exit 0
+	exit 1
 fi
 
 if [  $(./kptools -i kernel -l | grep patched=false) ]; then
@@ -111,8 +117,7 @@ if [ "$FLASH_TO_DEVICE" = "true" ]; then
   # was a block device the `[ -f "new-boot.img" ]` check was therefore
   # never evaluated, and the script would attempt to flash even when
   # the repack step had silently failed and new-boot.img was missing.
-  # The nested if makes both conditions required and produces a clear
-  # error when the output file is absent.
+  # The nested if flashes only when that output file is present.
   if [ -b "$BOOTIMAGE" ] || [ -c "$BOOTIMAGE" ]; then
     if [ -f "new-boot.img" ]; then
       echo "- Flashing new boot image"
@@ -122,13 +127,18 @@ if [ "$FLASH_TO_DEVICE" = "true" ]; then
         >&2 echo "- Flash error: $flash_rc"
         exit "$flash_rc"
       fi
-    else
-      >&2 echo "- new-boot.img missing - refusing to flash"
-      exit 1
     fi
   fi
 
+  if [ ! -f "new-boot.img" ]; then
+    >&2 echo "- new-boot.img missing - refusing to flash"
+    exit 1
+  fi
   echo "- Successfully Flashed!"
 else
+  if [ ! -f "new-boot.img" ]; then
+    >&2 echo "- new-boot.img missing"
+    exit 1
+  fi
   echo "- Successfully Patched!"
 fi

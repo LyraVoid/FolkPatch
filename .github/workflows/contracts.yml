@@ -31,3 +31,13 @@ jobs:
 
       - name: Check package boundaries
         run: python3 scripts/check-package-boundaries.py
+
+  boot-patch-output:
+    name: Boot patch output
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Check boot patch output
+        run: python3 scripts/test_boot_patch_output.py

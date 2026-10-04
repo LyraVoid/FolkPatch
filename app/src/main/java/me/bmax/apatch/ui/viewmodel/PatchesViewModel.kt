@@ -744,6 +744,15 @@ class PatchesViewModel : ViewModel() {
                 clearJailbreakMarker()
             } else if (mode == PatchMode.PATCH_ONLY) {
                 val newBootFile = patchDir.getChildFile("new-boot.img")
+                if (!newBootFile.exists()) {
+                    val msg = " Patch failed."
+                    error = msg
+                    logs.add(error)
+                    logs.add("****************************")
+                    patchdone = true
+                    patching = false
+                    return@launch
+                }
                 val outDir = getSafeDownloadsDir(apApp)
                 if (!outDir.exists()) outDir.mkdirs()
                 val outPath = File(outDir, outFilename)
@@ -753,7 +762,17 @@ class PatchesViewModel : ViewModel() {
                     val outUri = createDownloadUri(apApp, outFilename)
                     succ = insertDownload(apApp, outUri, inputUri)
                 } else {
-                    newBootFile.inputStream().copyAndClose(outPath.outputStream())
+                    try {
+                        newBootFile.inputStream().copyAndClose(outPath.outputStream())
+                    } catch (_: IOException) {
+                        val msg = " Patch failed."
+                        error = msg
+                        logs.add(error)
+                        logs.add("****************************")
+                        patchdone = true
+                        patching = false
+                        return@launch
+                    }
                 }
                 if (succ) {
                     logs.add(apApp.getString(R.string.patch_output_written_to))
