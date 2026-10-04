@@ -610,9 +610,9 @@ fun runAPModuleAction(
         }
     }
 
-    val result = withNewRootShell{ 
-        newJob().add("${APApplication.APD_PATH} module action $moduleId")
-        .to(stdoutCallback, stderrCallback).exec()
+    val result = withNewRootShell{
+        newJob().add("${APApplication.APD_PATH} module action ${shellQuote(moduleId)}")
+            .to(stdoutCallback, stderrCallback).exec()
     }
     Log.i(TAG, "APModule runAction result: $result")
 
