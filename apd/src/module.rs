@@ -412,10 +412,7 @@ fn _install_module(zip: &str) -> Result<()> {
     // The id becomes a directory name under MODULE_DIR and is interpolated into
     // shell commands by the manager; reject path traversal at this trust boundary
     // (same rule as KernelSU and module_config.rs).
-    let id_re = regex_lite::Regex::new(r"^[a-zA-Z][a-zA-Z0-9._-]+$")?;
-    if !id_re.is_match(module_id) {
-        bail!("invalid module id: {module_id}");
-    }
+    ensure_valid_module_id(module_id)?;
 
     // Check if this module is a metamodule
     let is_metamodule = metamodule::is_metamodule(&module_prop);
@@ -624,7 +621,16 @@ pub fn read_module_prop(module_path: &Path) -> Result<HashMap<String, String>> {
     Ok(prop_map)
 }
 
+fn ensure_valid_module_id(id: &str) -> Result<()> {
+    let id_re = regex_lite::Regex::new(r"^[a-zA-Z][a-zA-Z0-9._-]+$")?;
+    if !id_re.is_match(id) {
+        bail!("invalid module id: {id}");
+    }
+    Ok(())
+}
+
 pub fn run_action(id: &str) -> Result<()> {
+    ensure_valid_module_id(id)?;
     let action_script_path = format!("/data/adb/modules/{}/action.sh", id);
     if Path::new(&action_script_path).exists() {
         let _ = exec_script(&action_script_path, true);
