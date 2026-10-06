@@ -89,7 +89,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         with:
           submodules: recursive
           fetch-depth: 0
@@ -110,7 +110,7 @@ jobs:
           APK=$(find app/build/outputs/apk/debug -name "*.apk" -type f | head -1)
           [ -n "$APK" ] && mv "$APK" "FolkPatch-Debug-${SHORT}.apk"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: folkpatch-debug-${{ github.sha }}
           path: FolkPatch-Debug-*.apk
@@ -123,7 +123,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         with:
           submodules: recursive
           fetch-depth: 0
@@ -157,7 +157,7 @@ jobs:
           APK=$(find app/build/outputs/apk/release -name "*.apk" -type f | head -1)
           [ -n "$APK" ] && mv "$APK" "FolkPatch-Release-${SHORT}.apk"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: folkpatch-release-${{ github.sha }}
           path: FolkPatch-Release-*.apk
@@ -181,7 +181,7 @@ jobs:
 
       - name: Download artifacts
         if: steps.tg_check.outputs.enabled == 'true'
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           pattern: folkpatch-*
           path: artifacts
