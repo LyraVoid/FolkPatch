@@ -52,9 +52,12 @@ jobs:
 
     steps:
       - id: set
+        env:
+          INPUT_TYPE: ${{ inputs.build_type }}
+          EVENT_NAME: ${{ github.event_name }}
         run: |
-          TYPE="${{ inputs.build_type }}"
-          [ "${{ github.event_name }}" != "workflow_dispatch" ] && TYPE="both"
+          TYPE="$INPUT_TYPE"
+          [ "$EVENT_NAME" != "workflow_dispatch" ] && TYPE="both"
 
           DEBUG="false"; RELEASE="false"; LIST=""
           [ "$TYPE" = "both" -o "$TYPE" = "debug" ] && { DEBUG="true"; LIST="folkpatch-debug-${{ github.sha }}"; }
@@ -69,14 +72,21 @@ jobs:
           echo "artifact_list=$LIST" >> "$GITHUB_OUTPUT"
 
       - id: msg
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PUSH_MSG: ${{ github.event.head_commit.message }}
+          PUSH_AUTHOR: ${{ github.event.head_commit.author.name }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+          ACTOR: ${{ github.actor }}
         run: |
-          case "${{ github.event_name }}" in
-            push)         TEXT="${{ github.event.head_commit.message }}"
-                           AUTHOR="${{ github.event.head_commit.author.name }}" ;;
-            pull_request) TEXT="PR: ${{ github.event.pull_request.title }}"
-                           AUTHOR="${{ github.event.pull_request.user.login }}" ;;
+          case "$EVENT_NAME" in
+            push)         TEXT="$PUSH_MSG"
+                          AUTHOR="$PUSH_AUTHOR" ;;
+            pull_request) TEXT="PR: $PR_TITLE"
+                          AUTHOR="$PR_AUTHOR" ;;
             *)            TEXT="FolkPatch Build"
-                           AUTHOR="${{ github.actor }}" ;;
+                          AUTHOR="$ACTOR" ;;
           esac
           TEXT="${TEXT%%$'\n'*}"
           echo "text=$TEXT" >> "$GITHUB_OUTPUT"
@@ -134,16 +144,22 @@ jobs:
         run: ./gradlew printVersion --no-daemon
 
       - name: Decode keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
         run: |
-          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > FolkPatch.jks
+          echo "$KEYSTORE_BASE64" | base64 -d > FolkPatch.jks
 
       - name: Create keystore.properties
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
-          cat > keystore.properties << 'EOF'
+          cat > keystore.properties << EOF
           KEYSTORE_FILE=../FolkPatch.jks
-          KEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }}
-          KEY_ALIAS=${{ secrets.KEY_ALIAS }}
-          KEY_PASSWORD=${{ secrets.KEY_PASSWORD }}
+          KEYSTORE_PASSWORD=${KEYSTORE_PASSWORD}
+          KEY_ALIAS=${KEY_ALIAS}
+          KEY_PASSWORD=${KEY_PASSWORD}
           EOF
 
       - run: ./gradlew assembleRelease --no-daemon
@@ -172,8 +188,11 @@ jobs:
     steps:
       - name: Check Telegram config
         id: tg_check
+        env:
+          BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
-          if [ -n "${{ secrets.TELEGRAM_BOT_TOKEN }}" ] && [ -n "${{ secrets.TELEGRAM_CHAT_ID }}" ]; then
+          if [ -n "$BOT_TOKEN" ] && [ -n "$CHAT_ID" ]; then
             echo "enabled=true" >> "$GITHUB_OUTPUT"
           else
             echo "::notice::Telegram secrets not configured, skipping upload"
@@ -189,6 +208,16 @@ jobs:
 
       - name: Send to Telegram
         if: steps.tg_check.outputs.enabled == 'true'
+        env:
+          COMMIT_MSG: ${{ needs.prepare.outputs.commit_msg }}
+          COMMIT_AUTHOR: ${{ needs.prepare.outputs.commit_author }}
+          REF_NAME: ${{ github.ref_name }}
+          SHA: ${{ github.sha }}
+          SERVER_URL: ${{ github.server_url }}
+          REPOSITORY: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
+          BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
           FILES=$(find artifacts -type f 2>/dev/null | sort)
           FILE_COUNT=$(echo "$FILES" | grep -c . || true)
@@ -198,11 +227,20 @@ jobs:
             exit 1
           fi
           
-          CAPTION="${{ needs.prepare.outputs.commit_msg }}\nBranch: ${{ github.ref_name }}\nCommit: ${{ github.sha }}\nAuthor: ${{ needs.prepare.outputs.commit_author }}\nRun: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          # jq -Rs: safely JSON-escape arbitrary user-controlled strings
+          # (commit messages may contain quotes, backticks, $(), newlines)
+          MSG_JSON=$(printf '%s' "$COMMIT_MSG" | jq -Rs .)
+          AUTHOR_JSON=$(printf '%s' "$COMMIT_AUTHOR" | jq -Rs .)
+          REF_JSON=$(printf '%s' "$REF_NAME" | jq -Rs .)
+          SHA_JSON=$(printf '%s' "$SHA" | jq -Rs .)
+          RUN_JSON=$(printf '%s' "$SERVER_URL/$REPOSITORY/actions/runs/$RUN_ID" | jq -Rs .)
+          CAPTION=$(jq -jn --argjson m "$MSG_JSON" --argjson a "$AUTHOR_JSON" \
+            --argjson r "$REF_JSON" --argjson s "$SHA_JSON" --argjson u "$RUN_JSON" \
+            '$m + "\nBranch: " + $r + "\nCommit: " + $s + "\nAuthor: " + $a + "\nRun: " + $u')
           
           if [ "$FILE_COUNT" -eq 1 ]; then
-            curl -sf -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendDocument" \
-              -F "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
+            curl -sf -X POST "https://api.telegram.org/bot${BOT_TOKEN}/sendDocument" \
+              -F "chat_id=${CHAT_ID}" \
               -F "document=@$FILES" \
               -F "caption=${CAPTION}"
           else
@@ -219,15 +257,16 @@ jobs:
                 MEDIA_JSON+=","
               fi
               if [ $((i + 1)) -eq $TOTAL ]; then
-                MEDIA_JSON+="{\"type\":\"document\",\"media\":\"attach://$FNAME\",\"caption\":\"${CAPTION}\"}"
+                CAPTION_JSON=$(printf '%s' "$CAPTION" | jq -Rs .)
+                MEDIA_JSON+="{\"type\":\"document\",\"media\":\"attach://$FNAME\",\"caption\":${CAPTION_JSON}}"
               else
                 MEDIA_JSON+="{\"type\":\"document\",\"media\":\"attach://$FNAME\"}"
               fi
             done
             MEDIA_JSON+="]"
             
-            ARGS=(-X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMediaGroup")
-            ARGS+=(-F "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}")
+            ARGS=(-X POST "https://api.telegram.org/bot${BOT_TOKEN}/sendMediaGroup")
+            ARGS+=(-F "chat_id=${CHAT_ID}")
             ARGS+=(-F "media=${MEDIA_JSON}")
             
             while IFS= read -r f; do
