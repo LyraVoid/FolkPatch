@@ -12,7 +12,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.sync.withPermit
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.apApp
@@ -34,6 +36,7 @@ class APModuleViewModel : ViewModel() {
         private const val TAG = "ModuleViewModel"
         private const val CUSTOM_ORDER_ENABLED_KEY = "module_custom_order_enabled"
         private const val CUSTOM_ORDER_KEY = "module_custom_order"
+        private const val MODULE_SIZE_CACHE_KEY = "module_size_cache_v1"
         private var modules by mutableStateOf<List<ModuleInfo>>(emptyList())
         private val zygiskModuleIds = listOf(
             "zygisksu",
@@ -65,6 +68,13 @@ class APModuleViewModel : ViewModel() {
         val isLSPosed: Boolean,
     )
 
+    /**
+     * Persisted module size cache entry.
+     * [versionCode] is the module.prop versionCode at measurement time,
+     * used to invalidate the cache when a module gets updated.
+     */
+    private data class CachedSize(val bytes: Long, val versionCode: Int)
+
     data class ModuleUpdateInfo(
         val version: String,
         val versionCode: Int,
@@ -88,18 +98,29 @@ class APModuleViewModel : ViewModel() {
     private var customOrderEnabled by mutableStateOf(prefs.getBoolean(CUSTOM_ORDER_ENABLED_KEY, false))
     private var customOrder by mutableStateOf(readCustomOrder())
     private val bannerCache = mutableStateMapOf<String, BannerInfo>()
-    private val moduleSizeCache = mutableStateMapOf<String, Long>()
+    private val moduleSizeCache = mutableStateMapOf<String, CachedSize>()
+    private val sizePrefetchMutex = Mutex()
     private val updateSemaphore = Semaphore(3)
     val bannerSemaphore = Semaphore(4)
 
     private val preferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
         if (key == "module_sort_optimization") {
             sortOptimizationEnabled = prefs.getBoolean("module_sort_optimization", true)
+        } else if (key == "show_more_module_info") {
+            // Size display just turned on: measure modules that are not cached yet.
+            if (prefs.getBoolean("show_more_module_info", true)) {
+                viewModelScope.launch(Dispatchers.IO) {
+                    prefetchModuleSizes(modules.map { it.id })
+                }
+            }
         }
     }
 
+    private val collator = Collator.getInstance(Locale.getDefault())
+
     init {
         prefs.registerOnSharedPreferenceChangeListener(preferenceChangeListener)
+        loadSizeCacheFromDisk()
     }
 
     override fun onCleared() {
@@ -107,7 +128,40 @@ class APModuleViewModel : ViewModel() {
         prefs.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener)
     }
 
-    private val collator = Collator.getInstance(Locale.getDefault())
+    /**
+     * Load the persisted size cache into memory so sizes are available
+     * immediately on cold start (no "0 KB" flash before du finishes).
+     */
+    private fun loadSizeCacheFromDisk() {
+        runCatching {
+            val raw = prefs.getString(MODULE_SIZE_CACHE_KEY, null) ?: return
+            val obj = JSONObject(raw)
+            for (id in obj.keys()) {
+                val entry = obj.optJSONObject(id) ?: continue
+                val bytes = entry.optLong("bytes", -1L)
+                if (bytes < 0) continue
+                moduleSizeCache[id] = CachedSize(bytes, entry.optInt("vc", -1))
+            }
+        }.onFailure { e ->
+            Log.e(TAG, "Failed to load module size cache", e)
+        }
+    }
+
+    /**
+     * Persist the in-memory size cache. Called after measurement / pruning;
+     * the entry count is small (dozens) so the write cost is negligible.
+     */
+    private fun persistSizeCache() {
+        runCatching {
+            val obj = JSONObject()
+            for ((id, cached) in moduleSizeCache) {
+                obj.put(id, JSONObject().put("bytes", cached.bytes).put("vc", cached.versionCode))
+            }
+            prefs.edit().putString(MODULE_SIZE_CACHE_KEY, obj.toString()).apply()
+        }.onFailure { e ->
+            Log.e(TAG, "Failed to persist module size cache", e)
+        }
+    }
 
     val moduleList by derivedStateOf {
         if (customOrderEnabled) {
@@ -208,7 +262,10 @@ class APModuleViewModel : ViewModel() {
 
     private fun pruneModuleSizeCache(validIds: Set<String>) {
         val keysToRemove = moduleSizeCache.keys.filter { it !in validIds }
-        keysToRemove.forEach { moduleSizeCache.remove(it) }
+        if (keysToRemove.isNotEmpty()) {
+            keysToRemove.forEach { moduleSizeCache.remove(it) }
+            persistSizeCache()
+        }
     }
 
     private val updateCache = mutableStateMapOf<String, Triple<String, String, String>>()
@@ -275,7 +332,9 @@ class APModuleViewModel : ViewModel() {
                 // Non-critical: run in background without blocking module display
                 pruneBannerCache(ids.toSet())
                 pruneModuleSizeCache(ids.toSet())
-                viewModelScope.launch(Dispatchers.IO) { prefetchModuleSizes(ids) }
+                if (prefs.getBoolean("show_more_module_info", true)) {
+                    viewModelScope.launch(Dispatchers.IO) { prefetchModuleSizes(ids) }
+                }
                 viewModelScope.launch(Dispatchers.IO) { batchCheckUpdates() }
 
                 Log.i(TAG, "load cost: ${SystemClock.elapsedRealtime() - start}, modules: $modules")
@@ -372,38 +431,52 @@ class APModuleViewModel : ViewModel() {
 
     private fun prefetchModuleSizes(moduleIds: List<String>) {
         if (moduleIds.isEmpty()) return
-        val idsToFetch = moduleIds.filter { it !in moduleSizeCache }
-        if (idsToFetch.isEmpty()) return
+        // Guard against overlapping runs (rapid refresh / settings toggle)
+        // so du is not executed multiple times concurrently.
+        viewModelScope.launch(Dispatchers.IO) {
+            sizePrefetchMutex.withLock {
+                // Re-measure only when there is no entry, or the module was
+                // updated (versionCode changed) since the last measurement.
+                val versionCodeById = modules.associate { it.id to it.versionCode }
+                val idsToFetch = moduleIds.filter { id ->
+                    val cached = moduleSizeCache[id]
+                    cached == null || cached.versionCode != versionCodeById[id]
+                }
+                if (idsToFetch.isEmpty()) return@withLock
 
-        runCatching {
-            val sb = StringBuilder("for d in")
-            for (id in idsToFetch) {
-                sb.append(" /data/adb/modules/")
-                sb.append(id.replace(" ", "\\ "))
-            }
-            sb.append("; do if [ -d \"\$d\" ]; then /data/adb/ap/bin/busybox du -sb \"\$d\" 2>/dev/null; fi; done")
-            val result = getRootShell().newJob().add(sb.toString()).to(ArrayList(), null).exec()
-            if (result.isSuccess) {
-                for (line in result.out) {
-                    val parts = line.split("\t", limit = 2)
-                    if (parts.size == 2) {
-                        val size = parts[0].trim().toLongOrNull() ?: continue
-                        val path = parts[1].trim()
-                        val id = path.removePrefix("/data/adb/modules/")
-                        if (id in idsToFetch) {
-                            moduleSizeCache[id] = size
-                        }
+                runCatching {
+                    val sb = StringBuilder("/data/adb/ap/bin/busybox du -sb")
+                    for (id in idsToFetch) {
+                        sb.append(" /data/adb/modules/")
+                        sb.append(id.replace(" ", "\\ "))
                     }
+                    // Single du invocation: one fork/exec for all modules,
+                    // non-existent dirs only produce stderr (discarded).
+                    val result = getRootShell().newJob().add(sb.toString()).to(ArrayList(), null).exec()
+                    if (result.isSuccess) {
+                        for (line in result.out) {
+                            val parts = line.split("\t", limit = 2)
+                            if (parts.size == 2) {
+                                val size = parts[0].trim().toLongOrNull() ?: continue
+                                val path = parts[1].trim()
+                                val id = path.removePrefix("/data/adb/modules/")
+                                if (id in idsToFetch) {
+                                    moduleSizeCache[id] = CachedSize(size, versionCodeById[id] ?: -1)
+                                }
+                            }
+                        }
+                        persistSizeCache()
+                    }
+                }.onFailure { e ->
+                    Log.e(TAG, "Error prefetching module sizes", e)
                 }
             }
-        }.onFailure { e ->
-            Log.e(TAG, "Error prefetching module sizes", e)
         }
     }
 
     fun getModuleSize(moduleId: String): String {
-        moduleSizeCache[moduleId]?.let { cachedBytes ->
-            return formatFileSize(cachedBytes)
+        moduleSizeCache[moduleId]?.let { cached ->
+            return formatFileSize(cached.bytes)
         }
         return "0 KB"
     }
