@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import me.bmax.apatch.ui.component.folk.folkPressScale
 import androidx.compose.ui.semantics.Role
 import me.bmax.apatch.ui.theme.tokens.FolkShape
+import me.bmax.apatch.ui.component.folk.folkInsetColor
 
 /**
  * One of the two avatar choices. The selected tile is tinted and carries a
@@ -66,7 +67,7 @@ internal fun AvatarOptionTile(
                     .size(FolkDimens.Size64)
                     .alpha(opacity)
                     .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.surfaceContainerHighest),
+                    .background(folkInsetColor()),
                 contentAlignment = Alignment.Center,
             ) {
                 preview()

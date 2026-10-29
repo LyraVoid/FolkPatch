@@ -10,6 +10,7 @@ import androidx.compose.ui.unit.sp
 import me.bmax.apatch.ui.theme.tokens.FolkShape
 import me.bmax.apatch.ui.theme.tokens.FolkTheme
 import me.bmax.apatch.ui.theme.tokens.FolkType
+import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
 
 /**
  * Measurements that give the FolkPatch settings its own rhythm.
@@ -114,7 +115,16 @@ object FolkSettingsDimens {
  * each one deciding how far to lift a container off the page.
  */
 @Composable
-fun folkGroupColor(): Color = FolkTheme.palette.groupedSurface
+fun folkGroupColor(): Color =
+    LocalFolkWallpaperTokens.current?.group?.fill ?: FolkTheme.palette.groupedSurface
+
+@Composable
+fun folkInsetColor(): Color =
+    LocalFolkWallpaperTokens.current?.raised?.fill ?: FolkTheme.palette.groupedInset
+
+@Composable
+fun folkOverlayColor(): Color =
+    LocalFolkWallpaperTokens.current?.overlay?.fill ?: FolkTheme.palette.groupedInset
 
 @Composable
 fun folkSectionTitleColor(): Color = MaterialTheme.colorScheme.primary.copy(alpha = 0.9f)

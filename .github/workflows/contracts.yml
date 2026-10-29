@@ -32,6 +32,12 @@ jobs:
       - name: Check package boundaries
         run: python3 scripts/check-package-boundaries.py
 
+      - name: Self-test screen token guard
+        run: python3 scripts/check-screen-tokens.py --self-test
+
+      - name: Check screen tokens and surface alpha ownership
+        run: python3 scripts/check-screen-tokens.py
+
   boot-patch-output:
     name: Boot patch output
     runs-on: ubuntu-latest

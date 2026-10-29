@@ -33,6 +33,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.theme.tokens.FolkShape
+import me.bmax.apatch.ui.component.folk.folkOverlayColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -142,7 +143,7 @@ fun SuperUserOptionsSheet(
     ModalBottomSheet(
         onDismissRequest = onDismiss,
         sheetState = sheetState,
-        containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+        containerColor = folkOverlayColor(),
     ) {
         Column(
             modifier = Modifier

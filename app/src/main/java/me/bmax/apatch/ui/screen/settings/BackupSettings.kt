@@ -1,6 +1,8 @@
 package me.bmax.apatch.ui.screen.settings
 
 import me.bmax.apatch.ui.theme.tokens.FolkDimens
+import me.bmax.apatch.ui.component.folk.folkInsetColor
+import me.bmax.apatch.ui.component.folk.folkOverlayColor
 import android.content.Intent
 import me.bmax.apatch.util.ui.showToast
 import androidx.core.content.FileProvider
@@ -177,7 +179,7 @@ fun WebDavConfigDialog(showDialog: MutableState<Boolean>) {
                 .wrapContentHeight(),
             shape = MaterialTheme.shapes.large,
             tonalElevation = AlertDialogDefaults.TonalElevation,
-            color = MaterialTheme.colorScheme.surface.copy(alpha = 1f)
+            color = folkOverlayColor()
         ) {
             Column(modifier = Modifier.padding(FolkDimens.Size24)) {
                 Text(
@@ -293,7 +295,7 @@ fun BackupLogDialog(showDialog: MutableState<Boolean>, onDismiss: () -> Unit) {
                 .height(FolkDimens.Size500),
             shape = MaterialTheme.shapes.large,
             tonalElevation = AlertDialogDefaults.TonalElevation,
-            color = MaterialTheme.colorScheme.surface.copy(alpha = 1f)
+            color = folkOverlayColor()
         ) {
             Column(modifier = Modifier.padding(FolkDimens.Size24)) {
                 Text(
@@ -305,7 +307,7 @@ fun BackupLogDialog(showDialog: MutableState<Boolean>, onDismiss: () -> Unit) {
                 Surface(
                     modifier = Modifier.weight(1f).fillMaxWidth(),
                     shape = RoundedCornerShape(FolkDimens.Size8),
-                    color = MaterialTheme.colorScheme.surfaceVariant
+                    color = folkInsetColor()
                 ) {
                     val scrollState = rememberScrollState()
                     Text(

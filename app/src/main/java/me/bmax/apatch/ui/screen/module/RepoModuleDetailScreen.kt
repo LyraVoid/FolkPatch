@@ -42,6 +42,7 @@ import me.bmax.apatch.ui.component.TonalCard
 import me.bmax.apatch.ui.component.ModuleLabel
 import me.bmax.apatch.ui.component.SegmentedColumn
 import me.bmax.apatch.ui.component.folk.FolkScaffold
+import me.bmax.apatch.ui.component.folk.folkInsetColor
 import me.bmax.apatch.ui.viewmodel.RepoModuleViewModel
 import me.bmax.apatch.util.DownloadListener
 import me.bmax.apatch.util.download
@@ -96,7 +97,7 @@ fun RepoModuleDetailScreen(
                             )
                             ModuleLabel(
                                 text = module.version,
-                                containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+                                containerColor = folkInsetColor(),
                                 contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
                             if (module.license.isNotEmpty()) {

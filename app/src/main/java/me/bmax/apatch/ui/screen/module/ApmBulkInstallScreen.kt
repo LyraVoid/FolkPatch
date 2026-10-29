@@ -69,6 +69,7 @@ import com.ramcosta.composedestinations.generated.destinations.InstallScreenDest
 import me.bmax.apatch.ui.component.folk.FolkStateView
 import androidx.compose.material.icons.outlined.Extension
 import me.bmax.apatch.ui.theme.tokens.FolkShape
+import me.bmax.apatch.ui.component.folk.folkInsetColor
 
 @Destination<RootGraph>
 @OptIn(ExperimentalMaterial3Api::class)
@@ -274,7 +275,7 @@ fun ApmBulkInstallScreen(navigator: DestinationsNavigator, initialUris: ArrayLis
                                 ListItem(
                                     modifier = Modifier
                                         .clip(FolkShape.Corner16)
-                                        .background(MaterialTheme.colorScheme.surfaceContainerHighest),
+                                        .background(folkInsetColor()),
                                     headlineContent = { 
                                         Text(
                                             text = getFileName(context, uri),

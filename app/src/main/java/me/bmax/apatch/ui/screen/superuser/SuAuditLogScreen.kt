@@ -60,6 +60,7 @@ import me.bmax.apatch.ui.component.folk.FolkScaffold
 import me.bmax.apatch.ui.component.folk.FolkLogEmptyState
 import me.bmax.apatch.ui.component.folk.folkLogTextStyle
 import me.bmax.apatch.ui.component.folk.FolkTitleStyle
+import me.bmax.apatch.ui.component.folk.folkInsetColor
 import me.bmax.apatch.ui.component.splicedLazyColumnGroup
 import me.bmax.apatch.util.SuAuditLog
 import java.text.SimpleDateFormat
@@ -203,7 +204,7 @@ private fun KernelAuditList(entries: List<SuAuditLog.AuditEntry.KernelEntry>) {
                             modifier = Modifier
                                 .size(FolkDimens.Size40)
                                 .clip(CircleShape)
-                                .background(MaterialTheme.colorScheme.surfaceContainerHigh),
+                                .background(folkInsetColor()),
                             contentAlignment = Alignment.Center,
                         ) {
                             Text(
@@ -299,7 +300,7 @@ private fun AppAuditList(entries: List<SuAuditLog.AuditEntry.AppEntry>) {
                             modifier = Modifier
                                 .size(FolkDimens.Size40)
                                 .clip(CircleShape)
-                                .background(MaterialTheme.colorScheme.surfaceContainerHigh),
+                                .background(folkInsetColor()),
                             contentAlignment = Alignment.Center,
                         ) {
                             Text(

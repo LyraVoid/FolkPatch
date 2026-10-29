@@ -43,6 +43,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.folk.FolkScaffold
 import me.bmax.apatch.ui.component.folk.FolkTitleStyle
+import me.bmax.apatch.ui.component.folk.folkInsetColor
 import me.bmax.apatch.ui.component.splicedLazyColumnGroup
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.util.ui.NavigationBarsSpacer
@@ -124,7 +125,7 @@ fun LanguagePickerScreen(navigator: DestinationsNavigator) {
                                 .size(FolkDimens.Size32)
                                 .background(
                                     color = if (isSelected) MaterialTheme.colorScheme.primary
-                                    else MaterialTheme.colorScheme.surfaceContainerHigh,
+                                    else folkInsetColor(),
                                     shape = CircleShape,
                                 ),
                             contentAlignment = Alignment.Center,

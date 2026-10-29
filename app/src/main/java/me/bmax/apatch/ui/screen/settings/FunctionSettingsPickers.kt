@@ -54,6 +54,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import me.bmax.apatch.ui.component.folk.ExpressiveDialog
+import me.bmax.apatch.ui.component.folk.folkInsetColor
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
 import coil.compose.AsyncImage
@@ -136,7 +137,7 @@ fun SelectedPathHideAppItem(
             Box(
                 modifier = Modifier
                     .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.surfaceContainerHigh)
+                    .background(folkInsetColor())
                     .padding(FolkDimens.Size8),
                 contentAlignment = Alignment.Center,
             ) {

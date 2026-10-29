@@ -66,6 +66,7 @@ import me.bmax.apatch.util.download
 import me.bmax.apatch.util.ui.showToast
 import me.bmax.apatch.ui.component.folk.FolkStateView
 import me.bmax.apatch.ui.component.folk.FolkStateTone
+import me.bmax.apatch.ui.component.folk.folkGroupColor
 import me.bmax.apatch.ui.theme.tokens.FolkShape
 import androidx.compose.material.icons.outlined.Warning
 
@@ -339,7 +340,7 @@ private fun RepoSelectDialog(
                                     onRepoSelected(repo.url)
                                 },
                                 shape = FolkShape.Corner12,
-                                color = MaterialTheme.colorScheme.surfaceContainer
+                                color = folkGroupColor(),
                             ) {
                                 Column(modifier = Modifier.padding(FolkDimens.Size16)) {
                                     Row(

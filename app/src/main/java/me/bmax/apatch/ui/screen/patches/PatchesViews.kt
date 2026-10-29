@@ -73,6 +73,7 @@ import androidx.compose.material.icons.outlined.Warning
 import androidx.compose.foundation.layout.size
 import me.bmax.apatch.core.ui.R as CoreR
 import me.bmax.apatch.ui.theme.tokens.FolkShape
+import me.bmax.apatch.ui.component.folk.folkInsetColor
 
 @Composable
 fun StartButton(text: String, modifier: Modifier = Modifier, onClick: () -> Unit) {
@@ -382,8 +383,8 @@ fun SetSuperKeyView(viewModel: PatchesViewModel) {
 
 @Composable
 fun superKeyFieldColors() = OutlinedTextFieldDefaults.colors(
-    focusedContainerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-    unfocusedContainerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+    focusedContainerColor = folkInsetColor(),
+    unfocusedContainerColor = folkInsetColor(),
     errorContainerColor = MaterialTheme.colorScheme.errorContainer,
     focusedBorderColor = MaterialTheme.colorScheme.primary,
     unfocusedBorderColor = FolkColors.Transparent,
@@ -492,12 +493,9 @@ fun SelectFileButton(
         onSelected(data, uri)
     }
 
-    // When a custom wallpaper is enabled the secondaryContainer token is made
-    // translucent (only the alpha channel changes), so restoring alpha to 1f
-    // keeps this button opaque with its original color.
     val colors = if (opaque) {
         ButtonDefaults.filledTonalButtonColors(
-            containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 1f)
+            containerColor = MaterialTheme.colorScheme.secondaryContainer
         )
     } else {
         ButtonDefaults.filledTonalButtonColors()

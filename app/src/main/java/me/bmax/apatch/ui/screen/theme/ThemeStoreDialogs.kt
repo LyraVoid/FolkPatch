@@ -245,7 +245,7 @@ fun ThemeFilterSheetContent(
             horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size8)
         ) {
             val chipColors = FilterChipDefaults.filterChipColors(
-                selectedContainerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 1f)
+                selectedContainerColor = MaterialTheme.colorScheme.secondaryContainer
             )
             FilterChip(
                 selected = source == "all",
@@ -281,7 +281,7 @@ fun ThemeFilterSheetContent(
             horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size8)
         ) {
             val chipColors = FilterChipDefaults.filterChipColors(
-                selectedContainerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 1f)
+                selectedContainerColor = MaterialTheme.colorScheme.secondaryContainer
             )
             FilterChip(
                 selected = typePhone,

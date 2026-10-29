@@ -26,6 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import me.bmax.apatch.ui.theme.tokens.FolkTheme
+import me.bmax.apatch.ui.component.folk.folkInsetColor
 import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
 
 @Composable
@@ -111,7 +112,7 @@ private fun OnlineModuleCardContent(
                         )
                         ModuleLabel(
                             text = "$versionLabel $version",
-                            containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+                            containerColor = folkInsetColor(),
                             contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                         capabilityLabel?.let {

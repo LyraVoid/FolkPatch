@@ -66,6 +66,7 @@ import kotlinx.coroutines.withContext
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.folk.FolkScaffold
 import me.bmax.apatch.ui.component.folk.FolkTitleStyle
+import me.bmax.apatch.ui.component.folk.folkGroupColor
 import me.bmax.apatch.ui.component.SegmentedColumn
 import me.bmax.apatch.ui.component.rememberConfirmDialog
 import me.bmax.apatch.ui.viewmodel.PatchesViewModel
@@ -485,7 +486,7 @@ private fun InstallStatusItem(
 ) {
     Surface(
         modifier = modifier,
-        color = MaterialTheme.colorScheme.surfaceContainer,
+        color = folkGroupColor(),
         contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
         shape = MaterialTheme.shapes.large,
     ) {

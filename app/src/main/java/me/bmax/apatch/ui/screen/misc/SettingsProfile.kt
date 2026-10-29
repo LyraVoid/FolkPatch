@@ -57,6 +57,7 @@ import me.bmax.apatch.ui.component.folk.folkGroupColor
 import kotlin.math.roundToInt
 import androidx.compose.ui.semantics.Role
 import me.bmax.apatch.ui.theme.tokens.FolkShape
+import me.bmax.apatch.ui.component.folk.folkOverlayColor
 import me.bmax.apatch.ui.theme.tokens.ContinuousCornerShape
 
 /** Square size the avatar is decoded at, in pixels. */
@@ -99,7 +100,7 @@ fun ProfileEditSheet(
         onDismissRequest = onDismiss,
         sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
         shape = ContinuousCornerShape(topStart = FolkDimens.Size28, topEnd = FolkDimens.Size28),
-        containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+        containerColor = folkOverlayColor(),
         dragHandle = { BottomSheetDefaults.DragHandle() },
     ) {
         Column(

@@ -1,6 +1,8 @@
 package me.bmax.apatch.ui.screen.misc
 
 import me.bmax.apatch.ui.theme.tokens.FolkDimens
+import me.bmax.apatch.ui.component.folk.folkInsetColor
+import me.bmax.apatch.ui.component.folk.folkOverlayColor
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -56,7 +58,7 @@ fun DeveloperInfo(
     if (showDialog) {
         ModalBottomSheet(
             sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
-            containerColor = MaterialTheme.colorScheme.surfaceContainerLowest,
+            containerColor = folkOverlayColor(),
             onDismissRequest = onDismissRequest
         ) {
             Column(
@@ -71,7 +73,7 @@ fun DeveloperInfo(
                         .size(FolkDimens.Size110)
                         .shadow(FolkDimens.Size8, CircleShape)
                         .clip(CircleShape)
-                        .background(MaterialTheme.colorScheme.surfaceContainerHighest),
+                        .background(folkInsetColor()),
                     contentAlignment = Alignment.Center
                 ) {
                     AsyncImage(
@@ -86,7 +88,7 @@ fun DeveloperInfo(
                         modifier = Modifier
                             .fillMaxSize()
                             .clip(CircleShape)
-                            .background(MaterialTheme.colorScheme.surfaceContainerHighest)
+                            .background(folkInsetColor())
                     )
                 }
 

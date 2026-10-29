@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.SubcomposeLayout
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
+import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
 
 
 /**
@@ -66,9 +67,7 @@ fun AdaptiveModuleButtonRow(
                     onClick = config.onClick,
                     enabled = config.enabled,
                     contentPadding = PaddingValues(12.dp),
-                    colors = config.colors ?: ButtonDefaults.filledTonalButtonColors(
-                        containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = (opacity + 0.3f).coerceAtMost(1f))
-                    )
+                    colors = config.colors ?: moduleButtonColors(opacity)
                 ) {
                     Icon(
                         imageVector = config.icon,
@@ -85,9 +84,7 @@ fun AdaptiveModuleButtonRow(
                     onClick = config.onClick,
                     enabled = config.enabled,
                     contentPadding = PaddingValues(12.dp),
-                    colors = config.colors ?: ButtonDefaults.filledTonalButtonColors(
-                        containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = (opacity + 0.3f).coerceAtMost(1f))
-                    )
+                    colors = config.colors ?: moduleButtonColors(opacity)
                 ) {
                     Icon(
                         imageVector = config.icon,
@@ -262,9 +259,24 @@ private fun AdaptiveButtonRowLayout(
     }
 }
 
-/**
- * 模块操作按钮
- */
+@Composable
+private fun moduleButtonColors(opacity: Float): ButtonColors {
+    val wallpaper = LocalFolkWallpaperTokens.current
+    return if (wallpaper != null) {
+        ButtonDefaults.filledTonalButtonColors(
+            containerColor = wallpaper.selection.fill,
+            contentColor = wallpaper.selection.contentColor,
+        )
+    } else {
+        ButtonDefaults.filledTonalButtonColors(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(
+                alpha = (opacity + 0.3f).coerceAtMost(1f),
+            ),
+        )
+    }
+}
+
+/** 模块操作按钮 */
 @Composable
 fun ModuleActionButton(
     config: ModuleButtonConfig,
@@ -277,9 +289,7 @@ fun ModuleActionButton(
         enabled = config.enabled,
         contentPadding = if (iconOnly) PaddingValues(12.dp) else ButtonDefaults.TextButtonContentPadding,
         modifier = if (iconOnly) modifier else modifier,
-        colors = config.colors ?: ButtonDefaults.filledTonalButtonColors(
-            containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = (opacity + 0.3f).coerceAtMost(1f))
-        )
+        colors = config.colors ?: moduleButtonColors(opacity)
     ) {
         Icon(
             imageVector = config.icon,

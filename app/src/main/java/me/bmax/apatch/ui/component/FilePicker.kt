@@ -31,6 +31,7 @@ import me.bmax.apatch.R
 import java.io.File
 import me.bmax.apatch.core.ui.R as CoreR
 import me.bmax.apatch.ui.theme.tokens.FolkShape
+import me.bmax.apatch.ui.component.folk.folkOverlayColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -84,7 +85,7 @@ fun FilePickerDialog(
                 .fillMaxHeight(0.88f),
             shape = FolkShape.Corner24,
             // Force opaque color to avoid transparency issues
-            color = MaterialTheme.colorScheme.surface.copy(alpha = 1f),
+            color = folkOverlayColor(),
             tonalElevation = 6.dp
         ) {
             if (!hasPermission && Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {

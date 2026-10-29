@@ -56,6 +56,7 @@ import me.bmax.apatch.ui.component.folk.FolkLoadingIndicator
 import me.bmax.apatch.ui.component.folk.FolkScaffold
 import me.bmax.apatch.ui.component.folk.FolkSettingsDimens
 import me.bmax.apatch.ui.component.folk.FolkTitleStyle
+import me.bmax.apatch.ui.component.folk.folkOverlayColor
 import me.bmax.apatch.ui.theme.tokens.FolkShape
 import me.bmax.apatch.ui.component.folk.FolkStateView
 import me.bmax.apatch.ui.viewmodel.WallpaperGalleryViewModel
@@ -180,7 +181,7 @@ private fun WallpaperPreviewDialog(
     Dialog(onDismissRequest = onDismiss) {
         Surface(
             shape = FolkShape.Dialog,
-            color = MaterialTheme.colorScheme.surfaceContainerHigh,
+            color = folkOverlayColor(),
             tonalElevation = FolkDimens.Size6,
         ) {
             Column {

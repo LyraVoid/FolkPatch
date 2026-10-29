@@ -52,6 +52,7 @@ import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.folk.FolkScaffold
 import me.bmax.apatch.ui.component.folk.FolkTitleStyle
+import me.bmax.apatch.ui.component.folk.folkInsetColor
 import me.bmax.apatch.ui.component.TonalCard
 import me.bmax.apatch.ui.component.WarningCard
 import me.bmax.apatch.ui.theme.tokens.FolkMotion
@@ -246,7 +247,7 @@ fun Patches(mode: PatchesViewModel.PatchMode) {
                 // patch log
                 if (viewModel.patching || viewModel.patchdone) {
                     Surface(
-                        color = MaterialTheme.colorScheme.surfaceContainerLow,
+                        color = folkInsetColor(),
                         shape = MaterialTheme.shapes.large,
                         modifier = Modifier
                             .fillMaxWidth()
