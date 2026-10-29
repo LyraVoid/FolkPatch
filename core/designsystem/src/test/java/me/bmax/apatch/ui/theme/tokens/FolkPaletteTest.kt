@@ -11,6 +11,17 @@ import org.junit.Test
 
 class FolkPaletteTest {
 
+    private fun slots(palette: FolkPalette) = listOf(
+        palette.groupedBackground,
+        palette.groupedSurface,
+        palette.groupedInset,
+        palette.separator,
+        palette.positive,
+        palette.caution,
+        palette.critical,
+        palette.neutral,
+    )
+
     @Test
     fun semanticRolesMapToTheScheme() {
         val scheme = lightColorScheme()
@@ -125,5 +136,64 @@ class FolkPaletteTest {
             FolkPalette.from(base.copy(background = Color.Black.copy(alpha = 0.5f)))
                 .onCustomBackground,
         )
+    }
+
+    @Test
+    fun changingOneRoleOnlyMovesItsMappedSlot() {
+        val base = lightColorScheme()
+        val before = slots(FolkPalette.from(base))
+        val mutations = listOf(
+            base.copy(surfaceContainer = Color.Black) to 0,
+            base.copy(surfaceBright = Color.Black) to 1,
+            base.copy(surfaceContainerHigh = Color.Black) to 2,
+            base.copy(outlineVariant = Color.Black) to 3,
+            base.copy(primary = Color.Black) to 4,
+            base.copy(tertiary = Color.Black) to 5,
+            base.copy(error = Color.Black) to 6,
+            base.copy(onSurfaceVariant = Color.Black) to 7,
+        )
+
+        mutations.forEach { (scheme, changedIndex) ->
+            val after = slots(FolkPalette.from(scheme))
+            after.indices.forEach { index ->
+                if (index == changedIndex) {
+                    assertNotEquals("slot $index should change", before[index], after[index])
+                } else {
+                    assertEquals("slot $index should not change", before[index], after[index])
+                }
+            }
+        }
+        assertEquals(before, slots(FolkPalette.from(base.copy(background = Color.Black))))
+    }
+
+    @Test
+    fun amoledKeepsTheGroupAboveItsBlackPage() {
+        val light = FolkPalette.from(
+            lightColorScheme(
+                surfaceContainer = Color(0xFFF3EDF7),
+                surfaceBright = Color(0xFFFFFFFF),
+                surfaceContainerHigh = Color(0xFFECE6F0),
+            ),
+        )
+        val dark = FolkPalette.from(
+            darkColorScheme(
+                surfaceContainer = Color(0xFF0A0A0A),
+                surfaceBright = Color(0xFF1F1F1F),
+                surfaceContainerHigh = Color(0xFF121212),
+            ),
+        )
+        val amoled = FolkPalette.from(
+            darkColorScheme(
+                surfaceContainer = Color.Black,
+                surfaceBright = Color(0xFF1F1F1F),
+                surfaceContainerHigh = Color(0xFF121212),
+            ),
+        )
+
+        listOf(light, dark, amoled).forEach { palette ->
+            assertTrue(palette.groupedSurface.luminance() > palette.groupedBackground.luminance())
+        }
+        assertTrue(amoled.groupedBackground.luminance() < 0.001f)
+        assertTrue(amoled.groupedSurface.luminance() > 0.01f)
     }
 }

@@ -14,7 +14,8 @@ class FolkContrastTest {
     private data class ThemeCase(
         val name: String,
         val scheme: ColorScheme,
-        val wallpaper: Boolean = false,
+        val wallpaper: Color? = null,
+        val wallpaperOpacity: Float = 1f,
     )
 
     private fun contrast(foreground: Color, background: Color): Float {
@@ -25,19 +26,14 @@ class FolkContrastTest {
         return (high + 0.05f) / (low + 0.05f)
     }
 
-    private fun onWallpaper(color: Color, wallpaper: Color): Color =
-        color.compositeOver(wallpaper)
+    private fun over(fill: Color, wallpaper: Color?): Color =
+        if (wallpaper == null) fill else fill.compositeOver(wallpaper)
 
     @Test
     fun sixThemesKeepBodyLargeAndNonTextContrast() {
         val classicDark = FolkThemeCatalog.scheme("blue", true)
-        val wallpaperBase = FolkThemeCatalog.scheme("green", true)
-        val wallpaper = wallpaperBase.copy(
-            background = Color.Transparent,
-            surface = wallpaperBase.surface.copy(alpha = 0.55f),
-            surfaceContainer = wallpaperBase.surfaceContainer.copy(alpha = 0.70f),
-            surfaceContainerHigh = wallpaperBase.surfaceContainerHigh.copy(alpha = 0.70f),
-        )
+        val wallpaperScheme = FolkThemeCatalog.scheme("green", true)
+        val wallpaper = Color.Black.copy(alpha = 0.65f).compositeOver(Color.White)
         val themes = listOf(
             ThemeCase("light", FolkThemeCatalog.scheme("blue", false)),
             ThemeCase("dark", classicDark),
@@ -46,10 +42,17 @@ class FolkContrastTest {
                 classicDark.copy(
                     background = Color.Black,
                     surface = Color.Black,
-                    surfaceContainer = classicDark.surfaceContainer,
+                    surfaceContainerLowest = Color.Black,
+                    surfaceContainerLow = Color(0xFF050505),
+                    surfaceDim = Color(0xFF0D0D0D),
+                    surfaceContainer = Color(0xFF0A0A0A),
+                    surfaceVariant = Color(0xFF121212),
+                    surfaceContainerHigh = Color(0xFF121212),
+                    surfaceContainerHighest = Color(0xFF1A1A1A),
+                    surfaceBright = Color(0xFF1F1F1F),
                 ),
             ),
-            ThemeCase("wallpaper", wallpaper, wallpaper = true),
+            ThemeCase("wallpaper", wallpaperScheme, wallpaper, wallpaperOpacity = 0.65f),
             ThemeCase("imported", FolkThemeCatalog.scheme("ink_wash", false)),
             ThemeCase(
                 "dynamic",
@@ -62,6 +65,7 @@ class FolkContrastTest {
                     onSurface = Color(0xFF17202A),
                     surfaceContainer = Color(0xFFE8EDF3),
                     surfaceContainerHigh = Color(0xFFDDE5ED),
+                    surfaceBright = Color.White,
                     onSurfaceVariant = Color(0xFF46515D),
                     outline = Color(0xFF68737F),
                 ),
@@ -70,22 +74,30 @@ class FolkContrastTest {
 
         themes.forEach { theme ->
             val palette = FolkPalette.from(theme.scheme)
-            val wallpaperColor = Color.Black.copy(alpha = 0.65f).compositeOver(Color.White)
-            fun surface(color: Color): Color =
-                if (theme.wallpaper) onWallpaper(color, wallpaperColor) else color
-
-            val background = surface(palette.groupedBackground)
-            val groupedSurface = surface(palette.groupedSurface)
+            val materials = theme.wallpaper?.let {
+                resolveFolkWallpaperTokens(theme.scheme, theme.wallpaperOpacity)
+            }
+            val background = theme.wallpaper ?: palette.groupedBackground
+            val groupedSurface = materials?.let { over(it.group.fill, theme.wallpaper) }
+                ?: palette.groupedSurface
+            val inset = materials?.let { over(it.raised.fill, theme.wallpaper) }
+                ?: palette.groupedInset
+            val selection = materials?.let { over(it.selection.fill, theme.wallpaper) }
+                ?: theme.scheme.secondaryContainer
+            val selectionContent = materials?.selection?.contentColor
+                ?: theme.scheme.onSecondaryContainer
             val pairs = listOf(
                 "body/background" to contrast(theme.scheme.onBackground, background),
                 "body/surface" to contrast(theme.scheme.onSurface, groupedSurface),
+                "body/inset" to contrast(theme.scheme.onSurface, inset),
                 "body/neutral" to contrast(palette.neutral, groupedSurface),
                 "body/primary" to contrast(theme.scheme.onPrimary, theme.scheme.primary),
+                "body/selection" to contrast(selectionContent, selection),
                 "large/accent" to contrast(theme.scheme.primary, background),
                 "nontext/outline" to contrast(theme.scheme.outline, groupedSurface),
             )
-            val body = pairs.take(4)
-            val largeAndNonText = pairs.drop(4)
+            val body = pairs.take(6)
+            val largeAndNonText = pairs.drop(6)
 
             body.forEach { (name, ratio) ->
                 assertTrue("${theme.name} $name=$ratio", ratio >= 4.5f)

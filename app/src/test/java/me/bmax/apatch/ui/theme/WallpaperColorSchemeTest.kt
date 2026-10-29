@@ -3,6 +3,7 @@ package me.bmax.apatch.ui.theme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -46,5 +47,26 @@ class WallpaperColorSchemeTest {
         assertFalse(wallpaperUsesDarkNeutral(darkTheme = false, luminance = 0.5f))
         assertTrue(wallpaperUsesDarkNeutral(darkTheme = false, luminance = 0.49f))
         assertTrue(wallpaperUsesDarkNeutral(darkTheme = true, luminance = 1f))
+    }
+
+    @Test
+    fun amoledBlackPageDoesNotEraseRaisedContainers() {
+        val amoled = lightColorScheme(surface = Color(0xFF1A1C1E)).toAmoled()
+
+        assertEquals(Color.Black, amoled.background)
+        assertEquals(Color.Black, amoled.surface)
+        assertTrue(amoled.surfaceContainerHigh.luminance() > amoled.surfaceContainer.luminance())
+        assertTrue(amoled.surfaceBright.luminance() > amoled.surfaceContainer.luminance())
+    }
+
+    @Test
+    fun contrastGuardMeasuresTheRenderedMaterialFill() {
+        val guarded = guardedDim(
+            requested = 0f,
+            scheme = darkColorScheme(),
+            opacity = 0f,
+        )
+
+        assertTrue(guarded != null && guarded > 0f)
     }
 }

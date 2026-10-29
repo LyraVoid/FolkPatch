@@ -133,7 +133,11 @@ internal fun adaptColorScheme(
     // 浅色模式：浅色中性内容压在暗壁纸上时，用对比度保护兜底（通常已是暗壁纸，基本不改动）。
     // 夜间模式：UI 已固定为深色，遮罩完全交给用户的夜间暗度滑块，不做自动加深。
     val renderDim = if (useLightContent && !darkTheme) {
-        guardedDim(wallpaperDim, adapted) ?: wallpaperDim
+        guardedDim(
+            requested = wallpaperDim,
+            scheme = adapted,
+            opacity = BackgroundConfig.customBackgroundOpacity,
+        ) ?: wallpaperDim
     } else {
         wallpaperDim
     }

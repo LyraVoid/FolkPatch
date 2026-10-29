@@ -5,6 +5,7 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.graphics.luminance
+import me.bmax.apatch.ui.theme.tokens.resolveFolkWallpaperTokens
 
 /**
  * 壁纸模式下实际用于绘制壁纸遮罩的 dim 值（0..1）。
@@ -25,14 +26,18 @@ private const val MIN_CONTRAST = 4.5f
 
 /**
  * 以最亮壁纸（纯白）为最坏情况，叠加黑遮罩后，检测中性前景色在裸壁纸、半透明
- * surface、半透明 surfaceContainer 三种背景上是否都达到 [MIN_CONTRAST]。
+ * 壁纸材质和页面背景上是否都达到 [MIN_CONTRAST]。
  */
-private fun passesContrast(dim: Float, scheme: ColorScheme): Boolean {
+private fun passesContrast(dim: Float, scheme: ColorScheme, opacity: Float): Boolean {
     val wall = Color.Black.copy(alpha = dim.coerceIn(0f, 1f)).compositeOver(Color.White)
+    val materials = resolveFolkWallpaperTokens(scheme, opacity)
     val backgrounds = listOf(
         wall,
-        scheme.surface.compositeOver(wall),
-        scheme.surfaceContainer.compositeOver(wall),
+        materials.group.fill.compositeOver(wall),
+        materials.raised.fill.compositeOver(wall),
+        materials.overlay.fill.compositeOver(wall),
+        materials.chrome.fill.compositeOver(wall),
+        materials.selection.fill.compositeOver(wall),
     ).map { it.luminance() }
     val foregrounds = listOf(
         scheme.onBackground,
@@ -55,15 +60,15 @@ private fun passesContrast(dim: Float, scheme: ColorScheme): Boolean {
  * @return 需要的 dim；若即使 dim=1 也无法满足，返回 null（调用方应对文字使用完整 on 色，
  *         不要再叠加 alpha）。
  */
-internal fun guardedDim(requested: Float, scheme: ColorScheme): Float? {
+internal fun guardedDim(requested: Float, scheme: ColorScheme, opacity: Float): Float? {
     val start = requested.coerceIn(0f, 1f)
-    if (passesContrast(start, scheme)) return start
-    if (!passesContrast(1f, scheme)) return null
+    if (passesContrast(start, scheme, opacity)) return start
+    if (!passesContrast(1f, scheme, opacity)) return null
     var low = start
     var high = 1f
     repeat(16) {
         val mid = (low + high) / 2f
-        if (passesContrast(mid, scheme)) high = mid else low = mid
+        if (passesContrast(mid, scheme, opacity)) high = mid else low = mid
     }
     return high
 }
