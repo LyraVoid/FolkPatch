@@ -119,4 +119,57 @@ class FolkPaletteTest {
         assertNotEquals(light.critical, dark.critical)
         assertNotEquals(light.neutral, dark.neutral)
     }
+
+    @Test
+    fun eachSemanticSlotTracksItsOwnSchemeRole() {
+        val base = lightColorScheme()
+        val palette = FolkPalette.from(base)
+
+        assertNotEquals(
+            palette.groupedBackground,
+            FolkPalette.from(base.copy(background = Color.Black)).groupedBackground,
+        )
+        assertNotEquals(
+            palette.groupedSurface,
+            FolkPalette.from(base.copy(surfaceContainer = Color.Black)).groupedSurface,
+        )
+        assertNotEquals(
+            palette.groupedInset,
+            FolkPalette.from(base.copy(surfaceContainerHigh = Color.Black)).groupedInset,
+        )
+        assertNotEquals(
+            palette.separator,
+            FolkPalette.from(base.copy(outlineVariant = Color.Black)).separator,
+        )
+        assertNotEquals(
+            palette.positive,
+            FolkPalette.from(base.copy(primary = Color.Black)).positive,
+        )
+        assertNotEquals(
+            palette.caution,
+            FolkPalette.from(base.copy(tertiary = Color.Black)).caution,
+        )
+        assertNotEquals(
+            palette.critical,
+            FolkPalette.from(base.copy(error = Color.Black)).critical,
+        )
+        assertNotEquals(
+            palette.neutral,
+            FolkPalette.from(base.copy(onSurfaceVariant = Color.Black)).neutral,
+        )
+        assertNotEquals(
+            palette.onCustomBackground,
+            FolkPalette.from(base.copy(background = Color.Black.copy(alpha = 0.5f)))
+                .onCustomBackground,
+        )
+        assertNotEquals(
+            palette.chromeControlAlpha,
+            FolkPalette.from(
+                base.copy(
+                    background = Color.Black.copy(alpha = 0.5f),
+                    surface = Color.Black.copy(alpha = 0.5f),
+                ),
+            ).chromeControlAlpha,
+        )
+    }
 }
