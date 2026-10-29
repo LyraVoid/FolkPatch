@@ -35,7 +35,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.DualBackgroundSettings
-import me.bmax.apatch.ui.component.ExpressiveCard
+import me.bmax.apatch.ui.component.TonalCard
 import me.bmax.apatch.ui.component.LoadingDialogHandle
 import me.bmax.apatch.ui.component.rememberConfirmDialog
 import me.bmax.apatch.ui.component.SegmentedColumn
@@ -158,7 +158,7 @@ fun AppearanceFocusCardSection(
                         }
                     }
                 )
-                ExpressiveCard(
+                TonalCard(
                     flat = flat,
                     // 点击卡片主体：调起系统图片选择器，保存到对应卡片
                     onClick = {

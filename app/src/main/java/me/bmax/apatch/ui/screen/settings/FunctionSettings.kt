@@ -31,7 +31,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.text.KeyboardOptions
 import me.bmax.apatch.R
-import me.bmax.apatch.ui.component.ExpressiveCard
+import me.bmax.apatch.ui.component.TonalCard
 import me.bmax.apatch.ui.component.ExpressiveSwitch
 import me.bmax.apatch.ui.component.SegmentedColumn
 import me.bmax.apatch.ui.component.SegmentedSection
@@ -160,7 +160,7 @@ fun FunctionSettingsContent(
             val umountPathsPlaceholder = stringResource(id = R.string.umount_config_paths_placeholder)
             val umountPathsHelper = stringResource(id = R.string.umount_config_paths_helper)
 
-            ExpressiveCard(flat = flat) {
+            TonalCard(flat = flat) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()

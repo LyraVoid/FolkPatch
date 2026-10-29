@@ -35,7 +35,7 @@ fun SliderSettingCard(
     onValueChange: (Float) -> Unit,
     onValueChangeFinished: () -> Unit = {},
 ) {
-    ExpressiveCard(flat = flat) {
+    TonalCard(flat = flat) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()

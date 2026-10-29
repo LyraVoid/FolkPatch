@@ -7,35 +7,44 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
-import me.bmax.apatch.ui.component.LocalInsideSplicedGroup
+import androidx.compose.ui.semantics.Role
 import me.bmax.apatch.ui.component.folk.folkPressScale
 import me.bmax.apatch.ui.theme.tokens.FolkShape
-import androidx.compose.ui.semantics.Role
+import me.bmax.apatch.ui.theme.tokens.FolkTheme
 
 @Composable
-fun ExpressiveCard(
+fun TonalCard(
     modifier: Modifier = Modifier,
+    containerColor: Color? = null,
+    contentColor: Color? = null,
+    shape: Shape = FolkShape.Corner20,
     onClick: (() -> Unit)? = null,
     flat: Boolean = false,
     content: @Composable () -> Unit,
 ) {
-    if (LocalInsideSplicedGroup.current || LocalInsideSplicedGroup.current) {
-        // Inside a settings group (SegmentedColumn or SegmentedColumn): skip
-        // the card wrapper, the parent already provides the container surface.
-        if (onClick != null) {
+    val fill = containerColor ?: FolkTheme.palette.groupedSurface
+    val foreground = contentColor ?: contentColorFor(fill)
+
+    if (LocalInsideSplicedGroup.current) {
+        if (onClick == null) {
+            Box(modifier = modifier.fillMaxWidth()) { content() }
+        } else {
             val interactionSource = remember { MutableInteractionSource() }
             val haptics = LocalHapticFeedback.current
             Box(
                 modifier = modifier
                     .fillMaxWidth()
                     .folkPressScale(interactionSource)
-                    .clickable(role = Role.Button,
+                    .clickable(
+                        role = Role.Button,
                         interactionSource = interactionSource,
                         indication = null,
                         onClick = {
@@ -46,56 +55,38 @@ fun ExpressiveCard(
             ) {
                 content()
             }
-        } else {
-            Box(modifier = modifier.fillMaxWidth()) {
-                content()
-            }
         }
         return
     }
 
-    // Standalone: an ElevatedCard whose corners ease out of the edges instead of
-    // meeting them in a circular arc.
-    val shape = FolkShape.Corner28
     val colors = if (flat) {
-        CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer)
+        CardDefaults.cardColors(containerColor = fill, contentColor = foreground)
     } else {
-        CardDefaults.elevatedCardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer)
+        CardDefaults.elevatedCardColors(containerColor = fill, contentColor = foreground)
     }
+    val cardModifier = modifier.fillMaxWidth()
 
     if (flat) {
-        if (onClick != null) {
-            Card(
-                modifier = modifier.fillMaxWidth(),
-                colors = colors,
-                onClick = onClick,
-                shape = shape,
-                content = { content() },
-            )
+        if (onClick == null) {
+            Card(modifier = cardModifier, colors = colors, shape = shape, content = { content() })
         } else {
             Card(
-                modifier = modifier.fillMaxWidth(),
+                modifier = cardModifier,
                 colors = colors,
                 shape = shape,
+                onClick = onClick,
                 content = { content() },
             )
         }
+    } else if (onClick == null) {
+        ElevatedCard(modifier = cardModifier, colors = colors, shape = shape, content = { content() })
     } else {
-        if (onClick != null) {
-            ElevatedCard(
-                modifier = modifier.fillMaxWidth(),
-                colors = colors,
-                onClick = onClick,
-                shape = shape,
-                content = { content() },
-            )
-        } else {
-            ElevatedCard(
-                modifier = modifier.fillMaxWidth(),
-                colors = colors,
-                shape = shape,
-                content = { content() },
-            )
-        }
+        ElevatedCard(
+            modifier = cardModifier,
+            colors = colors,
+            shape = shape,
+            onClick = onClick,
+            content = { content() },
+        )
     }
 }

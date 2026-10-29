@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.DualBackgroundSettings
-import me.bmax.apatch.ui.component.ExpressiveCard
+import me.bmax.apatch.ui.component.TonalCard
 import me.bmax.apatch.ui.component.LoadingDialogHandle
 import me.bmax.apatch.ui.component.SegmentedColumn
 import me.bmax.apatch.ui.component.SegmentedSwitchItem
@@ -121,7 +121,7 @@ fun AppearanceDashboardCardSection(
             }
 
             item(key = "appearance_dashboard_card_select") {
-                ExpressiveCard(
+                TonalCard(
                     flat = flat,
                     onClick = {
                         if (PermissionUtils.hasExternalStoragePermission(context)) {

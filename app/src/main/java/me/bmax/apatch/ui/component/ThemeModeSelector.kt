@@ -87,7 +87,7 @@ fun ThemeModeSelector(
     if (bare) {
         content()
     } else {
-        ExpressiveCard(modifier = modifier, flat = flat) {
+        TonalCard(modifier = modifier, flat = flat) {
             content()
         }
     }

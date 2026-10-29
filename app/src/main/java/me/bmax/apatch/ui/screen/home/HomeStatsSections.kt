@@ -18,6 +18,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.generated.destinations.InstallModeSelectScreenDestination
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
+import me.bmax.apatch.ui.component.TonalCard
 import me.bmax.apatch.ui.component.chart.ModulePieChart
 import me.bmax.apatch.ui.component.chart.rememberPieSliceDataFromCounts
 import me.bmax.apatch.ui.component.chart.SystemAreaChart

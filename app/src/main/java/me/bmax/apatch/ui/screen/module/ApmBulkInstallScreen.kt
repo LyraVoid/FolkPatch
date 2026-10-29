@@ -57,7 +57,7 @@ import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.folk.FolkScaffold
 import me.bmax.apatch.ui.component.folk.FolkTitleStyle
-import me.bmax.apatch.ui.component.ExpressiveCard
+import me.bmax.apatch.ui.component.TonalCard
 import me.bmax.apatch.util.installModule
 import me.bmax.apatch.util.reboot
 
@@ -226,7 +226,7 @@ fun ApmBulkInstallScreen(navigator: DestinationsNavigator, initialUris: ArrayLis
                 .padding(innerPadding)
                 .padding(16.dp)
         ) {
-            ExpressiveCard(
+            TonalCard(
                 modifier = Modifier.weight(1f),
                 flat = true
             ) {

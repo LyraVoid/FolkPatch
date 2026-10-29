@@ -34,6 +34,7 @@ import me.bmax.apatch.util.getSELinuxStatus
 import me.bmax.apatch.util.Version.getManagerVersion
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.ui.component.copyableInfo
+import me.bmax.apatch.ui.component.TonalCard
 import androidx.compose.material3.surfaceColorAtElevation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -499,33 +500,6 @@ fun AStatusCardCircle(apState: APApplication.State) {
                 }
             }
         }
-    }
-}
-
-@Composable
-fun TonalCard(
-    modifier: Modifier = Modifier,
-    containerColor: Color? = null,
-    contentColor: Color? = null,
-    shape: Shape = FolkShape.Corner20,
-    content: @Composable () -> Unit
-) {
-    val finalContainerColor = containerColor ?: if (BackgroundConfig.isCustomBackgroundEnabled) {
-        MaterialTheme.colorScheme.surface.copy(alpha = BackgroundConfig.customBackgroundOpacity)
-    } else {
-        MaterialTheme.colorScheme.surfaceColorAtElevation(1.dp)
-    }
-
-    Card(
-        modifier = modifier,
-        colors = if (contentColor != null) {
-            CardDefaults.cardColors(containerColor = finalContainerColor, contentColor = contentColor)
-        } else {
-            CardDefaults.cardColors(containerColor = finalContainerColor)
-        },
-        shape = shape
-    ) {
-        content()
     }
 }
 

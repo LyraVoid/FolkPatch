@@ -36,7 +36,7 @@ import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.InstallScreenDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import me.bmax.apatch.R
-import me.bmax.apatch.ui.component.ExpressiveCard
+import me.bmax.apatch.ui.component.TonalCard
 import me.bmax.apatch.ui.component.ModuleLabel
 import me.bmax.apatch.ui.component.SegmentedColumn
 import me.bmax.apatch.ui.component.folk.FolkScaffold
@@ -80,7 +80,7 @@ fun RepoModuleDetailScreen(
         ) {
             // Section 1: Module basic info
             item(key = "info") {
-                ExpressiveCard(flat = true) {
+                TonalCard(flat = true) {
                     Column(
                         modifier = Modifier.padding(16.dp),
                         verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -133,7 +133,7 @@ fun RepoModuleDetailScreen(
                 item(key = "links") {
                     SegmentedColumn(title = stringResource(R.string.repo_module_detail_links)) {
                         item(key = "homepage", visible = module.homepage.isNotEmpty()) {
-                            ExpressiveCard(flat = true, onClick = { openUrl(context, module.homepage) }) {
+                            TonalCard(flat = true, onClick = { openUrl(context, module.homepage) }) {
                                 Row(
                                     modifier = Modifier.padding(16.dp),
                                     horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -145,7 +145,7 @@ fun RepoModuleDetailScreen(
                             }
                         }
                         item(key = "source", visible = module.source.isNotEmpty()) {
-                            ExpressiveCard(flat = true, onClick = { openUrl(context, module.source) }) {
+                            TonalCard(flat = true, onClick = { openUrl(context, module.source) }) {
                                 Row(
                                     modifier = Modifier.padding(16.dp),
                                     horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -157,7 +157,7 @@ fun RepoModuleDetailScreen(
                             }
                         }
                         item(key = "support", visible = module.support.isNotEmpty()) {
-                            ExpressiveCard(flat = true, onClick = { openUrl(context, module.support) }) {
+                            TonalCard(flat = true, onClick = { openUrl(context, module.support) }) {
                                 Row(
                                     modifier = Modifier.padding(16.dp),
                                     horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -178,7 +178,7 @@ fun RepoModuleDetailScreen(
                     SegmentedColumn(title = stringResource(R.string.repo_module_detail_versions)) {
                         module.versions.forEach { ver ->
                             item(key = ver.versionCode) {
-                                ExpressiveCard(
+                                TonalCard(
                                     flat = true,
                                     onClick = {
                                         download(

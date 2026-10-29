@@ -60,7 +60,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
 import me.bmax.apatch.ui.component.folk.FolkAlertDialog
 import me.bmax.apatch.R
-import me.bmax.apatch.ui.component.ExpressiveCard
+import me.bmax.apatch.ui.component.TonalCard
 import me.bmax.apatch.ui.component.SegmentedSwitchItem
 import me.bmax.apatch.ui.viewmodel.KPModel
 import me.bmax.apatch.ui.viewmodel.PatchesViewModel
@@ -149,7 +149,7 @@ fun ExtraItem(extra: KPModel.IExtraInfo, existed: Boolean, onDelete: () -> Unit)
         ExtraConfigDialog(extra, onDismiss = { showConfigDialog = false })
     }
 
-    ExpressiveCard(flat = true) {
+    TonalCard(flat = true) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -216,7 +216,7 @@ fun ExtraItem(extra: KPModel.IExtraInfo, existed: Boolean, onDelete: () -> Unit)
 @Composable
 fun KernelPatchImageView(kpImgInfo: KPModel.KPImgInfo) {
     if (kpImgInfo.version.isEmpty()) return
-    ExpressiveCard(flat = true) {
+    TonalCard(flat = true) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -255,7 +255,7 @@ fun PatchSuperKeySection(
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
 ) {
-    ExpressiveCard(flat = true) {
+    TonalCard(flat = true) {
         Column {
             SegmentedSwitchItem(
                 icon = Icons.Default.Key,
@@ -389,7 +389,7 @@ fun superKeyFieldColors() = OutlinedTextFieldDefaults.colors(
 @Composable
 fun CustomKPImgView(viewModel: PatchesViewModel) {
     if (!viewModel.useCustomKPImg) return
-    ExpressiveCard(flat = true) {
+    TonalCard(flat = true) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -417,7 +417,7 @@ fun CustomKPImgView(viewModel: PatchesViewModel) {
 
 @Composable
 fun BootimgView(slot: String, boot: String) {
-    ExpressiveCard(flat = true) {
+    TonalCard(flat = true) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -449,7 +449,7 @@ fun BootimgView(slot: String, boot: String) {
 
 @Composable
 fun KernelImageView(kImgInfo: KPModel.KImgInfo) {
-    ExpressiveCard(flat = true) {
+    TonalCard(flat = true) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -517,7 +517,7 @@ fun SelectFileButton(
 @Composable
 fun ErrorView(error: String) {
     if (error.isEmpty()) return
-    ExpressiveCard(flat = true) {
+    TonalCard(flat = true) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()

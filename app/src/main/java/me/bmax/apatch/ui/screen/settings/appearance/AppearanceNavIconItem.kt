@@ -13,7 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.bmax.apatch.R
-import me.bmax.apatch.ui.component.ExpressiveCard
+import me.bmax.apatch.ui.component.TonalCard
 import me.bmax.apatch.ui.navigation.BottomBarDestination
 import me.bmax.apatch.util.BottomBarIconConfig
 import androidx.compose.ui.draw.clip
@@ -88,7 +88,7 @@ fun SegmentedColumnScope.appearanceNavCustomIconsItem(
             Column {
                 navDestinations.forEach { (destName, labelRes, defaultIcon) ->
                     val customUri = remember(iconRevision, destName) { prefs.getString("nav_icon_$destName", null) }
-                    ExpressiveCard(
+                    TonalCard(
                         flat = flat,
                         onClick = {
                             editingDestName = destName

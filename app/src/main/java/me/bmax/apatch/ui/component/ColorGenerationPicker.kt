@@ -74,7 +74,7 @@ fun ColorGenerationModeSelector(
         }
     }
 
-    if (bare) content() else ExpressiveCard(modifier = modifier, flat = flat) { content() }
+    if (bare) content() else TonalCard(modifier = modifier, flat = flat) { content() }
 }
 
 // ─── Color Standard (MD3 2021 / M3e 2025) ────────────────────────────────────
@@ -106,7 +106,7 @@ fun ColorStandardSelector(
         }
     }
 
-    if (bare) content() else ExpressiveCard(modifier = modifier, flat = flat) { content() }
+    if (bare) content() else TonalCard(modifier = modifier, flat = flat) { content() }
 }
 
 // ─── Color Style (9 PaletteStyle options) ────────────────────────────────────
@@ -136,7 +136,7 @@ fun ColorStylePicker(
         }
     }
 
-    if (bare) content() else ExpressiveCard(modifier = modifier, flat = flat) { content() }
+    if (bare) content() else TonalCard(modifier = modifier, flat = flat) { content() }
 }
 
 // ─── Color Contrast (Standard / Medium / High) ───────────────────────────────
@@ -174,7 +174,7 @@ fun ColorContrastSelector(
         }
     }
 
-    if (bare) content() else ExpressiveCard(modifier = modifier, flat = flat) { content() }
+    if (bare) content() else TonalCard(modifier = modifier, flat = flat) { content() }
 }
 
 // ─── Segmented Toggle Row (reusable) ─────────────────────────────────────────

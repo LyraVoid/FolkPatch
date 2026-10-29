@@ -33,7 +33,7 @@ import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import me.bmax.apatch.BuildConfig
 import me.bmax.apatch.R
-import me.bmax.apatch.ui.component.ExpressiveCard
+import me.bmax.apatch.ui.component.TonalCard
 import me.bmax.apatch.ui.component.SegmentedColumn
 import me.bmax.apatch.ui.component.folk.FolkScaffold
 import me.bmax.apatch.ui.component.folk.FolkTitleStyle
@@ -101,8 +101,8 @@ fun AboutScreen(navigator: DestinationsNavigator) {
 
                     Spacer(modifier = Modifier.height(24.dp))
 
-                    // Description card — M3E ExpressiveCard
-                    ExpressiveCard(
+                    // Description card — M3E TonalCard
+                    TonalCard(
                         modifier = Modifier.padding(horizontal = 16.dp),
                         flat = true,
                     ) {

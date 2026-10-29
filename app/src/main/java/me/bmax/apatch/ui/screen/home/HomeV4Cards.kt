@@ -55,6 +55,7 @@ import me.bmax.apatch.APApplication
 import me.bmax.apatch.Natives
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.copyableInfo
+import me.bmax.apatch.ui.component.TonalCard
 import me.bmax.apatch.util.SystemInfoCollector
 import me.bmax.apatch.util.Version
 import me.bmax.apatch.util.getSELinuxStatus

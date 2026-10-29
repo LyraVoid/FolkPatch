@@ -29,7 +29,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.bmax.apatch.R
-import me.bmax.apatch.ui.component.ExpressiveCard
+import me.bmax.apatch.ui.component.TonalCard
 import me.bmax.apatch.ui.component.ExpressiveSwitch
 import me.bmax.apatch.ui.component.SegmentedColumn
 import me.bmax.apatch.ui.component.SegmentedSection
@@ -75,7 +75,7 @@ fun FunctionSettingsHideSection(
             val versionLabel = stringResource(id = R.string.settings_kernel_spoof_version)
             val buildTimeLabel = stringResource(id = R.string.settings_kernel_spoof_build_time)
 
-            ExpressiveCard(flat = flat) {
+            TonalCard(flat = flat) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()

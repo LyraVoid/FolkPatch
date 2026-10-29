@@ -20,7 +20,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.bmax.apatch.R
-import me.bmax.apatch.ui.component.ExpressiveCard
+import me.bmax.apatch.ui.component.TonalCard
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.util.BottomBarIconConfig
 import me.bmax.apatch.util.ui.FloatingBarConfig
@@ -70,7 +70,7 @@ fun SegmentedColumnScope.appearanceNavItems(
                 targetValue = if (expanded) 180f else 0f,
                 label = "ArrowRotation",
             )
-            ExpressiveCard(flat = flat, onClick = { expanded = !expanded }) {
+            TonalCard(flat = flat, onClick = { expanded = !expanded }) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()

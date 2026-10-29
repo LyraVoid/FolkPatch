@@ -35,7 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.text.KeyboardOptions
 import android.content.pm.ApplicationInfo
 import me.bmax.apatch.R
-import me.bmax.apatch.ui.component.ExpressiveCard
+import me.bmax.apatch.ui.component.TonalCard
 import me.bmax.apatch.ui.component.ExpressiveSwitch
 import androidx.compose.material.icons.outlined.*
 import android.content.Context
@@ -65,7 +65,7 @@ fun SegmentedColumnScope.functionPathHideItem(
         val pathsPlaceholder = stringResource(id = R.string.path_hide_paths_placeholder)
         val pathsHelper = stringResource(id = R.string.path_hide_paths_helper)
 
-        ExpressiveCard(flat = flat) {
+        TonalCard(flat = flat) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -341,7 +341,7 @@ fun SegmentedColumnScope.functionNetIsolateItem(
         val niSummary = stringResource(id = R.string.netisolate_enable_summary)
         val noAppsText = stringResource(R.string.netisolate_no_uids)
 
-        ExpressiveCard(flat = flat) {
+        TonalCard(flat = flat) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()

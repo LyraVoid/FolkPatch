@@ -51,7 +51,7 @@ import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.folk.FolkScaffold
 import me.bmax.apatch.ui.component.folk.FolkTitleStyle
-import me.bmax.apatch.ui.component.ExpressiveCard
+import me.bmax.apatch.ui.component.TonalCard
 import me.bmax.apatch.ui.component.WarningCard
 import me.bmax.apatch.ui.theme.tokens.FolkMotion
 import me.bmax.apatch.ui.viewmodel.PatchesViewModel
@@ -319,7 +319,7 @@ fun Patches(mode: PatchesViewModel.PatchMode) {
 
 @Composable
 private fun PatchMode(mode: PatchesViewModel.PatchMode) {
-    ExpressiveCard(flat = true) {
+    TonalCard(flat = true) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
