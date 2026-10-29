@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.ui.theme.tokens.FolkShape
+import me.bmax.apatch.ui.theme.tokens.FolkTheme
 
 @Composable
 fun ProvideMenuShape(
@@ -27,7 +28,7 @@ fun WallpaperAwareDropdownMenu(
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
     shape: CornerBasedShape = FolkShape.Corner28,
-    containerColor: androidx.compose.ui.graphics.Color = androidx.compose.material3.MaterialTheme.colorScheme.surfaceContainer,
+    containerColor: Color = FolkTheme.palette.groupedInset,
     content: @Composable ColumnScope.() -> Unit
 ) {
     // 在壁纸模式下移除阴影效果

@@ -14,6 +14,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import me.bmax.apatch.ui.theme.tokens.FolkTheme
 
 private val CornerRadius = 16.dp
 private val ConnectionRadius = 5.dp
@@ -74,7 +75,7 @@ fun <T> LazyListScope.splicedLazyColumnGroup(
                 .padding(horizontal = 16.dp)
                 .padding(top = if (isFirst) 0.dp else 2.dp),
             shape = shape,
-            color = MaterialTheme.colorScheme.surfaceContainer,
+            color = FolkTheme.palette.groupedSurface,
         ) {
             CompositionLocalProvider(LocalInsideSplicedGroup provides true) {
                 itemContent(index, item)

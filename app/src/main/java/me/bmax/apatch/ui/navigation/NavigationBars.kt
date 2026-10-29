@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -42,6 +41,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.ui.theme.BackgroundConfig
+import me.bmax.apatch.ui.theme.tokens.FolkTheme
 import me.bmax.apatch.util.ui.FloatingBarConfig
 import me.bmax.apatch.util.ui.navBarGlassEffect
 
@@ -188,7 +188,7 @@ fun BottomBar(
                 alpha = 0.10f + 0.85f * BackgroundConfig.customBackgroundOpacity
             )
         } else {
-            NavigationBarDefaults.containerColor
+            FolkTheme.palette.groupedSurface
         }
 
         if (isFloating) {

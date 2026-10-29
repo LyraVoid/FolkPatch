@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.bmax.apatch.ui.theme.tokens.FolkShape
+import me.bmax.apatch.ui.theme.tokens.FolkTheme
 
 /**
  * The pieces shared by every log screen: the neutral monospace line, the rounded
@@ -93,7 +94,7 @@ fun FolkLogCard(modifier: Modifier = Modifier, content: @Composable () -> Unit) 
     Surface(
         modifier = modifier,
         shape = FolkShape.Corner16,
-        color = MaterialTheme.colorScheme.surfaceContainer,
+        color = FolkTheme.palette.groupedSurface,
         content = content,
     )
 }

@@ -198,7 +198,7 @@ fun BackgroundLayer(
     val fallbackColor = if (BackgroundConfig.isCustomBackgroundEnabled) {
         if (isDarkTheme) Color.Black else Color.White
     } else {
-        MaterialTheme.colorScheme.background
+        me.bmax.apatch.ui.theme.tokens.FolkTheme.palette.groupedBackground
     }
     
     Box(

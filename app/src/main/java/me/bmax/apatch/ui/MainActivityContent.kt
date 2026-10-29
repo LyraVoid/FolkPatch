@@ -72,6 +72,7 @@ import me.bmax.apatch.util.UpdateChecker
 import me.bmax.apatch.ui.component.DebugBuildRibbon
 import me.bmax.apatch.ui.component.UpdateDialog
 import me.bmax.apatch.ui.theme.ThemeManager
+import me.bmax.apatch.ui.theme.tokens.FolkTheme
 import me.bmax.apatch.ui.component.rememberConfirmDialog
 import me.bmax.apatch.ui.component.rememberLoadingDialog
 import me.bmax.apatch.ui.screen.settings.appearance.ThemeImportDialog
@@ -94,7 +95,7 @@ fun MainActivityContent(activity: MainActivity) {
 val locked by remember { activity.isLocked }
 if (locked) {
     Box(
-        modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background),
+        modifier = Modifier.fillMaxSize().background(FolkTheme.palette.groupedBackground),
         contentAlignment = Alignment.Center
     ) {
         androidx.compose.material3.CircularProgressIndicator(

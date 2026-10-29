@@ -3,6 +3,7 @@ package me.bmax.apatch.ui.theme.tokens
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotEquals
@@ -16,7 +17,9 @@ class FolkPaletteTest {
         val scheme = lightColorScheme()
         val palette = FolkPalette.from(scheme)
 
-        assertEquals(scheme.background, palette.groupedBackground)
+        assertEquals(scheme.surfaceContainer, palette.groupedBackground)
+        assertEquals(scheme.surfaceBright, palette.groupedSurface)
+        assertEquals(scheme.surfaceContainerHigh, palette.groupedInset)
         assertEquals(scheme.primary, palette.positive)
         assertEquals(scheme.tertiary, palette.caution)
         assertEquals(scheme.error, palette.critical)
@@ -25,21 +28,13 @@ class FolkPaletteTest {
     }
 
     @Test
-    fun lightThemeSeparatesSurfaceAndInsetFromThePage() {
-        val scheme = lightColorScheme()
-        val palette = FolkPalette.from(scheme)
+    fun surfaceRolesRaiseThePageWithoutALuminanceBranch() {
+        listOf(lightColorScheme(), darkColorScheme()).forEach { scheme ->
+            val palette = FolkPalette.from(scheme)
 
-        assertNotEquals(scheme.background, palette.groupedSurface)
-        assertNotEquals(palette.groupedSurface, palette.groupedInset)
-    }
-
-    @Test
-    fun darkThemeSeparatesSurfaceAndInsetFromThePage() {
-        val scheme = darkColorScheme()
-        val palette = FolkPalette.from(scheme)
-
-        assertNotEquals(scheme.background, palette.groupedSurface)
-        assertNotEquals(palette.groupedSurface, palette.groupedInset)
+            assertTrue(palette.groupedSurface.luminance() > palette.groupedBackground.luminance())
+            assertTrue(palette.groupedSurface.luminance() > palette.groupedInset.luminance())
+        }
     }
 
     @Test
@@ -50,8 +45,9 @@ class FolkPaletteTest {
 
         // With a custom background image the page is translucent, so the container can no longer be
         // derived from it; the scheme's own container is used instead.
-        assertEquals(scheme.surfaceContainer, palette.groupedSurface)
-        assertNotEquals(scheme.surfaceContainer, palette.groupedInset)
+        assertEquals(Color.Transparent, palette.groupedBackground)
+        assertEquals(scheme.surfaceBright, palette.groupedSurface)
+        assertEquals(scheme.surfaceContainerHigh, palette.groupedInset)
         assertTrue(palette.onCustomBackground)
     }
 
@@ -127,11 +123,11 @@ class FolkPaletteTest {
 
         assertNotEquals(
             palette.groupedBackground,
-            FolkPalette.from(base.copy(background = Color.Black)).groupedBackground,
+            FolkPalette.from(base.copy(surfaceContainer = Color.Black)).groupedBackground,
         )
         assertNotEquals(
             palette.groupedSurface,
-            FolkPalette.from(base.copy(surfaceContainer = Color.Black)).groupedSurface,
+            FolkPalette.from(base.copy(surfaceBright = Color.Black)).groupedSurface,
         )
         assertNotEquals(
             palette.groupedInset,

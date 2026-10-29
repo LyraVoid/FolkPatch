@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import me.bmax.apatch.ui.theme.tokens.FolkTheme
 
 @Composable
 fun OnlineModuleCard(
@@ -38,7 +39,7 @@ fun OnlineModuleCard(
     onClick: (() -> Unit)? = null,
 ) {
     if (onClick != null) {
-        Surface(onClick = onClick) {
+        Surface(onClick = onClick, color = FolkTheme.palette.groupedSurface) {
             OnlineModuleCardContent(
                 name = name,
                 version = version,
@@ -79,7 +80,7 @@ private fun OnlineModuleCardContent(
         modifier = Modifier.fillMaxWidth(),
         shape = MaterialTheme.shapes.large,
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainer,
+            containerColor = FolkTheme.palette.groupedSurface,
         ),
     ) {
         Column(
