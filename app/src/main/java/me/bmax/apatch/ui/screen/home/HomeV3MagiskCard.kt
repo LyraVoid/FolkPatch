@@ -33,7 +33,6 @@ import kotlinx.coroutines.launch
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.BackgroundOptionsDialog
-import me.bmax.apatch.ui.component.folk.FolkButtonDefaults
 import me.bmax.apatch.ui.component.rememberConfirmDialog
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.ui.theme.BackgroundManager
@@ -199,7 +198,7 @@ fun MagiskStyleCard(
                             // Material 3 Expressive's medium size: a taller, roomier
                             // primary action than the compact default.
                             contentPadding = ButtonDefaults.MediumContentPadding,
-                            colors = FolkButtonDefaults.filledColors()
+                            colors = ButtonDefaults.buttonColors()
                         ) {
                             Text(text = actionText)
                         }

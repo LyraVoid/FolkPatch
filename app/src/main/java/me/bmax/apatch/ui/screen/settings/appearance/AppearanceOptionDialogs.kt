@@ -22,7 +22,6 @@ import androidx.compose.ui.window.DialogWindowProvider
 import me.bmax.apatch.ui.component.folk.ExpressiveDialog
 import me.bmax.apatch.ui.component.SegmentedSelectableItem
 import me.bmax.apatch.R
-import me.bmax.apatch.ui.component.folk.FolkButtonDefaults
 import me.bmax.apatch.ui.theme.ThemeManager
 import me.bmax.apatch.util.ui.APDialogBlurBehindUtils
 import me.bmax.apatch.util.ui.showToast
@@ -180,7 +179,7 @@ fun ThemeExportDialog(
                             }
                         },
                         enabled = name.isNotEmpty(),
-                        colors = FolkButtonDefaults.filledColors()
+                        colors = ButtonDefaults.buttonColors()
                     ) { Text(stringResource(R.string.theme_export_action)) }
                 }
             }
@@ -259,7 +258,7 @@ fun ThemeImportDialog(
                 }
                 Row(modifier = Modifier.fillMaxWidth().padding(top = 20.dp), horizontalArrangement = Arrangement.End) {
                     TextButton(onClick = { showDialog.value = false }) { Text(stringResource(android.R.string.cancel)) }
-                    Button(onClick = { showDialog.value = false; onConfirm() }, colors = FolkButtonDefaults.filledColors()) { Text(stringResource(R.string.theme_import_action)) }
+                    Button(onClick = { showDialog.value = false; onConfirm() }, colors = ButtonDefaults.buttonColors()) { Text(stringResource(R.string.theme_import_action)) }
                 }
             }
             val dialogWindowProvider = LocalView.current.parent as DialogWindowProvider
@@ -384,7 +383,7 @@ fun BannerApiConfigDialog(
                 Button(
                     onClick = { onConfirm(sourceText); showDialog.value = false; showToast(context, context.getString(R.string.apm_banner_api_source_saved)) },
                     enabled = sourceText.isNotBlank(), modifier = Modifier.weight(1f),
-                    colors = FolkButtonDefaults.filledColors()
+                    colors = ButtonDefaults.buttonColors()
                 ) { Text(stringResource(android.R.string.ok)) }
             }
             Spacer(modifier = Modifier.height(8.dp))

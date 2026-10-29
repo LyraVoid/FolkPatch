@@ -20,7 +20,6 @@ import me.bmax.apatch.ui.component.SegmentedSelectableItem
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.Natives
 import me.bmax.apatch.R
-import me.bmax.apatch.ui.component.folk.FolkButtonDefaults
 import me.bmax.apatch.util.*
 import me.bmax.apatch.util.ui.showToast
 import java.io.File
@@ -93,7 +92,7 @@ fun ResetSUPathDialog(showDialog: MutableState<Boolean>) {
                         }
                         showToast(context, if (success) R.string.success else R.string.failure)
                     }
-                }, colors = FolkButtonDefaults.filledColors()) {
+                }, colors = ButtonDefaults.buttonColors()) {
                     Text(stringResource(id = android.R.string.ok))
                 }
             }
@@ -152,7 +151,7 @@ fun CleanStorageDialog(
                         }
                         showToast(context, if (success) R.string.settings_clean_storage_done else R.string.failure)
                     }
-                }, colors = FolkButtonDefaults.filledColors()) {
+                }, colors = ButtonDefaults.buttonColors()) {
                     Text(stringResource(id = android.R.string.ok))
                 }
             }

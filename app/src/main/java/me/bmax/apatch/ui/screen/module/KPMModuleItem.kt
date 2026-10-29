@@ -56,6 +56,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.withPermit
 import kotlinx.coroutines.withContext
 import me.bmax.apatch.R
+import me.bmax.apatch.ui.component.ExpressiveSwitch
 import me.bmax.apatch.ui.component.folk.folkPressScale
 import me.bmax.apatch.ui.component.ModuleLabel
 import me.bmax.apatch.ui.component.rememberLoadingDialog
@@ -402,7 +403,7 @@ fun KPModuleItem(
                         Spacer(modifier = Modifier.weight(1f))
 
                         if (module.installed && module.loadSource != "embedded") {
-                            Switch(checked = !module.disabled, onCheckedChange = onToggle)
+                            ExpressiveSwitch(checked = !module.disabled, onCheckedChange = onToggle)
                             Spacer(modifier = Modifier.width(8.dp))
                         }
 

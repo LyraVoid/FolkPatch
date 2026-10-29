@@ -29,7 +29,6 @@ import me.bmax.apatch.Natives
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.folk.ExpressiveDialog
 import me.bmax.apatch.ui.component.SegmentedSelectableItem
-import me.bmax.apatch.ui.component.folk.FolkButtonDefaults
 import me.bmax.apatch.util.*
 import me.bmax.apatch.util.ui.showToast
 import me.bmax.apatch.ui.theme.tokens.ContinuousCornerShape
@@ -269,7 +268,7 @@ fun DpiChooseDialog(showDialog: MutableState<Boolean>) {
                         DPIUtils.setDpi(context, finalDpi)
                         activity?.recreate()
                     },
-                    colors = FolkButtonDefaults.filledColors(),
+                    colors = ButtonDefaults.buttonColors(),
                 ) {
                     Icon(
                         Icons.Filled.Check,
@@ -342,7 +341,7 @@ fun SELinuxModeDialog(
                         showConfirmationDialog = true
                     },
                     enabled = selectedMode != currentMode,
-                    colors = FolkButtonDefaults.filledColors(),
+                    colors = ButtonDefaults.buttonColors(),
                 ) {
                     Text(stringResource(id = android.R.string.ok))
                 }

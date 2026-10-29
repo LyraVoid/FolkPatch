@@ -6,6 +6,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Restore
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.HorizontalDivider
@@ -34,7 +35,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import me.bmax.apatch.ui.component.folk.ExpressiveDialog
-import me.bmax.apatch.ui.component.folk.FolkButtonDefaults
 import me.bmax.apatch.ui.theme.tokens.FolkShape
 
 /**
@@ -287,7 +287,7 @@ fun BackgroundOptionsDialog(
                                         onResetModuleInfo()
                                     },
                                     enabled = hasChanges || hasSavedCustomInfo,
-                                    colors = FolkButtonDefaults.textColors(),
+                                    colors = ButtonDefaults.textButtonColors(),
                                 ) {
                                     Text(resetLabel)
                                 }
@@ -298,7 +298,7 @@ fun BackgroundOptionsDialog(
                                         onSaveModuleInfo(ModuleInfoData(name, version, author, description))
                                     },
                                     enabled = hasNonBlank && hasChanges,
-                                    colors = FolkButtonDefaults.textColors(),
+                                    colors = ButtonDefaults.textButtonColors(),
                                 ) {
                                     Text(saveLabel)
                                 }

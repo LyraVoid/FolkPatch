@@ -22,6 +22,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.SwapHoriz
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -55,7 +56,6 @@ import me.bmax.apatch.ui.component.OnlineModuleCard
 import me.bmax.apatch.ui.component.SearchAppBar
 import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenu
 import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenuItem
-import me.bmax.apatch.ui.component.folk.FolkButtonDefaults
 import me.bmax.apatch.ui.component.folk.FolkScaffold
 import me.bmax.apatch.ui.viewmodel.OnlineModuleViewModel
 import me.bmax.apatch.ui.viewmodel.RepoModuleViewModel
@@ -414,7 +414,7 @@ private fun RepoUrlDialog(
             TextButton(
                 onClick = { onConfirm(inputUrl) },
                 enabled = isValid,
-                colors = FolkButtonDefaults.textColors()
+                colors = ButtonDefaults.textButtonColors()
             ) {
                 Text(stringResource(android.R.string.ok))
             }

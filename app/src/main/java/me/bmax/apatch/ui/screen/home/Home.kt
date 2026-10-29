@@ -22,6 +22,7 @@ import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.DeleteForever
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import androidx.compose.material3.Card
@@ -62,7 +63,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
-import me.bmax.apatch.ui.component.folk.FolkButtonDefaults
 import me.bmax.apatch.ui.component.folk.FolkScaffold
 import me.bmax.apatch.ui.component.WelcomeGuideDialog
 import me.bmax.apatch.ui.viewmodel.PatchesViewModel
@@ -302,7 +302,7 @@ fun UninstallDialog(showDialog: MutableState<Boolean>, navigator: DestinationsNa
                         }
                     },
                     enabled = selectedOption != null,
-                    colors = FolkButtonDefaults.filledColors()
+                    colors = ButtonDefaults.buttonColors()
                 ) {
                     Text(text = stringResource(android.R.string.ok))
                 }

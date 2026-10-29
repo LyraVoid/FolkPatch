@@ -24,7 +24,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import me.bmax.apatch.ui.component.folk.ExpressiveDialog
 import me.bmax.apatch.R
-import me.bmax.apatch.ui.component.folk.FolkButtonDefaults
 import me.bmax.apatch.ui.theme.tokens.ContinuousCornerShape
 import me.bmax.apatch.ui.theme.tokens.FolkShape
 
@@ -94,7 +93,7 @@ fun KPMControlDialog(showDialog: MutableState<Boolean>, onConfirm: (String) -> U
                     // leaves composition here, cancelling any scope it owns.
                     onConfirm(controlParam)
 
-                }, enabled = enable, colors = FolkButtonDefaults.filledColors()) {
+                }, enabled = enable, colors = ButtonDefaults.buttonColors()) {
                     Text(stringResource(id = android.R.string.ok))
                 }
             }

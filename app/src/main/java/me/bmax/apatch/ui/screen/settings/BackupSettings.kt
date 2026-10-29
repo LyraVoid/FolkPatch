@@ -28,7 +28,6 @@ import kotlinx.coroutines.launch
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.TonalCard
-import me.bmax.apatch.ui.component.folk.FolkButtonDefaults
 import me.bmax.apatch.ui.component.SegmentedNavigationItem
 import me.bmax.apatch.ui.component.SegmentedColumn
 import me.bmax.apatch.ui.component.SegmentedSection
@@ -245,7 +244,7 @@ fun WebDavConfigDialog(showDialog: MutableState<Boolean>) {
                             }
                         },
                         enabled = !isTesting,
-                        colors = FolkButtonDefaults.textColors()
+                        colors = ButtonDefaults.textButtonColors()
                     ) {
                         Text(stringResource(R.string.test))
                     }

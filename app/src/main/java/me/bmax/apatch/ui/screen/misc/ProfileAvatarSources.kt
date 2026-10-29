@@ -16,6 +16,7 @@ import androidx.compose.material.icons.outlined.AlternateEmail
 import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material.icons.outlined.Public
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -33,7 +34,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.folk.ExpressiveDialog
-import me.bmax.apatch.ui.component.folk.FolkButtonDefaults
 import me.bmax.apatch.ui.component.SegmentedPreferenceItem
 import java.io.File
 import java.io.FileOutputStream
@@ -106,7 +106,7 @@ internal fun AvatarIdDialog(
                 Button(
                     onClick = { onConfirm(value.trim()) },
                     enabled = value.isNotBlank(),
-                    colors = FolkButtonDefaults.filledColors(),
+                    colors = ButtonDefaults.buttonColors(),
                 ) { Text(text = stringResource(android.R.string.ok)) }
             }
         }
