@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import me.bmax.apatch.ui.component.folk.FolkAlertDialog
+import me.bmax.apatch.ui.component.folk.ExpressiveDialog
 import me.bmax.apatch.ui.component.SegmentedSelectableItem
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.theme.SoundEffectConfig
@@ -43,7 +43,7 @@ fun MultimediaDialogs(
 
     // Sound Effect Source Dialog
     if (showSoundEffectSourceDialog.value) {
-        FolkAlertDialog(
+        ExpressiveDialog(
             onDismissRequest = { showSoundEffectSourceDialog.value = false },
         ) {
             Column(modifier = Modifier.padding(24.dp)) {
@@ -97,7 +97,7 @@ fun MultimediaDialogs(
 
     // Sound Effect Preset Dialog
     if (showSoundEffectPresetDialog.value) {
-        FolkAlertDialog(
+        ExpressiveDialog(
             onDismissRequest = { showSoundEffectPresetDialog.value = false },
         ) {
             Column(modifier = Modifier.padding(24.dp)) {
@@ -145,7 +145,7 @@ fun MultimediaDialogs(
 
     // Sound Effect Scope Dialog
     if (showSoundEffectScopeDialog.value) {
-        FolkAlertDialog(
+        ExpressiveDialog(
             onDismissRequest = { showSoundEffectScopeDialog.value = false },
         ) {
             Column(modifier = Modifier.padding(24.dp)) {
@@ -199,7 +199,7 @@ fun MultimediaDialogs(
 
     // Startup Sound Source Dialog
     if (showStartupSourceDialog.value) {
-        FolkAlertDialog(
+        ExpressiveDialog(
             onDismissRequest = { showStartupSourceDialog.value = false },
         ) {
             Column(modifier = Modifier.padding(24.dp)) {
@@ -253,7 +253,7 @@ fun MultimediaDialogs(
 
     // Startup Sound Preset Dialog
     if (showStartupPresetDialog.value) {
-        FolkAlertDialog(
+        ExpressiveDialog(
             onDismissRequest = { showStartupPresetDialog.value = false },
         ) {
             Column(modifier = Modifier.padding(24.dp)) {
@@ -301,7 +301,7 @@ fun MultimediaDialogs(
 
     // Vibration Scope Dialog
     if (showVibrationScopeDialog.value) {
-        FolkAlertDialog(
+        ExpressiveDialog(
             onDismissRequest = { showVibrationScopeDialog.value = false },
         ) {
             Column(modifier = Modifier.padding(24.dp)) {

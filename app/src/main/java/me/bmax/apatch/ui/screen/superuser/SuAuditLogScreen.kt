@@ -53,7 +53,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import me.bmax.apatch.ui.component.folk.FolkAlertDialog
+import me.bmax.apatch.ui.component.folk.ExpressiveDialog
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.folk.FolkScaffold
 import me.bmax.apatch.ui.component.folk.FolkLogEmptyState
@@ -349,7 +349,7 @@ private fun SuAuditClearDialog(
     onDismiss: () -> Unit,
     onConfirm: () -> Unit,
 ) {
-    FolkAlertDialog(
+    ExpressiveDialog(
         onDismissRequest = onDismiss,
         width = 320.dp,
         shape = FolkShape.Corner20,

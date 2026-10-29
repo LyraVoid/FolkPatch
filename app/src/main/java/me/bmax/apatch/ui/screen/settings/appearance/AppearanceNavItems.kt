@@ -41,7 +41,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import kotlinx.coroutines.CoroutineScope
 import me.bmax.apatch.ui.component.SegmentedColumnScope
-import me.bmax.apatch.ui.component.folk.FolkAlertDialog
+import me.bmax.apatch.ui.component.folk.ExpressiveDialog
 import me.bmax.apatch.ui.component.SegmentedSelectableItem
 
 fun SegmentedColumnScope.appearanceNavItems(
@@ -176,7 +176,7 @@ fun SegmentedColumnScope.appearanceNavItems(
                 onClick = { showStyleDialog = true },
             )
             if (showStyleDialog) {
-                FolkAlertDialog(onDismissRequest = { showStyleDialog = false }) {
+                ExpressiveDialog(onDismissRequest = { showStyleDialog = false }) {
                     Column(Modifier.padding(24.dp)) {
                         Text(stringResource(R.string.settings_floating_bar_style),
                             style = MaterialTheme.typography.headlineSmall,

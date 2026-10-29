@@ -45,7 +45,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import me.bmax.apatch.ui.component.folk.FolkAlertDialog
+import me.bmax.apatch.ui.component.folk.ExpressiveDialog
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.ExpressiveSwitch
 import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenu
@@ -288,7 +288,7 @@ fun PluginConfigDialog(
         mutableStateMapOf<String, String>().apply { putAll(initial) }
     }
 
-    FolkAlertDialog(
+    ExpressiveDialog(
         onDismissRequest = onDismiss,
     ) {
         Column(modifier = Modifier.padding(24.dp)) {
@@ -406,7 +406,7 @@ fun PluginLogDialog(
     output: String,
     onDismiss: () -> Unit,
 ) {
-    FolkAlertDialog(
+    ExpressiveDialog(
         onDismissRequest = onDismiss,
     ) {
         Column(modifier = Modifier.padding(24.dp)) {

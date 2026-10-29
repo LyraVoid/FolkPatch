@@ -12,7 +12,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.edit
 import kotlinx.coroutines.launch
-import me.bmax.apatch.ui.component.folk.FolkAlertDialog
+import me.bmax.apatch.ui.component.folk.ExpressiveDialog
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.TonalCard
@@ -81,7 +81,7 @@ fun AppearanceThemeSection(
             )
 
             if (showModeSwitchDialog.value) {
-                FolkAlertDialog(
+                ExpressiveDialog(
                     onDismissRequest = { showModeSwitchDialog.value = false },
                     width = 320.dp,
                     blurBehind = false,

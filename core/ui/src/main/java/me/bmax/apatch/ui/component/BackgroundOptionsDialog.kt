@@ -33,7 +33,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import me.bmax.apatch.ui.component.folk.FolkAlertDialog
+import me.bmax.apatch.ui.component.folk.ExpressiveDialog
 import me.bmax.apatch.ui.component.folk.FolkButtonDefaults
 import me.bmax.apatch.ui.theme.tokens.FolkShape
 
@@ -96,7 +96,7 @@ fun BackgroundOptionsDialog(
                 surfaceContainer = scheme.surfaceContainer.copy(alpha = 1f),
             )
         ) {
-            FolkAlertDialog(
+            ExpressiveDialog(
                 onDismissRequest = onDismiss,
                 width = 320.dp,
                 shape = FolkShape.Corner20,

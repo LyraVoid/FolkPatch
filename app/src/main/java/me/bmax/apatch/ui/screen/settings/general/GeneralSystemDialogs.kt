@@ -27,7 +27,7 @@ import kotlinx.coroutines.withContext
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.Natives
 import me.bmax.apatch.R
-import me.bmax.apatch.ui.component.folk.FolkAlertDialog
+import me.bmax.apatch.ui.component.folk.ExpressiveDialog
 import me.bmax.apatch.ui.component.SegmentedSelectableItem
 import me.bmax.apatch.ui.component.folk.FolkButtonDefaults
 import me.bmax.apatch.util.*
@@ -50,7 +50,7 @@ fun NewAppProfileModeDialog(
         2 to R.string.settings_new_app_profile_exclude,
     )
 
-    FolkAlertDialog(
+    ExpressiveDialog(
         onDismissRequest = { showDialog.value = false },
     ) {
         Column(modifier = Modifier.padding(24.dp)) {
@@ -134,7 +134,7 @@ fun DpiChooseDialog(showDialog: MutableState<Boolean>) {
     var tempDpi by remember { mutableIntStateOf(if (savedDpi == DPIUtils.DEFAULT_DPI) DPIUtils.systemDpi else savedDpi) }
     var isSystemDefault by remember { mutableStateOf(savedDpi == DPIUtils.DEFAULT_DPI) }
 
-    FolkAlertDialog(
+    ExpressiveDialog(
         onDismissRequest = { showDialog.value = false },
         width = 340.dp,
     ) {
@@ -295,7 +295,7 @@ fun SELinuxModeDialog(
     var selectedMode by remember { mutableStateOf(currentMode) }
     var showConfirmationDialog by remember { mutableStateOf(false) }
 
-    FolkAlertDialog(
+    ExpressiveDialog(
         onDismissRequest = { showDialog.value = false },
     ) {
         Column(modifier = Modifier.padding(24.dp)) {

@@ -19,7 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.DialogWindowProvider
-import me.bmax.apatch.ui.component.folk.FolkAlertDialog
+import me.bmax.apatch.ui.component.folk.ExpressiveDialog
 import me.bmax.apatch.ui.component.SegmentedSelectableItem
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.folk.FolkButtonDefaults
@@ -276,7 +276,7 @@ fun NavModeChooseDialog(
     onModeSelected: (String) -> Unit,
     onDismiss: () -> Unit
 ) {
-    FolkAlertDialog(
+    ExpressiveDialog(
         onDismissRequest = onDismiss,
     ) {
         Column(modifier = Modifier.padding(24.dp)) {
@@ -317,7 +317,7 @@ fun StatsTopLayoutChooseDialog(
     onModeSelected: (String) -> Unit,
     onDismiss: () -> Unit
 ) {
-    FolkAlertDialog(
+    ExpressiveDialog(
         onDismissRequest = onDismiss,
     ) {
         Column(modifier = Modifier.padding(24.dp)) {
@@ -351,7 +351,7 @@ fun BannerApiConfigDialog(
     val context = LocalContext.current
     var sourceText by remember { mutableStateOf(currentSource) }
 
-    FolkAlertDialog(
+    ExpressiveDialog(
         onDismissRequest = { showDialog.value = false },
         width = 340.dp,
         shape = FolkShape.Corner28,

@@ -19,7 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.SecureFlagPolicy
-import me.bmax.apatch.ui.component.folk.FolkAlertDialog
+import me.bmax.apatch.ui.component.folk.ExpressiveDialog
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.viewmodel.SuperUserViewModel
 import me.bmax.apatch.util.ui.APDialogBlurBehindUtils.Companion.setupWindowBlurListener
@@ -38,7 +38,7 @@ fun BatchExcludeDialog(
     val reverseText = stringResource(R.string.su_exclude_reverse_btn)
     val cancelText = stringResource(android.R.string.cancel)
 
-    FolkAlertDialog(
+    ExpressiveDialog(
         onDismissRequest = onDismiss,
         width = 320.dp,
         shape = FolkShape.Corner20,
@@ -99,7 +99,7 @@ fun BatchActionConfirmDialog(
     }
     val cancelText = stringResource(android.R.string.cancel)
 
-    FolkAlertDialog(
+    ExpressiveDialog(
         onDismissRequest = onDismiss,
         width = 320.dp,
         shape = FolkShape.Corner20,
@@ -150,7 +150,7 @@ fun AppActionDialog(
     val forceStopText = stringResource(R.string.su_app_action_force_stop)
     val cancelText = stringResource(android.R.string.cancel)
 
-    FolkAlertDialog(
+    ExpressiveDialog(
         onDismissRequest = onDismiss,
         width = 320.dp,
         shape = FolkShape.Corner20,

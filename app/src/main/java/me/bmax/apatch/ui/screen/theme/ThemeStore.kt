@@ -22,7 +22,7 @@ import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.MyThemesScreenDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.launch
-import me.bmax.apatch.ui.component.folk.FolkAlertDialog
+import me.bmax.apatch.ui.component.folk.ExpressiveDialog
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.folk.FolkLoadingIndicator
@@ -333,7 +333,7 @@ fun ThemeStoreScreen(
 
     // 过滤器对话框
     if (showFilterSheet) {
-        FolkAlertDialog(
+        ExpressiveDialog(
             onDismissRequest = { showFilterSheet = false },
             width = 320.dp,
             shape = FolkShape.Corner28,

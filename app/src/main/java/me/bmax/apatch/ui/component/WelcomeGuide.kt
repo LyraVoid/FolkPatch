@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.DialogWindowProvider
-import me.bmax.apatch.ui.component.folk.FolkAlertDialog
+import me.bmax.apatch.ui.component.folk.ExpressiveDialog
 import me.bmax.apatch.R
 import me.bmax.apatch.util.ui.APDialogBlurBehindUtils
 import me.bmax.apatch.ui.theme.tokens.FolkShape
@@ -66,7 +66,7 @@ fun WelcomeGuideDialog(
         )
     }
 
-    FolkAlertDialog(
+    ExpressiveDialog(
         onDismissRequest = { /* intentionally no-op: use buttons to dismiss */ },
         width = 340.dp,
         shape = FolkShape.Corner24,

@@ -14,7 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.edit
-import me.bmax.apatch.ui.component.folk.FolkAlertDialog
+import me.bmax.apatch.ui.component.folk.ExpressiveDialog
 import me.bmax.apatch.ui.component.SegmentedSelectableItem
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
@@ -43,7 +43,7 @@ fun AppTitleChooseDialog(showDialog: MutableState<Boolean>, onTitleChanged: (Str
         "magicpatch" to stringResource(R.string.app_title_magicpatch)
     )
 
-    FolkAlertDialog(
+    ExpressiveDialog(
         onDismissRequest = { showDialog.value = false },
     ) {
         LazyColumn {
@@ -75,7 +75,7 @@ fun CustomAppTitleDialog(showDialog: MutableState<Boolean>, snackBarHost: Snackb
         mutableStateOf(prefs.getString("custom_app_title", "FolkPatch") ?: "FolkPatch")
     }
 
-    FolkAlertDialog(
+    ExpressiveDialog(
         onDismissRequest = { showDialog.value = false },
     ) {
         Column(
@@ -124,7 +124,7 @@ fun DesktopAppNameChooseDialog(showDialog: MutableState<Boolean>, onNameChanged:
     val prefs = APApplication.sharedPreferences
     val context = LocalContext.current
     val currentName = remember { prefs.getString("desktop_app_name", "FolkPatch") }
-    FolkAlertDialog(
+    ExpressiveDialog(
         onDismissRequest = { showDialog.value = false },
     ) {
         LazyColumn {
@@ -174,7 +174,7 @@ fun LauncherIconStyleDialog(showDialog: MutableState<Boolean>, onStyleChanged: (
     val prefs = APApplication.sharedPreferences
     val context = LocalContext.current
 
-    FolkAlertDialog(
+    ExpressiveDialog(
         onDismissRequest = { showDialog.value = false },
     ) {
         Column(modifier = Modifier.padding(24.dp)) {
@@ -235,7 +235,7 @@ fun LauncherIconStyleDialog(showDialog: MutableState<Boolean>, onStyleChanged: (
 fun FolkXAnimationTypeDialog(showDialog: MutableState<Boolean>, onTypeChanged: (String) -> Unit = {}) {
     val prefs = APApplication.sharedPreferences
 
-    FolkAlertDialog(
+    ExpressiveDialog(
         onDismissRequest = { showDialog.value = false },
     ) {
         Column(modifier = Modifier.padding(24.dp)) {
@@ -294,7 +294,7 @@ fun FolkXAnimationTypeDialog(showDialog: MutableState<Boolean>, onTypeChanged: (
 fun AppListLoadingSchemeDialog(showDialog: MutableState<Boolean>, onSchemeChanged: (String) -> Unit = {}) {
     val prefs = APApplication.sharedPreferences
 
-    FolkAlertDialog(
+    ExpressiveDialog(
         onDismissRequest = { showDialog.value = false },
     ) {
         Column(modifier = Modifier.padding(24.dp)) {

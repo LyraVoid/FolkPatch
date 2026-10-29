@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
-import me.bmax.apatch.ui.component.folk.FolkAlertDialog
+import me.bmax.apatch.ui.component.folk.ExpressiveDialog
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.theme.tokens.FolkShape
 
@@ -17,7 +17,7 @@ fun UpdateDialog(
     onDismiss: () -> Unit,
     onUpdate: () -> Unit
 ) {
-    FolkAlertDialog(
+    ExpressiveDialog(
         onDismissRequest = { /* Cannot dismiss by default means */ },
         width = 320.dp,
         shape = FolkShape.Corner20,

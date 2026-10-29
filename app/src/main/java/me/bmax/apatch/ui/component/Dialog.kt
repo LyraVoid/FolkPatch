@@ -59,7 +59,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.parcelize.Parcelize
-import me.bmax.apatch.ui.component.folk.FolkAlertDialog
+import me.bmax.apatch.ui.component.folk.ExpressiveDialog
 import me.bmax.apatch.util.ui.APDialogBlurBehindUtils.Companion.setupWindowBlurListener
 import kotlin.coroutines.resume
 import me.bmax.apatch.ui.theme.tokens.FolkShape
@@ -444,7 +444,7 @@ private fun LoadingDialog() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ConfirmDialog(visuals: ConfirmDialogVisuals, confirm: () -> Unit, dismiss: () -> Unit) {
-    FolkAlertDialog(
+    ExpressiveDialog(
         onDismissRequest = {
             dismiss()
         },

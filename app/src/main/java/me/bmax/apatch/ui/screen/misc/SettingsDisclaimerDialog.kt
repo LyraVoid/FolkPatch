@@ -17,12 +17,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.bmax.apatch.R
-import me.bmax.apatch.ui.component.folk.FolkAlertDialog
+import me.bmax.apatch.ui.component.folk.ExpressiveDialog
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsDisclaimerDialog(showDialog: MutableState<Boolean>) {
-    FolkAlertDialog(
+    ExpressiveDialog(
         onDismissRequest = { showDialog.value = false },
     ) {
         Column(modifier = Modifier.padding(PaddingValues(all = 24.dp))) {

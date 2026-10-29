@@ -52,7 +52,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import me.bmax.apatch.ui.component.folk.FolkAlertDialog
+import me.bmax.apatch.ui.component.folk.ExpressiveDialog
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
 import coil.compose.AsyncImage
@@ -366,7 +366,7 @@ fun PathHideFilterSystemWarningDialog(
     showDialog: MutableState<Boolean>,
     onConfirm: () -> Unit,
 ) {
-    FolkAlertDialog(
+    ExpressiveDialog(
         onDismissRequest = { showDialog.value = false },
     ) {
         Column(modifier = Modifier.padding(PaddingValues(all = 24.dp))) {

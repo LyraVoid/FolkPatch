@@ -15,7 +15,7 @@ import androidx.core.content.edit
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import me.bmax.apatch.ui.component.folk.FolkAlertDialog
+import me.bmax.apatch.ui.component.folk.ExpressiveDialog
 import me.bmax.apatch.ui.component.SegmentedSelectableItem
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.Natives
@@ -38,7 +38,7 @@ fun ResetSUPathDialog(showDialog: MutableState<Boolean>) {
             runCatching { me.bmax.apatch.Natives.suPath() }.getOrDefault("/system/bin/su")
         }
     }
-    FolkAlertDialog(
+    ExpressiveDialog(
         onDismissRequest = { showDialog.value = false },
     ) {
         Column(modifier = Modifier.padding(PaddingValues(all = 24.dp))) {
@@ -114,7 +114,7 @@ fun CleanStorageDialog(
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
-    FolkAlertDialog(
+    ExpressiveDialog(
         onDismissRequest = { showDialog.value = false },
     ) {
         Column(modifier = Modifier.padding(PaddingValues(all = 24.dp))) {
@@ -165,7 +165,7 @@ fun CleanStorageDialog(
 fun FolkXAnimationSpeedDialog(showDialog: MutableState<Boolean>, onSpeedChanged: (Float) -> Unit = {}) {
     val prefs = APApplication.sharedPreferences
 
-    FolkAlertDialog(
+    ExpressiveDialog(
         onDismissRequest = { showDialog.value = false },
     ) {
         Column(modifier = Modifier.padding(24.dp)) {

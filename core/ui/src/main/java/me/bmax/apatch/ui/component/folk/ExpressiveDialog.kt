@@ -2,7 +2,6 @@ package me.bmax.apatch.ui.component.folk
 
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
-import me.bmax.apatch.ui.theme.tokens.FolkShape
 import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -15,16 +14,12 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.DialogWindowProvider
+import me.bmax.apatch.ui.theme.tokens.FolkShape
 import me.bmax.apatch.util.ui.APDialogBlurBehindUtils
 
-/**
- * The frame every [BasicAlertDialog] in the app shares: a fixed-width rounded surface with the
- * wallpaper blur set up behind it. A dialog supplies only its own column, and the shape and the
- * blur live here so they cannot drift apart from dialog to dialog.
- */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FolkAlertDialog(
+fun ExpressiveDialog(
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
     width: Dp = 310.dp,

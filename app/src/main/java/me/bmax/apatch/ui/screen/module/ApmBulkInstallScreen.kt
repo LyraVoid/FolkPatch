@@ -52,7 +52,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import me.bmax.apatch.ui.component.folk.FolkAlertDialog
+import me.bmax.apatch.ui.component.folk.ExpressiveDialog
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.folk.FolkScaffold
@@ -120,7 +120,7 @@ fun ApmBulkInstallScreen(navigator: DestinationsNavigator, initialUris: ArrayLis
 
     // First Use Dialog
     if (showFirstTimeDialog) {
-        FolkAlertDialog(
+        ExpressiveDialog(
             onDismissRequest = {
                 if (dontShowAgain) {
                     prefs.edit().putBoolean("apm_bulk_install_first_use_shown", true).apply()

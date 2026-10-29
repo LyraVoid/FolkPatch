@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import me.bmax.apatch.R
-import me.bmax.apatch.ui.component.folk.FolkAlertDialog
+import me.bmax.apatch.ui.component.folk.ExpressiveDialog
 import me.bmax.apatch.ui.component.folk.FolkButtonDefaults
 import me.bmax.apatch.ui.component.SegmentedPreferenceItem
 import java.io.File
@@ -58,7 +58,7 @@ internal fun AvatarSourceDialog(
     onSelect: (AvatarSource) -> Unit,
 ) {
     if (!showDialog) return
-    FolkAlertDialog(onDismissRequest = onDismiss, width = 340.dp) {
+    ExpressiveDialog(onDismissRequest = onDismiss, width = 340.dp) {
         Column(modifier = Modifier.padding(vertical = 8.dp)) {
             Text(
                 text = stringResource(R.string.profile_avatar_source_title),
@@ -85,7 +85,7 @@ internal fun AvatarIdDialog(
     onConfirm: (String) -> Unit,
 ) {
     var value by remember { mutableStateOf("") }
-    FolkAlertDialog(onDismissRequest = onDismiss) {
+    ExpressiveDialog(onDismissRequest = onDismiss) {
         Column(modifier = Modifier.padding(24.dp)) {
             Text(text = title, style = MaterialTheme.typography.titleMedium)
             Spacer(Modifier.height(16.dp))
