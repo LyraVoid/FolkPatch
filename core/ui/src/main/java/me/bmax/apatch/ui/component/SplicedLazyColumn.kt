@@ -21,7 +21,7 @@ private val ConnectionRadius = 5.dp
 /**
  * LazyColumn extension that renders items as a continuous card group with animated corner radii.
  * First and last visible items get 16dp outer corners; middle items get 5dp connection corners.
- * Uses [LocalInsideSplicedGroup] so inner [ExpressiveCard] wrappers are automatically skipped.
+ * Uses [LocalInsideSplicedGroup] so inner [TonalCard] wrappers are automatically skipped.
  */
 fun <T> LazyListScope.splicedLazyColumnGroup(
     items: List<T>,
