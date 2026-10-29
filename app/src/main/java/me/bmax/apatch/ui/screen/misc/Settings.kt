@@ -77,7 +77,7 @@ import me.bmax.apatch.ui.component.folk.folkGroupColor
 import me.bmax.apatch.ui.component.folk.folkPressScale
 import me.bmax.apatch.ui.component.rememberLoadingDialog
 import me.bmax.apatch.ui.component.rememberSystemCropLauncher
-import me.bmax.apatch.ui.component.M3eSearchAppBar
+import me.bmax.apatch.ui.component.SearchAppBar
 import me.bmax.apatch.ui.screen.home.getDeviceInfo
 import me.bmax.apatch.ui.screen.settings.ResolvedEntry
 import me.bmax.apatch.ui.screen.settings.SettingCategory
@@ -298,7 +298,7 @@ fun SettingScreen(navigator: DestinationsNavigator) {
 
     FolkScaffold(
         topBar = {
-            M3eSearchAppBar(
+            SearchAppBar(
                 title = {
                     Text(
                         text = stringResource(R.string.settings),

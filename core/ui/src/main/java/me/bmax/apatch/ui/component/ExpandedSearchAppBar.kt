@@ -55,7 +55,7 @@ import me.bmax.apatch.ui.component.folk.folkDefaultAppBarColors
  */
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-fun M3eSearchAppBar(
+internal fun ExpandedSearchAppBar(
     title: @Composable () -> Unit,
     searchText: String,
     onSearchTextChange: (String) -> Unit,

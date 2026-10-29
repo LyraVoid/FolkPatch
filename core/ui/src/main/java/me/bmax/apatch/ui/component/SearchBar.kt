@@ -6,6 +6,8 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
@@ -43,6 +45,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.Dp
 import me.bmax.apatch.ui.component.folk.folkDefaultAppBarColors
 import me.bmax.apatch.core.ui.R
 import androidx.compose.ui.res.stringResource
@@ -56,14 +59,31 @@ fun SearchAppBar(
     title: @Composable () -> Unit,
     searchText: String,
     onSearchTextChange: (String) -> Unit,
-    onClearClick: () -> Unit,
+    onClearClick: () -> Unit = {},
+    searchPlaceholder: String = "",
+    actions: @Composable RowScope.() -> Unit = {},
     onBackClick: (() -> Unit)? = null,
     onConfirm: (() -> Unit)? = null,
     dropdownContent: @Composable (() -> Unit)? = null,
     leadingActions: @Composable (() -> Unit)? = null,
     trailingActions: @Composable (() -> Unit)? = null,
     startInSearchMode: Boolean = false,
+    defaultContent: (@Composable BoxScope.(bottomPadding: Dp, closeSearch: () -> Unit) -> Unit)? = null,
+    searchContent: (@Composable BoxScope.(bottomPadding: Dp, closeSearch: () -> Unit) -> Unit)? = null,
 ) {
+    if (defaultContent != null || searchContent != null) {
+        ExpandedSearchAppBar(
+            title = title,
+            searchText = searchText,
+            onSearchTextChange = onSearchTextChange,
+            searchPlaceholder = searchPlaceholder,
+            actions = actions,
+            defaultContent = defaultContent ?: { _, _ -> },
+            searchContent = searchContent ?: { _, _ -> },
+        )
+        return
+    }
+
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusRequester = remember { FocusRequester() }
     var onSearch by rememberSaveable { mutableStateOf(startInSearchMode) }
