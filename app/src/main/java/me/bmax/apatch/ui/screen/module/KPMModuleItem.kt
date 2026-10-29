@@ -65,6 +65,8 @@ import me.bmax.apatch.ui.component.rememberLoadingDialog
 import me.bmax.apatch.ui.viewmodel.KPModel
 import me.bmax.apatch.ui.viewmodel.KPModuleViewModel
 import me.bmax.apatch.ui.theme.BackgroundConfig
+import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
+import me.bmax.apatch.ui.theme.tokens.WallpaperSurfaceRole
 import me.bmax.apatch.ui.theme.bannerFadeColor
 import androidx.compose.material3.ButtonDefaults
 import me.bmax.apatch.util.kpmBannerStorage
@@ -145,8 +147,9 @@ fun KPModuleItem(
         1f
     }
     
-    val cardColor = if (isWallpaperMode) {
-        MaterialTheme.colorScheme.surface.copy(alpha = opacity)
+    val wallpaper = LocalFolkWallpaperTokens.current
+    val cardColor = if (wallpaper != null) {
+        wallpaper.material(WallpaperSurfaceRole.Group, minimumAlpha = 0.35f).fill
     } else {
         MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.2f)
     }

@@ -42,6 +42,7 @@ import kotlinx.coroutines.launch
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.ui.theme.tokens.FolkTheme
+import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
 import me.bmax.apatch.util.ui.FloatingBarConfig
 import me.bmax.apatch.util.ui.navBarGlassEffect
 
@@ -181,15 +182,8 @@ fun BottomBar(
             }
         }
 
-        val containerColor = if (BackgroundConfig.isCustomBackgroundEnabled) {
-            // Keep a faint floor so the capsule still reads when the custom
-            // background is pulled all the way to fully transparent.
-            MaterialTheme.colorScheme.surface.copy(
-                alpha = 0.10f + 0.85f * BackgroundConfig.customBackgroundOpacity
-            )
-        } else {
-            FolkTheme.palette.groupedSurface
-        }
+        val wallpaper = LocalFolkWallpaperTokens.current
+        val containerColor = wallpaper?.chrome?.fill ?: FolkTheme.palette.groupedSurface
 
         if (isFloating) {
             BoxWithConstraints(

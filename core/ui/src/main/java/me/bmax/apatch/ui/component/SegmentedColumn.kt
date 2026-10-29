@@ -38,6 +38,7 @@ import me.bmax.apatch.ui.component.folk.folkSectionTitleColor
 import me.bmax.apatch.ui.component.folk.folkSectionTitleStyle
 import me.bmax.apatch.ui.theme.tokens.ContinuousCornerShape
 import me.bmax.apatch.ui.theme.tokens.FolkTheme
+import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
 
 val LocalInsideSplicedGroup = compositionLocalOf { false }
 
@@ -71,7 +72,9 @@ fun SegmentedColumn(
     val visibleItems = scope.items.filter { it.visible }
     if (visibleItems.isEmpty() && title == null) return
 
-    val rowColor = FolkTheme.palette.groupedSurface
+    val wallpaper = LocalFolkWallpaperTokens.current
+    val rowColor = wallpaper?.group?.fill ?: FolkTheme.palette.groupedSurface
+    val rowContentColor = wallpaper?.group?.contentColor ?: MaterialTheme.colorScheme.onSurface
     val highlightColor = MaterialTheme.colorScheme.primary
     val atLeastTiramisu = Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
     val firstVisible = scope.items.indexOfFirst { it.visible }
@@ -175,6 +178,7 @@ fun SegmentedColumn(
                                     ),
                                 shape = itemShape,
                                 color = rowColor,
+                                contentColor = rowContentColor,
                                 tonalElevation = if (flat) 0.dp else 1.dp,
                             ) {
                                 Column(

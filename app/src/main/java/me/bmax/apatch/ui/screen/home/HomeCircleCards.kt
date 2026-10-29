@@ -41,6 +41,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import me.bmax.apatch.core.ui.R as CoreR
 import me.bmax.apatch.ui.theme.tokens.FolkShape
+import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
 
 @Composable
 fun StatusCardCircle(
@@ -61,7 +62,7 @@ fun StatusCardCircle(
     // 壁纸模式下状态卡统一用中性 surface/onSurface；强调容器降 alpha 后其 on 色
     // 会失去配对的对比度，不再在壁纸上使用。
     val finalContainerColor = if (isWallpaperMode) {
-        MaterialTheme.colorScheme.surface
+        LocalFolkWallpaperTokens.current?.group?.fill ?: MaterialTheme.colorScheme.surface
     } else if (isJailbreak) {
         MaterialTheme.colorScheme.tertiaryContainer
     } else if (isWorking) {

@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.ui.theme.tokens.FolkShape
 import me.bmax.apatch.ui.theme.tokens.FolkTheme
+import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
 
 @Composable
 fun ProvideMenuShape(
@@ -31,8 +32,10 @@ fun WallpaperAwareDropdownMenu(
     containerColor: Color = FolkTheme.palette.groupedInset,
     content: @Composable ColumnScope.() -> Unit
 ) {
+    val wallpaper = LocalFolkWallpaperTokens.current
+    val fill = wallpaper?.overlay?.fill ?: containerColor
     // 在壁纸模式下移除阴影效果
-    if (BackgroundConfig.isCustomBackgroundEnabled) {
+    if (wallpaper != null) {
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = onDismissRequest,
@@ -45,7 +48,7 @@ fun WallpaperAwareDropdownMenu(
             shape = shape,
             tonalElevation = 0.dp, // 在壁纸模式下不使用阴影
             shadowElevation = 0.dp, // 确保没有阴影
-            containerColor = containerColor.copy(alpha = 0.95f), // 略微透明，与壁纸更好地融合
+            containerColor = fill,
             content = content
         )
     } else {

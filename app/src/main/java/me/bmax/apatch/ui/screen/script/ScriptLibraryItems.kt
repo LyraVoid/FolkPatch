@@ -50,6 +50,8 @@ import me.bmax.apatch.ui.component.LocalInsideSplicedGroup
 import me.bmax.apatch.ui.component.BackgroundOptionsDialog
 import me.bmax.apatch.ui.component.rememberLoadingDialog
 import me.bmax.apatch.ui.theme.BackgroundConfig
+import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
+import me.bmax.apatch.ui.theme.tokens.WallpaperSurfaceRole
 import me.bmax.apatch.ui.theme.bannerFadeColor
 import me.bmax.apatch.util.ModuleShortcut
 import me.bmax.apatch.util.scriptBannerStorage
@@ -126,8 +128,9 @@ fun ScriptItem(
         1f
     }
 
-    val cardColor = if (isWallpaperMode) {
-        MaterialTheme.colorScheme.surface.copy(alpha = opacity)
+    val wallpaper = LocalFolkWallpaperTokens.current
+    val cardColor = if (wallpaper != null) {
+        wallpaper.material(WallpaperSurfaceRole.Group, minimumAlpha = 0.35f).fill
     } else {
         MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.2f)
     }

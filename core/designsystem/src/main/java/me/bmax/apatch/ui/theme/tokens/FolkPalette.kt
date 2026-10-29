@@ -27,20 +27,12 @@ class FolkPalette internal constructor(
     val neutral: Color,
     /** True when the page shows a custom background image, so chrome should read straight through. */
     val onCustomBackground: Boolean,
-    /** Alpha shared by small controls drawn on the translucent wallpaper chrome. */
-    val chromeControlAlpha: Float,
 ) {
-    fun chromeControlFill(tint: Color): Color =
-        if (onCustomBackground) tint.copy(alpha = chromeControlAlpha) else tint
-
     companion object {
-        private const val CHROME_ALPHA_FLOOR = 0.1f
-
         fun from(scheme: ColorScheme): FolkPalette {
             val background = scheme.background
 
             val onCustomBackground = background.alpha < 0.99f
-            val wallpaperOpacity = scheme.surface.alpha.coerceIn(0f, 1f)
 
             return FolkPalette(
                 groupedBackground = if (onCustomBackground) Color.Transparent else scheme.surfaceContainer,
@@ -53,11 +45,6 @@ class FolkPalette internal constructor(
                 critical = scheme.error,
                 neutral = scheme.onSurfaceVariant,
                 onCustomBackground = onCustomBackground,
-                chromeControlAlpha = if (onCustomBackground) {
-                    CHROME_ALPHA_FLOOR + (1f - CHROME_ALPHA_FLOOR) * wallpaperOpacity
-                } else {
-                    1f
-                },
             )
         }
     }

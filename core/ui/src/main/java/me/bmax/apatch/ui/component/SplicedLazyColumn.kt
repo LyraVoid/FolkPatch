@@ -15,6 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import me.bmax.apatch.ui.theme.tokens.FolkTheme
+import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
 
 private val CornerRadius = 16.dp
 private val ConnectionRadius = 5.dp
@@ -69,13 +70,15 @@ fun <T> LazyListScope.splicedLazyColumnGroup(
             bottomStart = currentBottomRadius,
             bottomEnd = currentBottomRadius,
         )
+        val wallpaper = LocalFolkWallpaperTokens.current
 
         Surface(
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .padding(top = if (isFirst) 0.dp else 2.dp),
             shape = shape,
-            color = FolkTheme.palette.groupedSurface,
+            color = wallpaper?.group?.fill ?: FolkTheme.palette.groupedSurface,
+            contentColor = wallpaper?.group?.contentColor ?: MaterialTheme.colorScheme.onSurface,
         ) {
             CompositionLocalProvider(LocalInsideSplicedGroup provides true) {
                 itemContent(index, item)

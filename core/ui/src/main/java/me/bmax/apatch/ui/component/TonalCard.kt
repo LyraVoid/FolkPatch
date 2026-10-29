@@ -19,6 +19,7 @@ import androidx.compose.ui.semantics.Role
 import me.bmax.apatch.ui.component.folk.folkPressScale
 import me.bmax.apatch.ui.theme.tokens.FolkShape
 import me.bmax.apatch.ui.theme.tokens.FolkTheme
+import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
 
 @Composable
 fun TonalCard(
@@ -30,8 +31,18 @@ fun TonalCard(
     flat: Boolean = false,
     content: @Composable () -> Unit,
 ) {
-    val fill = containerColor ?: FolkTheme.palette.groupedSurface
-    val foreground = contentColor ?: contentColorFor(fill)
+    val wallpaper = LocalFolkWallpaperTokens.current
+    val useWallpaperMaterial = wallpaper != null && containerColor == null
+    val fill = if (useWallpaperMaterial) {
+        wallpaper.group.fill
+    } else {
+        containerColor ?: FolkTheme.palette.groupedSurface
+    }
+    val foreground = contentColor ?: if (useWallpaperMaterial) {
+        wallpaper.group.contentColor
+    } else {
+        contentColorFor(fill)
+    }
 
     if (LocalInsideSplicedGroup.current) {
         if (onClick == null) {

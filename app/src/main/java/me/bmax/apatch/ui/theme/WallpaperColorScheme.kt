@@ -106,14 +106,12 @@ internal fun adaptColorScheme(
 
     val wallpaperDim = BackgroundConfig.getEffectiveBackgroundDim(darkTheme)
     val effectiveLuminance = BackgroundConfig.wallpaperLuminanceFor(activeBackgroundUri)
-        ?.let { it * (1f - wallpaperDim) }
     // 夜间模式始终保持深色中性方案：不因壁纸偏亮而把整套 UI 翻成浅色（避免「发白」），
     // 可读性交给下面的对比度保护抬高遮罩。浅色模式仍按壁纸明暗决定，以照顾暗壁纸。
-    val useLightContent = if (darkTheme) {
-        true
-    } else {
-        effectiveLuminance?.let { it < WALLPAPER_DARK_THRESHOLD } ?: false
-    }
+    val useLightContent = wallpaperUsesDarkNeutral(
+        darkTheme = darkTheme,
+        luminance = effectiveLuminance ?: -1f,
+    )
 
     val neutralScheme = if (useLightContent == darkTheme) {
         baseColorScheme
@@ -130,28 +128,7 @@ internal fun adaptColorScheme(
         )
     }
 
-    val opacity = BackgroundConfig.customBackgroundOpacity
-    val adapted = baseColorScheme.copy(
-        background = Color.Transparent,
-        surface = neutralScheme.surface.copy(alpha = opacity),
-        surfaceDim = neutralScheme.surfaceDim,
-        surfaceBright = neutralScheme.surfaceBright,
-        surfaceContainer = neutralScheme.surfaceContainer.copy(alpha = opacity),
-        surfaceContainerLow = neutralScheme.surfaceContainerLow,
-        surfaceContainerLowest = neutralScheme.surfaceContainerLowest,
-        surfaceContainerHigh = neutralScheme.surfaceContainerHigh,
-        surfaceContainerHighest = neutralScheme.surfaceContainerHighest,
-        surfaceVariant = neutralScheme.surfaceVariant,
-        onBackground = neutralScheme.onBackground,
-        onSurface = neutralScheme.onSurface,
-        onSurfaceVariant = neutralScheme.onSurfaceVariant,
-        outline = neutralScheme.outline,
-        outlineVariant = neutralScheme.outlineVariant,
-        inverseSurface = neutralScheme.inverseSurface,
-        inverseOnSurface = neutralScheme.inverseOnSurface,
-        // secondaryContainer 保持 base（不透明）：它由 onSecondaryContainer 配对使用，
-        // 一旦降 alpha 就会让选中态文字直接压在壁纸上而失去对比度。
-    )
+    val adapted = adaptWallpaperColorScheme(baseColorScheme, neutralScheme, active = true)
 
     // 浅色模式：浅色中性内容压在暗壁纸上时，用对比度保护兜底（通常已是暗壁纸，基本不改动）。
     // 夜间模式：UI 已固定为深色，遮罩完全交给用户的夜间暗度滑块，不做自动加深。
@@ -162,4 +139,37 @@ internal fun adaptColorScheme(
     }
 
     return WallpaperThemeResult(adapted, renderDim)
+}
+
+internal fun wallpaperUsesDarkNeutral(darkTheme: Boolean, luminance: Float): Boolean {
+    if (darkTheme) return true
+    if (luminance < 0f) return false
+    return luminance < WALLPAPER_DARK_THRESHOLD
+}
+
+internal fun adaptWallpaperColorScheme(
+    base: ColorScheme,
+    neutral: ColorScheme,
+    active: Boolean,
+): ColorScheme {
+    if (!active) return base
+    return base.copy(
+        background = Color.Transparent,
+        surface = neutral.surface,
+        surfaceDim = neutral.surfaceDim,
+        surfaceBright = neutral.surfaceBright,
+        surfaceContainer = neutral.surfaceContainer,
+        surfaceContainerLow = neutral.surfaceContainerLow,
+        surfaceContainerLowest = neutral.surfaceContainerLowest,
+        surfaceContainerHigh = neutral.surfaceContainerHigh,
+        surfaceContainerHighest = neutral.surfaceContainerHighest,
+        surfaceVariant = neutral.surfaceVariant,
+        onBackground = neutral.onBackground,
+        onSurface = neutral.onSurface,
+        onSurfaceVariant = neutral.onSurfaceVariant,
+        outline = neutral.outline,
+        outlineVariant = neutral.outlineVariant,
+        inverseSurface = neutral.inverseSurface,
+        inverseOnSurface = neutral.inverseOnSurface,
+    )
 }

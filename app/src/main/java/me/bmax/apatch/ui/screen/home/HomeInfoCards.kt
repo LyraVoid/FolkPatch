@@ -51,6 +51,7 @@ import me.bmax.apatch.util.Version
 import me.bmax.apatch.util.Version.getManagerVersion
 import me.bmax.apatch.util.getSELinuxStatus
 import me.bmax.apatch.ui.theme.tokens.FolkShape
+import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
 
 private val managerVersion = getManagerVersion()
 
@@ -80,7 +81,7 @@ fun InfoCard(kpState: APApplication.State, apState: APApplication.State) {
     Card(
         shape = FolkShape.Corner20,
         colors = CardDefaults.cardColors(containerColor = if (BackgroundConfig.isCustomBackgroundEnabled) {
-            MaterialTheme.colorScheme.surface
+            LocalFolkWallpaperTokens.current?.group?.fill ?: MaterialTheme.colorScheme.surface
         } else {
             MaterialTheme.colorScheme.surfaceColorAtElevation(FolkDimens.Size1)
         })
@@ -185,7 +186,7 @@ fun ListInfoCard(kpState: APApplication.State, apState: APApplication.State, sho
     Card(
         shape = FolkShape.Corner20,
         colors = CardDefaults.cardColors(containerColor = if (BackgroundConfig.isCustomBackgroundEnabled) {
-            MaterialTheme.colorScheme.surface
+            LocalFolkWallpaperTokens.current?.group?.fill ?: MaterialTheme.colorScheme.surface
         } else {
             MaterialTheme.colorScheme.surfaceColorAtElevation(FolkDimens.Size1)
         })

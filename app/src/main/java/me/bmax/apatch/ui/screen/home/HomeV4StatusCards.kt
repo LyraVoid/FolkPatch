@@ -62,6 +62,7 @@ import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.util.SystemInfoCollector
 import me.bmax.apatch.core.ui.R as CoreR
 import me.bmax.apatch.ui.theme.tokens.FolkShape
+import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
 
 @Composable
 fun HomeV4DeviceStatusCard(isWallpaperMode: Boolean, modifier: Modifier = Modifier) {
@@ -284,9 +285,9 @@ fun AndroidPatchCard(
     showInstallDialog: MutableState<Boolean>,
     isWallpaperMode: Boolean
 ) {
-    val containerColor = if (BackgroundConfig.isCustomBackgroundEnabled) {
-        // 中性 surface，避免强调容器降 alpha 后 on*Container 角色错配。
-        MaterialTheme.colorScheme.surface
+    val wallpaper = LocalFolkWallpaperTokens.current
+    val containerColor = if (wallpaper != null) {
+        wallpaper.group.fill
     } else {
         MaterialTheme.colorScheme.surfaceColorAtElevation(FolkDimens.Size1)
     }

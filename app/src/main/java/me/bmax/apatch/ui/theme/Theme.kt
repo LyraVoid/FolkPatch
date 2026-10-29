@@ -53,6 +53,8 @@ import me.bmax.apatch.ui.theme.tokens.FolkThemeCatalog
 import androidx.compose.material3.MotionScheme
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import me.bmax.apatch.ui.theme.tokens.FolkExpressiveMotionScheme
+import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
+import me.bmax.apatch.ui.theme.tokens.resolveFolkWallpaperTokens
 
 @Composable
 private fun SystemBarStyle(
@@ -282,6 +284,11 @@ fun APatchTheme(
                 LocalWallpaperContentVariant provides if (useCustomBackground) colorScheme.onSurfaceVariant else null,
                 // 对比度保护后的实际绘制 dim（仅壁纸模式非空）；BackgroundLayer 以它遮罩壁纸。
                 LocalWallpaperDim provides wallpaperTheme.renderDim,
+                LocalFolkWallpaperTokens provides if (useCustomBackground) {
+                    resolveFolkWallpaperTokens(colorScheme, BackgroundConfig.customBackgroundOpacity)
+                } else {
+                    null
+                },
             ) {
                 MonetColorsProvider.UpdateCss()
                 Box(modifier = Modifier.fillMaxSize()) {

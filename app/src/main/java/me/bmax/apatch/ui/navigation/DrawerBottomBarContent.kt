@@ -36,7 +36,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import me.bmax.apatch.ui.theme.BackgroundConfig
+import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
 
 /** A floating capsule whose selected destination opens to reveal its label. */
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
@@ -51,6 +51,7 @@ fun DrawerBottomBarContent(
     if (destinations.isEmpty()) return
     val spatialSpec = MaterialTheme.motionScheme.defaultSpatialSpec<Float>()
     val effectsSpec = MaterialTheme.motionScheme.defaultEffectsSpec<Color>()
+    val wallpaper = LocalFolkWallpaperTokens.current
     BoxWithConstraints(modifier = modifier) {
         val barWidth = (56.dp * destinations.size + 88.dp).coerceAtMost(maxWidth)
         // Reserve 48dp for every icon; give the remaining room to the open drawer.
@@ -76,23 +77,8 @@ fun DrawerBottomBarContent(
                         animationSpec = spatialSpec,
                         label = "drawerIconScale",
                     )
-                    // surfaceBright sits one step lighter than the bar's own
-                    // surfaceContainer in both light and dark, so the open pill
-                    // reads as a soft lift instead of a heavy block. When a
-                    // custom wallpaper is on, the pill follows the card
-                    // transparency but always stays one step above the
-                    // capsule, so the hierarchy survives even at full
-                    // transparency.
-                    val selectedPillColor = MaterialTheme.colorScheme.surfaceBright.let { pill ->
-                        if (BackgroundConfig.isCustomBackgroundEnabled) {
-                            pill.copy(
-                                alpha = (BackgroundConfig.customBackgroundOpacity + 0.35f)
-                                    .coerceIn(0.45f, 1f)
-                            )
-                        } else {
-                            pill
-                        }
-                    }
+                    val selectedPillColor = wallpaper?.selection?.fill
+                        ?: MaterialTheme.colorScheme.surfaceBright
                     val background by animateColorAsState(
                         targetValue = if (selected) selectedPillColor
                             else Color.Transparent,
@@ -102,7 +88,8 @@ fun DrawerBottomBarContent(
                     val label = stringResource(destination.label)
                     val count = badgeCount(destination)
                     val badgeLabel = if (count > 0) ", $count" else ""
-                    val tint = if (selected) MaterialTheme.colorScheme.onSurface
+                    val tint = if (selected) wallpaper?.selection?.contentColor
+                        ?: MaterialTheme.colorScheme.onSurface
                         else MaterialTheme.colorScheme.onSurfaceVariant
                     Row(
                         modifier = Modifier.weight(1f + (openWeight - 1f) * expansion)

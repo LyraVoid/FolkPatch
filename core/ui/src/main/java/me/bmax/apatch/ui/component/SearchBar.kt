@@ -51,6 +51,7 @@ import me.bmax.apatch.core.ui.R
 import androidx.compose.ui.res.stringResource
 import me.bmax.apatch.ui.theme.tokens.FolkShape
 import me.bmax.apatch.ui.theme.tokens.FolkTheme
+import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
 
 private const val TAG = "SearchBar"
 
@@ -135,9 +136,11 @@ fun SearchAppBar(
                     enter = fadeIn(MaterialTheme.motionScheme.defaultEffectsSpec()),
                     exit = fadeOut(MaterialTheme.motionScheme.fastEffectsSpec())
                 ) {
+                    val wallpaper = LocalFolkWallpaperTokens.current
+                    val searchFill = wallpaper?.raised?.fill ?: FolkTheme.palette.groupedInset
                     val searchFieldColors = TextFieldDefaults.colors(
-                        focusedContainerColor = FolkTheme.palette.groupedInset,
-                        unfocusedContainerColor = FolkTheme.palette.groupedInset,
+                        focusedContainerColor = searchFill,
+                        unfocusedContainerColor = searchFill,
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent,
                     )

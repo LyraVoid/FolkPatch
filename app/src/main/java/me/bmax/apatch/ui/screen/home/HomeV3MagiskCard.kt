@@ -43,6 +43,7 @@ import me.bmax.apatch.ui.theme.BackgroundManager
 import me.bmax.apatch.util.PermissionUtils
 import me.bmax.apatch.util.ui.showToast
 import me.bmax.apatch.ui.theme.tokens.FolkShape
+import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
 
 @Composable
 fun MagiskStyleCard(
@@ -130,7 +131,8 @@ fun MagiskStyleCard(
         shape = FolkShape.Corner20,
         colors = CardDefaults.cardColors(
             containerColor = if (hasCardWallpaper) FolkColors.Transparent
-                else MaterialTheme.colorScheme.surfaceColorAtElevation(FolkDimens.Size1),
+                else LocalFolkWallpaperTokens.current?.group?.fill
+                    ?: MaterialTheme.colorScheme.surfaceColorAtElevation(FolkDimens.Size1),
             contentColor = contentColor
         )
     ) {

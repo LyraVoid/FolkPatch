@@ -72,6 +72,7 @@ import me.bmax.apatch.util.migrateStockBootBackup
 import me.bmax.apatch.util.ui.APDialogBlurBehindUtils
 import me.bmax.apatch.util.ui.HomeBottomSpacer
 import me.bmax.apatch.ui.theme.tokens.FolkShape
+import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
 
 private enum class ApatchUninstallOption(
     @param:StringRes val titleRes: Int,
@@ -343,7 +344,7 @@ fun LearnMoreCard() {
     Card(
         shape = FolkShape.Corner20,
         colors = CardDefaults.cardColors(containerColor = if (BackgroundConfig.isCustomBackgroundEnabled) {
-            MaterialTheme.colorScheme.surface
+            LocalFolkWallpaperTokens.current?.group?.fill ?: MaterialTheme.colorScheme.surface
         } else {
             MaterialTheme.colorScheme.surfaceColorAtElevation(FolkDimens.Size1)
         })

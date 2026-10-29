@@ -5,7 +5,6 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -49,38 +48,6 @@ class FolkPaletteTest {
         assertEquals(scheme.surfaceBright, palette.groupedSurface)
         assertEquals(scheme.surfaceContainerHigh, palette.groupedInset)
         assertTrue(palette.onCustomBackground)
-    }
-
-    @Test
-    fun wallpaperChromeControlsTrackBackgroundOpacity() {
-        val base = lightColorScheme()
-        val scheme = base.copy(
-            background = base.background.copy(alpha = 0f),
-            surface = base.surface.copy(alpha = 0.5f),
-        )
-        val palette = FolkPalette.from(scheme)
-        val expected = 0.1f + 0.9f * scheme.surface.alpha
-
-        assertEquals(expected, palette.chromeControlAlpha, 0.001f)
-        assertEquals(
-            palette.chromeControlAlpha,
-            palette.chromeControlFill(base.surfaceContainerHighest).alpha,
-            0.002f,
-        )
-    }
-
-    @Test
-    fun regularChromeControlsStayOpaque() {
-        val scheme = lightColorScheme()
-        val palette = FolkPalette.from(scheme)
-
-        assertFalse(palette.onCustomBackground)
-        assertEquals(1f, palette.chromeControlAlpha, 0f)
-        assertEquals(
-            1f,
-            palette.chromeControlFill(scheme.surfaceContainerHighest).alpha,
-            0f,
-        )
     }
 
     @Test
@@ -157,15 +124,6 @@ class FolkPaletteTest {
             palette.onCustomBackground,
             FolkPalette.from(base.copy(background = Color.Black.copy(alpha = 0.5f)))
                 .onCustomBackground,
-        )
-        assertNotEquals(
-            palette.chromeControlAlpha,
-            FolkPalette.from(
-                base.copy(
-                    background = Color.Black.copy(alpha = 0.5f),
-                    surface = Color.Black.copy(alpha = 0.5f),
-                ),
-            ).chromeControlAlpha,
         )
     }
 }

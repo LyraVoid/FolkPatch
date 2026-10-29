@@ -59,6 +59,7 @@ import me.bmax.apatch.ui.theme.BackgroundManager
 import me.bmax.apatch.util.PermissionUtils
 import me.bmax.apatch.util.ui.showToast
 import me.bmax.apatch.ui.theme.tokens.FolkShape
+import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
 
 private val managerVersion = getManagerVersion()
 
@@ -446,8 +447,9 @@ fun SmallInfoCard(
     icon: ImageVector,
     onClick: () -> Unit
 ) {
-    val containerColor = if (BackgroundConfig.isCustomBackgroundEnabled) {
-        MaterialTheme.colorScheme.surface.copy(alpha = BackgroundConfig.customBackgroundOpacity)
+    val wallpaper = LocalFolkWallpaperTokens.current
+    val containerColor = if (wallpaper != null) {
+        wallpaper.group.fill
     } else {
         MaterialTheme.colorScheme.surfaceColorAtElevation(FolkDimens.Size1)
     }

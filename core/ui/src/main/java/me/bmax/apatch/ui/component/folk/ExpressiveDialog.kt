@@ -17,6 +17,7 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.DialogWindowProvider
 import me.bmax.apatch.ui.theme.tokens.FolkShape
 import me.bmax.apatch.ui.theme.tokens.FolkTheme
+import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
 import me.bmax.apatch.util.ui.APDialogBlurBehindUtils
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -33,6 +34,7 @@ fun ExpressiveDialog(
     ),
     content: @Composable () -> Unit,
 ) {
+    val wallpaper = LocalFolkWallpaperTokens.current
     BasicAlertDialog(
         onDismissRequest = onDismissRequest,
         properties = dialogProperties,
@@ -43,8 +45,8 @@ fun ExpressiveDialog(
                 .wrapContentHeight(),
             shape = shape,
             tonalElevation = AlertDialogDefaults.TonalElevation,
-            color = FolkTheme.palette.groupedInset,
-            contentColor = MaterialTheme.colorScheme.onSurface,
+            color = wallpaper?.overlay?.fill ?: FolkTheme.palette.groupedInset,
+            contentColor = wallpaper?.overlay?.contentColor ?: MaterialTheme.colorScheme.onSurface,
         ) {
             content()
 

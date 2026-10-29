@@ -57,6 +57,8 @@ import me.bmax.apatch.util.clearLegacyFolkBanner
 import me.bmax.apatch.util.CustomModuleInfo
 import me.bmax.apatch.util.apmCustomModuleInfoStorage
 import me.bmax.apatch.ui.theme.BackgroundConfig
+import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
+import me.bmax.apatch.ui.theme.tokens.WallpaperSurfaceRole
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 
@@ -295,8 +297,9 @@ fun ModuleItem(
 
     val insideSplicedGroup = LocalInsideSplicedGroup.current
 
-    val cardColor = if (isWallpaperMode) {
-        MaterialTheme.colorScheme.surface.copy(alpha = opacity)
+    val wallpaper = LocalFolkWallpaperTokens.current
+    val cardColor = if (wallpaper != null) {
+        wallpaper.material(WallpaperSurfaceRole.Group, minimumAlpha = 0.35f).fill
     } else {
         MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.2f)
     }

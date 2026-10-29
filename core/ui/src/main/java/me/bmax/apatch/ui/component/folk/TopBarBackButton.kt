@@ -15,7 +15,7 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import me.bmax.apatch.ui.theme.tokens.FolkTheme
+import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
 
 /** The filled, circular back control used by the settings app bars. */
 @Composable
@@ -27,6 +27,8 @@ fun TopBarBackButton(
 ) {
     val haptics = LocalHapticFeedback.current
     val interactionSource = remember { MutableInteractionSource() }
+    val wallpaper = LocalFolkWallpaperTokens.current
+    val tint = MaterialTheme.colorScheme.surfaceContainerHighest
     IconButton(
         modifier = modifier
             .padding(horizontal = horizontalPadding)
@@ -36,14 +38,9 @@ fun TopBarBackButton(
             onClick()
         },
         colors = IconButtonDefaults.iconButtonColors(
-            containerColor = FolkTheme.palette.chromeControlFill(
-                MaterialTheme.colorScheme.surfaceContainerHighest
-            ),
-            contentColor = if (FolkTheme.palette.onCustomBackground) {
-                MaterialTheme.colorScheme.onSurface
-            } else {
-                MaterialTheme.colorScheme.onSurfaceVariant
-            },
+            containerColor = wallpaper?.chromeControlFill(tint) ?: tint,
+            contentColor = wallpaper?.chrome?.contentColor
+                ?: MaterialTheme.colorScheme.onSurfaceVariant,
         ),
         interactionSource = interactionSource,
     ) {

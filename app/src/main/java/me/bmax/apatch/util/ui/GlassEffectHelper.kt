@@ -20,6 +20,7 @@ import io.github.fletchmckee.liquid.liquid
 import io.github.fletchmckee.liquid.liquefiable
 import io.github.fletchmckee.liquid.rememberLiquidState
 import me.bmax.apatch.ui.theme.BackgroundConfig
+import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
 
 fun isRealTimeBlurAvailable(): Boolean = Build.VERSION.SDK_INT >= 33
 
@@ -45,7 +46,8 @@ fun Modifier.navBarGlassEffect(
     enableBorder: Boolean = BackgroundConfig.isNavBarGlassBorderEnabled,
     liquidState: io.github.fletchmckee.liquid.LiquidState? = null,
 ): Modifier {
-    val isDarkTheme = !MaterialTheme.colorScheme.background.luminance().let { it > 0.5f }
+    val isDarkTheme = MaterialTheme.colorScheme.onSurface.luminance() > 0.5f
+    val wallpaper = LocalFolkWallpaperTokens.current
     val density = LocalDensity.current
     val halfDp = with(density) { 0.5.dp.toPx() }
     val oneDp = with(density) { 1.dp.toPx() }
@@ -54,7 +56,7 @@ fun Modifier.navBarGlassEffect(
     val fourDp = with(density) { 4.dp.toPx() }
     val eightDp = with(density) { 8.dp.toPx() }
 
-    val glassBaseColor = if (isDarkTheme) {
+    val glassBaseColor = wallpaper?.chrome?.fill ?: if (isDarkTheme) {
         MaterialTheme.colorScheme.surfaceContainerHighest.copy(alpha = 0.14f + (1f - transparency) * 0.10f)
     } else {
         MaterialTheme.colorScheme.surfaceContainerHighest.copy(alpha = 0.10f + (1f - transparency) * 0.08f)

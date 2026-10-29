@@ -62,6 +62,7 @@ import com.ramcosta.composedestinations.utils.rememberDestinationsNavigator
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.ui.theme.tokens.FolkTheme
+import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
 import me.bmax.apatch.util.BottomBarIconConfig
 import me.bmax.apatch.util.ui.FloatingBarConfig
 
@@ -85,6 +86,7 @@ fun BottomBarContent(
     isDrawer: Boolean = false,
 ) {
     val navigator = navController.rememberDestinationsNavigator()
+    val wallpaper = LocalFolkWallpaperTokens.current
     if (isDrawer) {
         DrawerBottomBarContent(
             destinations = visibleDestinations,
@@ -202,7 +204,8 @@ fun BottomBarContent(
                             .background(
                                 // secondaryContainer 与 onSecondaryContainer 必须配对；
                                 // 降 alpha 会让选中指示器失去对比度。
-                                color = MaterialTheme.colorScheme.secondaryContainer,
+                                color = wallpaper?.selection?.fill
+                                    ?: MaterialTheme.colorScheme.secondaryContainer,
                                 shape = itemShape
                             )
                             .then(
@@ -291,7 +294,8 @@ fun BottomBarContent(
                                 destination = destination,
                                 isSelected = isSelected,
                                 tint = if (isSelected) {
-                                    MaterialTheme.colorScheme.onSecondaryContainer
+                                    wallpaper?.selection?.contentColor
+                                        ?: MaterialTheme.colorScheme.onSecondaryContainer
                                 } else {
                                     MaterialTheme.colorScheme.onSurfaceVariant
                                 }
@@ -372,11 +376,8 @@ fun NavigationRailBar(navController: NavHostController) {
 
         NavigationRail(
             modifier = Modifier.fillMaxHeight(),
-            containerColor = if (BackgroundConfig.isCustomBackgroundEnabled) {
-                MaterialTheme.colorScheme.surface.copy(alpha = BackgroundConfig.customBackgroundOpacity)
-            } else {
-                FolkTheme.palette.groupedSurface
-            }
+            containerColor = LocalFolkWallpaperTokens.current?.chrome?.fill
+                ?: FolkTheme.palette.groupedSurface
         ) {
             Spacer(Modifier.weight(1f))
 

@@ -33,6 +33,7 @@ import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
 import me.bmax.apatch.core.ui.R as CoreR
 import me.bmax.apatch.ui.theme.tokens.FolkShape
+import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
 
 @Composable
 fun AStatusCard(apState: APApplication.State) {
@@ -42,7 +43,7 @@ fun AStatusCard(apState: APApplication.State) {
             // 壁纸模式下用中性 surface/onSurface，避免把强调容器降 alpha 后
             // onSecondaryContainer 文字直接压在壁纸上而失去对比度。
             containerColor = if (BackgroundConfig.isCustomBackgroundEnabled) {
-                MaterialTheme.colorScheme.surface
+                LocalFolkWallpaperTokens.current?.group?.fill ?: MaterialTheme.colorScheme.surface
             } else {
                 MaterialTheme.colorScheme.surfaceColorAtElevation(FolkDimens.Size1)
             },

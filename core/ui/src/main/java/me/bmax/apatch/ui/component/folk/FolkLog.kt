@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.bmax.apatch.ui.theme.tokens.FolkShape
 import me.bmax.apatch.ui.theme.tokens.FolkTheme
+import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
 
 /**
  * The pieces shared by every log screen: the neutral monospace line, the rounded
@@ -91,10 +92,12 @@ fun folkLogLevelColor(level: FolkLogLevel): Color = when (level) {
 /** The rounded neutral surface a log stream lives in. */
 @Composable
 fun FolkLogCard(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
+    val wallpaper = LocalFolkWallpaperTokens.current
     Surface(
         modifier = modifier,
         shape = FolkShape.Corner16,
-        color = FolkTheme.palette.groupedSurface,
+        color = wallpaper?.group?.fill ?: FolkTheme.palette.groupedSurface,
+        contentColor = wallpaper?.group?.contentColor ?: MaterialTheme.colorScheme.onSurface,
         content = content,
     )
 }
