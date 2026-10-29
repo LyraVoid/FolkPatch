@@ -1,168 +1,261 @@
 package me.bmax.apatch.ui.screen.settings
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.SearchOff
+import androidx.compose.material.icons.outlined.Brush
+import androidx.compose.material.icons.outlined.CloudUpload
+import androidx.compose.material.icons.outlined.Extension
+import androidx.compose.material.icons.outlined.Handyman
+import androidx.compose.material.icons.outlined.LibraryMusic
+import androidx.compose.material.icons.outlined.Lock
+import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material.icons.outlined.TouchApp
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.annotation.RootGraph
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import com.ramcosta.composedestinations.generated.destinations.GeneralSettingsScreenDestination
-import com.ramcosta.composedestinations.generated.destinations.AppearanceSettingsScreenDestination
-import com.ramcosta.composedestinations.generated.destinations.BehaviorSettingsScreenDestination
-import com.ramcosta.composedestinations.generated.destinations.SecuritySettingsScreenDestination
-import com.ramcosta.composedestinations.generated.destinations.BackupSettingsScreenDestination
-import com.ramcosta.composedestinations.generated.destinations.ModuleSettingsScreenDestination
-import com.ramcosta.composedestinations.generated.destinations.MultimediaSettingsScreenDestination
-import com.ramcosta.composedestinations.generated.destinations.FunctionSettingsScreenDestination
 import me.bmax.apatch.R
-import me.bmax.apatch.ui.component.SearchAppBar
-import me.bmax.apatch.ui.component.folk.FolkScaffold
-import me.bmax.apatch.util.ui.NavigationBarsSpacer
+import me.bmax.apatch.ui.component.folk.FolkNavigationPreference
+import me.bmax.apatch.ui.component.folk.FolkSettingsDimens
+import me.bmax.apatch.ui.component.folk.FolkSettingsGroup
 import me.bmax.apatch.ui.component.folk.FolkStateView
-import androidx.compose.material.icons.outlined.Search
-import androidx.compose.ui.semantics.Role
+import me.bmax.apatch.ui.component.folk.folkPressScale
 
-@Destination<RootGraph>
-@Composable
-fun SettingsSearchScreen(navigator: DestinationsNavigator) {
-    var searchQuery by rememberSaveable { mutableStateOf("") }
-    val context = LocalContext.current
+internal data class SettingsSearchShortcut(
+    val label: String,
+    val icon: ImageVector,
+    val onOpen: () -> Unit,
+)
 
-    val resolvedEntries = remember {
-        SettingsRegistry.resolveAll(context.resources)
-    }
+internal fun settingsSearchTokens(query: String): List<String> =
+    query.trim().split(Regex("\\s+")).filter(String::isNotEmpty)
 
-    val filteredResults = remember(searchQuery) {
-        if (searchQuery.isBlank()) emptyList()
-        else {
-            val query = searchQuery.lowercase()
-            resolvedEntries.filter { it.title.contains(query, ignoreCase = true) ||
-                    it.summary.contains(query, ignoreCase = true) ||
-                    it.categoryName.contains(query, ignoreCase = true) }
+internal fun settingsSearchResults(
+    query: String,
+    entries: List<ResolvedEntry>,
+): List<ResolvedEntry> {
+    val tokens = settingsSearchTokens(query)
+    if (tokens.isEmpty()) return emptyList()
+    return entries.filter { entry ->
+        tokens.all { token ->
+            entry.title.contains(token, ignoreCase = true) ||
+                entry.summary.contains(token, ignoreCase = true) ||
+                entry.categoryName.contains(token, ignoreCase = true)
         }
     }
+}
 
-    FolkScaffold(
-        topBar = {
-            SearchAppBar(
-                title = { Text(stringResource(R.string.settings_search_title)) },
-                searchText = searchQuery,
-                onSearchTextChange = { searchQuery = it },
-                onClearClick = { searchQuery = "" },
-                onBackClick = { navigator.popBackStack() },
-                startInSearchMode = true,
-            )
-        },
-        addBottomClearance = false,
-    ) { paddingValues ->
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues),
-        ) {
-            if (filteredResults.isEmpty()) {
-                item {
-                    FolkStateView(
-                        title = if (searchQuery.isBlank())
-                            stringResource(R.string.settings_search_empty_hint)
-                        else
-                            stringResource(R.string.settings_no_results),
-                        modifier = Modifier.padding(vertical = 48.dp),
-                        icon = Icons.Outlined.Search,
-                    )
+internal fun settingsMatchRanges(text: String, tokens: List<String>): List<IntRange> {
+    if (text.isEmpty() || tokens.isEmpty()) return emptyList()
+    val ranges = buildList {
+        tokens.forEach { token ->
+            var start = text.indexOf(token, ignoreCase = true)
+            while (start >= 0) {
+                add(start until start + token.length)
+                start = text.indexOf(token, start + 1, ignoreCase = true)
+            }
+        }
+    }.sortedBy { it.first }
+    if (ranges.isEmpty()) return emptyList()
+
+    val merged = mutableListOf(ranges.first())
+    ranges.drop(1).forEach { range ->
+        val current = merged.last()
+        if (range.first <= current.last + 1) {
+            merged[merged.lastIndex] = current.first..maxOf(current.last, range.last)
+        } else {
+            merged += range
+        }
+    }
+    return merged
+}
+
+@Composable
+internal fun SettingsSearchShortcuts(
+    shortcuts: List<SettingsSearchShortcut>,
+    onOpen: (SettingsSearchShortcut) -> Unit,
+    contentPadding: PaddingValues,
+) {
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = contentPadding,
+    ) {
+        item(key = "shortcut_spacer") { Spacer(Modifier.height(FolkSettingsDimens.SectionSpacing)) }
+        item(key = "shortcut_group") {
+            FolkSettingsGroup {
+                shortcuts.forEach { shortcut ->
+                    item(key = shortcut.label) {
+                        FolkNavigationPreference(
+                            icon = shortcut.icon,
+                            title = shortcut.label,
+                            onClick = { onOpen(shortcut) },
+                        )
+                    }
                 }
             }
-
-            val grouped = filteredResults.groupBy { it.entry.category }
-            grouped.forEach { (category, entries) ->
-                item(key = "header_${category.key}") {
-                    Text(
-                        text = stringResource(category.labelResId),
-                        style = MaterialTheme.typography.titleSmall,
-                        color = MaterialTheme.colorScheme.secondary,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp),
-                    )
-                }
-                items(entries, key = { it.entry.key }) { resolved ->
-                    SearchResultItem(
-                        title = resolved.title,
-                        summary = resolved.summary.ifBlank { null },
-                        categoryName = stringResource(resolved.entry.category.labelResId),
-                        onClick = {
-                            val highlightKey = resolved.entry.key
-                            when (category) {
-                                SettingCategory.GENERAL -> navigator.navigate(GeneralSettingsScreenDestination(highlightKey))
-                                SettingCategory.APPEARANCE -> navigator.navigate(AppearanceSettingsScreenDestination(highlightKey))
-                                SettingCategory.BEHAVIOR -> navigator.navigate(BehaviorSettingsScreenDestination(highlightKey))
-                                SettingCategory.SECURITY -> navigator.navigate(SecuritySettingsScreenDestination(highlightKey))
-                                SettingCategory.BACKUP -> navigator.navigate(BackupSettingsScreenDestination(highlightKey))
-                                SettingCategory.MODULE -> navigator.navigate(ModuleSettingsScreenDestination(highlightKey))
-                                SettingCategory.MULTIMEDIA -> navigator.navigate(MultimediaSettingsScreenDestination(highlightKey))
-                                SettingCategory.FUNCTION -> navigator.navigate(FunctionSettingsScreenDestination(highlightKey))
-                            }
-                        },
-                    )
-                }
-            }
-
-            item { Spacer(Modifier.height(16.dp)) }
-            item { NavigationBarsSpacer() }
         }
     }
 }
 
 @Composable
-private fun SearchResultItem(
-    title: String,
-    summary: String?,
-    categoryName: String,
+internal fun SettingsSearchResults(
+    query: String,
+    entries: List<ResolvedEntry>,
+    categories: Set<SettingCategory>,
+    onSelect: (ResolvedEntry) -> Unit,
+    contentPadding: PaddingValues,
+) {
+    val tokens = remember(query) { settingsSearchTokens(query) }
+    val results = remember(entries, query, categories) {
+        settingsSearchResults(query, entries.filter { it.entry.category in categories })
+    }
+    if (results.isEmpty()) {
+        FolkStateView(
+            title = stringResource(R.string.settings_no_results),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(contentPadding),
+            icon = Icons.Filled.SearchOff,
+        )
+        return
+    }
+
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = contentPadding,
+    ) {
+        results
+            .groupBy { it.entry.category }
+            .toList()
+            .sortedBy { (category, _) -> SearchCategoryOrder.indexOf(category) }
+            .forEach { (category, categoryResults) ->
+                item(key = "header_${category.key}") {
+                    Text(
+                        text = categoryResults.first().categoryName,
+                        style = MaterialTheme.typography.labelLarge,
+                        color = MaterialTheme.colorScheme.primary,
+                        fontWeight = FontWeight.SemiBold,
+                        modifier = Modifier.padding(
+                            start = 24.dp,
+                            end = 24.dp,
+                            top = 12.dp,
+                            bottom = 8.dp,
+                        ),
+                    )
+                }
+                item(key = "group_${category.key}") {
+                    FolkSettingsGroup {
+                        categoryResults.forEach { result ->
+                            item(key = result.entry.key) {
+                                SettingsSearchResultRow(
+                                    result = result,
+                                    tokens = tokens,
+                                    onClick = { onSelect(result) },
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+    }
+}
+
+private val SearchCategoryOrder = listOf(
+    SettingCategory.GENERAL,
+    SettingCategory.APPEARANCE,
+    SettingCategory.BEHAVIOR,
+    SettingCategory.FUNCTION,
+    SettingCategory.SECURITY,
+    SettingCategory.BACKUP,
+    SettingCategory.MODULE,
+    SettingCategory.MULTIMEDIA,
+)
+
+@Composable
+private fun SettingsSearchResultRow(
+    result: ResolvedEntry,
+    tokens: List<String>,
     onClick: () -> Unit,
 ) {
+    val interactionSource = remember { MutableInteractionSource() }
+    val haptics = LocalHapticFeedback.current
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(role = Role.Button, onClick = onClick)
-            .padding(horizontal = 24.dp, vertical = 16.dp),
+            .defaultMinSize(minHeight = 56.dp)
+            .folkPressScale(interactionSource)
+            .clickable(
+                role = Role.Button,
+                interactionSource = interactionSource,
+                indication = null,
+                onClick = {
+                    haptics.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                    onClick()
+                },
+            )
+            .padding(
+                start = FolkSettingsDimens.ItemHorizontalPadding,
+                end = FolkSettingsDimens.ItemEndPadding,
+                top = FolkSettingsDimens.ItemVerticalPaddingWithSummary,
+                bottom = FolkSettingsDimens.ItemVerticalPaddingWithSummary,
+            ),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Column(modifier = Modifier.weight(1f)) {
+        Icon(
+            imageVector = categoryIcon(result.entry.category),
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.size(FolkSettingsDimens.IconSize),
+        )
+        Spacer(Modifier.width(FolkSettingsDimens.IconSpacing))
+        Column(
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.spacedBy(2.dp),
+        ) {
             Text(
-                text = title,
+                text = highlightedText(result.title, settingsMatchRanges(result.title, tokens)),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurface,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
-            if (summary != null) {
-                Spacer(Modifier.height(2.dp))
+            if (result.summary.isNotEmpty()) {
                 Text(
-                    text = summary,
+                    text = highlightedText(
+                        result.summary,
+                        settingsMatchRanges(result.summary, tokens),
+                    ),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 2,
@@ -170,12 +263,35 @@ private fun SearchResultItem(
                 )
             }
         }
-        Spacer(Modifier.width(12.dp))
-        Text(
-            text = categoryName,
-            style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.outline,
-            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+        Spacer(Modifier.width(FolkSettingsDimens.TrailingSpacing))
+        Icon(
+            Icons.AutoMirrored.Filled.KeyboardArrowRight,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.size(FolkSettingsDimens.ChevronSize),
         )
     }
+}
+
+private fun highlightedText(text: String, ranges: List<IntRange>): AnnotatedString =
+    buildAnnotatedString {
+        append(text)
+        ranges.forEach { range ->
+            addStyle(
+                SpanStyle(fontWeight = FontWeight.SemiBold),
+                start = range.first,
+                end = (range.last + 1).coerceAtMost(text.length),
+            )
+        }
+    }
+
+internal fun categoryIcon(category: SettingCategory): ImageVector = when (category) {
+    SettingCategory.GENERAL -> Icons.Outlined.Settings
+    SettingCategory.APPEARANCE -> Icons.Outlined.Brush
+    SettingCategory.BEHAVIOR -> Icons.Outlined.TouchApp
+    SettingCategory.FUNCTION -> Icons.Outlined.Handyman
+    SettingCategory.SECURITY -> Icons.Outlined.Lock
+    SettingCategory.BACKUP -> Icons.Outlined.CloudUpload
+    SettingCategory.MODULE -> Icons.Outlined.Extension
+    SettingCategory.MULTIMEDIA -> Icons.Outlined.LibraryMusic
 }

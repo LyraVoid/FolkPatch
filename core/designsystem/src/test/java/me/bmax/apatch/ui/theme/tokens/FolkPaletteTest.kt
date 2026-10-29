@@ -50,4 +50,35 @@ class FolkPaletteTest {
         assertEquals(scheme.surfaceContainer, palette.groupedSurface)
         assertNotEquals(scheme.surfaceContainer, palette.groupedInset)
     }
+
+    @Test
+    fun wallpaperChromeControlsTrackBackgroundOpacity() {
+        val base = lightColorScheme()
+        val scheme = base.copy(
+            background = base.background.copy(alpha = 0f),
+            surface = base.surface.copy(alpha = 0.5f),
+        )
+        val palette = FolkPalette.from(scheme)
+        val expected = 0.1f + 0.9f * scheme.surface.alpha
+
+        assertEquals(expected, palette.chromeControlAlpha, 0.001f)
+        assertEquals(
+            palette.chromeControlAlpha,
+            palette.chromeControlFill(base.surfaceContainerHighest).alpha,
+            0.002f,
+        )
+    }
+
+    @Test
+    fun regularChromeControlsStayOpaque() {
+        val scheme = lightColorScheme()
+        val palette = FolkPalette.from(scheme)
+
+        assertEquals(1f, palette.chromeControlAlpha, 0f)
+        assertEquals(
+            1f,
+            palette.chromeControlFill(scheme.surfaceContainerHighest).alpha,
+            0f,
+        )
+    }
 }
