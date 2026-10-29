@@ -17,10 +17,10 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
-import me.bmax.apatch.ui.component.folk.FolkNavigationPreference
-import me.bmax.apatch.ui.component.folk.FolkSettingsGroup
-import me.bmax.apatch.ui.component.folk.FolkSettingsSection
-import me.bmax.apatch.ui.component.folk.FolkSwitchPreference
+import me.bmax.apatch.ui.component.SegmentedNavigationItem
+import me.bmax.apatch.ui.component.SegmentedColumn
+import me.bmax.apatch.ui.component.SegmentedSection
+import me.bmax.apatch.ui.component.SegmentedSwitchItem
 import me.bmax.apatch.ui.component.rememberConfirmDialog
 import me.bmax.apatch.util.APatchKeyHelper
 import androidx.compose.material.icons.outlined.*
@@ -46,10 +46,10 @@ fun SecuritySettingsContent(
     ) == androidx.biometric.BiometricManager.BIOMETRIC_SUCCESS
 
     if (canAuthenticate) {
-    FolkSettingsSection(title = stringResource(R.string.settings_section_security_auth)) {
-        FolkSettingsGroup(flat = flat, highlightKey = highlightKey) {
+    SegmentedSection(title = stringResource(R.string.settings_section_security_auth)) {
+        SegmentedColumn(flat = flat, highlightKey = highlightKey) {
             item(key = "security_biometric_login", visible = canAuthenticate) {
-                FolkSwitchPreference(
+                SegmentedSwitchItem(
                     icon = Icons.Outlined.Fingerprint,
                     title = stringResource(id = R.string.settings_biometric_login),
                     summary = stringResource(id = R.string.settings_biometric_login_summary),
@@ -91,7 +91,7 @@ fun SecuritySettingsContent(
 
             item(key = "security_strong_biometric", visible = biometricLogin && canAuthenticate) {
                 var strongBiometric by remember { mutableStateOf(prefs.getBoolean("strong_biometric", false)) }
-                FolkSwitchPreference(
+                SegmentedSwitchItem(
                     icon = Icons.Outlined.Shield,
                     title = stringResource(id = R.string.settings_strong_biometric),
                     summary = stringResource(id = R.string.settings_strong_biometric_summary),
@@ -107,15 +107,15 @@ fun SecuritySettingsContent(
     }
 
     if (kPatchReady) {
-    FolkSettingsSection(title = stringResource(R.string.settings_section_security_key)) {
-        FolkSettingsGroup(flat = flat, highlightKey = highlightKey) {
+    SegmentedSection(title = stringResource(R.string.settings_section_security_key)) {
+        SegmentedColumn(flat = flat, highlightKey = highlightKey) {
             item(key = "security_clear_superkey", visible = kPatchReady) {
                 val title = stringResource(id = R.string.clear_super_key)
                 val clearDialog = rememberConfirmDialog {
                     APatchKeyHelper.clearConfigKey()
                     APApplication.setSuperKeyAndRefresh("su")
                 }
-                FolkNavigationPreference(
+                SegmentedNavigationItem(
                     icon = Icons.Outlined.DeleteForever,
                     title = title,
                     onClick = {
@@ -131,7 +131,7 @@ fun SecuritySettingsContent(
                 var noStoreKey by remember {
                     mutableStateOf(APatchKeyHelper.shouldSkipStoreSuperKey())
                 }
-                FolkSwitchPreference(
+                SegmentedSwitchItem(
                     icon = Icons.Outlined.Key,
                     title = stringResource(id = R.string.settings_donot_store_superkey),
                     summary = stringResource(id = R.string.settings_donot_store_superkey_summary),

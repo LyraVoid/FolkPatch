@@ -31,8 +31,8 @@ import androidx.compose.ui.unit.dp
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.ExpressiveCard
 import me.bmax.apatch.ui.component.ExpressiveSwitch
-import me.bmax.apatch.ui.component.folk.FolkSettingsGroup
-import me.bmax.apatch.ui.component.folk.FolkSettingsSection
+import me.bmax.apatch.ui.component.SegmentedColumn
+import me.bmax.apatch.ui.component.SegmentedSection
 import androidx.compose.material.icons.outlined.*
 
 @Composable
@@ -67,8 +67,8 @@ fun FunctionSettingsHideSection(
 ) {
     val context = LocalContext.current
     if (kPatchReady && aPatchReady) {
-    FolkSettingsSection(title = stringResource(R.string.settings_section_function_hide)) {
-     FolkSettingsGroup(flat = flat, highlightKey = highlightKey) {
+    SegmentedSection(title = stringResource(R.string.settings_section_function_hide)) {
+     SegmentedColumn(flat = flat, highlightKey = highlightKey) {
         item(key = "function_kernel_spoof", visible = kPatchReady && aPatchReady) {
             val kernelSpoofTitle = stringResource(id = R.string.settings_kernel_spoof)
             val kernelSpoofSummary = stringResource(id = R.string.settings_kernel_spoof_summary)

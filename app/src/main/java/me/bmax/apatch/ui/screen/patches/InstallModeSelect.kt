@@ -64,7 +64,7 @@ import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.folk.FolkButtonDefaults
 import me.bmax.apatch.ui.component.folk.FolkScaffold
 import me.bmax.apatch.ui.component.folk.FolkTitleStyle
-import me.bmax.apatch.ui.component.SplicedColumnGroup
+import me.bmax.apatch.ui.component.SegmentedColumn
 import me.bmax.apatch.ui.component.rememberConfirmDialog
 import me.bmax.apatch.ui.viewmodel.PatchesViewModel
 import me.bmax.apatch.util.getFileNameFromUri
@@ -356,7 +356,7 @@ private fun SelectInstallMethod(
                 .verticalScroll(rememberScrollState())
                 .padding(vertical = 8.dp)
         ) {
-            SplicedColumnGroup {
+            SegmentedColumn {
                 // KernelPatch Patching/Installing
                 if (!jailbreakBlocked) item(key = "kp_install") {
                     ListItem(

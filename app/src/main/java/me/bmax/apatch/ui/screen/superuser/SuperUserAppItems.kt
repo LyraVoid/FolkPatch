@@ -31,7 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import me.bmax.apatch.ui.component.folk.FolkChevron
+import me.bmax.apatch.ui.component.SegmentedChevron
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -41,7 +41,7 @@ import me.bmax.apatch.APApplication
 import me.bmax.apatch.Natives
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.ExpressiveSwitch
-import me.bmax.apatch.ui.component.SwitchItem
+import me.bmax.apatch.ui.component.SegmentedSwitchItem
 import me.bmax.apatch.ui.viewmodel.SuperUserViewModel
 import me.bmax.apatch.util.PkgConfig
 import me.bmax.apatch.util.SuAuditLog
@@ -121,7 +121,7 @@ fun AppItemM3E(
                 onCheckedChange = { onToggleSelection?.invoke() },
             )
         } else {
-            FolkChevron()
+            SegmentedChevron()
         }
     }
 }
@@ -239,7 +239,7 @@ fun AppItemLegacy(
         visible = showEditProfile && !rootGranted,
         modifier = Modifier.fillMaxWidth()
     ) {
-        SwitchItem(
+        SegmentedSwitchItem(
             icon = Icons.Filled.Security,
             title = stringResource(id = R.string.su_pkg_excluded_setting_title),
             summary = stringResource(id = R.string.su_pkg_excluded_setting_summary),

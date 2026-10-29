@@ -15,7 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.edit
 import me.bmax.apatch.ui.component.folk.FolkAlertDialog
-import me.bmax.apatch.ui.component.folk.FolkSelectableRow
+import me.bmax.apatch.ui.component.SegmentedSelectableItem
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
 import me.bmax.apatch.util.*
@@ -203,7 +203,7 @@ fun LauncherIconStyleDialog(showDialog: MutableState<Boolean>, onStyleChanged: (
                         LauncherIconUtils.ICON_STYLE_GEOMETRY to R.string.launcher_icon_style_geometry,
                         LauncherIconUtils.ICON_STYLE_APATCH to R.string.launcher_icon_style_apatch
                     ).forEach { (style, labelId) ->
-                        FolkSelectableRow(
+                        SegmentedSelectableItem(
                             title = stringResource(labelId),
                             selected = currentStyle == style,
                             onClick = {
@@ -262,7 +262,7 @@ fun FolkXAnimationTypeDialog(showDialog: MutableState<Boolean>, onTypeChanged: (
                             "diagonal" -> R.string.settings_folkx_animation_diagonal
                             else -> R.string.settings_folkx_animation_linear
                         }
-                        FolkSelectableRow(
+                        SegmentedSelectableItem(
                             title = stringResource(labelId),
                             selected = currentType == type,
                             onClick = {
@@ -318,7 +318,7 @@ fun AppListLoadingSchemeDialog(showDialog: MutableState<Boolean>, onSchemeChange
                     )
 
                     schemes.forEach { (scheme, labelId) ->
-                        FolkSelectableRow(
+                        SegmentedSelectableItem(
                             title = stringResource(labelId),
                             selected = currentScheme == scheme,
                             onClick = {

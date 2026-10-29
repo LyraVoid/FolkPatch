@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.DialogWindowProvider
 import me.bmax.apatch.ui.component.folk.FolkAlertDialog
-import me.bmax.apatch.ui.component.folk.FolkSelectableRow
+import me.bmax.apatch.ui.component.SegmentedSelectableItem
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.folk.FolkButtonDefaults
 import me.bmax.apatch.ui.theme.ThemeManager
@@ -283,22 +283,22 @@ fun NavModeChooseDialog(
             Text(text = stringResource(R.string.settings_nav_scheme), style = MaterialTheme.typography.headlineSmall, modifier = Modifier.padding(bottom = 16.dp))
             Surface(shape = FolkShape.Corner12, color = AlertDialogDefaults.containerColor, tonalElevation = 2.dp) {
                 Column {
-                    FolkSelectableRow(
+                    SegmentedSelectableItem(
                         title = stringResource(R.string.settings_nav_mode_floating),
                         selected = currentMode == "floating",
                         onClick = { onModeSelected("floating") }
                     )
-                    FolkSelectableRow(
+                    SegmentedSelectableItem(
                         title = stringResource(R.string.settings_nav_mode_auto),
                         selected = currentMode == "auto",
                         onClick = { onModeSelected("auto") }
                     )
-                    FolkSelectableRow(
+                    SegmentedSelectableItem(
                         title = stringResource(R.string.settings_nav_mode_bottom),
                         selected = currentMode == "bottom",
                         onClick = { onModeSelected("bottom") }
                     )
-                    FolkSelectableRow(
+                    SegmentedSelectableItem(
                         title = stringResource(R.string.settings_nav_mode_rail),
                         selected = currentMode == "rail",
                         onClick = { onModeSelected("rail") }
@@ -324,12 +324,12 @@ fun StatsTopLayoutChooseDialog(
             Text(text = stringResource(R.string.settings_stats_top_layout), style = MaterialTheme.typography.headlineSmall, modifier = Modifier.padding(bottom = 16.dp))
             Surface(shape = FolkShape.Corner12, color = AlertDialogDefaults.containerColor, tonalElevation = 2.dp) {
                 Column {
-                    FolkSelectableRow(
+                    SegmentedSelectableItem(
                         title = stringResource(R.string.settings_stats_top_layout_list),
                         selected = currentMode == "list",
                         onClick = { onModeSelected("list") }
                     )
-                    FolkSelectableRow(
+                    SegmentedSelectableItem(
                         title = stringResource(R.string.settings_stats_top_layout_grid),
                         selected = currentMode == "grid",
                         onClick = { onModeSelected("grid") }

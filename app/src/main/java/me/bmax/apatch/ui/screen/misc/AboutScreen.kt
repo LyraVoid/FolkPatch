@@ -27,14 +27,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.dropUnlessResumed
-import me.bmax.apatch.ui.component.folk.FolkChevron
+import me.bmax.apatch.ui.component.SegmentedChevron
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import me.bmax.apatch.BuildConfig
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.ExpressiveCard
-import me.bmax.apatch.ui.component.SplicedColumnGroup
+import me.bmax.apatch.ui.component.SegmentedColumn
 import me.bmax.apatch.ui.component.folk.FolkScaffold
 import me.bmax.apatch.ui.component.folk.FolkTitleStyle
 import me.bmax.apatch.util.Version
@@ -138,8 +138,8 @@ fun AboutScreen(navigator: DestinationsNavigator) {
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    // Links — M3E SplicedColumnGroup
-                    SplicedColumnGroup(
+                    // Links — M3E SegmentedColumn
+                    SegmentedColumn(
                         modifier = Modifier.padding(horizontal = 0.dp),
                     ) {
                         item {
@@ -197,6 +197,6 @@ private fun SplicedLinkItem(
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.weight(1f),
         )
-        FolkChevron()
+        SegmentedChevron()
     }
 }

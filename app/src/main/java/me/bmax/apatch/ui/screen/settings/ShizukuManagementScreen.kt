@@ -59,8 +59,8 @@ import me.bmax.apatch.ui.component.folk.FolkScaffold
 import me.bmax.apatch.ui.component.folk.FolkTitleStyle
 import me.bmax.apatch.ui.screen.superuser.LabelText
 import me.bmax.apatch.util.ShizukuServiceManager
-import me.bmax.apatch.ui.component.folk.FolkSettingsGroup
-import me.bmax.apatch.ui.component.folk.FolkSwitchPreference
+import me.bmax.apatch.ui.component.SegmentedColumn
+import me.bmax.apatch.ui.component.SegmentedSwitchItem
 import androidx.compose.material.icons.outlined.*
 import me.bmax.apatch.ui.component.folk.FolkStateView
 import androidx.compose.material.icons.outlined.Apps
@@ -218,8 +218,8 @@ fun ShizukuManagementScreen(navigator: DestinationsNavigator) {
                             .getOrDefault(app.packageInfo.packageName)
                     }
                     // One group per app: keep a gap between the cards (the
-                    // settings sub-pages get this from FolkSettingsSection).
-                    FolkSettingsGroup(
+                    // settings sub-pages get this from SegmentedSection).
+                    SegmentedColumn(
                         flat = true,
                         modifier = Modifier.padding(bottom = 10.dp),
                     ) {
@@ -240,7 +240,7 @@ fun ShizukuManagementScreen(navigator: DestinationsNavigator) {
                             )
                         }
                         item(key = "allow") {
-                            FolkSwitchPreference(
+                            SegmentedSwitchItem(
                                 icon = Icons.Outlined.Shield,
                                 title = stringResource(R.string.shizuku_management_allowed_title),
                                 summary = if (app.allowed) {
@@ -262,7 +262,7 @@ fun ShizukuManagementScreen(navigator: DestinationsNavigator) {
                         }
                         if (serverIsRoot) {
                             item(key = "root") {
-                                FolkSwitchPreference(
+                                SegmentedSwitchItem(
                                     icon = Icons.Outlined.Lock,
                                     title = stringResource(R.string.shizuku_management_root_access),
                                     summary = stringResource(R.string.shizuku_management_root_access_desc),

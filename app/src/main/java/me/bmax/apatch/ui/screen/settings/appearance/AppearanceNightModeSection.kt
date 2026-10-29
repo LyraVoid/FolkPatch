@@ -25,8 +25,8 @@ import me.bmax.apatch.ui.component.SwitchIconState
 import me.bmax.apatch.ui.component.ThemeColorPicker
 import me.bmax.apatch.ui.component.ThemeMode
 import me.bmax.apatch.ui.component.ThemeModeSelector
-import me.bmax.apatch.ui.component.folk.FolkSettingsSectionGroup
-import me.bmax.apatch.ui.component.folk.FolkSwitchPreference
+import me.bmax.apatch.ui.component.SegmentedColumn
+import me.bmax.apatch.ui.component.SegmentedSwitchItem
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.ui.theme.ColorGenerationMode
 import me.bmax.apatch.ui.theme.ColorStandard
@@ -63,7 +63,7 @@ fun AppearanceNightModeSection(
 ) {
     val prefs = APApplication.sharedPreferences
 
-    FolkSettingsSectionGroup(title = stringResource(R.string.settings_appearance_night_mode), flat = flat, highlightKey = highlightKey) {
+    SegmentedColumn(title = stringResource(R.string.settings_appearance_night_mode), flat = flat, highlightKey = highlightKey) {
         if (isNightModeSupported) {
             item(key = "appearance_theme_mode") {
                 ThemeModeSelector(
@@ -181,7 +181,7 @@ fun AppearanceNightModeSection(
 
         item(key = "appearance_switch_icon") {
             var showSwitchIcon by remember { mutableStateOf(SwitchIconState.showIcon) }
-            FolkSwitchPreference(
+            SegmentedSwitchItem(
                 icon = Icons.Outlined.ToggleOn,
                 title = stringResource(R.string.settings_switch_icon),
                 summary = stringResource(R.string.settings_switch_icon_desc),
@@ -196,7 +196,7 @@ fun AppearanceNightModeSection(
 
         item(key = "appearance_discrete_slider") {
             var isDiscreteSlider by remember { mutableStateOf(SliderStyleConfig.isDiscrete) }
-            FolkSwitchPreference(
+            SegmentedSwitchItem(
                 icon = Icons.Outlined.Segment,
                 title = stringResource(R.string.settings_discrete_slider),
                 summary = stringResource(R.string.settings_discrete_slider_desc),

@@ -15,7 +15,7 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import me.bmax.apatch.R
-import me.bmax.apatch.ui.component.SegmentedControl
+import me.bmax.apatch.ui.component.SegmentedChoiceRow
 import me.bmax.apatch.ui.component.folk.FolkSettingsDimens
 import me.bmax.apatch.ui.wallpaper.WallpaperDevice
 
@@ -49,11 +49,9 @@ internal fun WallpaperDisplaySheet(
                 text = stringResource(R.string.wallpaper_display_options),
                 style = MaterialTheme.typography.titleMedium,
             )
-            SegmentedControl(
+            SegmentedChoiceRow(
                 items = devices.map { stringResource(it.labelRes) },
                 selectedIndex = devices.indexOf(device),
-                color = MaterialTheme.colorScheme.surface.copy(alpha = 0f),
-                contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
                 onItemSelection = { index ->
                     haptics.performHapticFeedback(HapticFeedbackType.TextHandleMove)
                     onDeviceSelected(devices[index])
@@ -64,11 +62,9 @@ internal fun WallpaperDisplaySheet(
                 style = MaterialTheme.typography.titleSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
-            SegmentedControl(
+            SegmentedChoiceRow(
                 items = layoutLabels,
                 selectedIndex = layoutIndex,
-                color = MaterialTheme.colorScheme.surface.copy(alpha = 0f),
-                contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
                 onItemSelection = { index ->
                     haptics.performHapticFeedback(HapticFeedbackType.TextHandleMove)
                     onLayoutSelected(index)

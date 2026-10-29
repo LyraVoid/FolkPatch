@@ -9,7 +9,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.bmax.apatch.ui.component.folk.FolkAlertDialog
-import me.bmax.apatch.ui.component.folk.FolkSelectableRow
+import me.bmax.apatch.ui.component.SegmentedSelectableItem
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.theme.SoundEffectConfig
 import me.bmax.apatch.ui.theme.VibrationConfig
@@ -59,7 +59,7 @@ fun MultimediaDialogs(
                     tonalElevation = 2.dp
                 ) {
                     Column {
-                        FolkSelectableRow(
+                        SegmentedSelectableItem(
                             title = soundEffectSourceLocal,
                             selected = SoundEffectConfig.sourceType == SoundEffectConfig.SOURCE_TYPE_LOCAL,
                             onClick = {
@@ -69,7 +69,7 @@ fun MultimediaDialogs(
                             }
                         )
 
-                        FolkSelectableRow(
+                        SegmentedSelectableItem(
                             title = soundEffectSourcePreset,
                             selected = SoundEffectConfig.sourceType == SoundEffectConfig.SOURCE_TYPE_PRESET,
                             onClick = {
@@ -116,7 +116,7 @@ fun MultimediaDialogs(
                     androidx.compose.foundation.lazy.LazyColumn {
                         items(SoundEffectConfig.PRESETS.size, key = { it }) { index ->
                             val preset = SoundEffectConfig.PRESETS[index]
-                            FolkSelectableRow(
+                            SegmentedSelectableItem(
                                 title = preset,
                                 selected = SoundEffectConfig.presetName == preset,
                                 onClick = {
@@ -161,7 +161,7 @@ fun MultimediaDialogs(
                     tonalElevation = 2.dp
                 ) {
                     Column {
-                        FolkSelectableRow(
+                        SegmentedSelectableItem(
                             title = stringResource(R.string.settings_sound_effect_scope_global),
                             selected = SoundEffectConfig.scope == SoundEffectConfig.SCOPE_GLOBAL,
                             onClick = {
@@ -171,7 +171,7 @@ fun MultimediaDialogs(
                             }
                         )
 
-                        FolkSelectableRow(
+                        SegmentedSelectableItem(
                             title = stringResource(R.string.settings_sound_effect_scope_bottom_bar),
                             selected = SoundEffectConfig.scope == SoundEffectConfig.SCOPE_BOTTOM_BAR,
                             onClick = {
@@ -215,7 +215,7 @@ fun MultimediaDialogs(
                     tonalElevation = 2.dp
                 ) {
                     Column {
-                        FolkSelectableRow(
+                        SegmentedSelectableItem(
                             title = startupSourceLocal,
                             selected = SoundEffectConfig.startupSourceType == SoundEffectConfig.SOURCE_TYPE_LOCAL,
                             onClick = {
@@ -225,7 +225,7 @@ fun MultimediaDialogs(
                             }
                         )
 
-                        FolkSelectableRow(
+                        SegmentedSelectableItem(
                             title = startupSourcePreset,
                             selected = SoundEffectConfig.startupSourceType == SoundEffectConfig.SOURCE_TYPE_PRESET,
                             onClick = {
@@ -272,7 +272,7 @@ fun MultimediaDialogs(
                     androidx.compose.foundation.lazy.LazyColumn {
                         items(SoundEffectConfig.STARTUP_PRESETS.size, key = { it }) { index ->
                             val preset = SoundEffectConfig.STARTUP_PRESETS[index]
-                            FolkSelectableRow(
+                            SegmentedSelectableItem(
                                 title = preset,
                                 selected = SoundEffectConfig.startupPresetName == preset,
                                 onClick = {
@@ -317,7 +317,7 @@ fun MultimediaDialogs(
                     tonalElevation = 2.dp
                 ) {
                     Column {
-                        FolkSelectableRow(
+                        SegmentedSelectableItem(
                             title = stringResource(R.string.settings_vibration_scope_global),
                             selected = VibrationConfig.scope == VibrationConfig.SCOPE_GLOBAL,
                             onClick = {
@@ -327,7 +327,7 @@ fun MultimediaDialogs(
                             }
                         )
 
-                        FolkSelectableRow(
+                        SegmentedSelectableItem(
                             title = stringResource(R.string.settings_vibration_scope_bottom_bar),
                             selected = VibrationConfig.scope == VibrationConfig.SCOPE_BOTTOM_BAR,
                             onClick = {

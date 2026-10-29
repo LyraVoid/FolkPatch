@@ -16,10 +16,10 @@ import me.bmax.apatch.ui.component.ExpressiveCard
 import me.bmax.apatch.ui.component.LoadingDialogHandle
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.util.ui.showToast
-import me.bmax.apatch.ui.component.folk.FolkSettingsSectionGroup
-import me.bmax.apatch.ui.component.folk.FolkSliderPreference
-import me.bmax.apatch.ui.component.folk.FolkSwitchPreference
-import me.bmax.apatch.ui.component.folk.FolkValuePreference
+import me.bmax.apatch.ui.component.SegmentedColumn
+import me.bmax.apatch.ui.component.SegmentedSliderItem
+import me.bmax.apatch.ui.component.SegmentedSwitchItem
+import me.bmax.apatch.ui.component.SegmentedValueItem
 import androidx.compose.material.icons.outlined.*
 
 @Composable
@@ -32,9 +32,9 @@ fun AppearanceBannerSection(
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
-    FolkSettingsSectionGroup(title = stringResource(R.string.settings_appearance_banner), flat = flat, highlightKey = highlightKey) {
+    SegmentedColumn(title = stringResource(R.string.settings_appearance_banner), flat = flat, highlightKey = highlightKey) {
         item(key = "appearance_banner") {
-            FolkSwitchPreference(
+            SegmentedSwitchItem(
                 icon = Icons.Outlined.Campaign,
                 title = stringResource(id = R.string.apm_enable_module_banner),
                 summary = stringResource(id = R.string.apm_enable_module_banner_summary),
@@ -48,7 +48,7 @@ fun AppearanceBannerSection(
 
         if (BackgroundConfig.isBannerEnabled) {
             item(key = "appearance_folk_banner") {
-                FolkSwitchPreference(
+                SegmentedSwitchItem(
                     icon = Icons.Outlined.Image,
                     title = stringResource(id = R.string.apm_enable_folk_banner),
                     summary = stringResource(id = R.string.apm_enable_folk_banner_summary),
@@ -62,7 +62,7 @@ fun AppearanceBannerSection(
 
             if (BackgroundConfig.isFolkBannerEnabled) {
                 item(key = "appearance_banner_api_mode") {
-                    FolkSwitchPreference(
+                    SegmentedSwitchItem(
                         icon = Icons.Outlined.Api,
                         title = stringResource(id = R.string.apm_banner_api_mode),
                         summary = stringResource(id = R.string.apm_banner_api_mode_summary),
@@ -88,7 +88,7 @@ fun AppearanceBannerSection(
                         }
 
                         Column {
-                            FolkValuePreference(
+                            SegmentedValueItem(
                 icon = Icons.Outlined.Api,
                 title = stringResource(id = R.string.apm_banner_api_source),
                 summary = apiSourceSummary,
@@ -114,7 +114,7 @@ fun AppearanceBannerSection(
                                 )
                             }
 
-                            FolkValuePreference(
+                            SegmentedValueItem(
                 icon = Icons.Outlined.Store,
                 title = stringResource(id = R.string.apm_api_marketplace_title),
                 onClick = { onNavigateToApiMarketplace() },
@@ -125,7 +125,7 @@ fun AppearanceBannerSection(
             }
 
             item(key = "appearance_banner_opacity") {
-                FolkSwitchPreference(
+                SegmentedSwitchItem(
                     icon = Icons.Outlined.Opacity,
                     title = stringResource(id = R.string.settings_banner_custom_opacity),
                     summary = stringResource(id = R.string.settings_banner_custom_opacity_summary),
@@ -139,7 +139,7 @@ fun AppearanceBannerSection(
 
             if (BackgroundConfig.isBannerCustomOpacityEnabled) {
                 item(key = "appearance_banner_opacity_slider") {
-                    FolkSliderPreference(
+                    SegmentedSliderItem(
                         title = stringResource(id = R.string.settings_banner_opacity),
                         value = BackgroundConfig.bannerCustomOpacity,
                         onValueChange = { BackgroundConfig.setBannerCustomOpacityValue(it) },

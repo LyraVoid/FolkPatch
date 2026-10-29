@@ -38,8 +38,8 @@ import me.bmax.apatch.ui.component.DualBackgroundSettings
 import me.bmax.apatch.ui.component.ExpressiveCard
 import me.bmax.apatch.ui.component.LoadingDialogHandle
 import me.bmax.apatch.ui.component.rememberConfirmDialog
-import me.bmax.apatch.ui.component.folk.FolkSettingsSectionGroup
-import me.bmax.apatch.ui.component.folk.FolkSwitchPreference
+import me.bmax.apatch.ui.component.SegmentedColumn
+import me.bmax.apatch.ui.component.SegmentedSwitchItem
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.ui.theme.BackgroundManager
 import me.bmax.apatch.util.PermissionUtils
@@ -77,13 +77,13 @@ fun AppearanceFocusCardSection(
         }
     }
 
-    FolkSettingsSectionGroup(
+    SegmentedColumn(
         title = stringResource(R.string.focus_card_background_title),
         flat = flat,
         highlightKey = highlightKey,
     ) {
         item(key = "appearance_focus_card_background_enabled") {
-            FolkSwitchPreference(
+            SegmentedSwitchItem(
                 icon = Icons.Outlined.Wallpaper,
                 title = stringResource(R.string.settings_focus_card_background),
                 summary = if (BackgroundConfig.isFocusCardBackgroundEnabled) {

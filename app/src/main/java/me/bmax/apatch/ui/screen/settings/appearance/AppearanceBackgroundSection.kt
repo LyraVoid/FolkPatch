@@ -31,10 +31,10 @@ import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.LoadingDialogHandle
 import me.bmax.apatch.ui.component.rememberConfirmDialog
 import me.bmax.apatch.ui.component.rememberSystemCropLauncher
-import me.bmax.apatch.ui.component.folk.FolkSettingsSectionGroup
-import me.bmax.apatch.ui.component.folk.FolkSliderPreference
-import me.bmax.apatch.ui.component.folk.FolkSwitchPreference
-import me.bmax.apatch.ui.component.folk.FolkValuePreference
+import me.bmax.apatch.ui.component.SegmentedColumn
+import me.bmax.apatch.ui.component.SegmentedSliderItem
+import me.bmax.apatch.ui.component.SegmentedSwitchItem
+import me.bmax.apatch.ui.component.SegmentedValueItem
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.ui.theme.BackgroundManager
 import me.bmax.apatch.ui.theme.refreshTheme
@@ -203,9 +203,9 @@ fun AppearanceBackgroundSection(
         }
     }
 
-    FolkSettingsSectionGroup(title = stringResource(R.string.settings_appearance_background), flat = flat, highlightKey = highlightKey) {
+    SegmentedColumn(title = stringResource(R.string.settings_appearance_background), flat = flat, highlightKey = highlightKey) {
         item(key = "appearance_custom_background") {
-            FolkSwitchPreference(
+            SegmentedSwitchItem(
                 icon = Icons.Outlined.Wallpaper,
                 title = stringResource(id = R.string.settings_custom_background),
                 summary = if (BackgroundConfig.isCustomBackgroundEnabled) stringResource(id = R.string.settings_custom_background_enabled) else stringResource(id = R.string.settings_custom_background_summary),
@@ -221,7 +221,7 @@ fun AppearanceBackgroundSection(
         if (BackgroundConfig.isCustomBackgroundEnabled) {
             if (!BackgroundConfig.isVideoBackgroundEnabled) {
                 item(key = "appearance_bg_dual_dim") {
-                    FolkSwitchPreference(
+                    SegmentedSwitchItem(
                         icon = Icons.Outlined.Contrast,
                         title = stringResource(id = R.string.settings_custom_background_dual_dim),
                         summary = stringResource(id = R.string.settings_custom_background_dual_dim_desc),
@@ -235,7 +235,7 @@ fun AppearanceBackgroundSection(
                 }
 
                 item(key = "appearance_bg_opacity") {
-                    FolkSliderPreference(
+                    SegmentedSliderItem(
                         title = stringResource(id = R.string.settings_custom_background_opacity),
                         value = BackgroundConfig.customBackgroundOpacity,
                         onValueChange = { BackgroundConfig.setCustomBackgroundOpacityValue(it) },
@@ -244,7 +244,7 @@ fun AppearanceBackgroundSection(
                 }
 
                 item(key = "appearance_bg_blur") {
-                    FolkSliderPreference(
+                    SegmentedSliderItem(
                         title = stringResource(id = R.string.settings_custom_background_blur),
                         value = BackgroundConfig.customBackgroundBlur,
                         valueRange = 0f..50f,
@@ -256,7 +256,7 @@ fun AppearanceBackgroundSection(
 
                 if (!BackgroundConfig.isDualBackgroundDimEnabled) {
                     item(key = "appearance_bg_dim") {
-                        FolkSliderPreference(
+                        SegmentedSliderItem(
                             title = stringResource(id = R.string.settings_custom_background_dim),
                             value = BackgroundConfig.customBackgroundDim,
                             onValueChange = { BackgroundConfig.setCustomBackgroundDimValue(it) },
@@ -265,7 +265,7 @@ fun AppearanceBackgroundSection(
                     }
                 } else {
                     item(key = "appearance_bg_day_dim") {
-                        FolkSliderPreference(
+                        SegmentedSliderItem(
                             title = stringResource(id = R.string.settings_custom_background_day_dim),
                             value = BackgroundConfig.customBackgroundDayDim,
                             onValueChange = { BackgroundConfig.setCustomBackgroundDayDimValue(it) },
@@ -274,7 +274,7 @@ fun AppearanceBackgroundSection(
                     }
 
                     item(key = "appearance_bg_night_dim") {
-                        FolkSliderPreference(
+                        SegmentedSliderItem(
                             title = stringResource(id = R.string.settings_custom_background_night_dim),
                             value = BackgroundConfig.customBackgroundNightDim,
                             onValueChange = { BackgroundConfig.setCustomBackgroundNightDimValue(it) },
@@ -285,7 +285,7 @@ fun AppearanceBackgroundSection(
             }
 
             item(key = "appearance_video_background") {
-                FolkSwitchPreference(
+                SegmentedSwitchItem(
                     icon = Icons.Outlined.VideoFile,
                     title = stringResource(id = R.string.settings_video_background),
                     summary = stringResource(id = R.string.settings_video_background_summary),
@@ -300,7 +300,7 @@ fun AppearanceBackgroundSection(
 
             if (BackgroundConfig.isVideoBackgroundEnabled) {
                 item(key = "appearance_select_video") {
-                    FolkValuePreference(
+                    SegmentedValueItem(
             icon = Icons.Outlined.VideoFile,
             title = stringResource(id = R.string.settings_select_video),
             summary = if (!BackgroundConfig.videoBackgroundUri.isNullOrEmpty()) stringResource(id = R.string.settings_video_selected) else null,
@@ -328,7 +328,7 @@ fun AppearanceBackgroundSection(
                         )
                         val clearVideoTitle = stringResource(id = R.string.settings_clear_video_background)
                         val clearVideoConfirm = context.getString(R.string.settings_clear_video_background_confirm)
-                        FolkValuePreference(
+                        SegmentedValueItem(
             icon = Icons.Outlined.Delete,
             title = clearVideoTitle,
             onClick = {                                    clearVideoDialog.showConfirm(
@@ -342,7 +342,7 @@ fun AppearanceBackgroundSection(
                 }
 
                 item(key = "appearance_video_volume") {
-                    FolkSliderPreference(
+                    SegmentedSliderItem(
                         title = stringResource(id = R.string.settings_video_volume),
                         value = BackgroundConfig.videoVolume,
                         onValueChange = { BackgroundConfig.setVideoVolumeValue(it) },
@@ -351,7 +351,7 @@ fun AppearanceBackgroundSection(
                 }
             } else {
                 item(key = "appearance_multi_background") {
-                    FolkSwitchPreference(
+                    SegmentedSwitchItem(
                         icon = Icons.Outlined.GridView,
                         title = stringResource(id = R.string.settings_multi_background_mode),
                         summary = stringResource(id = R.string.settings_multi_background_mode_summary),
@@ -375,7 +375,7 @@ fun AppearanceBackgroundSection(
                         )
                         Column {
                             multiItems.forEach { (titleRes, type, uri) ->
-                                FolkValuePreference(
+                                SegmentedValueItem(
             icon = Icons.Outlined.Image,
             title = stringResource(id = titleRes),
             summary = if (!uri.isNullOrEmpty()) stringResource(id = R.string.settings_background_selected) else null,
@@ -397,7 +397,7 @@ fun AppearanceBackgroundSection(
                     }
                 } else {
                     item(key = "appearance_select_background") {
-                        FolkValuePreference(
+                        SegmentedValueItem(
             icon = Icons.Outlined.Image,
             title = stringResource(id = R.string.settings_select_background_image),
             summary = if (!BackgroundConfig.customBackgroundUri.isNullOrEmpty()) stringResource(id = R.string.settings_background_selected) else null,
@@ -431,7 +431,7 @@ fun AppearanceBackgroundSection(
                             )
                             val clearBgTitle = stringResource(id = R.string.settings_clear_background)
                             val clearBgConfirm = context.getString(R.string.settings_clear_background_confirm)
-                            FolkValuePreference(
+                            SegmentedValueItem(
             icon = Icons.Outlined.Delete,
             title = clearBgTitle,
             onClick = {                                        clearBackgroundDialog.showConfirm(

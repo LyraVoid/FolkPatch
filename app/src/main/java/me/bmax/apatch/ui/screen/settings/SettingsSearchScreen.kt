@@ -46,9 +46,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import me.bmax.apatch.R
-import me.bmax.apatch.ui.component.folk.FolkNavigationPreference
+import me.bmax.apatch.ui.component.SegmentedNavigationItem
 import me.bmax.apatch.ui.component.folk.FolkSettingsDimens
-import me.bmax.apatch.ui.component.folk.FolkSettingsGroup
+import me.bmax.apatch.ui.component.SegmentedColumn
 import me.bmax.apatch.ui.component.folk.FolkStateView
 import me.bmax.apatch.ui.component.folk.folkPressScale
 
@@ -113,10 +113,10 @@ internal fun SettingsSearchShortcuts(
     ) {
         item(key = "shortcut_spacer") { Spacer(Modifier.height(FolkSettingsDimens.SectionSpacing)) }
         item(key = "shortcut_group") {
-            FolkSettingsGroup {
+            SegmentedColumn {
                 shortcuts.forEach { shortcut ->
                     item(key = shortcut.label) {
-                        FolkNavigationPreference(
+                        SegmentedNavigationItem(
                             icon = shortcut.icon,
                             title = shortcut.label,
                             onClick = { onOpen(shortcut) },
@@ -175,7 +175,7 @@ internal fun SettingsSearchResults(
                     )
                 }
                 item(key = "group_${category.key}") {
-                    FolkSettingsGroup {
+                    SegmentedColumn {
                         categoryResults.forEach { result ->
                             item(key = result.entry.key) {
                                 SettingsSearchResultRow(

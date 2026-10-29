@@ -8,7 +8,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.edit
 import me.bmax.apatch.ui.component.folk.FolkAlertDialog
-import me.bmax.apatch.ui.component.folk.FolkSelectableRow
+import me.bmax.apatch.ui.component.SegmentedSelectableItem
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.theme.tokens.ContinuousCornerShape
@@ -49,7 +49,7 @@ fun HomeLayoutChooseDialog(showDialog: MutableState<Boolean>, onLayoutSelected: 
                 tonalElevation = 2.dp
             ) {
                 Column {
-                    FolkSelectableRow(
+                    SegmentedSelectableItem(
                         title = stringResource(R.string.settings_home_layout_default),
                         selected = currentStyle == "default",
                         onClick = {
@@ -58,7 +58,7 @@ fun HomeLayoutChooseDialog(showDialog: MutableState<Boolean>, onLayoutSelected: 
                             showDialog.value = false
                         }
                     )
-                    FolkSelectableRow(
+                    SegmentedSelectableItem(
                         title = stringResource(R.string.settings_home_layout_grid),
                         selected = currentStyle == "kernelsu",
                         onClick = {
@@ -67,7 +67,7 @@ fun HomeLayoutChooseDialog(showDialog: MutableState<Boolean>, onLayoutSelected: 
                             showDialog.value = false
                         }
                     )
-                    FolkSelectableRow(
+                    SegmentedSelectableItem(
                         title = stringResource(R.string.settings_home_layout_focus),
                         selected = currentStyle == "focus",
                         onClick = {
@@ -76,7 +76,7 @@ fun HomeLayoutChooseDialog(showDialog: MutableState<Boolean>, onLayoutSelected: 
                             showDialog.value = false
                         }
                     )
-                    FolkSelectableRow(
+                    SegmentedSelectableItem(
                         title = stringResource(R.string.settings_home_layout_circle),
                         selected = currentStyle == "circle",
                         onClick = {
@@ -85,7 +85,7 @@ fun HomeLayoutChooseDialog(showDialog: MutableState<Boolean>, onLayoutSelected: 
                             showDialog.value = false
                         }
                     )
-                    FolkSelectableRow(
+                    SegmentedSelectableItem(
                         title = stringResource(R.string.settings_home_layout_dashboard_pro),
                         selected = currentStyle == "dashboard_ui",
                         onClick = {
@@ -94,7 +94,7 @@ fun HomeLayoutChooseDialog(showDialog: MutableState<Boolean>, onLayoutSelected: 
                             showDialog.value = false
                         }
                     )
-                    FolkSelectableRow(
+                    SegmentedSelectableItem(
                         title = stringResource(R.string.settings_home_layout_stats),
                         selected = currentStyle == "stats",
                         onClick = {

@@ -16,7 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.bmax.apatch.ui.component.folk.FolkAlertDialog
-import me.bmax.apatch.ui.component.folk.FolkSelectableRow
+import me.bmax.apatch.ui.component.SegmentedSelectableItem
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.Natives
 import me.bmax.apatch.R
@@ -193,7 +193,7 @@ fun FolkXAnimationSpeedDialog(showDialog: MutableState<Boolean>, onSpeedChanged:
                     )
 
                     speeds.forEach { (speed, label) ->
-                        FolkSelectableRow(
+                        SegmentedSelectableItem(
                             title = label,
                             selected = currentSpeed == speed,
                             onClick = {

@@ -18,11 +18,11 @@ import me.bmax.apatch.Natives
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.UpdateDialog
 import me.bmax.apatch.ui.component.rememberLoadingDialog
-import me.bmax.apatch.ui.component.folk.FolkNavigationPreference
-import me.bmax.apatch.ui.component.folk.FolkSettingsGroup
-import me.bmax.apatch.ui.component.folk.FolkSettingsSection
-import me.bmax.apatch.ui.component.folk.FolkSwitchPreference
-import me.bmax.apatch.ui.component.folk.FolkValuePreference
+import me.bmax.apatch.ui.component.SegmentedNavigationItem
+import me.bmax.apatch.ui.component.SegmentedColumn
+import me.bmax.apatch.ui.component.SegmentedSection
+import me.bmax.apatch.ui.component.SegmentedSwitchItem
+import me.bmax.apatch.ui.component.SegmentedValueItem
 import me.bmax.apatch.util.*
 import me.bmax.apatch.ui.screen.settings.general.*
 import me.bmax.apatch.util.LauncherIconUtils
@@ -193,11 +193,11 @@ fun GeneralSettingsContent(
         else -> stringResource(R.string.settings_new_app_profile_normal)
     }
 
-    FolkSettingsSection(title = stringResource(R.string.settings_section_general_basics)) {
-     FolkSettingsGroup(flat = flat, highlightKey = highlightKey) {
+    SegmentedSection(title = stringResource(R.string.settings_section_general_basics)) {
+     SegmentedColumn(flat = flat, highlightKey = highlightKey) {
 
         item(key = "general_language") {
-            FolkValuePreference(
+            SegmentedValueItem(
                 icon = Icons.Outlined.Translate,
                 title = languageTitle,
                 summary = languageValue,
@@ -206,7 +206,7 @@ fun GeneralSettingsContent(
         }
 
         item(key = "general_check_update") {
-            FolkNavigationPreference(
+            SegmentedNavigationItem(
                 icon = Icons.Outlined.Update,
                 title = updateTitle,
                 onClick = {
@@ -225,7 +225,7 @@ fun GeneralSettingsContent(
         }
 
         item(key = "general_auto_update") {
-            FolkSwitchPreference(
+            SegmentedSwitchItem(
                 icon = Icons.Outlined.Autorenew,
                 title = autoUpdateTitle,
                 summary = autoUpdateSummary,
@@ -238,7 +238,7 @@ fun GeneralSettingsContent(
         }
 
         item(key = "general_block_kp_update") {
-            FolkSwitchPreference(
+            SegmentedSwitchItem(
                 icon = Icons.Outlined.Block,
                 title = blockUpdateTitle,
                 summary = blockUpdateSummary,
@@ -251,7 +251,7 @@ fun GeneralSettingsContent(
         }
 
         item(key = "general_block_ap_update") {
-            FolkSwitchPreference(
+            SegmentedSwitchItem(
                 icon = Icons.Outlined.Block,
                 title = blockApUpdateTitle,
                 summary = blockApUpdateSummary,
@@ -284,11 +284,11 @@ fun GeneralSettingsContent(
     )
 
     if (kPatchReady) {
-    FolkSettingsSection(title = stringResource(R.string.settings_section_general_root)) {
-     FolkSettingsGroup(flat = flat, highlightKey = highlightKey) {
+    SegmentedSection(title = stringResource(R.string.settings_section_general_root)) {
+     SegmentedColumn(flat = flat, highlightKey = highlightKey) {
 
         item(key = "general_new_app_profile_enabled", visible = kPatchReady) {
-            FolkSwitchPreference(
+            SegmentedSwitchItem(
                 icon = Icons.Outlined.AppRegistration,
                 title = newAppProfileEnabledTitle,
                 summary = newAppProfileEnabledSummary,
@@ -321,7 +321,7 @@ fun GeneralSettingsContent(
         }
 
         item(key = "general_new_app_profile", visible = kPatchReady && newAppProfileEnabled) {
-            FolkValuePreference(
+            SegmentedValueItem(
                 icon = Icons.Outlined.SettingsApplications,
                 title = newAppProfileTitle,
                 summary = currentNewAppProfileLabel,
@@ -330,7 +330,7 @@ fun GeneralSettingsContent(
         }
 
         item(key = "general_app_list_scheme", visible = kPatchReady) {
-            FolkValuePreference(
+            SegmentedValueItem(
                 icon = Icons.Outlined.List,
                 title = appListLoadingSchemeTitle,
                 summary = currentSchemeLabel,
@@ -339,7 +339,7 @@ fun GeneralSettingsContent(
         }
 
         item(key = "general_selinux_mode", visible = kPatchReady && aPatchReady) {
-            FolkValuePreference(
+            SegmentedValueItem(
                 icon = Icons.Outlined.Security,
                 title = selinuxModeTitle,
                 summary = stringResource(R.string.settings_selinux_current_mode, selinuxModeValue),
@@ -348,7 +348,7 @@ fun GeneralSettingsContent(
         }
 
         item(key = "general_global_namespace", visible = kPatchReady && aPatchReady) {
-            FolkSwitchPreference(
+            SegmentedSwitchItem(
                 icon = Icons.Outlined.Public,
                 title = globalNamespaceTitle,
                 summary = globalNamespaceSummary,

@@ -39,9 +39,9 @@ import me.bmax.apatch.ui.component.ExpressiveCard
 import me.bmax.apatch.ui.component.ExpressiveSwitch
 import androidx.compose.material.icons.outlined.*
 import android.content.Context
-import me.bmax.apatch.ui.component.folk.FolkSettingsGroupScope
+import me.bmax.apatch.ui.component.SegmentedColumnScope
 
-fun FolkSettingsGroupScope.functionPathHideItem(
+fun SegmentedColumnScope.functionPathHideItem(
     context: Context,
     flat: Boolean,
     kPatchReady: Boolean,
@@ -326,7 +326,7 @@ fun FolkSettingsGroupScope.functionPathHideItem(
     }
 }
 
-fun FolkSettingsGroupScope.functionNetIsolateItem(
+fun SegmentedColumnScope.functionNetIsolateItem(
     context: Context,
     flat: Boolean,
     kPatchReady: Boolean,

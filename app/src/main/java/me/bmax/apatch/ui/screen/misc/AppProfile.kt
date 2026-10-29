@@ -55,7 +55,7 @@ import kotlinx.coroutines.launch
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.Natives
 import me.bmax.apatch.R
-import me.bmax.apatch.ui.component.SplicedColumnGroup
+import me.bmax.apatch.ui.component.SegmentedColumn
 import me.bmax.apatch.ui.component.folk.FolkScaffold
 import me.bmax.apatch.ui.viewmodel.SuperUserViewModel
 import me.bmax.apatch.util.PkgConfig
@@ -184,7 +184,7 @@ fun AppProfileScreen(
                     }
                 }
 
-                SplicedColumnGroup {
+                SegmentedColumn {
                     item(key = "app") {
                         Row(
                             modifier = Modifier

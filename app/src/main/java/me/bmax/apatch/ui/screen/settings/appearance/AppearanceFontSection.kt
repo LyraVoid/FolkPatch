@@ -14,9 +14,9 @@ import androidx.compose.ui.res.stringResource
 import kotlinx.coroutines.launch
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.rememberConfirmDialog
-import me.bmax.apatch.ui.component.folk.FolkPreference
-import me.bmax.apatch.ui.component.folk.FolkSettingsSectionGroup
-import me.bmax.apatch.ui.component.folk.FolkValuePreference
+import me.bmax.apatch.ui.component.SegmentedPreferenceItem
+import me.bmax.apatch.ui.component.SegmentedColumn
+import me.bmax.apatch.ui.component.SegmentedValueItem
 import me.bmax.apatch.ui.theme.FontConfig
 import me.bmax.apatch.ui.theme.FontMode
 import me.bmax.apatch.ui.theme.refreshTheme
@@ -34,7 +34,7 @@ fun AppearanceFontSection(
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
-    FolkSettingsSectionGroup(title = stringResource(R.string.settings_appearance_font), flat = flat, highlightKey = highlightKey) {
+    SegmentedColumn(title = stringResource(R.string.settings_appearance_font), flat = flat, highlightKey = highlightKey) {
         item(key = "appearance_font_mode_app") {
             FontModePreference(
                 title = stringResource(R.string.settings_font_mode_app),
@@ -61,7 +61,7 @@ fun AppearanceFontSection(
 
         if (fontMode == FontMode.CUSTOM) {
             item(key = "appearance_select_font") {
-                FolkValuePreference(
+                SegmentedValueItem(
                     icon = Icons.Outlined.FontDownload,
                     title = stringResource(id = R.string.settings_select_font_file),
                     onClick = {
@@ -87,7 +87,7 @@ fun AppearanceFontSection(
                     )
                     val clearFontTitle = stringResource(id = R.string.settings_clear_font)
                     val clearFontConfirm = context.getString(R.string.settings_clear_font_confirm)
-                    FolkValuePreference(
+                    SegmentedValueItem(
                         icon = Icons.Outlined.Delete,
                         title = clearFontTitle,
                         onClick = {
@@ -110,7 +110,7 @@ private fun FontModePreference(
     selected: Boolean,
     onSelect: () -> Unit,
 ) {
-    FolkPreference(
+    SegmentedPreferenceItem(
         title = title,
         selected = selected,
         onClick = onSelect,

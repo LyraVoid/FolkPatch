@@ -43,20 +43,18 @@ fun DualBackgroundSettings(
     showDualDim: Boolean = true,
 ) {
     if (showDualDim) {
-        ToggleSettingCard(
-            flat = flat,
+        SegmentedSwitchItem(
             icon = Icons.Filled.Contrast,
             title = dualDimTitle,
-            description = dualDimDescription,
+            summary = dualDimDescription,
             checked = dualDimEnabled,
             onCheckedChange = { onDualDimEnabledChange(it); save() },
         )
     }
-    ToggleSettingCard(
-        flat = flat,
+    SegmentedSwitchItem(
         icon = Icons.Filled.Contrast,
         title = dualOpacityTitle,
-        description = dualOpacityDescription,
+        summary = dualOpacityDescription,
         checked = dualOpacityEnabled,
         onCheckedChange = { onDualOpacityEnabledChange(it); save() },
     )

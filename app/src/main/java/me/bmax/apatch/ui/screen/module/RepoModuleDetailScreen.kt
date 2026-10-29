@@ -38,7 +38,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.ExpressiveCard
 import me.bmax.apatch.ui.component.ModuleLabel
-import me.bmax.apatch.ui.component.SplicedColumnGroup
+import me.bmax.apatch.ui.component.SegmentedColumn
 import me.bmax.apatch.ui.component.folk.FolkScaffold
 import me.bmax.apatch.ui.viewmodel.RepoModuleViewModel
 import me.bmax.apatch.util.DownloadListener
@@ -131,7 +131,7 @@ fun RepoModuleDetailScreen(
             val hasLinks = module.homepage.isNotEmpty() || module.source.isNotEmpty() || module.support.isNotEmpty()
             if (hasLinks) {
                 item(key = "links") {
-                    SplicedColumnGroup(title = stringResource(R.string.repo_module_detail_links)) {
+                    SegmentedColumn(title = stringResource(R.string.repo_module_detail_links)) {
                         item(key = "homepage", visible = module.homepage.isNotEmpty()) {
                             ExpressiveCard(flat = true, onClick = { openUrl(context, module.homepage) }) {
                                 Row(
@@ -175,7 +175,7 @@ fun RepoModuleDetailScreen(
             // Section 3: Version history
             if (module.versions.isNotEmpty()) {
                 item(key = "versions_header") {
-                    SplicedColumnGroup(title = stringResource(R.string.repo_module_detail_versions)) {
+                    SegmentedColumn(title = stringResource(R.string.repo_module_detail_versions)) {
                         module.versions.forEach { ver ->
                             item(key = ver.versionCode) {
                                 ExpressiveCard(

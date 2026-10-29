@@ -83,6 +83,9 @@ object FolkSettingsDimens {
 
     val ItemVerticalPaddingWithSummary = 16.dp
 
+    /** Minimum touch height shared by every segmented settings row. */
+    val ItemMinHeight = 56.dp
+
     /** Leading icon size. The reference uses a standard 24dp icon box. */
     val IconSize = 24.dp
 

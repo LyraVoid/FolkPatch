@@ -61,7 +61,7 @@ import kotlinx.coroutines.launch
 import me.bmax.apatch.ui.component.folk.FolkAlertDialog
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.ExpressiveCard
-import me.bmax.apatch.ui.component.SwitchItem
+import me.bmax.apatch.ui.component.SegmentedSwitchItem
 import me.bmax.apatch.ui.viewmodel.KPModel
 import me.bmax.apatch.ui.viewmodel.PatchesViewModel
 import me.bmax.apatch.util.Version
@@ -257,7 +257,7 @@ fun PatchSuperKeySection(
 ) {
     ExpressiveCard(flat = true) {
         Column {
-            SwitchItem(
+            SegmentedSwitchItem(
                 icon = Icons.Default.Key,
                 title = stringResource(R.string.patch_custom_superkey),
                 summary = stringResource(R.string.patch_custom_superkey_optional),

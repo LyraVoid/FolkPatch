@@ -33,9 +33,9 @@ import androidx.compose.foundation.text.KeyboardOptions
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.ExpressiveCard
 import me.bmax.apatch.ui.component.ExpressiveSwitch
-import me.bmax.apatch.ui.component.folk.FolkSettingsGroup
-import me.bmax.apatch.ui.component.folk.FolkSettingsSection
-import me.bmax.apatch.ui.component.folk.FolkSwitchPreference
+import me.bmax.apatch.ui.component.SegmentedColumn
+import me.bmax.apatch.ui.component.SegmentedSection
+import me.bmax.apatch.ui.component.SegmentedSwitchItem
 import me.bmax.apatch.util.setHideServiceEnabled
 import androidx.compose.material.icons.outlined.*
 
@@ -91,10 +91,10 @@ fun FunctionSettingsContent(
     val umountServiceSummary = stringResource(id = R.string.settings_umount_service_summary)
 
     if (kPatchReady && aPatchReady) {
-    FolkSettingsSection(title = stringResource(R.string.settings_section_function_root)) {
-     FolkSettingsGroup(flat = flat, highlightKey = highlightKey) {
+    SegmentedSection(title = stringResource(R.string.settings_section_function_root)) {
+     SegmentedColumn(flat = flat, highlightKey = highlightKey) {
         item(key = "function_jailbreak", visible = kPatchReady && aPatchReady && jailbreakAvailable) {
-            FolkSwitchPreference(
+            SegmentedSwitchItem(
                 icon = Icons.Outlined.LockOpen,
                 title = stringResource(R.string.settings_jailbreak_mode),
                 summary = stringResource(R.string.settings_jailbreak_mode_summary),
@@ -104,7 +104,7 @@ fun FunctionSettingsContent(
         }
 
         item(key = "function_hide_service", visible = kPatchReady && aPatchReady) {
-            FolkSwitchPreference(
+            SegmentedSwitchItem(
                 icon = Icons.Outlined.VisibilityOff,
                 title = hideServiceTitle,
                 summary = hideServiceSummary,
@@ -121,8 +121,8 @@ fun FunctionSettingsContent(
     }
 
     if (kPatchReady && aPatchReady) {
-    FolkSettingsSection(title = stringResource(R.string.settings_section_function_shizuku)) {
-     FolkSettingsGroup(flat = flat, highlightKey = highlightKey) {
+    SegmentedSection(title = stringResource(R.string.settings_section_function_shizuku)) {
+     SegmentedColumn(flat = flat, highlightKey = highlightKey) {
         item(key = "function_shizuku", visible = kPatchReady && aPatchReady) {
             val shizukuSummary = if (isShizukuRunning) {
                 stringResource(id = R.string.settings_shizuku_service_running)
@@ -130,7 +130,7 @@ fun FunctionSettingsContent(
                 stringResource(id = R.string.settings_shizuku_service_summary)
             }
             Column {
-                FolkSwitchPreference(
+                SegmentedSwitchItem(
                     icon = Icons.Outlined.WaterDrop,
                     title = stringResource(id = R.string.settings_shizuku_service),
                     summary = shizukuSummary,
@@ -153,8 +153,8 @@ fun FunctionSettingsContent(
     }
 
     if (kPatchReady && aPatchReady) {
-    FolkSettingsSection(title = stringResource(R.string.settings_section_function_mount)) {
-     FolkSettingsGroup(flat = flat, highlightKey = highlightKey) {
+    SegmentedSection(title = stringResource(R.string.settings_section_function_mount)) {
+     SegmentedColumn(flat = flat, highlightKey = highlightKey) {
         item(key = "function_umount", visible = kPatchReady && aPatchReady) {
             val umountPathsLabel = stringResource(id = R.string.umount_config_paths_label)
             val umountPathsPlaceholder = stringResource(id = R.string.umount_config_paths_placeholder)

@@ -16,10 +16,10 @@ import kotlinx.coroutines.withContext
 import me.bmax.apatch.BuildConfig
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.rememberLoadingDialog
-import me.bmax.apatch.ui.component.folk.FolkNavigationPreference
-import me.bmax.apatch.ui.component.folk.FolkSettingsGroup
-import me.bmax.apatch.ui.component.folk.FolkSettingsSection
-import me.bmax.apatch.ui.component.folk.FolkValuePreference
+import me.bmax.apatch.ui.component.SegmentedNavigationItem
+import me.bmax.apatch.ui.component.SegmentedColumn
+import me.bmax.apatch.ui.component.SegmentedSection
+import me.bmax.apatch.ui.component.SegmentedValueItem
 import me.bmax.apatch.util.getBugreportFile
 
 @Composable
@@ -35,11 +35,11 @@ fun GeneralMaintenanceSection(
     val scope = rememberCoroutineScope()
     val loadingDialog = rememberLoadingDialog()
 
-    FolkSettingsSection(title = stringResource(R.string.settings_section_general_maintenance)) {
-     FolkSettingsGroup(flat = flat, highlightKey = highlightKey) {
+    SegmentedSection(title = stringResource(R.string.settings_section_general_maintenance)) {
+     SegmentedColumn(flat = flat, highlightKey = highlightKey) {
 
         item(key = "general_send_log") {
-            FolkNavigationPreference(
+            SegmentedNavigationItem(
                 icon = Icons.Outlined.BugReport,
                 title = logTitle,
                 onClick = {
@@ -75,7 +75,7 @@ fun GeneralMaintenanceSection(
         }
 
         item(key = "general_clean_storage") {
-            FolkValuePreference(
+            SegmentedValueItem(
                 icon = Icons.Outlined.CleaningServices,
                 title = cleanStorageTitle,
                 summary = cleanStorageSummary,

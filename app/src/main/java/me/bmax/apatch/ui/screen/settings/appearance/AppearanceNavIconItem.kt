@@ -19,7 +19,7 @@ import me.bmax.apatch.util.BottomBarIconConfig
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import coil.compose.AsyncImage
-import me.bmax.apatch.ui.component.folk.FolkSwitchPreference
+import me.bmax.apatch.ui.component.SegmentedSwitchItem
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.*
@@ -28,9 +28,9 @@ import androidx.compose.runtime.*
 import android.content.Context
 import android.content.SharedPreferences
 import kotlinx.coroutines.CoroutineScope
-import me.bmax.apatch.ui.component.folk.FolkSettingsGroupScope
+import me.bmax.apatch.ui.component.SegmentedColumnScope
 
-fun FolkSettingsGroupScope.appearanceNavCustomIconsItem(
+fun SegmentedColumnScope.appearanceNavCustomIconsItem(
     flat: Boolean,
     context: Context,
     prefs: SharedPreferences,
@@ -64,7 +64,7 @@ fun FolkSettingsGroupScope.appearanceNavCustomIconsItem(
             editingDestName = null
         }
 
-        FolkSwitchPreference(
+        SegmentedSwitchItem(
             icon = Icons.Outlined.Image,
             title = stringResource(R.string.settings_nav_custom_icons),
             summary = stringResource(R.string.settings_nav_custom_icons_summary),

@@ -70,9 +70,9 @@ import kotlinx.coroutines.withContext
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.BuildConfig
 import me.bmax.apatch.R
-import me.bmax.apatch.ui.component.folk.FolkNavigationPreference
+import me.bmax.apatch.ui.component.SegmentedNavigationItem
 import me.bmax.apatch.ui.component.folk.FolkScaffold
-import me.bmax.apatch.ui.component.folk.FolkSettingsGroup
+import me.bmax.apatch.ui.component.SegmentedColumn
 import me.bmax.apatch.ui.component.folk.folkGroupColor
 import me.bmax.apatch.ui.component.folk.folkPressScale
 import me.bmax.apatch.ui.component.rememberLoadingDialog
@@ -366,44 +366,44 @@ fun SettingScreen(navigator: DestinationsNavigator) {
 
             item(key = "utility_rows") {
                 Spacer(Modifier.height(16.dp))
-                FolkSettingsGroup(shape = FolkShape.Corner12) {
+                SegmentedColumn(shape = FolkShape.Corner12) {
                     item(key = "utility_wallpaper") {
-                        FolkNavigationPreference(
+                        SegmentedNavigationItem(
                             icon = Icons.Outlined.Wallpaper,
                             title = stringResource(R.string.settings_wallpaper_gallery),
                             onClick = { navigator.navigate(WallpaperGalleryScreenDestination) },
                         )
                     }
                     item(key = "utility_faq") {
-                        FolkNavigationPreference(
+                        SegmentedNavigationItem(
                             icon = Icons.Outlined.Quiz,
                             title = stringResource(R.string.settings_faq),
                             onClick = { navigator.navigate(FaqScreenDestination) },
                         )
                     }
                     item(key = "utility_feedback") {
-                        FolkNavigationPreference(
+                        SegmentedNavigationItem(
                             icon = Icons.Outlined.BugReport,
                             title = stringResource(R.string.settings_bug_feedback),
                             onClick = { uriHandler.openUri(FEEDBACK_URL) },
                         )
                     }
                     item(key = "utility_clean_storage") {
-                        FolkNavigationPreference(
+                        SegmentedNavigationItem(
                             icon = Icons.Outlined.CleaningServices,
                             title = stringResource(R.string.settings_clear_cache),
                             onClick = { cleanStorageDialogState.value = true },
                         )
                     }
                     item(key = "utility_disclaimer") {
-                        FolkNavigationPreference(
+                        SegmentedNavigationItem(
                             icon = Icons.Outlined.Policy,
                             title = stringResource(R.string.settings_disclaimer),
                             onClick = { disclaimerDialogState.value = true },
                         )
                     }
                     item(key = "utility_send_log") {
-                        FolkNavigationPreference(
+                        SegmentedNavigationItem(
                             icon = Icons.Outlined.Description,
                             title = stringResource(R.string.send_log),
                             onClick = {
@@ -428,7 +428,7 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                         )
                     }
                     item(key = "utility_about") {
-                        FolkNavigationPreference(
+                        SegmentedNavigationItem(
                             icon = Icons.Outlined.Info,
                             title = stringResource(R.string.about),
                             onClick = { navigator.navigate(AboutScreenDestination) },

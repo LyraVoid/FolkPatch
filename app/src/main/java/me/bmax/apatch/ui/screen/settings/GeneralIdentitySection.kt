@@ -7,9 +7,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.res.stringResource
 import me.bmax.apatch.R
-import me.bmax.apatch.ui.component.folk.FolkSettingsGroup
-import me.bmax.apatch.ui.component.folk.FolkSettingsSection
-import me.bmax.apatch.ui.component.folk.FolkValuePreference
+import me.bmax.apatch.ui.component.SegmentedColumn
+import me.bmax.apatch.ui.component.SegmentedSection
+import me.bmax.apatch.ui.component.SegmentedValueItem
 
 @Composable
 fun GeneralIdentitySection(
@@ -32,11 +32,11 @@ fun GeneralIdentitySection(
     dpiValue: String,
     showDpiDialog: MutableState<Boolean>,
 ) {
-    FolkSettingsSection(title = stringResource(R.string.settings_section_general_identity)) {
-     FolkSettingsGroup(flat = flat, highlightKey = highlightKey) {
+    SegmentedSection(title = stringResource(R.string.settings_section_general_identity)) {
+     SegmentedColumn(flat = flat, highlightKey = highlightKey) {
 
         item(key = "general_alt_icon") {
-            FolkValuePreference(
+            SegmentedValueItem(
                 icon = Icons.Outlined.Android,
                 title = launcherIconTitle,
                 summary = launcherIconSummary,
@@ -45,7 +45,7 @@ fun GeneralIdentitySection(
         }
 
         item(key = "general_app_title") {
-            FolkValuePreference(
+            SegmentedValueItem(
                 icon = Icons.Outlined.Label,
                 title = appTitleTitle,
                 summary = appTitleLabel,
@@ -54,7 +54,7 @@ fun GeneralIdentitySection(
         }
 
         item(key = "general_custom_app_title", visible = currentAppTitle == "custom") {
-            FolkValuePreference(
+            SegmentedValueItem(
                 icon = Icons.Outlined.Edit,
                 title = customAppTitleTitle,
                 summary = currentCustomAppTitle,
@@ -63,7 +63,7 @@ fun GeneralIdentitySection(
         }
 
         item(key = "general_desktop_app_name") {
-            FolkValuePreference(
+            SegmentedValueItem(
                 icon = Icons.Outlined.PhoneAndroid,
                 title = desktopAppNameTitle,
                 summary = currentDesktopAppName,
@@ -72,7 +72,7 @@ fun GeneralIdentitySection(
         }
 
         item(key = "general_dpi") {
-            FolkValuePreference(
+            SegmentedValueItem(
                 icon = Icons.Outlined.FormatSize,
                 title = dpiTitle,
                 summary = dpiValue,

@@ -26,12 +26,12 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.stringResource
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
-import me.bmax.apatch.ui.component.folk.FolkCheckboxPreference
+import me.bmax.apatch.ui.component.SegmentedCheckboxItem
 import me.bmax.apatch.ui.component.folk.FolkSettingsDimens
-import me.bmax.apatch.ui.component.folk.FolkPreference
-import me.bmax.apatch.ui.component.folk.FolkSettingsGroup
-import me.bmax.apatch.ui.component.folk.FolkSettingsSection
-import me.bmax.apatch.ui.component.folk.FolkSwitchPreference
+import me.bmax.apatch.ui.component.SegmentedPreferenceItem
+import me.bmax.apatch.ui.component.SegmentedColumn
+import me.bmax.apatch.ui.component.SegmentedSection
+import me.bmax.apatch.ui.component.SegmentedSwitchItem
 import androidx.compose.material.icons.outlined.*
 
 @Composable
@@ -57,11 +57,11 @@ fun BehaviorSettingsContent(
     }
 
     if (kPatchReady || currentStyle != "focus") {
-    FolkSettingsSection(title = stringResource(R.string.settings_section_behavior_display)) {
-        FolkSettingsGroup(flat = flat, highlightKey = highlightKey) {
+    SegmentedSection(title = stringResource(R.string.settings_section_behavior_display)) {
+        SegmentedColumn(flat = flat, highlightKey = highlightKey) {
             item(key = "behavior_hide_apatch_card", visible = currentStyle != "focus") {
                 var hideApatchCard by remember { mutableStateOf(prefs.getBoolean("hide_apatch_card", false)) }
-                FolkSwitchPreference(
+                SegmentedSwitchItem(
                     icon = Icons.Outlined.VisibilityOff,
                     title = stringResource(id = R.string.settings_hide_apatch_card),
                     summary = stringResource(id = R.string.settings_hide_apatch_card_summary),
@@ -75,7 +75,7 @@ fun BehaviorSettingsContent(
 
             item(key = "behavior_hide_su_path", visible = kPatchReady) {
                 var hideSuPath by remember { mutableStateOf(prefs.getBoolean("hide_su_path", false)) }
-                FolkSwitchPreference(
+                SegmentedSwitchItem(
                     icon = Icons.Outlined.VisibilityOff,
                     title = stringResource(id = R.string.home_hide_su_path),
                     summary = stringResource(id = R.string.home_hide_su_path_summary),
@@ -89,7 +89,7 @@ fun BehaviorSettingsContent(
 
             item(key = "behavior_hide_kpatch_version", visible = kPatchReady) {
                 var hideKpatchVersion by remember { mutableStateOf(prefs.getBoolean("hide_kpatch_version", false)) }
-                FolkSwitchPreference(
+                SegmentedSwitchItem(
                     icon = Icons.Outlined.VisibilityOff,
                     title = stringResource(id = R.string.home_hide_kpatch_version),
                     summary = stringResource(id = R.string.home_hide_kpatch_version_summary),
@@ -103,7 +103,7 @@ fun BehaviorSettingsContent(
 
             item(key = "behavior_hide_fingerprint", visible = kPatchReady) {
                 var hideFingerprint by remember { mutableStateOf(prefs.getBoolean("hide_fingerprint", false)) }
-                FolkSwitchPreference(
+                SegmentedSwitchItem(
                     icon = Icons.Outlined.Fingerprint,
                     title = stringResource(id = R.string.home_hide_fingerprint),
                     summary = stringResource(id = R.string.home_hide_fingerprint_summary),
@@ -117,7 +117,7 @@ fun BehaviorSettingsContent(
 
             item(key = "behavior_hide_zygisk", visible = kPatchReady) {
                 var hideZygisk by remember { mutableStateOf(prefs.getBoolean("hide_zygisk", false)) }
-                FolkSwitchPreference(
+                SegmentedSwitchItem(
                     icon = Icons.Outlined.VisibilityOff,
                     title = stringResource(id = R.string.home_hide_zygisk),
                     summary = stringResource(id = R.string.home_hide_zygisk_summary),
@@ -131,7 +131,7 @@ fun BehaviorSettingsContent(
 
             item(key = "behavior_hide_mount", visible = kPatchReady) {
                 var hideMount by remember { mutableStateOf(prefs.getBoolean("hide_mount", false)) }
-                FolkSwitchPreference(
+                SegmentedSwitchItem(
                     icon = Icons.Outlined.VisibilityOff,
                     title = stringResource(id = R.string.home_hide_mount),
                     summary = stringResource(id = R.string.home_hide_mount_summary),
@@ -153,7 +153,7 @@ fun BehaviorSettingsContent(
                     label = "ArrowRotation"
                 )
 
-                FolkPreference(
+                SegmentedPreferenceItem(
                     icon = Icons.Outlined.Badge,
                     title = stringResource(id = R.string.enable_badge_count),
                     summary = stringResource(id = R.string.enable_badge_count_summary),
@@ -171,7 +171,7 @@ fun BehaviorSettingsContent(
                 )
 
                 if (expanded) {
-                    FolkCheckboxPreference(
+                    SegmentedCheckboxItem(
                         title = stringResource(id = R.string.badge_superuser),
                         checked = enableSuperUserBadge,
                         onCheckedChange = {
@@ -179,7 +179,7 @@ fun BehaviorSettingsContent(
                             prefs.edit().putBoolean("badge_superuser", it).apply()
                         },
                     )
-                    FolkCheckboxPreference(
+                    SegmentedCheckboxItem(
                         title = stringResource(id = R.string.badge_apm),
                         checked = enableApmBadge,
                         onCheckedChange = {
@@ -187,7 +187,7 @@ fun BehaviorSettingsContent(
                             prefs.edit().putBoolean("badge_apm", it).apply()
                         },
                     )
-                    FolkCheckboxPreference(
+                    SegmentedCheckboxItem(
                         title = stringResource(id = R.string.badge_kernel),
                         checked = enableKernelBadge,
                         onCheckedChange = {
@@ -201,11 +201,11 @@ fun BehaviorSettingsContent(
     }
     }
 
-    FolkSettingsSection(title = stringResource(R.string.settings_section_behavior_actions)) {
-        FolkSettingsGroup(flat = flat, highlightKey = highlightKey) {
+    SegmentedSection(title = stringResource(R.string.settings_section_behavior_actions)) {
+        SegmentedColumn(flat = flat, highlightKey = highlightKey) {
             item(key = "behavior_install_confirm", visible = aPatchReady) {
                 var installConfirm by remember { mutableStateOf(prefs.getBoolean("apm_install_confirm_enabled", true)) }
-                FolkSwitchPreference(
+                SegmentedSwitchItem(
                     icon = Icons.Outlined.Verified,
                     title = stringResource(id = R.string.settings_apm_install_confirm),
                     summary = stringResource(id = R.string.settings_apm_install_confirm_summary),
@@ -219,7 +219,7 @@ fun BehaviorSettingsContent(
 
             item(key = "behavior_module_shortcut", visible = aPatchReady) {
                 var enableModuleShortcutAdd by remember { mutableStateOf(prefs.getBoolean("enable_module_shortcut_add", true)) }
-                FolkSwitchPreference(
+                SegmentedSwitchItem(
                     icon = Icons.Outlined.AddToHomeScreen,
                     title = stringResource(id = R.string.settings_enable_module_shortcut_add),
                     summary = stringResource(id = R.string.settings_enable_module_shortcut_add_summary),
@@ -233,7 +233,7 @@ fun BehaviorSettingsContent(
 
             item(key = "behavior_stay_on_page", visible = aPatchReady) {
                 var stayOnPage by remember { mutableStateOf(prefs.getBoolean("apm_action_stay_on_page", true)) }
-                FolkSwitchPreference(
+                SegmentedSwitchItem(
                     icon = Icons.Outlined.OpenInNew,
                     title = stringResource(id = R.string.settings_apm_stay_on_page),
                     summary = stringResource(id = R.string.settings_apm_stay_on_page_summary),
@@ -247,7 +247,7 @@ fun BehaviorSettingsContent(
 
             item(key = "behavior_web_debugging") {
                 var enableWebDebugging by remember { mutableStateOf(prefs.getBoolean("enable_web_debugging", false)) }
-                FolkSwitchPreference(
+                SegmentedSwitchItem(
                     icon = Icons.Outlined.BugReport,
                     title = stringResource(id = R.string.enable_web_debugging),
                     summary = stringResource(id = R.string.enable_web_debugging_summary),
@@ -261,7 +261,7 @@ fun BehaviorSettingsContent(
 
             item(key = "behavior_info_copy") {
                 var infoCopyEnabled by remember { mutableStateOf(prefs.getBoolean("enable_info_copy", true)) }
-                FolkSwitchPreference(
+                SegmentedSwitchItem(
                     icon = Icons.Outlined.ContentCopy,
                     title = stringResource(id = R.string.settings_info_copy),
                     summary = stringResource(id = R.string.settings_info_copy_summary),
@@ -275,7 +275,7 @@ fun BehaviorSettingsContent(
 
             item(key = "behavior_legacy_su_page", visible = kPatchReady) {
                 var useLegacySuPage by remember { mutableStateOf(prefs.getBoolean("use_legacy_su_page", false)) }
-                FolkSwitchPreference(
+                SegmentedSwitchItem(
                     icon = Icons.Outlined.History,
                     title = stringResource(id = R.string.settings_use_legacy_su_page),
                     summary = stringResource(id = R.string.settings_use_legacy_su_page_summary),

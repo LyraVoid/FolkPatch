@@ -1,4 +1,4 @@
-package me.bmax.apatch.ui.component.folk
+package me.bmax.apatch.ui.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,14 +17,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
+import me.bmax.apatch.ui.component.folk.FolkSettingsDimens
+import me.bmax.apatch.ui.component.folk.folkIconColor
+import me.bmax.apatch.ui.component.folk.folkPreferenceSummaryStyle
+import me.bmax.apatch.ui.component.folk.folkPreferenceTitleStyle
+import me.bmax.apatch.ui.component.folk.folkPreferenceValueStyle
 
-/**
- * A settings row with a slider, styled to match [FolkPreference].
- */
 @Composable
-fun FolkSliderPreference(
+fun SegmentedSliderItem(
     title: String,
     value: Float,
     onValueChange: (Float) -> Unit,
@@ -44,8 +44,8 @@ fun FolkSliderPreference(
             .padding(
                 start = FolkSettingsDimens.ItemHorizontalPadding,
                 end = FolkSettingsDimens.ItemEndPadding,
-                top = FolkSettingsDimens.ItemVerticalPaddingWithSummary,
-                bottom = FolkSettingsDimens.ItemVerticalPaddingWithSummary,
+                top = FolkSettingsDimens.ItemVerticalPadding,
+                bottom = FolkSettingsDimens.ItemVerticalPadding,
             ),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -78,11 +78,11 @@ fun FolkSliderPreference(
                 }
             }
             Spacer(Modifier.width(FolkSettingsDimens.TrailingSpacing))
-                Text(
-                    text = valueText ?: valueFormat(value),
-                    style = folkPreferenceValueStyle(),
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
+            Text(
+                text = valueText ?: valueFormat(value),
+                style = folkPreferenceValueStyle(),
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
         }
         Slider(
             value = value,

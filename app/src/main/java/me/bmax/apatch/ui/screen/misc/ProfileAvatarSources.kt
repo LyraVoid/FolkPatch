@@ -34,7 +34,7 @@ import kotlinx.coroutines.withContext
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.folk.FolkAlertDialog
 import me.bmax.apatch.ui.component.folk.FolkButtonDefaults
-import me.bmax.apatch.ui.component.folk.FolkPreference
+import me.bmax.apatch.ui.component.SegmentedPreferenceItem
 import java.io.File
 import java.io.FileOutputStream
 import java.net.URL
@@ -66,7 +66,7 @@ internal fun AvatarSourceDialog(
                 modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp),
             )
             AvatarSource.entries.forEach { source ->
-                FolkPreference(
+                SegmentedPreferenceItem(
                     title = stringResource(source.titleRes),
                     icon = source.icon,
                     onClick = { onSelect(source) },

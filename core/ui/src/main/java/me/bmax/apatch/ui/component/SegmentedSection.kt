@@ -1,33 +1,25 @@
-package me.bmax.apatch.ui.component.folk
+package me.bmax.apatch.ui.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import me.bmax.apatch.ui.component.folk.FolkSettingsDimens
+import me.bmax.apatch.ui.component.folk.folkPreferenceSummaryStyle
+import me.bmax.apatch.ui.component.folk.folkSectionTitleColor
+import me.bmax.apatch.ui.component.folk.folkSectionTitleStyle
 
-/**
- * A titled block of settings.
- *
- * The title sits *outside* the group surface (never inside the rounded card),
- * which is what makes a section read as one shelf rather than a card with its
- * own caption. A section is followed by [FolkSettingsDimens.SectionSpacing].
- */
 @Composable
-fun FolkSettingsSection(
+fun SegmentedSection(
     title: String? = null,
     description: String? = null,
     modifier: Modifier = Modifier,
-    contentPadding: PaddingValues = PaddingValues(
-        bottom = FolkSettingsDimens.SectionSpacing,
-    ),
+    contentPadding: PaddingValues = PaddingValues(bottom = FolkSettingsDimens.SectionSpacing),
     content: @Composable () -> Unit,
 ) {
     Column(

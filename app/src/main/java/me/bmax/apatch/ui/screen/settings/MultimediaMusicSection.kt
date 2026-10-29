@@ -20,13 +20,13 @@ import kotlinx.coroutines.launch
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.rememberConfirmDialog
 import me.bmax.apatch.ui.component.rememberLoadingDialog
-import me.bmax.apatch.ui.component.folk.FolkNavigationPreference
+import me.bmax.apatch.ui.component.SegmentedNavigationItem
 import me.bmax.apatch.ui.component.folk.FolkSettingsDimens
-import me.bmax.apatch.ui.component.folk.FolkSettingsGroup
-import me.bmax.apatch.ui.component.folk.FolkSettingsSection
-import me.bmax.apatch.ui.component.folk.FolkSliderPreference
-import me.bmax.apatch.ui.component.folk.FolkSwitchPreference
-import me.bmax.apatch.ui.component.folk.FolkValuePreference
+import me.bmax.apatch.ui.component.SegmentedColumn
+import me.bmax.apatch.ui.component.SegmentedSection
+import me.bmax.apatch.ui.component.SegmentedSliderItem
+import me.bmax.apatch.ui.component.SegmentedSwitchItem
+import me.bmax.apatch.ui.component.SegmentedValueItem
 import me.bmax.apatch.ui.theme.MusicConfig
 import me.bmax.apatch.util.MusicManager
 import androidx.compose.material.icons.outlined.*
@@ -103,12 +103,12 @@ fun MultimediaMusicSection(
     )
 
 
-    FolkSettingsSection(title = stringResource(R.string.settings_section_multimedia_music)) {
-        FolkSettingsGroup(flat = flat, highlightKey = highlightKey) {
+    SegmentedSection(title = stringResource(R.string.settings_section_multimedia_music)) {
+        SegmentedColumn(flat = flat, highlightKey = highlightKey) {
 
         // --- Background Music Toggle ---
         item(key = "multimedia_bg_music") {
-            FolkSwitchPreference(
+            SegmentedSwitchItem(
                 icon = Icons.Outlined.MusicNote,
                 title = musicTitle,
                 summary = if (MusicConfig.isMusicEnabled) {
@@ -131,7 +131,7 @@ fun MultimediaMusicSection(
 
         // --- Music: Select Music File ---
         item(key = "multimedia_select_music", visible = MusicConfig.isMusicEnabled) {
-            FolkValuePreference(
+            SegmentedValueItem(
                 icon = Icons.Outlined.AudioFile,
                 title = selectMusicTitle,
                 summary = if (MusicConfig.musicFilename != null) musicSelectedText else null,
@@ -147,7 +147,7 @@ fun MultimediaMusicSection(
 
         // --- Music: Auto Play Toggle ---
         item(key = "multimedia_music_auto_play", visible = MusicConfig.isMusicEnabled) {
-            FolkSwitchPreference(
+            SegmentedSwitchItem(
                 icon = Icons.Outlined.PlayArrow,
                 title = autoPlayTitle,
                 summary = autoPlaySummary,
@@ -161,7 +161,7 @@ fun MultimediaMusicSection(
 
         // --- Music: Looping Toggle ---
         item(key = "multimedia_music_looping", visible = MusicConfig.isMusicEnabled) {
-            FolkSwitchPreference(
+            SegmentedSwitchItem(
                 icon = Icons.Outlined.Repeat,
                 title = loopingTitle,
                 summary = loopingSummary,
@@ -176,7 +176,7 @@ fun MultimediaMusicSection(
 
         // --- Music: Volume Slider ---
         item(key = "multimedia_music_volume", visible = MusicConfig.isMusicEnabled) {
-            FolkSliderPreference(
+            SegmentedSliderItem(
                 title = musicVolumeTitle,
                 value = MusicConfig.volume,
                 onValueChange = {
@@ -241,7 +241,7 @@ fun MultimediaMusicSection(
 
         // --- Music: Clear Music ---
         item(key = "multimedia_clear_music", visible = MusicConfig.isMusicEnabled && MusicConfig.musicFilename != null) {
-            FolkNavigationPreference(
+            SegmentedNavigationItem(
                 icon = Icons.Outlined.Delete,
                 title = clearMusicTitle,
                 onClick = {

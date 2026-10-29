@@ -19,9 +19,9 @@ import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.DualBackgroundSettings
 import me.bmax.apatch.ui.component.LoadingDialogHandle
 import me.bmax.apatch.ui.component.rememberConfirmDialog
-import me.bmax.apatch.ui.component.folk.FolkSettingsGroupScope
-import me.bmax.apatch.ui.component.folk.FolkSwitchPreference
-import me.bmax.apatch.ui.component.folk.FolkValuePreference
+import me.bmax.apatch.ui.component.SegmentedColumnScope
+import me.bmax.apatch.ui.component.SegmentedSwitchItem
+import me.bmax.apatch.ui.component.SegmentedValueItem
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.ui.theme.BackgroundManager
 import me.bmax.apatch.util.PermissionUtils
@@ -31,7 +31,7 @@ import me.bmax.apatch.util.ui.showToast
  * Grid working-card background preferences. They are contributed to the
  * background section's existing group, so the shelf layout is unchanged.
  */
-fun FolkSettingsGroupScope.appearanceBackgroundGridItems(
+fun SegmentedColumnScope.appearanceBackgroundGridItems(
     showGridCardSettings: Boolean,
     flat: Boolean,
     context: Context,
@@ -45,7 +45,7 @@ fun FolkSettingsGroupScope.appearanceBackgroundGridItems(
     if (!showGridCardSettings) return
 
         item(key = "appearance_grid_card_bg") {
-            FolkSwitchPreference(
+            SegmentedSwitchItem(
                 icon = Icons.Outlined.GridView,
                 title = stringResource(id = R.string.settings_grid_working_card_background),
                 summary = if (BackgroundConfig.isGridWorkingCardBackgroundEnabled) stringResource(id = R.string.settings_grid_working_card_background_enabled) else stringResource(id = R.string.settings_grid_working_card_background_summary),
@@ -84,7 +84,7 @@ fun FolkSettingsGroupScope.appearanceBackgroundGridItems(
             }
 
             item(key = "appearance_grid_select_image") {
-                FolkValuePreference(
+                SegmentedValueItem(
         icon = Icons.Outlined.Image,
         title = stringResource(id = R.string.settings_select_background_image),
         summary = if (!BackgroundConfig.gridWorkingCardBackgroundUri.isNullOrEmpty()) stringResource(id = R.string.settings_grid_working_card_background_selected) else null,
@@ -112,7 +112,7 @@ fun FolkSettingsGroupScope.appearanceBackgroundGridItems(
                         }
                     }
                 )
-                FolkValuePreference(
+                SegmentedValueItem(
         icon = Icons.Outlined.Delete,
         title = stringResource(id = R.string.settings_clear_grid_working_card_background),
         onClick = {                                clearGridBackgroundDialog.showConfirm(
@@ -126,7 +126,7 @@ fun FolkSettingsGroupScope.appearanceBackgroundGridItems(
         }
 
         item(key = "appearance_grid_card_check") {
-            FolkSwitchPreference(
+            SegmentedSwitchItem(
                 icon = Icons.Outlined.CheckCircle,
                 title = stringResource(id = R.string.settings_grid_working_card_hide_check),
                 summary = stringResource(id = R.string.settings_grid_working_card_hide_check_summary),
@@ -139,7 +139,7 @@ fun FolkSettingsGroupScope.appearanceBackgroundGridItems(
         }
 
         item(key = "appearance_grid_card_text") {
-            FolkSwitchPreference(
+            SegmentedSwitchItem(
                 icon = Icons.Outlined.TextFields,
                 title = stringResource(id = R.string.settings_grid_working_card_hide_text),
                 summary = stringResource(id = R.string.settings_grid_working_card_hide_text_summary),
@@ -152,7 +152,7 @@ fun FolkSettingsGroupScope.appearanceBackgroundGridItems(
         }
 
         item(key = "appearance_grid_card_mode") {
-            FolkSwitchPreference(
+            SegmentedSwitchItem(
                 icon = Icons.Outlined.Label,
                 title = stringResource(id = R.string.settings_grid_working_card_hide_mode),
                 summary = stringResource(id = R.string.settings_grid_working_card_hide_mode_summary),
@@ -165,7 +165,7 @@ fun FolkSettingsGroupScope.appearanceBackgroundGridItems(
         }
 
         item(key = "appearance_grid_badge_text", visible = !BackgroundConfig.isGridWorkingCardModeHidden) {
-            FolkValuePreference(
+            SegmentedValueItem(
         icon = Icons.Outlined.Badge,
         title = stringResource(id = R.string.settings_custom_badge_text),
         summary = currentBadgeTextMode,

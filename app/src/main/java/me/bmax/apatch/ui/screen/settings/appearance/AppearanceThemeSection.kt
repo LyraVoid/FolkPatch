@@ -19,10 +19,10 @@ import me.bmax.apatch.ui.component.ExpressiveCard
 import me.bmax.apatch.ui.component.LoadingDialogHandle
 import me.bmax.apatch.ui.component.rememberConfirmDialog
 import me.bmax.apatch.ui.theme.ThemeManager
-import me.bmax.apatch.ui.component.folk.FolkSettingsSectionGroup
-import me.bmax.apatch.ui.component.folk.FolkSliderPreference
-import me.bmax.apatch.ui.component.folk.FolkSwitchPreference
-import me.bmax.apatch.ui.component.folk.FolkValuePreference
+import me.bmax.apatch.ui.component.SegmentedColumn
+import me.bmax.apatch.ui.component.SegmentedSliderItem
+import me.bmax.apatch.ui.component.SegmentedSwitchItem
+import me.bmax.apatch.ui.component.SegmentedValueItem
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.Surface
 import androidx.compose.material3.RadioButton
@@ -57,9 +57,9 @@ fun AppearanceThemeSection(
     val scope = rememberCoroutineScope()
     val prefs = APApplication.sharedPreferences
 
-    FolkSettingsSectionGroup(title = stringResource(R.string.settings_appearance_theme), flat = flat, highlightKey = highlightKey) {
+    SegmentedColumn(title = stringResource(R.string.settings_appearance_theme), flat = flat, highlightKey = highlightKey) {
         item(key = "appearance_theme_store") {
-            FolkValuePreference(
+            SegmentedValueItem(
                 icon = Icons.Outlined.Store,
                 title = stringResource(id = R.string.theme_store_title),
                 summary = if (themeStoreMode == "compat") stringResource(R.string.theme_mode_compat_desc) else null,
@@ -73,7 +73,7 @@ fun AppearanceThemeSection(
                 else -> stringResource(R.string.theme_mode_builtin)
             }
             val showModeSwitchDialog = remember { mutableStateOf(false) }
-            FolkValuePreference(
+            SegmentedValueItem(
                 icon = Icons.Outlined.Tune,
                 title = stringResource(R.string.settings_theme_mode),
                 summary = stringResource(R.string.theme_mode_current, modeName),
@@ -178,7 +178,7 @@ fun AppearanceThemeSection(
         }
 
         item(key = "appearance_save_theme") {
-            FolkValuePreference(
+            SegmentedValueItem(
                 icon = Icons.Outlined.FileDownload,
                 title = stringResource(id = R.string.settings_save_theme),
                 onClick = { showExportDialog.value = true },
@@ -186,7 +186,7 @@ fun AppearanceThemeSection(
         }
 
         item(key = "appearance_import_theme") {
-            FolkValuePreference(
+            SegmentedValueItem(
                 icon = Icons.Outlined.FileUpload,
                 title = stringResource(id = R.string.settings_import_theme),
                 onClick = { showFilePicker.value = true },
@@ -208,7 +208,7 @@ fun AppearanceThemeSection(
             )
             val resetThemeTitle = stringResource(id = R.string.settings_reset_theme)
             val resetThemeConfirm = context.getString(R.string.settings_reset_theme_confirm)
-            FolkValuePreference(
+            SegmentedValueItem(
                 icon = Icons.Outlined.RestartAlt,
                 title = resetThemeTitle,
                 onClick = {                    resetThemeDialog.showConfirm(

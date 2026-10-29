@@ -28,7 +28,7 @@ import me.bmax.apatch.APApplication
 import me.bmax.apatch.Natives
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.folk.FolkAlertDialog
-import me.bmax.apatch.ui.component.folk.FolkSelectableRow
+import me.bmax.apatch.ui.component.SegmentedSelectableItem
 import me.bmax.apatch.ui.component.folk.FolkButtonDefaults
 import me.bmax.apatch.util.*
 import me.bmax.apatch.util.ui.showToast
@@ -67,7 +67,7 @@ fun NewAppProfileModeDialog(
             ) {
                 Column {
                     options.forEach { (mode, labelId) ->
-                        FolkSelectableRow(
+                        SegmentedSelectableItem(
                             title = stringResource(labelId),
                             selected = currentMode.intValue == mode,
                             onClick = {
@@ -311,14 +311,14 @@ fun SELinuxModeDialog(
                 tonalElevation = 2.dp
             ) {
                 Column {
-                    FolkSelectableRow(
+                    SegmentedSelectableItem(
                         title = stringResource(R.string.settings_selinux_mode_enforcing),
                         summary = stringResource(R.string.settings_selinux_mode_enforcing_summary),
                         selected = selectedMode == "Enforcing",
                         onClick = { selectedMode = "Enforcing" }
                     )
 
-                    FolkSelectableRow(
+                    SegmentedSelectableItem(
                         title = stringResource(R.string.settings_selinux_mode_permissive),
                         summary = stringResource(R.string.settings_selinux_mode_permissive_summary),
                         selected = selectedMode == "Permissive",
