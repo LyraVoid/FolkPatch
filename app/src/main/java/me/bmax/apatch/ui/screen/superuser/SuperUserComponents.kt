@@ -1,5 +1,7 @@
 package me.bmax.apatch.ui.screen.superuser
 
+import me.bmax.apatch.ui.theme.tokens.FolkColors
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -109,13 +111,13 @@ fun LabelText(
     containerColor: Color = MaterialTheme.colorScheme.surfaceVariant,
 ) {
     Surface(
-        modifier = Modifier.padding(end = 4.dp),
-        shape = RoundedCornerShape(4.dp),
+        modifier = Modifier.padding(end = FolkDimens.Size4),
+        shape = RoundedCornerShape(FolkDimens.Size4),
         color = containerColor,
     ) {
         Text(
             text = label,
-            modifier = Modifier.padding(horizontal = 6.dp, vertical = 1.dp),
+            modifier = Modifier.padding(horizontal = FolkDimens.Size6, vertical = FolkDimens.Size1),
             style = MaterialTheme.typography.labelSmall,
             color = contentColorFor(containerColor),
             fontWeight = FontWeight.Medium,
@@ -145,26 +147,26 @@ fun SuperUserOptionsSheet(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-                .padding(bottom = 32.dp),
+                .padding(horizontal = FolkDimens.Size16)
+                .padding(bottom = FolkDimens.Size32),
         ) {
             Text(
                 text = stringResource(R.string.su_title),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold,
-                modifier = Modifier.padding(bottom = 16.dp),
+                modifier = Modifier.padding(bottom = FolkDimens.Size16),
             )
 
             // Refresh
             Surface(
                 onClick = onRefresh,
                 shape = FolkShape.Corner12,
-                color = Color.Transparent,
+                color = FolkColors.Transparent,
             ) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(12.dp),
+                        .padding(FolkDimens.Size12),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
@@ -178,12 +180,12 @@ fun SuperUserOptionsSheet(
             Surface(
                 onClick = onToggleSystemApps,
                 shape = FolkShape.Corner12,
-                color = Color.Transparent,
+                color = FolkColors.Transparent,
             ) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(12.dp),
+                        .padding(FolkDimens.Size12),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
@@ -201,12 +203,12 @@ fun SuperUserOptionsSheet(
             Surface(
                 onClick = onBackup,
                 shape = FolkShape.Corner12,
-                color = Color.Transparent,
+                color = FolkColors.Transparent,
             ) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(12.dp),
+                        .padding(FolkDimens.Size12),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
@@ -220,12 +222,12 @@ fun SuperUserOptionsSheet(
             Surface(
                 onClick = onRestore,
                 shape = FolkShape.Corner12,
-                color = Color.Transparent,
+                color = FolkColors.Transparent,
             ) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(12.dp),
+                        .padding(FolkDimens.Size12),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(

@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.patches
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import android.Manifest
 import android.app.Activity
 import android.content.pm.PackageManager
@@ -76,7 +77,7 @@ fun Patches(mode: PatchesViewModel.PatchMode) {
             Box(
                 modifier = Modifier
                     .padding(innerPadding)
-                    .padding(12.dp)
+                    .padding(FolkDimens.Size12)
             ) {
                 WarningCard(
                     message = stringResource(R.string.jailbreak_no_patch),
@@ -131,10 +132,10 @@ fun Patches(mode: PatchesViewModel.PatchMode) {
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxWidth()
-                    .widthIn(max = 720.dp)
+                    .widthIn(max = FolkDimens.Size720)
                     .verticalScroll(scrollState)
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+                    .padding(horizontal = FolkDimens.Size16, vertical = FolkDimens.Size8),
+                verticalArrangement = Arrangement.spacedBy(FolkDimens.Size12)
             ) {
                 val context = LocalContext.current
 
@@ -249,13 +250,13 @@ fun Patches(mode: PatchesViewModel.PatchMode) {
                         shape = MaterialTheme.shapes.large,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .heightIn(min = 160.dp, max = 360.dp)
+                            .heightIn(min = FolkDimens.Size160, max = FolkDimens.Size360)
                     ) {
                         SelectionContainer {
                             Text(
                                 modifier = Modifier
                                     .verticalScroll(logScrollState)
-                                    .padding(16.dp),
+                                    .padding(FolkDimens.Size16),
                                 text = viewModel.patchLog,
                                 fontSize = MaterialTheme.typography.bodySmall.fontSize,
                                 fontFamily = FontFamily.Monospace,
@@ -276,13 +277,13 @@ fun Patches(mode: PatchesViewModel.PatchMode) {
                 if (viewModel.running) {
                     CircularProgressIndicator(
                         modifier = Modifier
-                            .padding(16.dp)
-                            .size(32.dp)
+                            .padding(FolkDimens.Size16)
+                            .size(FolkDimens.Size32)
                             .align(Alignment.CenterHorizontally)
                     )
                 }
 
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(FolkDimens.Size4))
             }
 
             val keyReady = mode == PatchesViewModel.PatchMode.UNPATCH ||
@@ -302,8 +303,8 @@ fun Patches(mode: PatchesViewModel.PatchMode) {
                     text = actionText,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .widthIn(max = 720.dp)
-                        .padding(start = 16.dp, end = 16.dp, top = 12.dp, bottom = 16.dp)
+                        .widthIn(max = FolkDimens.Size720)
+                        .padding(start = FolkDimens.Size16, end = FolkDimens.Size16, top = FolkDimens.Size12, bottom = FolkDimens.Size16)
                 ) {
                     if (mode == PatchesViewModel.PatchMode.UNPATCH) {
                         viewModel.doUnpatch()
@@ -323,7 +324,7 @@ private fun PatchMode(mode: PatchesViewModel.PatchMode) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(12.dp),
+                .padding(FolkDimens.Size12),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(text = stringResource(id = mode.sId), style = MaterialTheme.typography.bodyLarge)

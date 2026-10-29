@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.home
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
@@ -130,7 +131,7 @@ fun HomeTopBar(
                     .build(),
                 contentDescription = titleResId?.let { stringResource(it) } ?: customAppTitle,
                 modifier = Modifier
-                    .height(40.dp)
+                    .height(FolkDimens.Size40)
                     .offset(x = titleOffsetX.dp)
                     .alpha(titleOpacity)
                     .graphicsLayer {

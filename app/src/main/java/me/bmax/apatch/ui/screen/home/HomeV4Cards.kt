@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.home
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import android.os.Build
 import android.system.Os
 import androidx.compose.foundation.clickable
@@ -99,7 +100,7 @@ fun InstallProgressDialog(
                     text = statusText,
                     style = MaterialTheme.typography.bodyMedium
                 )
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(FolkDimens.Size16))
                 LinearProgressIndicator(
                     progress = { progress },
                     modifier = Modifier.fillMaxWidth(),
@@ -134,20 +135,20 @@ internal fun SystemInfoCard(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(FolkDimens.Size16)
         ) {
             // 标题
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(bottom = 12.dp)
+                modifier = Modifier.padding(bottom = FolkDimens.Size12)
             ) {
                 Icon(
                     imageVector = Icons.Outlined.Info,
                     contentDescription = null,
-                    modifier = Modifier.size(20.dp),
+                    modifier = Modifier.size(FolkDimens.Size20),
                     tint = MaterialTheme.colorScheme.primary
                 )
-                Spacer(Modifier.width(8.dp))
+                Spacer(Modifier.width(FolkDimens.Size8))
                 Text(
                     text = stringResource(R.string.home_kpatch_info_title),
                     style = MaterialTheme.typography.titleMediumEmphasized,
@@ -156,7 +157,7 @@ internal fun SystemInfoCard(
 
             HorizontalDivider(
                 color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f),
-                modifier = Modifier.padding(bottom = 12.dp)
+                modifier = Modifier.padding(bottom = FolkDimens.Size12)
             )
 
             // 信息列表
@@ -195,18 +196,18 @@ fun InfoItem(icon: ImageVector, label: String, value: String) {
         modifier = Modifier
             .fillMaxWidth()
             .copyableInfo(label, value)
-            .padding(vertical = 6.dp),
+            .padding(vertical = FolkDimens.Size6),
         verticalAlignment = Alignment.Top
     ) {
         Icon(
             imageVector = icon,
             contentDescription = null,
             modifier = Modifier
-                .size(18.dp)
-                .padding(top = 2.dp),
+                .size(FolkDimens.Size18)
+                .padding(top = FolkDimens.Size2),
             tint = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        Spacer(Modifier.width(12.dp))
+        Spacer(Modifier.width(FolkDimens.Size12))
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = label,
@@ -243,20 +244,20 @@ fun StorageInfoCard(modifier: Modifier = Modifier) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(FolkDimens.Size16)
         ) {
             // 标题
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(bottom = 12.dp)
+                modifier = Modifier.padding(bottom = FolkDimens.Size12)
             ) {
                 Icon(
                     imageVector = Icons.Outlined.SdStorage,
                     contentDescription = null,
-                    modifier = Modifier.size(20.dp),
+                    modifier = Modifier.size(FolkDimens.Size20),
                     tint = MaterialTheme.colorScheme.primary
                 )
-                Spacer(Modifier.width(8.dp))
+                Spacer(Modifier.width(FolkDimens.Size8))
                 Text(
                     text = stringResource(R.string.home_storage_title),
                     style = MaterialTheme.typography.titleMediumEmphasized,
@@ -265,7 +266,7 @@ fun StorageInfoCard(modifier: Modifier = Modifier) {
 
             HorizontalDivider(
                 color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f),
-                modifier = Modifier.padding(bottom = 12.dp)
+                modifier = Modifier.padding(bottom = FolkDimens.Size12)
             )
 
             // 存储进度
@@ -276,7 +277,7 @@ fun StorageInfoCard(modifier: Modifier = Modifier) {
                 color = MaterialTheme.colorScheme.primary
             )
 
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(FolkDimens.Size12))
 
             StorageProgressBar(
                 label = stringResource(R.string.home_storage_ram),
@@ -319,13 +320,13 @@ fun StorageProgressBar(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-        Spacer(Modifier.height(6.dp))
+        Spacer(Modifier.height(FolkDimens.Size6))
         LinearProgressIndicator(
             progress = { progress },
             modifier = Modifier
                 .fillMaxWidth()
-                .height(6.dp)
-                .clip(RoundedCornerShape(3.dp)),
+                .height(FolkDimens.Size6)
+                .clip(RoundedCornerShape(FolkDimens.Size3)),
             color = color,
             trackColor = color.copy(alpha = 0.2f),
         )
@@ -347,16 +348,16 @@ internal fun LearnMoreCardV4() {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(FolkDimens.Size16),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
                 imageVector = Icons.Outlined.Info,
                 contentDescription = null,
-                modifier = Modifier.size(24.dp),
+                modifier = Modifier.size(FolkDimens.Size24),
                 tint = MaterialTheme.colorScheme.primary
             )
-            Spacer(Modifier.width(12.dp))
+            Spacer(Modifier.width(FolkDimens.Size12))
             Column {
                 Text(
                     text = stringResource(R.string.home_learn_apatch),

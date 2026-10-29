@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.script
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import android.content.SharedPreferences
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.*
@@ -131,9 +132,9 @@ fun ScriptLibraryScreen(navigator: DestinationsNavigator) {
                         modifier = Modifier.fillMaxSize(),
                         items = scripts,
                         key = { it.id },
-                        verticalSpacing = 16.dp,
-                        horizontalSpacing = 16.dp,
-                        contentPadding = PaddingValues(16.dp),
+                        verticalSpacing = FolkDimens.Size16,
+                        horizontalSpacing = FolkDimens.Size16,
+                        contentPadding = PaddingValues(FolkDimens.Size16),
                     ) { script ->
                         ScriptItem(
                             script = script,
@@ -180,7 +181,7 @@ fun ScriptLibraryScreen(navigator: DestinationsNavigator) {
                 } else {
                     LazyColumn(
                         modifier = Modifier.fillMaxSize(),
-                        contentPadding = PaddingValues(top = 24.dp, bottom = 16.dp)
+                        contentPadding = PaddingValues(top = FolkDimens.Size24, bottom = FolkDimens.Size16)
                     ) {
                         if (splicedCardGroup) {
                             splicedLazyColumnGroup(
@@ -222,7 +223,7 @@ fun ScriptLibraryScreen(navigator: DestinationsNavigator) {
                             }
                         } else {
                             items(scripts, key = { it.id }) { script ->
-                                Box(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
+                                Box(modifier = Modifier.padding(horizontal = FolkDimens.Size16, vertical = FolkDimens.Size8)) {
                                     ScriptItem(
                                         script = script,
                                         enableShortcut = enableModuleShortcutAdd,
@@ -331,12 +332,12 @@ private fun AddScriptDialog(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Icon(Icons.Outlined.FolderOpen, contentDescription = null)
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.width(FolkDimens.Size8))
                     Text(stringResource(R.string.script_library_select_file))
                 }
 
                 if (selectedFile != null) {
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(FolkDimens.Size8))
                     Text(
                         text = selectedFile?.absolutePath ?: "",
                         style = MaterialTheme.typography.bodySmall,
@@ -344,7 +345,7 @@ private fun AddScriptDialog(
                     )
                 }
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(FolkDimens.Size16))
 
                 OutlinedTextField(
                     value = scriptAlias,

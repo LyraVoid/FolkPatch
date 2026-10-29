@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.wallpaper
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -78,7 +79,7 @@ fun WallpaperWaterfall(
         }.distinctUntilChanged().collect { nearEnd -> if (nearEnd) onLoadMore() }
     }
     LazyVerticalStaggeredGrid(
-        columns = StaggeredGridCells.Adaptive(160.dp),
+        columns = StaggeredGridCells.Adaptive(FolkDimens.Size160),
         state = gridState,
         modifier = modifier.fillMaxSize(),
         contentPadding = contentPadding,
@@ -115,14 +116,14 @@ fun WallpaperStack(
         if (index >= items.size - 4) onLoadMore()
     }
     BoxWithConstraints(modifier.fillMaxSize().clipToBounds(), contentAlignment = Alignment.Center) {
-        val layerGap = if (maxHeight < 320.dp) {
+        val layerGap = if (maxHeight < FolkDimens.Size320) {
             FolkSettingsDimens.SectionTitleIndent
         } else {
             FolkSettingsDimens.ScreenPadding
         }
-        val availableHeight = (maxHeight - layerGap * 6).coerceAtLeast(1.dp)
+        val availableHeight = (maxHeight - layerGap * 6).coerceAtLeast(FolkDimens.Size1)
         val maxDrag = with(density) { (layerGap * 2).toPx() }
-        val threshold = with(density) { 48.dp.toPx() }
+        val threshold = with(density) { FolkDimens.Size48.toPx() }
         LaunchedEffect(maxWidth, maxHeight, index) { drag = 0f }
         val animatedDrag by animateFloatAsState(
             targetValue = drag.coerceIn(-maxDrag, maxDrag),

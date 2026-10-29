@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.theme
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import android.net.Uri
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -60,9 +61,9 @@ fun ThemeDownloadDialog(
                             .build(),
                         contentDescription = theme.name,
                         modifier = Modifier
-                            .size(64.dp)
-                            .padding(end = 12.dp)
-                            .clip(RoundedCornerShape(8.dp)),
+                            .size(FolkDimens.Size64)
+                            .padding(end = FolkDimens.Size12)
+                            .clip(RoundedCornerShape(FolkDimens.Size8)),
                         contentScale = ContentScale.Crop
                     )
                     
@@ -79,14 +80,14 @@ fun ThemeDownloadDialog(
                     }
                 }
                 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(FolkDimens.Size16))
                 
                 // 总进度条
                 Text(
                     text = "${stringResource(R.string.theme_download_progress)}: ${(progress.overallProgress * 100).toInt()}%",
                     style = MaterialTheme.typography.bodyMedium
                 )
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(FolkDimens.Size8))
                 val animatedProgress by animateFloatAsState(
                     targetValue = progress.overallProgress,
                     animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec,
@@ -97,7 +98,7 @@ fun ThemeDownloadDialog(
                     modifier = Modifier.fillMaxWidth()
                 )
                 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(FolkDimens.Size16))
                 
                 // 文件进度
                 Row(
@@ -116,7 +117,7 @@ fun ThemeDownloadDialog(
                 
                 // 暂停提示
                 if (progress.status == DownloadStatus.PAUSED) {
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(FolkDimens.Size8))
                     Text(
                         text = stringResource(R.string.theme_download_paused),
                         color = MaterialTheme.colorScheme.primary,
@@ -126,7 +127,7 @@ fun ThemeDownloadDialog(
 
                 // 错误信息
                 if (progress.errorMessage != null) {
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(FolkDimens.Size8))
                     Text(
                         text = progress.errorMessage!!,
                         color = MaterialTheme.colorScheme.error,
@@ -213,12 +214,12 @@ fun ThemeFilterSheetContent(
         modifier = Modifier
             .fillMaxWidth()
             .verticalScroll(rememberScrollState())
-            .padding(24.dp)
+            .padding(FolkDimens.Size24)
     ) {
         Text(
             text = stringResource(R.string.theme_store_filter_title),
             style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier.padding(bottom = FolkDimens.Size16)
         )
 
         OutlinedTextField(
@@ -230,18 +231,18 @@ fun ThemeFilterSheetContent(
             singleLine = true
         )
         
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(FolkDimens.Size16))
 
         Text(
             text = stringResource(R.string.theme_store_filter_source),
             style = MaterialTheme.typography.titleMedium
         )
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(FolkDimens.Size8))
         Row(
             modifier = Modifier
                 .horizontalScroll(rememberScrollState())
                 .fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size8)
         ) {
             val chipColors = FilterChipDefaults.filterChipColors(
                 selectedContainerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 1f)
@@ -266,18 +267,18 @@ fun ThemeFilterSheetContent(
             )
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(FolkDimens.Size16))
 
         Text(
             text = stringResource(R.string.theme_store_filter_type),
             style = MaterialTheme.typography.titleMedium
         )
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(FolkDimens.Size8))
         Row(
             modifier = Modifier
                 .horizontalScroll(rememberScrollState())
                 .fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size8)
         ) {
             val chipColors = FilterChipDefaults.filterChipColors(
                 selectedContainerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 1f)
@@ -296,7 +297,7 @@ fun ThemeFilterSheetContent(
             )
         }
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(FolkDimens.Size24))
 
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -314,14 +315,14 @@ fun ThemeFilterSheetContent(
             ) {
                 Text(stringResource(R.string.theme_store_filter_reset))
             }
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.width(FolkDimens.Size8))
             Button(
                 onClick = { onApply(author, source, typePhone, typeTablet) }
             ) {
                 Text(stringResource(R.string.theme_store_filter_apply))
             }
         }
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(FolkDimens.Size16))
     }
 }
 
@@ -354,7 +355,7 @@ fun ThemeGridItem(
                     onClick()
                 },
             ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = FolkDimens.Size4)
     ) {
         AsyncImage(
             model = ImageRequest.Builder(context)

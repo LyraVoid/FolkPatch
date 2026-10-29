@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.home
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -122,10 +123,10 @@ fun HomeScreenV4(
             .padding(innerPadding)
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+            .padding(horizontal = FolkDimens.Size16),
+        verticalArrangement = Arrangement.spacedBy(FolkDimens.Size16)
     ) {
-        Spacer(Modifier.height(0.dp))
+        Spacer(Modifier.height(FolkDimens.Size0))
 
         // Hero状态卡
         HeroStatusCard(
@@ -157,7 +158,7 @@ fun HomeScreenV4(
         if (isWide) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
+                horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size16)
             ) {
                 SystemInfoCard(
                     kpState = kpStateResolved,
@@ -168,7 +169,7 @@ fun HomeScreenV4(
                 )
                 Column(
                     modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                    verticalArrangement = Arrangement.spacedBy(FolkDimens.Size16)
                 ) {
                     HomeV4DeviceStatusCard(isWallpaperMode = isWallpaperMode)
                     StorageInfoCard()

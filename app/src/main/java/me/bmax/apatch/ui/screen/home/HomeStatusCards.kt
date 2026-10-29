@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.home
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -58,13 +59,13 @@ fun StatusBadge(
 ) {
     Surface(
         color = containerColor.copy(alpha = 1f),
-        shape = RoundedCornerShape(4.dp),
-        tonalElevation = 0.dp,
-        shadowElevation = 0.dp
+        shape = RoundedCornerShape(FolkDimens.Size4),
+        tonalElevation = FolkDimens.Size0,
+        shadowElevation = FolkDimens.Size0
     ) {
         Text(
             text = text,
-            modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
+            modifier = Modifier.padding(horizontal = FolkDimens.Size6, vertical = FolkDimens.Size2),
             style = MaterialTheme.typography.labelSmall,
             color = contentColor.copy(alpha = 1f),
             fontWeight = FontWeight.Bold
@@ -134,7 +135,7 @@ fun KStatusCard(
         }
 
         else -> {
-            MaterialTheme.colorScheme.surfaceColorAtElevation(1.dp) to MaterialTheme.colorScheme.onSurface
+            MaterialTheme.colorScheme.surfaceColorAtElevation(FolkDimens.Size1) to MaterialTheme.colorScheme.onSurface
         }
     }
 
@@ -153,7 +154,7 @@ fun KStatusCard(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(12.dp),
+                .padding(FolkDimens.Size12),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             if (!isJailbreak && kpState == APApplication.State.KERNELPATCH_NEED_UPDATE) {
@@ -167,7 +168,7 @@ fun KStatusCard(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(10.dp),
+                    .padding(FolkDimens.Size10),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 when {
@@ -190,7 +191,7 @@ fun KStatusCard(
                 Column(
                     Modifier
                         .weight(2f)
-                        .padding(start = 16.dp)
+                        .padding(start = FolkDimens.Size16)
                 ) {
                     when {
                         isJailbreak -> {
@@ -198,7 +199,7 @@ fun KStatusCard(
                                 text = stringResource(R.string.settings_jailbreak_mode),
                                 style = MaterialTheme.typography.titleMedium
                             )
-                            Spacer(Modifier.height(6.dp))
+                            Spacer(Modifier.height(FolkDimens.Size6))
                             Text(
                                 text = stringResource(R.string.settings_jailbreak_mode_summary),
                                 style = MaterialTheme.typography.bodyMedium
@@ -216,7 +217,7 @@ fun KStatusCard(
                                     style = MaterialTheme.typography.titleMedium
                                 )
                                 if (!BackgroundConfig.isListWorkingCardModeHidden) {
-                                    Spacer(Modifier.width(8.dp))
+                                    Spacer(Modifier.width(FolkDimens.Size8))
                                     StatusBadge(
                                         text = BackgroundConfig.getCustomBadgeText() ?: if (apState == APApplication.State.ANDROIDPATCH_INSTALLED) "Kpm" else "Half"
                                     )
@@ -229,7 +230,7 @@ fun KStatusCard(
                                 text = stringResource(R.string.home_kp_need_update),
                                 style = MaterialTheme.typography.titleMedium
                             )
-                            Spacer(Modifier.height(6.dp))
+                            Spacer(Modifier.height(FolkDimens.Size6))
                             Text(
                                 text = stringResource(
                                     R.string.kpatch_version_update,
@@ -251,7 +252,7 @@ fun KStatusCard(
                         }
                     }
                     if (!isJailbreak && kpState != APApplication.State.UNKNOWN_STATE && kpState != APApplication.State.KERNELPATCH_NEED_UPDATE && kpState != APApplication.State.KERNELPATCH_NEED_REBOOT) {
-                        Spacer(Modifier.height(4.dp))
+                        Spacer(Modifier.height(FolkDimens.Size4))
                         Text(
                             text = "${Version.installedKPVString()} (${managerVersion.second})" + if (BackgroundConfig.isListWorkingCardModeHidden) " - " + (if (apState != APApplication.State.ANDROIDPATCH_NOT_INSTALLED) "Kpm" else "KernelPatch") else "",
                             style = MaterialTheme.typography.bodyMedium

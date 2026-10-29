@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.settings.appearance
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
@@ -76,14 +77,14 @@ fun SegmentedColumnScope.appearanceNavItems(
                         .padding(
                             start = FolkSettingsDimens.ItemHorizontalPadding,
                             end = FolkSettingsDimens.ItemEndPadding,
-                            top = 16.dp,
-                            bottom = 16.dp,
+                            top = FolkDimens.Size16,
+                            bottom = FolkDimens.Size16,
                         ),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Icon(imageVector = Icons.Outlined.Navigation, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(24.dp))
-                    Spacer(Modifier.width(16.dp))
+                    Icon(imageVector = Icons.Outlined.Navigation, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(FolkDimens.Size24))
+                    Spacer(Modifier.width(FolkDimens.Size16))
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
                             text = stringResource(id = R.string.settings_nav_layout_title),
@@ -111,7 +112,7 @@ fun SegmentedColumnScope.appearanceNavItems(
                 enter = fadeIn(MaterialTheme.motionScheme.defaultEffectsSpec()) + expandVertically(MaterialTheme.motionScheme.defaultSpatialSpec()),
                 exit = shrinkVertically(MaterialTheme.motionScheme.fastSpatialSpec()) + fadeOut(MaterialTheme.motionScheme.fastEffectsSpec())
             ) {
-                Column(modifier = Modifier.padding(start = 16.dp, top = 8.dp)) {
+                Column(modifier = Modifier.padding(start = FolkDimens.Size16, top = FolkDimens.Size8)) {
                     me.bmax.apatch.ui.component.SegmentedCheckboxItem(
                         icon = null,
                         title = stringResource(id = R.string.settings_show_apm),
@@ -176,10 +177,10 @@ fun SegmentedColumnScope.appearanceNavItems(
             )
             if (showStyleDialog) {
                 ExpressiveDialog(onDismissRequest = { showStyleDialog = false }) {
-                    Column(Modifier.padding(24.dp)) {
+                    Column(Modifier.padding(FolkDimens.Size24)) {
                         Text(stringResource(R.string.settings_floating_bar_style),
                             style = MaterialTheme.typography.headlineSmall,
-                            modifier = Modifier.padding(bottom = 16.dp))
+                            modifier = Modifier.padding(bottom = FolkDimens.Size16))
                         listOf(FloatingBarConfig.STYLE_STANDARD to R.string.settings_bottom_bar_standard,
                             FloatingBarConfig.STYLE_DRAWER to R.string.settings_bottom_bar_drawer).forEach { (value, title) ->
                             SegmentedSelectableItem(

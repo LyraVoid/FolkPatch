@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.module
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -79,11 +80,11 @@ fun OnlineKPMScreen(navigator: DestinationsNavigator) {
                 )
             } else {
                 LazyVerticalGrid(
-                    columns = GridCells.Adaptive(minSize = 320.dp),
+                    columns = GridCells.Adaptive(minSize = FolkDimens.Size320),
                     modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(16.dp),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                    contentPadding = PaddingValues(FolkDimens.Size16),
+                    horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size12),
+                    verticalArrangement = Arrangement.spacedBy(FolkDimens.Size12),
                 ) {
                     items(viewModel.modules, key = { it.name }) { module ->
                         OnlineKPMItem(module, context)

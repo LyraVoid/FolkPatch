@@ -1,5 +1,7 @@
 package me.bmax.apatch.ui.screen.home
 
+import me.bmax.apatch.ui.theme.tokens.FolkColors
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import android.os.Build
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -189,7 +191,7 @@ fun DeviceStatusCard(isWallpaperMode: Boolean, modifier: Modifier = Modifier) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 8.dp),
+                .padding(vertical = FolkDimens.Size8),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             StatusCircle(
@@ -243,7 +245,7 @@ fun StorageCard(isWallpaperMode: Boolean, modifier: Modifier = Modifier) {
             total = storageStatus.storageTotal,
             color = MaterialTheme.colorScheme.primary
         )
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(FolkDimens.Size12))
         StorageRow(
             label = stringResource(R.string.home_storage_ram),
             used = storageStatus.ramUsed,
@@ -251,7 +253,7 @@ fun StorageCard(isWallpaperMode: Boolean, modifier: Modifier = Modifier) {
             color = MaterialTheme.colorScheme.secondary
         )
         if (storageStatus.zramTotal > 0) {
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(FolkDimens.Size12))
             StorageRow(
                 label = stringResource(R.string.home_storage_zram),
                 used = storageStatus.zramUsed,
@@ -260,7 +262,7 @@ fun StorageCard(isWallpaperMode: Boolean, modifier: Modifier = Modifier) {
             )
         }
         if (storageStatus.swapTotal > 0) {
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(FolkDimens.Size12))
             StorageRow(
                 label = stringResource(R.string.home_storage_swap),
                 used = storageStatus.swapUsed,
@@ -283,8 +285,8 @@ fun StorageRow(
     val totalStr = android.text.format.Formatter.formatFileSize(LocalContext.current, total)
     val isWallpaper = LocalFocusCardWallpaper.current
     val subColor = LocalFocusCardSubColor.current
-    val primaryColor = if (isWallpaper) Color.White else MaterialTheme.colorScheme.onSurface
-    val secondaryColor = if (isWallpaper && subColor != Color.Unspecified) subColor else MaterialTheme.colorScheme.onSurfaceVariant
+    val primaryColor = if (isWallpaper) FolkColors.MediaContent else MaterialTheme.colorScheme.onSurface
+    val secondaryColor = if (isWallpaper && subColor != FolkColors.Unspecified) subColor else MaterialTheme.colorScheme.onSurfaceVariant
     
     Column(modifier = Modifier.fillMaxWidth()) {
         Row(
@@ -302,15 +304,15 @@ fun StorageRow(
                 color = secondaryColor
             )
         }
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(FolkDimens.Size8))
         LinearProgressIndicator(
             progress = { progress },
             modifier = Modifier
                 .fillMaxWidth()
-                .height(8.dp)
+                .height(FolkDimens.Size8)
                 .clip(MaterialTheme.shapes.small),
-            color = if (isWallpaper) Color.White else color,
-            trackColor = (if (isWallpaper) Color.White else color).copy(alpha = 0.2f),
+            color = if (isWallpaper) FolkColors.MediaContent else color,
+            trackColor = (if (isWallpaper) FolkColors.MediaContent else color).copy(alpha = 0.2f),
         )
     }
 }
@@ -325,16 +327,16 @@ fun StatusCircle(
 ) {
     val isWallpaper = LocalFocusCardWallpaper.current
     val subColor = LocalFocusCardSubColor.current
-    val effectiveColor = if (isWallpaper) Color.White else color
-    val labelColor = if (isWallpaper && subColor != Color.Unspecified) subColor else MaterialTheme.colorScheme.onSurfaceVariant
+    val effectiveColor = if (isWallpaper) FolkColors.MediaContent else color
+    val labelColor = if (isWallpaper && subColor != FolkColors.Unspecified) subColor else MaterialTheme.colorScheme.onSurfaceVariant
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(FolkDimens.Size8)
     ) {
         Box(
             contentAlignment = Alignment.Center,
-            modifier = Modifier.size(80.dp)
+            modifier = Modifier.size(FolkDimens.Size80)
         ) {
             if (progress > 0f) {
                 CircularWavyProgressIndicator(
@@ -345,7 +347,7 @@ fun StatusCircle(
                     // Keep the standard wave height; a longer wavelength gives
                     // fewer, broader ripples, which reads calmer.
                     amplitude = { 1f },
-                    wavelength = 24.dp,
+                    wavelength = FolkDimens.Size24,
                 )
             } else {
                 // An empty gauge still shows a muted wavy ring, so a 0% value
@@ -355,13 +357,13 @@ fun StatusCircle(
                     modifier = Modifier.fillMaxSize(),
                     color = effectiveColor.copy(alpha = 0.2f),
                     amplitude = { 1f },
-                    wavelength = 24.dp,
+                    wavelength = FolkDimens.Size24,
                 )
             }
             Text(
                 text = value,
                 style = MaterialTheme.typography.titleLargeEmphasized,
-                color = if (isWallpaper) Color.White else MaterialTheme.colorScheme.onSurface
+                color = if (isWallpaper) FolkColors.MediaContent else MaterialTheme.colorScheme.onSurface
             )
         }
         Text(
@@ -381,7 +383,7 @@ val LocalFocusCardWallpaper = compositionLocalOf { false }
 /**
  * CompositionLocal: 壁纸模式下的次要文字颜色
  */
-val LocalFocusCardSubColor = compositionLocalOf { Color.Unspecified }
+val LocalFocusCardSubColor = compositionLocalOf { FolkColors.Unspecified }
 
 @Composable
 fun InfoRow(
@@ -390,8 +392,8 @@ fun InfoRow(
 ) {
     val isWallpaper = LocalFocusCardWallpaper.current
     val subColor = LocalFocusCardSubColor.current
-    val labelColor = if (isWallpaper && subColor != Color.Unspecified) subColor else MaterialTheme.colorScheme.onSurfaceVariant
-    val valueColor = if (isWallpaper) Color.White else MaterialTheme.colorScheme.onSurface
+    val labelColor = if (isWallpaper && subColor != FolkColors.Unspecified) subColor else MaterialTheme.colorScheme.onSurfaceVariant
+    val valueColor = if (isWallpaper) FolkColors.MediaContent else MaterialTheme.colorScheme.onSurface
 
     Row(
         modifier = Modifier.copyableInfo(label, value),

@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.home
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -78,20 +79,20 @@ fun HomeScreenV3(
     }
     
     BoxWithConstraints {
-        val isWide = maxWidth >= 600.dp && maxWidth > maxHeight
+        val isWide = maxWidth >= FolkDimens.Size600 && maxWidth > maxHeight
         
         Column(
             modifier = Modifier
                 .padding(paddingValues)
                 .fillMaxSize()
                 .verticalScroll(scrollState)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+                .padding(FolkDimens.Size16),
+            verticalArrangement = Arrangement.spacedBy(FolkDimens.Size16)
         ) {
             if (isWide) {
                 // Row 1: KernelPatch + APP
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size16),
                     modifier = Modifier.height(IntrinsicSize.Max)
                 ) {
                     KernelPatchCard(
@@ -114,7 +115,7 @@ fun HomeScreenV3(
                 
                 // Row 2: Device + Storage
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size16),
                     modifier = Modifier.height(IntrinsicSize.Max)
                 ) {
                     DeviceStatusCard(

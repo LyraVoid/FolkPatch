@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.settings
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -167,10 +168,10 @@ internal fun SettingsSearchResults(
                         color = MaterialTheme.colorScheme.primary,
                         fontWeight = FontWeight.SemiBold,
                         modifier = Modifier.padding(
-                            start = 24.dp,
-                            end = 24.dp,
-                            top = 12.dp,
-                            bottom = 8.dp,
+                            start = FolkDimens.Size24,
+                            end = FolkDimens.Size24,
+                            top = FolkDimens.Size12,
+                            bottom = FolkDimens.Size8,
                         ),
                     )
                 }
@@ -213,7 +214,7 @@ private fun SettingsSearchResultRow(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .defaultMinSize(minHeight = 56.dp)
+            .defaultMinSize(minHeight = FolkDimens.Size56)
             .folkPressScale(interactionSource)
             .clickable(
                 role = Role.Button,
@@ -241,7 +242,7 @@ private fun SettingsSearchResultRow(
         Spacer(Modifier.width(FolkSettingsDimens.IconSpacing))
         Column(
             modifier = Modifier.weight(1f),
-            verticalArrangement = Arrangement.spacedBy(2.dp),
+            verticalArrangement = Arrangement.spacedBy(FolkDimens.Size2),
         ) {
             Text(
                 text = highlightedText(result.title, settingsMatchRanges(result.title, tokens)),

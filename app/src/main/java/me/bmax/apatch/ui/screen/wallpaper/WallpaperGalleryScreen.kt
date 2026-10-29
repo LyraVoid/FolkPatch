@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.wallpaper
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import android.app.Application
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -134,7 +135,7 @@ fun WallpaperGalleryScreen(navigator: DestinationsNavigator) {
 
                     layoutIndex == 0 -> WallpaperWaterfall(
                         items = state.items,
-                        contentPadding = PaddingValues(bottom = 24.dp),
+                        contentPadding = PaddingValues(bottom = FolkDimens.Size24),
                         onTap = { preview = it },
                         onLoadMore = viewModel::loadMore,
                         onImageSize = viewModel::recordImageSize,
@@ -180,7 +181,7 @@ private fun WallpaperPreviewDialog(
         Surface(
             shape = FolkShape.Dialog,
             color = MaterialTheme.colorScheme.surfaceContainerHigh,
-            tonalElevation = 6.dp,
+            tonalElevation = FolkDimens.Size6,
         ) {
             Column {
                 AsyncImage(
@@ -192,17 +193,17 @@ private fun WallpaperPreviewDialog(
                         .heightIn(max = imageMaxHeight),
                 )
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 8.dp),
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = FolkDimens.Size12, vertical = FolkDimens.Size8),
                     horizontalArrangement = Arrangement.End,
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     TextButton(onClick = onDismiss) {
                         Text(stringResource(R.string.wallpaper_cancel))
                     }
-                    Spacer(Modifier.width(8.dp))
+                    Spacer(Modifier.width(FolkDimens.Size8))
                     Button(onClick = onDownload) {
-                        Icon(Icons.Outlined.Download, contentDescription = null, modifier = Modifier.size(18.dp))
-                        Spacer(Modifier.width(6.dp))
+                        Icon(Icons.Outlined.Download, contentDescription = null, modifier = Modifier.size(FolkDimens.Size18))
+                        Spacer(Modifier.width(FolkDimens.Size6))
                         Text(stringResource(R.string.wallpaper_download))
                     }
                 }

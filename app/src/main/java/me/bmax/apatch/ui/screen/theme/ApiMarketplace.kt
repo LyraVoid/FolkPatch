@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.theme
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import me.bmax.apatch.util.ui.showToast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -134,8 +135,8 @@ fun ApiMarketplaceScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(paddingValues),
-                    contentPadding = PaddingValues(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                    contentPadding = PaddingValues(FolkDimens.Size16),
+                    verticalArrangement = Arrangement.spacedBy(FolkDimens.Size12)
                 ) {
                     items(
                         items = viewModel.items,
@@ -166,12 +167,12 @@ private fun ApiMarketplaceItemCard(
         modifier = Modifier.fillMaxWidth(),
         shape = FolkShape.Corner20,
         color = MaterialTheme.colorScheme.surface,
-        tonalElevation = 1.dp
+        tonalElevation = FolkDimens.Size1
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(FolkDimens.Size16),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -184,7 +185,7 @@ private fun ApiMarketplaceItemCard(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(FolkDimens.Size4))
                 Text(
                     text = item.getLocalizedDescription(),
                     style = MaterialTheme.typography.bodyMedium,
@@ -193,12 +194,12 @@ private fun ApiMarketplaceItemCard(
                     overflow = TextOverflow.Ellipsis
                 )
             }
-            Spacer(modifier = Modifier.width(12.dp))
+            Spacer(modifier = Modifier.width(FolkDimens.Size12))
 
             FilledTonalButton(
                 onClick = onPreview,
                 contentPadding = ButtonDefaults.TextButtonContentPadding,
-                modifier = Modifier.height(36.dp),
+                modifier = Modifier.height(FolkDimens.Size36),
                 colors = ButtonDefaults.filledTonalButtonColors(
                     containerColor = MaterialTheme.colorScheme.secondaryContainer
                 )
@@ -206,9 +207,9 @@ private fun ApiMarketplaceItemCard(
                 Icon(
                     imageVector = Icons.Outlined.Info,
                     contentDescription = null,
-                    modifier = Modifier.size(18.dp)
+                    modifier = Modifier.size(FolkDimens.Size18)
                 )
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(FolkDimens.Size8))
                 Text(stringResource(R.string.apm_api_preview))
             }
         }
@@ -245,7 +246,7 @@ private fun ApiPreviewDialog(
                     style = MaterialTheme.typography.bodyMedium
                 )
 
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(FolkDimens.Size8))
 
                 // URL
                 Text(
@@ -259,19 +260,19 @@ private fun ApiPreviewDialog(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(FolkDimens.Size16))
 
                 // API Preview Image
                 Text(
                     text = stringResource(R.string.apm_api_preview_title),
                     style = MaterialTheme.typography.labelMedium
                 )
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(FolkDimens.Size8))
 
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(150.dp)
+                        .height(FolkDimens.Size150)
                         .clip(MaterialTheme.shapes.medium),
                     contentAlignment = Alignment.Center
                 ) {
@@ -286,7 +287,7 @@ private fun ApiPreviewDialog(
                     // Loading state
                     if (imageLoadState is AsyncImagePainter.State.Loading) {
                         CircularProgressIndicator(
-                            modifier = Modifier.size(32.dp)
+                            modifier = Modifier.size(FolkDimens.Size32)
                         )
                     }
 
@@ -299,9 +300,9 @@ private fun ApiPreviewDialog(
                                 imageVector = Icons.Outlined.Info,
                                 contentDescription = null,
                                 tint = MaterialTheme.colorScheme.error,
-                                modifier = Modifier.size(32.dp)
+                                modifier = Modifier.size(FolkDimens.Size32)
                             )
-                            Spacer(modifier = Modifier.height(4.dp))
+                            Spacer(modifier = Modifier.height(FolkDimens.Size4))
                             Text(
                                 text = stringResource(R.string.apm_api_preview_failed),
                                 style = MaterialTheme.typography.bodySmall,
@@ -313,7 +314,7 @@ private fun ApiPreviewDialog(
 
                 // Verification error message
                 if (verificationState is ApiMarketplaceViewModel.VerificationState.Error) {
-                    Spacer(modifier = Modifier.height(12.dp))
+                    Spacer(modifier = Modifier.height(FolkDimens.Size12))
                     Text(
                         text = verificationState.message,
                         style = MaterialTheme.typography.bodySmall,
@@ -333,10 +334,10 @@ private fun ApiPreviewDialog(
                         )
                     ) {
                         CircularProgressIndicator(
-                            modifier = Modifier.size(16.dp),
-                            strokeWidth = 2.dp
+                            modifier = Modifier.size(FolkDimens.Size16),
+                            strokeWidth = FolkDimens.Size2
                         )
-                        Spacer(modifier = Modifier.width(8.dp))
+                        Spacer(modifier = Modifier.width(FolkDimens.Size8))
                         Text(stringResource(R.string.apm_api_verifying))
                     }
                 }
@@ -358,7 +359,7 @@ private fun ApiPreviewDialog(
                         )
                     ) {
                         Icon(Icons.Outlined.Check, contentDescription = null)
-                        Spacer(modifier = Modifier.width(4.dp))
+                        Spacer(modifier = Modifier.width(FolkDimens.Size4))
                         Text(stringResource(R.string.apm_api_apply_success))
                     }
                 }

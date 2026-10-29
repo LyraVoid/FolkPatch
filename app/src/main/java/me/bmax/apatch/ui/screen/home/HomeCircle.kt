@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.home
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -55,11 +56,11 @@ fun HomeScreenCircle(
         modifier = Modifier
             .padding(innerPadding)
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+            .padding(horizontal = FolkDimens.Size16),
+        verticalArrangement = Arrangement.spacedBy(FolkDimens.Size16)
     ) {
         if (BackgroundConfig.isCustomBackgroundEnabled) {
-            Spacer(Modifier.height(0.dp))
+            Spacer(Modifier.height(FolkDimens.Size0))
         }
         
         // Status Card
@@ -77,7 +78,7 @@ fun HomeScreenCircle(
             
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
+                horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size16)
             ) {
                 TonalCard(modifier = Modifier.weight(1f)) {
                     Row(
@@ -92,16 +93,16 @@ fun HomeScreenCircle(
                                     restoreState = true
                                 }
                             }
-                            .padding(horizontal = 20.dp, vertical = 16.dp),
+                            .padding(horizontal = FolkDimens.Size20, vertical = FolkDimens.Size16),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.Security,
                             contentDescription = null,
-                            modifier = Modifier.size(20.dp),
+                            modifier = Modifier.size(FolkDimens.Size20),
                             tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
-                        Spacer(Modifier.width(16.dp))
+                        Spacer(Modifier.width(FolkDimens.Size16))
                         Column {
                             Text(
                                 text = stringResource(R.string.superuser),
@@ -109,7 +110,7 @@ fun HomeScreenCircle(
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             )
-                            Spacer(Modifier.height(4.dp))
+                            Spacer(Modifier.height(FolkDimens.Size4))
                             Text(
                                 text = superuserCount.toString(),
                                 style = MaterialTheme.typography.bodyMedium,
@@ -132,16 +133,16 @@ fun HomeScreenCircle(
                                     restoreState = true
                                 }
                             }
-                            .padding(horizontal = 20.dp, vertical = 16.dp),
+                            .padding(horizontal = FolkDimens.Size20, vertical = FolkDimens.Size16),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.Widgets,
                             contentDescription = null,
-                            modifier = Modifier.size(20.dp),
+                            modifier = Modifier.size(FolkDimens.Size20),
                             tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
-                        Spacer(Modifier.width(16.dp))
+                        Spacer(Modifier.width(FolkDimens.Size16))
                         Column {
                             Text(
                                 text = stringResource(R.string.module),
@@ -149,7 +150,7 @@ fun HomeScreenCircle(
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             )
-                            Spacer(Modifier.height(4.dp))
+                            Spacer(Modifier.height(FolkDimens.Size4))
                             Text(
                                 text = moduleCount.toString(),
                                 style = MaterialTheme.typography.bodyMedium,

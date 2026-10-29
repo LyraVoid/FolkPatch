@@ -2,6 +2,8 @@
 
 package me.bmax.apatch.ui.screen.settings.general
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
+
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
@@ -40,10 +42,10 @@ fun ResetSUPathDialog(showDialog: MutableState<Boolean>) {
     ExpressiveDialog(
         onDismissRequest = { showDialog.value = false },
     ) {
-        Column(modifier = Modifier.padding(PaddingValues(all = 24.dp))) {
+        Column(modifier = Modifier.padding(PaddingValues(all = FolkDimens.Size24))) {
             Box(
                 Modifier
-                    .padding(PaddingValues(bottom = 16.dp))
+                    .padding(PaddingValues(bottom = FolkDimens.Size16))
                     .align(Alignment.Start)
             ) {
                 Text(
@@ -54,7 +56,7 @@ fun ResetSUPathDialog(showDialog: MutableState<Boolean>) {
             Box(
                 Modifier
                     .weight(weight = 1f, fill = false)
-                    .padding(PaddingValues(bottom = 12.dp))
+                    .padding(PaddingValues(bottom = FolkDimens.Size12))
                     .align(Alignment.Start)
             ) {
                 OutlinedTextField(
@@ -116,16 +118,16 @@ fun CleanStorageDialog(
     ExpressiveDialog(
         onDismissRequest = { showDialog.value = false },
     ) {
-        Column(modifier = Modifier.padding(PaddingValues(all = 24.dp))) {
+        Column(modifier = Modifier.padding(PaddingValues(all = FolkDimens.Size24))) {
             Text(
                 text = stringResource(id = titleRes),
                 style = MaterialTheme.typography.headlineSmall,
-                modifier = Modifier.padding(bottom = 16.dp)
+                modifier = Modifier.padding(bottom = FolkDimens.Size16)
             )
             Text(
                 text = stringResource(id = R.string.settings_clean_storage_confirm),
                 style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier.padding(bottom = 12.dp)
+                modifier = Modifier.padding(bottom = FolkDimens.Size12)
             )
 
             Row(
@@ -167,11 +169,11 @@ fun FolkXAnimationSpeedDialog(showDialog: MutableState<Boolean>, onSpeedChanged:
     ExpressiveDialog(
         onDismissRequest = { showDialog.value = false },
     ) {
-        Column(modifier = Modifier.padding(24.dp)) {
+        Column(modifier = Modifier.padding(FolkDimens.Size24)) {
             Text(
                 text = stringResource(R.string.settings_folkx_animation_speed),
                 style = MaterialTheme.typography.headlineSmall,
-                modifier = Modifier.padding(bottom = 16.dp)
+                modifier = Modifier.padding(bottom = FolkDimens.Size16)
             )
 
             val currentSpeed = remember { prefs.getFloat("folkx_animation_speed", 1.0f) }
@@ -179,7 +181,7 @@ fun FolkXAnimationSpeedDialog(showDialog: MutableState<Boolean>, onSpeedChanged:
             Surface(
                 shape = FolkShape.Corner12,
                 color = AlertDialogDefaults.containerColor,
-                tonalElevation = 2.dp
+                tonalElevation = FolkDimens.Size2
             ) {
                 Column {
                     val speeds = listOf(
@@ -208,7 +210,7 @@ fun FolkXAnimationSpeedDialog(showDialog: MutableState<Boolean>, onSpeedChanged:
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 24.dp),
+                    .padding(top = FolkDimens.Size24),
                 horizontalArrangement = Arrangement.End
             ) {
                 TextButton(onClick = { showDialog.value = false }) {

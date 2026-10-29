@@ -13,7 +13,7 @@
              with the generic APK placeholder icon in the center. -->
         <item name="android:windowBackground">@drawable/splash_background</item>
         <item name="windowSplashScreenBackground">@color/splash_background</item>
-        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_foreground_anime</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground_anime</item>
         <item name="windowSplashScreenIconBackgroundColor">@color/splash_background</item>
     </style>
 

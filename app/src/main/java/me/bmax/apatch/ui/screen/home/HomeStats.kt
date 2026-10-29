@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.home
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -100,12 +101,12 @@ fun HomeScreenStats(
         Row(
             modifier = Modifier
                 .padding(innerPadding)
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = FolkDimens.Size16)
                 .verticalScroll(rememberScrollState()),
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
+            horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size16)
         ) {
-            if (isWallpaperMode) { Spacer(Modifier.height(8.dp)) }
-            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+            if (isWallpaperMode) { Spacer(Modifier.height(FolkDimens.Size8)) }
+            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(FolkDimens.Size16)) {
                 if (useGridTop) {
                     StatsGridTopSection(kpState, apState, navigator, showUninstallDialog)
                 } else {
@@ -119,7 +120,7 @@ fun HomeScreenStats(
                 }
                 HomeBottomSpacer()
             }
-            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(FolkDimens.Size16)) {
                 if (isInstalled) {
                     ModuleStatisticsSection(superuserCount, apmModuleCount, kernelModuleCount)
                 }
@@ -135,10 +136,10 @@ fun HomeScreenStats(
             modifier = Modifier
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
-                .padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+                .padding(horizontal = FolkDimens.Size16),
+            verticalArrangement = Arrangement.spacedBy(FolkDimens.Size16)
         ) {
-            if (isWallpaperMode) { Spacer(Modifier.height(8.dp)) }
+            if (isWallpaperMode) { Spacer(Modifier.height(FolkDimens.Size8)) }
             if (useGridTop) {
                 StatsGridTopSection(kpState, apState, navigator, showUninstallDialog)
             } else {

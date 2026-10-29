@@ -1,4 +1,6 @@
 package me.bmax.apatch.ui.screen.module
+
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import me.bmax.apatch.ui.screen.patches.MODULE_TYPE
 
 import android.app.Activity.RESULT_OK
@@ -147,7 +149,7 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(12.dp),
+                .padding(FolkDimens.Size12),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -273,7 +275,7 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
             val configuration = LocalConfiguration.current
             val isLandscape = configuration.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
             val animatedOffset by animateDpAsState(
-                targetValue = if (isFloatingMode && bottomBarVisible && !isLandscape) (-88).dp else 0.dp,
+                targetValue = if (isFloatingMode && bottomBarVisible && !isLandscape) (-88).dp else FolkDimens.Size0,
                 animationSpec = MaterialTheme.motionScheme.defaultSpatialSpec(),
                 label = "fabOffset"
             )
@@ -316,7 +318,7 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
                             fabExpanded = false
                             navigator.navigate(ApmBulkInstallScreenDestination())
                         },
-                        icon = { Icon(Icons.AutoMirrored.Outlined.PlaylistAdd, contentDescription = null, modifier = Modifier.size(18.dp)) },
+                        icon = { Icon(Icons.AutoMirrored.Outlined.PlaylistAdd, contentDescription = null, modifier = Modifier.size(FolkDimens.Size18)) },
                         text = { Text(text = stringResource(R.string.apm_bulk_install_action), style = MaterialTheme.typography.bodyMedium) },
                     )
                     // 安装 (Install)
@@ -332,7 +334,7 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
                                 }
                             }
                         },
-                        icon = { Icon(Icons.Outlined.Download, contentDescription = null, modifier = Modifier.size(18.dp)) },
+                        icon = { Icon(Icons.Outlined.Download, contentDescription = null, modifier = Modifier.size(FolkDimens.Size18)) },
                         text = { Text(text = stringResource(R.string.apm_install), style = MaterialTheme.typography.bodyMedium) },
                     )
                 }
@@ -356,7 +358,7 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(24.dp),
+                        .padding(FolkDimens.Size24),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
@@ -409,16 +411,16 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
                 }
                 showFirstTimeDialog = false
             },
-            width = 350.dp,
+            width = FolkDimens.Size350,
             shape = FolkShape.Corner20,
             blurBehind = false,
             dialogProperties = DialogProperties(dismissOnClickOutside = false, dismissOnBackPress = false),
         ) {
-            Column(modifier = Modifier.padding(16.dp)) {
+            Column(modifier = Modifier.padding(FolkDimens.Size16)) {
                 Text(
                     text = stringResource(R.string.apm_first_use_title),
                     style = MaterialTheme.typography.titleMedium,
-                    modifier = Modifier.padding(bottom = 16.dp)
+                    modifier = Modifier.padding(bottom = FolkDimens.Size16)
                 )
 
                 Text(
@@ -430,7 +432,7 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 16.dp),
+                        .padding(top = FolkDimens.Size16),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Checkbox(
@@ -440,7 +442,7 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
                     Text(
                         text = stringResource(R.string.dont_show_again),
                         style = MaterialTheme.typography.bodySmall,
-                        modifier = Modifier.padding(start = 8.dp)
+                        modifier = Modifier.padding(start = FolkDimens.Size8)
                     )
                 }
 

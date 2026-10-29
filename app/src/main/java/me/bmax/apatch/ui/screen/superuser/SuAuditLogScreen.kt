@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.superuser
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -152,7 +153,7 @@ private fun KernelAuditList(entries: List<SuAuditLog.AuditEntry.KernelEntry>) {
     } else {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(top = 8.dp, bottom = 16.dp),
+            contentPadding = PaddingValues(top = FolkDimens.Size8, bottom = FolkDimens.Size16),
         ) {
             splicedLazyColumnGroup(
                 items = entries,
@@ -176,7 +177,7 @@ private fun KernelAuditList(entries: List<SuAuditLog.AuditEntry.KernelEntry>) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 12.dp),
+                        .padding(horizontal = FolkDimens.Size16, vertical = FolkDimens.Size12),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     // Icon
@@ -195,12 +196,12 @@ private fun KernelAuditList(entries: List<SuAuditLog.AuditEntry.KernelEntry>) {
                             model = ImageRequest.Builder(LocalContext.current).data(appInfo)
                                 .crossfade(true).build(),
                             contentDescription = null,
-                            modifier = Modifier.size(40.dp).clip(CircleShape),
+                            modifier = Modifier.size(FolkDimens.Size40).clip(CircleShape),
                         )
                     } else {
                         Box(
                             modifier = Modifier
-                                .size(40.dp)
+                                .size(FolkDimens.Size40)
                                 .clip(CircleShape)
                                 .background(MaterialTheme.colorScheme.surfaceContainerHigh),
                             contentAlignment = Alignment.Center,
@@ -213,7 +214,7 @@ private fun KernelAuditList(entries: List<SuAuditLog.AuditEntry.KernelEntry>) {
                         }
                     }
 
-                    Spacer(modifier = Modifier.width(16.dp))
+                    Spacer(modifier = Modifier.width(FolkDimens.Size16))
 
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
@@ -246,7 +247,7 @@ private fun AppAuditList(entries: List<SuAuditLog.AuditEntry.AppEntry>) {
     } else {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(top = 8.dp, bottom = 16.dp),
+            contentPadding = PaddingValues(top = FolkDimens.Size8, bottom = FolkDimens.Size16),
         ) {
             splicedLazyColumnGroup(
                 items = entries,
@@ -275,7 +276,7 @@ private fun AppAuditList(entries: List<SuAuditLog.AuditEntry.AppEntry>) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 12.dp),
+                        .padding(horizontal = FolkDimens.Size16, vertical = FolkDimens.Size12),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     // Icon
@@ -291,12 +292,12 @@ private fun AppAuditList(entries: List<SuAuditLog.AuditEntry.AppEntry>) {
                             model = ImageRequest.Builder(LocalContext.current).data(appInfo)
                                 .crossfade(true).build(),
                             contentDescription = null,
-                            modifier = Modifier.size(40.dp).clip(CircleShape),
+                            modifier = Modifier.size(FolkDimens.Size40).clip(CircleShape),
                         )
                     } else {
                         Box(
                             modifier = Modifier
-                                .size(40.dp)
+                                .size(FolkDimens.Size40)
                                 .clip(CircleShape)
                                 .background(MaterialTheme.colorScheme.surfaceContainerHigh),
                             contentAlignment = Alignment.Center,
@@ -309,7 +310,7 @@ private fun AppAuditList(entries: List<SuAuditLog.AuditEntry.AppEntry>) {
                         }
                     }
 
-                    Spacer(modifier = Modifier.width(16.dp))
+                    Spacer(modifier = Modifier.width(FolkDimens.Size16))
 
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
@@ -351,21 +352,21 @@ private fun SuAuditClearDialog(
 ) {
     ExpressiveDialog(
         onDismissRequest = onDismiss,
-        width = 320.dp,
+        width = FolkDimens.Size320,
         shape = FolkShape.Corner20,
         blurBehind = false,
     ) {
-        Column(modifier = Modifier.padding(24.dp)) {
+        Column(modifier = Modifier.padding(FolkDimens.Size24)) {
             Text(
                 text = stringResource(R.string.su_audit_log_clear),
                 style = MaterialTheme.typography.headlineSmall,
             )
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(FolkDimens.Size16))
             Text(
                 text = stringResource(R.string.su_audit_log_clear_confirm),
                 style = MaterialTheme.typography.bodyMedium,
             )
-            Spacer(Modifier.height(24.dp))
+            Spacer(Modifier.height(FolkDimens.Size24))
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End,

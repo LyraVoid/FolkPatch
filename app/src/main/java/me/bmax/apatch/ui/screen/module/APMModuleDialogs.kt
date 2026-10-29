@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.module
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
@@ -58,32 +59,32 @@ fun ModuleShortcutDialog(
                     label = { Text(stringResource(R.string.module_shortcut_name)) },
                     modifier = Modifier.fillMaxWidth()
                 )
-                Spacer(Modifier.height(12.dp))
+                Spacer(Modifier.height(FolkDimens.Size12))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(stringResource(R.string.module_shortcut_icon))
-                    Spacer(Modifier.width(12.dp))
+                    Spacer(Modifier.width(FolkDimens.Size12))
                     if (shortcutPreviewBitmap != null) {
                         Image(
                             bitmap = shortcutPreviewBitmap.asImageBitmap(),
                             contentDescription = null,
-                            modifier = Modifier.size(36.dp)
+                            modifier = Modifier.size(FolkDimens.Size36)
                         )
                     } else if (shortcutIconUri != null) {
                         AsyncImage(
                             model = shortcutIconUri,
                             contentDescription = null,
-                            modifier = Modifier.size(36.dp)
+                            modifier = Modifier.size(FolkDimens.Size36)
                         )
                     } else {
                         AsyncImage(
                             model = appIcon,
                             contentDescription = null,
-                            modifier = Modifier.size(36.dp)
+                            modifier = Modifier.size(FolkDimens.Size36)
                         )
                     }
                 }
-                Spacer(Modifier.height(8.dp))
-                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                Spacer(Modifier.height(FolkDimens.Size8))
+                Row(horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size12)) {
                     TextButton(onClick = onPickIcon) {
                         Text(stringResource(R.string.module_shortcut_icon_select))
                     }
@@ -92,7 +93,7 @@ fun ModuleShortcutDialog(
                     }
                 }
                 if (module.hasWebUi && module.hasActionScript) {
-                    Spacer(Modifier.height(12.dp))
+                    Spacer(Modifier.height(FolkDimens.Size12))
                     Text(stringResource(R.string.module_shortcut_type))
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         RadioButton(
@@ -100,7 +101,7 @@ fun ModuleShortcutDialog(
                             onClick = { onShortcutTypeChange("webui") }
                         )
                         Text(stringResource(R.string.module_shortcut_type_webui))
-                        Spacer(Modifier.width(24.dp))
+                        Spacer(Modifier.width(FolkDimens.Size24))
                         RadioButton(
                             selected = shortcutType == "action",
                             onClick = { onShortcutTypeChange("action") }

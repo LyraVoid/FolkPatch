@@ -1,5 +1,7 @@
 package me.bmax.apatch.ui.screen.misc
 
+import me.bmax.apatch.ui.theme.tokens.FolkColors
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -96,7 +98,7 @@ fun ProfileEditSheet(
     ModalBottomSheet(
         onDismissRequest = onDismiss,
         sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
-        shape = ContinuousCornerShape(topStart = 28.dp, topEnd = 28.dp),
+        shape = ContinuousCornerShape(topStart = FolkDimens.Size28, topEnd = FolkDimens.Size28),
         containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
         dragHandle = { BottomSheetDefaults.DragHandle() },
     ) {
@@ -104,8 +106,8 @@ fun ProfileEditSheet(
             modifier = Modifier
                 .fillMaxWidth()
                 .verticalScroll(rememberScrollState())
-                .padding(horizontal = 20.dp)
-                .padding(bottom = 28.dp),
+                .padding(horizontal = FolkDimens.Size20)
+                .padding(bottom = FolkDimens.Size28),
         ) {
             Text(
                 text = stringResource(R.string.profile_edit_title),
@@ -113,11 +115,11 @@ fun ProfileEditSheet(
                 color = MaterialTheme.colorScheme.onSurface,
             )
 
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(FolkDimens.Size16))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size12),
             ) {
                 AvatarOptionTile(
                     label = stringResource(R.string.profile_avatar_default),
@@ -130,7 +132,7 @@ fun ProfileEditSheet(
                         painter = painterResource(id = R.drawable.ic_launcher_foreground),
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.size(58.dp),
+                        modifier = Modifier.size(FolkDimens.Size58),
                     )
                 }
                 AvatarOptionTile(
@@ -152,13 +154,13 @@ fun ProfileEditSheet(
                             imageVector = Icons.Outlined.AddPhotoAlternate,
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier.size(28.dp),
+                            modifier = Modifier.size(FolkDimens.Size28),
                         )
                     }
                 }
             }
 
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(FolkDimens.Size16))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -183,7 +185,7 @@ fun ProfileEditSheet(
                 modifier = Modifier.fillMaxWidth(),
             )
 
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(FolkDimens.Size8))
 
             ProfileTextField(
                 value = name,
@@ -192,7 +194,7 @@ fun ProfileEditSheet(
                 singleLine = true,
             )
 
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(FolkDimens.Size12))
 
             ProfileTextField(
                 value = sign,
@@ -202,7 +204,7 @@ fun ProfileEditSheet(
                 minLines = 2,
             )
 
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(FolkDimens.Size16))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -215,7 +217,7 @@ fun ProfileEditSheet(
                 TextButton(onClick = onDismiss) {
                     Text(stringResource(android.R.string.cancel))
                 }
-                Spacer(Modifier.width(8.dp))
+                Spacer(Modifier.width(FolkDimens.Size8))
                 Button(
                     onClick = { onSave(name.trim(), sign.trim()) },
                     shape = FolkShape.Corner16,
@@ -251,9 +253,9 @@ fun ProfileTextField(
             focusedContainerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
             unfocusedContainerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
             disabledContainerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent,
+            focusedIndicatorColor = FolkColors.Transparent,
+            unfocusedIndicatorColor = FolkColors.Transparent,
+            disabledIndicatorColor = FolkColors.Transparent,
         ),
         modifier = Modifier.fillMaxWidth(),
     )
@@ -293,13 +295,13 @@ fun ProfileHeader(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp)
-            .padding(top = 16.dp),
+            .padding(horizontal = FolkDimens.Size16)
+            .padding(top = FolkDimens.Size16),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Box(
                 modifier = Modifier
-                    .size(68.dp)
+                    .size(FolkDimens.Size68)
                     // Alpha before clip/background so the whole avatar - circle
                     // fill included - fades together and the wallpaper shows through.
                     .alpha(avatarOpacity)
@@ -324,12 +326,12 @@ fun ProfileHeader(
                         painter = painterResource(id = R.drawable.ic_launcher_foreground),
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.size(86.dp),
+                        modifier = Modifier.size(FolkDimens.Size86),
                     )
                 }
             }
 
-            Spacer(Modifier.width(16.dp))
+            Spacer(Modifier.width(FolkDimens.Size16))
 
             Column(modifier = Modifier.weight(1f)) {
                 Text(
@@ -339,7 +341,7 @@ fun ProfileHeader(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
-                Spacer(Modifier.height(5.dp))
+                Spacer(Modifier.height(FolkDimens.Size5))
                 // A signature overwrites the device model on the same line; the
                 // device stands in for the email other apps put here.
                 Text(

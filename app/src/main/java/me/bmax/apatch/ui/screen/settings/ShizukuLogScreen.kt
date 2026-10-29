@@ -1,5 +1,7 @@
 package me.bmax.apatch.ui.screen.settings
 
+import me.bmax.apatch.ui.theme.tokens.FolkColors
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import android.content.Intent
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -167,7 +169,7 @@ fun ShizukuLogScreen(navigator: DestinationsNavigator) {
             Dp.Unspecified
         } else {
             with(density) {
-                (textMeasurer.measure(widest, logStyle).size.width + 16.dp.roundToPx()).toDp()
+                (textMeasurer.measure(widest, logStyle).size.width + FolkDimens.Size16.roundToPx()).toDp()
             }
         }
     }
@@ -198,11 +200,11 @@ fun ShizukuLogScreen(navigator: DestinationsNavigator) {
                     placeholder = { Text(stringResource(R.string.shizuku_log_search_hint)) },
                     singleLine = true,
                     colors = TextFieldDefaults.colors(
-                        focusedContainerColor = Color.Transparent,
-                        unfocusedContainerColor = Color.Transparent,
-                        disabledContainerColor = Color.Transparent,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
+                        focusedContainerColor = FolkColors.Transparent,
+                        unfocusedContainerColor = FolkColors.Transparent,
+                        disabledContainerColor = FolkColors.Transparent,
+                        focusedIndicatorColor = FolkColors.Transparent,
+                        unfocusedIndicatorColor = FolkColors.Transparent,
                     ),
                     modifier = Modifier.fillMaxWidth(),
                 )
@@ -308,10 +310,10 @@ fun ShizukuLogScreen(navigator: DestinationsNavigator) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+                    .padding(horizontal = FolkDimens.Size16, vertical = FolkDimens.Size8),
+                verticalArrangement = Arrangement.spacedBy(FolkDimens.Size8),
             ) {
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Row(horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size8)) {
                     FilterChip(
                         selected = source == LogSource.SERVER,
                         onClick = { source = LogSource.SERVER },
@@ -327,7 +329,7 @@ fun ShizukuLogScreen(navigator: DestinationsNavigator) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .horizontalScroll(rememberScrollState()),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size8),
                 ) {
                     LEVELS.forEach { level ->
                         FilterChip(
@@ -353,16 +355,16 @@ fun ShizukuLogScreen(navigator: DestinationsNavigator) {
                     icon = Icons.AutoMirrored.Outlined.Article,
                     title = stringResource(R.string.shizuku_log_empty),
                 )
-                else -> Box(modifier = Modifier.fillMaxSize().padding(bottom = 8.dp)) {
+                else -> Box(modifier = Modifier.fillMaxSize().padding(bottom = FolkDimens.Size8)) {
                     FolkLogCard(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(horizontal = 16.dp),
+                            .padding(horizontal = FolkDimens.Size16),
                     ) {
                         LazyColumn(
                             state = listState,
                             modifier = Modifier.fillMaxSize(),
-                            contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
+                            contentPadding = PaddingValues(horizontal = FolkDimens.Size12, vertical = FolkDimens.Size8),
                         ) {
                             items(visibleLines) { line ->
                                 FolkLogLine(

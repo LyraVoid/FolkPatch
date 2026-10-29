@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.script
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import android.os.Environment
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -190,7 +191,7 @@ fun ScriptExecutionLogScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 8.dp, end = 8.dp, top = 8.dp, bottom = 30.dp),
+                    .padding(start = FolkDimens.Size8, end = FolkDimens.Size8, top = FolkDimens.Size8, bottom = FolkDimens.Size30),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 OutlinedTextField(
@@ -231,7 +232,7 @@ fun ScriptExecutionLogScreen(
             itemsIndexed(logLines, key = { index, _ -> index }) { _, line ->
                 Text(
                     text = line,
-                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp),
+                    modifier = Modifier.padding(horizontal = FolkDimens.Size8, vertical = FolkDimens.Size2),
                     fontSize = MaterialTheme.typography.bodySmall.fontSize,
                     fontFamily = FontFamily.Monospace,
                     lineHeight = MaterialTheme.typography.bodySmall.lineHeight,

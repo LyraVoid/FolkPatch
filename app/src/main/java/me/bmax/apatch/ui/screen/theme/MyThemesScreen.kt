@@ -1,5 +1,7 @@
 package me.bmax.apatch.ui.screen.theme
 
+import me.bmax.apatch.ui.theme.tokens.FolkColors
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import android.net.Uri
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.background
@@ -98,7 +100,7 @@ fun MyThemesScreen(
                         text = "${stringResource(R.string.theme_source)}: $sourceString",
                         style = MaterialTheme.typography.bodyMedium
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(FolkDimens.Size8))
                     Text(
                         text = theme.description.ifEmpty { "No description" },
                         style = MaterialTheme.typography.bodySmall,
@@ -140,7 +142,7 @@ fun MyThemesScreen(
             text = {
                 Column {
                     Text(text = theme.name)
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(FolkDimens.Size8))
                     Text(
                         text = stringResource(R.string.my_themes_delete_confirm),
                         style = MaterialTheme.typography.bodyMedium
@@ -192,11 +194,11 @@ fun MyThemesScreen(
                     placeholder = { Text(stringResource(R.string.theme_store_search_hint)) },
                     singleLine = true,
                     colors = TextFieldDefaults.colors(
-                        focusedContainerColor = Color.Transparent,
-                        unfocusedContainerColor = Color.Transparent,
-                        disabledContainerColor = Color.Transparent,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
+                        focusedContainerColor = FolkColors.Transparent,
+                        unfocusedContainerColor = FolkColors.Transparent,
+                        disabledContainerColor = FolkColors.Transparent,
+                        focusedIndicatorColor = FolkColors.Transparent,
+                        unfocusedIndicatorColor = FolkColors.Transparent,
                     ),
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -243,11 +245,11 @@ fun MyThemesScreen(
         } else {
             // 主题瀑布流（和主题商店一致）
             LazyVerticalStaggeredGrid(
-                columns = StaggeredGridCells.Adaptive(minSize = 128.dp),
+                columns = StaggeredGridCells.Adaptive(minSize = FolkDimens.Size128),
                 modifier = Modifier.fillMaxSize().padding(paddingValues),
-                contentPadding = PaddingValues(16.dp),
-                verticalItemSpacing = 16.dp,
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
+                contentPadding = PaddingValues(FolkDimens.Size16),
+                verticalItemSpacing = FolkDimens.Size16,
+                horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size16)
             ) {
                 items(
                     items = viewModel.localThemes,
@@ -290,7 +292,7 @@ fun MyThemeGridItem(
                     onLongClick()
                 }
             ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = FolkDimens.Size4)
     ) {
         Box {
             // 图片加载：本地优先，回退网络
@@ -325,16 +327,16 @@ fun MyThemeGridItem(
                     .fillMaxWidth()
                     .background(
                         Brush.verticalGradient(
-                            colors = listOf(Color.Transparent, Color.Black.copy(alpha = 0.6f))
+                            colors = listOf(FolkColors.Transparent, FolkColors.MediaScrim.copy(alpha = 0.6f))
                         )
                     )
-                    .padding(8.dp)
+                    .padding(FolkDimens.Size8)
             ) {
                 Text(
                     text = theme.name,
                     style = MaterialTheme.typography.bodyMedium,
-                    color = Color.White,
-                    modifier = Modifier.padding(4.dp),
+                    color = FolkColors.MediaContent,
+                    modifier = Modifier.padding(FolkDimens.Size4),
                     textAlign = TextAlign.Center
                 )
             }

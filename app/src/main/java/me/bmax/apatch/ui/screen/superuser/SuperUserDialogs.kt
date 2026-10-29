@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.superuser
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -40,14 +41,14 @@ fun BatchExcludeDialog(
 
     ExpressiveDialog(
         onDismissRequest = onDismiss,
-        width = 320.dp,
+        width = FolkDimens.Size320,
         shape = FolkShape.Corner20,
         dialogProperties = DialogProperties(decorFitsSystemWindows = true, usePlatformDefaultWidth = false, securePolicy = SecureFlagPolicy.SecureOff, dismissOnClickOutside = false),
     ) {
-        Column(modifier = Modifier.padding(PaddingValues(all = 24.dp))) {
+        Column(modifier = Modifier.padding(PaddingValues(all = FolkDimens.Size24))) {
             Box(
                 Modifier
-                    .padding(PaddingValues(bottom = 16.dp))
+                    .padding(PaddingValues(bottom = FolkDimens.Size16))
                     .align(Alignment.Start)
             ) {
                 Text(text = title, style = MaterialTheme.typography.headlineSmall)
@@ -55,7 +56,7 @@ fun BatchExcludeDialog(
             Box(
                 Modifier
                     .weight(weight = 1f, fill = false)
-                    .padding(PaddingValues(bottom = 24.dp))
+                    .padding(PaddingValues(bottom = FolkDimens.Size24))
                     .align(Alignment.Start)
             ) {
                 Text(text = content, style = MaterialTheme.typography.bodyMedium)
@@ -101,14 +102,14 @@ fun BatchActionConfirmDialog(
 
     ExpressiveDialog(
         onDismissRequest = onDismiss,
-        width = 320.dp,
+        width = FolkDimens.Size320,
         shape = FolkShape.Corner20,
         dialogProperties = DialogProperties(decorFitsSystemWindows = true, usePlatformDefaultWidth = false, securePolicy = SecureFlagPolicy.SecureOff, dismissOnClickOutside = false),
     ) {
-        Column(modifier = Modifier.padding(PaddingValues(all = 24.dp))) {
+        Column(modifier = Modifier.padding(PaddingValues(all = FolkDimens.Size24))) {
             Box(
                 Modifier
-                    .padding(PaddingValues(bottom = 16.dp))
+                    .padding(PaddingValues(bottom = FolkDimens.Size16))
                     .align(Alignment.Start)
             ) {
                 Text(text = title, style = MaterialTheme.typography.headlineSmall)
@@ -116,7 +117,7 @@ fun BatchActionConfirmDialog(
             Box(
                 Modifier
                     .weight(weight = 1f, fill = false)
-                    .padding(PaddingValues(bottom = 24.dp))
+                    .padding(PaddingValues(bottom = FolkDimens.Size24))
                     .align(Alignment.Start)
             ) {
                 Text(text = content, style = MaterialTheme.typography.bodyMedium)
@@ -152,14 +153,14 @@ fun AppActionDialog(
 
     ExpressiveDialog(
         onDismissRequest = onDismiss,
-        width = 320.dp,
+        width = FolkDimens.Size320,
         shape = FolkShape.Corner20,
         dialogProperties = DialogProperties(decorFitsSystemWindows = true, usePlatformDefaultWidth = false, securePolicy = SecureFlagPolicy.SecureOff, dismissOnClickOutside = true),
     ) {
-        Column(modifier = Modifier.padding(PaddingValues(all = 24.dp))) {
+        Column(modifier = Modifier.padding(PaddingValues(all = FolkDimens.Size24))) {
             Box(
                 Modifier
-                    .padding(PaddingValues(bottom = 16.dp))
+                    .padding(PaddingValues(bottom = FolkDimens.Size16))
                     .align(Alignment.Start)
             ) {
                 Text(text = title, style = MaterialTheme.typography.headlineSmall)
@@ -167,7 +168,7 @@ fun AppActionDialog(
             Box(
                 Modifier
                     .weight(weight = 1f, fill = false)
-                    .padding(PaddingValues(bottom = 24.dp))
+                    .padding(PaddingValues(bottom = FolkDimens.Size24))
                     .align(Alignment.Start)
             ) {
                 Text(

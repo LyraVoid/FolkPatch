@@ -1,4 +1,6 @@
 package me.bmax.apatch.ui.screen.module
+
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import me.bmax.apatch.ui.screen.patches.MODULE_TYPE
 
 import android.app.Activity.RESULT_OK
@@ -108,7 +110,7 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(12.dp),
+                .padding(FolkDimens.Size12),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -316,7 +318,7 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
                                     navigator.navigate(PatchesDestination(PatchesViewModel.PatchMode.PATCH_AND_INSTALL))
                                 }
                             },
-                            icon = { Icon(Icons.Outlined.Code, contentDescription = null, modifier = Modifier.size(18.dp)) },
+                            icon = { Icon(Icons.Outlined.Code, contentDescription = null, modifier = Modifier.size(FolkDimens.Size18)) },
                             text = { Text(text = moduleEmbed, style = MaterialTheme.typography.bodyMedium) },
                         )
                     }
@@ -329,7 +331,7 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
                             intent.addCategory(Intent.CATEGORY_OPENABLE)
                             selectInstallKpmLauncher.launch(intent)
                         },
-                        icon = { Icon(Icons.Outlined.Settings, contentDescription = null, modifier = Modifier.size(18.dp)) },
+                        icon = { Icon(Icons.Outlined.Settings, contentDescription = null, modifier = Modifier.size(FolkDimens.Size18)) },
                         text = { Text(text = moduleInstall, style = MaterialTheme.typography.bodyMedium) },
                     )
                     // 加载 (Load)
@@ -344,7 +346,7 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
                                 selectKpmLauncher.launch(intent)
                             }
                         },
-                        icon = { Icon(Icons.Outlined.Download, contentDescription = null, modifier = Modifier.size(18.dp)) },
+                        icon = { Icon(Icons.Outlined.Download, contentDescription = null, modifier = Modifier.size(FolkDimens.Size18)) },
                         text = { Text(text = moduleLoad, style = MaterialTheme.typography.bodyMedium) },
                     )
                 }
@@ -353,7 +355,7 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
             val configuration = LocalConfiguration.current
             val isLandscape = configuration.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
             val animatedOffset by animateDpAsState(
-                targetValue = if (isFloatingMode && bottomBarVisible && !isLandscape) (-88).dp else 0.dp,
+                targetValue = if (isFloatingMode && bottomBarVisible && !isLandscape) (-88).dp else FolkDimens.Size0,
                 animationSpec = MaterialTheme.motionScheme.defaultSpatialSpec(),
                 label = "fabOffset"
             )
@@ -390,7 +392,7 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
 
 
     if (showOrderDialog) {
-        val reorderThreshold = with(LocalDensity.current) { 40.dp.toPx() }
+        val reorderThreshold = with(LocalDensity.current) { FolkDimens.Size40.toPx() }
         val dragToReorderDescription = stringResource(R.string.apm_drag_to_reorder)
         var draggedModuleName by remember { mutableStateOf<String?>(null) }
         var draggedDistance by remember { mutableStateOf(0f) }
@@ -398,7 +400,7 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
             onDismissRequest = { showOrderDialog = false },
             title = { Text(stringResource(R.string.apm_custom_order)) },
             text = {
-                LazyColumn(modifier = Modifier.heightIn(max = 480.dp)) {
+                LazyColumn(modifier = Modifier.heightIn(max = FolkDimens.Size480)) {
                     itemsIndexed(orderedModules, key = { _, module -> module.name }) { _, module ->
                         val isDragging = draggedModuleName == module.name
                         Row(
@@ -425,7 +427,7 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
                             )
                             Column(
                                 modifier = Modifier
-                                    .padding(start = 12.dp, end = 4.dp)
+                                    .padding(start = FolkDimens.Size12, end = FolkDimens.Size4)
                                     .semantics { contentDescription = dragToReorderDescription }
                                     .pointerInput(module.name) {
                                         detectDragGestures(
@@ -463,14 +465,14 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
                                             }
                                         }
                                     }
-                                    .padding(vertical = 12.dp),
-                                verticalArrangement = Arrangement.spacedBy(4.dp)
+                                    .padding(vertical = FolkDimens.Size12),
+                                verticalArrangement = Arrangement.spacedBy(FolkDimens.Size4)
                             ) {
                                 repeat(2) {
                                     Box(
                                         modifier = Modifier
-                                            .size(width = 24.dp, height = 3.dp)
-                                            .clip(RoundedCornerShape(2.dp))
+                                            .size(width = FolkDimens.Size24, height = FolkDimens.Size3)
+                                            .clip(RoundedCornerShape(FolkDimens.Size2))
                                             .background(MaterialTheme.colorScheme.onSurfaceVariant)
                                     )
                                 }

@@ -1,4 +1,6 @@
 package me.bmax.apatch.ui.screen.module
+
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import me.bmax.apatch.ui.screen.patches.MODULE_TYPE
 
 import android.content.Context
@@ -214,11 +216,11 @@ private fun OfficialContent(
             )
         } else {
             LazyVerticalGrid(
-                columns = GridCells.Adaptive(minSize = 320.dp),
+                columns = GridCells.Adaptive(minSize = FolkDimens.Size320),
                 modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(16.dp),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
+                contentPadding = PaddingValues(FolkDimens.Size16),
+                horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size12),
+                verticalArrangement = Arrangement.spacedBy(FolkDimens.Size12),
             ) {
                 items(viewModel.modules, key = { it.name }) { module ->
                     OnlineModuleItem(module, context)
@@ -259,11 +261,11 @@ private fun RepoContent(
             )
         } else {
             LazyVerticalGrid(
-                columns = GridCells.Adaptive(minSize = 320.dp),
+                columns = GridCells.Adaptive(minSize = FolkDimens.Size320),
                 modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(16.dp),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
+                contentPadding = PaddingValues(FolkDimens.Size16),
+                horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size12),
+                verticalArrangement = Arrangement.spacedBy(FolkDimens.Size12),
             ) {
                 items(viewModel.modules, key = { it.id }) { module ->
                     OnlineModuleCard(
@@ -321,15 +323,15 @@ private fun RepoSelectDialog(
             text = {
                 if (viewModel.isReposLoading) {
                     Box(
-                        modifier = Modifier.fillMaxWidth().height(200.dp),
+                        modifier = Modifier.fillMaxWidth().height(FolkDimens.Size200),
                         contentAlignment = Alignment.Center
                     ) {
-                        CircularProgressIndicator(modifier = Modifier.size(36.dp))
+                        CircularProgressIndicator(modifier = Modifier.size(FolkDimens.Size36))
                     }
                 } else {
                     LazyColumn(
                         modifier = Modifier.fillMaxWidth(),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                        verticalArrangement = Arrangement.spacedBy(FolkDimens.Size8)
                     ) {
                         items(viewModel.repositories, key = { it.url }) { repo ->
                             Surface(
@@ -339,7 +341,7 @@ private fun RepoSelectDialog(
                                 shape = FolkShape.Corner12,
                                 color = MaterialTheme.colorScheme.surfaceContainer
                             ) {
-                                Column(modifier = Modifier.padding(16.dp)) {
+                                Column(modifier = Modifier.padding(FolkDimens.Size16)) {
                                     Row(
                                         modifier = Modifier.fillMaxWidth(),
                                         horizontalArrangement = Arrangement.SpaceBetween,
@@ -366,7 +368,7 @@ private fun RepoSelectDialog(
                                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                                             maxLines = 2,
                                             overflow = TextOverflow.Ellipsis,
-                                            modifier = Modifier.padding(top = 4.dp)
+                                            modifier = Modifier.padding(top = FolkDimens.Size4)
                                         )
                                     }
                                 }

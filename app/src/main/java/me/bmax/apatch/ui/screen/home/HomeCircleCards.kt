@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.home
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import android.os.Build
 import android.system.Os
 import androidx.compose.foundation.clickable
@@ -87,17 +88,17 @@ fun StatusCardCircle(
                         else -> navigator.navigate(com.ramcosta.composedestinations.generated.destinations.InstallModeSelectScreenDestination)
                     }
                 }
-                .padding(24.dp),
+                .padding(FolkDimens.Size24),
             verticalAlignment = Alignment.CenterVertically
         ) {
             if (isJailbreak) {
                 Icon(Icons.Outlined.LockOpen, stringResource(R.string.settings_jailbreak_mode))
-                Column(Modifier.padding(start = 20.dp).weight(1f)) {
+                Column(Modifier.padding(start = FolkDimens.Size20).weight(1f)) {
                     Text(
                         text = stringResource(R.string.settings_jailbreak_mode),
                         style = MaterialTheme.typography.titleMedium
                     )
-                    Spacer(Modifier.height(4.dp))
+                    Spacer(Modifier.height(FolkDimens.Size4))
                     Text(
                         text = stringResource(R.string.settings_jailbreak_mode_summary),
                         style = MaterialTheme.typography.bodyMedium
@@ -105,7 +106,7 @@ fun StatusCardCircle(
                 }
             } else if (isWorking) {
                  Icon(Icons.Outlined.CheckCircle, stringResource(R.string.home_working))
-                 Column(Modifier.padding(start = 20.dp).weight(1f)) {
+                 Column(Modifier.padding(start = FolkDimens.Size20).weight(1f)) {
                      val isFull = apState == APApplication.State.ANDROIDPATCH_INSTALLED
                     val modeTextTitle = if (isFull) "Kpm" else "Half"
                     val modeTextCaps = if (isFull) "KPM" else "HALF"
@@ -120,14 +121,14 @@ fun StatusCardCircle(
                             },
                             style = MaterialTheme.typography.titleMedium
                         )
-                        Spacer(Modifier.width(8.dp))
+                        Spacer(Modifier.width(FolkDimens.Size8))
 
                        // Full/Half Label
                       if (!classicEmojiEnabled) {
                           ModeLabelText(label = modeText)
                       }
                    }
-                   Spacer(Modifier.height(4.dp))
+                   Spacer(Modifier.height(FolkDimens.Size4))
                    Text(
                        text = stringResource(R.string.home_version, getManagerVersion().second.toString()) +
                                if (classicEmojiEnabled) " - $modeTextTitle" else "",
@@ -140,12 +141,12 @@ fun StatusCardCircle(
                  val title = if (isUpdate) stringResource(R.string.home_kp_need_update) else stringResource(R.string.home_not_installed)
 
                  Icon(icon, title)
-                 Column(Modifier.padding(start = 20.dp).weight(1f)) {
+                 Column(Modifier.padding(start = FolkDimens.Size20).weight(1f)) {
                      Text(
                          text = title,
                          style = MaterialTheme.typography.titleMedium
                      )
-                     Spacer(Modifier.height(4.dp))
+                     Spacer(Modifier.height(FolkDimens.Size4))
                      Text(
                          text = stringResource(R.string.home_click_to_install),
                          style = MaterialTheme.typography.bodyMedium
@@ -158,7 +159,7 @@ fun StatusCardCircle(
                     enabled = !jailbreakState.isTriggering,
                 ) {
                     if (jailbreakState.isTriggering) {
-                        CircularProgressIndicator(Modifier.size(22.dp), strokeWidth = 2.dp)
+                        CircularProgressIndicator(Modifier.size(FolkDimens.Size22), strokeWidth = FolkDimens.Size2)
                     } else {
                         Icon(
                             imageVector = if (isJailbreak) Icons.Outlined.RestartAlt else Icons.Outlined.LockOpen,
@@ -179,7 +180,7 @@ fun InfoCardCircle(kpState: APApplication.State, apState: APApplication.State) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 20.dp, vertical = 24.dp)
+                .padding(horizontal = FolkDimens.Size20, vertical = FolkDimens.Size24)
         ) {
             val uname = Os.uname()
             val prefs = APApplication.sharedPreferences
@@ -232,7 +233,7 @@ fun InfoCardCircle(kpState: APApplication.State, apState: APApplication.State) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     icon()
-                    Spacer(Modifier.width(16.dp))
+                    Spacer(Modifier.width(FolkDimens.Size16))
                     Column {
                         Text(text = label, style = MaterialTheme.typography.bodyLarge)
                         Text(
@@ -252,7 +253,7 @@ fun InfoCardCircle(kpState: APApplication.State, apState: APApplication.State) {
                     Icon(
                         imageVector = icon,
                         contentDescription = null,
-                        modifier = Modifier.size(20.dp),
+                        modifier = Modifier.size(FolkDimens.Size20),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
@@ -265,14 +266,14 @@ fun InfoCardCircle(kpState: APApplication.State, apState: APApplication.State) {
                 content = managerVersion.first
             )
 
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(FolkDimens.Size16))
             if (kpState != APApplication.State.UNKNOWN_STATE && !hideKpatchVersion) {
                 InfoCardItem(
                     icon = Icons.Outlined.Extension,
                     label = stringResource(R.string.home_kpatch_version),
                     content = Version.installedKPVString()
                 )
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(FolkDimens.Size16))
             }
 
             if (kpState != APApplication.State.UNKNOWN_STATE && !hideSuPath) {
@@ -281,7 +282,7 @@ fun InfoCardCircle(kpState: APApplication.State, apState: APApplication.State) {
                     label = stringResource(R.string.home_su_path),
                     content = Natives.suPath()
                 )
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(FolkDimens.Size16))
             }
 
             if (apState != APApplication.State.UNKNOWN_STATE && apState != APApplication.State.ANDROIDPATCH_NOT_INSTALLED) {
@@ -290,7 +291,7 @@ fun InfoCardCircle(kpState: APApplication.State, apState: APApplication.State) {
                     label = stringResource(R.string.home_apatch_version),
                     content = managerVersion.second.toString()
                 )
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(FolkDimens.Size16))
             }
 
             InfoCardItem(
@@ -299,28 +300,28 @@ fun InfoCardCircle(kpState: APApplication.State, apState: APApplication.State) {
                 content = getDeviceInfo()
             )
 
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(FolkDimens.Size16))
             InfoCardItem(
                 icon = Icons.Outlined.DeveloperBoard,
                 label = stringResource(R.string.home_kernel),
                 content = uname.release
             )
 
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(FolkDimens.Size16))
             InfoCardItem(
                 icon = Icons.Outlined.Info,
                 label = stringResource(R.string.home_system_version),
                 content = getSystemVersion()
             )
 
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(FolkDimens.Size16))
             if (!hideFingerprint) {
                 InfoCardItem(
                     icon = Icons.Outlined.Fingerprint,
                     label = stringResource(R.string.home_fingerprint),
                     content = Build.FINGERPRINT
                 )
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(FolkDimens.Size16))
             }
 
             if (kpState != APApplication.State.UNKNOWN_STATE && zygiskImplement != "None" && !hideZygisk) {
@@ -329,7 +330,7 @@ fun InfoCardCircle(kpState: APApplication.State, apState: APApplication.State) {
                     label = stringResource(R.string.home_zygisk_implement),
                     content = zygiskImplement
                 )
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(FolkDimens.Size16))
             }
 
             if (kpState != APApplication.State.UNKNOWN_STATE && mountImplement != "None" && !hideMount) {
@@ -338,7 +339,7 @@ fun InfoCardCircle(kpState: APApplication.State, apState: APApplication.State) {
                     label = stringResource(R.string.home_mount_implement),
                     content = mountImplement
                 )
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(FolkDimens.Size16))
             }
 
             InfoCardItem(
@@ -359,15 +360,15 @@ fun ModeLabelText(
 ) {
     Box(
         modifier = modifier
-            .padding(end = 4.dp)
+            .padding(end = FolkDimens.Size4)
             .background(
                 color = containerColor,
-                shape = RoundedCornerShape(4.dp)
+                shape = RoundedCornerShape(FolkDimens.Size4)
             )
     ) {
         Text(
             text = label,
-            modifier = Modifier.padding(vertical = 2.dp, horizontal = 5.dp),
+            modifier = Modifier.padding(vertical = FolkDimens.Size2, horizontal = FolkDimens.Size5),
             style = MaterialTheme.typography.labelSmall.copy(
                 fontWeight = FontWeight.SemiBold,
                 color = color,
@@ -382,14 +383,14 @@ fun AStatusCardCircle(apState: APApplication.State) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(20.dp),
+                .padding(FolkDimens.Size20),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
                 text = stringResource(R.string.android_patch),
                 style = MaterialTheme.typography.titleMedium
             )
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(FolkDimens.Size12))
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
@@ -421,7 +422,7 @@ fun AStatusCardCircle(apState: APApplication.State) {
                 Column(
                     Modifier
                         .weight(2f)
-                        .padding(start = 16.dp)
+                        .padding(start = FolkDimens.Size16)
                 ) {
                     when (apState) {
                         APApplication.State.ANDROIDPATCH_NOT_INSTALLED -> {
@@ -514,7 +515,7 @@ fun LearnMoreCardCircle() {
                 .clickable {
                     uriHandler.openUri("https://fp.mysqil.com/")
                 }
-                .padding(24.dp),
+                .padding(FolkDimens.Size24),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column {
@@ -522,7 +523,7 @@ fun LearnMoreCardCircle() {
                     text = stringResource(R.string.home_learn_apatch),
                     style = MaterialTheme.typography.titleSmall
                 )
-                Spacer(Modifier.height(4.dp))
+                Spacer(Modifier.height(FolkDimens.Size4))
                 Text(
                     text = stringResource(R.string.home_click_to_learn_apatch),
                     style = MaterialTheme.typography.bodyMedium,

@@ -1,5 +1,7 @@
 package me.bmax.apatch.ui.screen.superuser
 
+import me.bmax.apatch.ui.theme.tokens.FolkColors
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
@@ -66,13 +68,13 @@ fun AppItemM3E(
             .background(
                 if (isSelected && selectionMode) 
                     MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.12f)
-                else Color.Transparent
+                else FolkColors.Transparent
             )
             .combinedClickable(
                 onClick = onClick,
                 onLongClick = onLongClick,
             )
-            .padding(horizontal = 16.dp, vertical = 12.dp),
+            .padding(horizontal = FolkDimens.Size16, vertical = FolkDimens.Size12),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         AsyncImage(
@@ -82,14 +84,14 @@ fun AppItemM3E(
                 .build(),
             contentDescription = app.label,
             modifier = Modifier
-                .size(48.dp)
+                .size(FolkDimens.Size48)
                 .clip(CircleShape),
         )
 
         Column(
             modifier = Modifier
                 .weight(1f)
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = FolkDimens.Size16),
         ) {
             Text(
                 text = app.label,
@@ -102,7 +104,7 @@ fun AppItemM3E(
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
-            FlowRow(modifier = Modifier.padding(top = 4.dp)) {
+            FlowRow(modifier = Modifier.padding(top = FolkDimens.Size4)) {
                 if (rootGranted) {
                     LabelText(label = "ROOT", containerColor = MaterialTheme.colorScheme.primaryContainer)
                 }
@@ -147,7 +149,7 @@ fun AppItemLegacy(
             .background(
                 if (isSelected && selectionMode)
                     MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.12f)
-                else Color.Transparent
+                else FolkColors.Transparent
             )
             .combinedClickable(
                 onClick = {
@@ -167,7 +169,7 @@ fun AppItemLegacy(
                     }
                 }
             ),
-        colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+        colors = ListItemDefaults.colors(containerColor = FolkColors.Transparent),
         headlineContent = { Text(app.label) },
         leadingContent = {
             AsyncImage(
@@ -175,9 +177,9 @@ fun AppItemLegacy(
                     .crossfade(true).build(),
                 contentDescription = app.label,
                 modifier = Modifier
-                    .padding(4.dp)
-                    .width(48.dp)
-                    .height(48.dp)
+                    .padding(FolkDimens.Size4)
+                    .width(FolkDimens.Size48)
+                    .height(FolkDimens.Size48)
             )
         },
         supportingContent = {

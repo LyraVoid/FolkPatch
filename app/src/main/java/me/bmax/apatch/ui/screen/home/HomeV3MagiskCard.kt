@@ -1,6 +1,10 @@
 @file:OptIn(androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
 package me.bmax.apatch.ui.screen.home
 
+import me.bmax.apatch.ui.theme.tokens.FolkColors
+
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
+
 import android.content.ActivityNotFoundException
 import android.net.Uri
 import android.os.Build
@@ -106,8 +110,8 @@ fun MagiskStyleCard(
     )
 
     // 卡片壁纸模式下的内容颜色
-    val contentColor = if (hasCardWallpaper) Color.White else MaterialTheme.colorScheme.onSurface
-    val subContentColor = if (hasCardWallpaper) Color.White.copy(alpha = 0.8f) else MaterialTheme.colorScheme.onSurfaceVariant
+    val contentColor = if (hasCardWallpaper) FolkColors.MediaContent else MaterialTheme.colorScheme.onSurface
+    val subContentColor = if (hasCardWallpaper) FolkColors.MediaContent.copy(alpha = 0.8f) else MaterialTheme.colorScheme.onSurfaceVariant
 
     Card(
         modifier = modifier
@@ -125,8 +129,8 @@ fun MagiskStyleCard(
             ),
         shape = FolkShape.Corner20,
         colors = CardDefaults.cardColors(
-            containerColor = if (hasCardWallpaper) Color.Transparent
-                else MaterialTheme.colorScheme.surfaceColorAtElevation(1.dp),
+            containerColor = if (hasCardWallpaper) FolkColors.Transparent
+                else MaterialTheme.colorScheme.surfaceColorAtElevation(FolkDimens.Size1),
             contentColor = contentColor
         )
     ) {
@@ -164,13 +168,13 @@ fun MagiskStyleCard(
                 Box(
                     modifier = Modifier
                         .matchParentSize()
-                        .background(Color.Black.copy(alpha = cardBgDim))
+                        .background(FolkColors.MediaScrim.copy(alpha = cardBgDim))
                 )
             }
 
             // 卡片内容层（决定卡片的实际尺寸）
             Column(
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(FolkDimens.Size16)
             ) {
                 // Header Row
                 Row(
@@ -180,10 +184,10 @@ fun MagiskStyleCard(
                     Icon(
                         imageVector = icon,
                         contentDescription = null,
-                        modifier = Modifier.size(32.dp),
-                        tint = if (hasCardWallpaper) Color.White else MaterialTheme.colorScheme.primary
+                        modifier = Modifier.size(FolkDimens.Size32),
+                        tint = if (hasCardWallpaper) FolkColors.MediaContent else MaterialTheme.colorScheme.primary
                     )
-                    Spacer(modifier = Modifier.width(16.dp))
+                    Spacer(modifier = Modifier.width(FolkDimens.Size16))
                     Text(
                         text = title,
                         style = MaterialTheme.typography.titleLargeEmphasized,
@@ -206,14 +210,14 @@ fun MagiskStyleCard(
                 }
 
                 HorizontalDivider(
-                    modifier = Modifier.padding(vertical = 16.dp),
-                    color = if (hasCardWallpaper) Color.White.copy(alpha = 0.3f)
+                    modifier = Modifier.padding(vertical = FolkDimens.Size16),
+                    color = if (hasCardWallpaper) FolkColors.MediaContent.copy(alpha = 0.3f)
                         else MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
                 )
 
                 // Content Info
                 Column(
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                    verticalArrangement = Arrangement.spacedBy(FolkDimens.Size8)
                 ) {
                     CompositionLocalProvider(
                         LocalFocusCardWallpaper provides hasCardWallpaper,

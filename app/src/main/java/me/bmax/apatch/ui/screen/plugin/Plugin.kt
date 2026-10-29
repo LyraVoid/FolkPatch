@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.plugin
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.net.Uri
@@ -161,7 +162,7 @@ fun PluginScreen(navigator: DestinationsNavigator) {
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
                     state = listState,
-                    contentPadding = PaddingValues(top = 8.dp, bottom = 96.dp),
+                    contentPadding = PaddingValues(top = FolkDimens.Size8, bottom = FolkDimens.Size96),
                 ) {
                     splicedLazyColumnGroup(
                         items = viewModel.plugins,

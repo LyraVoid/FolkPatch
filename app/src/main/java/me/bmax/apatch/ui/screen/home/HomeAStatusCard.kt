@@ -1,6 +1,8 @@
 @file:OptIn(androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
 package me.bmax.apatch.ui.screen.home
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -42,7 +44,7 @@ fun AStatusCard(apState: APApplication.State) {
             containerColor = if (BackgroundConfig.isCustomBackgroundEnabled) {
                 MaterialTheme.colorScheme.surface
             } else {
-                MaterialTheme.colorScheme.surfaceColorAtElevation(1.dp)
+                MaterialTheme.colorScheme.surfaceColorAtElevation(FolkDimens.Size1)
             },
             contentColor = MaterialTheme.colorScheme.onSurface,
         )
@@ -50,7 +52,7 @@ fun AStatusCard(apState: APApplication.State) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(12.dp),
+                .padding(FolkDimens.Size12),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row {
@@ -62,7 +64,7 @@ fun AStatusCard(apState: APApplication.State) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(10.dp),
+                    .padding(FolkDimens.Size10),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 when (apState) {
@@ -92,7 +94,7 @@ fun AStatusCard(apState: APApplication.State) {
                 Column(
                     Modifier
                         .weight(2f)
-                        .padding(start = 16.dp)
+                        .padding(start = FolkDimens.Size16)
                 ) {
 
                     when (apState) {

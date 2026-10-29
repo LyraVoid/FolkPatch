@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.misc
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import android.content.Context
 import android.net.Uri
 import androidx.annotation.StringRes
@@ -58,12 +59,12 @@ internal fun AvatarSourceDialog(
     onSelect: (AvatarSource) -> Unit,
 ) {
     if (!showDialog) return
-    ExpressiveDialog(onDismissRequest = onDismiss, width = 340.dp) {
-        Column(modifier = Modifier.padding(vertical = 8.dp)) {
+    ExpressiveDialog(onDismissRequest = onDismiss, width = FolkDimens.Size340) {
+        Column(modifier = Modifier.padding(vertical = FolkDimens.Size8)) {
             Text(
                 text = stringResource(R.string.profile_avatar_source_title),
                 style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp),
+                modifier = Modifier.padding(horizontal = FolkDimens.Size24, vertical = FolkDimens.Size12),
             )
             AvatarSource.entries.forEach { source ->
                 SegmentedPreferenceItem(
@@ -86,9 +87,9 @@ internal fun AvatarIdDialog(
 ) {
     var value by remember { mutableStateOf("") }
     ExpressiveDialog(onDismissRequest = onDismiss) {
-        Column(modifier = Modifier.padding(24.dp)) {
+        Column(modifier = Modifier.padding(FolkDimens.Size24)) {
             Text(text = title, style = MaterialTheme.typography.titleMedium)
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(FolkDimens.Size16))
             OutlinedTextField(
                 value = value,
                 onValueChange = { value = it },
@@ -96,13 +97,13 @@ internal fun AvatarIdDialog(
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
             )
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(FolkDimens.Size20))
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End,
             ) {
                 TextButton(onClick = onDismiss) { Text(text = stringResource(R.string.cancel)) }
-                Spacer(Modifier.width(8.dp))
+                Spacer(Modifier.width(FolkDimens.Size8))
                 Button(
                     onClick = { onConfirm(value.trim()) },
                     enabled = value.isNotBlank(),

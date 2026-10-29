@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.settings
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
@@ -79,7 +80,7 @@ fun FunctionSettingsHideSection(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp),
+                        .padding(FolkDimens.Size16),
                 ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -94,16 +95,16 @@ fun FunctionSettingsHideSection(
                                 imageVector = Icons.Outlined.Memory,
                                 contentDescription = null,
                                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                                modifier = Modifier.size(24.dp),
+                                modifier = Modifier.size(FolkDimens.Size24),
                             )
-                            Spacer(Modifier.width(16.dp))
+                            Spacer(Modifier.width(FolkDimens.Size16))
                             Column {
                                 Text(
                                     text = kernelSpoofTitle,
                                     style = MaterialTheme.typography.bodyLarge,
                                     color = MaterialTheme.colorScheme.onSurface,
                                 )
-                                Spacer(modifier = Modifier.height(4.dp))
+                                Spacer(modifier = Modifier.height(FolkDimens.Size4))
                                 Text(
                                     text = kernelSpoofSummary,
                                     style = MaterialTheme.typography.bodySmall,
@@ -122,7 +123,7 @@ fun FunctionSettingsHideSection(
                         enter = fadeIn(MaterialTheme.motionScheme.defaultEffectsSpec()) + expandVertically(MaterialTheme.motionScheme.defaultSpatialSpec()),
                         exit = shrinkVertically(MaterialTheme.motionScheme.fastSpatialSpec()) + fadeOut(MaterialTheme.motionScheme.fastEffectsSpec())
                     ) {
-                        Column(modifier = Modifier.padding(top = 12.dp)) {
+                        Column(modifier = Modifier.padding(top = FolkDimens.Size12)) {
                             OutlinedTextField(
                                 value = kernelSpoofVersion,
                                 onValueChange = onKernelSpoofVersionChange,
@@ -131,7 +132,7 @@ fun FunctionSettingsHideSection(
                                 singleLine = true,
                             )
 
-                            Spacer(modifier = Modifier.height(8.dp))
+                            Spacer(modifier = Modifier.height(FolkDimens.Size8))
 
                             OutlinedTextField(
                                 value = kernelSpoofBuildTime,
@@ -141,11 +142,11 @@ fun FunctionSettingsHideSection(
                                 singleLine = true,
                             )
 
-                            Spacer(modifier = Modifier.height(12.dp))
+                            Spacer(modifier = Modifier.height(FolkDimens.Size12))
 
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size8),
                             ) {
                                 Button(
                                     onClick = onKernelSpoofSave,

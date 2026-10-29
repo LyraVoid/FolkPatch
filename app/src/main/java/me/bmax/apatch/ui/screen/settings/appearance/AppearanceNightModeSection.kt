@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.settings.appearance
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import androidx.compose.material.icons.automirrored.outlined.Segment
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
@@ -149,20 +150,20 @@ fun AppearanceNightModeSection(
                             interactionSource = amoledInteractionSource,
                             indication = null,
                         )
-                        .padding(horizontal = 16.dp, vertical = 12.dp),
+                        .padding(horizontal = FolkDimens.Size16, vertical = FolkDimens.Size12),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Icon(imageVector = Icons.Outlined.DarkMode, contentDescription = null, tint = if (!isWallpaperEnabled) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.38f), modifier = Modifier.size(24.dp))
-                    Spacer(Modifier.width(16.dp))
-                    Column(modifier = Modifier.weight(1f).padding(end = 16.dp)) {
+                    Icon(imageVector = Icons.Outlined.DarkMode, contentDescription = null, tint = if (!isWallpaperEnabled) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.38f), modifier = Modifier.size(FolkDimens.Size24))
+                    Spacer(Modifier.width(FolkDimens.Size16))
+                    Column(modifier = Modifier.weight(1f).padding(end = FolkDimens.Size16)) {
                         Text(
                             text = stringResource(R.string.settings_amoled_theme),
                             style = MaterialTheme.typography.bodyLarge,
                             color = if (!isWallpaperEnabled) MaterialTheme.colorScheme.onSurface
                             else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f),
                         )
-                        Spacer(Modifier.height(4.dp))
+                        Spacer(Modifier.height(FolkDimens.Size4))
                         Text(
                             text = stringResource(R.string.settings_amoled_theme_desc),
                             style = MaterialTheme.typography.bodySmall,

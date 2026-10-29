@@ -1,4 +1,6 @@
 package me.bmax.apatch.ui.screen.module
+
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import me.bmax.apatch.ui.screen.patches.MODULE_TYPE
 
 import android.content.Context
@@ -75,18 +77,18 @@ fun RepoModuleDetailScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding),
-            contentPadding = PaddingValues(vertical = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+            contentPadding = PaddingValues(vertical = FolkDimens.Size16),
+            verticalArrangement = Arrangement.spacedBy(FolkDimens.Size12)
         ) {
             // Section 1: Module basic info
             item(key = "info") {
                 TonalCard(flat = true) {
                     Column(
-                        modifier = Modifier.padding(16.dp),
-                        verticalArrangement = Arrangement.spacedBy(12.dp)
+                        modifier = Modifier.padding(FolkDimens.Size16),
+                        verticalArrangement = Arrangement.spacedBy(FolkDimens.Size12)
                     ) {
                         // Label row
-                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Row(horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size8)) {
                             ModuleLabel(
                                 text = "APM",
                                 containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -135,8 +137,8 @@ fun RepoModuleDetailScreen(
                         item(key = "homepage", visible = module.homepage.isNotEmpty()) {
                             TonalCard(flat = true, onClick = { openUrl(context, module.homepage) }) {
                                 Row(
-                                    modifier = Modifier.padding(16.dp),
-                                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                                    modifier = Modifier.padding(FolkDimens.Size16),
+                                    horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size12),
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Icon(Icons.Outlined.Language, contentDescription = null)
@@ -147,8 +149,8 @@ fun RepoModuleDetailScreen(
                         item(key = "source", visible = module.source.isNotEmpty()) {
                             TonalCard(flat = true, onClick = { openUrl(context, module.source) }) {
                                 Row(
-                                    modifier = Modifier.padding(16.dp),
-                                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                                    modifier = Modifier.padding(FolkDimens.Size16),
+                                    horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size12),
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Icon(Icons.Outlined.Code, contentDescription = null)
@@ -159,8 +161,8 @@ fun RepoModuleDetailScreen(
                         item(key = "support", visible = module.support.isNotEmpty()) {
                             TonalCard(flat = true, onClick = { openUrl(context, module.support) }) {
                                 Row(
-                                    modifier = Modifier.padding(16.dp),
-                                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                                    modifier = Modifier.padding(FolkDimens.Size16),
+                                    horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size12),
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Icon(Icons.AutoMirrored.Outlined.HelpOutline, contentDescription = null)
@@ -190,8 +192,8 @@ fun RepoModuleDetailScreen(
                                     }
                                 ) {
                                     Row(
-                                        modifier = Modifier.padding(16.dp),
-                                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                                        modifier = Modifier.padding(FolkDimens.Size16),
+                                        horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size12),
                                         verticalAlignment = Alignment.CenterVertically
                                     ) {
                                         Column(modifier = Modifier.weight(1f)) {
@@ -238,7 +240,7 @@ fun RepoModuleDetailScreen(
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
+                        .padding(horizontal = FolkDimens.Size16)
                 ) {
                     Text(stringResource(R.string.repo_module_detail_download))
                 }

@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.module
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -153,7 +154,7 @@ fun TopBar(
     )
 
     if (showOrderDialog) {
-        val reorderThreshold = with(LocalDensity.current) { 40.dp.toPx() }
+        val reorderThreshold = with(LocalDensity.current) { FolkDimens.Size40.toPx() }
         val dragToReorderDescription = stringResource(R.string.apm_drag_to_reorder)
         var draggedModuleId by remember { mutableStateOf<String?>(null) }
         var draggedDistance by remember { mutableStateOf(0f) }
@@ -161,7 +162,7 @@ fun TopBar(
             onDismissRequest = { showOrderDialog = false },
             title = { Text(stringResource(R.string.apm_custom_order)) },
             text = {
-                LazyColumn(modifier = Modifier.heightIn(max = 480.dp)) {
+                LazyColumn(modifier = Modifier.heightIn(max = FolkDimens.Size480)) {
                     itemsIndexed(orderedModules, key = { _, module -> module.id }) { _, module ->
                         val isDragging = draggedModuleId == module.id
                         Row(
@@ -188,7 +189,7 @@ fun TopBar(
                             )
                             Column(
                                 modifier = Modifier
-                                    .padding(start = 12.dp, end = 4.dp)
+                                    .padding(start = FolkDimens.Size12, end = FolkDimens.Size4)
                                     .semantics { contentDescription = dragToReorderDescription }
                                     .pointerInput(module.id) {
                                         detectDragGestures(
@@ -226,14 +227,14 @@ fun TopBar(
                                             }
                                         }
                                     }
-                                    .padding(vertical = 12.dp),
-                                verticalArrangement = Arrangement.spacedBy(4.dp)
+                                    .padding(vertical = FolkDimens.Size12),
+                                verticalArrangement = Arrangement.spacedBy(FolkDimens.Size4)
                             ) {
                                 repeat(2) {
                                     Box(
                                         modifier = Modifier
-                                            .size(width = 24.dp, height = 3.dp)
-                                            .clip(RoundedCornerShape(2.dp))
+                                            .size(width = FolkDimens.Size24, height = FolkDimens.Size3)
+                                            .clip(RoundedCornerShape(FolkDimens.Size2))
                                             .background(MaterialTheme.colorScheme.onSurfaceVariant)
                                     )
                                 }

@@ -1,6 +1,10 @@
 @file:OptIn(androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
 package me.bmax.apatch.ui.screen.patches
 
+import me.bmax.apatch.ui.theme.tokens.FolkColors
+
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
+
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -98,11 +102,11 @@ fun ExtraConfigDialog(kpmInfo: KPModel.KPMInfo, onDismiss: () -> Unit) {
         onDismissRequest = onDismiss,
         blurBehind = false,
     ) {
-        Column(modifier = Modifier.padding(PaddingValues(all = 24.dp))) {
+        Column(modifier = Modifier.padding(PaddingValues(all = FolkDimens.Size24))) {
             Text(
                 text = stringResource(id = R.string.kpm_control_dialog_title),
                 style = MaterialTheme.typography.headlineSmall,
-                modifier = Modifier.padding(bottom = 16.dp)
+                modifier = Modifier.padding(bottom = FolkDimens.Size16)
             )
 
             OutlinedTextField(
@@ -115,7 +119,7 @@ fun ExtraConfigDialog(kpmInfo: KPModel.KPMInfo, onDismiss: () -> Unit) {
                 modifier = Modifier.fillMaxWidth()
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(FolkDimens.Size16))
 
             OutlinedTextField(
                 value = args,
@@ -127,7 +131,7 @@ fun ExtraConfigDialog(kpmInfo: KPModel.KPMInfo, onDismiss: () -> Unit) {
                 modifier = Modifier.fillMaxWidth()
             )
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(FolkDimens.Size24))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -153,7 +157,7 @@ fun ExtraItem(extra: KPModel.IExtraInfo, existed: Boolean, onDelete: () -> Unit)
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(12.dp),
+                .padding(FolkDimens.Size12),
         ) {
             Row(modifier = Modifier.align(Alignment.CenterHorizontally)) {
                 Text(
@@ -173,7 +177,7 @@ fun ExtraItem(extra: KPModel.IExtraInfo, existed: Boolean, onDelete: () -> Unit)
                         imageVector = Icons.Outlined.Settings,
                         contentDescription = stringResource(CoreR.string.core_action_config),
                         modifier = Modifier
-                            .padding(end = 8.dp)
+                            .padding(end = FolkDimens.Size8)
                             .clickable { showConfigDialog = true }
                     )
                 }
@@ -182,7 +186,7 @@ fun ExtraItem(extra: KPModel.IExtraInfo, existed: Boolean, onDelete: () -> Unit)
                     imageVector = Icons.Outlined.Delete,
                     contentDescription = stringResource(CoreR.string.core_action_delete),
                     modifier = Modifier
-                        .padding(end = 8.dp)
+                        .padding(end = FolkDimens.Size8)
                         .clickable { onDelete() })
             }
             if (extra.type == KPModel.ExtraType.KPM) {
@@ -220,7 +224,7 @@ fun KernelPatchImageView(kpImgInfo: KPModel.KPImgInfo) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 12.dp, top = 12.dp, end = 12.dp, bottom = 12.dp),
+                .padding(start = FolkDimens.Size12, top = FolkDimens.Size12, end = FolkDimens.Size12, bottom = FolkDimens.Size12),
         ) {
             Column(
                 modifier = Modifier
@@ -271,7 +275,7 @@ fun PatchSuperKeySection(
             ) {
                 Column {
                     HorizontalDivider(
-                        modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 4.dp)
+                        modifier = Modifier.padding(start = FolkDimens.Size16, end = FolkDimens.Size16, top = FolkDimens.Size4)
                     )
                     SetSuperKeyView(viewModel)
                 }
@@ -292,8 +296,8 @@ fun SetSuperKeyView(viewModel: PatchesViewModel) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(10.dp),
+            .padding(start = FolkDimens.Size16, top = FolkDimens.Size8, end = FolkDimens.Size16, bottom = FolkDimens.Size16),
+        verticalArrangement = Arrangement.spacedBy(FolkDimens.Size10),
     ) {
         Text(
             text = stringResource(R.string.patch_item_set_skey_label),
@@ -382,7 +386,7 @@ fun superKeyFieldColors() = OutlinedTextFieldDefaults.colors(
     unfocusedContainerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
     errorContainerColor = MaterialTheme.colorScheme.errorContainer,
     focusedBorderColor = MaterialTheme.colorScheme.primary,
-    unfocusedBorderColor = Color.Transparent,
+    unfocusedBorderColor = FolkColors.Transparent,
     errorBorderColor = MaterialTheme.colorScheme.error,
 )
 
@@ -393,7 +397,7 @@ fun CustomKPImgView(viewModel: PatchesViewModel) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(12.dp),
+                .padding(FolkDimens.Size12),
         ) {
             Column(
                 modifier = Modifier
@@ -421,7 +425,7 @@ fun BootimgView(slot: String, boot: String) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(12.dp),
+                .padding(FolkDimens.Size12),
         ) {
             Column(
                 modifier = Modifier
@@ -453,7 +457,7 @@ fun KernelImageView(kImgInfo: KPModel.KImgInfo) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(12.dp),
+                .padding(FolkDimens.Size12),
         ) {
             Column(
                 modifier = Modifier
@@ -521,16 +525,16 @@ fun ErrorView(error: String) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 12.dp, top = 12.dp, end = 12.dp, bottom = 12.dp),
+                .padding(start = FolkDimens.Size12, top = FolkDimens.Size12, end = FolkDimens.Size12, bottom = FolkDimens.Size12),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
                 imageVector = Icons.Outlined.Warning,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.error,
-                modifier = Modifier.size(20.dp),
+                modifier = Modifier.size(FolkDimens.Size20),
             )
-            Spacer(Modifier.width(12.dp))
+            Spacer(Modifier.width(FolkDimens.Size12))
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = stringResource(id = R.string.patch_item_error),

@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.settings
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -363,7 +364,7 @@ fun AppearanceSettingsContent(
                         Text(
                             stringResource(id = R.string.settings_custom_badge_text_summary),
                             style = MaterialTheme.typography.bodySmall,
-                            modifier = Modifier.padding(bottom = 16.dp),
+                            modifier = Modifier.padding(bottom = FolkDimens.Size16),
                         )
                         badgeTextModes.forEachIndexed { index, mode ->
                             val badgeInteractionSource = remember { MutableInteractionSource() }
@@ -385,10 +386,10 @@ fun AppearanceSettingsContent(
                                             showCustomBadgeTextDialog.value = false
                                         },
                                     )
-                                    .padding(vertical = 12.dp)
+                                    .padding(vertical = FolkDimens.Size12)
                             ) {
                                 Text(text = mode, modifier = Modifier.weight(1f))
-                                Spacer(modifier = Modifier.width(8.dp))
+                                Spacer(modifier = Modifier.width(FolkDimens.Size8))
                                 RadioButton(selected = index == currentBadgeTextModeIndex, onClick = null)
                             }
                         }

@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.settings
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import android.content.Intent
 import me.bmax.apatch.util.ui.showToast
 import androidx.core.content.FileProvider
@@ -172,24 +173,24 @@ fun WebDavConfigDialog(showDialog: MutableState<Boolean>) {
     ) {
         Surface(
             modifier = Modifier
-                .width(400.dp)
+                .width(FolkDimens.Size400)
                 .wrapContentHeight(),
             shape = MaterialTheme.shapes.large,
             tonalElevation = AlertDialogDefaults.TonalElevation,
             color = MaterialTheme.colorScheme.surface.copy(alpha = 1f)
         ) {
-            Column(modifier = Modifier.padding(24.dp)) {
+            Column(modifier = Modifier.padding(FolkDimens.Size24)) {
                 Text(
                     text = stringResource(R.string.webdav_config_title),
                     style = MaterialTheme.typography.headlineSmall,
-                    modifier = Modifier.padding(bottom = 16.dp)
+                    modifier = Modifier.padding(bottom = FolkDimens.Size16)
                 )
 
                 OutlinedTextField(
                     value = url,
                     onValueChange = { url = it },
                     label = { Text(stringResource(R.string.webdav_url)) },
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+                    modifier = Modifier.fillMaxWidth().padding(bottom = FolkDimens.Size8),
                     singleLine = true
                 )
 
@@ -197,7 +198,7 @@ fun WebDavConfigDialog(showDialog: MutableState<Boolean>) {
                     value = username,
                     onValueChange = { username = it },
                     label = { Text(stringResource(R.string.webdav_username)) },
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+                    modifier = Modifier.fillMaxWidth().padding(bottom = FolkDimens.Size8),
                     singleLine = true
                 )
 
@@ -205,7 +206,7 @@ fun WebDavConfigDialog(showDialog: MutableState<Boolean>) {
                     value = password,
                     onValueChange = { password = it },
                     label = { Text(stringResource(R.string.webdav_password)) },
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+                    modifier = Modifier.fillMaxWidth().padding(bottom = FolkDimens.Size8),
                     singleLine = true,
                     visualTransformation = PasswordVisualTransformation()
                 )
@@ -214,7 +215,7 @@ fun WebDavConfigDialog(showDialog: MutableState<Boolean>) {
                     value = path,
                     onValueChange = { path = it },
                     label = { Text(stringResource(R.string.webdav_path_label)) },
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
+                    modifier = Modifier.fillMaxWidth().padding(bottom = FolkDimens.Size16),
                     singleLine = true
                 )
 
@@ -288,29 +289,29 @@ fun BackupLogDialog(showDialog: MutableState<Boolean>, onDismiss: () -> Unit) {
     ) {
         Surface(
             modifier = Modifier
-                .width(350.dp)
-                .height(500.dp),
+                .width(FolkDimens.Size350)
+                .height(FolkDimens.Size500),
             shape = MaterialTheme.shapes.large,
             tonalElevation = AlertDialogDefaults.TonalElevation,
             color = MaterialTheme.colorScheme.surface.copy(alpha = 1f)
         ) {
-            Column(modifier = Modifier.padding(24.dp)) {
+            Column(modifier = Modifier.padding(FolkDimens.Size24)) {
                 Text(
                     text = stringResource(R.string.webdav_backup_logs_title),
                     style = MaterialTheme.typography.headlineSmall,
-                    modifier = Modifier.padding(bottom = 16.dp)
+                    modifier = Modifier.padding(bottom = FolkDimens.Size16)
                 )
 
                 Surface(
                     modifier = Modifier.weight(1f).fillMaxWidth(),
-                    shape = RoundedCornerShape(8.dp),
+                    shape = RoundedCornerShape(FolkDimens.Size8),
                     color = MaterialTheme.colorScheme.surfaceVariant
                 ) {
                     val scrollState = rememberScrollState()
                     Text(
                         text = logs.ifEmpty { stringResource(R.string.webdav_no_logs) },
                         modifier = Modifier
-                            .padding(8.dp)
+                            .padding(FolkDimens.Size8)
                             .verticalScroll(scrollState),
                         style = MaterialTheme.typography.bodySmall,
                         fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace
@@ -318,7 +319,7 @@ fun BackupLogDialog(showDialog: MutableState<Boolean>, onDismiss: () -> Unit) {
                 }
 
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
+                    modifier = Modifier.fillMaxWidth().padding(top = FolkDimens.Size16),
                     horizontalArrangement = Arrangement.End
                 ) {
                     TextButton(onClick = {

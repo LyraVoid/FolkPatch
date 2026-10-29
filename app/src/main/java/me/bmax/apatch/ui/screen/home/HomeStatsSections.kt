@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.home
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -44,8 +45,8 @@ fun SystemMonitoringSection(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+                .padding(FolkDimens.Size16),
+            verticalArrangement = Arrangement.spacedBy(FolkDimens.Size16)
         ) {
             Text(
                 text = stringResource(R.string.home_device_status_title),
@@ -56,7 +57,7 @@ fun SystemMonitoringSection(
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
+                horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size12)
             ) {
                 SystemLineChart(
                     title = stringResource(R.string.home_device_status_cpu_load),
@@ -100,7 +101,7 @@ fun SystemMonitoringSection(
                     (mem.ramUsed.toFloat() / mem.ramTotal.toFloat() * 100f)
                 } else 0f
 
-                Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                Column(verticalArrangement = Arrangement.spacedBy(FolkDimens.Size6)) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,
@@ -110,10 +111,10 @@ fun SystemMonitoringSection(
                             Icon(
                                 imageVector = Icons.Outlined.Memory,
                                 contentDescription = null,
-                                modifier = Modifier.size(16.dp),
+                                modifier = Modifier.size(FolkDimens.Size16),
                                 tint = colors.onSurfaceVariant
                             )
-                            Spacer(Modifier.width(6.dp))
+                            Spacer(Modifier.width(FolkDimens.Size6))
                             Text(
                                 text = stringResource(R.string.home_storage_ram),
                                 style = MaterialTheme.typography.bodySmall,
@@ -130,8 +131,8 @@ fun SystemMonitoringSection(
                         progress = { ramPercent.coerceIn(0f, 100f) / 100f },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(8.dp)
-                            .clip(RoundedCornerShape(4.dp)),
+                            .height(FolkDimens.Size8)
+                            .clip(RoundedCornerShape(FolkDimens.Size4)),
                         color = when {
                             ramPercent > 85f -> colors.error
                             ramPercent > 70f -> colors.tertiary
@@ -143,7 +144,7 @@ fun SystemMonitoringSection(
 
                 if (mem.zramTotal > 0) {
                     val zramPercent = mem.zramUsed.toFloat() / mem.zramTotal.toFloat() * 100f
-                    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                    Column(verticalArrangement = Arrangement.spacedBy(FolkDimens.Size6)) {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween,
@@ -153,10 +154,10 @@ fun SystemMonitoringSection(
                                 Icon(
                                     imageVector = Icons.Outlined.SdStorage,
                                     contentDescription = null,
-                                    modifier = Modifier.size(16.dp),
+                                    modifier = Modifier.size(FolkDimens.Size16),
                                     tint = colors.onSurfaceVariant
                                 )
-                                Spacer(Modifier.width(6.dp))
+                                Spacer(Modifier.width(FolkDimens.Size6))
                                 Text(
                                     text = stringResource(R.string.home_storage_zram),
                                     style = MaterialTheme.typography.bodySmall,
@@ -173,8 +174,8 @@ fun SystemMonitoringSection(
                             progress = { zramPercent.coerceIn(0f, 100f) / 100f },
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(8.dp)
-                                .clip(RoundedCornerShape(4.dp)),
+                                .height(FolkDimens.Size8)
+                                .clip(RoundedCornerShape(FolkDimens.Size4)),
                             color = colors.tertiary,
                             trackColor = colors.surfaceContainerHighest
                         )
@@ -183,7 +184,7 @@ fun SystemMonitoringSection(
 
                 if (mem.swapTotal > 0) {
                     val swapPercent = mem.swapUsed.toFloat() / mem.swapTotal.toFloat() * 100f
-                    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                    Column(verticalArrangement = Arrangement.spacedBy(FolkDimens.Size6)) {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween,
@@ -193,10 +194,10 @@ fun SystemMonitoringSection(
                                 Icon(
                                     imageVector = Icons.Outlined.Storage,
                                     contentDescription = null,
-                                    modifier = Modifier.size(16.dp),
+                                    modifier = Modifier.size(FolkDimens.Size16),
                                     tint = colors.onSurfaceVariant
                                 )
-                                Spacer(Modifier.width(6.dp))
+                                Spacer(Modifier.width(FolkDimens.Size6))
                                 Text(
                                     text = stringResource(R.string.home_storage_swap),
                                     style = MaterialTheme.typography.bodySmall,
@@ -213,8 +214,8 @@ fun SystemMonitoringSection(
                             progress = { swapPercent.coerceIn(0f, 100f) / 100f },
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(8.dp)
-                                .clip(RoundedCornerShape(4.dp)),
+                                .height(FolkDimens.Size8)
+                                .clip(RoundedCornerShape(FolkDimens.Size4)),
                             color = colors.error,
                             trackColor = colors.surfaceContainerHighest
                         )
@@ -224,7 +225,7 @@ fun SystemMonitoringSection(
 
             Column(
                 modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(4.dp)
+                verticalArrangement = Arrangement.spacedBy(FolkDimens.Size4)
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
@@ -234,10 +235,10 @@ fun SystemMonitoringSection(
                             Icons.Outlined.BatteryStd
                         },
                         contentDescription = null,
-                        modifier = Modifier.size(14.dp),
+                        modifier = Modifier.size(FolkDimens.Size14),
                         tint = if (systemMonitor.batteryCharging) colors.primary else colors.onSurfaceVariant
                     )
-                    Spacer(Modifier.width(4.dp))
+                    Spacer(Modifier.width(FolkDimens.Size4))
                     Text(
                         text = stringResource(R.string.home_device_status_battery_level),
                         style = MaterialTheme.typography.labelSmall,
@@ -259,8 +260,8 @@ fun SystemMonitoringSection(
                     progress = { systemMonitor.batteryLevel.coerceIn(0, 100) / 100f },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(6.dp)
-                        .clip(RoundedCornerShape(3.dp)),
+                        .height(FolkDimens.Size6)
+                        .clip(RoundedCornerShape(FolkDimens.Size3)),
                     color = when {
                         systemMonitor.batteryCharging -> colors.primary
                         systemMonitor.batteryLevel <= 20 -> colors.error
@@ -274,17 +275,17 @@ fun SystemMonitoringSection(
             if (systemMonitor.networkRxBytes > 0 || systemMonitor.networkTxBytes > 0) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                    horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size16)
                 ) {
-                    Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(FolkDimens.Size4)) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Icon(
                                 imageVector = Icons.Outlined.Download,
                                 contentDescription = null,
-                                modifier = Modifier.size(14.dp),
+                                modifier = Modifier.size(FolkDimens.Size14),
                                 tint = colors.onSurfaceVariant
                             )
-                            Spacer(Modifier.width(4.dp))
+                            Spacer(Modifier.width(FolkDimens.Size4))
                             Text(
                                 text = stringResource(R.string.home_network_rx),
                                 style = MaterialTheme.typography.labelSmall,
@@ -297,15 +298,15 @@ fun SystemMonitoringSection(
                             color = colors.onSurface
                         )
                     }
-                    Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(FolkDimens.Size4)) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Icon(
                                 imageVector = Icons.Outlined.Upload,
                                 contentDescription = null,
-                                modifier = Modifier.size(14.dp),
+                                modifier = Modifier.size(FolkDimens.Size14),
                                 tint = colors.onSurfaceVariant
                             )
-                            Spacer(Modifier.width(4.dp))
+                            Spacer(Modifier.width(FolkDimens.Size4))
                             Text(
                                 text = stringResource(R.string.home_network_tx),
                                 style = MaterialTheme.typography.labelSmall,
@@ -335,8 +336,8 @@ fun ModuleStatisticsSection(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
+                .padding(FolkDimens.Size16),
+            horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size16)
         ) {
             val totalCount = kernelModuleCount + apmModuleCount + superuserCount
             ModulePieChart(
@@ -347,11 +348,11 @@ fun ModuleStatisticsSection(
                     apmLabel = stringResource(R.string.apm)
                 ),
                 centerLabel = if (totalCount > 0) totalCount.toString() else "--",
-                modifier = Modifier.size(140.dp)
+                modifier = Modifier.size(FolkDimens.Size140)
             )
 
             Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(FolkDimens.Size8),
                 modifier = Modifier.align(Alignment.CenterVertically)
             ) {
                 StatRow(
@@ -389,9 +390,9 @@ fun StatRow(
             imageVector = icon,
             contentDescription = null,
             tint = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.size(20.dp)
+            modifier = Modifier.size(FolkDimens.Size20)
         )
-        Spacer(Modifier.width(12.dp))
+        Spacer(Modifier.width(FolkDimens.Size12))
         Text(
             text = label,
             style = MaterialTheme.typography.bodyMedium,
@@ -424,15 +425,15 @@ fun CpuFrequencyBars(
             CpuCluster(label, avgFreq, maxFreq)
         }
 
-    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(4.dp)) {
+    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(FolkDimens.Size4)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(
                 imageVector = Icons.Outlined.DeveloperBoard,
                 contentDescription = null,
-                modifier = Modifier.size(14.dp),
+                modifier = Modifier.size(FolkDimens.Size14),
                 tint = colors.onSurfaceVariant
             )
-            Spacer(Modifier.width(6.dp))
+            Spacer(Modifier.width(FolkDimens.Size6))
             Text(
                 text = stringResource(R.string.home_device_status_cpu_freq),
                 style = MaterialTheme.typography.labelSmall,
@@ -452,14 +453,14 @@ fun CpuFrequencyBars(
                     text = cluster.label,
                     style = MaterialTheme.typography.labelSmall,
                     color = colors.onSurfaceVariant,
-                    modifier = Modifier.width(52.dp)
+                    modifier = Modifier.width(FolkDimens.Size52)
                 )
                 LinearProgressIndicator(
                     progress = { percent / 100f },
                     modifier = Modifier
                         .weight(1f)
-                        .height(6.dp)
-                        .clip(RoundedCornerShape(3.dp)),
+                        .height(FolkDimens.Size6)
+                        .clip(RoundedCornerShape(FolkDimens.Size3)),
                     color = when {
                         percent > 80f -> colors.error
                         percent > 50f -> colors.tertiary
@@ -467,12 +468,12 @@ fun CpuFrequencyBars(
                     },
                     trackColor = colors.surfaceContainerHighest
                 )
-                Spacer(Modifier.width(8.dp))
+                Spacer(Modifier.width(FolkDimens.Size8))
                 Text(
                     text = formatFreq(cluster.avgFreq),
                     style = MaterialTheme.typography.labelSmall,
                     color = colors.onSurface,
-                    modifier = Modifier.width(64.dp)
+                    modifier = Modifier.width(FolkDimens.Size64)
                 )
             }
         }
@@ -516,7 +517,7 @@ fun StatsGridTopSection(
         modifier = Modifier
             .fillMaxWidth()
             .height(IntrinsicSize.Min),
-        horizontalArrangement = Arrangement.spacedBy(12.dp)
+        horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size12)
     ) {
         StatusCardBig(
             modifier = Modifier
@@ -538,7 +539,7 @@ fun StatsGridTopSection(
             modifier = Modifier
                 .weight(1f)
                 .fillMaxHeight(),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+            verticalArrangement = Arrangement.spacedBy(FolkDimens.Size12)
         ) {
             SmallInfoCard(
                 modifier = Modifier.weight(1f),

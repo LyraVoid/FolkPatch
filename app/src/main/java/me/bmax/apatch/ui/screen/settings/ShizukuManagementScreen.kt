@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.settings
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import android.content.pm.PackageInfo
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
@@ -168,9 +169,9 @@ fun ShizukuManagementScreen(navigator: DestinationsNavigator) {
             loading -> Column(
                 modifier = Modifier.fillMaxSize().padding(padding),
                 horizontalAlignment = Alignment.CenterHorizontally,
-            ) { CircularProgressIndicator(modifier = Modifier.padding(32.dp)) }
+            ) { CircularProgressIndicator(modifier = Modifier.padding(FolkDimens.Size32)) }
             loadFailed -> Column(
-                modifier = Modifier.fillMaxSize().padding(padding).padding(24.dp),
+                modifier = Modifier.fillMaxSize().padding(padding).padding(FolkDimens.Size24),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
             ) {
@@ -178,13 +179,13 @@ fun ShizukuManagementScreen(navigator: DestinationsNavigator) {
                     text = stringResource(R.string.shizuku_management_load_failed),
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(FolkDimens.Size16))
                 Button(onClick = { scope.launch { loadApps() } }) {
                     Text(stringResource(R.string.retry))
                 }
             }
             !available -> Column(
-                modifier = Modifier.fillMaxSize().padding(padding).padding(24.dp),
+                modifier = Modifier.fillMaxSize().padding(padding).padding(FolkDimens.Size24),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
             ) {
@@ -192,7 +193,7 @@ fun ShizukuManagementScreen(navigator: DestinationsNavigator) {
                     text = stringResource(R.string.shizuku_management_unavailable),
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(FolkDimens.Size16))
                 Button(onClick = { scope.launch { loadApps() } }) {
                     Text(stringResource(R.string.retry))
                 }
@@ -209,7 +210,7 @@ fun ShizukuManagementScreen(navigator: DestinationsNavigator) {
             )
             else -> LazyColumn(
                 modifier = Modifier.fillMaxSize().padding(padding),
-                contentPadding = PaddingValues(top = 8.dp, bottom = 24.dp),
+                contentPadding = PaddingValues(top = FolkDimens.Size8, bottom = FolkDimens.Size24),
             ) {
                 items(apps, key = { it.uid }) { app ->
                     val info = app.packageInfo.applicationInfo ?: return@items
@@ -221,7 +222,7 @@ fun ShizukuManagementScreen(navigator: DestinationsNavigator) {
                     // settings sub-pages get this from SegmentedSection).
                     SegmentedColumn(
                         flat = true,
-                        modifier = Modifier.padding(bottom = 10.dp),
+                        modifier = Modifier.padding(bottom = FolkDimens.Size10),
                     ) {
                         item(key = "header") {
                             ShizukuAppHeader(
@@ -235,7 +236,7 @@ fun ShizukuManagementScreen(navigator: DestinationsNavigator) {
                         }
                         item(key = "divider") {
                             HorizontalDivider(
-                                modifier = Modifier.padding(horizontal = 16.dp),
+                                modifier = Modifier.padding(horizontal = FolkDimens.Size16),
                                 color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.4f),
                             )
                         }
@@ -299,7 +300,7 @@ private fun ShizukuAppHeader(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 12.dp),
+            .padding(horizontal = FolkDimens.Size16, vertical = FolkDimens.Size12),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         AsyncImage(
@@ -309,13 +310,13 @@ private fun ShizukuAppHeader(
                 .build(),
             contentDescription = label,
             modifier = Modifier
-                .size(48.dp)
+                .size(FolkDimens.Size48)
                 .clip(CircleShape),
         )
         Column(
             modifier = Modifier
                 .weight(1f)
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = FolkDimens.Size16),
         ) {
             Text(
                 text = label,
@@ -332,7 +333,7 @@ private fun ShizukuAppHeader(
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
-            FlowRow(modifier = Modifier.padding(top = 4.dp)) {
+            FlowRow(modifier = Modifier.padding(top = FolkDimens.Size4)) {
                 LabelText(
                     label = if (allowed) {
                         stringResource(R.string.shizuku_management_badge_allowed)

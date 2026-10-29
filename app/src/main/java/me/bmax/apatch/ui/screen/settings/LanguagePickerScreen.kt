@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.settings
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -72,9 +73,9 @@ fun LanguagePickerScreen(navigator: DestinationsNavigator) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues),
-            verticalArrangement = Arrangement.spacedBy(0.dp),
+            verticalArrangement = Arrangement.spacedBy(FolkDimens.Size0),
         ) {
-            item { Spacer(Modifier.height(12.dp)) }
+            item { Spacer(Modifier.height(FolkDimens.Size12)) }
 
             splicedLazyColumnGroup(
                 items = languageList,
@@ -103,7 +104,7 @@ fun LanguagePickerScreen(navigator: DestinationsNavigator) {
                                 )
                             }
                         }
-                        .padding(horizontal = 16.dp, vertical = 16.dp),
+                        .padding(horizontal = FolkDimens.Size16, vertical = FolkDimens.Size16),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     if (index == 0) {
@@ -115,12 +116,12 @@ fun LanguagePickerScreen(navigator: DestinationsNavigator) {
                             } else {
                                 MaterialTheme.colorScheme.onSurfaceVariant
                             },
-                            modifier = Modifier.size(24.dp),
+                            modifier = Modifier.size(FolkDimens.Size24),
                         )
                     } else {
                         Box(
                             modifier = Modifier
-                                .size(32.dp)
+                                .size(FolkDimens.Size32)
                                 .background(
                                     color = if (isSelected) MaterialTheme.colorScheme.primary
                                     else MaterialTheme.colorScheme.surfaceContainerHigh,
@@ -137,7 +138,7 @@ fun LanguagePickerScreen(navigator: DestinationsNavigator) {
                             )
                         }
                     }
-                    Spacer(Modifier.width(16.dp))
+                    Spacer(Modifier.width(FolkDimens.Size16))
                     Text(
                         text = item,
                         style = MaterialTheme.typography.bodyLarge,
@@ -155,7 +156,7 @@ fun LanguagePickerScreen(navigator: DestinationsNavigator) {
                 }
             }
 
-            item { Spacer(Modifier.height(16.dp)) }
+            item { Spacer(Modifier.height(FolkDimens.Size16)) }
             item { NavigationBarsSpacer() }
         }
     }

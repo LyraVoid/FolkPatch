@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.patches
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import android.content.Intent
 import android.net.Uri
 import androidx.activity.ComponentActivity
@@ -217,7 +218,7 @@ fun InstallScreen(navigator: DestinationsNavigator, uri: Uri, type: MODULE_TYPE)
                 scrollState.animateScrollTo(scrollState.maxValue, animationSpec = FolkMotion.ScrollIntoView)
             }
             Text(
-                modifier = Modifier.padding(8.dp),
+                modifier = Modifier.padding(FolkDimens.Size8),
                 text = text,
                 fontSize = MaterialTheme.typography.bodySmall.fontSize,
                 fontFamily = FontFamily.Monospace,

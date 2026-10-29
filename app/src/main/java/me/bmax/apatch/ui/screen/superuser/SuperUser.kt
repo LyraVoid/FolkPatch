@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.superuser
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -302,7 +303,7 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
                                 Icon(
                                     Icons.Outlined.Terminal,
                                     contentDescription = stringResource(R.string.script_library),
-                                    modifier = Modifier.size(18.dp)
+                                    modifier = Modifier.size(FolkDimens.Size18)
                                 )
                             },
                             text = { Text(stringResource(R.string.script_library), style = MaterialTheme.typography.bodyMedium) },
@@ -316,7 +317,7 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
                                 Icon(
                                     Icons.Outlined.History,
                                     contentDescription = stringResource(R.string.su_audit_log_title),
-                                    modifier = Modifier.size(18.dp)
+                                    modifier = Modifier.size(FolkDimens.Size18)
                                 )
                             },
                             text = { Text(stringResource(R.string.su_audit_log_title), style = MaterialTheme.typography.bodyMedium) },
@@ -328,7 +329,7 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
                 val configuration = LocalConfiguration.current
                 val isLandscape = configuration.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
                 val animatedOffset by animateDpAsState(
-                    targetValue = if (isFloatingMode && bottomBarVisible && !isLandscape) (-88).dp else 0.dp,
+                    targetValue = if (isFloatingMode && bottomBarVisible && !isLandscape) (-88).dp else FolkDimens.Size0,
                     animationSpec = MaterialTheme.motionScheme.defaultSpatialSpec(),
                     label = "fabOffset"
                 )
@@ -377,7 +378,7 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
                         )
                     }
                 } else {
-                    item { Spacer(Modifier.height(8.dp)) }
+                    item { Spacer(Modifier.height(FolkDimens.Size8)) }
                     splicedLazyColumnGroup(
                         items = filteredApps,
                         key = { _, app -> app.packageName + app.uid },
@@ -407,7 +408,7 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
                         )
                     }
                     item {
-                        Spacer(Modifier.height(8.dp)) // bottom clearance handled by contentPadding
+                        Spacer(Modifier.height(FolkDimens.Size8)) // bottom clearance handled by contentPadding
                     }
                 }
             }

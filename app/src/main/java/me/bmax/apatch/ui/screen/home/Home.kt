@@ -1,5 +1,7 @@
 package me.bmax.apatch.ui.screen.home
 
+import me.bmax.apatch.ui.theme.tokens.FolkColors
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import android.os.Build
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
@@ -175,11 +177,11 @@ fun HomeScreenV1(
     Column(
         modifier = Modifier
             .padding(innerPadding)
-            .padding(horizontal = 16.dp)
+            .padding(horizontal = FolkDimens.Size16)
             .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(FolkDimens.Size16)
     ) {
-        Spacer(Modifier.height(0.dp))
+        Spacer(Modifier.height(FolkDimens.Size0))
         KStatusCard(kpState, apState, navigator)
         if (kpState != APApplication.State.UNKNOWN_STATE && apState != APApplication.State.UNKNOWN_STATE && apState != APApplication.State.ANDROIDPATCH_INSTALLED) {
             AStatusCard(apState)
@@ -216,15 +218,15 @@ fun UninstallDialog(showDialog: MutableState<Boolean>, navigator: DestinationsNa
             },
             text = {
                 Column(
-                    modifier = Modifier.padding(vertical = 8.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    modifier = Modifier.padding(vertical = FolkDimens.Size8),
+                    verticalArrangement = Arrangement.spacedBy(FolkDimens.Size16),
                 ) {
                     options.forEach { option ->
                         val isSelected = selectedOption == option
                         val backgroundColor = if (isSelected) {
                             MaterialTheme.colorScheme.primaryContainer
                         } else {
-                            Color.Transparent
+                            FolkColors.Transparent
                         }
                         val subtitleColor = if (isSelected) {
                             MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
@@ -238,7 +240,7 @@ fun UninstallDialog(showDialog: MutableState<Boolean>, navigator: DestinationsNa
                                 .clip(MaterialTheme.shapes.medium)
                                 .background(backgroundColor)
                                 .clickable { selectedOption = option }
-                                .padding(vertical = 12.dp, horizontal = 8.dp),
+                                .padding(vertical = FolkDimens.Size12, horizontal = FolkDimens.Size8),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Icon(
@@ -246,8 +248,8 @@ fun UninstallDialog(showDialog: MutableState<Boolean>, navigator: DestinationsNa
                                 contentDescription = null,
                                 tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier
-                                    .padding(end = 16.dp)
-                                    .size(24.dp)
+                                    .padding(end = FolkDimens.Size16)
+                                    .size(FolkDimens.Size24)
                             )
                             Column(modifier = Modifier.weight(1f)) {
                                 Text(
@@ -272,7 +274,7 @@ fun UninstallDialog(showDialog: MutableState<Boolean>, navigator: DestinationsNa
                                 } else {
                                     MaterialTheme.colorScheme.onSurfaceVariant
                                 },
-                                modifier = Modifier.size(24.dp)
+                                modifier = Modifier.size(FolkDimens.Size24)
                             )
                         }
                     }
@@ -313,7 +315,7 @@ fun UninstallDialog(showDialog: MutableState<Boolean>, navigator: DestinationsNa
                 }
             },
             shape = MaterialTheme.shapes.extraLarge,
-            tonalElevation = 4.dp,
+            tonalElevation = FolkDimens.Size4,
         )
     }
 }
@@ -343,7 +345,7 @@ fun LearnMoreCard() {
         colors = CardDefaults.cardColors(containerColor = if (BackgroundConfig.isCustomBackgroundEnabled) {
             MaterialTheme.colorScheme.surface
         } else {
-            MaterialTheme.colorScheme.surfaceColorAtElevation(1.dp)
+            MaterialTheme.colorScheme.surfaceColorAtElevation(FolkDimens.Size1)
         })
     ) {
         Row(
@@ -352,13 +354,13 @@ fun LearnMoreCard() {
                 .clickable {
                     uriHandler.openUri("https://fp.mysqil.com/")
                 }
-                .padding(24.dp), verticalAlignment = Alignment.CenterVertically) {
+                .padding(FolkDimens.Size24), verticalAlignment = Alignment.CenterVertically) {
             Column {
                 Text(
                     text = stringResource(R.string.home_learn_apatch),
                     style = MaterialTheme.typography.titleSmall
                 )
-                Spacer(Modifier.height(4.dp))
+                Spacer(Modifier.height(FolkDimens.Size4))
                 Text(
                     text = stringResource(R.string.home_click_to_learn_apatch),
                     style = MaterialTheme.typography.bodyMedium

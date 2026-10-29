@@ -1,5 +1,7 @@
 package me.bmax.apatch.ui.screen.home
 
+import me.bmax.apatch.ui.theme.tokens.FolkColors
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -92,18 +94,18 @@ fun HomeScreenV2(
     Column(
         modifier = Modifier
             .padding(paddingValues)
-            .padding(horizontal = 16.dp)
+            .padding(horizontal = FolkDimens.Size16)
             .verticalScroll(scrollState),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(FolkDimens.Size16)
     ) {
-        Spacer(Modifier.height(0.dp))
+        Spacer(Modifier.height(FolkDimens.Size0))
         
         // Top Section: Split into Left (Status) and Right (Details)
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(IntrinsicSize.Min),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
+            horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size12)
         ) {
             // Left: Big Status Card
             StatusCardBig(
@@ -127,7 +129,7 @@ fun HomeScreenV2(
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxHeight(),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+                verticalArrangement = Arrangement.spacedBy(FolkDimens.Size12)
             ) {
                 // Top Right: KP Version
                 SmallInfoCard(
@@ -235,10 +237,10 @@ fun StatusCardBig(
         }
     }
     
-    val containerColor = if (useCustomGridBg) Color.Transparent else baseContainerColor
+    val containerColor = if (useCustomGridBg) FolkColors.Transparent else baseContainerColor
     // If using custom grid bg, force content color to white (or based on some logic), or keep base logic?
     // Let's assume white text for image background with dimming
-    val contentColor = if (useCustomGridBg) Color.White else baseContentColor
+    val contentColor = if (useCustomGridBg) FolkColors.MediaContent else baseContentColor
 
     // Long-press card options (only when working and card background feature enabled)
     val scope = rememberCoroutineScope()
@@ -340,11 +342,11 @@ fun StatusCardBig(
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(Color.Black.copy(alpha = BackgroundConfig.gridWorkingCardBackgroundDim))
+                        .background(FolkColors.MediaScrim.copy(alpha = BackgroundConfig.gridWorkingCardBackgroundDim))
                 )
             }
             
-            Box(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+            Box(modifier = Modifier.fillMaxSize().padding(FolkDimens.Size16)) {
                 Column(modifier = Modifier.align(Alignment.BottomStart)) {
                     if (!BackgroundConfig.isGridWorkingCardTextHidden) {
                         Text(
@@ -361,7 +363,7 @@ fun StatusCardBig(
                         )
                     }
                     if (!isJailbreak && isWorking && !BackgroundConfig.isGridWorkingCardModeHidden) {
-                        Spacer(Modifier.height(4.dp))
+                        Spacer(Modifier.height(FolkDimens.Size4))
                         val customText = BackgroundConfig.getCustomBadgeText()
                         Text(
                             text = if (customText != null) "<$customText>" else if (apState == APApplication.State.ANDROIDPATCH_INSTALLED) "<Full>" else "<Half>",
@@ -370,14 +372,14 @@ fun StatusCardBig(
                         )
                     }
                     if (isJailbreak && !BackgroundConfig.isGridWorkingCardTextHidden) {
-                        Spacer(Modifier.height(4.dp))
+                        Spacer(Modifier.height(FolkDimens.Size4))
                         Text(
                             text = stringResource(R.string.reboot_soft),
                             style = MaterialTheme.typography.labelMedium,
                             color = contentColor.copy(alpha = 0.78f),
                         )
                     } else if (kpState == APApplication.State.UNKNOWN_STATE && isPermissive) {
-                        Spacer(Modifier.height(4.dp))
+                        Spacer(Modifier.height(FolkDimens.Size4))
                         Text(
                             text = stringResource(R.string.jailbreak),
                             style = MaterialTheme.typography.labelMedium,
@@ -399,7 +401,7 @@ fun StatusCardBig(
                     contentDescription = null,
                     modifier = Modifier
                         .align(Alignment.TopEnd)
-                        .size(48.dp),
+                        .size(FolkDimens.Size48),
                     tint = contentColor
                 )
             }
@@ -447,7 +449,7 @@ fun SmallInfoCard(
     val containerColor = if (BackgroundConfig.isCustomBackgroundEnabled) {
         MaterialTheme.colorScheme.surface.copy(alpha = BackgroundConfig.customBackgroundOpacity)
     } else {
-        MaterialTheme.colorScheme.surfaceColorAtElevation(1.dp)
+        MaterialTheme.colorScheme.surfaceColorAtElevation(FolkDimens.Size1)
     }
     
     Card(
@@ -457,24 +459,24 @@ fun SmallInfoCard(
         colors = CardDefaults.cardColors(containerColor = containerColor)
     ) {
         Column(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(FolkDimens.Size16),
             verticalArrangement = Arrangement.Center
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
                     imageVector = icon, 
                     contentDescription = null, 
-                    modifier = Modifier.size(16.dp),
+                    modifier = Modifier.size(FolkDimens.Size16),
                     tint = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                Spacer(Modifier.width(8.dp))
+                Spacer(Modifier.width(FolkDimens.Size8))
                 Text(
                     text = title,
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            Spacer(Modifier.height(4.dp))
+            Spacer(Modifier.height(FolkDimens.Size4))
             Text(
                 text = value,
                 style = MaterialTheme.typography.titleMedium,

@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.settings.appearance
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -75,7 +76,7 @@ fun SegmentedColumnScope.appearanceNavCustomIconsItem(
         )
 
         if (customNavIconsEnabled.value) {
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(FolkDimens.Size8))
             val navDestinations = listOf(
                 Triple("Home", R.string.nav_icon_home, BottomBarDestination.Home.iconSelected),
                 Triple("KModule", R.string.nav_icon_kpm, BottomBarDestination.KModule.iconSelected),
@@ -95,14 +96,14 @@ fun SegmentedColumnScope.appearanceNavCustomIconsItem(
                         }
                     ) {
                         Row(
-                            modifier = Modifier.fillMaxWidth().padding(16.dp),
+                            modifier = Modifier.fillMaxWidth().padding(FolkDimens.Size16),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             if (customUri != null) {
                                 AsyncImage(
                                     model = customUri,
                                     contentDescription = null,
-                                    modifier = Modifier.size(36.dp).clip(RoundedCornerShape(6.dp)),
+                                    modifier = Modifier.size(FolkDimens.Size36).clip(RoundedCornerShape(FolkDimens.Size6)),
                                     contentScale = ContentScale.Crop
                                 )
                             } else {
@@ -110,10 +111,10 @@ fun SegmentedColumnScope.appearanceNavCustomIconsItem(
                                     imageVector = defaultIcon,
                                     contentDescription = null,
                                     tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    modifier = Modifier.size(36.dp)
+                                    modifier = Modifier.size(FolkDimens.Size36)
                                 )
                             }
-                            Spacer(Modifier.width(16.dp))
+                            Spacer(Modifier.width(FolkDimens.Size16))
                             Column(modifier = Modifier.weight(1f)) {
                                 Text(
                                     stringResource(labelRes),
@@ -141,7 +142,7 @@ fun SegmentedColumnScope.appearanceNavCustomIconsItem(
                             }
                         }
                     }
-                    Spacer(Modifier.height(4.dp))
+                    Spacer(Modifier.height(FolkDimens.Size4))
                 }
             }
         }

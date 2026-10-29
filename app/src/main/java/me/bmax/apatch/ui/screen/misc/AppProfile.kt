@@ -1,5 +1,7 @@
 package me.bmax.apatch.ui.screen.misc
 
+import me.bmax.apatch.ui.theme.tokens.FolkColors
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -132,8 +134,8 @@ fun AppProfileScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .widthIn(max = 720.dp)
-                    .padding(vertical = 12.dp),
+                    .widthIn(max = FolkDimens.Size720)
+                    .padding(vertical = FolkDimens.Size12),
             ) {
                 fun selectMode(index: Int) {
                     if (index == selectedIndex) return
@@ -189,7 +191,7 @@ fun AppProfileScreen(
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 20.dp, vertical = 16.dp),
+                                .padding(horizontal = FolkDimens.Size20, vertical = FolkDimens.Size16),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             AsyncImage(
@@ -197,11 +199,11 @@ fun AppProfileScreen(
                                     .crossfade(true).build(),
                                 contentDescription = appInfo.label,
                                 modifier = Modifier
-                                    .size(56.dp)
+                                    .size(FolkDimens.Size56)
                                     .clip(CircleShape),
                             )
 
-                            Spacer(Modifier.width(16.dp))
+                            Spacer(Modifier.width(FolkDimens.Size16))
 
                             Column(modifier = Modifier.weight(1f)) {
                                 Text(
@@ -210,7 +212,7 @@ fun AppProfileScreen(
                                     fontWeight = FontWeight.SemiBold,
                                     color = MaterialTheme.colorScheme.onSurface,
                                 )
-                                Spacer(Modifier.height(2.dp))
+                                Spacer(Modifier.height(FolkDimens.Size2))
                                 Text(
                                     text = appInfo.packageName,
                                     style = MaterialTheme.typography.bodyMedium,
@@ -272,7 +274,7 @@ private fun AuthorizationOption(
         targetValue = if (selected) {
             MaterialTheme.colorScheme.secondaryContainer
         } else {
-            Color.Transparent
+            FolkColors.Transparent
         },
         label = "authorizationOptionColor",
     )
@@ -294,7 +296,7 @@ private fun AuthorizationOption(
                 interactionSource = interactionSource,
                 indication = null,
             )
-            .padding(horizontal = 16.dp, vertical = 16.dp),
+            .padding(horizontal = FolkDimens.Size16, vertical = FolkDimens.Size16),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Surface(
@@ -314,12 +316,12 @@ private fun AuthorizationOption(
                 imageVector = icon,
                 contentDescription = null,
                 modifier = Modifier
-                    .padding(10.dp)
-                    .size(20.dp),
+                    .padding(FolkDimens.Size10)
+                    .size(FolkDimens.Size20),
             )
         }
 
-        Spacer(Modifier.width(16.dp))
+        Spacer(Modifier.width(FolkDimens.Size16))
 
         Column(modifier = Modifier.weight(1f)) {
             Text(
@@ -332,7 +334,7 @@ private fun AuthorizationOption(
                     MaterialTheme.colorScheme.onSurface
                 },
             )
-            Spacer(Modifier.height(2.dp))
+            Spacer(Modifier.height(FolkDimens.Size2))
             Text(
                 text = summary,
                 style = MaterialTheme.typography.bodyMedium,
@@ -344,7 +346,7 @@ private fun AuthorizationOption(
             )
         }
 
-        Spacer(Modifier.width(12.dp))
+        Spacer(Modifier.width(FolkDimens.Size12))
         RadioButton(selected = selected, onClick = null)
     }
 }

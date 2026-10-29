@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.misc
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
@@ -89,10 +90,10 @@ fun FaqScreen(navigator: DestinationsNavigator) {
             contentPadding = PaddingValues(
                 start = FolkSettingsDimens.ScreenPadding,
                 end = FolkSettingsDimens.ScreenPadding,
-                top = 12.dp,
+                top = FolkDimens.Size12,
                 bottom = FolkSettingsDimens.ScreenPadding,
             ),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+            verticalArrangement = Arrangement.spacedBy(FolkDimens.Size12),
         ) {
             itemsIndexed(items) { index, item ->
                 FaqCard(
@@ -120,9 +121,9 @@ private fun FaqCard(item: FaqItem, expanded: Boolean, onToggle: () -> Unit) {
     val pressed by interactionSource.collectIsPressedAsState()
     val corner by animateDpAsState(
         targetValue = when {
-            expanded -> 28.dp
-            pressed -> 24.dp
-            else -> 20.dp
+            expanded -> FolkDimens.Size28
+            pressed -> FolkDimens.Size24
+            else -> FolkDimens.Size20
         },
         animationSpec = MaterialTheme.motionScheme.defaultSpatialSpec(),
         label = "FaqCardCorner",

@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.settings.appearance
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -48,23 +49,23 @@ fun ThemeExportDialog(
         Surface(
             modifier = Modifier
                 .fillMaxWidth(0.92f)
-                .widthIn(max = 440.dp)
+                .widthIn(max = FolkDimens.Size440)
                 .wrapContentHeight(),
             shape = FolkShape.Corner28,
             tonalElevation = AlertDialogDefaults.TonalElevation,
             color = AlertDialogDefaults.containerColor,
         ) {
-            Column(modifier = Modifier.padding(24.dp)) {
+            Column(modifier = Modifier.padding(FolkDimens.Size24)) {
                 Text(
                     text = stringResource(R.string.theme_export_title),
                     style = MaterialTheme.typography.headlineSmall,
-                    modifier = Modifier.padding(bottom = 20.dp)
+                    modifier = Modifier.padding(bottom = FolkDimens.Size20)
                 )
                 Column(
                     modifier = Modifier
                         .weight(1f, fill = false)
                         .verticalScroll(rememberScrollState()),
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                    verticalArrangement = Arrangement.spacedBy(FolkDimens.Size12)
                 ) {
                     OutlinedTextField(
                         value = name,
@@ -81,7 +82,7 @@ fun ThemeExportDialog(
                     )
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(0.dp)
+                        horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size0)
                     ) {
                         listOf(
                             Triple("phone", Icons.Outlined.PhoneAndroid, R.string.theme_type_phone),
@@ -92,10 +93,10 @@ fun ThemeExportDialog(
                                 onClick = { type = value },
                                 modifier = Modifier
                                     .weight(1f)
-                                    .height(56.dp),
+                                    .height(FolkDimens.Size56),
                                 shape = when (index) {
-                                    0 -> ContinuousCornerShape(topStart = 16.dp, bottomStart = 16.dp)
-                                    else -> ContinuousCornerShape(topEnd = 16.dp, bottomEnd = 16.dp)
+                                    0 -> ContinuousCornerShape(topStart = FolkDimens.Size16, bottomStart = FolkDimens.Size16)
+                                    else -> ContinuousCornerShape(topEnd = FolkDimens.Size16, bottomEnd = FolkDimens.Size16)
                                 },
                                 color = if (selected) {
                                     MaterialTheme.colorScheme.secondaryContainer
@@ -108,7 +109,7 @@ fun ThemeExportDialog(
                                     MaterialTheme.colorScheme.onSurfaceVariant
                                 },
                                 border = BorderStroke(
-                                    width = 1.dp,
+                                    width = FolkDimens.Size1,
                                     color = if (selected) {
                                         MaterialTheme.colorScheme.primary
                                     } else {
@@ -121,18 +122,18 @@ fun ThemeExportDialog(
                                     horizontalArrangement = Arrangement.Center,
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
-                                    Icon(icon, contentDescription = null, modifier = Modifier.size(20.dp))
-                                    Spacer(Modifier.width(8.dp))
+                                    Icon(icon, contentDescription = null, modifier = Modifier.size(FolkDimens.Size20))
+                                    Spacer(Modifier.width(FolkDimens.Size8))
                                     Text(
                                         text = stringResource(label),
                                         style = MaterialTheme.typography.labelLarge
                                     )
                                     if (selected) {
-                                        Spacer(Modifier.width(8.dp))
+                                        Spacer(Modifier.width(FolkDimens.Size8))
                                         Icon(
                                             imageVector = Icons.Outlined.Check,
                                             contentDescription = null,
-                                            modifier = Modifier.size(18.dp)
+                                            modifier = Modifier.size(FolkDimens.Size18)
                                         )
                                     }
                                 }
@@ -166,7 +167,7 @@ fun ThemeExportDialog(
                     )
                 }
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(top = 20.dp),
+                    modifier = Modifier.fillMaxWidth().padding(top = FolkDimens.Size20),
                     horizontalArrangement = Arrangement.End,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -203,19 +204,19 @@ fun ThemeImportDialog(
         Surface(
             modifier = Modifier
                 .fillMaxWidth(0.92f)
-                .widthIn(max = 440.dp)
+                .widthIn(max = FolkDimens.Size440)
                 .wrapContentHeight(),
             shape = FolkShape.Corner28,
             tonalElevation = AlertDialogDefaults.TonalElevation,
             color = AlertDialogDefaults.containerColor,
         ) {
-            Column(modifier = Modifier.padding(24.dp)) {
+            Column(modifier = Modifier.padding(FolkDimens.Size24)) {
                 Text(text = stringResource(R.string.theme_import_title), style = MaterialTheme.typography.headlineSmall)
                 Text(
                     text = stringResource(R.string.theme_import_confirm),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(top = 8.dp, bottom = 20.dp)
+                    modifier = Modifier.padding(top = FolkDimens.Size8, bottom = FolkDimens.Size20)
                 )
                 Surface(
                     shape = FolkShape.Corner16,
@@ -223,11 +224,11 @@ fun ThemeImportDialog(
                     contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
+                    Column(modifier = Modifier.padding(FolkDimens.Size16)) {
                         Text(metadata.name, style = MaterialTheme.typography.titleLarge)
                         Row(
-                            modifier = Modifier.padding(top = 8.dp),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            modifier = Modifier.padding(top = FolkDimens.Size8),
+                            horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size8)
                         ) {
                             SuggestionChip(
                                 onClick = {},
@@ -243,11 +244,11 @@ fun ThemeImportDialog(
                                 text = metadata.author,
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                modifier = Modifier.padding(top = 8.dp)
+                                modifier = Modifier.padding(top = FolkDimens.Size8)
                             )
                         }
                         if (metadata.description.isNotEmpty()) {
-                            HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp))
+                            HorizontalDivider(modifier = Modifier.padding(vertical = FolkDimens.Size12))
                             Text(
                                 text = metadata.description,
                                 style = MaterialTheme.typography.bodyMedium,
@@ -256,7 +257,7 @@ fun ThemeImportDialog(
                         }
                     }
                 }
-                Row(modifier = Modifier.fillMaxWidth().padding(top = 20.dp), horizontalArrangement = Arrangement.End) {
+                Row(modifier = Modifier.fillMaxWidth().padding(top = FolkDimens.Size20), horizontalArrangement = Arrangement.End) {
                     TextButton(onClick = { showDialog.value = false }) { Text(stringResource(android.R.string.cancel)) }
                     Button(onClick = { showDialog.value = false; onConfirm() }, colors = ButtonDefaults.buttonColors()) { Text(stringResource(R.string.theme_import_action)) }
                 }
@@ -278,9 +279,9 @@ fun NavModeChooseDialog(
     ExpressiveDialog(
         onDismissRequest = onDismiss,
     ) {
-        Column(modifier = Modifier.padding(24.dp)) {
-            Text(text = stringResource(R.string.settings_nav_scheme), style = MaterialTheme.typography.headlineSmall, modifier = Modifier.padding(bottom = 16.dp))
-            Surface(shape = FolkShape.Corner12, color = AlertDialogDefaults.containerColor, tonalElevation = 2.dp) {
+        Column(modifier = Modifier.padding(FolkDimens.Size24)) {
+            Text(text = stringResource(R.string.settings_nav_scheme), style = MaterialTheme.typography.headlineSmall, modifier = Modifier.padding(bottom = FolkDimens.Size16))
+            Surface(shape = FolkShape.Corner12, color = AlertDialogDefaults.containerColor, tonalElevation = FolkDimens.Size2) {
                 Column {
                     SegmentedSelectableItem(
                         title = stringResource(R.string.settings_nav_mode_floating),
@@ -319,9 +320,9 @@ fun StatsTopLayoutChooseDialog(
     ExpressiveDialog(
         onDismissRequest = onDismiss,
     ) {
-        Column(modifier = Modifier.padding(24.dp)) {
-            Text(text = stringResource(R.string.settings_stats_top_layout), style = MaterialTheme.typography.headlineSmall, modifier = Modifier.padding(bottom = 16.dp))
-            Surface(shape = FolkShape.Corner12, color = AlertDialogDefaults.containerColor, tonalElevation = 2.dp) {
+        Column(modifier = Modifier.padding(FolkDimens.Size24)) {
+            Text(text = stringResource(R.string.settings_stats_top_layout), style = MaterialTheme.typography.headlineSmall, modifier = Modifier.padding(bottom = FolkDimens.Size16))
+            Surface(shape = FolkShape.Corner12, color = AlertDialogDefaults.containerColor, tonalElevation = FolkDimens.Size2) {
                 Column {
                     SegmentedSelectableItem(
                         title = stringResource(R.string.settings_stats_top_layout_list),
@@ -352,12 +353,12 @@ fun BannerApiConfigDialog(
 
     ExpressiveDialog(
         onDismissRequest = { showDialog.value = false },
-        width = 340.dp,
+        width = FolkDimens.Size340,
         shape = FolkShape.Corner28,
     ) {
-        Column(modifier = Modifier.padding(24.dp).verticalScroll(rememberScrollState())) {
-            Text(text = stringResource(R.string.apm_banner_api_config_title), style = MaterialTheme.typography.headlineSmall, modifier = Modifier.padding(bottom = 16.dp))
-            Text(text = stringResource(R.string.apm_banner_api_config_desc), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(bottom = 16.dp))
+        Column(modifier = Modifier.padding(FolkDimens.Size24).verticalScroll(rememberScrollState())) {
+            Text(text = stringResource(R.string.apm_banner_api_config_title), style = MaterialTheme.typography.headlineSmall, modifier = Modifier.padding(bottom = FolkDimens.Size16))
+            Text(text = stringResource(R.string.apm_banner_api_config_desc), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(bottom = FolkDimens.Size16))
             OutlinedTextField(
                 value = sourceText, onValueChange = { sourceText = it },
                 label = { Text(stringResource(R.string.apm_banner_api_source)) },
@@ -369,16 +370,16 @@ fun BannerApiConfigDialog(
                     }
                 }
             )
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(FolkDimens.Size12))
             Surface(shape = FolkShape.Corner12, color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)) {
-                Column(modifier = Modifier.padding(12.dp)) {
+                Column(modifier = Modifier.padding(FolkDimens.Size12)) {
                     Text(text = stringResource(R.string.apm_banner_api_examples_title), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary)
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(FolkDimens.Size8))
                     Text(text = stringResource(R.string.apm_banner_api_examples), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
-            Spacer(modifier = Modifier.height(16.dp))
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Spacer(modifier = Modifier.height(FolkDimens.Size16))
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size8)) {
                 OutlinedButton(onClick = { onClearCache() }, modifier = Modifier.weight(1f)) { Text(stringResource(R.string.apm_banner_clear_cache)) }
                 Button(
                     onClick = { onConfirm(sourceText); showDialog.value = false; showToast(context, context.getString(R.string.apm_banner_api_source_saved)) },
@@ -386,7 +387,7 @@ fun BannerApiConfigDialog(
                     colors = ButtonDefaults.buttonColors()
                 ) { Text(stringResource(android.R.string.ok)) }
             }
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(FolkDimens.Size8))
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                 TextButton(onClick = { showDialog.value = false }) { Text(stringResource(android.R.string.cancel)) }
             }

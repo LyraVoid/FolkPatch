@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.script
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import android.content.Context
 import android.net.Uri
 import me.bmax.apatch.util.ui.showToast
@@ -79,11 +80,11 @@ fun OnlineScriptScreen(navigator: DestinationsNavigator) {
                 )
             } else {
                 LazyVerticalGrid(
-                    columns = GridCells.Adaptive(minSize = 320.dp),
+                    columns = GridCells.Adaptive(minSize = FolkDimens.Size320),
                     modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(16.dp),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                    contentPadding = PaddingValues(FolkDimens.Size16),
+                    horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size12),
+                    verticalArrangement = Arrangement.spacedBy(FolkDimens.Size12),
                 ) {
                     items(viewModel.modules, key = { it.name }) { script ->
                         OnlineScriptItem(script, context)

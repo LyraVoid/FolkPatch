@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.misc
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -61,14 +62,14 @@ fun DeveloperInfo(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(24.dp),
+                    .padding(FolkDimens.Size24),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
                 Box(
                     modifier = Modifier
-                        .size(110.dp)
-                        .shadow(8.dp, CircleShape)
+                        .size(FolkDimens.Size110)
+                        .shadow(FolkDimens.Size8, CircleShape)
                         .clip(CircleShape)
                         .background(MaterialTheme.colorScheme.surfaceContainerHighest),
                     contentAlignment = Alignment.Center
@@ -89,7 +90,7 @@ fun DeveloperInfo(
                     )
                 }
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(FolkDimens.Size16))
 
                 Text(
                     text = "Matsuzaka Yuki",
@@ -101,64 +102,64 @@ fun DeveloperInfo(
                     color = MaterialTheme.colorScheme.primary
                 )
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(FolkDimens.Size16))
 
                 Text(
                     text = "\"美しい世界を見てきましょう\"",
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.8f),
-                    modifier = Modifier.padding(horizontal = 16.dp)
+                    modifier = Modifier.padding(horizontal = FolkDimens.Size16)
                 )
 
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(FolkDimens.Size24))
 
                 Row(
-                    modifier = Modifier.padding(top = 16.dp),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                    modifier = Modifier.padding(top = FolkDimens.Size16),
+                    horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size16)
                 ) {
                     FilledTonalButton(
                         onClick = { uriHandler.openUri(githubUrl) },
-                        modifier = Modifier.height(38.dp)
+                        modifier = Modifier.height(FolkDimens.Size38)
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.github),
                             contentDescription = stringResource(R.string.github),
-                            modifier = Modifier.size(20.dp)
+                            modifier = Modifier.size(FolkDimens.Size20)
                         )
-                        Spacer(Modifier.width(8.dp))
+                        Spacer(Modifier.width(FolkDimens.Size8))
                         Text(stringResource(R.string.github))
                     }
 
                     FilledTonalButton(
                         onClick = { uriHandler.openUri(telegramUrl) },
-                        modifier = Modifier.height(38.dp)
+                        modifier = Modifier.height(FolkDimens.Size38)
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.telegram),
                             contentDescription = stringResource(R.string.telegram),
-                            modifier = Modifier.size(20.dp)
+                            modifier = Modifier.size(FolkDimens.Size20)
                         )
-                        Spacer(Modifier.width(8.dp))
+                        Spacer(Modifier.width(FolkDimens.Size8))
                         Text(stringResource(R.string.telegram))
                     }
                 }
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(FolkDimens.Size16))
 
                 FilledTonalButton(
                     onClick = { uriHandler.openUri(sociabuzzUrl) },
-                    modifier = Modifier.height(38.dp)
+                    modifier = Modifier.height(FolkDimens.Size38)
                 ) {
                     Icon(
                         imageVector = Icons.Outlined.Coffee,
                         contentDescription = stringResource(R.string.support_or_donate),
-                        modifier = Modifier.size(20.dp)
+                        modifier = Modifier.size(FolkDimens.Size20)
                     )
-                    Spacer(Modifier.width(8.dp))
+                    Spacer(Modifier.width(FolkDimens.Size8))
                     Text(stringResource(R.string.support_or_donate))
                 }
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(FolkDimens.Size16))
             }
         }
     }

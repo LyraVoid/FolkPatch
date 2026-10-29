@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.misc
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -60,17 +61,17 @@ fun AboutScreen(navigator: DestinationsNavigator) {
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Spacer(modifier = Modifier.height(24.dp))
+                    Spacer(modifier = Modifier.height(FolkDimens.Size24))
 
                     // App icon (transparent cutout, no background)
                     Image(
                         painter = painterResource(id = R.drawable.about_icon_anime),
                         contentDescription = stringResource(R.string.app_name),
                         contentScale = ContentScale.Fit,
-                        modifier = Modifier.size(78.dp)
+                        modifier = Modifier.size(FolkDimens.Size78)
                     )
 
-                    Spacer(modifier = Modifier.height(14.dp))
+                    Spacer(modifier = Modifier.height(FolkDimens.Size14))
 
                     Text(
                         text = stringResource(id = R.string.app_name),
@@ -78,7 +79,7 @@ fun AboutScreen(navigator: DestinationsNavigator) {
                         fontWeight = FontWeight.Bold,
                     )
 
-                    Spacer(modifier = Modifier.height(4.dp))
+                    Spacer(modifier = Modifier.height(FolkDimens.Size4))
 
                     Text(
                         text = stringResource(
@@ -96,20 +97,20 @@ fun AboutScreen(navigator: DestinationsNavigator) {
                         ),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.padding(top = 2.dp)
+                        modifier = Modifier.padding(top = FolkDimens.Size2)
                     )
 
-                    Spacer(modifier = Modifier.height(24.dp))
+                    Spacer(modifier = Modifier.height(FolkDimens.Size24))
 
                     // Description card — M3E TonalCard
                     TonalCard(
-                        modifier = Modifier.padding(horizontal = 16.dp),
+                        modifier = Modifier.padding(horizontal = FolkDimens.Size16),
                         flat = true,
                     ) {
                         Column(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(20.dp)
+                                .padding(FolkDimens.Size20)
                         ) {
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
@@ -118,16 +119,16 @@ fun AboutScreen(navigator: DestinationsNavigator) {
                                     imageVector = Icons.Outlined.Info,
                                     contentDescription = null,
                                     tint = MaterialTheme.colorScheme.primary,
-                                    modifier = Modifier.size(20.dp)
+                                    modifier = Modifier.size(FolkDimens.Size20)
                                 )
-                                Spacer(modifier = Modifier.width(12.dp))
+                                Spacer(modifier = Modifier.width(FolkDimens.Size12))
                                 Text(
                                     text = stringResource(id = R.string.about),
                                     style = MaterialTheme.typography.titleMedium,
                                     fontWeight = FontWeight.SemiBold,
                                 )
                             }
-                            Spacer(modifier = Modifier.height(12.dp))
+                            Spacer(modifier = Modifier.height(FolkDimens.Size12))
                             Text(
                                 text = stringResource(id = R.string.about_app_desc),
                                 style = MaterialTheme.typography.bodyMedium,
@@ -136,11 +137,11 @@ fun AboutScreen(navigator: DestinationsNavigator) {
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(FolkDimens.Size16))
 
                     // Links — M3E SegmentedColumn
                     SegmentedColumn(
-                        modifier = Modifier.padding(horizontal = 0.dp),
+                        modifier = Modifier.padding(horizontal = FolkDimens.Size0),
                     ) {
                         item {
                             SplicedLinkItem(
@@ -148,7 +149,7 @@ fun AboutScreen(navigator: DestinationsNavigator) {
                                     Icon(
                                         painter = painterResource(id = R.drawable.github),
                                         contentDescription = null,
-                                        modifier = Modifier.size(20.dp)
+                                        modifier = Modifier.size(FolkDimens.Size20)
                                     )
                                 },
                                 title = stringResource(id = R.string.about_github),
@@ -161,7 +162,7 @@ fun AboutScreen(navigator: DestinationsNavigator) {
                                     Icon(
                                         painter = painterResource(id = R.drawable.telegram),
                                         contentDescription = null,
-                                        modifier = Modifier.size(20.dp)
+                                        modifier = Modifier.size(FolkDimens.Size20)
                                     )
                                 },
                                 title = stringResource(id = R.string.about_telegram_channel),
@@ -170,7 +171,7 @@ fun AboutScreen(navigator: DestinationsNavigator) {
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(32.dp))
+                    Spacer(modifier = Modifier.height(FolkDimens.Size32))
                 }
             }
         }
@@ -187,11 +188,11 @@ private fun SplicedLinkItem(
         modifier = Modifier
             .fillMaxWidth()
             .clickable(role = Role.Button, onClick = onClick)
-            .padding(horizontal = 24.dp, vertical = 16.dp),
+            .padding(horizontal = FolkDimens.Size24, vertical = FolkDimens.Size16),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         icon()
-        Spacer(modifier = Modifier.width(20.dp))
+        Spacer(modifier = Modifier.width(FolkDimens.Size20))
         Text(
             text = title,
             style = MaterialTheme.typography.bodyLarge,

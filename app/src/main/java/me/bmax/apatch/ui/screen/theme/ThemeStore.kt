@@ -1,5 +1,7 @@
 package me.bmax.apatch.ui.screen.theme
 
+import me.bmax.apatch.ui.theme.tokens.FolkColors
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
@@ -76,7 +78,7 @@ fun ThemeStoreScreen(
             text = {
                 Column {
                     Text(stringResource(R.string.theme_mode_onboarding_msg))
-                    Spacer(Modifier.height(16.dp))
+                    Spacer(Modifier.height(FolkDimens.Size16))
                     // Built-in option
                     OutlinedButton(
                         onClick = {
@@ -86,7 +88,7 @@ fun ThemeStoreScreen(
                         },
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Column(modifier = Modifier.padding(8.dp)) {
+                        Column(modifier = Modifier.padding(FolkDimens.Size8)) {
                             Text(
                                 stringResource(R.string.theme_mode_builtin_label),
                                 style = MaterialTheme.typography.titleMedium
@@ -98,7 +100,7 @@ fun ThemeStoreScreen(
                             )
                         }
                     }
-                    Spacer(Modifier.height(12.dp))
+                    Spacer(Modifier.height(FolkDimens.Size12))
                     // Compat option
                     OutlinedButton(
                         onClick = {
@@ -108,7 +110,7 @@ fun ThemeStoreScreen(
                         },
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Column(modifier = Modifier.padding(8.dp)) {
+                        Column(modifier = Modifier.padding(FolkDimens.Size8)) {
                             Text(
                                 stringResource(R.string.theme_mode_compat_label),
                                 style = MaterialTheme.typography.titleMedium
@@ -254,13 +256,13 @@ fun ThemeStoreScreen(
                         text = "${stringResource(R.string.theme_source)}: $sourceString",
                         style = MaterialTheme.typography.bodyMedium
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(FolkDimens.Size8))
                     Text(
                         text = theme.description,
                         style = MaterialTheme.typography.bodySmall
                     )
                     if (isDownloaded) {
-                        Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(FolkDimens.Size8))
                         Text(
                             text = "✓ Already downloaded",
                             color = MaterialTheme.colorScheme.primary,
@@ -292,8 +294,8 @@ fun ThemeStoreScreen(
                         onClick = { selectedTheme = null },
                         enabled = false
                     ) {
-                        CircularProgressIndicator(modifier = Modifier.size(16.dp))
-                        Spacer(modifier = Modifier.width(8.dp))
+                        CircularProgressIndicator(modifier = Modifier.size(FolkDimens.Size16))
+                        Spacer(modifier = Modifier.width(FolkDimens.Size8))
                         Text("Downloading...")
                     }
                 } else {
@@ -318,7 +320,7 @@ fun ThemeStoreScreen(
                         }
                     ) {
                         Icon(Icons.Outlined.Download, contentDescription = null)
-                        Spacer(modifier = Modifier.width(8.dp))
+                        Spacer(modifier = Modifier.width(FolkDimens.Size8))
                         Text(stringResource(R.string.theme_store_download))
                     }
                 }
@@ -335,7 +337,7 @@ fun ThemeStoreScreen(
     if (showFilterSheet) {
         ExpressiveDialog(
             onDismissRequest = { showFilterSheet = false },
-            width = 320.dp,
+            width = FolkDimens.Size320,
             shape = FolkShape.Corner28,
             blurBehind = false,
         ) {
@@ -375,11 +377,11 @@ fun ThemeStoreScreen(
                     placeholder = { Text(stringResource(R.string.theme_store_search_hint)) },
                     singleLine = true,
                     colors = TextFieldDefaults.colors(
-                        focusedContainerColor = Color.Transparent,
-                        unfocusedContainerColor = Color.Transparent,
-                        disabledContainerColor = Color.Transparent,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
+                        focusedContainerColor = FolkColors.Transparent,
+                        unfocusedContainerColor = FolkColors.Transparent,
+                        disabledContainerColor = FolkColors.Transparent,
+                        focusedIndicatorColor = FolkColors.Transparent,
+                        unfocusedIndicatorColor = FolkColors.Transparent,
                     ),
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -429,7 +431,7 @@ fun ThemeStoreScreen(
                 Text(
                     text = viewModel.errorMessage ?: "Unknown error",
                     color = MaterialTheme.colorScheme.error,
-                    modifier = Modifier.padding(16.dp)
+                    modifier = Modifier.padding(FolkDimens.Size16)
                 )
                 Button(onClick = { viewModel.fetchThemes() }) {
                     Text(stringResource(R.string.retry))
@@ -437,11 +439,11 @@ fun ThemeStoreScreen(
             }
         } else {
             LazyVerticalStaggeredGrid(
-                columns = StaggeredGridCells.Adaptive(minSize = 128.dp),
+                columns = StaggeredGridCells.Adaptive(minSize = FolkDimens.Size128),
                 modifier = Modifier.fillMaxSize().padding(paddingValues),
-                contentPadding = PaddingValues(16.dp),
-                verticalItemSpacing = 16.dp,
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
+                contentPadding = PaddingValues(FolkDimens.Size16),
+                verticalItemSpacing = FolkDimens.Size16,
+                horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size16)
             ) {
                 items(
                     items = viewModel.themes.distinctBy { it.id },

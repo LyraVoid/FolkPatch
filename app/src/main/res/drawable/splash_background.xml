@@ -8,6 +8,6 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@mipmap/ic_launcher_foreground_anime" />
+            android:src="@drawable/ic_launcher_foreground_anime" />
     </item>
 </layer-list>

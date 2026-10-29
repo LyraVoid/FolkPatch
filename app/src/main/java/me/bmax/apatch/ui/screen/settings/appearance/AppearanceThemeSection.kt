@@ -1,5 +1,7 @@
 package me.bmax.apatch.ui.screen.settings.appearance
 
+import me.bmax.apatch.ui.theme.tokens.FolkColors
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
@@ -82,20 +84,20 @@ fun AppearanceThemeSection(
             if (showModeSwitchDialog.value) {
                 ExpressiveDialog(
                     onDismissRequest = { showModeSwitchDialog.value = false },
-                    width = 320.dp,
+                    width = FolkDimens.Size320,
                     blurBehind = false,
                 ) {
-                    Column(modifier = Modifier.padding(24.dp)) {
+                    Column(modifier = Modifier.padding(FolkDimens.Size24)) {
                         Text(
                             text = stringResource(R.string.theme_mode_switch_title),
                             style = MaterialTheme.typography.titleLarge,
-                            modifier = Modifier.padding(bottom = 8.dp)
+                            modifier = Modifier.padding(bottom = FolkDimens.Size8)
                         )
                         Text(
                             text = stringResource(R.string.theme_mode_switch_msg),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier.padding(bottom = 16.dp)
+                            modifier = Modifier.padding(bottom = FolkDimens.Size16)
                         )
 
                         val builtinLabel = stringResource(R.string.theme_mode_builtin_label)
@@ -108,7 +110,7 @@ fun AppearanceThemeSection(
                                 color = if (themeStoreMode == mode) {
                                     MaterialTheme.colorScheme.secondaryContainer
                                 } else {
-                                    Color.Transparent
+                                    FolkColors.Transparent
                                 },
                                 contentColor = if (themeStoreMode == mode) {
                                     MaterialTheme.colorScheme.onSecondaryContainer
@@ -136,7 +138,7 @@ fun AppearanceThemeSection(
                                         },
                                     ),
                             ) {
-                                Row(modifier = Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
+                                Row(modifier = Modifier.padding(FolkDimens.Size12), verticalAlignment = Alignment.CenterVertically) {
                                     Column(modifier = Modifier.weight(1f)) {
                                         Text(
                                             label,
@@ -158,11 +160,11 @@ fun AppearanceThemeSection(
                                             }
                                         )
                                     }
-                                    Spacer(Modifier.width(12.dp))
+                                    Spacer(Modifier.width(FolkDimens.Size12))
                                     RadioButton(selected = themeStoreMode == mode, onClick = null)
                                 }
                             }
-                            Spacer(Modifier.height(8.dp))
+                            Spacer(Modifier.height(FolkDimens.Size8))
                         }
 
                         TextButton(

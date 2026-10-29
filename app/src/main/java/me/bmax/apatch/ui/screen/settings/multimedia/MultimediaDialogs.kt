@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.settings.multimedia
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import android.content.Context
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -46,17 +47,17 @@ fun MultimediaDialogs(
         ExpressiveDialog(
             onDismissRequest = { showSoundEffectSourceDialog.value = false },
         ) {
-            Column(modifier = Modifier.padding(24.dp)) {
+            Column(modifier = Modifier.padding(FolkDimens.Size24)) {
                 Text(
                     text = soundEffectSourceTitle,
                     style = MaterialTheme.typography.headlineSmall,
-                    modifier = Modifier.padding(bottom = 16.dp)
+                    modifier = Modifier.padding(bottom = FolkDimens.Size16)
                 )
 
                 Surface(
                     shape = FolkShape.Corner12,
                     color = AlertDialogDefaults.containerColor,
-                    tonalElevation = 2.dp
+                    tonalElevation = FolkDimens.Size2
                 ) {
                     Column {
                         SegmentedSelectableItem(
@@ -84,7 +85,7 @@ fun MultimediaDialogs(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 24.dp),
+                        .padding(top = FolkDimens.Size24),
                     horizontalArrangement = Arrangement.End
                 ) {
                     TextButton(onClick = { showSoundEffectSourceDialog.value = false }) {
@@ -100,18 +101,18 @@ fun MultimediaDialogs(
         ExpressiveDialog(
             onDismissRequest = { showSoundEffectPresetDialog.value = false },
         ) {
-            Column(modifier = Modifier.padding(24.dp)) {
+            Column(modifier = Modifier.padding(FolkDimens.Size24)) {
                 Text(
                     text = soundEffectPresetTitle,
                     style = MaterialTheme.typography.headlineSmall,
-                    modifier = Modifier.padding(bottom = 16.dp)
+                    modifier = Modifier.padding(bottom = FolkDimens.Size16)
                 )
 
                 Surface(
                     shape = FolkShape.Corner12,
                     color = AlertDialogDefaults.containerColor,
-                    tonalElevation = 2.dp,
-                    modifier = Modifier.heightIn(max = 400.dp)
+                    tonalElevation = FolkDimens.Size2,
+                    modifier = Modifier.heightIn(max = FolkDimens.Size400)
                 ) {
                     androidx.compose.foundation.lazy.LazyColumn {
                         items(SoundEffectConfig.PRESETS.size, key = { it }) { index ->
@@ -132,7 +133,7 @@ fun MultimediaDialogs(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 24.dp),
+                        .padding(top = FolkDimens.Size24),
                     horizontalArrangement = Arrangement.End
                 ) {
                     TextButton(onClick = { showSoundEffectPresetDialog.value = false }) {
@@ -148,17 +149,17 @@ fun MultimediaDialogs(
         ExpressiveDialog(
             onDismissRequest = { showSoundEffectScopeDialog.value = false },
         ) {
-            Column(modifier = Modifier.padding(24.dp)) {
+            Column(modifier = Modifier.padding(FolkDimens.Size24)) {
                 Text(
                     text = soundEffectScopeTitle,
                     style = MaterialTheme.typography.headlineSmall,
-                    modifier = Modifier.padding(bottom = 16.dp)
+                    modifier = Modifier.padding(bottom = FolkDimens.Size16)
                 )
 
                 Surface(
                     shape = FolkShape.Corner12,
                     color = AlertDialogDefaults.containerColor,
-                    tonalElevation = 2.dp
+                    tonalElevation = FolkDimens.Size2
                 ) {
                     Column {
                         SegmentedSelectableItem(
@@ -186,7 +187,7 @@ fun MultimediaDialogs(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 24.dp),
+                        .padding(top = FolkDimens.Size24),
                     horizontalArrangement = Arrangement.End
                 ) {
                     TextButton(onClick = { showSoundEffectScopeDialog.value = false }) {
@@ -202,17 +203,17 @@ fun MultimediaDialogs(
         ExpressiveDialog(
             onDismissRequest = { showStartupSourceDialog.value = false },
         ) {
-            Column(modifier = Modifier.padding(24.dp)) {
+            Column(modifier = Modifier.padding(FolkDimens.Size24)) {
                 Text(
                     text = startupSourceTitle,
                     style = MaterialTheme.typography.headlineSmall,
-                    modifier = Modifier.padding(bottom = 16.dp)
+                    modifier = Modifier.padding(bottom = FolkDimens.Size16)
                 )
 
                 Surface(
                     shape = FolkShape.Corner12,
                     color = AlertDialogDefaults.containerColor,
-                    tonalElevation = 2.dp
+                    tonalElevation = FolkDimens.Size2
                 ) {
                     Column {
                         SegmentedSelectableItem(
@@ -240,7 +241,7 @@ fun MultimediaDialogs(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 24.dp),
+                        .padding(top = FolkDimens.Size24),
                     horizontalArrangement = Arrangement.End
                 ) {
                     TextButton(onClick = { showStartupSourceDialog.value = false }) {
@@ -256,18 +257,18 @@ fun MultimediaDialogs(
         ExpressiveDialog(
             onDismissRequest = { showStartupPresetDialog.value = false },
         ) {
-            Column(modifier = Modifier.padding(24.dp)) {
+            Column(modifier = Modifier.padding(FolkDimens.Size24)) {
                 Text(
                     text = startupPresetTitle,
                     style = MaterialTheme.typography.headlineSmall,
-                    modifier = Modifier.padding(bottom = 16.dp)
+                    modifier = Modifier.padding(bottom = FolkDimens.Size16)
                 )
 
                 Surface(
                     shape = FolkShape.Corner12,
                     color = AlertDialogDefaults.containerColor,
-                    tonalElevation = 2.dp,
-                    modifier = Modifier.heightIn(max = 400.dp)
+                    tonalElevation = FolkDimens.Size2,
+                    modifier = Modifier.heightIn(max = FolkDimens.Size400)
                 ) {
                     androidx.compose.foundation.lazy.LazyColumn {
                         items(SoundEffectConfig.STARTUP_PRESETS.size, key = { it }) { index ->
@@ -288,7 +289,7 @@ fun MultimediaDialogs(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 24.dp),
+                        .padding(top = FolkDimens.Size24),
                     horizontalArrangement = Arrangement.End
                 ) {
                     TextButton(onClick = { showStartupPresetDialog.value = false }) {
@@ -304,17 +305,17 @@ fun MultimediaDialogs(
         ExpressiveDialog(
             onDismissRequest = { showVibrationScopeDialog.value = false },
         ) {
-            Column(modifier = Modifier.padding(24.dp)) {
+            Column(modifier = Modifier.padding(FolkDimens.Size24)) {
                 Text(
                     text = vibrationScopeTitle,
                     style = MaterialTheme.typography.headlineSmall,
-                    modifier = Modifier.padding(bottom = 16.dp)
+                    modifier = Modifier.padding(bottom = FolkDimens.Size16)
                 )
 
                 Surface(
                     shape = FolkShape.Corner12,
                     color = AlertDialogDefaults.containerColor,
-                    tonalElevation = 2.dp
+                    tonalElevation = FolkDimens.Size2
                 ) {
                     Column {
                         SegmentedSelectableItem(
@@ -342,7 +343,7 @@ fun MultimediaDialogs(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 24.dp),
+                        .padding(top = FolkDimens.Size24),
                     horizontalArrangement = Arrangement.End
                 ) {
                     TextButton(onClick = { showVibrationScopeDialog.value = false }) {

@@ -1,5 +1,7 @@
 package me.bmax.apatch.ui.screen.home
 
+import me.bmax.apatch.ui.theme.tokens.FolkColors
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import android.content.ActivityNotFoundException
 import android.net.Uri
 import androidx.compose.animation.animateColorAsState
@@ -160,7 +162,7 @@ fun HeroStatusCard(
     val wallpaperContentColor = LocalWallpaperContentColor.current
     val contentColor by animateColorAsState(
         targetValue = when {
-            hasWallpaper -> Color.White
+            hasWallpaper -> FolkColors.MediaContent
             wallpaperContentColor != null -> wallpaperContentColor
             isJailbreak -> MaterialTheme.colorScheme.onTertiaryContainer
             isWorking -> MaterialTheme.colorScheme.onPrimary
@@ -193,13 +195,13 @@ fun HeroStatusCard(
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .heightIn(min = 160.dp)
+                .heightIn(min = FolkDimens.Size160)
                 .then(if (wallpaperEnabled) Modifier.pointerInput(Unit) {
                     detectTapGestures(onLongPress = { showBackgroundOptions = true })
                 } else Modifier),
             shape = FolkShape.Corner24,
             colors = CardDefaults.cardColors(
-                containerColor = Color.Transparent,
+                containerColor = FolkColors.Transparent,
                 contentColor = contentColor
             )
         ) {
@@ -215,10 +217,10 @@ fun HeroStatusCard(
                         contentScale = ContentScale.Crop,
                         modifier = Modifier.matchParentSize().alpha(wallpaperOpacity),
                     )
-                    Box(Modifier.matchParentSize().background(Color.Black.copy(alpha = wallpaperDim)))
+                    Box(Modifier.matchParentSize().background(FolkColors.MediaScrim.copy(alpha = wallpaperDim)))
                 }
                 Column(
-                    modifier = Modifier.fillMaxWidth().padding(24.dp)
+                    modifier = Modifier.fillMaxWidth().padding(FolkDimens.Size24)
                 ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -232,11 +234,11 @@ fun HeroStatusCard(
                             Icon(
                                 imageVector = if (isJailbreak) Icons.Outlined.LockOpen else Icons.Outlined.CheckCircle,
                                 contentDescription = null,
-                                modifier = Modifier.size(32.dp),
+                                modifier = Modifier.size(FolkDimens.Size32),
                                 tint = contentColor
                             )
 
-                            Spacer(Modifier.width(12.dp))
+                            Spacer(Modifier.width(FolkDimens.Size12))
 
                             Column {
                                 Text(
@@ -251,20 +253,20 @@ fun HeroStatusCard(
                                 )
 
                                 if (isJailbreak) {
-                                    Spacer(Modifier.height(4.dp))
+                                    Spacer(Modifier.height(FolkDimens.Size4))
                                     Text(
                                         text = stringResource(R.string.settings_jailbreak_mode_summary),
                                         style = MaterialTheme.typography.bodyMedium,
                                         color = contentColor
                                     )
                                 } else if (!classicEmojiEnabled) {
-                                    Spacer(Modifier.height(4.dp))
+                                    Spacer(Modifier.height(FolkDimens.Size4))
                                     ModeLabelChip(label = modeText, contentColor = contentColor)
                                 }
                             }
                         }
 
-                        Spacer(Modifier.width(8.dp))
+                        Spacer(Modifier.width(FolkDimens.Size8))
 
                         if (isJailbreak) {
                             IconButton(
@@ -274,8 +276,8 @@ fun HeroStatusCard(
                             ) {
                                 if (jailbreakState.isTriggering) {
                                     CircularProgressIndicator(
-                                        modifier = Modifier.size(22.dp),
-                                        strokeWidth = 2.dp,
+                                        modifier = Modifier.size(FolkDimens.Size22),
+                                        strokeWidth = FolkDimens.Size2,
                                         color = contentColor,
                                     )
                                 } else {
@@ -292,26 +294,26 @@ fun HeroStatusCard(
                                     contentColor = contentColor
                                 ),
                                 border = androidx.compose.foundation.BorderStroke(
-                                    1.dp,
+                                    FolkDimens.Size1,
                                     contentColor.copy(alpha = 0.5f)
                                 ),
-                                contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)
+                                contentPadding = PaddingValues(horizontal = FolkDimens.Size12, vertical = FolkDimens.Size8)
                             ) {
                                 Icon(
                                     imageVector = Icons.Outlined.Delete,
                                     contentDescription = stringResource(R.string.home_ap_cando_uninstall),
-                                    modifier = Modifier.size(20.dp)
+                                    modifier = Modifier.size(FolkDimens.Size20)
                                 )
                             }
                         }
                     }
 
-                    Spacer(Modifier.height(20.dp))
+                    Spacer(Modifier.height(FolkDimens.Size20))
                     HorizontalDivider(
                         color = contentColor.copy(alpha = 0.2f),
-                        modifier = Modifier.padding(vertical = 4.dp)
+                        modifier = Modifier.padding(vertical = FolkDimens.Size4)
                     )
-                    Spacer(Modifier.height(12.dp))
+                    Spacer(Modifier.height(FolkDimens.Size12))
 
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -359,33 +361,33 @@ fun HeroStatusCard(
             )
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth().padding(24.dp),
+                modifier = Modifier.fillMaxWidth().padding(FolkDimens.Size24),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 when {
                     isJailbreak -> Icon(
                         imageVector = Icons.Outlined.LockOpen,
                         contentDescription = null,
-                        modifier = Modifier.size(32.dp)
+                        modifier = Modifier.size(FolkDimens.Size32)
                     )
                     isUpdate -> Icon(
                         imageVector = Icons.Outlined.SystemUpdate,
                         contentDescription = null,
-                        modifier = Modifier.size(32.dp)
+                        modifier = Modifier.size(FolkDimens.Size32)
                     )
                     isUnknown -> Icon(
                         imageVector = Icons.Outlined.Warning,
                         contentDescription = null,
-                        modifier = Modifier.size(32.dp)
+                        modifier = Modifier.size(FolkDimens.Size32)
                     )
                     else -> Icon(
                         imageVector = Icons.Outlined.Block,
                         contentDescription = null,
-                        modifier = Modifier.size(32.dp)
+                        modifier = Modifier.size(FolkDimens.Size32)
                     )
                 }
 
-                Spacer(Modifier.width(20.dp))
+                Spacer(Modifier.width(FolkDimens.Size20))
 
                 Column(Modifier.weight(1f)) {
                     Text(
@@ -397,7 +399,7 @@ fun HeroStatusCard(
                         },
                         style = MaterialTheme.typography.titleMedium
                     )
-                    Spacer(Modifier.height(4.dp))
+                    Spacer(Modifier.height(FolkDimens.Size4))
                     Text(
                         text = stringResource(
                             if (isUnknown && isPermissive) R.string.jailbreak else R.string.home_click_to_install
@@ -406,9 +408,9 @@ fun HeroStatusCard(
                     )
                 }
                 if (isUnknown && isPermissive) {
-                    Spacer(Modifier.width(12.dp))
+                    Spacer(Modifier.width(FolkDimens.Size12))
                     if (jailbreakState.isTriggering) {
-                        CircularProgressIndicator(Modifier.size(24.dp), strokeWidth = 2.dp)
+                        CircularProgressIndicator(Modifier.size(FolkDimens.Size24), strokeWidth = FolkDimens.Size2)
                     } else {
                         Icon(
                             imageVector = Icons.Outlined.LockOpen,

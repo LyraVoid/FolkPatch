@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.home
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -88,7 +89,7 @@ fun HomeV4DeviceStatusCard(isWallpaperMode: Boolean, modifier: Modifier = Modifi
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 8.dp),
+                .padding(vertical = FolkDimens.Size8),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             HomeV4StatusCircle(
@@ -123,11 +124,11 @@ fun HomeV4StatusCircle(
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(FolkDimens.Size8)
     ) {
         Box(
             contentAlignment = Alignment.Center,
-            modifier = Modifier.size(80.dp)
+            modifier = Modifier.size(FolkDimens.Size80)
         ) {
             if (progress > 0f) {
                 CircularWavyProgressIndicator(
@@ -138,7 +139,7 @@ fun HomeV4StatusCircle(
                     // Keep the standard wave height; a longer wavelength gives
                     // fewer, broader ripples, which reads calmer.
                     amplitude = { 1f },
-                    wavelength = 24.dp,
+                    wavelength = FolkDimens.Size24,
                 )
             } else {
                 // An empty gauge still shows a muted wavy ring, so a 0% value
@@ -148,7 +149,7 @@ fun HomeV4StatusCircle(
                     modifier = Modifier.fillMaxSize(),
                     color = color.copy(alpha = 0.2f),
                     amplitude = { 1f },
-                    wavelength = 24.dp,
+                    wavelength = FolkDimens.Size24,
                 )
             }
             Text(
@@ -179,7 +180,7 @@ fun HomeV4MagiskStyleCard(
 ) {
     TonalCard(modifier = modifier) {
         Column(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(FolkDimens.Size16)
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -188,10 +189,10 @@ fun HomeV4MagiskStyleCard(
                 Icon(
                     imageVector = icon,
                     contentDescription = null,
-                    modifier = Modifier.size(32.dp),
+                    modifier = Modifier.size(FolkDimens.Size32),
                     tint = MaterialTheme.colorScheme.primary
                 )
-                Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(FolkDimens.Size16))
                 Text(
                     text = title,
                     style = MaterialTheme.typography.titleLargeEmphasized,
@@ -210,12 +211,12 @@ fun HomeV4MagiskStyleCard(
             }
             
             HorizontalDivider(
-                modifier = Modifier.padding(vertical = 16.dp),
+                modifier = Modifier.padding(vertical = FolkDimens.Size16),
                 color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
             )
             
             Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(FolkDimens.Size8)
             ) {
                 content()
             }
@@ -230,11 +231,11 @@ fun HomeV4MagiskStyleCard(
 fun ModeLabelChip(label: String, contentColor: Color) {
     Surface(
         color = contentColor.copy(alpha = 0.2f),
-        shape = RoundedCornerShape(8.dp)
+        shape = RoundedCornerShape(FolkDimens.Size8)
     ) {
         Text(
             text = label,
-            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+            modifier = Modifier.padding(horizontal = FolkDimens.Size8, vertical = FolkDimens.Size4),
             style = MaterialTheme.typography.labelMedium,
             fontWeight = FontWeight.Bold,
             color = contentColor
@@ -287,7 +288,7 @@ fun AndroidPatchCard(
         // 中性 surface，避免强调容器降 alpha 后 on*Container 角色错配。
         MaterialTheme.colorScheme.surface
     } else {
-        MaterialTheme.colorScheme.surfaceColorAtElevation(1.dp)
+        MaterialTheme.colorScheme.surfaceColorAtElevation(FolkDimens.Size1)
     }
 
     Card(
@@ -301,7 +302,7 @@ fun AndroidPatchCard(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(FolkDimens.Size16),
             verticalAlignment = Alignment.CenterVertically
         ) {
             // 图标
@@ -310,7 +311,7 @@ fun AndroidPatchCard(
                     Icon(
                         imageVector = Icons.Outlined.CheckCircle,
                         contentDescription = null,
-                        modifier = Modifier.size(28.dp),
+                        modifier = Modifier.size(FolkDimens.Size28),
                         tint = if (isWallpaperMode) {
                             MaterialTheme.colorScheme.onSurface
                         } else {
@@ -320,8 +321,8 @@ fun AndroidPatchCard(
                 }
                 APApplication.State.ANDROIDPATCH_INSTALLING -> {
                     CircularProgressIndicator(
-                        modifier = Modifier.size(28.dp),
-                        strokeWidth = 3.dp,
+                        modifier = Modifier.size(FolkDimens.Size28),
+                        strokeWidth = FolkDimens.Size3,
                         color = if (isWallpaperMode) {
                             MaterialTheme.colorScheme.onSurface
                         } else {
@@ -333,7 +334,7 @@ fun AndroidPatchCard(
                     Icon(
                         imageVector = Icons.Outlined.SystemUpdate,
                         contentDescription = null,
-                        modifier = Modifier.size(28.dp),
+                        modifier = Modifier.size(FolkDimens.Size28),
                         // The tertiary role turns pink under some seeds, which reads as
                         // an error here; stay on the app's action colour instead.
                         tint = MaterialTheme.colorScheme.primary
@@ -343,13 +344,13 @@ fun AndroidPatchCard(
                     Icon(
                         imageVector = Icons.Outlined.Android,
                         contentDescription = null,
-                        modifier = Modifier.size(28.dp),
+                        modifier = Modifier.size(FolkDimens.Size28),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             }
 
-            Spacer(Modifier.width(16.dp))
+            Spacer(Modifier.width(FolkDimens.Size16))
 
             // 状态文字
             Column(modifier = Modifier.weight(1f)) {

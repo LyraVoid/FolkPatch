@@ -1,4 +1,6 @@
 package me.bmax.apatch.ui.screen.module
+
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import me.bmax.apatch.ui.screen.misc.BannerApiService
 
 import android.graphics.Bitmap
@@ -304,9 +306,9 @@ fun ModuleItem(
     val cardPressed by cardInteractionSource.collectIsPressedAsState()
     val cardCorner by animateDpAsState(
         targetValue = when {
-            expanded -> 28.dp
-            cardPressed -> 24.dp
-            else -> 20.dp
+            expanded -> FolkDimens.Size28
+            cardPressed -> FolkDimens.Size24
+            else -> FolkDimens.Size20
         },
         animationSpec = MaterialTheme.motionScheme.defaultSpatialSpec(),
         label = "moduleCardCorner",
@@ -380,7 +382,7 @@ fun ModuleItem(
                 .then(clickModifier),
             shape = cardShape,
             color = cardColor,
-            tonalElevation = 0.dp
+            tonalElevation = FolkDimens.Size0
         ) {
             contentBlock()
         }

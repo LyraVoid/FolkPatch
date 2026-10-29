@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.settings.appearance
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import android.content.ActivityNotFoundException
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -175,11 +176,11 @@ fun AppearanceFocusCardSection(
                     }
                 ) {
                     Row(
-                        modifier = Modifier.fillMaxWidth().padding(16.dp),
+                        modifier = Modifier.fillMaxWidth().padding(FolkDimens.Size16),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        Icon(imageVector = Icons.Outlined.Image, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(24.dp))
-                        Spacer(Modifier.width(16.dp))
+                        Icon(imageVector = Icons.Outlined.Image, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(FolkDimens.Size24))
+                        Spacer(Modifier.width(FolkDimens.Size16))
                         Column(modifier = Modifier.weight(1f)) {
                             Text(text = stringResource(id = nameRes), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
                             Text(
@@ -191,13 +192,13 @@ fun AppearanceFocusCardSection(
                         // 右侧叉叉清除按钮：仅在已设置壁纸时显示，点击弹出确认对话框
                         // （嵌套clickable会消费点击事件，不会触发卡片的选图onClick）
                         if (hasWallpaper) {
-                            Spacer(Modifier.width(8.dp))
+                            Spacer(Modifier.width(FolkDimens.Size8))
                             Icon(
                                 imageVector = Icons.Outlined.Close,
                                 contentDescription = stringResource(id = R.string.focus_card_background_clear),
                                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
                                 modifier = Modifier
-                                    .size(24.dp)
+                                    .size(FolkDimens.Size24)
                                     .clickable {
                                         clearFocusBgDialog.showConfirm(
                                             title = context.getString(R.string.focus_card_background_clear),

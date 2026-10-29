@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.misc
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import android.content.Intent
 import android.content.ActivityNotFoundException
 import android.net.Uri
@@ -127,7 +128,7 @@ private data class SecondaryEntry(
     val category: SettingCategory,
     val icon: ImageVector,
     val label: String,
-    val iconSize: Dp = 24.dp,
+    val iconSize: Dp = FolkDimens.Size24,
     val onClick: () -> Unit,
 )
 
@@ -360,12 +361,12 @@ fun SettingScreen(navigator: DestinationsNavigator) {
             }
 
             item(key = "secondary_entries") {
-                Spacer(Modifier.height(20.dp))
+                Spacer(Modifier.height(FolkDimens.Size20))
                 SettingsIconGrid(entries = secondaryEntries)
             }
 
             item(key = "utility_rows") {
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(FolkDimens.Size16))
                 SegmentedColumn(shape = FolkShape.Corner12) {
                     item(key = "utility_wallpaper") {
                         SegmentedNavigationItem(
@@ -438,7 +439,7 @@ fun SettingScreen(navigator: DestinationsNavigator) {
             }
 
             item(key = "settings_bottom_spacer") {
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(FolkDimens.Size16))
                 NavigationBarsSpacer()
             }
         }
@@ -574,12 +575,12 @@ private fun SettingsIconGrid(entries: List<SecondaryEntry>) {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+            .padding(horizontal = FolkDimens.Size16),
         shape = FolkShape.Corner12,
         color = folkGroupColor(),
-        tonalElevation = 0.dp,
+        tonalElevation = FolkDimens.Size0,
     ) {
-        Column(modifier = Modifier.padding(vertical = 8.dp)) {
+        Column(modifier = Modifier.padding(vertical = FolkDimens.Size8)) {
             entries.chunked(4).forEach { row ->
                 Row(modifier = Modifier.fillMaxWidth()) {
                     row.forEach { entry ->
@@ -616,7 +617,7 @@ private fun GridEntry(
                     entry.onClick()
                 },
             )
-            .padding(vertical = 8.dp, horizontal = 4.dp),
+            .padding(vertical = FolkDimens.Size8, horizontal = FolkDimens.Size4),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Icon(
@@ -625,7 +626,7 @@ private fun GridEntry(
             tint = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.size(entry.iconSize),
         )
-        Spacer(Modifier.height(10.dp))
+        Spacer(Modifier.height(FolkDimens.Size10))
         Text(
             text = entry.label,
             style = MaterialTheme.typography.bodyMedium,

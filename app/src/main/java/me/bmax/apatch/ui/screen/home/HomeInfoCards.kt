@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.home
 
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import android.os.Build
 import android.system.Os
 import androidx.compose.foundation.layout.Column
@@ -81,13 +82,13 @@ fun InfoCard(kpState: APApplication.State, apState: APApplication.State) {
         colors = CardDefaults.cardColors(containerColor = if (BackgroundConfig.isCustomBackgroundEnabled) {
             MaterialTheme.colorScheme.surface
         } else {
-            MaterialTheme.colorScheme.surfaceColorAtElevation(1.dp)
+            MaterialTheme.colorScheme.surfaceColorAtElevation(FolkDimens.Size1)
         })
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 24.dp, top = 24.dp, end = 24.dp, bottom = 16.dp)
+                .padding(start = FolkDimens.Size24, top = FolkDimens.Size24, end = FolkDimens.Size24, bottom = FolkDimens.Size16)
         ) {
             val contents = StringBuilder()
             val uname = Os.uname()
@@ -110,47 +111,47 @@ fun InfoCard(kpState: APApplication.State, apState: APApplication.State) {
                     stringResource(R.string.home_kpatch_version), Version.installedKPVString()
                 )
 
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(FolkDimens.Size16))
             }
             
             if (kpState != APApplication.State.UNKNOWN_STATE && !hideSuPath.value) {
                 InfoCardItem(stringResource(R.string.home_su_path), suPath)
 
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(FolkDimens.Size16))
             }
 
             if (apState != APApplication.State.UNKNOWN_STATE && apState != APApplication.State.ANDROIDPATCH_NOT_INSTALLED) {
                 InfoCardItem(
                     stringResource(R.string.home_apatch_version), managerVersion.second.toString()
                 )
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(FolkDimens.Size16))
             }
 
             InfoCardItem(stringResource(R.string.home_device_info), getDeviceInfo())
 
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(FolkDimens.Size16))
             InfoCardItem(stringResource(R.string.home_kernel), uname.release)
 
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(FolkDimens.Size16))
             InfoCardItem(stringResource(R.string.home_system_version), getSystemVersion())
 
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(FolkDimens.Size16))
             if (!hideFingerprint.value) {
                 InfoCardItem(stringResource(R.string.home_fingerprint), Build.FINGERPRINT)
 
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(FolkDimens.Size16))
             }
             
             if (kpState != APApplication.State.UNKNOWN_STATE && zygiskImplement != "None" && !hideZygisk.value) {
                 InfoCardItem(stringResource(R.string.home_zygisk_implement), zygiskImplement)
 
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(FolkDimens.Size16))
             }
 
             if (kpState != APApplication.State.UNKNOWN_STATE && mountImplement != "None" && !hideMount.value) {
                 InfoCardItem(stringResource(R.string.home_mount_implement), mountImplement)
 
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(FolkDimens.Size16))
             }
 
             InfoCardItem(stringResource(R.string.home_selinux_status), getSELinuxStatus())
@@ -186,13 +187,13 @@ fun ListInfoCard(kpState: APApplication.State, apState: APApplication.State, sho
         colors = CardDefaults.cardColors(containerColor = if (BackgroundConfig.isCustomBackgroundEnabled) {
             MaterialTheme.colorScheme.surface
         } else {
-            MaterialTheme.colorScheme.surfaceColorAtElevation(1.dp)
+            MaterialTheme.colorScheme.surfaceColorAtElevation(FolkDimens.Size1)
         })
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 24.dp, top = 24.dp, end = 24.dp, bottom = 16.dp)
+                .padding(start = FolkDimens.Size24, top = FolkDimens.Size24, end = FolkDimens.Size24, bottom = FolkDimens.Size16)
         ) {
             val uname = Os.uname()
 
@@ -209,11 +210,11 @@ fun ListInfoCard(kpState: APApplication.State, apState: APApplication.State, sho
                             imageVector = icon,
                             contentDescription = null,
                             modifier = Modifier
-                                .padding(top = 2.dp)
-                                .size(20.dp),
+                                .padding(top = FolkDimens.Size2)
+                                .size(FolkDimens.Size20),
                             tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
-                        Spacer(Modifier.width(12.dp))
+                        Spacer(Modifier.width(FolkDimens.Size12))
                         Column(modifier = Modifier.weight(1f)) {
                             Text(text = label, style = MaterialTheme.typography.bodyLarge)
                             FolkWrapSafeText(text = content, style = MaterialTheme.typography.bodyMedium)
@@ -233,41 +234,41 @@ fun ListInfoCard(kpState: APApplication.State, apState: APApplication.State, sho
 
             if (kpState != APApplication.State.UNKNOWN_STATE && !hideKpatchVersion.value) {
                 InfoCardItem(Icons.Outlined.Extension, stringResource(R.string.home_kpatch_version), Version.installedKPVString())
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(FolkDimens.Size16))
             }
 
             if (kpState != APApplication.State.UNKNOWN_STATE && !hideSuPath.value) {
                 InfoCardItem(Icons.Outlined.Code, stringResource(R.string.home_su_path), suPath)
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(FolkDimens.Size16))
             }
 
             if (apState != APApplication.State.UNKNOWN_STATE && apState != APApplication.State.ANDROIDPATCH_NOT_INSTALLED) {
                 InfoCardItem(Icons.Outlined.Android, stringResource(R.string.home_apatch_version), managerVersion.second.toString())
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(FolkDimens.Size16))
             }
 
             InfoCardItem(Icons.Outlined.PhoneAndroid, stringResource(R.string.home_device_info), getDeviceInfo())
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(FolkDimens.Size16))
 
             InfoCardItem(Icons.Outlined.DeveloperBoard, stringResource(R.string.home_kernel), uname.release)
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(FolkDimens.Size16))
 
             InfoCardItem(Icons.Outlined.Info, stringResource(R.string.home_system_version), getSystemVersion())
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(FolkDimens.Size16))
 
             if (!hideFingerprint.value) {
                 InfoCardItem(Icons.Outlined.Fingerprint, stringResource(R.string.home_fingerprint), Build.FINGERPRINT)
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(FolkDimens.Size16))
             }
 
             if (kpState != APApplication.State.UNKNOWN_STATE && zygiskImplement != "None" && !hideZygisk.value) {
                 InfoCardItem(Icons.Outlined.Layers, stringResource(R.string.home_zygisk_implement), zygiskImplement)
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(FolkDimens.Size16))
             }
 
             if (kpState != APApplication.State.UNKNOWN_STATE && mountImplement != "None" && !hideMount.value) {
                 InfoCardItem(Icons.Outlined.SdStorage, stringResource(R.string.home_mount_implement), mountImplement)
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(FolkDimens.Size16))
             }
 
             InfoCardItem(Icons.Outlined.Shield, stringResource(R.string.home_selinux_status), getSELinuxStatus())
