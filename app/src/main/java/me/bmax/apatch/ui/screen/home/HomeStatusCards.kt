@@ -10,10 +10,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.HelpOutline
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.LockOpen
-import androidx.compose.material.icons.outlined.Cached
 import androidx.compose.material.icons.outlined.CheckCircle
+import androidx.compose.material.icons.outlined.LockOpen
+import androidx.compose.material.icons.outlined.Cached
 import androidx.compose.material.icons.outlined.SystemUpdate
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -173,11 +172,11 @@ fun KStatusCard(
             ) {
                 when {
                     isJailbreak -> {
-                        Icon(Icons.Filled.LockOpen, stringResource(R.string.settings_jailbreak_mode))
+                        Icon(Icons.Outlined.LockOpen, stringResource(R.string.settings_jailbreak_mode))
                     }
 
                     kpState == APApplication.State.KERNELPATCH_INSTALLED -> {
-                        Icon(Icons.Filled.CheckCircle, stringResource(R.string.home_working))
+                        Icon(Icons.Outlined.CheckCircle, stringResource(R.string.home_working))
                     }
 
                     kpState == APApplication.State.KERNELPATCH_NEED_UPDATE || kpState == APApplication.State.KERNELPATCH_NEED_REBOOT -> {

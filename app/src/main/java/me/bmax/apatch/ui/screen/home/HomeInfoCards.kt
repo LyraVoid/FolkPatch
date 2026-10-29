@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Fingerprint
+import androidx.compose.material.icons.outlined.Fingerprint
 import androidx.compose.material.icons.outlined.Android
 import androidx.compose.material.icons.outlined.Extension
 import androidx.compose.material.icons.outlined.Code
@@ -256,7 +256,7 @@ fun ListInfoCard(kpState: APApplication.State, apState: APApplication.State, sho
             Spacer(Modifier.height(16.dp))
 
             if (!hideFingerprint.value) {
-                InfoCardItem(Icons.Filled.Fingerprint, stringResource(R.string.home_fingerprint), Build.FINGERPRINT)
+                InfoCardItem(Icons.Outlined.Fingerprint, stringResource(R.string.home_fingerprint), Build.FINGERPRINT)
                 Spacer(Modifier.height(16.dp))
             }
 

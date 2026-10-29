@@ -13,8 +13,8 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.outlined.Close
+import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.ExpandedFullScreenContainedSearchBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
@@ -137,14 +137,14 @@ internal fun ExpandedSearchAppBar(
                         contentDescription = stringResource(R.string.core_action_back),
                     )
                 } else {
-                    Icon(Icons.Filled.Search, contentDescription = null)
+                    Icon(Icons.Outlined.Search, contentDescription = null)
                 }
             },
             trailingIcon = {
                 if (isExpanded && currentQuery.isNotEmpty()) {
                     IconButton(onClick = { clearSearchText() }) {
                         Icon(
-                            Icons.Filled.Close,
+                            Icons.Outlined.Close,
                             contentDescription = stringResource(R.string.core_action_clear),
                         )
                     }
@@ -159,7 +159,7 @@ internal fun ExpandedSearchAppBar(
         actions = {
             IconButton(onClick = { scope.launch { searchBarState.animateToExpanded() } }) {
                 Icon(
-                    Icons.Filled.Search,
+                    Icons.Outlined.Search,
                     contentDescription = stringResource(R.string.core_action_search),
                 )
             }

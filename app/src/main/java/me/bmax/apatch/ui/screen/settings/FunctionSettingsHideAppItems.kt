@@ -15,11 +15,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.FolderOff
-import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.material.icons.filled.HideSource
-import androidx.compose.material.icons.filled.PersonPin
-import androidx.compose.material.icons.filled.WifiOff
+import androidx.compose.material.icons.outlined.FolderOff
+import androidx.compose.material.icons.outlined.VisibilityOff
+import androidx.compose.material.icons.outlined.HideSource
+import androidx.compose.material.icons.outlined.PersonPin
+import androidx.compose.material.icons.outlined.WifiOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -81,7 +81,7 @@ fun SegmentedColumnScope.functionPathHideItem(
                         modifier = Modifier.weight(1f),
                     ) {
                         Icon(
-                            imageVector = Icons.Filled.HideSource,
+                            imageVector = Icons.Outlined.HideSource,
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.size(24.dp),
@@ -145,7 +145,7 @@ fun SegmentedColumnScope.functionPathHideItem(
                             ) {
                                 if (pathCount > 0) {
                                     Icon(
-                                        Icons.Filled.FolderOff,
+                                        Icons.Outlined.FolderOff,
                                         contentDescription = null,
                                         modifier = Modifier.size(16.dp),
                                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -162,7 +162,7 @@ fun SegmentedColumnScope.functionPathHideItem(
                                 }
                                 if (appCount > 0) {
                                     Icon(
-                                        Icons.Filled.PersonPin,
+                                        Icons.Outlined.PersonPin,
                                         contentDescription = null,
                                         modifier = Modifier.size(16.dp),
                                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -192,7 +192,7 @@ fun SegmentedColumnScope.functionPathHideItem(
                                 modifier = Modifier.weight(1f),
                             ) {
                                 Icon(
-                                    imageVector = Icons.Filled.PersonPin,
+                                    imageVector = Icons.Outlined.PersonPin,
                                     contentDescription = null,
                                     tint = MaterialTheme.colorScheme.onSurfaceVariant,
                                     modifier = Modifier.size(20.dp),
@@ -231,7 +231,7 @@ fun SegmentedColumnScope.functionPathHideItem(
                                 modifier = Modifier.weight(1f),
                             ) {
                                 Icon(
-                                    imageVector = Icons.Filled.VisibilityOff,
+                                    imageVector = Icons.Outlined.VisibilityOff,
                                     contentDescription = null,
                                     tint = MaterialTheme.colorScheme.onSurfaceVariant,
                                     modifier = Modifier.size(20.dp),
@@ -357,7 +357,7 @@ fun SegmentedColumnScope.functionNetIsolateItem(
                         modifier = Modifier.weight(1f),
                     ) {
                         Icon(
-                            imageVector = Icons.Filled.WifiOff,
+                            imageVector = Icons.Outlined.WifiOff,
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.size(24.dp),

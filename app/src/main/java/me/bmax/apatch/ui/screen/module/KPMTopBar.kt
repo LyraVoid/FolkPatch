@@ -33,15 +33,10 @@ import com.ramcosta.composedestinations.generated.destinations.OnlineKPMScreenDe
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import me.bmax.apatch.R
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.automirrored.filled.Sort
+import androidx.compose.material.icons.outlined.Close
+import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material.icons.automirrored.outlined.Sort
 import androidx.compose.material.icons.outlined.Storefront
-import androidx.compose.material3.*
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.getValue
 import me.bmax.apatch.ui.component.folk.folkDefaultAppBarColors
 import me.bmax.apatch.core.ui.R as CoreR
 import me.bmax.apatch.ui.theme.tokens.FolkShape
@@ -109,7 +104,7 @@ fun KPMTopBar(
                                     keyboardController?.hide()
                                     onSearchQueryChange("")
                                 },
-                                content = { Icon(Icons.Filled.Close, stringResource(CoreR.string.core_action_close)) }
+                                content = { Icon(Icons.Outlined.Close, stringResource(CoreR.string.core_action_close)) }
                             )
                         },
                         maxLines = 1,
@@ -133,7 +128,7 @@ fun KPMTopBar(
                     // 搜索按钮
                     IconButton(onClick = { onSearch = true }) {
                         Icon(
-                            imageVector = Icons.Filled.Search,
+                            imageVector = Icons.Outlined.Search,
                             contentDescription = stringResource(CoreR.string.core_action_search)
                         )
                     }
@@ -148,7 +143,7 @@ fun KPMTopBar(
                     if (showCustomOrder) {
                         IconButton(onClick = onCustomOrderClick) {
                             Icon(
-                                imageVector = Icons.AutoMirrored.Filled.Sort,
+                                imageVector = Icons.AutoMirrored.Outlined.Sort,
                                 contentDescription = stringResource(R.string.kpm_custom_order)
                             )
                         }

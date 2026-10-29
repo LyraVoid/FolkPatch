@@ -18,9 +18,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Block
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.WaterDrop
+import androidx.compose.material.icons.outlined.Block
+import androidx.compose.material.icons.outlined.Check
+import androidx.compose.material.icons.outlined.WaterDrop
 import androidx.compose.material.icons.outlined.Timelapse
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -185,7 +185,7 @@ private fun PermissionDialog(
                         )
                     } else {
                         Icon(
-                            imageVector = Icons.Filled.WaterDrop,
+                            imageVector = Icons.Outlined.WaterDrop,
                             contentDescription = null,
                             modifier = Modifier.size(52.dp),
                             tint = MaterialTheme.colorScheme.primary,
@@ -210,7 +210,7 @@ private fun PermissionDialog(
                 Spacer(Modifier.height(4.dp))
 
                 PermissionOption(
-                    icon = Icons.Filled.Check,
+                    icon = Icons.Outlined.Check,
                     title = stringResource(R.string.shizuku_permission_allow),
                     subtitle = stringResource(R.string.shizuku_permission_allow_summary),
                     container = MaterialTheme.colorScheme.primaryContainer,
@@ -226,7 +226,7 @@ private fun PermissionDialog(
                     onClick = onAllowOnce,
                 )
                 PermissionOption(
-                    icon = Icons.Filled.Block,
+                    icon = Icons.Outlined.Block,
                     title = stringResource(R.string.shizuku_permission_deny),
                     subtitle = stringResource(R.string.shizuku_permission_deny_summary),
                     container = MaterialTheme.colorScheme.surfaceContainer,

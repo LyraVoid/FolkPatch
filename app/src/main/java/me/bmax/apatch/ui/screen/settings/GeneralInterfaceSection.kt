@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.settings
 
+import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.layout.*
@@ -83,7 +84,7 @@ fun GeneralInterfaceSection(
 
         item(key = "general_predictive_back", visible = Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             SegmentedSwitchItem(
-                icon = Icons.Outlined.ArrowBack,
+                icon = Icons.AutoMirrored.Outlined.ArrowBack,
                 title = predictiveBackTitle,
                 summary = predictiveBackSummary,
                 checked = predictiveBackEnabled,

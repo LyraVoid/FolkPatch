@@ -18,7 +18,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Article
-import androidx.compose.material.icons.filled.DeleteOutline
+import androidx.compose.material.icons.outlined.DeleteOutline
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -115,7 +115,7 @@ fun SuAuditLogScreen(navigator: DestinationsNavigator) {
         actions = {
             if (kernelEntries.isNotEmpty() || appEntries.isNotEmpty()) {
                 IconButton(onClick = { showClearDialog = true }) {
-                    Icon(Icons.Filled.DeleteOutline, contentDescription = stringResource(R.string.su_audit_log_clear))
+                    Icon(Icons.Outlined.DeleteOutline, contentDescription = stringResource(R.string.su_audit_log_clear))
                 }
             }
         },

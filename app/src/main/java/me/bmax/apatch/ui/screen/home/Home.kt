@@ -16,8 +16,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.RadioButtonChecked
-import androidx.compose.material.icons.filled.RadioButtonUnchecked
+import androidx.compose.material.icons.outlined.RadioButtonChecked
+import androidx.compose.material.icons.outlined.RadioButtonUnchecked
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.DeleteForever
 import androidx.compose.material3.AlertDialog
@@ -262,9 +262,9 @@ fun UninstallDialog(showDialog: MutableState<Boolean>, navigator: DestinationsNa
                             }
                             Icon(
                                 imageVector = if (isSelected) {
-                                    Icons.Filled.RadioButtonChecked
+                                    Icons.Outlined.RadioButtonChecked
                                 } else {
-                                    Icons.Filled.RadioButtonUnchecked
+                                    Icons.Outlined.RadioButtonUnchecked
                                 },
                                 contentDescription = null,
                                 tint = if (isSelected) {

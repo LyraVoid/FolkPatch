@@ -3,16 +3,16 @@ package me.bmax.apatch.ui.screen.settings
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddToHomeScreen
-import androidx.compose.material.icons.filled.Badge
-import androidx.compose.material.icons.filled.BugReport
-import androidx.compose.material.icons.filled.ContentCopy
-import androidx.compose.material.icons.filled.Fingerprint
-import androidx.compose.material.icons.filled.History
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.OpenInNew
-import androidx.compose.material.icons.filled.Verified
-import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material.icons.automirrored.outlined.AddToHomeScreen
+import androidx.compose.material.icons.outlined.Badge
+import androidx.compose.material.icons.outlined.BugReport
+import androidx.compose.material.icons.outlined.ContentCopy
+import androidx.compose.material.icons.outlined.Fingerprint
+import androidx.compose.material.icons.outlined.History
+import androidx.compose.material.icons.outlined.KeyboardArrowDown
+import androidx.compose.material.icons.automirrored.outlined.OpenInNew
+import androidx.compose.material.icons.outlined.Verified
+import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -160,7 +160,7 @@ fun BehaviorSettingsContent(
                     onClick = { expanded = !expanded },
                     trailing = {
                         Icon(
-                            imageVector = Icons.Filled.KeyboardArrowDown,
+                            imageVector = Icons.Outlined.KeyboardArrowDown,
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
                             modifier = Modifier
@@ -220,7 +220,7 @@ fun BehaviorSettingsContent(
             item(key = "behavior_module_shortcut", visible = aPatchReady) {
                 var enableModuleShortcutAdd by remember { mutableStateOf(prefs.getBoolean("enable_module_shortcut_add", true)) }
                 SegmentedSwitchItem(
-                    icon = Icons.Outlined.AddToHomeScreen,
+                    icon = Icons.AutoMirrored.Outlined.AddToHomeScreen,
                     title = stringResource(id = R.string.settings_enable_module_shortcut_add),
                     summary = stringResource(id = R.string.settings_enable_module_shortcut_add_summary),
                     checked = enableModuleShortcutAdd,
@@ -234,7 +234,7 @@ fun BehaviorSettingsContent(
             item(key = "behavior_stay_on_page", visible = aPatchReady) {
                 var stayOnPage by remember { mutableStateOf(prefs.getBoolean("apm_action_stay_on_page", true)) }
                 SegmentedSwitchItem(
-                    icon = Icons.Outlined.OpenInNew,
+                    icon = Icons.AutoMirrored.Outlined.OpenInNew,
                     title = stringResource(id = R.string.settings_apm_stay_on_page),
                     summary = stringResource(id = R.string.settings_apm_stay_on_page_summary),
                     checked = stayOnPage,

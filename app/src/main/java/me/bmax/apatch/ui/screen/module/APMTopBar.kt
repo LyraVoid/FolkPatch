@@ -55,7 +55,7 @@ import me.bmax.apatch.ui.component.rememberConfirmDialog
 import me.bmax.apatch.ui.viewmodel.APModuleViewModel
 import com.ramcosta.composedestinations.generated.destinations.OnlineModuleScreenDestination
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.outlined.MoreVert
 import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenu
 import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenuItem
 import me.bmax.apatch.core.ui.R as CoreR
@@ -98,7 +98,7 @@ fun TopBar(
                 )
             }
             androidx.compose.material3.IconButton(onClick = { showMenu = true }) {
-                Icon(Icons.Filled.MoreVert, contentDescription = stringResource(CoreR.string.core_action_more))
+                Icon(Icons.Outlined.MoreVert, contentDescription = stringResource(CoreR.string.core_action_more))
                 WallpaperAwareDropdownMenu(
                     expanded = showMenu,
                     onDismissRequest = { showMenu = false }

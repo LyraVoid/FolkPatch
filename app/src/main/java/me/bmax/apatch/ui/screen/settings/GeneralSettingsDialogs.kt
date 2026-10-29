@@ -2,7 +2,7 @@ package me.bmax.apatch.ui.screen.settings
 
 import androidx.compose.foundation.layout.*
 import me.bmax.apatch.ui.theme.tokens.ContinuousCornerShape
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -12,7 +12,6 @@ import me.bmax.apatch.ui.component.folk.ExpressiveDialog
 import me.bmax.apatch.R
 import me.bmax.apatch.util.*
 import me.bmax.apatch.ui.screen.settings.general.*
-import androidx.compose.material.icons.outlined.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

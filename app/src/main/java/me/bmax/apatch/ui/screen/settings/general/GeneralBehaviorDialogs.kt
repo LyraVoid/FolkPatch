@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -58,7 +58,7 @@ fun AppTitleChooseDialog(showDialog: MutableState<Boolean>, onTitleChanged: (Str
                     },
                     trailingContent = {
                         if (currentTitle == key) {
-                            Icon(Icons.Filled.Check, contentDescription = null)
+                            Icon(Icons.Outlined.Check, contentDescription = null)
                         }
                     }
                 )
@@ -141,7 +141,7 @@ fun DesktopAppNameChooseDialog(showDialog: MutableState<Boolean>, onNameChanged:
                     },
                     trailingContent = {
                         if (currentName == "FolkPatch" || currentName == null) {
-                            Icon(Icons.Filled.Check, contentDescription = null)
+                            Icon(Icons.Outlined.Check, contentDescription = null)
                         }
                     }
                 )
@@ -159,7 +159,7 @@ fun DesktopAppNameChooseDialog(showDialog: MutableState<Boolean>, onNameChanged:
                     },
                     trailingContent = {
                         if (currentName == "FPatch") {
-                            Icon(Icons.Filled.Check, contentDescription = null)
+                            Icon(Icons.Outlined.Check, contentDescription = null)
                         }
                     }
                 )

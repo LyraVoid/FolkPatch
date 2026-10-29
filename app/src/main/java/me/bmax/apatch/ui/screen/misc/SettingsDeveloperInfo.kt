@@ -14,7 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Coffee
+import androidx.compose.material.icons.outlined.Coffee
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
@@ -150,7 +150,7 @@ fun DeveloperInfo(
                     modifier = Modifier.height(38.dp)
                 ) {
                     Icon(
-                        imageVector = Icons.Filled.Coffee,
+                        imageVector = Icons.Outlined.Coffee,
                         contentDescription = stringResource(R.string.support_or_donate),
                         modifier = Modifier.size(20.dp)
                     )

@@ -21,7 +21,6 @@ import androidx.compose.ui.layout.ContentScale
 import coil.compose.AsyncImage
 import me.bmax.apatch.ui.component.SegmentedSwitchItem
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -137,7 +136,7 @@ fun SegmentedColumnScope.appearanceNavCustomIconsItem(
                                         }
                                     }
                                 ) {
-                                    Icon(Icons.Filled.Close, stringResource(R.string.nav_icon_clear), tint = MaterialTheme.colorScheme.error)
+                                    Icon(Icons.Outlined.Close, stringResource(R.string.nav_icon_clear), tint = MaterialTheme.colorScheme.error)
                                 }
                             }
                         }

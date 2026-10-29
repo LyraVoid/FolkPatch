@@ -9,11 +9,11 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Cloud
-import androidx.compose.material.icons.filled.FolderOpen
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Save
-import androidx.compose.material.icons.filled.RestartAlt
+import androidx.compose.material.icons.outlined.Cloud
+import androidx.compose.material.icons.outlined.FolderOpen
+import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material.icons.outlined.Save
+import androidx.compose.material.icons.outlined.RestartAlt
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment

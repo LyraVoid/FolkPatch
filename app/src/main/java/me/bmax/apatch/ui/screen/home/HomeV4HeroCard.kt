@@ -27,9 +27,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.LockOpen
 import androidx.compose.material.icons.outlined.CheckCircle
+import androidx.compose.material.icons.outlined.LockOpen
 import androidx.compose.material.icons.outlined.Block
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.SystemUpdate
@@ -231,7 +230,7 @@ fun HeroStatusCard(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Icon(
-                                imageVector = if (isJailbreak) Icons.Filled.LockOpen else Icons.Filled.CheckCircle,
+                                imageVector = if (isJailbreak) Icons.Outlined.LockOpen else Icons.Outlined.CheckCircle,
                                 contentDescription = null,
                                 modifier = Modifier.size(32.dp),
                                 tint = contentColor
@@ -365,7 +364,7 @@ fun HeroStatusCard(
             ) {
                 when {
                     isJailbreak -> Icon(
-                        imageVector = Icons.Filled.LockOpen,
+                        imageVector = Icons.Outlined.LockOpen,
                         contentDescription = null,
                         modifier = Modifier.size(32.dp)
                     )
@@ -412,7 +411,7 @@ fun HeroStatusCard(
                         CircularProgressIndicator(Modifier.size(24.dp), strokeWidth = 2.dp)
                     } else {
                         Icon(
-                            imageVector = Icons.Filled.LockOpen,
+                            imageVector = Icons.Outlined.LockOpen,
                             contentDescription = stringResource(R.string.jailbreak),
                         )
                     }

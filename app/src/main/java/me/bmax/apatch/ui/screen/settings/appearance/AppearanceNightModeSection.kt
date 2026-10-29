@@ -1,10 +1,10 @@
 package me.bmax.apatch.ui.screen.settings.appearance
 
+import androidx.compose.material.icons.automirrored.outlined.Segment
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -153,7 +153,7 @@ fun AppearanceNightModeSection(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Icon(imageVector = Icons.Filled.DarkMode, contentDescription = null, tint = if (!isWallpaperEnabled) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.38f), modifier = Modifier.size(24.dp))
+                    Icon(imageVector = Icons.Outlined.DarkMode, contentDescription = null, tint = if (!isWallpaperEnabled) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.38f), modifier = Modifier.size(24.dp))
                     Spacer(Modifier.width(16.dp))
                     Column(modifier = Modifier.weight(1f).padding(end = 16.dp)) {
                         Text(
@@ -197,7 +197,7 @@ fun AppearanceNightModeSection(
         item(key = "appearance_discrete_slider") {
             var isDiscreteSlider by remember { mutableStateOf(SliderStyleConfig.isDiscrete) }
             SegmentedSwitchItem(
-                icon = Icons.Outlined.Segment,
+                icon = Icons.AutoMirrored.Outlined.Segment,
                 title = stringResource(R.string.settings_discrete_slider),
                 summary = stringResource(R.string.settings_discrete_slider_desc),
                 checked = isDiscreteSlider,

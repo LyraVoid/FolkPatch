@@ -1,5 +1,7 @@
 package me.bmax.apatch.ui.screen.settings.appearance
 
+import androidx.compose.material.icons.automirrored.outlined.LabelOff
+import androidx.compose.material.icons.automirrored.outlined.ViewList
 import android.content.ActivityNotFoundException
 import android.net.Uri
 import me.bmax.apatch.util.ui.showToast
@@ -24,7 +26,6 @@ import me.bmax.apatch.ui.component.SegmentedSliderItem
 import me.bmax.apatch.ui.component.SegmentedSwitchItem
 import me.bmax.apatch.ui.component.SegmentedValueItem
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -131,7 +132,7 @@ fun AppearanceLayoutSection(
 
         item(key = "appearance_list_card_badge", visible = isListStyle) {
             SegmentedSwitchItem(
-                icon = Icons.Outlined.LabelOff,
+                icon = Icons.AutoMirrored.Outlined.LabelOff,
                 title = stringResource(id = R.string.settings_list_card_hide_status_badge),
                 summary = stringResource(id = R.string.settings_list_card_hide_status_badge_summary),
                 checked = BackgroundConfig.isListWorkingCardModeHidden,
@@ -154,7 +155,7 @@ fun AppearanceLayoutSection(
         item(key = "appearance_list_info_icons", visible = isDefaultStyle) {
             var showListInfoIcons by remember { mutableStateOf(prefs.getBoolean("list_info_show_icons", false)) }
             SegmentedSwitchItem(
-                icon = Icons.Outlined.ViewList,
+                icon = Icons.AutoMirrored.Outlined.ViewList,
                 title = stringResource(id = R.string.settings_list_info_show_icons),
                 summary = stringResource(id = R.string.settings_list_info_show_icons_summary),
                 checked = showListInfoIcons,

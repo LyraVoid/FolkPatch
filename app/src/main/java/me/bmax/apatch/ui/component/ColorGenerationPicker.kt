@@ -13,11 +13,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AutoAwesome
-import androidx.compose.material.icons.filled.Build
-import androidx.compose.material.icons.filled.Contrast
-import androidx.compose.material.icons.filled.Palette
-import androidx.compose.material.icons.filled.Tune
+import androidx.compose.material.icons.outlined.AutoAwesome
+import androidx.compose.material.icons.outlined.Build
+import androidx.compose.material.icons.outlined.Contrast
+import androidx.compose.material.icons.outlined.Palette
+import androidx.compose.material.icons.outlined.Tune
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -62,8 +62,8 @@ fun ColorGenerationModeSelector(
                             }
                         ),
                         icon = when (mode) {
-                            ColorGenerationMode.CLASSIC -> Icons.Default.Palette
-                            ColorGenerationMode.CUSTOM -> Icons.Default.AutoAwesome
+                            ColorGenerationMode.CLASSIC -> Icons.Outlined.Palette
+                            ColorGenerationMode.CUSTOM -> Icons.Outlined.AutoAwesome
                         },
                         key = mode.name,
                     )
@@ -94,8 +94,8 @@ fun ColorStandardSelector(
                     SegmentedOption(
                         label = stringResource(standard.labelRes),
                         icon = when (standard) {
-                            ColorStandard.MD3_2021 -> Icons.Default.Build
-                            ColorStandard.M3E_2025 -> Icons.Default.AutoAwesome
+                            ColorStandard.MD3_2021 -> Icons.Outlined.Build
+                            ColorStandard.M3E_2025 -> Icons.Outlined.AutoAwesome
                         },
                         key = standard.name,
                     )
@@ -161,9 +161,9 @@ fun ColorContrastSelector(
                     SegmentedOption(
                         label = stringResource(contrast.labelRes),
                         icon = when (contrast) {
-                            ColorContrast.STANDARD -> Icons.Default.Contrast
-                            ColorContrast.MEDIUM -> Icons.Default.Tune
-                            ColorContrast.HIGH -> Icons.Default.AutoAwesome
+                            ColorContrast.STANDARD -> Icons.Outlined.Contrast
+                            ColorContrast.MEDIUM -> Icons.Outlined.Tune
+                            ColorContrast.HIGH -> Icons.Outlined.AutoAwesome
                         },
                         key = contrast.name,
                     )

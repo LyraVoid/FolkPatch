@@ -5,8 +5,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.outlined.Check
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -204,7 +204,7 @@ private fun ApiMarketplaceItemCard(
                 )
             ) {
                 Icon(
-                    imageVector = Icons.Default.Info,
+                    imageVector = Icons.Outlined.Info,
                     contentDescription = null,
                     modifier = Modifier.size(18.dp)
                 )
@@ -296,7 +296,7 @@ private fun ApiPreviewDialog(
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Icon(
-                                imageVector = Icons.Default.Info,
+                                imageVector = Icons.Outlined.Info,
                                 contentDescription = null,
                                 tint = MaterialTheme.colorScheme.error,
                                 modifier = Modifier.size(32.dp)
@@ -357,7 +357,7 @@ private fun ApiPreviewDialog(
                             containerColor = MaterialTheme.colorScheme.primaryContainer
                         )
                     ) {
-                        Icon(Icons.Default.Check, contentDescription = null)
+                        Icon(Icons.Outlined.Check, contentDescription = null)
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(stringResource(R.string.apm_api_apply_success))
                     }

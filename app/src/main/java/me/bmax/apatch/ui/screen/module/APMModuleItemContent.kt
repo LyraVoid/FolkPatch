@@ -46,7 +46,6 @@ import me.bmax.apatch.ui.component.AdaptiveModuleButtonRow
 import me.bmax.apatch.ui.component.ModuleButtonConfig
 import me.bmax.apatch.ui.viewmodel.APModuleViewModel
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Download
 import me.bmax.apatch.util.CustomModuleInfo
 import me.bmax.apatch.ui.theme.bannerFadeColor
 

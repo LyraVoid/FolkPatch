@@ -5,7 +5,7 @@ import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -317,7 +317,7 @@ fun ThemeStoreScreen(
                             selectedTheme = null
                         }
                     ) {
-                        Icon(Icons.Filled.Download, contentDescription = null)
+                        Icon(Icons.Outlined.Download, contentDescription = null)
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(stringResource(R.string.theme_store_download))
                     }
@@ -391,22 +391,22 @@ fun ThemeStoreScreen(
             // "我的主题"按钮 — hidden in compat mode
             if (!isCompatMode) {
                 IconButton(onClick = { navigator.navigate(MyThemesScreenDestination) }) {
-                    Icon(Icons.Filled.ColorLens, contentDescription = stringResource(R.string.my_themes_title))
+                    Icon(Icons.Outlined.ColorLens, contentDescription = stringResource(R.string.my_themes_title))
                 }
             }
             if (isSearchActive) {
                 if (viewModel.searchQuery.isNotEmpty()) {
                     IconButton(onClick = { viewModel.onSearchQueryChange("") }) {
-                        Icon(Icons.Filled.Close, contentDescription = stringResource(CoreR.string.core_action_clear))
+                        Icon(Icons.Outlined.Close, contentDescription = stringResource(CoreR.string.core_action_clear))
                     }
                 }
             } else {
                 IconButton(onClick = { isSearchActive = true }) {
-                    Icon(Icons.Filled.Search, contentDescription = stringResource(CoreR.string.core_action_search))
+                    Icon(Icons.Outlined.Search, contentDescription = stringResource(CoreR.string.core_action_search))
                 }
             }
             IconButton(onClick = { showFilterSheet = true }) {
-                Icon(Icons.Filled.FilterList, contentDescription = stringResource(CoreR.string.core_action_filter))
+                Icon(Icons.Outlined.FilterList, contentDescription = stringResource(CoreR.string.core_action_filter))
             }
         },
         snackbarHostState = snackbarHostState,

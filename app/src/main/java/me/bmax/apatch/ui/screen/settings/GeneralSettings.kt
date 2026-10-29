@@ -1,10 +1,11 @@
 package me.bmax.apatch.ui.screen.settings
 
+import androidx.compose.material.icons.automirrored.outlined.List
 import me.bmax.apatch.util.ui.showToast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
@@ -26,7 +27,6 @@ import me.bmax.apatch.ui.component.SegmentedValueItem
 import me.bmax.apatch.util.*
 import me.bmax.apatch.ui.screen.settings.general.*
 import me.bmax.apatch.util.LauncherIconUtils
-import androidx.compose.material.icons.outlined.*
 
 @Composable
 fun GeneralSettingsContent(
@@ -331,7 +331,7 @@ fun GeneralSettingsContent(
 
         item(key = "general_app_list_scheme", visible = kPatchReady) {
             SegmentedValueItem(
-                icon = Icons.Outlined.List,
+                icon = Icons.AutoMirrored.Outlined.List,
                 title = appListLoadingSchemeTitle,
                 summary = currentSchemeLabel,
                 onClick = { showAppListLoadingSchemeDialog.value = true },

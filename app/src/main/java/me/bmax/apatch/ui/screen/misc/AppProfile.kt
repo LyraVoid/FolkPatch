@@ -18,9 +18,9 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.OpenInNew
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.RemoveCircle
-import androidx.compose.material.icons.filled.Security
+import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.RemoveCircle
+import androidx.compose.material.icons.outlined.Security
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -229,7 +229,7 @@ fun AppProfileScreen(
                         AuthorizationOption(
                             title = stringResource(R.string.su_pkg_root_setting_title),
                             summary = stringResource(R.string.su_pkg_root_setting_summary),
-                            icon = Icons.Filled.Security,
+                            icon = Icons.Outlined.Security,
                             selected = selectedIndex == 0,
                             onClick = { selectMode(0) },
                         )
@@ -239,7 +239,7 @@ fun AppProfileScreen(
                         AuthorizationOption(
                             title = stringResource(R.string.su_pkg_normal_setting_title),
                             summary = stringResource(R.string.su_pkg_normal_setting_summary),
-                            icon = Icons.Filled.Info,
+                            icon = Icons.Outlined.Info,
                             selected = selectedIndex == 1,
                             onClick = { selectMode(1) },
                         )
@@ -249,7 +249,7 @@ fun AppProfileScreen(
                         AuthorizationOption(
                             title = stringResource(R.string.su_pkg_excluded_setting_title),
                             summary = stringResource(R.string.su_pkg_excluded_setting_summary),
-                            icon = Icons.Filled.RemoveCircle,
+                            icon = Icons.Outlined.RemoveCircle,
                             selected = selectedIndex == 2,
                             onClick = { selectMode(2) },
                         )

@@ -1,14 +1,14 @@
 package me.bmax.apatch.ui.screen.settings
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Archive
-import androidx.compose.material.icons.filled.Dock
-import androidx.compose.material.icons.filled.Download
-import androidx.compose.material.icons.filled.Folder
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Sort
-import androidx.compose.material.icons.filled.Update
-import androidx.compose.material.icons.filled.ViewAgenda
+import androidx.compose.material.icons.outlined.Archive
+import androidx.compose.material.icons.outlined.Dock
+import androidx.compose.material.icons.outlined.Download
+import androidx.compose.material.icons.outlined.Folder
+import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.automirrored.outlined.Sort
+import androidx.compose.material.icons.outlined.Update
+import androidx.compose.material.icons.outlined.ViewAgenda
 import androidx.compose.runtime.*
 import androidx.compose.ui.res.stringResource
 import me.bmax.apatch.APApplication
@@ -76,7 +76,7 @@ fun ModuleSettingsContent(
 
             item(key = "module_sort_opt") {
                 SegmentedSwitchItem(
-                    icon = Icons.Outlined.Sort,
+                    icon = Icons.AutoMirrored.Outlined.Sort,
                     title = moduleSortOptimizationTitle,
                     summary = moduleSortOptimizationSummary,
                     checked = moduleSortOptimization,

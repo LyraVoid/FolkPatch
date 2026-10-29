@@ -7,11 +7,6 @@ import androidx.compose.material.icons.outlined.Cottage
 import androidx.compose.material.icons.outlined.Extension
 import androidx.compose.material.icons.outlined.Memory
 import androidx.compose.material.icons.outlined.Tune
-import androidx.compose.material.icons.rounded.AdminPanelSettings
-import androidx.compose.material.icons.rounded.Cottage
-import androidx.compose.material.icons.rounded.Extension
-import androidx.compose.material.icons.rounded.Memory
-import androidx.compose.material.icons.rounded.Tune
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.ramcosta.composedestinations.generated.destinations.APModuleScreenDestination
 import com.ramcosta.composedestinations.generated.destinations.HomeScreenDestination
@@ -32,7 +27,7 @@ enum class BottomBarDestination(
     Home(
         HomeScreenDestination,
         R.string.home,
-        Icons.Rounded.Cottage,
+        Icons.Outlined.Cottage,
         Icons.Outlined.Cottage,
         false,
         false
@@ -40,7 +35,7 @@ enum class BottomBarDestination(
     KModule(
         KPModuleScreenDestination,
         R.string.kpm,
-        Icons.Rounded.Memory,
+        Icons.Outlined.Memory,
         Icons.Outlined.Memory,
         true,
         false
@@ -48,7 +43,7 @@ enum class BottomBarDestination(
     SuperUser(
         SuperUserScreenDestination,
         R.string.su_title,
-        Icons.Rounded.AdminPanelSettings,
+        Icons.Outlined.AdminPanelSettings,
         Icons.Outlined.AdminPanelSettings,
         true,
         false
@@ -56,7 +51,7 @@ enum class BottomBarDestination(
     AModule(
         APModuleScreenDestination,
         R.string.apm,
-        Icons.Rounded.Extension,
+        Icons.Outlined.Extension,
         Icons.Outlined.Extension,
         false,
         true
@@ -64,7 +59,7 @@ enum class BottomBarDestination(
     Settings(
         SettingScreenDestination,
         R.string.settings,
-        Icons.Rounded.Tune,
+        Icons.Outlined.Tune,
         Icons.Outlined.Tune,
         false,
         false

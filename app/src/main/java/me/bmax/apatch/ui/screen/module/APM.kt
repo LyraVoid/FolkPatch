@@ -75,10 +75,9 @@ import me.bmax.apatch.util.hasMagisk
 import me.bmax.apatch.util.ui.LocalSnackbarHost
 
 import com.ramcosta.composedestinations.generated.destinations.ApmBulkInstallScreenDestination
-import androidx.compose.material.icons.automirrored.filled.PlaylistAdd
+import androidx.compose.material.icons.automirrored.outlined.PlaylistAdd
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Download
+import androidx.compose.material.icons.outlined.Close
 import me.bmax.apatch.util.apmCustomModuleInfoStorage
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.ui.navigation.LocalBottomBarVisible
@@ -298,7 +297,7 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
                             ) { isExpanded ->
                                 if (isExpanded) {
                                     Icon(
-                                        Icons.Filled.Close,
+                                        Icons.Outlined.Close,
                                         contentDescription = null,
                                     )
                                 } else {
@@ -317,7 +316,7 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
                             fabExpanded = false
                             navigator.navigate(ApmBulkInstallScreenDestination())
                         },
-                        icon = { Icon(Icons.AutoMirrored.Filled.PlaylistAdd, contentDescription = null, modifier = Modifier.size(18.dp)) },
+                        icon = { Icon(Icons.AutoMirrored.Outlined.PlaylistAdd, contentDescription = null, modifier = Modifier.size(18.dp)) },
                         text = { Text(text = stringResource(R.string.apm_bulk_install_action), style = MaterialTheme.typography.bodyMedium) },
                     )
                     // 安装 (Install)

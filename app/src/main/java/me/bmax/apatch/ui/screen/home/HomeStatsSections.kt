@@ -3,7 +3,7 @@ package me.bmax.apatch.ui.screen.home
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.LockOpen
+import androidx.compose.material.icons.outlined.LockOpen
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -550,7 +550,7 @@ fun StatsGridTopSection(
                 } else {
                     "N/A"
                 },
-                icon = if (isJailbreak) Icons.Filled.LockOpen else Icons.Outlined.Extension,
+                icon = if (isJailbreak) Icons.Outlined.LockOpen else Icons.Outlined.Extension,
                 onClick = {
                     if (kpState == APApplication.State.KERNELPATCH_NEED_UPDATE) {
                         navigator.navigate(InstallModeSelectScreenDestination)

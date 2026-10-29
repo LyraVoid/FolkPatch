@@ -10,7 +10,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -176,7 +176,7 @@ fun DpiChooseDialog(showDialog: MutableState<Boolean>) {
                 )
                 if (isSystemDefault) {
                     Icon(
-                        Icons.Filled.Check,
+                        Icons.Outlined.Check,
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.size(20.dp),
@@ -271,7 +271,7 @@ fun DpiChooseDialog(showDialog: MutableState<Boolean>) {
                     colors = ButtonDefaults.buttonColors(),
                 ) {
                     Icon(
-                        Icons.Filled.Check,
+                        Icons.Outlined.Check,
                         contentDescription = null,
                         modifier = Modifier.size(18.dp),
                     )

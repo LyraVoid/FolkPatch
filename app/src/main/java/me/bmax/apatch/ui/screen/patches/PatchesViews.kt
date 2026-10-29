@@ -25,11 +25,11 @@ import androidx.compose.foundation.layout.PaddingValues
 import me.bmax.apatch.ui.theme.tokens.ContinuousCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Key
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material.icons.outlined.Delete
+import androidx.compose.material.icons.outlined.Key
+import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material.icons.outlined.Visibility
+import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -170,7 +170,7 @@ fun ExtraItem(extra: KPModel.IExtraInfo, existed: Boolean, onDelete: () -> Unit)
 
                 if (extra.type == KPModel.ExtraType.KPM) {
                     Icon(
-                        imageVector = Icons.Default.Settings,
+                        imageVector = Icons.Outlined.Settings,
                         contentDescription = stringResource(CoreR.string.core_action_config),
                         modifier = Modifier
                             .padding(end = 8.dp)
@@ -179,7 +179,7 @@ fun ExtraItem(extra: KPModel.IExtraInfo, existed: Boolean, onDelete: () -> Unit)
                 }
 
                 Icon(
-                    imageVector = Icons.Default.Delete,
+                    imageVector = Icons.Outlined.Delete,
                     contentDescription = stringResource(CoreR.string.core_action_delete),
                     modifier = Modifier
                         .padding(end = 8.dp)
@@ -258,7 +258,7 @@ fun PatchSuperKeySection(
     TonalCard(flat = true) {
         Column {
             SegmentedSwitchItem(
-                icon = Icons.Default.Key,
+                icon = Icons.Outlined.Key,
                 title = stringResource(R.string.patch_custom_superkey),
                 summary = stringResource(R.string.patch_custom_superkey_optional),
                 checked = checked,
@@ -328,8 +328,8 @@ fun SetSuperKeyView(viewModel: PatchesViewModel) {
             trailingIcon = {
                 IconButton(onClick = { keyVisible = !keyVisible }) {
                     Icon(
-                        imageVector = if (keyVisible) Icons.Default.Visibility
-                        else Icons.Default.VisibilityOff,
+                        imageVector = if (keyVisible) Icons.Outlined.Visibility
+                        else Icons.Outlined.VisibilityOff,
                         contentDescription = null,
                     )
                 }
@@ -366,8 +366,8 @@ fun SetSuperKeyView(viewModel: PatchesViewModel) {
             trailingIcon = {
                 IconButton(onClick = { confirmVisible = !confirmVisible }) {
                     Icon(
-                        imageVector = if (confirmVisible) Icons.Default.Visibility
-                        else Icons.Default.VisibilityOff,
+                        imageVector = if (confirmVisible) Icons.Outlined.Visibility
+                        else Icons.Outlined.VisibilityOff,
                         contentDescription = null,
                     )
                 }

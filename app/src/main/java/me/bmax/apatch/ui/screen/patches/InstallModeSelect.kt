@@ -25,10 +25,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AutoFixHigh
-import androidx.compose.material.icons.filled.ExpandLess
-import androidx.compose.material.icons.filled.ExpandMore
-import androidx.compose.material.icons.filled.FileUpload
+import androidx.compose.material.icons.outlined.AutoFixHigh
+import androidx.compose.material.icons.outlined.ExpandLess
+import androidx.compose.material.icons.outlined.ExpandMore
+import androidx.compose.material.icons.outlined.FileUpload
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -363,7 +363,7 @@ private fun SelectInstallMethod(
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent),
                         leadingContent = {
                             Icon(
-                                Icons.Filled.AutoFixHigh,
+                                Icons.Outlined.AutoFixHigh,
                                 contentDescription = null,
                                 tint = MaterialTheme.colorScheme.primary
                             )
@@ -376,7 +376,7 @@ private fun SelectInstallMethod(
                         },
                         trailingContent = {
                             Icon(
-                                imageVector = if (kpExpanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
+                                imageVector = if (kpExpanded) Icons.Outlined.ExpandLess else Icons.Outlined.ExpandMore,
                                 contentDescription = null
                             )
                         },
@@ -413,7 +413,7 @@ private fun SelectInstallMethod(
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent),
                         leadingContent = {
                             Icon(
-                                Icons.Filled.FileUpload,
+                                Icons.Outlined.FileUpload,
                                 contentDescription = null,
                                 tint = MaterialTheme.colorScheme.primary
                             )
@@ -426,7 +426,7 @@ private fun SelectInstallMethod(
                         },
                         trailingContent = {
                             Icon(
-                                imageVector = if (restoreExpanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
+                                imageVector = if (restoreExpanded) Icons.Outlined.ExpandLess else Icons.Outlined.ExpandMore,
                                 contentDescription = null
                             )
                         },

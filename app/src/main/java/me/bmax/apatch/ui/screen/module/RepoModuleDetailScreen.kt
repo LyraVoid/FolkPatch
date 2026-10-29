@@ -13,10 +13,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Code
-import androidx.compose.material.icons.filled.Download
-import androidx.compose.material.icons.filled.HelpOutline
-import androidx.compose.material.icons.filled.Language
+import androidx.compose.material.icons.outlined.Code
+import androidx.compose.material.icons.outlined.Download
+import androidx.compose.material.icons.automirrored.outlined.HelpOutline
+import androidx.compose.material.icons.outlined.Language
 import androidx.compose.material3.Button
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
@@ -139,7 +139,7 @@ fun RepoModuleDetailScreen(
                                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
-                                    Icon(Icons.Filled.Language, contentDescription = null)
+                                    Icon(Icons.Outlined.Language, contentDescription = null)
                                     Text(stringResource(R.string.repo_module_detail_homepage))
                                 }
                             }
@@ -151,7 +151,7 @@ fun RepoModuleDetailScreen(
                                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
-                                    Icon(Icons.Filled.Code, contentDescription = null)
+                                    Icon(Icons.Outlined.Code, contentDescription = null)
                                     Text(stringResource(R.string.repo_module_detail_source))
                                 }
                             }
@@ -163,7 +163,7 @@ fun RepoModuleDetailScreen(
                                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
-                                    Icon(Icons.Filled.HelpOutline, contentDescription = null)
+                                    Icon(Icons.AutoMirrored.Outlined.HelpOutline, contentDescription = null)
                                     Text(stringResource(R.string.repo_module_detail_support))
                                 }
                             }
@@ -212,7 +212,7 @@ fun RepoModuleDetailScreen(
                                                 module.description
                                             )
                                         }) {
-                                            Icon(Icons.Filled.Download, contentDescription = stringResource(CoreR.string.core_action_download))
+                                            Icon(Icons.Outlined.Download, contentDescription = stringResource(CoreR.string.core_action_download))
                                         }
                                     }
                                 }

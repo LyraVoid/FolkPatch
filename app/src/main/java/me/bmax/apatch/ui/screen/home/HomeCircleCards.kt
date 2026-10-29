@@ -8,10 +8,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
-import androidx.compose.material.icons.automirrored.outlined.Help
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.LockOpen
-import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material.icons.automirrored.outlined.HelpOutline
+import androidx.compose.material.icons.outlined.CheckCircle
+import androidx.compose.material.icons.outlined.LockOpen
+import androidx.compose.material.icons.outlined.Warning
 import androidx.compose.material.icons.outlined.RestartAlt
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -91,7 +91,7 @@ fun StatusCardCircle(
             verticalAlignment = Alignment.CenterVertically
         ) {
             if (isJailbreak) {
-                Icon(Icons.Filled.LockOpen, stringResource(R.string.settings_jailbreak_mode))
+                Icon(Icons.Outlined.LockOpen, stringResource(R.string.settings_jailbreak_mode))
                 Column(Modifier.padding(start = 20.dp).weight(1f)) {
                     Text(
                         text = stringResource(R.string.settings_jailbreak_mode),
@@ -161,7 +161,7 @@ fun StatusCardCircle(
                         CircularProgressIndicator(Modifier.size(22.dp), strokeWidth = 2.dp)
                     } else {
                         Icon(
-                            imageVector = if (isJailbreak) Icons.Outlined.RestartAlt else Icons.Filled.LockOpen,
+                            imageVector = if (isJailbreak) Icons.Outlined.RestartAlt else Icons.Outlined.LockOpen,
                             contentDescription = stringResource(if (isJailbreak) R.string.reboot_soft else R.string.jailbreak),
                         )
                     }
@@ -413,7 +413,7 @@ fun AStatusCardCircle(apState: APApplication.State) {
 
                     else -> {
                         Icon(
-                            Icons.AutoMirrored.Outlined.Help,
+                            Icons.AutoMirrored.Outlined.HelpOutline,
                             stringResource(R.string.home_install_unknown)
                         )
                     }

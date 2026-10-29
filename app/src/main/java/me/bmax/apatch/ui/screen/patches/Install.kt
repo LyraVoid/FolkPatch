@@ -10,9 +10,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Save
+import androidx.compose.material.icons.automirrored.outlined.ArrowForward
+import androidx.compose.material.icons.outlined.Refresh
+import androidx.compose.material.icons.outlined.Save
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -166,7 +166,7 @@ fun InstallScreen(navigator: DestinationsNavigator, uri: Uri, type: MODULE_TYPE)
                 }
             }) {
                 Icon(
-                    imageVector = Icons.Filled.Save, contentDescription = stringResource(CoreR.string.core_action_save)
+                    imageVector = Icons.Outlined.Save, contentDescription = stringResource(CoreR.string.core_action_save)
                 )
             }
         },
@@ -183,7 +183,7 @@ fun InstallScreen(navigator: DestinationsNavigator, uri: Uri, type: MODULE_TYPE)
                                 navigator.navigate(InstallScreenDestination(nextUri, type))
                             }
                         },
-                        icon = { Icon(Icons.AutoMirrored.Filled.ArrowForward, nextText) },
+                        icon = { Icon(Icons.AutoMirrored.Outlined.ArrowForward, nextText) },
                         text = { Text(text = nextText) },
                         containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
                         contentColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 1f),
@@ -198,7 +198,7 @@ fun InstallScreen(navigator: DestinationsNavigator, uri: Uri, type: MODULE_TYPE)
                                 }
                             }
                         },
-                        icon = { Icon(Icons.Filled.Refresh, reboot) },
+                        icon = { Icon(Icons.Outlined.Refresh, reboot) },
                         text = { Text(text = reboot) },
                         containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
                         contentColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 1f),

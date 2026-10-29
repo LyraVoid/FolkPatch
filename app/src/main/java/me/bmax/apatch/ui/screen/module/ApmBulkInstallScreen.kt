@@ -21,8 +21,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.FolderOpen
+import androidx.compose.material.icons.outlined.Delete
+import androidx.compose.material.icons.outlined.FolderOpen
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
@@ -250,7 +250,7 @@ fun ApmBulkInstallScreen(navigator: DestinationsNavigator, initialUris: ArrayLis
                             }
                         ) {
                             Icon(
-                                imageVector = Icons.Default.FolderOpen,
+                                imageVector = Icons.Outlined.FolderOpen,
                                 contentDescription = null,
                                 modifier = Modifier.padding(end = 8.dp)
                             )
@@ -286,7 +286,7 @@ fun ApmBulkInstallScreen(navigator: DestinationsNavigator, initialUris: ArrayLis
                                             }
                                         ) {
                                             Icon(
-                                                imageVector = Icons.Default.Delete,
+                                                imageVector = Icons.Outlined.Delete,
                                                 contentDescription = stringResource(R.string.apm_bulk_install_remove),
                                                 tint = MaterialTheme.colorScheme.error
                                             )

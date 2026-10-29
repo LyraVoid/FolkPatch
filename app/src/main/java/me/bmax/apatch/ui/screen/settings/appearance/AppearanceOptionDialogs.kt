@@ -5,10 +5,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.PhoneAndroid
-import androidx.compose.material.icons.filled.TabletAndroid
+import androidx.compose.material.icons.outlined.Clear
+import androidx.compose.material.icons.outlined.Check
+import androidx.compose.material.icons.outlined.PhoneAndroid
+import androidx.compose.material.icons.outlined.TabletAndroid
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -84,8 +84,8 @@ fun ThemeExportDialog(
                         horizontalArrangement = Arrangement.spacedBy(0.dp)
                     ) {
                         listOf(
-                            Triple("phone", Icons.Default.PhoneAndroid, R.string.theme_type_phone),
-                            Triple("tablet", Icons.Default.TabletAndroid, R.string.theme_type_tablet)
+                            Triple("phone", Icons.Outlined.PhoneAndroid, R.string.theme_type_phone),
+                            Triple("tablet", Icons.Outlined.TabletAndroid, R.string.theme_type_tablet)
                         ).forEachIndexed { index, (value, icon, label) ->
                             val selected = type == value
                             Surface(
@@ -130,7 +130,7 @@ fun ThemeExportDialog(
                                     if (selected) {
                                         Spacer(Modifier.width(8.dp))
                                         Icon(
-                                            imageVector = Icons.Default.Check,
+                                            imageVector = Icons.Outlined.Check,
                                             contentDescription = null,
                                             modifier = Modifier.size(18.dp)
                                         )
@@ -365,7 +365,7 @@ fun BannerApiConfigDialog(
                 modifier = Modifier.fillMaxWidth(), singleLine = true,
                 trailingIcon = {
                     if (sourceText.isNotEmpty()) {
-                        IconButton(onClick = { sourceText = "" }) { Icon(Icons.Filled.Clear, contentDescription = stringResource(CoreR.string.core_action_clear)) }
+                        IconButton(onClick = { sourceText = "" }) { Icon(Icons.Outlined.Clear, contentDescription = stringResource(CoreR.string.core_action_clear)) }
                     }
                 }
             )

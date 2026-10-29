@@ -10,11 +10,11 @@ import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.outlined.Delete
+import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.Refresh
+import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material.icons.outlined.Close
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.window.DialogProperties
@@ -208,19 +208,19 @@ fun MyThemesScreen(
             if (isSearchActive) {
                 if (viewModel.localSearchQuery.isNotEmpty()) {
                     IconButton(onClick = { viewModel.onLocalSearchQueryChange("") }) {
-                        Icon(Icons.Filled.Close, contentDescription = stringResource(CoreR.string.core_action_clear))
+                        Icon(Icons.Outlined.Close, contentDescription = stringResource(CoreR.string.core_action_clear))
                     }
                 }
             } else {
                 IconButton(onClick = { isSearchActive = true }) {
-                    Icon(Icons.Filled.Search, contentDescription = stringResource(CoreR.string.core_action_search))
+                    Icon(Icons.Outlined.Search, contentDescription = stringResource(CoreR.string.core_action_search))
                 }
                 IconButton(onClick = {
                     refreshing = true
                     viewModel.loadLocalThemes()
                     refreshing = false
                 }) {
-                    Icon(Icons.Filled.Refresh, contentDescription = stringResource(CoreR.string.core_action_refresh))
+                    Icon(Icons.Outlined.Refresh, contentDescription = stringResource(CoreR.string.core_action_refresh))
                 }
             }
         },

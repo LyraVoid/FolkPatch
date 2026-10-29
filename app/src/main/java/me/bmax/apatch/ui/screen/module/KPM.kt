@@ -74,19 +74,14 @@ import me.bmax.apatch.ui.navigation.LocalBottomBarVisible
 import me.bmax.apatch.ui.navigation.LocalIsFloatingNavMode
 import me.bmax.apatch.ui.navigation.fabNavBottomClearance
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Download
+import androidx.compose.material.icons.outlined.Close
+import androidx.compose.material.icons.outlined.Download
 import androidx.compose.material.icons.outlined.Code
 import androidx.compose.material.icons.outlined.Settings
-import androidx.compose.material3.*
 import android.widget.Toast
 
 import android.content.SharedPreferences
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.getValue
 
 import me.bmax.apatch.util.BiometricUtils
 import me.bmax.apatch.util.isJailbreakMode
@@ -296,7 +291,7 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
                             ) { isExpanded ->
                                 if (isExpanded) {
                                     Icon(
-                                        Icons.Filled.Close,
+                                        Icons.Outlined.Close,
                                         contentDescription = stringResource(CoreR.string.core_action_close),
                                     )
                                 } else {
@@ -349,7 +344,7 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
                                 selectKpmLauncher.launch(intent)
                             }
                         },
-                        icon = { Icon(Icons.Filled.Download, contentDescription = null, modifier = Modifier.size(18.dp)) },
+                        icon = { Icon(Icons.Outlined.Download, contentDescription = null, modifier = Modifier.size(18.dp)) },
                         text = { Text(text = moduleLoad, style = MaterialTheme.typography.bodyMedium) },
                     )
                 }

@@ -19,9 +19,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material.icons.automirrored.filled.ViewQuilt
-import androidx.compose.material.icons.automirrored.filled.VolumeUp
+import androidx.compose.material.icons.outlined.*
+import androidx.compose.material.icons.automirrored.outlined.ViewQuilt
+import androidx.compose.material.icons.automirrored.outlined.VolumeUp
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
@@ -62,7 +62,6 @@ import me.bmax.apatch.ui.screen.settings.appearance.ThemeImportDialog
 import me.bmax.apatch.util.ui.APDialogBlurBehindUtils
 import me.bmax.apatch.util.ui.NavigationBarsSpacer
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.RadioButton
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width

@@ -14,7 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Security
+import androidx.compose.material.icons.outlined.Security
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
@@ -240,7 +240,7 @@ fun AppItemLegacy(
         modifier = Modifier.fillMaxWidth()
     ) {
         SegmentedSwitchItem(
-            icon = Icons.Filled.Security,
+            icon = Icons.Outlined.Security,
             title = stringResource(id = R.string.su_pkg_excluded_setting_title),
             summary = stringResource(id = R.string.su_pkg_excluded_setting_summary),
             checked = excludeApp == 1,

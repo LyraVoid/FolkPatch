@@ -3,7 +3,7 @@ package me.bmax.apatch.ui.screen.home
 import android.os.Build
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.LockOpen
+import androidx.compose.material.icons.outlined.LockOpen
 import androidx.compose.material.icons.outlined.Android
 import androidx.compose.material.icons.outlined.Extension
 import androidx.compose.material.icons.outlined.Settings
@@ -49,7 +49,7 @@ fun KernelPatchCard(
     val isPermissive = jailbreakState.isPermissive
     MagiskStyleCard(
         title = if (isJailbreak) stringResource(R.string.settings_jailbreak_mode) else "KernelPatch",
-        icon = if (isJailbreak) Icons.Filled.LockOpen else Icons.Outlined.Extension,
+        icon = if (isJailbreak) Icons.Outlined.LockOpen else Icons.Outlined.Extension,
         actionText = when {
             isJailbreak -> stringResource(R.string.reboot_soft)
             kpState == APApplication.State.KERNELPATCH_NEED_UPDATE -> stringResource(R.string.home_kp_cando_update)

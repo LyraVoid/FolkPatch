@@ -14,8 +14,8 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.outlined.Close
+import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -161,7 +161,7 @@ fun SearchAppBar(
                         shape = FolkShape.CornerFull,
                         colors = searchFieldColors,
                         leadingIcon = {
-                            Icon(Icons.Filled.Search, contentDescription = null)
+                            Icon(Icons.Outlined.Search, contentDescription = null)
                         },
                         placeholder = { Text(stringResource(R.string.core_action_search)) },
                         trailingIcon = {
@@ -171,7 +171,7 @@ fun SearchAppBar(
                                     keyboardController?.hide()
                                     onClearClick()
                                 },
-                                content = { Icon(Icons.Filled.Close, stringResource(R.string.core_action_clear)) }
+                                content = { Icon(Icons.Outlined.Close, stringResource(R.string.core_action_clear)) }
                             )
                         },
                         maxLines = 1,
@@ -207,7 +207,7 @@ fun SearchAppBar(
                     leadingActions?.invoke()
                     IconButton(
                         onClick = { onSearch = true },
-                        content = { Icon(Icons.Filled.Search, stringResource(R.string.core_action_search)) }
+                        content = { Icon(Icons.Outlined.Search, stringResource(R.string.core_action_search)) }
                     )
                 }
             }

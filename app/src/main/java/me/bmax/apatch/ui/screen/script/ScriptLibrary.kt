@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Storefront
 import androidx.compose.material3.*
@@ -102,7 +102,7 @@ fun ScriptLibraryScreen(navigator: DestinationsNavigator) {
         onBack = { navigator.navigateUp() },
         actions = {
             IconButton(onClick = { showAddDialog = true }) {
-                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.script_library_add))
+                Icon(Icons.Outlined.Add, contentDescription = stringResource(R.string.script_library_add))
             }
             IconButton(onClick = { navigator.navigate(OnlineScriptScreenDestination) }) {
                 Icon(Icons.Outlined.Storefront, contentDescription = stringResource(R.string.online_script_title))
@@ -330,7 +330,7 @@ private fun AddScriptDialog(
                     onClick = { showFilePicker = true },
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Icon(Icons.Default.FolderOpen, contentDescription = null)
+                    Icon(Icons.Outlined.FolderOpen, contentDescription = null)
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(stringResource(R.string.script_library_select_file))
                 }

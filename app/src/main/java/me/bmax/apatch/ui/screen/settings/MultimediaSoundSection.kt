@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.settings
 
+import androidx.compose.material.icons.automirrored.outlined.Input
 import android.content.ActivityNotFoundException
 import android.net.Uri
 import me.bmax.apatch.util.ui.showToast
@@ -7,7 +8,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
@@ -25,7 +26,6 @@ import me.bmax.apatch.ui.component.SegmentedSwitchItem
 import me.bmax.apatch.ui.component.SegmentedValueItem
 import me.bmax.apatch.ui.theme.SoundEffectConfig
 import me.bmax.apatch.ui.theme.VibrationConfig
-import androidx.compose.material.icons.outlined.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -174,7 +174,7 @@ fun MultimediaSoundSection(
         // --- Sound Effect: Source Selector ---
         item(key = "multimedia_sound_effect_source", visible = SoundEffectConfig.isSoundEffectEnabled) {
             SegmentedValueItem(
-                icon = Icons.Outlined.Input,
+                icon = Icons.AutoMirrored.Outlined.Input,
                 title = soundEffectSourceTitle,
                 summary = if (SoundEffectConfig.sourceType == SoundEffectConfig.SOURCE_TYPE_LOCAL) soundEffectSourceLocal else soundEffectSourcePreset,
                 onClick = { showSoundEffectSourceDialogState.value = true },
@@ -259,7 +259,7 @@ fun MultimediaSoundSection(
         // --- Startup Sound: Source Selector ---
         item(key = "multimedia_startup_sound_source", visible = SoundEffectConfig.isStartupSoundEnabled) {
             SegmentedValueItem(
-                icon = Icons.Outlined.Input,
+                icon = Icons.AutoMirrored.Outlined.Input,
                 title = startupSourceTitle,
                 summary = if (SoundEffectConfig.startupSourceType == SoundEffectConfig.SOURCE_TYPE_LOCAL) startupSourceLocal else startupSourcePreset,
                 onClick = { showStartupSourceDialogState.value = true },

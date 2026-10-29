@@ -3,8 +3,8 @@ package me.bmax.apatch.ui.component
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.outlined.Check
+import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
@@ -41,9 +41,9 @@ fun ExpressiveSwitch(
         thumbContent = if (SwitchIconState.showIcon) {
             {
                 if (checked) {
-                    ThumbIcon(Icons.Filled.Check, MaterialTheme.colorScheme.primary)
+                    ThumbIcon(Icons.Outlined.Check, MaterialTheme.colorScheme.primary)
                 } else {
-                    ThumbIcon(Icons.Filled.Close, MaterialTheme.colorScheme.surfaceContainerHighest)
+                    ThumbIcon(Icons.Outlined.Close, MaterialTheme.colorScheme.surfaceContainerHighest)
                 }
             }
         } else null,

@@ -2,10 +2,10 @@ package me.bmax.apatch.ui.screen.settings
 
 import androidx.biometric.BiometricPrompt
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DeleteForever
-import androidx.compose.material.icons.filled.Fingerprint
-import androidx.compose.material.icons.filled.Key
-import androidx.compose.material.icons.filled.Shield
+import androidx.compose.material.icons.outlined.DeleteForever
+import androidx.compose.material.icons.outlined.Fingerprint
+import androidx.compose.material.icons.outlined.Key
+import androidx.compose.material.icons.outlined.Shield
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text

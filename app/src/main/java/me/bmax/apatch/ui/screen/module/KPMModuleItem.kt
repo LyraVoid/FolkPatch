@@ -64,12 +64,7 @@ import me.bmax.apatch.ui.viewmodel.KPModel
 import me.bmax.apatch.ui.viewmodel.KPModuleViewModel
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.ui.theme.bannerFadeColor
-import androidx.compose.material3.*
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.getValue
 import me.bmax.apatch.util.kpmBannerStorage
 import me.bmax.apatch.util.CustomModuleInfo
 import me.bmax.apatch.util.kpmCustomModuleInfoStorage

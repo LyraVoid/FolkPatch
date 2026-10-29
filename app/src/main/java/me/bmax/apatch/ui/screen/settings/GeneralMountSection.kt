@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.settings
 
+import androidx.compose.material.icons.automirrored.outlined.FeaturedPlayList
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
@@ -54,7 +55,7 @@ fun GeneralMountSection(
         item(key = "general_sucompat", visible = true) {
             var sucompatEnabled by remember { mutableStateOf(prefs.getBoolean("sucompat_enabled", false)) }
             SegmentedSwitchItem(
-                icon = Icons.Outlined.FeaturedPlayList,
+                icon = Icons.AutoMirrored.Outlined.FeaturedPlayList,
                 title = stringResource(id = R.string.settings_sucompat),
                 summary = stringResource(id = R.string.settings_sucompat_summary),
                 checked = sucompatEnabled,

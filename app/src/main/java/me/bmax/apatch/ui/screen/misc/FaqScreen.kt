@@ -21,7 +21,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.outlined.KeyboardArrowDown
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -156,7 +156,7 @@ private fun FaqCard(item: FaqItem, expanded: Boolean, onToggle: () -> Unit) {
                 )
                 Spacer(Modifier.width(FolkSettingsDimens.TrailingSpacing))
                 Icon(
-                    imageVector = Icons.Filled.KeyboardArrowDown,
+                    imageVector = Icons.Outlined.KeyboardArrowDown,
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
                     modifier = Modifier

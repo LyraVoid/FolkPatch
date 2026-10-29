@@ -18,12 +18,12 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.PlaylistAddCheck
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Deselect
-import androidx.compose.material.icons.filled.History
-import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Terminal
+import androidx.compose.material.icons.automirrored.outlined.PlaylistAddCheck
+import androidx.compose.material.icons.outlined.Close
+import androidx.compose.material.icons.outlined.Deselect
+import androidx.compose.material.icons.outlined.History
+import androidx.compose.material.icons.outlined.MoreVert
+import androidx.compose.material.icons.outlined.Terminal
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FloatingActionButton
@@ -206,19 +206,19 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
                         IconButton(onClick = {
                             viewModel.enterSelectionMode()
                         }) {
-                            Icon(Icons.Filled.Deselect, contentDescription = stringResource(R.string.su_multi_select_enter))
+                            Icon(Icons.Outlined.Deselect, contentDescription = stringResource(R.string.su_multi_select_enter))
                         }
                         IconButton(onClick = {
                             showBatchExcludeDialog = true
                         }) {
-                            Icon(Icons.AutoMirrored.Filled.PlaylistAddCheck, contentDescription = stringResource(R.string.su_batch_exclude_title))
+                            Icon(Icons.AutoMirrored.Outlined.PlaylistAddCheck, contentDescription = stringResource(R.string.su_batch_exclude_title))
                         }
                     },
                     dropdownContent = {
                         Box {
                             IconButton(onClick = { showSuperUserMenu = !showSuperUserMenu }) {
                                 Icon(
-                                    imageVector = Icons.Filled.MoreVert,
+                                    imageVector = Icons.Outlined.MoreVert,
                                     contentDescription = stringResource(id = R.string.settings)
                                 )
                             }
@@ -285,9 +285,9 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
                                     label = "fabIconCrossfade"
                                 ) { isExpanded ->
                                     if (isExpanded) {
-                                        Icon(Icons.Filled.Close, contentDescription = stringResource(R.string.close))
+                                        Icon(Icons.Outlined.Close, contentDescription = stringResource(R.string.close))
                                     } else {
-                                        Icon(Icons.Filled.History, contentDescription = stringResource(R.string.su_audit_log_title))
+                                        Icon(Icons.Outlined.History, contentDescription = stringResource(R.string.su_audit_log_title))
                                     }
                                 }
                             }
@@ -300,7 +300,7 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
                             },
                             icon = {
                                 Icon(
-                                    Icons.Filled.Terminal,
+                                    Icons.Outlined.Terminal,
                                     contentDescription = stringResource(R.string.script_library),
                                     modifier = Modifier.size(18.dp)
                                 )
@@ -314,7 +314,7 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
                             },
                             icon = {
                                 Icon(
-                                    Icons.Filled.History,
+                                    Icons.Outlined.History,
                                     contentDescription = stringResource(R.string.su_audit_log_title),
                                     modifier = Modifier.size(18.dp)
                                 )

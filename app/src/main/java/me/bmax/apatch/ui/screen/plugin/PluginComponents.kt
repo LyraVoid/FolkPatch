@@ -14,7 +14,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Article
-import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.outlined.MoreVert
 import androidx.compose.material.icons.outlined.Extension
 import androidx.compose.material.icons.outlined.Warning
 import androidx.compose.material.icons.outlined.Delete
@@ -118,7 +118,7 @@ fun PluginCard(
             Box {
                 IconButton(onClick = { showMenu = true }) {
                     Icon(
-                        imageVector = Icons.Filled.MoreVert,
+                        imageVector = Icons.Outlined.MoreVert,
                         contentDescription = stringResource(R.string.home_stats_more_options),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     )

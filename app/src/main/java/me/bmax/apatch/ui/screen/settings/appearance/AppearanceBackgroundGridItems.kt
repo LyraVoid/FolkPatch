@@ -8,7 +8,7 @@ import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.GridView
 import androidx.compose.material.icons.outlined.Image
-import androidx.compose.material.icons.outlined.Label
+import androidx.compose.material.icons.automirrored.outlined.Label
 import androidx.compose.material.icons.outlined.TextFields
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.MutableState
@@ -153,7 +153,7 @@ fun SegmentedColumnScope.appearanceBackgroundGridItems(
 
         item(key = "appearance_grid_card_mode") {
             SegmentedSwitchItem(
-                icon = Icons.Outlined.Label,
+                icon = Icons.AutoMirrored.Outlined.Label,
                 title = stringResource(id = R.string.settings_grid_working_card_hide_mode),
                 summary = stringResource(id = R.string.settings_grid_working_card_hide_mode_summary),
                 checked = BackgroundConfig.isGridWorkingCardModeHidden,

@@ -6,9 +6,9 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.LockOpen
-import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material.icons.outlined.CheckCircle
+import androidx.compose.material.icons.outlined.LockOpen
+import androidx.compose.material.icons.outlined.Warning
 import androidx.compose.material.icons.outlined.RestartAlt
 import androidx.compose.material.icons.outlined.Android
 import androidx.compose.material.icons.outlined.Extension
@@ -392,9 +392,9 @@ fun StatusCardBig(
                 Icon(
                     imageVector = when {
                         jailbreakState.isTriggering -> Icons.Outlined.RestartAlt
-                        isJailbreak -> Icons.Filled.LockOpen
-                        isWorking -> Icons.Filled.CheckCircle
-                        else -> Icons.Filled.Warning
+                        isJailbreak -> Icons.Outlined.LockOpen
+                        isWorking -> Icons.Outlined.CheckCircle
+                        else -> Icons.Outlined.Warning
                     },
                     contentDescription = null,
                     modifier = Modifier

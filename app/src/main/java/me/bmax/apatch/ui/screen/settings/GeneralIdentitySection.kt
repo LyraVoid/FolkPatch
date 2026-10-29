@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.settings
 
+import androidx.compose.material.icons.automirrored.outlined.Label
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
@@ -46,7 +47,7 @@ fun GeneralIdentitySection(
 
         item(key = "general_app_title") {
             SegmentedValueItem(
-                icon = Icons.Outlined.Label,
+                icon = Icons.AutoMirrored.Outlined.Label,
                 title = appTitleTitle,
                 summary = appTitleLabel,
                 onClick = { showAppTitleDialog.value = true },

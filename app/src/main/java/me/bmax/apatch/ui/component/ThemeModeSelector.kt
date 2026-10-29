@@ -10,9 +10,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AutoAwesome
-import androidx.compose.material.icons.filled.DarkMode
-import androidx.compose.material.icons.filled.LightMode
+import androidx.compose.material.icons.outlined.AutoAwesome
+import androidx.compose.material.icons.outlined.DarkMode
+import androidx.compose.material.icons.outlined.LightMode
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -59,7 +59,7 @@ fun ThemeModeSelector(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             ThemeModeOption(
-                icon = Icons.Default.LightMode,
+                icon = Icons.Outlined.LightMode,
                 label = stringResource(R.string.theme_light),
                 isSelected = selectedMode == ThemeMode.LIGHT,
                 onClick = { onModeSelected(ThemeMode.LIGHT) },
@@ -67,7 +67,7 @@ fun ThemeModeSelector(
             )
 
             ThemeModeOption(
-                icon = Icons.Default.DarkMode,
+                icon = Icons.Outlined.DarkMode,
                 label = stringResource(R.string.theme_dark),
                 isSelected = selectedMode == ThemeMode.DARK,
                 onClick = { onModeSelected(ThemeMode.DARK) },
@@ -75,7 +75,7 @@ fun ThemeModeSelector(
             )
 
             ThemeModeOption(
-                icon = Icons.Default.AutoAwesome,
+                icon = Icons.Outlined.AutoAwesome,
                 label = stringResource(R.string.theme_system),
                 isSelected = selectedMode == ThemeMode.SYSTEM,
                 onClick = { onModeSelected(ThemeMode.SYSTEM) },

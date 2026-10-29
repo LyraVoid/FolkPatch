@@ -10,8 +10,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.Send
-import androidx.compose.material.icons.filled.Save
+import androidx.compose.material.icons.automirrored.outlined.Send
+import androidx.compose.material.icons.outlined.Save
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -179,7 +179,7 @@ fun ScriptExecutionLogScreen(
                 }
             ) {
                 Icon(
-                    imageVector = Icons.Default.Save,
+                    imageVector = Icons.Outlined.Save,
                     contentDescription = stringResource(R.string.script_library_save_log)
                 )
             }
@@ -217,7 +217,7 @@ fun ScriptExecutionLogScreen(
                         }
                     }
                 ) {
-                    Icon(Icons.AutoMirrored.Filled.Send, contentDescription = stringResource(CoreR.string.core_action_send))
+                    Icon(Icons.AutoMirrored.Outlined.Send, contentDescription = stringResource(CoreR.string.core_action_send))
                 }
             }
         }

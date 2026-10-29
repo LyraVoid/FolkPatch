@@ -6,10 +6,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Block
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Security
-import androidx.compose.material.icons.filled.Shield
+import androidx.compose.material.icons.outlined.Block
+import androidx.compose.material.icons.outlined.Close
+import androidx.compose.material.icons.outlined.Security
+import androidx.compose.material.icons.outlined.Shield
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -54,7 +54,7 @@ fun SelectionTopBar(
         navigationIcon = {
             IconButton(onClick = onClose) {
                 Icon(
-                    imageVector = Icons.Filled.Close,
+                    imageVector = Icons.Outlined.Close,
                     contentDescription = stringResource(android.R.string.cancel),
                 )
             }
@@ -66,7 +66,7 @@ fun SelectionTopBar(
                 colors = actionColors,
             ) {
                 Icon(
-                    imageVector = Icons.Filled.Shield,
+                    imageVector = Icons.Outlined.Shield,
                     contentDescription = stringResource(R.string.su_multi_select_grant_root),
                 )
             }
@@ -76,7 +76,7 @@ fun SelectionTopBar(
                 colors = actionColors,
             ) {
                 Icon(
-                    imageVector = Icons.Filled.Security,
+                    imageVector = Icons.Outlined.Security,
                     contentDescription = stringResource(R.string.su_multi_select_revoke_root),
                 )
             }
@@ -86,7 +86,7 @@ fun SelectionTopBar(
                 colors = actionColors,
             ) {
                 Icon(
-                    imageVector = Icons.Filled.Block,
+                    imageVector = Icons.Outlined.Block,
                     contentDescription = stringResource(R.string.su_multi_select_exclude),
                 )
             }

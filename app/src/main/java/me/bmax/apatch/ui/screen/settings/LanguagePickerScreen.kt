@@ -16,8 +16,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Translate
+import androidx.compose.material.icons.outlined.Check
+import androidx.compose.material.icons.outlined.Translate
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -108,7 +108,7 @@ fun LanguagePickerScreen(navigator: DestinationsNavigator) {
                 ) {
                     if (index == 0) {
                         Icon(
-                            imageVector = Icons.Filled.Translate,
+                            imageVector = Icons.Outlined.Translate,
                             contentDescription = null,
                             tint = if (isSelected) {
                                 MaterialTheme.colorScheme.primary
@@ -147,7 +147,7 @@ fun LanguagePickerScreen(navigator: DestinationsNavigator) {
                     )
                     if (isSelected) {
                         Icon(
-                            imageVector = Icons.Filled.Check,
+                            imageVector = Icons.Outlined.Check,
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.primary,
                         )

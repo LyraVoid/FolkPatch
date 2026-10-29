@@ -1,7 +1,7 @@
 package me.bmax.apatch.ui.component
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Contrast
+import androidx.compose.material.icons.outlined.Contrast
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import me.bmax.apatch.R
@@ -44,7 +44,7 @@ fun DualBackgroundSettings(
 ) {
     if (showDualDim) {
         SegmentedSwitchItem(
-            icon = Icons.Filled.Contrast,
+            icon = Icons.Outlined.Contrast,
             title = dualDimTitle,
             summary = dualDimDescription,
             checked = dualDimEnabled,
@@ -52,7 +52,7 @@ fun DualBackgroundSettings(
         )
     }
     SegmentedSwitchItem(
-        icon = Icons.Filled.Contrast,
+        icon = Icons.Outlined.Contrast,
         title = dualOpacityTitle,
         summary = dualOpacityDescription,
         checked = dualOpacityEnabled,

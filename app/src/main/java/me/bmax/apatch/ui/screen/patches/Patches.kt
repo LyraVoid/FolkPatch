@@ -19,7 +19,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.outlined.Refresh
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
@@ -114,7 +114,7 @@ fun Patches(mode: PatchesViewModel.PatchMode) {
                         }
                     }
                 },
-                icon = { Icon(Icons.Filled.Refresh, reboot) },
+                icon = { Icon(Icons.Outlined.Refresh, reboot) },
                 text = { Text(text = reboot) },
                 containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
                 contentColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 1f),

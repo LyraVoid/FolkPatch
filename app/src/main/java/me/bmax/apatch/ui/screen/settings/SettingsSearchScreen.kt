@@ -16,8 +16,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.SearchOff
+import androidx.compose.material.icons.automirrored.outlined.KeyboardArrowRight
+import androidx.compose.material.icons.outlined.SearchOff
 import androidx.compose.material.icons.outlined.Brush
 import androidx.compose.material.icons.outlined.CloudUpload
 import androidx.compose.material.icons.outlined.Extension
@@ -146,7 +146,7 @@ internal fun SettingsSearchResults(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(contentPadding),
-            icon = Icons.Filled.SearchOff,
+            icon = Icons.Outlined.SearchOff,
         )
         return
     }
@@ -265,7 +265,7 @@ private fun SettingsSearchResultRow(
         }
         Spacer(Modifier.width(FolkSettingsDimens.TrailingSpacing))
         Icon(
-            Icons.AutoMirrored.Filled.KeyboardArrowRight,
+            Icons.AutoMirrored.Outlined.KeyboardArrowRight,
             contentDescription = null,
             tint = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.size(FolkSettingsDimens.ChevronSize),
