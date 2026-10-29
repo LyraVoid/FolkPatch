@@ -22,6 +22,7 @@ class FolkShapeTest {
         assertEquals(20f, topStartRadius(FolkShape.Corner20), 0.001f)
         assertEquals(24f, topStartRadius(FolkShape.Corner24), 0.001f)
         assertEquals(28f, topStartRadius(FolkShape.Corner28), 0.001f)
+        assertEquals(30f, topStartRadius(FolkShape.Dialog), 0.001f)
     }
 
     @Test

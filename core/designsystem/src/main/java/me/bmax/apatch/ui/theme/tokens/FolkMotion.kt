@@ -2,8 +2,10 @@ package me.bmax.apatch.ui.theme.tokens
 
 import androidx.compose.animation.core.FiniteAnimationSpec
 import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.VisibilityThreshold
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
+import androidx.compose.ui.unit.IntSize
 
 /**
  * Motion tokens, so a press, an expand and a fade feel the same wherever they happen. Only the
@@ -34,4 +36,17 @@ object FolkMotion {
 
     /** Turning an arrow around to point the other way. */
     val IconRotation: FiniteAnimationSpec<Float> = tween(durationMillis = 300)
+
+    /** A control taking up or giving back room in a row. */
+    val SlotSize: FiniteAnimationSpec<IntSize> = spring(
+        dampingRatio = Spring.DampingRatioNoBouncy,
+        stiffness = 900f,
+        visibilityThreshold = IntSize.VisibilityThreshold,
+    )
+
+    /** Fading a control while its slot resizes. */
+    val SlotFade: FiniteAnimationSpec<Float> = tween(durationMillis = 140)
+
+    /** The pop of a control appearing in or leaving a slot. */
+    val SlotScale: FiniteAnimationSpec<Float> = spring(dampingRatio = 0.8f, stiffness = 900f)
 }

@@ -6,7 +6,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.Hyphens
 import androidx.compose.ui.text.style.LineBreak
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 
 /**
@@ -16,22 +15,61 @@ import androidx.compose.ui.unit.sp
  */
 object FolkType {
 
-    /** The name of a thing: 15sp over a 20sp line box. */
+    /** The name of a thing: 17sp over a 22sp line box. */
     val Title: TextStyle
-        @Composable get() = scale(size = 15.sp, lineHeight = 20.sp, weight = FontWeight.Medium, lineBreak = LineBreak.Heading)
+        @Composable get() = MaterialTheme.typography.bodyLarge.merge(TitleMetrics)
 
-    /** What that thing is or does: 13sp over 18sp. */
+    /** What that thing is or does: 15sp over 20sp. */
     val Summary: TextStyle
-        @Composable get() = scale(size = 13.sp, lineHeight = 18.sp)
+        @Composable get() = MaterialTheme.typography.bodyLarge.merge(SummaryMetrics)
 
-    /** The small print: 12sp over 16sp. */
+    /** The small print: 14sp over 18sp. */
     val Caption: TextStyle
-        @Composable get() = scale(size = 12.sp, lineHeight = 16.sp)
+        @Composable get() = MaterialTheme.typography.bodyLarge.merge(CaptionMetrics)
 
     /** [Summary] with tabular figures, so a changing number does not push its neighbours around. */
     val Numeral: TextStyle
-        @Composable get() = Summary.copy(fontFeatureSettings = "tnum")
+        @Composable get() = MaterialTheme.typography.bodyLarge.merge(NumeralMetrics)
+
+    /** [Caption] for machine strings that should keep whole tokens together. */
+    val Machine: TextStyle
+        @Composable get() = MaterialTheme.typography.bodyLarge.merge(MachineMetrics)
 }
+
+internal val TitleMetrics = TextStyle(
+    fontSize = 17.sp,
+    lineHeight = 22.sp,
+    fontWeight = FontWeight.Medium,
+    letterSpacing = 0.sp,
+    lineBreak = LineBreak.Heading,
+    hyphens = Hyphens.Auto,
+)
+
+internal val SummaryMetrics = TextStyle(
+    fontSize = 15.sp,
+    lineHeight = 20.sp,
+    fontWeight = FontWeight.Normal,
+    letterSpacing = 0.sp,
+    lineBreak = LineBreak.Paragraph,
+    hyphens = Hyphens.Auto,
+)
+
+internal val CaptionMetrics = TextStyle(
+    fontSize = 14.sp,
+    lineHeight = 18.sp,
+    fontWeight = FontWeight.Normal,
+    letterSpacing = 0.sp,
+    lineBreak = LineBreak.Paragraph,
+    hyphens = Hyphens.Auto,
+)
+
+internal val NumeralMetrics = SummaryMetrics.copy(fontFeatureSettings = "tnum")
+
+internal val MachineMetrics = CaptionMetrics.copy(
+    fontFeatureSettings = "tnum",
+    hyphens = Hyphens.None,
+    lineBreak = LineBreak.Heading,
+)
 
 /**
  * How every style breaks a line: a heading breaks where a phrase ends, everything else fills its
@@ -41,16 +79,3 @@ fun TextStyle.wrapAware(lineBreak: LineBreak = LineBreak.Paragraph): TextStyle =
     lineBreak = lineBreak,
     hyphens = Hyphens.Auto,
 )
-
-@Composable
-private fun scale(
-    size: TextUnit,
-    lineHeight: TextUnit,
-    weight: FontWeight = FontWeight.Normal,
-    lineBreak: LineBreak = LineBreak.Paragraph,
-): TextStyle = MaterialTheme.typography.bodyLarge.copy(
-    fontSize = size,
-    lineHeight = lineHeight,
-    fontWeight = weight,
-    letterSpacing = 0.sp,
-).wrapAware(lineBreak)
