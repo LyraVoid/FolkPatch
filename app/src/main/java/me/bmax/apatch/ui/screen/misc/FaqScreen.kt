@@ -49,6 +49,7 @@ import kotlinx.coroutines.withContext
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.folk.FolkScaffold
 import me.bmax.apatch.ui.component.folk.FolkSettingsDimens
+import me.bmax.apatch.ui.component.folk.FolkTitleStyle
 import me.bmax.apatch.ui.component.folk.folkGroupColor
 import me.bmax.apatch.ui.component.folk.folkPressScale
 import org.json.JSONObject
@@ -78,6 +79,7 @@ fun FaqScreen(navigator: DestinationsNavigator) {
 
     FolkScaffold(
         title = stringResource(R.string.settings_faq),
+        titleStyle = FolkTitleStyle.Flexible,
         onBack = dropUnlessResumed { navigator.popBackStack() },
     ) { innerPadding ->
         LazyColumn(

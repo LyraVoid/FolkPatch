@@ -112,7 +112,9 @@ fun ScriptLibraryScreen(navigator: DestinationsNavigator) {
     ) { innerPadding ->
         val pullToRefreshState = rememberPullToRefreshState()
         PullToRefreshBox(
-            modifier = Modifier.padding(innerPadding),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding),
             onRefresh = { viewModel.loadScripts() },
             isRefreshing = isLoading,
             state = pullToRefreshState,

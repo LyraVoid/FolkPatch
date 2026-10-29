@@ -54,6 +54,7 @@ import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.folk.FolkLoadingIndicator
 import me.bmax.apatch.ui.component.folk.FolkScaffold
 import me.bmax.apatch.ui.component.folk.FolkSettingsDimens
+import me.bmax.apatch.ui.component.folk.FolkTitleStyle
 import me.bmax.apatch.ui.theme.tokens.FolkShape
 import me.bmax.apatch.ui.component.folk.FolkStateView
 import me.bmax.apatch.ui.viewmodel.WallpaperGalleryViewModel
@@ -91,6 +92,7 @@ fun WallpaperGalleryScreen(navigator: DestinationsNavigator) {
 
     FolkScaffold(
         title = stringResource(R.string.settings_wallpaper_gallery),
+        titleStyle = FolkTitleStyle.Flexible,
         onBack = { navigator.navigateUp() },
         snackbarHostState = snackbarHostState,
         actions = {

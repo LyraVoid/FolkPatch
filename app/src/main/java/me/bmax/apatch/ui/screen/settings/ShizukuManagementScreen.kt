@@ -151,7 +151,7 @@ fun ShizukuManagementScreen(navigator: DestinationsNavigator) {
 
     FolkScaffold(
         title = stringResource(R.string.shizuku_management_title),
-        titleStyle = FolkTitleStyle.Inline,
+        titleStyle = FolkTitleStyle.Flexible,
         onBack = navigator::popBackStack,
         actions = {
             IconButton(onClick = {
