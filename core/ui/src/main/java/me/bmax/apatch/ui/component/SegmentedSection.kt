@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -13,6 +12,7 @@ import me.bmax.apatch.ui.component.folk.FolkSettingsDimens
 import me.bmax.apatch.ui.component.folk.folkPreferenceSummaryStyle
 import me.bmax.apatch.ui.component.folk.folkSectionTitleColor
 import me.bmax.apatch.ui.component.folk.folkSectionTitleStyle
+import me.bmax.apatch.ui.component.folk.folkSupportingColor
 
 @Composable
 fun SegmentedSection(
@@ -47,7 +47,7 @@ fun SegmentedSection(
             Text(
                 text = description,
                 style = folkPreferenceSummaryStyle(),
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                color = folkSupportingColor(),
                 modifier = Modifier.padding(
                     start = FolkSettingsDimens.ScreenPadding + FolkSettingsDimens.SectionTitleIndent,
                     end = FolkSettingsDimens.ScreenPadding,

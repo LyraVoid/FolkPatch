@@ -26,6 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import me.bmax.apatch.ui.theme.tokens.FolkTheme
+import me.bmax.apatch.ui.component.folk.LocalWallpaperSupportingColor
 import me.bmax.apatch.ui.component.folk.folkInsetColor
 import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
 
@@ -151,7 +152,8 @@ private fun OnlineModuleCardContent(
             Text(
                 text = description,
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                color = LocalWallpaperSupportingColor.current
+                    ?: MaterialTheme.colorScheme.onSurfaceVariant,
                 maxLines = 4,
                 overflow = TextOverflow.Ellipsis,
             )

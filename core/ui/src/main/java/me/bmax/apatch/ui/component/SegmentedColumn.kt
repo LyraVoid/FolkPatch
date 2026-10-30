@@ -34,11 +34,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import kotlinx.coroutines.delay
 import me.bmax.apatch.ui.component.folk.FolkSettingsDimens
+import me.bmax.apatch.ui.component.folk.FolkWallpaperSurface
 import me.bmax.apatch.ui.component.folk.folkSectionTitleColor
 import me.bmax.apatch.ui.component.folk.folkSectionTitleStyle
 import me.bmax.apatch.ui.theme.tokens.ContinuousCornerShape
 import me.bmax.apatch.ui.theme.tokens.FolkTheme
-import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
+import me.bmax.apatch.ui.theme.tokens.WallpaperSurfaceRole
 
 val LocalInsideSplicedGroup = compositionLocalOf { false }
 
@@ -72,9 +73,6 @@ fun SegmentedColumn(
     val visibleItems = scope.items.filter { it.visible }
     if (visibleItems.isEmpty() && title == null) return
 
-    val wallpaper = LocalFolkWallpaperTokens.current
-    val rowColor = wallpaper?.group?.fill ?: FolkTheme.palette.groupedSurface
-    val rowContentColor = wallpaper?.group?.contentColor ?: MaterialTheme.colorScheme.onSurface
     val highlightColor = MaterialTheme.colorScheme.primary
     val atLeastTiramisu = Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
     val firstVisible = scope.items.indexOfFirst { it.visible }
@@ -166,7 +164,8 @@ fun SegmentedColumn(
                                 }
                             }
 
-                            Surface(
+                            FolkWallpaperSurface(
+                                role = WallpaperSurfaceRole.Group,
                                 modifier = Modifier
                                     .padding(top = if (isFirst) 0.dp else 2.dp)
                                     .then(
@@ -177,22 +176,22 @@ fun SegmentedColumn(
                                         },
                                     ),
                                 shape = itemShape,
-                                color = rowColor,
-                                contentColor = rowContentColor,
-                                tonalElevation = 0.dp,
-                            ) {
-                                Column(
-                                    modifier = Modifier.drawBehind {
-                                        if (highlightAlpha > 0.01f) {
-                                            drawRect(
-                                                highlightColor.copy(alpha = highlightAlpha),
-                                            )
-                                        }
-                                    },
-                                ) {
-                                    item.content()
+                                fallbackColor = FolkTheme.palette.groupedSurface,
+                                fallbackContentColor = MaterialTheme.colorScheme.onSurface,
+                                content = {
+                                    Column(
+                                        modifier = Modifier.drawBehind {
+                                            if (highlightAlpha > 0.01f) {
+                                                drawRect(
+                                                    highlightColor.copy(alpha = highlightAlpha),
+                                                )
+                                            }
+                                        },
+                                    ) {
+                                        item.content()
+                                    }
                                 }
-                            }
+                            )
                         }
                     }
                 }

@@ -209,7 +209,7 @@ internal fun AdaptiveSearchAppBar(
         )
     }
     val wallpaperTokens = LocalFolkWallpaperTokens.current
-    val searchBackground = wallpaperTokens?.raised?.fill ?: FolkTheme.palette.groupedInset
+    val searchBackground = wallpaperTokens?.raisedOverChrome() ?: FolkTheme.palette.groupedInset
 
     Surface(
         color = FolkTheme.palette.groupedBackground,

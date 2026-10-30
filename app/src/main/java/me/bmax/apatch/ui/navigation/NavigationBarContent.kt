@@ -27,6 +27,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
+import androidx.compose.material3.NavigationRailItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -60,6 +61,8 @@ import com.ramcosta.composedestinations.generated.NavGraphs
 import com.ramcosta.composedestinations.utils.isRouteOnBackStackAsState
 import com.ramcosta.composedestinations.utils.rememberDestinationsNavigator
 import me.bmax.apatch.APApplication
+import me.bmax.apatch.ui.component.folk.FolkChromeEdge
+import me.bmax.apatch.ui.component.folk.FolkWallpaperChromeZone
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.ui.theme.tokens.FolkTheme
 import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
@@ -374,11 +377,16 @@ fun NavigationRailBar(navController: NavHostController) {
             else isOnBackStack.indexOfLast { it }
         }
 
-        NavigationRail(
+        val wallpaper = LocalFolkWallpaperTokens.current
+        FolkWallpaperChromeZone(
+            edge = FolkChromeEdge.Start,
             modifier = Modifier.fillMaxHeight(),
-            containerColor = LocalFolkWallpaperTokens.current?.chrome?.fill
-                ?: FolkTheme.palette.groupedSurface
         ) {
+            NavigationRail(
+                modifier = Modifier.fillMaxHeight(),
+                containerColor = if (wallpaper != null) Color.Transparent
+                else FolkTheme.palette.groupedSurface
+            ) {
             Spacer(Modifier.weight(1f))
 
             visibleDestinations.forEachIndexed { index, destination ->
@@ -430,6 +438,11 @@ fun NavigationRailBar(navController: NavHostController) {
                                 }
                             }
                         },
+                        colors = if (wallpaper != null) {
+                            NavigationRailItemDefaults.colors(indicatorColor = Color.Transparent)
+                        } else {
+                            NavigationRailItemDefaults.colors()
+                        },
                         label = {
                             Text(
                                 text = stringResource(destination.label),
@@ -443,7 +456,8 @@ fun NavigationRailBar(navController: NavHostController) {
                 }
             }
 
-            Spacer(Modifier.weight(1f))
+                Spacer(Modifier.weight(1f))
+            }
         }
     }
 }

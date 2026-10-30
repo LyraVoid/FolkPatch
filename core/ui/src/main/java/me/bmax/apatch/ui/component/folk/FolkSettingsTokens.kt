@@ -130,9 +130,13 @@ fun folkOverlayColor(): Color =
 fun folkSectionTitleColor(): Color = MaterialTheme.colorScheme.primary.copy(alpha = 0.9f)
 
 @Composable
+fun folkSupportingColor(): Color =
+    LocalWallpaperSupportingColor.current ?: MaterialTheme.colorScheme.onSurfaceVariant
+
+@Composable
 fun folkIconColor(enabled: Boolean = true): Color =
-    if (enabled) MaterialTheme.colorScheme.onSurfaceVariant
-    else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.38f)
+    if (enabled) folkSupportingColor()
+    else folkSupportingColor().copy(alpha = 0.38f)
 
 /** Small, letter-spaced section label - brand voice, not a Material label. */
 @Composable

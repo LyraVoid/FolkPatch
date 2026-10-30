@@ -100,11 +100,12 @@ fun FolkScaffold(
             Modifier
         },
         topBar = {
-            val custom = topBar
-            if (custom != null) {
-                custom()
-            } else {
-                when (titleStyle) {
+            FolkWallpaperChromeZone(edge = FolkChromeEdge.Top) {
+                val custom = topBar
+                if (custom != null) {
+                    custom()
+                } else {
+                    when (titleStyle) {
                     FolkTitleStyle.Large -> LargeTopAppBar(
                         title = {
                             // A caller-supplied title (e.g. a search field)
@@ -158,6 +159,7 @@ fun FolkScaffold(
                     )
 
                     FolkTitleStyle.None -> Unit
+                    }
                 }
             }
         },
@@ -177,7 +179,9 @@ fun FolkScaffold(
         bottomBar = {
             val custom = bottomBar
             if (custom != null) {
-                custom()
+                FolkWallpaperChromeZone(edge = FolkChromeEdge.Bottom) {
+                    custom()
+                }
             }
         },
     ) { inner ->

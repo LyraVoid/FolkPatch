@@ -16,10 +16,12 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.semantics.Role
+import me.bmax.apatch.ui.component.folk.FolkWallpaperSurface
 import me.bmax.apatch.ui.component.folk.folkPressScale
 import me.bmax.apatch.ui.theme.tokens.FolkShape
 import me.bmax.apatch.ui.theme.tokens.FolkTheme
 import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
+import me.bmax.apatch.ui.theme.tokens.WallpaperSurfaceRole
 
 @Composable
 fun TonalCard(
@@ -67,6 +69,36 @@ fun TonalCard(
                 content()
             }
         }
+        return
+    }
+
+    if (useWallpaperMaterial) {
+        val interactionSource = remember { MutableInteractionSource() }
+        val haptics = LocalHapticFeedback.current
+        val wallpaperModifier = if (onClick == null) {
+            modifier.fillMaxWidth()
+        } else {
+            modifier
+                .fillMaxWidth()
+                .folkPressScale(interactionSource)
+                .clickable(
+                    role = Role.Button,
+                    interactionSource = interactionSource,
+                    indication = null,
+                    onClick = {
+                        haptics.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                        onClick()
+                    },
+                )
+        }
+        FolkWallpaperSurface(
+            role = WallpaperSurfaceRole.Group,
+            shape = shape,
+            modifier = wallpaperModifier,
+            fallbackColor = FolkTheme.palette.groupedSurface,
+            fallbackContentColor = foreground,
+            content = content,
+        )
         return
     }
 

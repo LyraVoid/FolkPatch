@@ -44,6 +44,8 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.ui.theme.BackgroundConfig
+import me.bmax.apatch.ui.component.folk.FolkChromeEdge
+import me.bmax.apatch.ui.component.folk.FolkWallpaperChromeZone
 import me.bmax.apatch.ui.theme.tokens.FolkTheme
 import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
 import me.bmax.apatch.util.ui.FloatingBarConfig
@@ -186,10 +188,11 @@ fun BottomBar(
         }
 
         val wallpaper = LocalFolkWallpaperTokens.current
-        val containerColor = wallpaper?.chrome?.fill ?: if (isFloating) {
-            floatingBarContainerColor()
-        } else {
-            FolkTheme.palette.groupedSurface
+        val containerColor = when {
+            wallpaper != null && isFloating -> wallpaper.raised.fill
+            wallpaper != null -> Color.Transparent
+            isFloating -> floatingBarContainerColor()
+            else -> FolkTheme.palette.groupedSurface
         }
 
         if (isFloating) {
@@ -298,20 +301,21 @@ fun BottomBar(
                 }
             }
         } else {
-            // Non-floating mode: plain docked bar.
-            PlainBottomNavigationBar(
-                visibleDestinations = visibleDestinations,
-                effectiveSelectedIndex = effectiveSelectedIndex,
-                containerColor = containerColor,
-                superuserCount = superuserCount,
-                apmModuleCount = apmModuleCount,
-                kernelModuleCount = kernelModuleCount,
-                enableSuperUserBadge = enableSuperUserBadge,
-                enableApmBadge = enableApmBadge,
-                enableKernelBadge = enableKernelBadge,
-                navController = navController,
-                onUserInteraction = onUserInteraction
-            )
+            FolkWallpaperChromeZone(edge = FolkChromeEdge.Bottom) {
+                PlainBottomNavigationBar(
+                    visibleDestinations = visibleDestinations,
+                    effectiveSelectedIndex = effectiveSelectedIndex,
+                    containerColor = containerColor,
+                    superuserCount = superuserCount,
+                    apmModuleCount = apmModuleCount,
+                    kernelModuleCount = kernelModuleCount,
+                    enableSuperUserBadge = enableSuperUserBadge,
+                    enableApmBadge = enableApmBadge,
+                    enableKernelBadge = enableKernelBadge,
+                    navController = navController,
+                    onUserInteraction = onUserInteraction
+                )
+            }
         }
     }
 }

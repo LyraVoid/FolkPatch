@@ -59,4 +59,16 @@ class FolkWallpaperTokensTest {
         assertEquals(0.45f, tokens.selection.alpha, 0.005f)
         assertEquals(0.1f, tokens.chrome.alpha, 0.005f)
     }
+
+    @Test
+    fun raisedOverChromeCompositsBackToRaised() {
+        val tokens = resolveFolkWallpaperTokens(scheme, opacity = 0.5f)
+        val extra = tokens.raisedOverChrome()
+
+        assertEquals(
+            tokens.raised.alpha,
+            extra.alpha + tokens.chrome.alpha * (1f - extra.alpha),
+            0.005f,
+        )
+    }
 }

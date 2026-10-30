@@ -34,6 +34,7 @@ import com.ramcosta.composedestinations.generated.NavGraphs
 import com.ramcosta.composedestinations.utils.isRouteOnBackStackAsState
 import com.ramcosta.composedestinations.utils.rememberDestinationsNavigator
 import me.bmax.apatch.ui.theme.BackgroundConfig
+import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
 
 /**
  * The plain docked bottom bar (nav_mode = "bottom"). It uses a Material3
@@ -56,6 +57,7 @@ internal fun PlainBottomNavigationBar(
 ) {
     val context = LocalContext.current
     val navigator = navController.rememberDestinationsNavigator()
+    val wallpaper = LocalFolkWallpaperTokens.current
 
     NavigationBar(
         tonalElevation = if (BackgroundConfig.isCustomBackgroundEnabled) 0.dp else 8.dp,
@@ -109,7 +111,11 @@ internal fun PlainBottomNavigationBar(
                             ),
                             label = "plainBarSelection"
                         )
-                        val indicatorColor = MaterialTheme.colorScheme.secondaryContainer
+                        val indicatorColor = if (wallpaper != null) {
+                            Color.Transparent
+                        } else {
+                            MaterialTheme.colorScheme.secondaryContainer
+                        }
 
                         BadgedBox(
                             modifier = Modifier.drawBehind {
@@ -162,7 +168,9 @@ internal fun PlainBottomNavigationBar(
                             modifier = Modifier.fillMaxWidth(),
                             style = MaterialTheme.typography.labelMedium.copy(
                                 textAlign = TextAlign.Center,
-                                color = if (isSelected) MaterialTheme.colorScheme.onSurface
+                                color = if (isSelected) {
+                                    wallpaper?.chrome?.contentColor ?: MaterialTheme.colorScheme.onSurface
+                                }
                                 else MaterialTheme.colorScheme.onSurfaceVariant,
                             ),
                             maxLines = 1,

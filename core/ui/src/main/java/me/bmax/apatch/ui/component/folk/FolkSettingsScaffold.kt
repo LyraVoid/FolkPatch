@@ -76,25 +76,29 @@ fun FolkSettingsScaffold(
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            LargeFlexibleTopAppBar(
-                title = {
-                    Text(
-                        text = title,
-                        fontWeight = FontWeight.Bold,
-                    )
-                },
-                colors = folkTopAppBarColors(),
-                navigationIcon = {
-                    if (onBack != null) {
-                        TopBarBackButton(
-                            onClick = onBack,
-                            contentDescription = stringResource(R.string.core_action_back),
+            FolkWallpaperChromeZone(
+                edge = FolkChromeEdge.Top,
+            ) {
+                LargeFlexibleTopAppBar(
+                    title = {
+                        Text(
+                            text = title,
+                            fontWeight = FontWeight.Bold,
                         )
-                    }
-                },
-                actions = actions,
-                scrollBehavior = scrollBehavior,
-            )
+                    },
+                    colors = folkTopAppBarColors(),
+                    navigationIcon = {
+                        if (onBack != null) {
+                            TopBarBackButton(
+                                onClick = onBack,
+                                contentDescription = stringResource(R.string.core_action_back),
+                            )
+                        }
+                    },
+                    actions = actions,
+                    scrollBehavior = scrollBehavior,
+                )
+            }
         },
         containerColor = Color.Transparent,
         snackbarHost = {

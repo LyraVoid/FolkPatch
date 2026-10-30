@@ -22,6 +22,7 @@ import me.bmax.apatch.ui.component.folk.folkIconColor
 import me.bmax.apatch.ui.component.folk.folkPreferenceSummaryStyle
 import me.bmax.apatch.ui.component.folk.folkPreferenceTitleStyle
 import me.bmax.apatch.ui.component.folk.folkPreferenceValueStyle
+import me.bmax.apatch.ui.component.folk.folkSupportingColor
 
 @Composable
 fun SegmentedSliderItem(
@@ -73,7 +74,7 @@ fun SegmentedSliderItem(
                     Text(
                         text = summary,
                         style = folkPreferenceSummaryStyle(),
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        color = folkSupportingColor(),
                     )
                 }
             }
@@ -81,7 +82,7 @@ fun SegmentedSliderItem(
             Text(
                 text = valueText ?: valueFormat(value),
                 style = folkPreferenceValueStyle(),
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                color = folkSupportingColor(),
             )
         }
         Slider(

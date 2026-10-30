@@ -36,6 +36,12 @@ data class FolkWallpaperTokens(
         }
     }
 
+    fun raisedOverChrome(): Color {
+        val under = chrome.alpha
+        val alpha = if (under >= 1f) 0f else (raised.alpha - under) / (1f - under)
+        return raised.tint.copy(alpha = alpha.coerceIn(0f, 1f))
+    }
+
     fun chromeControlFill(tint: Color): Color = tint.copy(alpha = chrome.alpha)
 }
 

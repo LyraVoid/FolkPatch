@@ -167,7 +167,7 @@ fun SearchAppBar(
                     exit = fadeOut(MaterialTheme.motionScheme.fastEffectsSpec())
                 ) {
                     val wallpaper = LocalFolkWallpaperTokens.current
-                    val searchFill = wallpaper?.raised?.fill ?: FolkTheme.palette.groupedInset
+                    val searchFill = wallpaper?.raisedOverChrome() ?: FolkTheme.palette.groupedInset
                     val searchFieldColors = TextFieldDefaults.colors(
                         focusedContainerColor = searchFill,
                         unfocusedContainerColor = searchFill,
@@ -225,9 +225,9 @@ fun SearchAppBar(
         },
         navigationIcon = {
             if (onBackClick != null) {
-                IconButton(
+                TopBarBackButton(
                     onClick = onBackClick,
-                    content = { Icon(Icons.AutoMirrored.Outlined.ArrowBack, stringResource(R.string.core_action_back)) }
+                    contentDescription = stringResource(R.string.core_action_back),
                 )
             }
         },

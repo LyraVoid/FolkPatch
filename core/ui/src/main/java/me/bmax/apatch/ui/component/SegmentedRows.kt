@@ -32,6 +32,7 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import me.bmax.apatch.ui.component.folk.FolkSettingsDimens
+import me.bmax.apatch.ui.component.folk.folkSupportingColor
 import me.bmax.apatch.ui.component.folk.folkIconColor
 import me.bmax.apatch.ui.component.folk.folkPressScale
 import me.bmax.apatch.ui.component.folk.folkPreferenceTitleStyle
@@ -209,9 +210,9 @@ fun SegmentedValueItem(
                         text = value,
                         style = folkPreferenceValueStyle(),
                         color = if (enabled) {
-                            MaterialTheme.colorScheme.onSurfaceVariant
+                            folkSupportingColor()
                         } else {
-                            MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.38f)
+                            folkSupportingColor().copy(alpha = 0.38f)
                         },
                     )
                     if (showChevron) Spacer(Modifier.width(6.dp))
@@ -260,7 +261,7 @@ fun SegmentedChevron(enabled: Boolean = true) {
     Icon(
         imageVector = Icons.AutoMirrored.Outlined.KeyboardArrowRight,
         contentDescription = null,
-        tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(
+        tint = folkSupportingColor().copy(
             alpha = if (enabled) 0.7f else 0.3f,
         ),
         modifier = Modifier.size(FolkSettingsDimens.ChevronSize),
@@ -284,9 +285,9 @@ private fun SegmentedRowContent(
         else -> MaterialTheme.colorScheme.onSurface
     }
     val summaryColor = when {
-        !enabled -> MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.38f)
+        !enabled -> folkSupportingColor().copy(alpha = 0.38f)
         selected -> MaterialTheme.colorScheme.primary.copy(alpha = 0.85f)
-        else -> MaterialTheme.colorScheme.onSurfaceVariant
+        else -> folkSupportingColor()
     }
 
     Row(
