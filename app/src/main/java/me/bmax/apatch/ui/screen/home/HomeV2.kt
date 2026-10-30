@@ -15,7 +15,6 @@ import androidx.compose.material.icons.outlined.RestartAlt
 import androidx.compose.material.icons.outlined.Android
 import androidx.compose.material.icons.outlined.Extension
 import androidx.compose.material3.*
-import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -54,12 +53,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.bmax.apatch.ui.component.BackgroundOptionsDialog
+import me.bmax.apatch.ui.component.TonalCard
 import me.bmax.apatch.ui.component.rememberConfirmDialog
 import me.bmax.apatch.ui.theme.BackgroundManager
 import me.bmax.apatch.util.PermissionUtils
 import me.bmax.apatch.util.ui.showToast
 import me.bmax.apatch.ui.theme.tokens.FolkShape
-import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
 
 private val managerVersion = getManagerVersion()
 
@@ -447,18 +446,10 @@ fun SmallInfoCard(
     icon: ImageVector,
     onClick: () -> Unit
 ) {
-    val wallpaper = LocalFolkWallpaperTokens.current
-    val containerColor = if (wallpaper != null) {
-        wallpaper.group.fill
-    } else {
-        MaterialTheme.colorScheme.surfaceColorAtElevation(FolkDimens.Size1)
-    }
-    
-    Card(
+    TonalCard(
         onClick = onClick,
-        modifier = modifier.fillMaxWidth(),
-        shape = FolkShape.Corner20,
-        colors = CardDefaults.cardColors(containerColor = containerColor)
+        modifier = modifier,
+        flat = true,
     ) {
         Column(
             modifier = Modifier.padding(FolkDimens.Size16),

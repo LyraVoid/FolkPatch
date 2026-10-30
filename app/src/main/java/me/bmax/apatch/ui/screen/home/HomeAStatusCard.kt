@@ -16,10 +16,6 @@ import androidx.compose.material.icons.outlined.Cached
 import androidx.compose.material.icons.outlined.SystemUpdate
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CardDefaults
-import me.bmax.apatch.ui.theme.BackgroundConfig
-import androidx.compose.material3.Card
-import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -31,25 +27,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
+import me.bmax.apatch.ui.component.TonalCard
 import me.bmax.apatch.core.ui.R as CoreR
-import me.bmax.apatch.ui.theme.tokens.FolkShape
-import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
 
 @Composable
 fun AStatusCard(apState: APApplication.State) {
-    Card(
-        shape = FolkShape.Corner20,
-        colors = CardDefaults.cardColors(
-            // 壁纸模式下用中性 surface/onSurface，避免把强调容器降 alpha 后
-            // onSecondaryContainer 文字直接压在壁纸上而失去对比度。
-            containerColor = if (BackgroundConfig.isCustomBackgroundEnabled) {
-                LocalFolkWallpaperTokens.current?.group?.fill ?: MaterialTheme.colorScheme.surface
-            } else {
-                MaterialTheme.colorScheme.surfaceColorAtElevation(FolkDimens.Size1)
-            },
-            contentColor = MaterialTheme.colorScheme.onSurface,
-        )
-    ) {
+    TonalCard(flat = true) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -184,5 +167,4 @@ fun AStatusCard(apState: APApplication.State) {
         }
     }
 }
-
 

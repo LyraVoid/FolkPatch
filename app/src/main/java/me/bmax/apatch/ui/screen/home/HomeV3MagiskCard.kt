@@ -20,7 +20,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
@@ -43,6 +42,7 @@ import me.bmax.apatch.ui.theme.BackgroundManager
 import me.bmax.apatch.util.PermissionUtils
 import me.bmax.apatch.util.ui.showToast
 import me.bmax.apatch.ui.theme.tokens.FolkShape
+import me.bmax.apatch.ui.theme.tokens.FolkTheme
 import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
 
 @Composable
@@ -132,7 +132,7 @@ fun MagiskStyleCard(
         colors = CardDefaults.cardColors(
             containerColor = if (hasCardWallpaper) FolkColors.Transparent
                 else LocalFolkWallpaperTokens.current?.group?.fill
-                    ?: MaterialTheme.colorScheme.surfaceColorAtElevation(FolkDimens.Size1),
+                    ?: FolkTheme.palette.groupedSurface,
             contentColor = contentColor
         )
     ) {

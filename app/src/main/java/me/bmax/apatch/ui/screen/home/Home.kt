@@ -25,10 +25,6 @@ import androidx.compose.material.icons.outlined.DeleteForever
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CardDefaults
-import me.bmax.apatch.ui.theme.BackgroundConfig
-import androidx.compose.material3.Card
-import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -65,14 +61,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
+import me.bmax.apatch.ui.component.TonalCard
 import me.bmax.apatch.ui.component.folk.FolkScaffold
 import me.bmax.apatch.ui.component.WelcomeGuideDialog
 import me.bmax.apatch.ui.viewmodel.PatchesViewModel
 import me.bmax.apatch.util.migrateStockBootBackup
 import me.bmax.apatch.util.ui.APDialogBlurBehindUtils
 import me.bmax.apatch.util.ui.HomeBottomSpacer
-import me.bmax.apatch.ui.theme.tokens.FolkShape
-import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
 
 private enum class ApatchUninstallOption(
     @param:StringRes val titleRes: Int,
@@ -341,14 +336,7 @@ fun getDeviceInfo(): String {
 fun LearnMoreCard() {
     val uriHandler = LocalUriHandler.current
 
-    Card(
-        shape = FolkShape.Corner20,
-        colors = CardDefaults.cardColors(containerColor = if (BackgroundConfig.isCustomBackgroundEnabled) {
-            LocalFolkWallpaperTokens.current?.group?.fill ?: MaterialTheme.colorScheme.surface
-        } else {
-            MaterialTheme.colorScheme.surfaceColorAtElevation(FolkDimens.Size1)
-        })
-    ) {
+    TonalCard(flat = true) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()

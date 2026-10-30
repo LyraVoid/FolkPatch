@@ -21,7 +21,6 @@ import androidx.compose.material3.CardDefaults
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.ui.theme.LocalWallpaperContentColor
 import androidx.compose.material3.Card
-import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -48,6 +47,8 @@ import me.bmax.apatch.util.Version.getManagerVersion
 import me.bmax.apatch.util.reboot
 import me.bmax.apatch.core.ui.R as CoreR
 import me.bmax.apatch.ui.theme.tokens.FolkShape
+import me.bmax.apatch.ui.theme.tokens.FolkTheme
+import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
 
 private val managerVersion = getManagerVersion()
 
@@ -135,7 +136,8 @@ fun KStatusCard(
         }
 
         else -> {
-            MaterialTheme.colorScheme.surfaceColorAtElevation(FolkDimens.Size1) to MaterialTheme.colorScheme.onSurface
+            (LocalFolkWallpaperTokens.current?.group?.fill ?: FolkTheme.palette.groupedSurface) to
+                (wallpaperContentColor ?: MaterialTheme.colorScheme.onSurface)
         }
     }
 

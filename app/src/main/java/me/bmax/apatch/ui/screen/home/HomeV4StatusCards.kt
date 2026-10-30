@@ -21,8 +21,6 @@ import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.SystemUpdate
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.CircularWavyProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
@@ -33,7 +31,6 @@ import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -62,7 +59,6 @@ import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.util.SystemInfoCollector
 import me.bmax.apatch.core.ui.R as CoreR
 import me.bmax.apatch.ui.theme.tokens.FolkShape
-import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
 
 @Composable
 fun HomeV4DeviceStatusCard(isWallpaperMode: Boolean, modifier: Modifier = Modifier) {
@@ -285,20 +281,10 @@ fun AndroidPatchCard(
     showInstallDialog: MutableState<Boolean>,
     isWallpaperMode: Boolean
 ) {
-    val wallpaper = LocalFolkWallpaperTokens.current
-    val containerColor = if (wallpaper != null) {
-        wallpaper.group.fill
-    } else {
-        MaterialTheme.colorScheme.surfaceColorAtElevation(FolkDimens.Size1)
-    }
-
-    Card(
+    TonalCard(
         modifier = Modifier.fillMaxWidth(),
         shape = FolkShape.Corner16,
-        colors = CardDefaults.cardColors(
-            containerColor = containerColor,
-            contentColor = if (isWallpaperMode) MaterialTheme.colorScheme.onSurface else LocalContentColor.current,
-        )
+        flat = true,
     ) {
         Row(
             modifier = Modifier
@@ -395,4 +381,3 @@ fun AndroidPatchCard(
         }
     }
 }
-

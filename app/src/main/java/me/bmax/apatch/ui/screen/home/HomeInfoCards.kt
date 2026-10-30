@@ -22,10 +22,6 @@ import androidx.compose.material.icons.outlined.Layers
 import androidx.compose.material.icons.outlined.PhoneAndroid
 import androidx.compose.material.icons.outlined.Shield
 import androidx.compose.material.icons.outlined.SdStorage
-import androidx.compose.material3.CardDefaults
-import me.bmax.apatch.ui.theme.BackgroundConfig
-import androidx.compose.material3.Card
-import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -45,13 +41,12 @@ import kotlinx.coroutines.withContext
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.Natives
 import me.bmax.apatch.R
+import me.bmax.apatch.ui.component.TonalCard
 import me.bmax.apatch.ui.component.copyableInfo
 import me.bmax.apatch.ui.component.folk.FolkWrapSafeText
 import me.bmax.apatch.util.Version
 import me.bmax.apatch.util.Version.getManagerVersion
 import me.bmax.apatch.util.getSELinuxStatus
-import me.bmax.apatch.ui.theme.tokens.FolkShape
-import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
 
 private val managerVersion = getManagerVersion()
 
@@ -78,14 +73,7 @@ fun InfoCard(kpState: APApplication.State, apState: APApplication.State) {
         }
     }
     
-    Card(
-        shape = FolkShape.Corner20,
-        colors = CardDefaults.cardColors(containerColor = if (BackgroundConfig.isCustomBackgroundEnabled) {
-            LocalFolkWallpaperTokens.current?.group?.fill ?: MaterialTheme.colorScheme.surface
-        } else {
-            MaterialTheme.colorScheme.surfaceColorAtElevation(FolkDimens.Size1)
-        })
-    ) {
+    TonalCard(flat = true) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -183,14 +171,7 @@ fun ListInfoCard(kpState: APApplication.State, apState: APApplication.State, sho
         }
     }
 
-    Card(
-        shape = FolkShape.Corner20,
-        colors = CardDefaults.cardColors(containerColor = if (BackgroundConfig.isCustomBackgroundEnabled) {
-            LocalFolkWallpaperTokens.current?.group?.fill ?: MaterialTheme.colorScheme.surface
-        } else {
-            MaterialTheme.colorScheme.surfaceColorAtElevation(FolkDimens.Size1)
-        })
-    ) {
+    TonalCard(flat = true) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -276,4 +257,3 @@ fun ListInfoCard(kpState: APApplication.State, apState: APApplication.State, sho
         }
     }
 }
-
