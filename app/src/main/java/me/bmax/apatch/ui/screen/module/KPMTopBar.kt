@@ -23,10 +23,8 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.activity.compose.BackHandler
@@ -36,7 +34,6 @@ import me.bmax.apatch.R
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material.icons.outlined.Search
-import androidx.compose.material.icons.automirrored.outlined.Sort
 import androidx.compose.material.icons.outlined.Storefront
 import me.bmax.apatch.ui.component.folk.folkDefaultAppBarColors
 import me.bmax.apatch.core.ui.R as CoreR
@@ -47,8 +44,6 @@ import me.bmax.apatch.ui.theme.tokens.FolkShape
 fun KPMTopBar(
     navigator: DestinationsNavigator,
     searchQuery: String,
-    showCustomOrder: Boolean,
-    onCustomOrderClick: () -> Unit,
     onSearchQueryChange: (String) -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -139,15 +134,6 @@ fun KPMTopBar(
                             imageVector = Icons.Outlined.Storefront,
                             contentDescription = stringResource(R.string.online_kpm_title)
                         )
-                    }
-                    // 自定义排序按钮（无模块时隐藏）
-                    if (showCustomOrder) {
-                        IconButton(onClick = onCustomOrderClick) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Outlined.Sort,
-                                contentDescription = stringResource(R.string.kpm_custom_order)
-                            )
-                        }
                     }
                 }
             }

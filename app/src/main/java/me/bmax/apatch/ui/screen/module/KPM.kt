@@ -11,23 +11,16 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -42,18 +35,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
-import androidx.compose.foundation.background
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
@@ -198,19 +184,11 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
         return true
     }
 
-    var showOrderDialog by remember { mutableStateOf(false) }
-    var orderedModules by remember { mutableStateOf(viewModel.moduleList) }
-
     FolkScaffold(
         topBar = {
             KPMTopBar(
                 navigator,
                 searchQuery,
-                showCustomOrder = viewModel.moduleList.isNotEmpty(),
-                onCustomOrderClick = {
-                    orderedModules = viewModel.moduleList
-                    showOrderDialog = true
-                }
             ) { searchQuery = it }
         },
         floatingActionButton = run {
@@ -386,114 +364,6 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
             splicedCardGroup = splicedCardGroup,
             showKpmStatusBadge = showKpmStatusBadge,
             checkStrongBiometric = ::checkStrongBiometric
-        )
-    }
-
-
-
-    if (showOrderDialog) {
-        val reorderThreshold = with(LocalDensity.current) { FolkDimens.Size40.toPx() }
-        val dragToReorderDescription = stringResource(R.string.apm_drag_to_reorder)
-        var draggedModuleName by remember { mutableStateOf<String?>(null) }
-        var draggedDistance by remember { mutableStateOf(0f) }
-        AlertDialog(
-            onDismissRequest = { showOrderDialog = false },
-            title = { Text(stringResource(R.string.apm_custom_order)) },
-            text = {
-                LazyColumn(modifier = Modifier.heightIn(max = FolkDimens.Size480)) {
-                    itemsIndexed(orderedModules, key = { _, module -> module.name }) { _, module ->
-                        val isDragging = draggedModuleName == module.name
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .then(
-                                    if (isDragging) {
-                                        Modifier
-                                            .zIndex(1f)
-                                            .graphicsLayer { translationY = draggedDistance }
-                                    } else {
-                                        Modifier.animateItem(
-                                            placementSpec = MaterialTheme.motionScheme.defaultSpatialSpec()
-                                        )
-                                    }
-                                ),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                text = module.name,
-                                modifier = Modifier.weight(1f),
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
-                            )
-                            Column(
-                                modifier = Modifier
-                                    .padding(start = FolkDimens.Size12, end = FolkDimens.Size4)
-                                    .semantics { contentDescription = dragToReorderDescription }
-                                    .pointerInput(module.name) {
-                                        detectDragGestures(
-                                            onDragStart = {
-                                                draggedModuleName = module.name
-                                                draggedDistance = 0f
-                                            },
-                                            onDragEnd = {
-                                                draggedModuleName = null
-                                                draggedDistance = 0f
-                                            },
-                                            onDragCancel = {
-                                                draggedModuleName = null
-                                                draggedDistance = 0f
-                                            }
-                                        ) { change, dragAmount ->
-                                            change.consume()
-                                            draggedDistance += dragAmount.y
-                                            val currentIndex = orderedModules.indexOfFirst { it.name == module.name }
-                                            val targetIndex = when {
-                                                draggedDistance > reorderThreshold -> currentIndex + 1
-                                                draggedDistance < -reorderThreshold -> currentIndex - 1
-                                                else -> currentIndex
-                                            }
-                                            if (currentIndex >= 0 && targetIndex in orderedModules.indices && targetIndex != currentIndex) {
-                                                orderedModules = orderedModules.toMutableList().apply {
-                                                    add(targetIndex, removeAt(currentIndex))
-                                                }
-                                                viewModel.setCustomModuleOrder(orderedModules.map { it.name })
-                                                draggedDistance -= if (targetIndex > currentIndex) {
-                                                    reorderThreshold
-                                                } else {
-                                                    -reorderThreshold
-                                                }
-                                            }
-                                        }
-                                    }
-                                    .padding(vertical = FolkDimens.Size12),
-                                verticalArrangement = Arrangement.spacedBy(FolkDimens.Size4)
-                            ) {
-                                repeat(2) {
-                                    Box(
-                                        modifier = Modifier
-                                            .size(width = FolkDimens.Size24, height = FolkDimens.Size3)
-                                            .clip(RoundedCornerShape(FolkDimens.Size2))
-                                            .background(MaterialTheme.colorScheme.onSurfaceVariant)
-                                    )
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            confirmButton = {
-                TextButton(onClick = { showOrderDialog = false }) {
-                    Text(stringResource(android.R.string.ok))
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = {
-                    viewModel.resetCustomModuleOrder()
-                    orderedModules = viewModel.moduleList
-                }) {
-                    Text(stringResource(R.string.apm_reset_order))
-                }
-            }
         )
     }
 }

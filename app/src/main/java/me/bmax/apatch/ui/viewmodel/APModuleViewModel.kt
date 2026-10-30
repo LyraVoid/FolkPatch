@@ -1,6 +1,5 @@
 package me.bmax.apatch.ui.viewmodel
 
-import android.content.SharedPreferences
 import android.os.SystemClock
 import android.util.Log
 import androidx.compose.runtime.derivedStateOf
@@ -17,6 +16,13 @@ import kotlinx.coroutines.sync.withPermit
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.apApp
 import me.bmax.apatch.ui.screen.misc.BannerApiService
+import me.bmax.apatch.ui.screen.module.ModuleCustomOrderStore
+import me.bmax.apatch.ui.screen.module.ModuleSortFacts
+import me.bmax.apatch.ui.screen.module.ModuleSortGroup
+import me.bmax.apatch.ui.screen.module.ModuleSortPriorityStore
+import me.bmax.apatch.ui.screen.module.customModuleOrderComparator
+import me.bmax.apatch.ui.screen.module.moduleSortComparator
+import me.bmax.apatch.ui.screen.module.reconcileModuleCustomOrder
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.util.getRootShell
 import me.bmax.apatch.util.listModules
@@ -32,17 +38,7 @@ import kotlin.math.pow
 class APModuleViewModel : ViewModel() {
     companion object {
         private const val TAG = "ModuleViewModel"
-        private const val CUSTOM_ORDER_ENABLED_KEY = "module_custom_order_enabled"
-        private const val CUSTOM_ORDER_KEY = "module_custom_order"
         private var modules by mutableStateOf<List<ModuleInfo>>(emptyList())
-        private val zygiskModuleIds = listOf(
-            "zygisksu",
-            "zygisknext",
-            "rezygisk",
-            "neozygisk",
-            "shirokozygisk",
-            "onyxzygisk"
-        )
     }
 
     class ModuleInfo(
@@ -61,8 +57,6 @@ class APModuleViewModel : ViewModel() {
         val webuiIcon: String?,
         val actionIcon: String?,
         val isMetamodule: Boolean,
-        val isZygisk: Boolean,
-        val isLSPosed: Boolean,
     )
 
     data class ModuleUpdateInfo(
@@ -84,48 +78,30 @@ class APModuleViewModel : ViewModel() {
         private set
 
     private val prefs = APApplication.sharedPreferences
-    var sortOptimizationEnabled by mutableStateOf(prefs.getBoolean("module_sort_optimization", true))
-    private var customOrderEnabled by mutableStateOf(prefs.getBoolean(CUSTOM_ORDER_ENABLED_KEY, false))
-    private var customOrder by mutableStateOf(readCustomOrder())
+    var sortGroups by mutableStateOf(
+        ModuleSortPriorityStore.decode(prefs.getString(ModuleSortPriorityStore.Key, null))
+    )
+        private set
+    var sortEnabledFirst by mutableStateOf(prefs.getBoolean("module_sort_enabled_first", false))
+        private set
+    var customOrder by mutableStateOf(
+        ModuleCustomOrderStore.decode(prefs.getString(ModuleCustomOrderStore.Key, null))
+    )
+        private set
     private val bannerCache = mutableStateMapOf<String, BannerInfo>()
     private val moduleSizeCache = mutableStateMapOf<String, Long>()
     private val updateSemaphore = Semaphore(3)
     val bannerSemaphore = Semaphore(4)
 
-    private val preferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
-        if (key == "module_sort_optimization") {
-            sortOptimizationEnabled = prefs.getBoolean("module_sort_optimization", true)
-        }
-    }
-
-    init {
-        prefs.registerOnSharedPreferenceChangeListener(preferenceChangeListener)
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        prefs.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener)
-    }
-
     private val collator = Collator.getInstance(Locale.getDefault())
 
     val moduleList by derivedStateOf {
-        if (customOrderEnabled) {
-            val positions = customOrder.withIndex().associate { it.value to it.index }
-            modules.sortedBy { positions[it.id] ?: Int.MAX_VALUE }
-        } else if (sortOptimizationEnabled) {
-            modules.sortedWith(
-                compareByDescending<ModuleInfo> { it.isMetamodule }
-                    .thenByDescending { it.isZygisk }
-                    .thenByDescending { it.isLSPosed }
-                    .thenByDescending { it.hasWebUi }
-                    .thenByDescending { it.hasActionScript }
-                    .thenByDescending { it.name.contains("vector", ignoreCase = true) }
-                    .thenBy(collator) { it.id }
-            )
+        val comparator = if (customOrder.isNotEmpty()) {
+            customModuleOrderComparator(collator, customOrder)
         } else {
-            modules.sortedWith(compareBy(collator, ModuleInfo::id))
+            moduleSortComparator(collator, sortGroups, sortEnabledFirst)
         }
+        modules.sortedWith(compareBy<ModuleInfo, ModuleSortFacts>(comparator) { it.toSortFacts() })
     }
 
     var isNeedRefresh by mutableStateOf(false)
@@ -135,45 +111,47 @@ class APModuleViewModel : ViewModel() {
         isNeedRefresh = true
     }
 
+    fun setSortGroup(group: ModuleSortGroup, selected: Boolean) {
+        sortGroups = if (selected) sortGroups + group else sortGroups - group
+        prefs.edit()
+            .putString(ModuleSortPriorityStore.Key, ModuleSortPriorityStore.encode(sortGroups))
+            .apply()
+    }
+
+    fun updateSortEnabledFirst(enabled: Boolean) {
+        sortEnabledFirst = enabled
+        prefs.edit().putBoolean("module_sort_enabled_first", enabled).apply()
+    }
+
     fun setCustomModuleOrder(ids: List<String>) {
-        val validIds = modules.mapTo(hashSetOf()) { it.id }
-        customOrder = ids.distinct().filter { it in validIds } +
-                modules.map { it.id }.filter { it !in ids }
-        customOrderEnabled = true
-        persistCustomOrder()
+        customOrder = reconcileModuleCustomOrder(ids, modules.map { it.id })
+        prefs.edit().putString(ModuleCustomOrderStore.Key, ModuleCustomOrderStore.encode(customOrder)).apply()
     }
 
     fun resetCustomModuleOrder() {
-        customOrderEnabled = false
         customOrder = emptyList()
-        prefs.edit()
-            .putBoolean(CUSTOM_ORDER_ENABLED_KEY, false)
-            .remove(CUSTOM_ORDER_KEY)
-            .apply()
-    }
-
-    private fun readCustomOrder(): List<String> = runCatching {
-        val array = JSONArray(prefs.getString(CUSTOM_ORDER_KEY, "[]"))
-        (0 until array.length()).map { array.getString(it) }.distinct()
-    }.getOrDefault(emptyList())
-
-    private fun persistCustomOrder() {
-        prefs.edit()
-            .putBoolean(CUSTOM_ORDER_ENABLED_KEY, customOrderEnabled)
-            .putString(CUSTOM_ORDER_KEY, JSONArray(customOrder).toString())
-            .apply()
+        prefs.edit().remove(ModuleCustomOrderStore.Key).apply()
     }
 
     private fun reconcileCustomOrder() {
-        if (!customOrderEnabled) return
-        val moduleIds = modules.map { it.id }
-        val validIds = moduleIds.toHashSet()
-        val reconciled = customOrder.filter { it in validIds } + moduleIds.filter { it !in customOrder }
+        if (customOrder.isEmpty()) return
+        val reconciled = reconcileModuleCustomOrder(customOrder, modules.map { it.id })
         if (reconciled != customOrder) {
             customOrder = reconciled
-            persistCustomOrder()
+            prefs.edit()
+                .putString(ModuleCustomOrderStore.Key, ModuleCustomOrderStore.encode(customOrder))
+                .apply()
         }
     }
+
+    private fun ModuleInfo.toSortFacts() = ModuleSortFacts(
+        id = id,
+        name = name,
+        metaModule = isMetamodule,
+        hasWebUi = hasWebUi,
+        hasActionScript = hasActionScript,
+        enabled = enabled,
+    )
 
     fun disableAllModules() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -246,9 +224,7 @@ class APModuleViewModel : ViewModel() {
                             obj.optBoolean("action"),
                             obj.optString("webuiIcon").trim().ifEmpty { null },
                             obj.optString("actionIcon").trim().ifEmpty { null },
-                            obj.optString("metamodule").let { it == "1" || it.equals("true", ignoreCase = true) },
-                            zygiskModuleIds.contains(obj.getString("id")),
-                            obj.optString("name").contains("LSPosed", ignoreCase = true)
+                            obj.optString("metamodule").let { it == "1" || it.equals("true", ignoreCase = true) }
                         )
                     }.toList()
 

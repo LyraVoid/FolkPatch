@@ -103,6 +103,7 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
         mutableStateOf(!prefs.getBoolean("apm_first_use_shown", false)) 
     }
     var dontShowAgain by remember { mutableStateOf(false) }
+    var showModuleSortSheet by remember { mutableStateOf(false) }
 
     var showMoreModuleInfo by remember { mutableStateOf(prefs.getBoolean("show_more_module_info", true)) }
     var foldSystemModule by remember { mutableStateOf(prefs.getBoolean("fold_system_module", true)) }
@@ -227,7 +228,8 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
                 val newValue = !BackgroundConfig.isBannerEnabled
                 BackgroundConfig.setBannerEnabledState(newValue)
                 BackgroundConfig.save(context)
-            }
+            },
+            onSortClick = { showModuleSortSheet = true },
         )
     }, floatingActionButton = if (hideInstallButton) {
         { /* Empty */ }
@@ -401,6 +403,19 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
             }
         }
     }
+
+    ModuleSortSheet(
+        show = showModuleSortSheet,
+        groups = viewModel.sortGroups,
+        enabledFirst = viewModel.sortEnabledFirst,
+        customOrder = viewModel.customOrder,
+        modules = viewModel.moduleList,
+        onDismiss = { showModuleSortSheet = false },
+        onGroupChange = viewModel::setSortGroup,
+        onEnabledFirstChange = viewModel::updateSortEnabledFirst,
+        onCustomOrderChange = viewModel::setCustomModuleOrder,
+        onResetCustomOrder = viewModel::resetCustomModuleOrder,
+    )
 
     // First Use Dialog
     if (showFirstTimeDialog) {

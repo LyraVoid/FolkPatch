@@ -6,7 +6,6 @@ import androidx.compose.material.icons.outlined.Dock
 import androidx.compose.material.icons.outlined.Download
 import androidx.compose.material.icons.outlined.Folder
 import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material.icons.automirrored.outlined.Sort
 import androidx.compose.material.icons.outlined.Update
 import androidx.compose.material.icons.outlined.ViewAgenda
 import androidx.compose.runtime.*
@@ -32,9 +31,6 @@ fun ModuleSettingsContent(
     val moreInfoTitle = stringResource(id = R.string.settings_show_more_module_info)
     val moreInfoSummary = stringResource(id = R.string.settings_show_more_module_info_summary)
 
-    val moduleSortOptimizationTitle = stringResource(id = R.string.settings_module_sort_optimization)
-    val moduleSortOptimizationSummary = stringResource(id = R.string.settings_module_sort_optimization_summary)
-
     val foldSystemModuleTitle = stringResource(id = R.string.settings_fold_system_module)
     val foldSystemModuleSummary = stringResource(id = R.string.settings_fold_system_module_summary)
 
@@ -52,7 +48,6 @@ fun ModuleSettingsContent(
 
     var disableModuleUpdateCheck by remember { mutableStateOf(prefs.getBoolean("disable_module_update_check", false)) }
     var showMoreModuleInfo by remember { mutableStateOf(prefs.getBoolean("show_more_module_info", true)) }
-    var moduleSortOptimization by remember { mutableStateOf(prefs.getBoolean("module_sort_optimization", true)) }
     var foldSystemModule by remember { mutableStateOf(prefs.getBoolean("fold_system_module", true)) }
     var apmBatchInstallFullProcess by remember { mutableStateOf(prefs.getBoolean("apm_batch_install_full_process", false)) }
     var simpleListBottomBar by remember { mutableStateOf(prefs.getBoolean("simple_list_bottom_bar", false)) }
@@ -70,19 +65,6 @@ fun ModuleSettingsContent(
                     onCheckedChange = {
                         showMoreModuleInfo = it
                         prefs.edit().putBoolean("show_more_module_info", it).apply()
-                    },
-                )
-            }
-
-            item(key = "module_sort_opt") {
-                SegmentedSwitchItem(
-                    icon = Icons.AutoMirrored.Outlined.Sort,
-                    title = moduleSortOptimizationTitle,
-                    summary = moduleSortOptimizationSummary,
-                    checked = moduleSortOptimization,
-                    onCheckedChange = {
-                        moduleSortOptimization = it
-                        prefs.edit().putBoolean("module_sort_optimization", it).apply()
                     },
                 )
             }

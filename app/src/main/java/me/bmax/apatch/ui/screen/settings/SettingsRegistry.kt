@@ -129,7 +129,6 @@ object SettingsRegistry {
             // === Module ===
             add(SettingEntry("module_disable_update", R.string.settings_disable_module_update_check, R.string.settings_disable_module_update_check_summary, SettingCategory.MODULE))
             add(SettingEntry("module_more_info", R.string.settings_show_more_module_info, R.string.settings_show_more_module_info_summary, SettingCategory.MODULE))
-            add(SettingEntry("module_sort_opt", R.string.settings_module_sort_optimization, R.string.settings_module_sort_optimization_summary, SettingCategory.MODULE))
             add(SettingEntry("module_fold_system", R.string.settings_fold_system_module, R.string.settings_fold_system_module_summary, SettingCategory.MODULE))
             add(SettingEntry("module_batch_install", R.string.apm_batch_install_full_process, R.string.apm_batch_install_full_process_summary, SettingCategory.MODULE))
             add(SettingEntry("module_simple_list", R.string.settings_simple_list_bottom_bar, R.string.settings_simple_list_bottom_bar_summary, SettingCategory.MODULE))
