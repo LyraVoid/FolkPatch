@@ -269,7 +269,6 @@
     <string name="su_multi_select_confirm_grant">授予 ROOT 給 %d 個應用？</string>
     <string name="su_multi_select_confirm_revoke">撤銷 %d 個應用的 ROOT 權限？</string>
     <string name="su_multi_select_confirm_exclude">排除 %d 個應用？</string>
-    <string name="su_multi_select_enter">多選</string>
 
     <string name="apm">系統模組</string>
     <string name="apm_not_installed">AndroidPatch 尚未安裝</string>

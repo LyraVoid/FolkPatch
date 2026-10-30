@@ -137,11 +137,6 @@ class SuperUserViewModel : ViewModel() {
         }
     }
 
-    fun selectAll(uids: List<Int>) {
-        selectionMap.clear()
-        selectionMap.putAll(uids.associateWith { true })
-    }
-
     fun isUidSelected(uid: Int): Boolean = selectionMap[uid] == true
 
     private var bindJob: kotlinx.coroutines.Job? = null

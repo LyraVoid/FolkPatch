@@ -266,7 +266,6 @@
     <string name="su_multi_select_confirm_grant">%d개 앱에 ROOT 부여?</string>
     <string name="su_multi_select_confirm_revoke">%d개 앱에서 ROOT 취소?</string>
     <string name="su_multi_select_confirm_exclude">%d개 앱 제외?</string>
-    <string name="su_multi_select_enter">다중 선택</string>
     <string name="apm">시스템 모듈</string>
 
 

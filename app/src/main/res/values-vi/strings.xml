@@ -269,7 +269,6 @@
     <string name="su_multi_select_confirm_grant">Cấp ROOT cho %d ứng dụng?</string>
     <string name="su_multi_select_confirm_revoke">Thu hồi ROOT từ %d ứng dụng?</string>
     <string name="su_multi_select_confirm_exclude">Loại trừ %d ứng dụng?</string>
-    <string name="su_multi_select_enter">Chọn nhiều</string>
 
     <string name="apm">Module hệ thống</string>
     <string name="apm_not_installed">Chưa cài đặt bản vá hệ thống</string>

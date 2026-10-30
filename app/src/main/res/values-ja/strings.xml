@@ -240,7 +240,6 @@
     <string name="su_multi_select_confirm_grant">%d 個のアプリに ROOT を許可しますか？</string>
     <string name="su_multi_select_confirm_revoke">%d 個のアプリから ROOT を解除しますか？</string>
     <string name="su_multi_select_confirm_exclude">%d 個のアプリを除外しますか？</string>
-    <string name="su_multi_select_enter">複数選択</string>
     <string name="apm">AP モジュール</string>
     <string name="apm_not_installed">AndroidPatch はインストールされていません</string>
     <string name="apm_failed_to_enable">モジュールの有効化に失敗: %s</string>

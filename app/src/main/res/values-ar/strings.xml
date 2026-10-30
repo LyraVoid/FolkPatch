@@ -288,7 +288,6 @@
     <string name="su_multi_select_confirm_grant">منح صلاحية ROOT لـ %d تطبيق؟</string>
     <string name="su_multi_select_confirm_revoke">سحب صلاحية ROOT من %d تطبيق؟</string>
     <string name="su_multi_select_confirm_exclude">استبعاد %d تطبيق؟</string>
-    <string name="su_multi_select_enter">تحديد متعدد</string>
 
     <string name="apm">وحدة AP</string>
     <string name="apm_not_installed">AndroidPatch غير مثبت</string>

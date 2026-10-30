@@ -63,7 +63,6 @@ Icons.Outlined.DeleteForever
 Icons.Outlined.DeleteOutline
 Icons.Outlined.DeleteSweep
 Icons.Outlined.Description
-Icons.Outlined.Deselect
 Icons.Outlined.DeveloperBoard
 Icons.Outlined.DeveloperMode
 Icons.Outlined.Dock

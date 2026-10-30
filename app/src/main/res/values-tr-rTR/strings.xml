@@ -262,7 +262,6 @@
     <string name="su_multi_select_confirm_grant">%d uygulamaya ROOT verilsin mi?</string>
     <string name="su_multi_select_confirm_revoke">%d uygulamadan ROOT kaldırılsın mı?</string>
     <string name="su_multi_select_confirm_exclude">%d uygulama hariç tutulsun mu?</string>
-    <string name="su_multi_select_enter">Çoklu Seçim</string>
     <string name="apm">Sistem Modülü</string>
 
 

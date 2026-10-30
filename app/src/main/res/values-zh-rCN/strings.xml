@@ -270,7 +270,6 @@
     <string name="su_multi_select_confirm_grant">授予 ROOT 给 %d 个应用？</string>
     <string name="su_multi_select_confirm_revoke">撤销 %d 个应用的 ROOT 权限？</string>
     <string name="su_multi_select_confirm_exclude">排除 %d 个应用？</string>
-    <string name="su_multi_select_enter">多选</string>
 
     <string name="apm">系统模块</string>
     <string name="apm_not_installed">未安装系统补丁</string>

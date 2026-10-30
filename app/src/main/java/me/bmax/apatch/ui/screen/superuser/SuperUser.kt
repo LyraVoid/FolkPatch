@@ -22,7 +22,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Article
 import androidx.compose.material.icons.automirrored.outlined.PlaylistAddCheck
 import androidx.compose.material.icons.outlined.Check
-import androidx.compose.material.icons.outlined.Deselect
 import androidx.compose.material.icons.outlined.MoreVert
 import androidx.compose.material.icons.outlined.Terminal
 import androidx.compose.material3.CheckableDropdownMenuItem
@@ -298,11 +297,6 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
                         )
                     },
                     leadingActions = {
-                        IconButton(onClick = {
-                            viewModel.enterSelectionMode()
-                        }) {
-                            Icon(Icons.Outlined.Deselect, contentDescription = stringResource(R.string.su_multi_select_enter))
-                        }
                         IconButton(onClick = {
                             showBatchExcludeDialog = true
                         }) {

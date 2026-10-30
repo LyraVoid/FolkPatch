@@ -275,7 +275,6 @@
     <string name="su_multi_select_confirm_grant">Beri ROOT ke %d aplikasi?</string>
     <string name="su_multi_select_confirm_revoke">Cabut ROOT dari %d aplikasi?</string>
     <string name="su_multi_select_confirm_exclude">Kecualikan %d aplikasi?</string>
-    <string name="su_multi_select_enter">Pilih banyak</string>
 
     <string name="apm">Modul Sistem</string>
     <string name="apm_not_installed">AndroidPatch tidak terinstal</string>

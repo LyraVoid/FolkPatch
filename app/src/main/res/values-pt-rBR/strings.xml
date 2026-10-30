@@ -288,7 +288,6 @@
     <string name="su_multi_select_confirm_grant">Conceder ROOT a %d aplicativos?</string>
     <string name="su_multi_select_confirm_revoke">Revogar ROOT de %d aplicativos?</string>
     <string name="su_multi_select_confirm_exclude">Excluir %d aplicativos?</string>
-    <string name="su_multi_select_enter">Multisseleção</string>
 
     <string name="apm">Módulo do Sistema</string>
     <string name="apm_not_installed">AndroidPatch não instalado</string>

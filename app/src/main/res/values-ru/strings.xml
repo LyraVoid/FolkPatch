@@ -275,7 +275,6 @@
     <string name="su_multi_select_confirm_grant">Предоставить ROOT %d приложениям?</string>
     <string name="su_multi_select_confirm_revoke">Отозвать ROOT у %d приложений?</string>
     <string name="su_multi_select_confirm_exclude">Исключить %d приложений?</string>
-    <string name="su_multi_select_enter">Множественный выбор</string>
 
     <string name="apm">Системный модуль</string>
     <string name="apm_not_installed">AndroidPatch не установлен</string>

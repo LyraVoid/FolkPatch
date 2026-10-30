@@ -249,7 +249,6 @@
     <string name="su_multi_select_confirm_grant">Przyznać ROOT %d aplikacjom?</string>
     <string name="su_multi_select_confirm_revoke">Odebrać ROOT z %d aplikacji?</string>
     <string name="su_multi_select_confirm_exclude">Wykluczyć %d aplikacji?</string>
-    <string name="su_multi_select_enter">Zaznacz wiele</string>
     <string name="apm">Moduły AP</string>
     <string name="apm_not_installed">AndroidPatch nie jest zainstalowany</string>
     <string name="apm_failed_to_enable">Nie udało się włączyć modułu: %s</string>

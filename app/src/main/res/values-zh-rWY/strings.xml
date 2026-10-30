@@ -272,7 +272,6 @@
     <string name="su_multi_select_confirm_grant">授 ROOT 於 %d 應用乎？</string>
     <string name="su_multi_select_confirm_revoke">收 %d 應用之 ROOT 乎？</string>
     <string name="su_multi_select_confirm_exclude">除 %d 應用乎？</string>
-    <string name="su_multi_select_enter">多擇</string>
     <string name="apm">統系之件</string>
 
 
