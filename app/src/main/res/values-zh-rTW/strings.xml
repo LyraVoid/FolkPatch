@@ -307,15 +307,6 @@
 
     <string name="setting_reset_su_path">重設 SU 路徑</string>
     <string name="setting_reset_su_new_path">新的完整路徑</string>
-    <string name="settings_folkx_engine_title">FolkX 動畫引擎</string>
-    <string name="settings_folkx_engine_summary">在頂層頁面切換時使用絲滑的物理彈簧動畫</string>
-    <string name="settings_folkx_animation_type">動畫類型</string>
-    <string name="settings_folkx_animation_linear">線性運動</string>
-    <string name="settings_folkx_animation_speed">動畫速度</string>
-    <string name="settings_folkx_animation_spatial">空間運動</string>
-    <string name="settings_folkx_animation_fade">漸隱漸顯</string>
-    <string name="settings_folkx_animation_vertical">垂直滑動</string>
-    <string name="settings_folkx_animation_diagonal">對角滑動</string>
 
     <string name="apm_webui_open">WebUI</string>
     <string name="apm_action">操作</string>

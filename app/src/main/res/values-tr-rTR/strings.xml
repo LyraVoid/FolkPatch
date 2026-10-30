@@ -93,15 +93,6 @@
     <string name="settings_grid_working_card_hide_mode_summary">Çalışma kartındaki \'Tam\' veya \'Yarım\' metnini gizle</string>
 
 
-	<string name="settings_folkx_engine_title">FolkX Animasyon Motoru</string>
-    <string name="settings_folkx_engine_summary">Üst seviye sayfalar arasında geçişte yumuşak, fizik tabanlı yay animasyonu kullan</string>
-    <string name="settings_folkx_animation_type">Animasyon Türü</string>
-    <string name="settings_folkx_animation_speed">Animasyon Hızı</string>
-    <string name="settings_folkx_animation_linear">Doğrusal Hareket</string>
-    <string name="settings_folkx_animation_spatial">Mekânsal Hareket</string>
-    <string name="settings_folkx_animation_fade">Solma (Fade In/Out)</string>
-    <string name="settings_folkx_animation_vertical">Dikey Kaydırma</string>
-    <string name="settings_folkx_animation_diagonal">Çapraz Kaydırma</string>
 
     <string name="su_exclude_all_title">Tümünü Hariç Tut</string>
     <string name="su_exclude_all_confirm">Root olmayan tüm uygulamaları hariç tutmak istediğinize emin misiniz?</string>

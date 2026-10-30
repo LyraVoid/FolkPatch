@@ -98,15 +98,6 @@
     <string name="settings_grid_working_card_hide_mode">إخفاء وضع العمل</string>
     <string name="settings_grid_working_card_hide_mode_summary">إخفاء نص "كامل" أو "نصف" في بطاقة الحالة</string>
 
-    <string name="settings_folkx_engine_title">محرك FolkX للرسوم المتحركة</string>
-    <string name="settings_folkx_engine_summary">استخدام رسوم متحركة زنبركية سلسة قائمة على الفيزياء عند التبديل بين الصفحات الرئيسية</string>
-    <string name="settings_folkx_animation_type">نوع الرسوم المتحركة</string>
-    <string name="settings_folkx_animation_speed">سرعة الرسوم المتحركة</string>
-    <string name="settings_folkx_animation_linear">حركة خطية</string>
-    <string name="settings_folkx_animation_spatial">حركة مكانية</string>
-    <string name="settings_folkx_animation_fade">تلاشي للداخل/للخارج</string>
-    <string name="settings_folkx_animation_vertical">انزلاق عمودي</string>
-    <string name="settings_folkx_animation_diagonal">انزلاق قطري</string>
 
     <string name="su_exclude_all_title">استثناء الكل</string>
     <string name="su_exclude_all_confirm">هل أنت متأكد من أنك تريد استثناء جميع التطبيقات التي لا تتطلب صلاحيات الروت؟</string>

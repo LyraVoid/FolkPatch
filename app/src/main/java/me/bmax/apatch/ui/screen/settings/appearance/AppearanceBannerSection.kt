@@ -1,5 +1,7 @@
 package me.bmax.apatch.ui.screen.settings.appearance
 
+import me.bmax.apatch.ui.component.folk.navOrigin
+import me.bmax.apatch.ui.component.folk.folkGroupColor
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
@@ -116,6 +118,7 @@ fun AppearanceBannerSection(
                             SegmentedValueItem(
                 icon = Icons.Outlined.Store,
                 title = stringResource(id = R.string.apm_api_marketplace_title),
+                modifier = androidx.compose.ui.Modifier.navOrigin(color = folkGroupColor()),
                 onClick = { onNavigateToApiMarketplace() },
             )
                         }

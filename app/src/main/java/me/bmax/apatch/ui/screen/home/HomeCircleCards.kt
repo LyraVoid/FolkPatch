@@ -79,22 +79,22 @@ fun StatusCardCircle(
         containerColor = finalContainerColor,
         contentColor = if (isWallpaperMode) MaterialTheme.colorScheme.onSurface else null,
         flat = true,
+        onClick = {
+            when {
+                isJailbreak -> jailbreakState.performPrimaryAction()
+                isWorking -> {
+                    if (apState == APApplication.State.ANDROIDPATCH_INSTALLED) {
+                        showUninstallDialog.value = true
+                    }
+                }
+                else -> navigator.navigate(com.ramcosta.composedestinations.generated.destinations.InstallModeSelectScreenDestination)
+            }
+        },
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .clickable {
-                    when {
-                        isJailbreak -> jailbreakState.performPrimaryAction()
-                        isWorking -> {
-                            if (apState == APApplication.State.ANDROIDPATCH_INSTALLED) {
-                                showUninstallDialog.value = true
-                            }
-                        }
-                        else -> navigator.navigate(com.ramcosta.composedestinations.generated.destinations.InstallModeSelectScreenDestination)
-                    }
-                }
                 .padding(FolkDimens.Size24),
             verticalAlignment = Alignment.CenterVertically
         ) {

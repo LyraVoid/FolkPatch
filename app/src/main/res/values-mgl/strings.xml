@@ -311,15 +311,6 @@
     <string name="setting_reset_su_path">重置魔法使路径</string>
     <string name="setting_reset_su_new_path">新完整魔法路径</string>
 
-    <string name="settings_folkx_engine_title">FolkX魔法动画引擎</string>
-    <string name="settings_folkx_engine_summary">在顶层魔法页面切换时使用流畅的物理弹簧动画</string>
-    <string name="settings_folkx_animation_type">魔法动画类型</string>
-    <string name="settings_folkx_animation_speed">异次元速度</string>
-    <string name="settings_folkx_animation_linear">魔法线性运动</string>
-    <string name="settings_folkx_animation_spatial">魔法空间运动</string>
-    <string name="settings_folkx_animation_fade">魔法渐隐渐显</string>
-    <string name="settings_folkx_animation_vertical">魔法垂直滑动</string>
-    <string name="settings_folkx_animation_diagonal">魔法对角滑动</string>
 
     <string name="apm_webui_open">开启</string>
     <string name="apm_action">魔法操作</string>

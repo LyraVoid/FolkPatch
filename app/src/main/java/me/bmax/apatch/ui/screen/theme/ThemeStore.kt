@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.theme
 
+import me.bmax.apatch.ui.component.folk.navOrigin
 import me.bmax.apatch.ui.theme.tokens.FolkColors
 import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import androidx.compose.foundation.layout.*
@@ -392,7 +393,10 @@ fun ThemeStoreScreen(
         actions = {
             // "我的主题"按钮 — hidden in compat mode
             if (!isCompatMode) {
-                IconButton(onClick = { navigator.navigate(MyThemesScreenDestination) }) {
+                IconButton(
+                    onClick = { navigator.navigate(MyThemesScreenDestination) },
+                    modifier = Modifier.navOrigin(captureBitmap = true),
+                ) {
                     Icon(Icons.Outlined.ColorLens, contentDescription = stringResource(R.string.my_themes_title))
                 }
             }

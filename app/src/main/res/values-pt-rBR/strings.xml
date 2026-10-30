@@ -98,15 +98,6 @@
     <string name="settings_grid_working_card_hide_mode">Ocultar modo de operação</string>
     <string name="settings_grid_working_card_hide_mode_summary">Ocultar o texto \'Completo\' ou \'Metade\' no cartão de status</string>
 
-    <string name="settings_folkx_engine_title">FolkX Animation Engine</string>
-    <string name="settings_folkx_engine_summary">Usar animação de mola baseada em física suave ao alternar entre páginas de nível superior</string>
-    <string name="settings_folkx_animation_type">Tipo de Animação</string>
-    <string name="settings_folkx_animation_speed">Velocidade da Animação</string>
-    <string name="settings_folkx_animation_linear">Movimento Linear</string>
-    <string name="settings_folkx_animation_spatial">Movimento Espacial</string>
-    <string name="settings_folkx_animation_fade">Fade In/Out</string>
-    <string name="settings_folkx_animation_vertical">Deslize Vertical</string>
-    <string name="settings_folkx_animation_diagonal">Deslize Diagonal</string>
 
     <string name="su_exclude_all_title">Excluir Tudo</string>
     <string name="su_exclude_all_confirm">Tem certeza de que deseja excluir todos os apps não-root?</string>

@@ -45,8 +45,7 @@ class MainActivity : AppCompatActivity() {
 
     /**
      * Debug builds only: a route handed in through `--es debug_route <route>`, so a page can be
-     * opened by script. The bottom bar is drawn by the FolkX engine, so screens cannot be reached
-     * by tapping coordinates while it animates.
+     * opened by script, so a page can be reached without walking the UI.
      */
     internal var pendingDebugRoute by mutableStateOf<String?>(null)
 

@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.settings
 
+import me.bmax.apatch.ui.component.folk.navOrigin
 import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import android.content.pm.PackageInfo
 import android.util.Log
@@ -155,9 +156,10 @@ fun ShizukuManagementScreen(navigator: DestinationsNavigator) {
         titleStyle = FolkTitleStyle.Flexible,
         onBack = navigator::popBackStack,
         actions = {
-            IconButton(onClick = {
-                navigator.navigate(ShizukuLogScreenDestination)
-            }) {
+            IconButton(
+                onClick = { navigator.navigate(ShizukuLogScreenDestination) },
+                modifier = androidx.compose.ui.Modifier.navOrigin(captureBitmap = true),
+            ) {
                 Icon(
                     Icons.AutoMirrored.Outlined.Article,
                     contentDescription = stringResource(R.string.shizuku_log_title),

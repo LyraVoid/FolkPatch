@@ -99,15 +99,6 @@
     <string name="settings_grid_working_card_hide_mode_summary">隱工作牌上 \'Full\' 或 \'Half\' 之文</string>
 
 
-    <string name="settings_folkx_engine_title">FolkX 動效之機</string>
-    <string name="settings_folkx_engine_summary">於頂層諸頁互易之際，行依物理之彈簧動效</string>
-    <string name="settings_folkx_animation_type">動效之式</string>
-    <string name="settings_folkx_animation_speed">動效之速</string>
-    <string name="settings_folkx_animation_linear">直行</string>
-    <string name="settings_folkx_animation_spatial">空際之行</string>
-    <string name="settings_folkx_animation_fade">隱現</string>
-    <string name="settings_folkx_animation_vertical">上下推移</string>
-    <string name="settings_folkx_animation_diagonal">斜向推移</string>
 
     <string name="su_exclude_all_title">盡除之</string>
     <string name="su_exclude_all_confirm">果欲盡除諸非 Root 之應用乎？</string>

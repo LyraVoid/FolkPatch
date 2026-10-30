@@ -98,15 +98,6 @@
     <string name="settings_grid_working_card_hide_mode_summary">작업 카드에서 \'Full\' 또는 \'Half\' 텍스트를 숨깁니다.</string>
 
 
-    <string name="settings_folkx_engine_title">FolkX 애니메이션 엔진</string>
-    <string name="settings_folkx_engine_summary">최상위 페이지 전환 시 부드러운 물리 기반 스프링 애니메이션을 사용합니다.</string>
-    <string name="settings_folkx_animation_type">애니메이션 유형</string>
-    <string name="settings_folkx_animation_speed">애니메이션 속도</string>
-    <string name="settings_folkx_animation_linear">선형 이동</string>
-    <string name="settings_folkx_animation_spatial">공간 이동</string>
-    <string name="settings_folkx_animation_fade">페이드 인/아웃</string>
-    <string name="settings_folkx_animation_vertical">수직 슬라이드</string>
-    <string name="settings_folkx_animation_diagonal">대각선 슬라이드</string>
 
     <string name="su_exclude_all_title">모두 제외</string>
     <string name="su_exclude_all_confirm">Root 권한이 없는 모든 앱을 제외할까요?</string>

@@ -23,64 +23,16 @@ import me.bmax.apatch.ui.theme.refreshTheme
 fun GeneralInterfaceSection(
     flat: Boolean,
     highlightKey: String?,
-    folkXEngineTitle: String,
-    folkXEngineSummary: String,
-    folkXEngineEnabled: Boolean,
-    onFolkXEngineEnabledChange: (Boolean) -> Unit,
-    currentType: String,
-    currentSpeed: Float,
     predictiveBackTitle: String,
     predictiveBackSummary: String,
     predictiveBackEnabled: Boolean,
     onPredictiveBackEnabledChange: (Boolean) -> Unit,
-    showFolkXAnimationTypeDialog: MutableState<Boolean>,
-    showFolkXAnimationSpeedDialog: MutableState<Boolean>,
 ) {
     val context = LocalContext.current
     val prefs = APApplication.sharedPreferences
 
     SegmentedSection(title = stringResource(R.string.settings_section_general_interface)) {
      SegmentedColumn(flat = flat, highlightKey = highlightKey) {
-
-        item(key = "general_folkx_engine") {
-            SegmentedSwitchItem(
-                icon = Icons.Outlined.AutoAwesome,
-                title = folkXEngineTitle,
-                summary = folkXEngineSummary,
-                checked = folkXEngineEnabled,
-                onCheckedChange = {
-                    onFolkXEngineEnabledChange(it)
-                    prefs.edit().putBoolean("folkx_engine_enabled", it).apply()
-                },
-            )
-        }
-
-        item(key = "general_folkx_animation_type", visible = folkXEngineEnabled) {
-            val animationTypeLabel = when (currentType) {
-                "linear" -> R.string.settings_folkx_animation_linear
-                "spatial" -> R.string.settings_folkx_animation_spatial
-                "fade" -> R.string.settings_folkx_animation_fade
-                "vertical" -> R.string.settings_folkx_animation_vertical
-                "diagonal" -> R.string.settings_folkx_animation_diagonal
-                else -> R.string.settings_folkx_animation_linear
-            }
-
-            SegmentedValueItem(
-                icon = Icons.Outlined.Animation,
-                title = stringResource(R.string.settings_folkx_animation_type),
-                summary = stringResource(animationTypeLabel),
-                onClick = { showFolkXAnimationTypeDialog.value = true },
-            )
-        }
-
-        item(key = "general_folkx_animation_speed", visible = folkXEngineEnabled) {
-            SegmentedValueItem(
-                icon = Icons.Outlined.Speed,
-                title = stringResource(R.string.settings_folkx_animation_speed),
-                summary = "${currentSpeed}x",
-                onClick = { showFolkXAnimationSpeedDialog.value = true },
-            )
-        }
 
         item(key = "general_predictive_back", visible = Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             SegmentedSwitchItem(

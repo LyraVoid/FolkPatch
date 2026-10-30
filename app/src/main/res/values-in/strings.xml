@@ -314,15 +314,6 @@
     <string name="setting_reset_su_path">Reset jalur su</string>
     <string name="setting_reset_su_new_path">Jalur penuh baru</string>
 
-    <string name="settings_folkx_engine_title">Mesin Animasi FolkX</string>
-    <string name="settings_folkx_engine_summary">Gunakan animasi pegas fisik yang halus saat beralih halaman tingkat atas</string>
-    <string name="settings_folkx_animation_type">Jenis Animasi</string>
-    <string name="settings_folkx_animation_speed">Kecepatan Animasi</string>
-    <string name="settings_folkx_animation_linear">Gerakan Linier</string>
-    <string name="settings_folkx_animation_spatial">Gerakan Spasial</string>
-    <string name="settings_folkx_animation_fade">Muncul/Hilang Bertahap</string>
-    <string name="settings_folkx_animation_vertical">Geser Vertikal</string>
-    <string name="settings_folkx_animation_diagonal">Geser Diagonal</string>
 
     <string name="apm_webui_open">Buka</string>
     <string name="apm_action">Tindakan</string>

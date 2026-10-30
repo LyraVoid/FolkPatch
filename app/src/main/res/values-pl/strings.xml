@@ -284,15 +284,6 @@
     <string name="hide_apatch_manager_failure">Nie udało się ukryć. Zgłoś błąd!</string>
     <string name="setting_reset_su_path">Zresetuj ścieżkę su</string>
     <string name="setting_reset_su_new_path">Nowa pełna ścieżka</string>
-    <string name="settings_folkx_engine_title">Silnik animacji FolkX</string>
-    <string name="settings_folkx_engine_summary">Używaj płynnych fizycznych animacji sprężynowych przy przełączaniu stron najwyższego poziomu</string>
-    <string name="settings_folkx_animation_type">Typ animacji</string>
-    <string name="settings_folkx_animation_speed">Prędkość animacji</string>
-    <string name="settings_folkx_animation_linear">Ruch liniowy</string>
-    <string name="settings_folkx_animation_spatial">Ruch przestrzenny</string>
-    <string name="settings_folkx_animation_fade">Przejście (Fade in/out)</string>
-    <string name="settings_folkx_animation_vertical">Przesuwanie pionowe</string>
-    <string name="settings_folkx_animation_diagonal">Przesuwanie ukośne</string>
     <string name="apm_webui_open">Otwórz</string>
     <string name="apm_action">Akcja</string>
     <string name="module_shortcut_add">Skrót</string>

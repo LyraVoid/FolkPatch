@@ -39,6 +39,7 @@ import me.bmax.apatch.ui.component.folk.folkPreferenceTitleStyle
 import me.bmax.apatch.ui.component.folk.folkPreferenceSummaryStyle
 import me.bmax.apatch.ui.component.folk.folkPreferenceValueStyle
 import me.bmax.apatch.ui.component.folk.navOrigin
+import me.bmax.apatch.ui.component.folk.folkGroupColor
 import me.bmax.apatch.ui.theme.tokens.FolkDimens
 
 @Composable
@@ -178,7 +179,7 @@ fun SegmentedNavigationItem(
 ) {
     SegmentedPreferenceItem(
         title = title,
-        modifier = modifier.navOrigin(cornerRadius = FolkDimens.Size20),
+        modifier = modifier.navOrigin(cornerRadius = FolkDimens.Size20, color = folkGroupColor()),
         icon = icon,
         summary = summary,
         enabled = enabled,

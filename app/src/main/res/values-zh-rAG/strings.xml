@@ -113,15 +113,6 @@
     <string name="settings_grid_working_card_hide_mode">把工作模式藏起来喵</string>
     <string name="settings_grid_working_card_hide_mode_summary">把工作卡片上那个“Full”或者“Half”藏起来嘛喵</string>
 
-    <string name="settings_folkx_engine_title">FolkX动画引擎喵</string>
-    <string name="settings_folkx_engine_summary">切页面的时候用那个弹簧动画哒，不要嫌卡哦喵</string>
-    <string name="settings_folkx_animation_type">动画类型喵</string>
-    <string name="settings_folkx_animation_speed">动画速度喵</string>
-    <string name="settings_folkx_animation_linear">直直地动喵</string>
-    <string name="settings_folkx_animation_spatial">空间感地动喵</string>
-    <string name="settings_folkx_animation_fade">变来变去喵</string>
-    <string name="settings_folkx_animation_vertical">上下滑滑喵</string>
-    <string name="settings_folkx_animation_diagonal">斜着滑滑喵</string>
 
     <string name="about_source_code"><![CDATA[<p>去 %1$s 看看人家的源码喵<p/>加人家的 %2$s 频道哦喵<p/>还要加人家的 %3$s 群呢喵]]></string>
     <string name="send_log">发送日志喵！</string>

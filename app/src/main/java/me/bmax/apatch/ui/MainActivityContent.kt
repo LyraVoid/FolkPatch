@@ -109,30 +109,12 @@ if (locked) {
     }
 } else {
 val prefs = APApplication.sharedPreferences
-var folkXEngineEnabled by remember {
-    mutableStateOf(prefs.getBoolean("folkx_engine_enabled", true))
-}
-var folkXAnimationType by remember {
-    mutableStateOf(prefs.getString("folkx_animation_type", "linear"))
-}
-var folkXAnimationSpeed by remember {
-    mutableStateOf(prefs.getFloat("folkx_animation_speed", 1.0f))
-}
 var layoutVariant by remember {
     mutableStateOf(LayoutVariant.fromValue(prefs.getString("layout_variant", LayoutVariant.M3E)))
 }
 
 DisposableEffect(Unit) {
     val listener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
-        if (key == "folkx_engine_enabled") {
-            folkXEngineEnabled = sharedPreferences.getBoolean("folkx_engine_enabled", true)
-        }
-        if (key == "folkx_animation_type") {
-            folkXAnimationType = sharedPreferences.getString("folkx_animation_type", "linear")
-        }
-        if (key == "folkx_animation_speed") {
-            folkXAnimationSpeed = sharedPreferences.getFloat("folkx_animation_speed", 1.0f)
-        }
         if (key == "layout_variant") {
             layoutVariant = LayoutVariant.fromValue(
                 sharedPreferences.getString("layout_variant", LayoutVariant.M3E)
@@ -246,9 +228,6 @@ CompositionLocalProvider(
 ) {
     APatchThemeWithBackground(
         navController = navController,
-        folkXEngineEnabled = folkXEngineEnabled,
-        folkXAnimationType = folkXAnimationType,
-        folkXAnimationSpeed = folkXAnimationSpeed
     ) {
     
     val showUpdateDialog = remember { mutableStateOf(false) }
@@ -491,18 +470,12 @@ CompositionLocalProvider(
 
         val wallpaperActive = LocalFolkWallpaperTokens.current != null
         val navTransitions = remember(
-            folkXEngineEnabled,
-            folkXAnimationType,
-            folkXAnimationSpeed,
             bottomBarRoutes,
             useNavigationRail,
             navOriginState,
             wallpaperActive,
         ) {
             createNavTransitions(
-                folkXEngineEnabled = folkXEngineEnabled,
-                folkXAnimationType = folkXAnimationType,
-                folkXAnimationSpeed = folkXAnimationSpeed,
                 bottomBarRoutes = bottomBarRoutes,
                 useNavigationRail = useNavigationRail,
                 navOriginState = navOriginState,

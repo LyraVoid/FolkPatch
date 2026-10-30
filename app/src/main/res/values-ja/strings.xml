@@ -88,15 +88,6 @@
     <string name="settings_grid_working_card_hide_text_summary">動作中のカードの「動作中」または「未インストール」のテキストを非表示にします。</string>
     <string name="settings_grid_working_card_hide_mode">動作モードを非表示</string>
     <string name="settings_grid_working_card_hide_mode_summary">動作中のカードの「完全」または「一部」のテキストを非表示にします。</string>
-    <string name="settings_folkx_engine_title">FolkX アニメーションエンジン</string>
-    <string name="settings_folkx_engine_summary">トップレベルのページの切り替え時にスムーズな物理ベースのスプリングアニメーションを使用します。</string>
-    <string name="settings_folkx_animation_type">アニメーションタイプ</string>
-    <string name="settings_folkx_animation_speed">アニメーション速度</string>
-    <string name="settings_folkx_animation_linear">リニアモーション</string>
-    <string name="settings_folkx_animation_spatial">空間モーション</string>
-    <string name="settings_folkx_animation_fade">フェードイン/アウト</string>
-    <string name="settings_folkx_animation_vertical">垂直にスライド</string>
-    <string name="settings_folkx_animation_diagonal">斜めにスライド</string>
     <string name="su_exclude_all_title">すべて除外</string>
     <string name="su_exclude_all_confirm">すべての非 root アプリを除外してもよろしいですか？</string>
     <string name="su_batch_exclude_title">一括で除外</string>

@@ -307,9 +307,6 @@ fun APatchTheme(
 @Composable
 fun APatchThemeWithBackground(
     navController: NavHostController? = null,
-    folkXEngineEnabled: Boolean = true,
-    folkXAnimationType: String? = "linear",
-    folkXAnimationSpeed: Float = 1.0f,
     content: @Composable () -> Unit
 ) {
     val context = LocalContext.current
@@ -356,12 +353,7 @@ fun APatchThemeWithBackground(
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             // Always show background layer if enabled
-            BackgroundLayer(
-                currentRoute = wallpaperRoute,
-                folkXEngineEnabled = folkXEngineEnabled,
-                folkXAnimationType = folkXAnimationType,
-                folkXAnimationSpeed = folkXAnimationSpeed
-            )
+            BackgroundLayer(currentRoute = wallpaperRoute)
             
             // Content layer - add zIndex to ensure it's above the background
             Box(modifier = Modifier.fillMaxSize().zIndex(1f)) {

@@ -23,6 +23,7 @@ import me.bmax.apatch.ui.theme.BackgroundConfig
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import me.bmax.apatch.ui.component.folk.navOrigin
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -154,7 +155,10 @@ fun HomeTopBar(
             Text(if (isCustomTitle) customAppTitle else stringResource(titleResId!!))
         }
     }, actions = {
-        IconButton(onClick = onInstallClick) {
+        IconButton(
+            onClick = onInstallClick,
+            modifier = Modifier.navOrigin(captureBitmap = true),
+        ) {
             Icon(
                 imageVector = Icons.Outlined.AutoFixHigh,
                 contentDescription = stringResource(id = R.string.mode_select_page_title)

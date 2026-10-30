@@ -314,15 +314,6 @@
     <string name="setting_reset_su_path">Сбросить путь su</string>
     <string name="setting_reset_su_new_path">Новый полный путь</string>
 
-    <string name="settings_folkx_engine_title">Движок анимации FolkX</string>
-    <string name="settings_folkx_engine_summary">Использовать плавные физические пружинные анимации при переключении страниц верхнего уровня</string>
-    <string name="settings_folkx_animation_type">Тип анимации</string>
-    <string name="settings_folkx_animation_speed">Скорость анимации</string>
-    <string name="settings_folkx_animation_linear">Линейное движение</string>
-    <string name="settings_folkx_animation_spatial">Пространственное движение</string>
-    <string name="settings_folkx_animation_fade">Появление/Исчезновение</string>
-    <string name="settings_folkx_animation_vertical">Вертикальное скольжение</string>
-    <string name="settings_folkx_animation_diagonal">Диагональное скольжение</string>
 
     <string name="apm_webui_open">Открыть</string>
     <string name="apm_action">Действие</string>

@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.script
 
+import me.bmax.apatch.ui.component.folk.navOrigin
 import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import android.content.SharedPreferences
 import androidx.compose.animation.AnimatedVisibility
@@ -105,7 +106,10 @@ fun ScriptLibraryScreen(navigator: DestinationsNavigator) {
             IconButton(onClick = { showAddDialog = true }) {
                 Icon(Icons.Outlined.Add, contentDescription = stringResource(R.string.script_library_add))
             }
-            IconButton(onClick = { navigator.navigate(OnlineScriptScreenDestination) }) {
+            IconButton(
+                onClick = { navigator.navigate(OnlineScriptScreenDestination) },
+                modifier = Modifier.navOrigin(captureBitmap = true),
+            ) {
                 Icon(Icons.Outlined.Storefront, contentDescription = stringResource(R.string.online_script_title))
             }
         },

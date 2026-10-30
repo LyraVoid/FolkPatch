@@ -102,15 +102,6 @@
     <string name="settings_grid_working_card_hide_mode">隐藏工作模式</string>
     <string name="settings_grid_working_card_hide_mode_summary">隐藏工作卡片上的"Full"或"Half"文字</string>
 
-    <string name="settings_folkx_engine_title">FolkX动画引擎</string>
-    <string name="settings_folkx_engine_summary">在顶层页面切换时使用丝滑的物理弹簧动画</string>
-    <string name="settings_folkx_animation_type">动画类型</string>
-    <string name="settings_folkx_animation_speed">动画速度</string>
-    <string name="settings_folkx_animation_linear">线性运动</string>
-    <string name="settings_folkx_animation_spatial">空间运动</string>
-    <string name="settings_folkx_animation_fade">渐隐渐显</string>
-    <string name="settings_folkx_animation_vertical">垂直滑动</string>
-    <string name="settings_folkx_animation_diagonal">对角滑动</string>
 
     <string name="about_source_code"><![CDATA[<p>在 %1$s 查看源代码<p/>加入我们的 %2$s 频道<p/>加入我们的 %3$s 群组]]></string>
     <string name="send_log">发送日志</string>

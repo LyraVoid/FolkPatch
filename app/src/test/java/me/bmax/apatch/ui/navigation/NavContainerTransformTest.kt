@@ -93,11 +93,19 @@ class NavContainerTransformTest {
     }
 
     @Test
-    fun `surface veil clears before the page settles`() {
-        assertEquals(1f, surfaceVeilAlpha(0f), 0.001f)
-        assertEquals(1f, surfaceVeilAlpha(0.08f), 0.001f)
-        assertEquals(0f, surfaceVeilAlpha(0.42f), 0.001f)
-        assertEquals(0f, surfaceVeilAlpha(1f), 0.001f)
+    fun `the expanding container uncovers the page`() {
+        assertEquals(1f, pushSurfaceVeilAlpha(0f), 0.001f)
+        assertEquals(1f, pushSurfaceVeilAlpha(0.08f), 0.001f)
+        assertEquals(0f, pushSurfaceVeilAlpha(0.42f), 0.001f)
+        assertEquals(0f, pushSurfaceVeilAlpha(1f), 0.001f)
+    }
+
+    @Test
+    fun `the folding container hides the page before it reaches the card`() {
+        assertEquals(0f, popSurfaceVeilAlpha(1f), 0.001f)
+        assertEquals(0f, popSurfaceVeilAlpha(0.5f), 0.001f)
+        assertEquals(1f, popSurfaceVeilAlpha(0.08f), 0.001f)
+        assertEquals(1f, popSurfaceVeilAlpha(0f), 0.001f)
     }
 
     @Test
@@ -116,6 +124,7 @@ class NavContainerTransformTest {
             originThemeSignature = 7,
             currentThemeSignature = 7,
             surfaceColor = surfaceColor,
+            popping = true,
             hasSnapshot = true,
             fraction = 0f,
         )
@@ -124,6 +133,7 @@ class NavContainerTransformTest {
             originThemeSignature = 7,
             currentThemeSignature = 8,
             surfaceColor = surfaceColor,
+            popping = true,
             hasSnapshot = true,
             fraction = 0f,
         )

@@ -102,15 +102,6 @@
     <string name="settings_grid_working_card_hide_mode">藏起游戏模式</string>
     <string name="settings_grid_working_card_hide_mode_summary">把合成台面板上的模式标识藏起来</string>
 
-    <string name="settings_folkx_engine_title">FolkX 物理引擎</string>
-    <string name="settings_folkx_engine_summary">在切换维度页面时使用丝滑的物理弹簧动画</string>
-    <string name="settings_folkx_animation_type">动画类型</string>
-    <string name="settings_folkx_animation_speed">动画速度（TPS）</string>
-    <string name="settings_folkx_animation_linear">线性弹道</string>
-    <string name="settings_folkx_animation_spatial">空间弹道</string>
-    <string name="settings_folkx_animation_fade">渐隐渐显</string>
-    <string name="settings_folkx_animation_vertical">Y轴滑动</string>
-    <string name="settings_folkx_animation_diagonal">对角弹道</string>
 
     <string name="about_source_code"><![CDATA[<p>在 %1$s 查看源代码<p/>加入我们的 %2$s 频道<p/>加入我们的 %3$s 服务器群组]]></string>
     <string name="send_log">发送崩溃报告</string>

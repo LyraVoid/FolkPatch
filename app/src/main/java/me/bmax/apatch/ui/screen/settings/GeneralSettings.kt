@@ -1,5 +1,6 @@
 package me.bmax.apatch.ui.screen.settings
 
+import androidx.compose.ui.Modifier
 import androidx.compose.material.icons.automirrored.outlined.List
 import me.bmax.apatch.util.ui.showToast
 import androidx.appcompat.app.AppCompatDelegate
@@ -18,6 +19,8 @@ import me.bmax.apatch.APApplication
 import me.bmax.apatch.Natives
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.UpdateDialog
+import me.bmax.apatch.ui.component.folk.navOrigin
+import me.bmax.apatch.ui.component.folk.folkGroupColor
 import me.bmax.apatch.ui.component.rememberLoadingDialog
 import me.bmax.apatch.ui.component.SegmentedNavigationItem
 import me.bmax.apatch.ui.component.SegmentedColumn
@@ -137,9 +140,6 @@ fun GeneralSettingsContent(
     val cleanStorageTitle = stringResource(id = R.string.settings_clear_cache)
     val cleanStorageSummary = stringResource(id = R.string.settings_clean_storage_summary)
 
-    val folkXEngineTitle = stringResource(id = R.string.settings_folkx_engine_title)
-    val folkXEngineSummary = stringResource(id = R.string.settings_folkx_engine_summary)
-
     val predictiveBackTitle = stringResource(id = R.string.settings_predictive_back)
     val predictiveBackSummary = stringResource(id = R.string.settings_predictive_back_summary)
 
@@ -161,8 +161,6 @@ fun GeneralSettingsContent(
     val showCustomAppTitleDialog = remember { mutableStateOf(false) }
     val showDesktopAppNameDialog = remember { mutableStateOf(false) }
     val showDpiDialog = remember { mutableStateOf(false) }
-    val showFolkXAnimationTypeDialog = remember { mutableStateOf(false) }
-    val showFolkXAnimationSpeedDialog = remember { mutableStateOf(false) }
     val showAppListLoadingSchemeDialog = remember { mutableStateOf(false) }
     val showNewAppProfileModeDialog = remember { mutableStateOf(false) }
     val showSELinuxModeDialog = remember { mutableStateOf(false) }
@@ -171,9 +169,6 @@ fun GeneralSettingsContent(
     var autoUpdateCheck by remember { mutableStateOf(prefs.getBoolean("auto_update_check", true)) }
     var blockUpdateChecked by remember { mutableStateOf(prefs.getBoolean(APApplication.PREF_BLOCK_KERNELPATCH_UPDATE, false)) }
     var blockApUpdateChecked by remember { mutableStateOf(prefs.getBoolean(APApplication.PREF_BLOCK_ANDROIDPATCH_UPDATE, false)) }
-    var folkXEngineEnabled by remember { mutableStateOf(prefs.getBoolean("folkx_engine_enabled", true)) }
-    var currentType by remember { mutableStateOf(prefs.getString("folkx_animation_type", "linear") ?: "linear") }
-    var currentSpeed by remember { mutableStateOf(prefs.getFloat("folkx_animation_speed", 1.0f)) }
     var predictiveBackEnabled by remember { mutableStateOf(prefs.getBoolean("predictive_back_enabled", true)) }
 
     val newAppProfileEnabledTitle = stringResource(id = R.string.settings_new_app_profile_enabled)
@@ -201,6 +196,7 @@ fun GeneralSettingsContent(
                 icon = Icons.Outlined.Translate,
                 title = languageTitle,
                 summary = languageValue,
+                modifier = Modifier.navOrigin(color = folkGroupColor()),
                 onClick = { navigator.navigate(LanguagePickerScreenDestination) },
             )
         }
@@ -269,18 +265,10 @@ fun GeneralSettingsContent(
     GeneralInterfaceSection(
         flat = flat,
         highlightKey = highlightKey,
-        folkXEngineTitle = folkXEngineTitle,
-        folkXEngineSummary = folkXEngineSummary,
-        folkXEngineEnabled = folkXEngineEnabled,
-        onFolkXEngineEnabledChange = { folkXEngineEnabled = it },
-        currentType = currentType,
-        currentSpeed = currentSpeed,
         predictiveBackTitle = predictiveBackTitle,
         predictiveBackSummary = predictiveBackSummary,
         predictiveBackEnabled = predictiveBackEnabled,
         onPredictiveBackEnabledChange = { predictiveBackEnabled = it },
-        showFolkXAnimationTypeDialog = showFolkXAnimationTypeDialog,
-        showFolkXAnimationSpeedDialog = showFolkXAnimationSpeedDialog,
     )
 
     if (kPatchReady) {
@@ -460,18 +448,6 @@ fun GeneralSettingsContent(
 
     if (showDpiDialog.value) {
         DpiChooseDialog(showDpiDialog)
-    }
-
-    if (showFolkXAnimationTypeDialog.value) {
-        FolkXAnimationTypeDialog(showFolkXAnimationTypeDialog) { newType ->
-            currentType = newType
-        }
-    }
-
-    if (showFolkXAnimationSpeedDialog.value) {
-        FolkXAnimationSpeedDialog(showFolkXAnimationSpeedDialog) { newSpeed ->
-            currentSpeed = newSpeed
-        }
     }
 
     if (showAppListLoadingSchemeDialog.value) {

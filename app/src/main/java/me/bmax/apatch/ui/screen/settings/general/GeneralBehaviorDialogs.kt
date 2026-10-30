@@ -233,65 +233,6 @@ fun LauncherIconStyleDialog(showDialog: MutableState<Boolean>, onStyleChanged: (
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FolkXAnimationTypeDialog(showDialog: MutableState<Boolean>, onTypeChanged: (String) -> Unit = {}) {
-    val prefs = APApplication.sharedPreferences
-
-    ExpressiveDialog(
-        onDismissRequest = { showDialog.value = false },
-    ) {
-        Column(modifier = Modifier.padding(FolkDimens.Size24)) {
-            Text(
-                text = stringResource(R.string.settings_folkx_animation_type),
-                style = MaterialTheme.typography.headlineSmall,
-                modifier = Modifier.padding(bottom = FolkDimens.Size16)
-            )
-
-            val currentType = remember { prefs.getString("folkx_animation_type", "linear") }
-
-            Surface(
-                shape = FolkShape.Corner12,
-                color = AlertDialogDefaults.containerColor,
-                tonalElevation = FolkDimens.Size2
-            ) {
-                Column {
-                    listOf("linear", "spatial", "fade", "vertical", "diagonal").forEach { type ->
-                        val labelId = when (type) {
-                            "linear" -> R.string.settings_folkx_animation_linear
-                            "spatial" -> R.string.settings_folkx_animation_spatial
-                            "fade" -> R.string.settings_folkx_animation_fade
-                            "vertical" -> R.string.settings_folkx_animation_vertical
-                            "diagonal" -> R.string.settings_folkx_animation_diagonal
-                            else -> R.string.settings_folkx_animation_linear
-                        }
-                        SegmentedSelectableItem(
-                            title = stringResource(labelId),
-                            selected = currentType == type,
-                            onClick = {
-                                prefs.edit().putString("folkx_animation_type", type).apply()
-                                onTypeChanged(type)
-                                showDialog.value = false
-                            }
-                        )
-                    }
-                }
-            }
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = FolkDimens.Size24),
-                horizontalArrangement = Arrangement.End
-            ) {
-                TextButton(onClick = { showDialog.value = false }) {
-                    Text(stringResource(id = android.R.string.cancel))
-                }
-            }
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
 fun AppListLoadingSchemeDialog(showDialog: MutableState<Boolean>, onSchemeChanged: (String) -> Unit = {}) {
     val prefs = APApplication.sharedPreferences
 

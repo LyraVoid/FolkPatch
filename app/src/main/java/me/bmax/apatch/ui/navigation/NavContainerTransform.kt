@@ -163,7 +163,8 @@ private fun ContentDrawScope.drawContainerTransform(
         originThemeSignature = origin.themeSignature,
         currentThemeSignature = themeSignature,
         surfaceColor = surfaceColor,
-        hasSnapshot = popping && origin.bitmap != null,
+        popping = popping,
+        hasSnapshot = origin.bitmap != null,
         fraction = fraction,
     )
     val path = Path().apply {
@@ -185,7 +186,11 @@ private fun ContentDrawScope.drawContainerTransform(
         }
     }
 
-    val veilAlpha = surfaceVeilAlpha(fraction)
+    val veilAlpha = if (popping) {
+        popSurfaceVeilAlpha(fraction) * if (appearance.snapshotEnabled) SnapshotWashAlpha else 1f
+    } else {
+        pushSurfaceVeilAlpha(fraction)
+    }
     if (veilAlpha > 0f) {
         drawRoundRect(
             color = lerp(appearance.fillColor, surfaceColor, fraction).copy(alpha = veilAlpha),
@@ -211,6 +216,7 @@ private fun ContentDrawScope.drawContainerTransform(
 
 internal data class ContainerAppearance(
     val fillColor: androidx.compose.ui.graphics.Color,
+    val snapshotEnabled: Boolean,
     val snapshotAlpha: Float,
 )
 
@@ -219,13 +225,16 @@ internal fun resolveContainerAppearance(
     originThemeSignature: Int,
     currentThemeSignature: Int,
     surfaceColor: androidx.compose.ui.graphics.Color,
+    popping: Boolean,
     hasSnapshot: Boolean,
     fraction: Float,
 ): ContainerAppearance {
     val themeMatches = originThemeSignature == currentThemeSignature
+    val snapshotEnabled = themeMatches && popping && hasSnapshot
     return ContainerAppearance(
         fillColor = if (themeMatches) originColor else surfaceColor,
-        snapshotAlpha = if (themeMatches && hasSnapshot) popSnapshotAlpha(fraction) else 0f,
+        snapshotEnabled = snapshotEnabled,
+        snapshotAlpha = if (snapshotEnabled) popSnapshotAlpha(fraction) else 0f,
     )
 }
 
@@ -246,10 +255,16 @@ internal fun interpolateContainerBounds(
 internal fun interpolateContainerCorner(cornerRadius: Float, fraction: Float): Float =
     cornerRadius * (1f - fraction.coerceIn(0f, 1f))
 
-internal fun surfaceVeilAlpha(fraction: Float): Float {
+internal fun pushSurfaceVeilAlpha(fraction: Float): Float {
     val reveal = ((fraction - VeilRevealStart) / (VeilRevealEnd - VeilRevealStart))
         .coerceIn(0f, 1f)
     return 1f - FastOutSlowInEasing.transform(reveal)
+}
+
+internal fun popSurfaceVeilAlpha(fraction: Float): Float {
+    val conceal = ((VeilRevealEnd - fraction) / (VeilRevealEnd - VeilRevealStart))
+        .coerceIn(0f, 1f)
+    return FastOutSlowInEasing.transform(conceal)
 }
 
 internal fun popSnapshotAlpha(fraction: Float): Float {
@@ -264,3 +279,4 @@ private const val VeilRevealStart = 0.08f
 private const val VeilRevealEnd = 0.42f
 private const val SnapshotRevealStart = 0.42f
 private const val SnapshotRevealEnd = 0.14f
+private const val SnapshotWashAlpha = 0.18f

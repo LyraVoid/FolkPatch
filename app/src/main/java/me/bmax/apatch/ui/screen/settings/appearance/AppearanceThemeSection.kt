@@ -1,5 +1,7 @@
 package me.bmax.apatch.ui.screen.settings.appearance
 
+import me.bmax.apatch.ui.component.folk.navOrigin
+import me.bmax.apatch.ui.component.folk.folkGroupColor
 import me.bmax.apatch.ui.theme.tokens.FolkColors
 import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import androidx.compose.foundation.layout.*
@@ -64,6 +66,7 @@ fun AppearanceThemeSection(
                 icon = Icons.Outlined.Store,
                 title = stringResource(id = R.string.theme_store_title),
                 summary = if (themeStoreMode == "compat") stringResource(R.string.theme_mode_compat_desc) else null,
+                modifier = Modifier.navOrigin(color = folkGroupColor()),
                 onClick = { onNavigateToThemeStore() },
             )
         }

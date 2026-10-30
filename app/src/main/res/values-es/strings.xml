@@ -98,15 +98,6 @@
     <string name="settings_grid_working_card_hide_mode">Ocultar modo de trabajo</string>
     <string name="settings_grid_working_card_hide_mode_summary">Ocultar el texto \'Full\' o \'Half\' en la tarjeta de estado</string>
 
-    <string name="settings_folkx_engine_title">Motor de Animación FolkX</string>
-    <string name="settings_folkx_engine_summary">Usar animación elástica basada en física al cambiar entre páginas principales</string>
-    <string name="settings_folkx_animation_type">Tipo de animación</string>
-    <string name="settings_folkx_animation_speed">Velocidad de animación</string>
-    <string name="settings_folkx_animation_linear">Movimiento lineal</string>
-    <string name="settings_folkx_animation_spatial">Movimiento espacial</string>
-    <string name="settings_folkx_animation_fade">Desvanecer Entrada/Salida</string>
-    <string name="settings_folkx_animation_vertical">Deslizar verticalmente</string>
-    <string name="settings_folkx_animation_diagonal">Deslizar diagonalmente</string>
 
     <string name="su_exclude_all_title">Excluir todo</string>
     <string name="su_exclude_all_confirm">¿Estás seguro de que deseas excluir todas las apps no root?</string>

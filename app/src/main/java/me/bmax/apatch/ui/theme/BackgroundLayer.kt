@@ -89,9 +89,6 @@ fun activeBackgroundUriForRoute(route: String?): String? {
 @Composable
 fun BackgroundLayer(
     currentRoute: String? = null,
-    folkXEngineEnabled: Boolean = true,
-    folkXAnimationType: String? = "linear",
-    folkXAnimationSpeed: Float = 1.0f
 ) {
     val context = LocalContext.current
     val prefs = APApplication.sharedPreferences
@@ -210,42 +207,19 @@ fun BackgroundLayer(
 
     // Image Background Logic
     if (BackgroundConfig.isCustomBackgroundEnabled) {
-        // 在单壁纸模式下，所有动画类型都不需要重生成壁纸，保持固定位置
-        val shouldAnimate = folkXEngineEnabled && BackgroundConfig.isMultiBackgroundEnabled
-
-        if (shouldAnimate) {
+        if (BackgroundConfig.isMultiBackgroundEnabled) {
             AnimatedContent(
                 targetState = currentRoute,
                 modifier = Modifier.fillMaxSize(),
                 transitionSpec = {
-                    val initialRoute = initialState
-                    val targetRoute = targetState
-                    
-                    val initialIndex = BottomBarDestination.entries.indexOfFirst { it.direction.route == initialRoute }
-                    val targetIndex = BottomBarDestination.entries.indexOfFirst { it.direction.route == targetRoute }
-
-                    val stiffness = 300f * folkXAnimationSpeed * folkXAnimationSpeed
-                    val duration300 = (300 / folkXAnimationSpeed).toInt()
-                    val duration600 = (600 / folkXAnimationSpeed).toInt()
-
-                    if (initialIndex != -1 && targetIndex != -1) {
-                        fadeIn(animationSpec = tween(duration600)) togetherWith fadeOut(animationSpec = tween(duration600))
-                    } else {
-                        // Default fade for other transitions (e.g. to details)
-                        fadeIn(animationSpec = tween(340)) togetherWith fadeOut(animationSpec = tween(340))
-                    }
+                    fadeIn(animationSpec = tween(340)) togetherWith fadeOut(animationSpec = tween(340))
                 },
                 label = "BackgroundAnimation"
             ) { route ->
-                val rawTargetUri = resolveBackgroundUriForRoute(route)
-                
-                RenderBackgroundImage(rawTargetUri, isDarkTheme)
+                RenderBackgroundImage(resolveBackgroundUriForRoute(route), isDarkTheme)
             }
         } else {
-            // No animation or standard logic
-            val rawTargetUri = resolveBackgroundUriForRoute(currentRoute)
-            
-            RenderBackgroundImage(rawTargetUri, isDarkTheme)
+            RenderBackgroundImage(resolveBackgroundUriForRoute(currentRoute), isDarkTheme)
         }
     }
 }

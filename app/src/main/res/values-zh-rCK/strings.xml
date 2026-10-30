@@ -102,15 +102,6 @@
     <string name="settings_grid_working_card_hide_mode">不显模式字</string>
     <string name="settings_grid_working_card_hide_mode_summary">工牌上那个"Full"啊"Half"啊模式标识收起</string>
 
-    <string name="settings_folkx_engine_title">FolkX 烹饪动画</string>
-    <string name="settings_folkx_engine_summary">在主页面切换时使用丝滑的物理弹簧动画</string>
-    <string name="settings_folkx_animation_type">动画类型</string>
-    <string name="settings_folkx_animation_speed">动画速度</string>
-    <string name="settings_folkx_animation_linear">直线运动</string>
-    <string name="settings_folkx_animation_spatial">空间运动</string>
-    <string name="settings_folkx_animation_fade">渐隐渐显</string>
-    <string name="settings_folkx_animation_vertical">垂直滑动</string>
-    <string name="settings_folkx_animation_diagonal">对角滑动</string>
 
     <string name="about_source_code"><![CDATA[<p>在 %1$s 查看菜谱源码<p/>加入我们的 %2$s 频道<p/>加入我们的 %3$s 群组]]></string>
     <string name="send_log">发送烹饪日志</string>

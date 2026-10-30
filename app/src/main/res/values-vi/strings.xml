@@ -308,15 +308,6 @@
     <string name="setting_reset_su_path">Đặt lại đường dẫn su</string>
     <string name="setting_reset_su_new_path">Đường dẫn đầy đủ mới</string>
 
-    <string name="settings_folkx_engine_title">Động cơ hoạt hình FolkX</string>
-    <string name="settings_folkx_engine_summary">Sử dụng hoạt hình lò xo vật lý mượt mà khi chuyển đổi các trang cấp cao nhất</string>
-    <string name="settings_folkx_animation_type">Loại hoạt hình</string>
-    <string name="settings_folkx_animation_speed">Tốc độ hoạt hình</string>
-    <string name="settings_folkx_animation_linear">Chuyển động tuyến tính</string>
-    <string name="settings_folkx_animation_spatial">Chuyển động không gian</string>
-    <string name="settings_folkx_animation_fade">Mờ dần/Hien dần</string>
-    <string name="settings_folkx_animation_vertical">Trượt theo chiều dọc</string>
-    <string name="settings_folkx_animation_diagonal">Trượt theo đường chéo</string>
 
     <string name="apm_webui_open">Mở</string>
     <string name="apm_action">Hành động</string>
