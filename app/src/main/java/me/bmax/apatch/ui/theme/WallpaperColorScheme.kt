@@ -38,12 +38,7 @@ internal fun generateColorScheme(
                 )
             } else {
                 // Fallback: system dynamic color not available, use selected color as seed
-                val seedOption = themeColorOptions.find { it.key == (customColorScheme ?: "indigo") }
-                val seedColor = if (darkTheme) {
-                    seedOption?.darkPrimary ?: Color(0xFFBAC3FF)
-                } else {
-                    seedOption?.lightPrimary ?: Color(0xFF4355B9)
-                }
+                val seedColor = catalogSeed(customColorScheme, darkTheme)
                 ColorSchemeGenerator.generate(
                     seedColor, darkTheme, style.paletteStyle, standard.specVersion
                 )
@@ -51,12 +46,7 @@ internal fun generateColorScheme(
         }
         // Custom dynamic generation (MaterialKolor) with selected color seed
         colorGenerationMode == "custom" -> {
-            val seedOption = themeColorOptions.find { it.key == (customColorScheme ?: "indigo") }
-            val seedColor = if (darkTheme) {
-                seedOption?.darkPrimary ?: Color(0xFFBAC3FF)
-            } else {
-                seedOption?.lightPrimary ?: Color(0xFF4355B9)
-            }
+            val seedColor = catalogSeed(customColorScheme, darkTheme)
             val standard = ColorStandard.fromName(colorStandard)
             val style = ColorStyle.fromName(colorStyle)
             ColorSchemeGenerator.generate(
@@ -75,6 +65,12 @@ internal fun generateColorScheme(
         else -> FolkThemeCatalog.scheme(customColorScheme, darkTheme)
     }
     return scheme.withSemanticError(darkTheme)
+}
+
+internal fun catalogSeed(key: String?, dark: Boolean): Color {
+    val option = themeColorOptions.find { it.key == (key ?: "indigo") }
+        ?: themeColorOptions.first { it.key == "indigo" }
+    return FolkThemeCatalog.scheme(option.key, dark).primary
 }
 
 internal fun ColorScheme.withSemanticError(isDark: Boolean): ColorScheme {
@@ -134,7 +130,7 @@ internal fun adaptColorScheme(
             dynamicColor = dynamicColor,
             customColorScheme = customColorScheme,
             colorStandard = colorStandard,
-            colorStyle = colorStyle,
+            colorStyle = ColorStyle.NEUTRAL.name,
         )
     }
 

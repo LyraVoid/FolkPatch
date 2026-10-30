@@ -6,6 +6,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import com.materialkolor.PaletteStyle
 import com.materialkolor.dynamiccolor.ColorSpec
+import me.bmax.apatch.ui.component.themeColorOptions
+import me.bmax.apatch.ui.theme.tokens.FolkThemeCatalog
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -87,6 +89,17 @@ class WallpaperColorSchemeTest {
     fun generationDefaultsMatchFinaSU() {
         assertEquals(ColorGenerationMode.CUSTOM, ColorGenerationMode.fromKey(null))
         assertEquals(ColorStandard.M3E_2025, ColorStandard.fromName(null))
+    }
+
+    @Test
+    fun catalogSeedsFollowClassicPrimaryForBothModes() {
+        for (option in themeColorOptions) {
+            for (dark in listOf(false, true)) {
+                assertEquals(FolkThemeCatalog.scheme(option.key, dark).primary, catalogSeed(option.key, dark))
+            }
+        }
+        assertEquals(Color(0xFF44D8F1), catalogSeed("cyan", true))
+        assertEquals(catalogSeed("indigo", true), catalogSeed("invalid", true))
     }
 
     @Test
