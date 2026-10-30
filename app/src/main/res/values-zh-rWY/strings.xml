@@ -1453,10 +1453,6 @@ KernelPatch 須用 boot 之像以補。
     <string name="color_style_neutral">中和</string>
     <string name="color_style_fidelity">傳真</string>
     <!-- Color Contrast -->
-    <string name="color_contrast_label">對比</string>
-    <string name="color_contrast_standard">常</string>
-    <string name="color_contrast_medium">中</string>
-    <string name="color_contrast_high">極</string>
     <string name="settings_jailbreak_mode">越獄之式</string>
     <string name="settings_jailbreak_mode_summary">"於原核之上載 KernelPatch 之件。此式不許補。"</string>
     <string name="settings_jailbreak_soft_reboot">軟重啟</string>

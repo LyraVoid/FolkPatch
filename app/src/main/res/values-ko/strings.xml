@@ -1361,10 +1361,6 @@ KernelPatch는 boot 이미지를 패치해야 합니다.
     <string name="color_style_neutral">중립</string>
     <string name="color_style_fidelity">충실도</string>
     <!-- Color Contrast -->
-    <string name="color_contrast_label">대비</string>
-    <string name="color_contrast_standard">표준</string>
-    <string name="color_contrast_medium">중간</string>
-    <string name="color_contrast_high">높음</string>
     <string name="settings_focus_card_background">FocusUI 카드 배경</string>
     <string name="settings_focus_card_background_enabled">FocusUI 카드 배경 활성화됨; 카드를 길게 눌러 배경 관리</string>
     <string name="settings_focus_card_background_summary">FocusUI 카드 배경 및 길게 눌러 배경 관리 활성화</string>

@@ -1377,10 +1377,6 @@ KernelPatch 需要修補 boot 映像檔。
     <string name="color_style_neutral">中性</string>
     <string name="color_style_fidelity">保真</string>
     <!-- Color Contrast -->
-    <string name="color_contrast_label">對比度</string>
-    <string name="color_contrast_standard">標準</string>
-    <string name="color_contrast_medium">中等</string>
-    <string name="color_contrast_high">高</string>
     <string name="settings_title_image_permission_required">請先授予儲存空間權限才能選擇標題圖片</string>
     <string name="settings_background_permission_required">請先授予儲存空間權限才能選擇背景圖片</string>
     <string name="settings_sound_effect_save_failed">儲存音效檔案失敗</string>

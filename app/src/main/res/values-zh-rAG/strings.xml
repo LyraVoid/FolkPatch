@@ -1382,10 +1382,6 @@ KernelPatch 需要修补 boot 镜像才能工作喵。
     <string name="color_style_neutral">中性喵</string>
     <string name="color_style_fidelity">保真喵</string>
     <!-- Color Contrast -->
-    <string name="color_contrast_label">对比度喵</string>
-    <string name="color_contrast_standard">标准喵</string>
-    <string name="color_contrast_medium">中等喵</string>
-    <string name="color_contrast_high">高喵</string>
     <string name="settings_focus_card_background">FocusUI 卡片壁纸喵</string>
     <string name="settings_focus_card_background_enabled">FocusUI 卡片壁纸已开启喵，长按卡片管理壁纸喵</string>
     <string name="settings_focus_card_background_summary">启用 FocusUI 卡片壁纸及长按壁纸管理喵</string>

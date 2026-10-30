@@ -1456,10 +1456,6 @@ Here are some possible reasons for authentication failure—please check which o
     <string name="color_style_neutral">Neutral</string>
     <string name="color_style_fidelity">Fidelity</string>
     <!-- Color Contrast -->
-    <string name="color_contrast_label">Contrast</string>
-    <string name="color_contrast_standard">Standard</string>
-    <string name="color_contrast_medium">Medium</string>
-    <string name="color_contrast_high">High</string>
     <string name="settings_jailbreak_mode">Jailbreak mode</string>
     <string name="settings_jailbreak_mode_summary">"Load the KernelPatch module on a stock kernel. Patching is not allowed in this mode."</string>
     <string name="settings_jailbreak_soft_reboot">Soft reboot</string>

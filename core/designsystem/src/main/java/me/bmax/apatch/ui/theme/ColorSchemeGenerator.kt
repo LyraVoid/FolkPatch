@@ -2,7 +2,7 @@ package me.bmax.apatch.ui.theme
 
 import android.content.Context
 import android.os.Build
-import android.util.LruCache
+import androidx.collection.LruCache
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
@@ -28,16 +28,18 @@ object ColorSchemeGenerator {
         isDark: Boolean,
         style: PaletteStyle,
         specVersion: ColorSpec.SpecVersion,
-        contrastLevel: Double = 0.0,
     ): ColorScheme {
-        val key = "${seedColor.value}_${style.name}_${specVersion.name}_${contrastLevel}_$isDark"
+        val effectiveSpec = if (specVersion == ColorSpec.SpecVersion.SPEC_2025 &&
+            style !in setOf(PaletteStyle.TonalSpot, PaletteStyle.Neutral, PaletteStyle.Vibrant, PaletteStyle.Expressive)
+        ) ColorSpec.SpecVersion.SPEC_2021 else specVersion
+        val key = "${seedColor.value}_${style.name}_${effectiveSpec.name}_$isDark"
         return cache.get(key) ?: run {
             val scheme = dynamicColorScheme(
                 seedColor = seedColor,
                 isDark = isDark,
                 style = style,
-                specVersion = specVersion,
-                contrastLevel = contrastLevel,
+                specVersion = effectiveSpec,
+                contrastLevel = 0.0,
             )
             cache.put(key, scheme)
             scheme
@@ -50,10 +52,9 @@ object ColorSchemeGenerator {
         isDark: Boolean,
         style: PaletteStyle,
         specVersion: ColorSpec.SpecVersion,
-        contrastLevel: Double = 0.0,
     ): ColorScheme {
         val seedColor = extractSystemSeedColor(context, isDark)
-        return generate(seedColor, isDark, style, specVersion, contrastLevel)
+        return generate(seedColor, isDark, style, specVersion)
     }
 
     private fun extractSystemSeedColor(context: Context, isDark: Boolean): Color {

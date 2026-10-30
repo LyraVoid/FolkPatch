@@ -1346,10 +1346,6 @@ KernelPatch требует образ boot для патча.
     <string name="color_style_neutral">Нейтральный</string>
     <string name="color_style_fidelity">Точность</string>
     <!-- Color Contrast -->
-    <string name="color_contrast_label">Контраст</string>
-    <string name="color_contrast_standard">Стандартный</string>
-    <string name="color_contrast_medium">Средний</string>
-    <string name="color_contrast_high">Высокий</string>
     <string name="settings_focus_card_background">Обои карточки FocusUI</string>
     <string name="settings_focus_card_background_enabled">Обои карточки FocusUI включены; удерживайте карточку для управления обоями</string>
     <string name="settings_focus_card_background_summary">Включить обои карточки FocusUI и управление обоями через удержание</string>

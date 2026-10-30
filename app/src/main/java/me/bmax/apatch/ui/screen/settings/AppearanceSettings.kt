@@ -8,7 +8,6 @@ import android.os.Build
 import me.bmax.apatch.ui.theme.ColorGenerationMode
 import me.bmax.apatch.ui.theme.ColorStandard
 import me.bmax.apatch.ui.theme.ColorStyle
-import me.bmax.apatch.ui.theme.ColorContrast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
@@ -128,7 +127,6 @@ fun AppearanceSettingsContent(
     var colorGenerationMode by remember { mutableStateOf(ColorGenerationMode.fromKey(prefs.getString("color_generation_mode", "custom"))) }
     var colorStandard by remember { mutableStateOf(ColorStandard.fromName(prefs.getString("color_standard", "M3E_2025"))) }
     var colorStyle by remember { mutableStateOf(ColorStyle.fromName(prefs.getString("color_style", "TONAL_SPOT"))) }
-    var colorContrast by remember { mutableStateOf(ColorContrast.fromName(prefs.getString("color_contrast", "STANDARD"))) }
 
     var currentStyle by remember { mutableStateOf(prefs.getString("home_layout_style", APApplication.HOME_LAYOUT_STYLE_DEFAULT)) }
 
@@ -142,7 +140,6 @@ fun AppearanceSettingsContent(
         colorGenerationMode = ColorGenerationMode.fromKey(prefs.getString("color_generation_mode", "custom"))
         colorStandard = ColorStandard.fromName(prefs.getString("color_standard", "M3E_2025"))
         colorStyle = ColorStyle.fromName(prefs.getString("color_style", "TONAL_SPOT"))
-        colorContrast = ColorContrast.fromName(prefs.getString("color_contrast", "STANDARD"))
         currentStyle = prefs.getString("home_layout_style", APApplication.HOME_LAYOUT_STYLE_DEFAULT)
     }
 
@@ -183,7 +180,6 @@ fun AppearanceSettingsContent(
                 "color_generation_mode" -> colorGenerationMode = ColorGenerationMode.fromKey(prefs.getString(key, "custom"))
                 "color_standard" -> colorStandard = ColorStandard.fromName(prefs.getString(key, "M3E_2025"))
                 "color_style" -> colorStyle = ColorStyle.fromName(prefs.getString(key, "TONAL_SPOT"))
-                "color_contrast" -> colorContrast = ColorContrast.fromName(prefs.getString(key, "STANDARD"))
                 "home_layout_style" -> currentStyle = prefs.getString(key, APApplication.HOME_LAYOUT_STYLE_DEFAULT)
                 "stats_top_layout" -> statsTopLayout = prefs.getString(key, "list") ?: "list"
                 "show_nav_apm" -> showNavApm = prefs.getBoolean(key, true)
@@ -237,7 +233,6 @@ fun AppearanceSettingsContent(
             colorGenerationMode = colorGenerationMode,
             colorStandard = colorStandard,
             colorStyle = colorStyle,
-            colorContrast = colorContrast,
             amoledTheme = amoledTheme,
             onThemeModeSelected = { mode ->
                 when (mode) {
@@ -282,11 +277,6 @@ fun AppearanceSettingsContent(
             onStyleSelected = { style ->
                 colorStyle = style
                 prefs.edit().putString("color_style", style.name).apply()
-                refreshTheme.value = true
-            },
-            onContrastSelected = { contrast ->
-                colorContrast = contrast
-                prefs.edit().putString("color_contrast", contrast.name).apply()
                 refreshTheme.value = true
             },
             onAmoledChange = { value ->

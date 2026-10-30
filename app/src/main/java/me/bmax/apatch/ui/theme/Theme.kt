@@ -155,7 +155,6 @@ fun APatchTheme(
     var colorGenerationMode by remember { mutableStateOf(prefs.getString("color_generation_mode", "custom")) }
     var colorStandard by remember { mutableStateOf(prefs.getString("color_standard", "M3E_2025")) }
     var colorStyle by remember { mutableStateOf(prefs.getString("color_style", "TONAL_SPOT")) }
-    var colorContrast by remember { mutableStateOf(prefs.getString("color_contrast", "STANDARD")) }
 
     DisposableEffect(prefs) {
         val listener = android.content.SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
@@ -168,7 +167,6 @@ fun APatchTheme(
                 "color_generation_mode" -> colorGenerationMode = prefs.getString(key, "custom")
                 "color_standard" -> colorStandard = prefs.getString(key, "M3E_2025")
                 "color_style" -> colorStyle = prefs.getString(key, "TONAL_SPOT")
-                "color_contrast" -> colorContrast = prefs.getString(key, "STANDARD")
             }
         }
         prefs.registerOnSharedPreferenceChangeListener(listener)
@@ -191,7 +189,6 @@ fun APatchTheme(
             colorGenerationMode = prefs.getString("color_generation_mode", "custom")
             colorStandard = prefs.getString("color_standard", "M3E_2025")
             colorStyle = prefs.getString("color_style", "TONAL_SPOT")
-            colorContrast = prefs.getString("color_contrast", "STANDARD")
             BackgroundManager.loadCustomBackground(context)
             FontConfig.load(context)
             me.bmax.apatch.util.ui.FloatingBarConfig.load(context)
@@ -205,8 +202,6 @@ fun APatchTheme(
         nightModeEnabled
     }
 
-    val contrastLevel = ColorContrast.fromName(colorContrast).level
-
     val baseColorScheme = generateColorScheme(
         context = context,
         darkTheme = darkTheme,
@@ -215,7 +210,6 @@ fun APatchTheme(
         customColorScheme = customColorScheme,
         colorStandard = colorStandard,
         colorStyle = colorStyle,
-        contrastLevel = contrastLevel,
     )
 
     val useCustomBackground = allowCustomBackground && BackgroundConfig.isCustomBackgroundEnabled
@@ -231,7 +225,6 @@ fun APatchTheme(
         customColorScheme = customColorScheme,
         colorStandard = colorStandard,
         colorStyle = colorStyle,
-        contrastLevel = contrastLevel,
     )
     val colorScheme = wallpaperTheme.colorScheme
 
@@ -377,4 +370,3 @@ fun APatchThemeWithBackground(
         }
     }
 }
-

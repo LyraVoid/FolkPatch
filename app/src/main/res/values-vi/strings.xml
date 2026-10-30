@@ -1345,10 +1345,6 @@ Dưới đây là một số nguyên nhân có thể gây ra thất bại xác t
     <string name="color_style_neutral">Trung tính</string>
     <string name="color_style_fidelity">Trung thực</string>
     <!-- Color Contrast -->
-    <string name="color_contrast_label">Độ tương phản</string>
-    <string name="color_contrast_standard">Tiêu chuẩn</string>
-    <string name="color_contrast_medium">Trung bình</string>
-    <string name="color_contrast_high">Cao</string>
     <string name="settings_focus_card_background">Hình nền thẻ FocusUI</string>
     <string name="settings_focus_card_background_enabled">Hình nền thẻ FocusUI đã bật; nhấn giữ thẻ để quản lý hình nền</string>
     <string name="settings_focus_card_background_summary">Bật hình nền thẻ FocusUI và quản lý hình nền bằng nhấn giữ</string>

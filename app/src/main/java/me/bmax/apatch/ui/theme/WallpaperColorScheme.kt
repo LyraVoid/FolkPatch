@@ -26,7 +26,6 @@ internal fun generateColorScheme(
     customColorScheme: String?,
     colorStandard: String?,
     colorStyle: String?,
-    contrastLevel: Double,
 ): ColorScheme {
     val scheme = when {
         // Custom dynamic generation (MaterialKolor) with system wallpaper seed
@@ -35,7 +34,7 @@ internal fun generateColorScheme(
             val style = ColorStyle.fromName(colorStyle)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 ColorSchemeGenerator.generateFromContext(
-                    context, darkTheme, style.paletteStyle, standard.specVersion, contrastLevel
+                    context, darkTheme, style.paletteStyle, standard.specVersion
                 )
             } else {
                 // Fallback: system dynamic color not available, use selected color as seed
@@ -46,7 +45,7 @@ internal fun generateColorScheme(
                     seedOption?.lightPrimary ?: Color(0xFF4355B9)
                 }
                 ColorSchemeGenerator.generate(
-                    seedColor, darkTheme, style.paletteStyle, standard.specVersion, contrastLevel
+                    seedColor, darkTheme, style.paletteStyle, standard.specVersion
                 )
             }
         }
@@ -61,7 +60,7 @@ internal fun generateColorScheme(
             val standard = ColorStandard.fromName(colorStandard)
             val style = ColorStyle.fromName(colorStyle)
             ColorSchemeGenerator.generate(
-                seedColor, darkTheme, style.paletteStyle, standard.specVersion, contrastLevel
+                seedColor, darkTheme, style.paletteStyle, standard.specVersion
             )
         }
         // System dynamic color (standard Material3 wallpaper extraction)
@@ -110,7 +109,6 @@ internal fun adaptColorScheme(
     customColorScheme: String?,
     colorStandard: String?,
     colorStyle: String?,
-    contrastLevel: Double,
 ): WallpaperThemeResult {
     if (!useCustomBackground) {
         val scheme = if (darkTheme && amoledTheme) baseColorScheme.toAmoled() else baseColorScheme
@@ -137,7 +135,6 @@ internal fun adaptColorScheme(
             customColorScheme = customColorScheme,
             colorStandard = colorStandard,
             colorStyle = colorStyle,
-            contrastLevel = contrastLevel,
         )
     }
 

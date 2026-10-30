@@ -19,7 +19,6 @@ import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.ColorGenerationModeSelector
 import me.bmax.apatch.ui.component.ColorStandardSelector
 import me.bmax.apatch.ui.component.ColorStylePicker
-import me.bmax.apatch.ui.component.ColorContrastSelector
 import me.bmax.apatch.ui.component.ExpressiveSwitch
 import me.bmax.apatch.ui.component.SliderStyleConfig
 import me.bmax.apatch.ui.component.SwitchIconState
@@ -32,7 +31,6 @@ import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.ui.theme.ColorGenerationMode
 import me.bmax.apatch.ui.theme.ColorStandard
 import me.bmax.apatch.ui.theme.ColorStyle
-import me.bmax.apatch.ui.theme.ColorContrast
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import me.bmax.apatch.ui.component.folk.folkPressScale
@@ -51,7 +49,6 @@ fun AppearanceNightModeSection(
     colorGenerationMode: ColorGenerationMode,
     colorStandard: ColorStandard,
     colorStyle: ColorStyle,
-    colorContrast: ColorContrast,
     amoledTheme: Boolean,
     onThemeModeSelected: (ThemeMode) -> Unit,
     onColorSelected: (String) -> Unit,
@@ -59,7 +56,6 @@ fun AppearanceNightModeSection(
     onGenerationModeSelected: (ColorGenerationMode) -> Unit,
     onStandardSelected: (ColorStandard) -> Unit,
     onStyleSelected: (ColorStyle) -> Unit,
-    onContrastSelected: (ColorContrast) -> Unit,
     onAmoledChange: (Boolean) -> Unit,
 ) {
     val prefs = APApplication.sharedPreferences
@@ -118,14 +114,6 @@ fun AppearanceNightModeSection(
                 )
             }
 
-            item(key = "appearance_color_contrast") {
-                ColorContrastSelector(
-                    selectedContrast = colorContrast,
-                    onContrastSelected = onContrastSelected,
-                    flat = flat,
-                    bare = true,
-                )
-            }
         }
 
         if (isDarkTheme) {

@@ -1270,10 +1270,6 @@ KernelPatch は boot イメージをパッチする必要があります。
     <string name="color_style_neutral">ニュートラル</string>
     <string name="color_style_fidelity">フィデリティ</string>
     <!-- Color Contrast -->
-    <string name="color_contrast_label">コントラスト</string>
-    <string name="color_contrast_standard">標準</string>
-    <string name="color_contrast_medium">中</string>
-    <string name="color_contrast_high">高</string>
     <string name="settings_focus_card_background">FocusUI カード壁紙</string>
     <string name="settings_focus_card_background_enabled">FocusUI カード壁紙が有効になりました。カードを長押しして壁紙を管理</string>
     <string name="settings_focus_card_background_summary">FocusUI カード壁紙と長押し壁紙管理を有効化</string>

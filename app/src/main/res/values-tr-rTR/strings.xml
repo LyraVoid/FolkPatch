@@ -1346,10 +1346,6 @@ Bol şans! Ayrıca, aşağıdaki belge butonuna tıklamak kesinlikle doğru!</st
     <string name="color_style_neutral">Nötr</string>
     <string name="color_style_fidelity">Sadakat</string>
     <!-- Color Contrast -->
-    <string name="color_contrast_label">Kontrast</string>
-    <string name="color_contrast_standard">Standart</string>
-    <string name="color_contrast_medium">Orta</string>
-    <string name="color_contrast_high">Yüksek</string>
     <string name="settings_focus_card_background">FocusUI Kart Duvar Kağıdı</string>
     <string name="settings_focus_card_background_enabled">FocusUI kart duvar kağıtları etkin; bir kartı yönetmek için uzun basın</string>
     <string name="settings_focus_card_background_summary">FocusUI kart duvar kağıtlarını ve uzun basarak duvar kağıdı yönetimini etkinleştir</string>

@@ -1347,10 +1347,6 @@ Aqui estão algumas possíveis razões para a falha de autenticação—verifiqu
     <string name="color_style_neutral">Neutro</string>
     <string name="color_style_fidelity">Fidelidade</string>
     <!-- Color Contrast -->
-    <string name="color_contrast_label">Contraste</string>
-    <string name="color_contrast_standard">Padrão</string>
-    <string name="color_contrast_medium">Médio</string>
-    <string name="color_contrast_high">Alto</string>
     <string name="settings_focus_card_background">Papel de parede do cartão FocusUI</string>
     <string name="settings_focus_card_background_enabled">Papéis de parede do cartão FocusUI ativados; pressione longamente um cartão para gerenciar seu papel de parede</string>
     <string name="settings_focus_card_background_summary">Ativar papéis de parede do cartão FocusUI e gerenciamento por pressão longa</string>

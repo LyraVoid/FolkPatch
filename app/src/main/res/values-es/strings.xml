@@ -1340,10 +1340,6 @@ Aquí hay algunas posibles razones para el fallo de autenticación—por favor v
     <string name="color_style_neutral">Neutro</string>
     <string name="color_style_fidelity">Fidelidad</string>
     <!-- Color Contrast -->
-    <string name="color_contrast_label">Contraste</string>
-    <string name="color_contrast_standard">Estándar</string>
-    <string name="color_contrast_medium">Medio</string>
-    <string name="color_contrast_high">Alto</string>
     <string name="settings_focus_card_background">Fondo de tarjeta FocusUI</string>
     <string name="settings_focus_card_background_enabled">Fondos de tarjeta FocusUI activados; mantén pulsada una tarjeta para gestionar su fondo</string>
     <string name="settings_focus_card_background_summary">Activar fondos de tarjeta FocusUI y gestión de fondo con pulsación larga</string>

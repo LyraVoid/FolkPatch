@@ -1325,10 +1325,6 @@
     <string name="color_style_neutral">محايد</string>
     <string name="color_style_fidelity">دقة</string>
     <!-- Color Contrast -->
-    <string name="color_contrast_label">التباين</string>
-    <string name="color_contrast_standard">قياسي</string>
-    <string name="color_contrast_medium">متوسط</string>
-    <string name="color_contrast_high">عالٍ</string>
     <string name="settings_focus_card_background">خلفية بطاقة FocusUI</string>
     <string name="settings_focus_card_background_enabled">تم تمكين خلفيات بطاقة FocusUI؛ اضغط مطولاً على بطاقة لإدارة خلفيتها</string>
     <string name="settings_focus_card_background_summary">تمكين خلفيات بطاقة FocusUI وإدارة الخلفية بالضغط المطول</string>

@@ -1271,10 +1271,6 @@ Kontynuować mimo to?</string>
     <string name="color_style_neutral">Neutralny</string>
     <string name="color_style_fidelity">Wierność</string>
     <!-- Color Contrast -->
-    <string name="color_contrast_label">Kontrast</string>
-    <string name="color_contrast_standard">Standardowy</string>
-    <string name="color_contrast_medium">Średni</string>
-    <string name="color_contrast_high">Wysoki</string>
     <string name="settings_focus_card_background">Tapeta karty FocusUI</string>
     <string name="settings_focus_card_background_enabled">Tapety kart FocusUI włączone; przytrzymaj kartę, aby zarządzać jej tapetą</string>
     <string name="settings_focus_card_background_summary">Włącz tapety kart FocusUI i zarządzanie tapetą przez przytrzymanie</string>

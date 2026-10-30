@@ -1335,10 +1335,6 @@ KernelPatch 魔法阵需要 boot 核心来施展。
     <string name="color_style_neutral">中立魔法</string>
     <string name="color_style_fidelity">保真魔法</string>
     <!-- Color Contrast -->
-    <string name="color_contrast_label">对比度魔法</string>
-    <string name="color_contrast_standard">标准魔法</string>
-    <string name="color_contrast_medium">中等魔法</string>
-    <string name="color_contrast_high">高魔法</string>
     <string name="settings_focus_card_background">FocusUI 卡片壁纸</string>
     <string name="settings_focus_card_background_enabled">FocusUI 卡片壁纸已开启，长按卡片管理壁纸</string>
     <string name="settings_focus_card_background_summary">启用 FocusUI 卡片壁纸及长按壁纸管理</string>

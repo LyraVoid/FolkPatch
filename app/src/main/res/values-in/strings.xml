@@ -1328,10 +1328,6 @@ Berikut adalah beberapa kemungkinan penyebab kegagalan autentikasi—silakan cek
     <string name="color_style_neutral">Netral</string>
     <string name="color_style_fidelity">Fidelitas</string>
     <!-- Color Contrast -->
-    <string name="color_contrast_label">Kontras</string>
-    <string name="color_contrast_standard">Standar</string>
-    <string name="color_contrast_medium">Sedang</string>
-    <string name="color_contrast_high">Tinggi</string>
     <string name="settings_focus_card_background">Latar Kartu FocusUI</string>
     <string name="settings_focus_card_background_enabled">Latar kartu FocusUI diaktifkan; tekan lama kartu untuk mengelola latarnya</string>
     <string name="settings_focus_card_background_summary">Aktifkan latar kartu FocusUI dan kelola latar dengan tekan lama</string>
