@@ -37,6 +37,7 @@ import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.KeyEventBlocker
 import me.bmax.apatch.ui.component.folk.FolkScaffold
+import me.bmax.apatch.ui.component.folk.FolkTitleStyle
 import me.bmax.apatch.ui.theme.tokens.FolkMotion
 import me.bmax.apatch.util.getSafeDownloadsDir
 import me.bmax.apatch.util.runAPModuleAction
@@ -128,6 +129,7 @@ fun ExecuteAPMActionScreen(navigator: DestinationsNavigator, moduleId: String) {
 
     FolkScaffold(
         title = stringResource(R.string.apm_action),
+        titleStyle = FolkTitleStyle.Flexible,
         onBack = dropUnlessResumed {
             navigator.popBackStack()
         },

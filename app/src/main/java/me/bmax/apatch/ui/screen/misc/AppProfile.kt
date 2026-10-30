@@ -59,6 +59,7 @@ import me.bmax.apatch.Natives
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.SegmentedColumn
 import me.bmax.apatch.ui.component.folk.FolkScaffold
+import me.bmax.apatch.ui.component.folk.FolkTitleStyle
 import me.bmax.apatch.ui.viewmodel.SuperUserViewModel
 import me.bmax.apatch.util.PkgConfig
 import me.bmax.apatch.util.SuAuditLog
@@ -105,6 +106,7 @@ fun AppProfileScreen(
 
     FolkScaffold(
         title = stringResource(R.string.su_title),
+        titleStyle = FolkTitleStyle.Flexible,
         onBack = { navigator.popBackStack() },
         actions = {
             IconButton(onClick = {

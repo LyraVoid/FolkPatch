@@ -220,7 +220,7 @@ fun ApmBulkInstallScreen(navigator: DestinationsNavigator, initialUris: ArrayLis
 
     FolkScaffold(
         title = stringResource(R.string.apm_bulk_install_title),
-        titleStyle = FolkTitleStyle.Inline,
+        titleStyle = FolkTitleStyle.Flexible,
         onBack = { navigator.navigateUp() },
     ) { innerPadding ->
         Column(

@@ -17,8 +17,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.SwapHoriz
@@ -26,6 +28,8 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -33,6 +37,8 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -41,10 +47,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ramcosta.composedestinations.annotation.Destination
@@ -59,6 +67,7 @@ import me.bmax.apatch.ui.component.SearchAppBar
 import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenu
 import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenuItem
 import me.bmax.apatch.ui.component.folk.FolkScaffold
+import me.bmax.apatch.ui.component.rememberSearchAppBarScrollBehavior
 import me.bmax.apatch.ui.viewmodel.OnlineModuleViewModel
 import me.bmax.apatch.ui.viewmodel.RepoModuleViewModel
 import me.bmax.apatch.util.DownloadListener
@@ -70,6 +79,7 @@ import me.bmax.apatch.ui.component.folk.folkGroupColor
 import me.bmax.apatch.ui.theme.tokens.FolkShape
 import androidx.compose.material.icons.outlined.Warning
 
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Destination<RootGraph>
 @Composable
 fun OnlineModuleScreen(navigator: DestinationsNavigator) {
@@ -83,6 +93,13 @@ fun OnlineModuleScreen(navigator: DestinationsNavigator) {
     var showSourceMenu by remember { mutableStateOf(false) }
     var showRepoUrlDialog by remember { mutableStateOf(false) }
     var showRepoSelectDialog by remember { mutableStateOf(false) }
+    val topAppBarScrollBehavior =
+        TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
+    val searchBarScrollBehavior = rememberSearchAppBarScrollBehavior(topAppBarScrollBehavior)
+    val officialGridState = rememberLazyGridState()
+    val repoGridState = rememberLazyGridState()
+    val searchOfficialGridState = rememberLazyGridState()
+    val searchRepoGridState = rememberLazyGridState()
 
     LaunchedEffect(Unit) {
         if (viewModel.modules.isEmpty() && sourceType == "official") {
@@ -93,6 +110,9 @@ fun OnlineModuleScreen(navigator: DestinationsNavigator) {
     FolkScaffold(
         topBar = {
             SearchAppBar(
+                largeTitle = true,
+                collapsibleSearch = true,
+                scrollBehavior = searchBarScrollBehavior,
                 title = { Text(stringResource(R.string.online_module_title)) },
                 searchText = if (sourceType == "official") viewModel.searchQuery else repoViewModel.searchQuery,
                 onSearchTextChange = {
@@ -104,6 +124,30 @@ fun OnlineModuleScreen(navigator: DestinationsNavigator) {
                     else repoViewModel.onSearchQueryChange("")
                 },
                 onBackClick = { navigator.popBackStack() },
+                defaultContent = { bottomPadding, _ ->
+                    OnlineModuleFullScreenContent(
+                        sourceType = sourceType,
+                        viewModel = viewModel,
+                        repoViewModel = repoViewModel,
+                        repoUrl = repoUrl,
+                        context = context,
+                        officialGridState = searchOfficialGridState,
+                        repoGridState = searchRepoGridState,
+                        bottomPadding = bottomPadding,
+                    )
+                },
+                searchContent = { bottomPadding, _ ->
+                    OnlineModuleFullScreenContent(
+                        sourceType = sourceType,
+                        viewModel = viewModel,
+                        repoViewModel = repoViewModel,
+                        repoUrl = repoUrl,
+                        context = context,
+                        officialGridState = searchOfficialGridState,
+                        repoGridState = searchRepoGridState,
+                        bottomPadding = bottomPadding,
+                    )
+                },
                 trailingActions = {
                     IconButton(onClick = { showSourceMenu = true }) {
                         Icon(Icons.Outlined.SwapHoriz, contentDescription = stringResource(R.string.online_module_source_title))
@@ -143,9 +187,24 @@ fun OnlineModuleScreen(navigator: DestinationsNavigator) {
             .fillMaxSize()
             .padding(innerPadding)) {
             if (sourceType == "official") {
-                OfficialContent(viewModel, context)
+                OfficialContent(
+                    viewModel = viewModel,
+                    context = context,
+                    state = officialGridState,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .nestedScroll(searchBarScrollBehavior.nestedScrollConnection),
+                )
             } else {
-                RepoContent(repoViewModel, repoUrl, context)
+                RepoContent(
+                    viewModel = repoViewModel,
+                    repoUrl = repoUrl,
+                    context = context,
+                    state = repoGridState,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .nestedScroll(searchBarScrollBehavior.nestedScrollConnection),
+                )
             }
         }
 
@@ -188,9 +247,46 @@ fun OnlineModuleScreen(navigator: DestinationsNavigator) {
 }
 
 @Composable
+private fun OnlineModuleFullScreenContent(
+    sourceType: String,
+    viewModel: OnlineModuleViewModel,
+    repoViewModel: RepoModuleViewModel,
+    repoUrl: String,
+    context: Context,
+    officialGridState: LazyGridState,
+    repoGridState: LazyGridState,
+    bottomPadding: Dp,
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(bottom = bottomPadding),
+    ) {
+        if (sourceType == "official") {
+            OfficialContent(
+                viewModel = viewModel,
+                context = context,
+                state = officialGridState,
+                modifier = Modifier.fillMaxSize(),
+            )
+        } else {
+            RepoContent(
+                viewModel = repoViewModel,
+                repoUrl = repoUrl,
+                context = context,
+                state = repoGridState,
+                modifier = Modifier.fillMaxSize(),
+            )
+        }
+    }
+}
+
+@Composable
 private fun OfficialContent(
     viewModel: OnlineModuleViewModel,
-    context: Context
+    context: Context,
+    state: LazyGridState,
+    modifier: Modifier,
 ) {
     LaunchedEffect(Unit) {
         if (viewModel.modules.isEmpty() && !viewModel.isRefreshing) {
@@ -198,7 +294,7 @@ private fun OfficialContent(
         }
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = modifier) {
         if (viewModel.isRefreshing) {
             FolkLoadingIndicator(
                 text = stringResource(R.string.loading_modules),
@@ -219,6 +315,7 @@ private fun OfficialContent(
             LazyVerticalGrid(
                 columns = GridCells.Adaptive(minSize = FolkDimens.Size320),
                 modifier = Modifier.fillMaxSize(),
+                state = state,
                 contentPadding = PaddingValues(FolkDimens.Size16),
                 horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size12),
                 verticalArrangement = Arrangement.spacedBy(FolkDimens.Size12),
@@ -235,7 +332,9 @@ private fun OfficialContent(
 private fun RepoContent(
     viewModel: RepoModuleViewModel,
     repoUrl: String,
-    context: Context
+    context: Context,
+    state: LazyGridState,
+    modifier: Modifier,
 ) {
     LaunchedEffect(repoUrl) {
         if (viewModel.modules.isEmpty() && !viewModel.isRefreshing) {
@@ -243,7 +342,7 @@ private fun RepoContent(
         }
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = modifier) {
         if (viewModel.isRefreshing) {
             FolkLoadingIndicator(
                 text = stringResource(R.string.loading_modules),
@@ -264,6 +363,7 @@ private fun RepoContent(
             LazyVerticalGrid(
                 columns = GridCells.Adaptive(minSize = FolkDimens.Size320),
                 modifier = Modifier.fillMaxSize(),
+                state = state,
                 contentPadding = PaddingValues(FolkDimens.Size16),
                 horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size12),
                 verticalArrangement = Arrangement.spacedBy(FolkDimens.Size12),

@@ -44,6 +44,7 @@ import me.bmax.apatch.R
 import me.bmax.apatch.apApp
 import me.bmax.apatch.data.ScriptInfo
 import me.bmax.apatch.ui.component.folk.FolkScaffold
+import me.bmax.apatch.ui.component.folk.FolkTitleStyle
 import me.bmax.apatch.util.getSafeDownloadsDir
 import me.bmax.apatch.util.ui.AnsiUtils
 import me.bmax.apatch.util.ui.LocalSnackbarHost
@@ -159,6 +160,7 @@ fun ScriptExecutionLogScreen(
 
     FolkScaffold(
         title = stringResource(R.string.script_library_output),
+        titleStyle = FolkTitleStyle.Flexible,
         onBack = { navigator.popBackStack() },
         actions = {
             IconButton(

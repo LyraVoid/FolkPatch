@@ -90,7 +90,7 @@ fun InstallModeSelectScreen(navigator: DestinationsNavigator) {
 
     FolkScaffold(
         title = stringResource(R.string.mode_select_page_title),
-        titleStyle = FolkTitleStyle.Inline,
+        titleStyle = FolkTitleStyle.Flexible,
         onBack = dropUnlessResumed { navigator.popBackStack() },
     ) { padding ->
         Column(

@@ -49,6 +49,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.Dp
 import me.bmax.apatch.ui.component.folk.folkDefaultAppBarColors
+import me.bmax.apatch.ui.component.folk.TopBarBackButton
 import me.bmax.apatch.core.ui.R
 import androidx.compose.ui.res.stringResource
 import me.bmax.apatch.ui.theme.tokens.FolkShape
@@ -98,14 +99,9 @@ fun SearchAppBar(
             },
             navigationIcon = navigationIcon ?: onBackClick?.let { backClick ->
                 {
-                    IconButton(
+                    TopBarBackButton(
                         onClick = backClick,
-                        content = {
-                            Icon(
-                                Icons.AutoMirrored.Outlined.ArrowBack,
-                                stringResource(R.string.core_action_back),
-                            )
-                        },
+                        contentDescription = stringResource(R.string.core_action_back),
                     )
                 }
             },

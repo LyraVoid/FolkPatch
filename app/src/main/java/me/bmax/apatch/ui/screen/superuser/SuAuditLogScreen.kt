@@ -111,7 +111,7 @@ fun SuAuditLogScreen(navigator: DestinationsNavigator) {
 
     FolkScaffold(
         title = stringResource(R.string.su_audit_log_title),
-        titleStyle = FolkTitleStyle.Inline,
+        titleStyle = FolkTitleStyle.Flexible,
         onBack = { navigator.popBackStack() },
         actions = {
             if (kernelEntries.isNotEmpty() || appEntries.isNotEmpty()) {

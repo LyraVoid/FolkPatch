@@ -44,6 +44,7 @@ import kotlinx.coroutines.withContext
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.KeyEventBlocker
 import me.bmax.apatch.ui.component.folk.FolkScaffold
+import me.bmax.apatch.ui.component.folk.FolkTitleStyle
 import me.bmax.apatch.ui.theme.tokens.FolkMotion
 import me.bmax.apatch.util.getSafeDownloadsDir
 import me.bmax.apatch.util.installModule
@@ -145,6 +146,7 @@ fun InstallScreen(navigator: DestinationsNavigator, uri: Uri, type: MODULE_TYPE)
 
     FolkScaffold(
         title = stringResource(R.string.apm_install),
+        titleStyle = FolkTitleStyle.Flexible,
         onBack = dropUnlessResumed {
             if (isExternalInstall) {
                 activity?.finish()

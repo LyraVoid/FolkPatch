@@ -73,7 +73,7 @@ fun Patches(mode: PatchesViewModel.PatchMode) {
     if (jailbreakBlocked) {
         FolkScaffold(
             title = stringResource(R.string.patch_config_title),
-            titleStyle = FolkTitleStyle.Inline,
+            titleStyle = FolkTitleStyle.Flexible,
         ) { innerPadding ->
             Box(
                 modifier = Modifier
@@ -104,7 +104,7 @@ fun Patches(mode: PatchesViewModel.PatchMode) {
 
     FolkScaffold(
         title = stringResource(R.string.patch_config_title),
-        titleStyle = FolkTitleStyle.Inline,
+        titleStyle = FolkTitleStyle.Flexible,
         floatingActionButton = {
         if (viewModel.needReboot) {
             val reboot = stringResource(id = R.string.reboot)

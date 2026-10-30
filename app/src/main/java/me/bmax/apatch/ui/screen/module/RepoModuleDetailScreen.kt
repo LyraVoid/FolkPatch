@@ -42,6 +42,7 @@ import me.bmax.apatch.ui.component.TonalCard
 import me.bmax.apatch.ui.component.ModuleLabel
 import me.bmax.apatch.ui.component.SegmentedColumn
 import me.bmax.apatch.ui.component.folk.FolkScaffold
+import me.bmax.apatch.ui.component.folk.FolkTitleStyle
 import me.bmax.apatch.ui.component.folk.folkInsetColor
 import me.bmax.apatch.ui.viewmodel.RepoModuleViewModel
 import me.bmax.apatch.util.DownloadListener
@@ -72,6 +73,7 @@ fun RepoModuleDetailScreen(
 
     FolkScaffold(
         title = module.name,
+        titleStyle = FolkTitleStyle.Flexible,
         onBack = { navigator.popBackStack() },
     ) { innerPadding ->
         LazyColumn(
