@@ -50,7 +50,8 @@ fun StatusCardCircle(
     kpState: APApplication.State,
     apState: APApplication.State,
     navigator: DestinationsNavigator,
-    showUninstallDialog: MutableState<Boolean>
+    showUninstallDialog: MutableState<Boolean>,
+    modifier: Modifier = Modifier,
 ) {
     val isWorking = kpState == APApplication.State.KERNELPATCH_INSTALLED
     val isUpdate = kpState == APApplication.State.KERNELPATCH_NEED_UPDATE || kpState == APApplication.State.KERNELPATCH_NEED_REBOOT
@@ -74,6 +75,7 @@ fun StatusCardCircle(
     }
 
     TonalCard(
+        modifier = modifier,
         containerColor = finalContainerColor,
         contentColor = if (isWallpaperMode) MaterialTheme.colorScheme.onSurface else null,
         flat = true,
@@ -81,6 +83,7 @@ fun StatusCardCircle(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .fillMaxHeight()
                 .clickable {
                     when {
                         isJailbreak -> jailbreakState.performPrimaryAction()

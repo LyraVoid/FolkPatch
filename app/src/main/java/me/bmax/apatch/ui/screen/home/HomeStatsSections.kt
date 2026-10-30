@@ -1,586 +1,182 @@
 package me.bmax.apatch.ui.screen.home
 
-import me.bmax.apatch.ui.theme.tokens.FolkDimens
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.CheckCircle
+import androidx.compose.material.icons.outlined.Extension
 import androidx.compose.material.icons.outlined.LockOpen
-import androidx.compose.material.icons.outlined.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.SystemUpdate
+import androidx.compose.material.icons.outlined.Warning
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import androidx.compose.ui.text.style.TextOverflow
 import com.ramcosta.composedestinations.generated.destinations.InstallModeSelectScreenDestination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.TonalCard
-import me.bmax.apatch.ui.component.chart.ModulePieChart
-import me.bmax.apatch.ui.component.chart.rememberPieSliceDataFromCounts
-import me.bmax.apatch.ui.component.chart.SystemAreaChart
-import me.bmax.apatch.ui.component.chart.SystemLineChart
-import me.bmax.apatch.util.Version
-import me.bmax.apatch.util.Version.getManagerVersion
-import me.bmax.apatch.ui.viewmodel.SystemMonitorState
-import me.bmax.apatch.ui.viewmodel.TimeSeriesData
+import me.bmax.apatch.ui.theme.BackgroundConfig
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
+import me.bmax.apatch.ui.theme.tokens.FolkType
+import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
 
 @Composable
-fun SystemMonitoringSection(
-    systemMonitor: SystemMonitorState,
-    timeSeries: TimeSeriesData,
-    modifier: Modifier = Modifier
-) {
-    val colors = MaterialTheme.colorScheme
-
-    val cpuDataPoints = timeSeries.cpuHistory
-    val gpuDataPoints = timeSeries.gpuHistory
-    val cpuTempDataPoints = timeSeries.cpuTempHistory
-
-    TonalCard(modifier = modifier) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(FolkDimens.Size16),
-            verticalArrangement = Arrangement.spacedBy(FolkDimens.Size16)
-        ) {
-            Text(
-                text = stringResource(R.string.home_device_status_title),
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.SemiBold,
-                color = colors.onSurface
-            )
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size12)
-            ) {
-                SystemLineChart(
-                    title = stringResource(R.string.home_device_status_cpu_load),
-                    dataPoints = cpuDataPoints,
-                    modifier = Modifier.weight(1f),
-                    color = colors.primary
-                )
-                SystemLineChart(
-                    title = stringResource(R.string.home_device_status_gpu_load),
-                    dataPoints = gpuDataPoints,
-                    modifier = Modifier.weight(1f),
-                    color = colors.tertiary
-                )
-            }
-
-            if (cpuTempDataPoints.isNotEmpty() && cpuTempDataPoints.last() > 0f) {
-                SystemLineChart(
-                    title = stringResource(R.string.home_device_status_cpu_temp),
-                    dataPoints = cpuTempDataPoints,
-                    unit = "°C",
-                    modifier = Modifier.fillMaxWidth(),
-                    color = colors.error
-                )
-            }
-
-            if (timeSeries.ramHistory.isNotEmpty()) {
-                SystemAreaChart(
-                    title = stringResource(R.string.home_device_status_memory_trend),
-                    dataPoints = timeSeries.ramHistory,
-                    modifier = Modifier.fillMaxWidth(),
-                    color = colors.secondary
-                )
-            }
-
-            if (systemMonitor.cpuFrequencies.isNotEmpty()) {
-                CpuFrequencyBars(systemMonitor.cpuFrequencies)
-            }
-
-            systemMonitor.memoryInfo?.let { mem ->
-                val ramPercent = if (mem.ramTotal > 0) {
-                    (mem.ramUsed.toFloat() / mem.ramTotal.toFloat() * 100f)
-                } else 0f
-
-                Column(verticalArrangement = Arrangement.spacedBy(FolkDimens.Size6)) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(
-                                imageVector = Icons.Outlined.Memory,
-                                contentDescription = null,
-                                modifier = Modifier.size(FolkDimens.Size16),
-                                tint = colors.onSurfaceVariant
-                            )
-                            Spacer(Modifier.width(FolkDimens.Size6))
-                            Text(
-                                text = stringResource(R.string.home_storage_ram),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = colors.onSurfaceVariant
-                            )
-                        }
-                        Text(
-                            text = formatBytes(mem.ramUsed) + " / " + formatBytes(mem.ramTotal),
-                            style = MaterialTheme.typography.labelSmall,
-                            color = colors.onSurfaceVariant
-                        )
-                    }
-                    LinearProgressIndicator(
-                        progress = { ramPercent.coerceIn(0f, 100f) / 100f },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(FolkDimens.Size8)
-                            .clip(RoundedCornerShape(FolkDimens.Size4)),
-                        color = when {
-                            ramPercent > 85f -> colors.error
-                            ramPercent > 70f -> colors.tertiary
-                            else -> colors.primary
-                        },
-                        trackColor = colors.surfaceContainerHighest
-                    )
-                }
-
-                if (mem.zramTotal > 0) {
-                    val zramPercent = mem.zramUsed.toFloat() / mem.zramTotal.toFloat() * 100f
-                    Column(verticalArrangement = Arrangement.spacedBy(FolkDimens.Size6)) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                Icon(
-                                    imageVector = Icons.Outlined.SdStorage,
-                                    contentDescription = null,
-                                    modifier = Modifier.size(FolkDimens.Size16),
-                                    tint = colors.onSurfaceVariant
-                                )
-                                Spacer(Modifier.width(FolkDimens.Size6))
-                                Text(
-                                    text = stringResource(R.string.home_storage_zram),
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = colors.onSurfaceVariant
-                                )
-                            }
-                            Text(
-                                text = formatBytes(mem.zramUsed) + " / " + formatBytes(mem.zramTotal),
-                                style = MaterialTheme.typography.labelSmall,
-                                color = colors.onSurfaceVariant
-                            )
-                        }
-                        LinearProgressIndicator(
-                            progress = { zramPercent.coerceIn(0f, 100f) / 100f },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(FolkDimens.Size8)
-                                .clip(RoundedCornerShape(FolkDimens.Size4)),
-                            color = colors.tertiary,
-                            trackColor = colors.surfaceContainerHighest
-                        )
-                    }
-                }
-
-                if (mem.swapTotal > 0) {
-                    val swapPercent = mem.swapUsed.toFloat() / mem.swapTotal.toFloat() * 100f
-                    Column(verticalArrangement = Arrangement.spacedBy(FolkDimens.Size6)) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                Icon(
-                                    imageVector = Icons.Outlined.Storage,
-                                    contentDescription = null,
-                                    modifier = Modifier.size(FolkDimens.Size16),
-                                    tint = colors.onSurfaceVariant
-                                )
-                                Spacer(Modifier.width(FolkDimens.Size6))
-                                Text(
-                                    text = stringResource(R.string.home_storage_swap),
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = colors.onSurfaceVariant
-                                )
-                            }
-                            Text(
-                                text = formatBytes(mem.swapUsed) + " / " + formatBytes(mem.swapTotal),
-                                style = MaterialTheme.typography.labelSmall,
-                                color = colors.onSurfaceVariant
-                            )
-                        }
-                        LinearProgressIndicator(
-                            progress = { swapPercent.coerceIn(0f, 100f) / 100f },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(FolkDimens.Size8)
-                                .clip(RoundedCornerShape(FolkDimens.Size4)),
-                            color = colors.error,
-                            trackColor = colors.surfaceContainerHighest
-                        )
-                    }
-                }
-            }
-
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(FolkDimens.Size4)
-            ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(
-                        imageVector = if (systemMonitor.batteryCharging) {
-                            Icons.Outlined.BatteryChargingFull
-                        } else {
-                            Icons.Outlined.BatteryStd
-                        },
-                        contentDescription = null,
-                        modifier = Modifier.size(FolkDimens.Size14),
-                        tint = if (systemMonitor.batteryCharging) colors.primary else colors.onSurfaceVariant
-                    )
-                    Spacer(Modifier.width(FolkDimens.Size4))
-                    Text(
-                        text = stringResource(R.string.home_device_status_battery_level),
-                        style = MaterialTheme.typography.labelSmall,
-                        color = colors.onSurfaceVariant
-                    )
-                }
-                Text(
-                    text = buildString {
-                        append("${systemMonitor.batteryLevel}%")
-                        if (systemMonitor.batteryCharging) append(" · ${stringResource(R.string.home_device_status_battery_charging)}")
-                        if (systemMonitor.batteryTemp > 0) {
-                            append("  ${systemMonitor.batteryTemp.toInt()}°C")
-                        }
-                    },
-                    style = MaterialTheme.typography.titleMediumEmphasized,
-                    color = colors.onSurface
-                )
-                LinearProgressIndicator(
-                    progress = { systemMonitor.batteryLevel.coerceIn(0, 100) / 100f },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(FolkDimens.Size6)
-                        .clip(RoundedCornerShape(FolkDimens.Size3)),
-                    color = when {
-                        systemMonitor.batteryCharging -> colors.primary
-                        systemMonitor.batteryLevel <= 20 -> colors.error
-                        systemMonitor.batteryLevel <= 50 -> colors.tertiary
-                        else -> colors.primary
-                    },
-                    trackColor = colors.surfaceContainerHighest
-                )
-            }
-
-            if (systemMonitor.networkRxBytes > 0 || systemMonitor.networkTxBytes > 0) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size16)
-                ) {
-                    Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(FolkDimens.Size4)) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(
-                                imageVector = Icons.Outlined.Download,
-                                contentDescription = null,
-                                modifier = Modifier.size(FolkDimens.Size14),
-                                tint = colors.onSurfaceVariant
-                            )
-                            Spacer(Modifier.width(FolkDimens.Size4))
-                            Text(
-                                text = stringResource(R.string.home_network_rx),
-                                style = MaterialTheme.typography.labelSmall,
-                                color = colors.onSurfaceVariant
-                            )
-                        }
-                        Text(
-                            text = formatBytes(systemMonitor.networkRxBytes),
-                            style = MaterialTheme.typography.titleMediumEmphasized,
-                            color = colors.onSurface
-                        )
-                    }
-                    Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(FolkDimens.Size4)) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(
-                                imageVector = Icons.Outlined.Upload,
-                                contentDescription = null,
-                                modifier = Modifier.size(FolkDimens.Size14),
-                                tint = colors.onSurfaceVariant
-                            )
-                            Spacer(Modifier.width(FolkDimens.Size4))
-                            Text(
-                                text = stringResource(R.string.home_network_tx),
-                                style = MaterialTheme.typography.labelSmall,
-                                color = colors.onSurfaceVariant
-                            )
-                        }
-                        Text(
-                            text = formatBytes(systemMonitor.networkTxBytes),
-                            style = MaterialTheme.typography.titleMediumEmphasized,
-                            color = colors.onSurface
-                        )
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun ModuleStatisticsSection(
-    superuserCount: Int,
-    apmModuleCount: Int,
-    kernelModuleCount: Int,
-    modifier: Modifier = Modifier
-) {
-    TonalCard(modifier = modifier) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(FolkDimens.Size16),
-            horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size16)
-        ) {
-            val totalCount = kernelModuleCount + apmModuleCount + superuserCount
-            ModulePieChart(
-                data = rememberPieSliceDataFromCounts(
-                    kernelModules = kernelModuleCount,
-                    apmModules = apmModuleCount,
-                    superusers = superuserCount,
-                    apmLabel = stringResource(R.string.apm)
-                ),
-                centerLabel = if (totalCount > 0) totalCount.toString() else "--",
-                modifier = Modifier.size(FolkDimens.Size140)
-            )
-
-            Column(
-                verticalArrangement = Arrangement.spacedBy(FolkDimens.Size8),
-                modifier = Modifier.align(Alignment.CenterVertically)
-            ) {
-                StatRow(
-                    label = stringResource(R.string.home_stats_kernel_modules),
-                    value = kernelModuleCount.toString(),
-                    icon = Icons.Outlined.DeveloperBoard
-                )
-                StatRow(
-                    label = stringResource(R.string.home_stats_apm_modules),
-                    value = apmModuleCount.toString(),
-                    icon = Icons.Outlined.Extension
-                )
-                StatRow(
-                    label = stringResource(R.string.home_stats_superusers),
-                    value = superuserCount.toString(),
-                    icon = Icons.Outlined.Shield
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun StatRow(
-    label: String,
-    value: String,
-    icon: ImageVector,
-    modifier: Modifier = Modifier
-) {
-    Row(
-        modifier = modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = null,
-            tint = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.size(FolkDimens.Size20)
-        )
-        Spacer(Modifier.width(FolkDimens.Size12))
-        Text(
-            text = label,
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.weight(1f)
-        )
-        Text(
-            text = value,
-            style = MaterialTheme.typography.bodyMedium,
-            fontWeight = FontWeight.SemiBold,
-            color = MaterialTheme.colorScheme.onSurface
-        )
-    }
-}
-
-@Composable
-fun CpuFrequencyBars(
-    cpuFrequencies: List<me.bmax.apatch.util.HardwareMonitor.CpuFreqInfo>,
-    modifier: Modifier = Modifier
-) {
-    val colors = MaterialTheme.colorScheme
-
-    val clusters = cpuFrequencies
-        .groupBy { it.maxFreqKhz }
-        .values
-        .map { cores ->
-            val label = if (cores.size == 1) "CPU${cores[0].coreIndex}" else "CPU${cores.first().coreIndex}-${cores.last().coreIndex}"
-            val avgFreq = cores.map { it.currentFreqKhz }.sum() / cores.size
-            val maxFreq = cores.first().maxFreqKhz
-            CpuCluster(label, avgFreq, maxFreq)
-        }
-
-    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(FolkDimens.Size4)) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(
-                imageVector = Icons.Outlined.DeveloperBoard,
-                contentDescription = null,
-                modifier = Modifier.size(FolkDimens.Size14),
-                tint = colors.onSurfaceVariant
-            )
-            Spacer(Modifier.width(FolkDimens.Size6))
-            Text(
-                text = stringResource(R.string.home_device_status_cpu_freq),
-                style = MaterialTheme.typography.labelSmall,
-                color = colors.onSurfaceVariant
-            )
-        }
-        clusters.forEach { cluster ->
-            val percent = if (cluster.maxFreq > 0) {
-                (cluster.avgFreq.toFloat() / cluster.maxFreq.toFloat() * 100f).coerceIn(0f, 100f)
-            } else 0f
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = cluster.label,
-                    style = MaterialTheme.typography.labelSmall,
-                    color = colors.onSurfaceVariant,
-                    modifier = Modifier.width(FolkDimens.Size52)
-                )
-                LinearProgressIndicator(
-                    progress = { percent / 100f },
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(FolkDimens.Size6)
-                        .clip(RoundedCornerShape(FolkDimens.Size3)),
-                    color = when {
-                        percent > 80f -> colors.error
-                        percent > 50f -> colors.tertiary
-                        else -> colors.primary
-                    },
-                    trackColor = colors.surfaceContainerHighest
-                )
-                Spacer(Modifier.width(FolkDimens.Size8))
-                Text(
-                    text = formatFreq(cluster.avgFreq),
-                    style = MaterialTheme.typography.labelSmall,
-                    color = colors.onSurface,
-                    modifier = Modifier.width(FolkDimens.Size64)
-                )
-            }
-        }
-    }
-}
-
-data class CpuCluster(
-    val label: String,
-    val avgFreq: Long,
-    val maxFreq: Long
-)
-
-fun formatBytes(bytes: Long): String {
-    return when {
-        bytes < 1024 -> "${bytes}B"
-        bytes < 1024 * 1024 -> "${bytes / 1024}KB"
-        bytes < 1024 * 1024 * 1024 -> String.format("%.1fMB", bytes / (1024.0 * 1024))
-        else -> String.format("%.1fGB", bytes / (1024.0 * 1024 * 1024))
-    }
-}
-
-fun formatFreq(khz: Long): String {
-    return when {
-        khz >= 1_000_000 -> String.format("%.2fGHz", khz / 1_000_000.0)
-        khz >= 1000 -> String.format("%.0fMHz", khz / 1000.0)
-        else -> "${khz}KHz"
-    }
-}
-
-@Composable
-fun StatsGridTopSection(
+internal fun StatsStatusSection(
     kpState: APApplication.State,
     apState: APApplication.State,
     navigator: DestinationsNavigator,
-    showUninstallDialog: MutableState<Boolean>
+    showUninstallDialog: MutableState<Boolean>,
+    countsAvailable: Boolean,
+    superuserCount: Int,
+    moduleCount: Int,
+    onOpenSuperUser: () -> Unit,
+    onOpenModule: () -> Unit,
+    grid: Boolean,
 ) {
-    val managerVersion = Version.getManagerVersion()
-    val isJailbreak = LocalHomeJailbreakState.current.isActive
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(IntrinsicSize.Min),
-        horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size12)
-    ) {
-        StatusCardBig(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxHeight(),
-            kpState = kpState,
-            apState = apState,
-            onClick = {
-                when (kpState) {
-                    APApplication.State.UNKNOWN_STATE -> navigator.navigate(InstallModeSelectScreenDestination)
-                    APApplication.State.KERNELPATCH_NEED_UPDATE -> navigator.navigate(InstallModeSelectScreenDestination)
-                    APApplication.State.KERNELPATCH_INSTALLED -> {}
-                    else -> navigator.navigate(InstallModeSelectScreenDestination)
+    Column(verticalArrangement = Arrangement.spacedBy(FolkDimens.Size16)) {
+        if (!grid) {
+            StatusCardCircle(kpState, apState, navigator, showUninstallDialog)
+        } else {
+            Row(
+                modifier = Modifier.fillMaxWidth().height(IntrinsicSize.Min),
+                horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size12),
+            ) {
+                StatsGridStatusCard(
+                    kpState = kpState,
+                    apState = apState,
+                    navigator = navigator,
+                    showUninstallDialog = showUninstallDialog,
+                    modifier = Modifier.weight(1f).fillMaxHeight(),
+                )
+                Column(
+                    modifier = Modifier.weight(1f).fillMaxHeight(),
+                    verticalArrangement = Arrangement.spacedBy(FolkDimens.Size12),
+                ) {
+                    HomeCountCard(
+                        icon = Icons.Outlined.Person,
+                        label = stringResource(R.string.superuser),
+                        count = superuserCount,
+                        onClick = onOpenSuperUser,
+                        modifier = Modifier.weight(1f),
+                        available = countsAvailable,
+                    )
+                    HomeCountCard(
+                        icon = Icons.Outlined.Extension,
+                        label = stringResource(R.string.module),
+                        count = moduleCount,
+                        onClick = onOpenModule,
+                        modifier = Modifier.weight(1f),
+                        available = countsAvailable,
+                    )
                 }
             }
-        )
-
-        Column(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxHeight(),
-            verticalArrangement = Arrangement.spacedBy(FolkDimens.Size12)
+        }
+        if (apState != APApplication.State.UNKNOWN_STATE &&
+            apState != APApplication.State.ANDROIDPATCH_INSTALLED
         ) {
-            SmallInfoCard(
-                modifier = Modifier.weight(1f),
-                title = if (isJailbreak) stringResource(R.string.settings_jailbreak_mode) else stringResource(R.string.kernel_patch),
-                value = if (isJailbreak) {
-                    stringResource(R.string.home_working)
-                } else if (kpState != APApplication.State.UNKNOWN_STATE) {
-                    "${Version.installedKPVString()} (${managerVersion.second})"
-                } else {
-                    "N/A"
-                },
-                icon = if (isJailbreak) Icons.Outlined.LockOpen else Icons.Outlined.Extension,
-                onClick = {
-                    if (kpState == APApplication.State.KERNELPATCH_NEED_UPDATE) {
-                        navigator.navigate(InstallModeSelectScreenDestination)
-                    }
-                }
-            )
-
-            SmallInfoCard(
-                modifier = Modifier.weight(1f),
-                title = stringResource(R.string.android_patch),
-                value = when (apState) {
-                    APApplication.State.ANDROIDPATCH_INSTALLED -> "Active"
-                    APApplication.State.ANDROIDPATCH_NEED_UPDATE -> "Update"
-                    APApplication.State.ANDROIDPATCH_INSTALLING -> "..."
-                    else -> "Inactive"
-                },
-                icon = Icons.Outlined.Android,
-                onClick = {
-                    if (apState == APApplication.State.ANDROIDPATCH_INSTALLED) {
-                        showUninstallDialog.value = true
-                    } else if (apState != APApplication.State.ANDROIDPATCH_NOT_INSTALLED && kpState == APApplication.State.KERNELPATCH_INSTALLED) {
-                        APApplication.installApatch()
-                    }
-                }
-            )
+            AStatusCardCircle(apState)
         }
     }
+}
 
-    if (kpState != APApplication.State.UNKNOWN_STATE && apState != APApplication.State.UNKNOWN_STATE && apState != APApplication.State.ANDROIDPATCH_INSTALLED) {
-        AStatusCard(apState)
+@Composable
+private fun StatsGridStatusCard(
+    kpState: APApplication.State,
+    apState: APApplication.State,
+    navigator: DestinationsNavigator,
+    showUninstallDialog: MutableState<Boolean>,
+    modifier: Modifier = Modifier,
+) {
+    val jailbreakState = LocalHomeJailbreakState.current
+    val jailbreak = jailbreakState.isActive
+    val working = kpState == APApplication.State.KERNELPATCH_INSTALLED
+    val update = kpState == APApplication.State.KERNELPATCH_NEED_UPDATE ||
+        kpState == APApplication.State.KERNELPATCH_NEED_REBOOT
+    val wallpaperMode = LocalFolkWallpaperTokens.current != null
+    val container = when {
+        wallpaperMode -> LocalFolkWallpaperTokens.current?.group?.fill ?: MaterialTheme.colorScheme.surface
+        jailbreak -> MaterialTheme.colorScheme.tertiaryContainer
+        working -> MaterialTheme.colorScheme.secondaryContainer
+        else -> MaterialTheme.colorScheme.errorContainer
+    }
+    val content = if (wallpaperMode) MaterialTheme.colorScheme.onSurface else contentColorFor(container)
+    val title = when {
+        jailbreak -> stringResource(R.string.settings_jailbreak_mode)
+        working -> stringResource(R.string.home_working) +
+            if (BackgroundConfig.isListWorkingCardModeHidden) "😋" else ""
+        update -> stringResource(R.string.home_kp_need_update)
+        else -> stringResource(R.string.home_not_installed)
+    }
+    val summary = when {
+        jailbreak -> stringResource(R.string.settings_jailbreak_mode_summary)
+        working -> {
+            val full = apState == APApplication.State.ANDROIDPATCH_INSTALLED
+            BackgroundConfig.getCustomBadgeText() ?: stringResource(
+                if (full) R.string.home_info_mode_full else R.string.home_info_mode_half
+            )
+        }
+        else -> stringResource(R.string.home_click_to_install)
+    }
+    val icon = when {
+        jailbreak -> Icons.Outlined.LockOpen
+        working -> Icons.Outlined.CheckCircle
+        update -> Icons.Outlined.SystemUpdate
+        else -> Icons.Outlined.Warning
+    }
+
+    TonalCard(
+        modifier = modifier,
+        containerColor = container,
+        contentColor = content,
+        flat = true,
+        onClick = {
+            when {
+                jailbreak -> jailbreakState.performPrimaryAction()
+                working && apState == APApplication.State.ANDROIDPATCH_INSTALLED -> {
+                    showUninstallDialog.value = true
+                }
+                !working -> navigator.navigate(InstallModeSelectScreenDestination)
+            }
+        },
+    ) {
+        Box(Modifier.fillMaxSize()) {
+            Column(
+                modifier = Modifier.align(Alignment.BottomStart).padding(FolkDimens.Size16),
+                verticalArrangement = Arrangement.spacedBy(FolkDimens.Size8),
+            ) {
+                Text(text = title, style = FolkType.Title)
+                Text(
+                    text = summary,
+                    style = FolkType.Caption,
+                    color = content.copy(alpha = 0.8f),
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
+            Icon(
+                imageVector = icon,
+                contentDescription = title,
+                modifier = Modifier.align(Alignment.TopEnd).size(FolkDimens.Size48),
+                tint = content,
+            )
+        }
     }
 }

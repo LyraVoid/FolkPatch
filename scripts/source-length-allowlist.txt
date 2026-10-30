@@ -16,7 +16,6 @@ app/src/main/java/me/bmax/apatch/ui/screen/module/APMModuleItem.kt
 app/src/main/java/me/bmax/apatch/ui/screen/module/APMModuleList.kt
 app/src/main/java/me/bmax/apatch/ui/screen/theme/ApiMarketplace.kt
 app/src/main/java/me/bmax/apatch/ui/screen/home/HomeCircleCards.kt
-app/src/main/java/me/bmax/apatch/ui/screen/home/HomeStatsSections.kt
 app/src/main/java/me/bmax/apatch/ui/screen/home/HomeV2.kt
 app/src/main/java/me/bmax/apatch/ui/screen/home/HomeV3Cards.kt
 app/src/main/java/me/bmax/apatch/ui/screen/home/HomeV4HeroCard.kt

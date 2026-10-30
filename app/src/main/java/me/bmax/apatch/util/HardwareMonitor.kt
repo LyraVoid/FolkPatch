@@ -16,21 +16,6 @@ object HardwareMonitor {
     private var prevTotalCpu: Long = 0
     private var prevIdleCpu: Long = 0
 
-    // GPU State
-    private var prevGpuUsage: Long = 0
-    private var prevGpuTotal: Long = 0
-    private var lastGpuUpdateTime: Long = 0
-    private var smoothedGpuUsage: Float = -1f
-    private const val GPU_EMA_ALPHA = 0.3f
-
-    // Adreno path
-    private const val ADRENO_PATH_NEW = "/sys/class/kgsl/kgsl-3d0/gpu_busy_percentage"
-    private const val ADRENO_PATH = "/sys/class/kgsl/kgsl-3d0/gpubusy"
-    // Mali path
-    private const val MALI_PATH = "/sys/class/misc/mali0/device/utilization"
-    // Generic path
-    private const val GENERIC_PATH = "/sys/kernel/gpu/gpu_busy"
-
     data class MemoryInfo(
         val ramTotal: Long,
         val ramUsed: Long,
@@ -44,12 +29,6 @@ object HardwareMonitor {
         val coreIndex: Int,
         val currentFreqKhz: Long,
         val maxFreqKhz: Long
-    )
-
-    data class StoragePartitionInfo(
-        val label: String,
-        val totalBytes: Long,
-        val usedBytes: Long
     )
 
     /**
@@ -96,94 +75,6 @@ object HardwareMonitor {
                 0
             } catch (e: Exception) {
                 Log.e(TAG, "Error reading CPU usage", e)
-                0
-            }
-        }
-    }
-
-    /**
-     * Get GPU Usage percentage (0-100).
-     */
-    suspend fun getGpuUsage(): Int {
-        return withContext(Dispatchers.IO) {
-            try {
-                var rawGpu = -1
-
-                // 1. Try Direct Percentage Path (New Adreno)
-                val adrenoPercentResult = rootShellForResult("cat $ADRENO_PATH_NEW")
-                if (adrenoPercentResult.isSuccess && adrenoPercentResult.out.isNotEmpty()) {
-                    val content = adrenoPercentResult.out[0].trim().replace("%", "")
-                    val value = content.toIntOrNull()
-                    if (value != null) rawGpu = value.coerceIn(0, 100)
-                }
-
-                // 2. Try Adreno (Cumulative Differential)
-                if (rawGpu < 0) {
-                    val adrenoResult = rootShellForResult("cat $ADRENO_PATH")
-                    if (adrenoResult.isSuccess && adrenoResult.out.isNotEmpty()) {
-                        val content = adrenoResult.out[0].trim()
-                        val parts = content.split(Regex("\\s+"))
-                        if (parts.size >= 2) {
-                            val currUsage = parts[0].toLongOrNull() ?: 0L
-                            val currTotal = parts[1].toLongOrNull() ?: 0L
-
-                            if (lastGpuUpdateTime == 0L || currTotal < prevGpuTotal) {
-                                prevGpuUsage = currUsage
-                                prevGpuTotal = currTotal
-                                lastGpuUpdateTime = System.currentTimeMillis()
-                                rawGpu = 0
-                            } else {
-                                val deltaUsage = currUsage - prevGpuUsage
-                                val deltaTotal = currTotal - prevGpuTotal
-
-                                prevGpuUsage = currUsage
-                                prevGpuTotal = currTotal
-                                lastGpuUpdateTime = System.currentTimeMillis()
-
-                                rawGpu = if (deltaTotal > 0) {
-                                    (deltaUsage.toDouble() / deltaTotal.toDouble() * 100.0).toInt().coerceIn(0, 100)
-                                } else {
-                                    0
-                                }
-                            }
-                        }
-                    }
-                }
-
-                // 3. Try Mali (Direct Value)
-                if (rawGpu < 0) {
-                    val maliResult = rootShellForResult("cat $MALI_PATH")
-                    if (maliResult.isSuccess && maliResult.out.isNotEmpty()) {
-                        val value = maliResult.out[0].trim().toIntOrNull() ?: 0
-                        rawGpu = if (value > 100) {
-                            (value * 100 / 255).coerceIn(0, 100)
-                        } else {
-                            value.coerceIn(0, 100)
-                        }
-                    }
-                }
-                
-                // 4. Try Generic
-                if (rawGpu < 0) {
-                    val genericResult = rootShellForResult("cat $GENERIC_PATH")
-                    if (genericResult.isSuccess && genericResult.out.isNotEmpty()) {
-                        val content = genericResult.out[0].trim().replace("%", "")
-                        rawGpu = content.toIntOrNull()?.coerceIn(0, 100) ?: 0
-                    }
-                }
-
-                if (rawGpu < 0) rawGpu = 0
-
-                // Apply EMA smoothing
-                smoothedGpuUsage = if (smoothedGpuUsage < 0) {
-                    rawGpu.toFloat()
-                } else {
-                    smoothedGpuUsage * (1f - GPU_EMA_ALPHA) + rawGpu.toFloat() * GPU_EMA_ALPHA
-                }
-
-                smoothedGpuUsage.toInt().coerceIn(0, 100)
-            } catch (e: Exception) {
-                Log.e(TAG, "Error reading GPU usage", e)
                 0
             }
         }
@@ -357,40 +248,4 @@ object HardwareMonitor {
         }
     }
 
-    suspend fun getStoragePartitions(): List<StoragePartitionInfo> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val partitions = listOf(
-                    Pair("/data", "Data"),
-                    Pair("/system", "System"),
-                    Pair("/cache", "Cache"),
-                    Pair("/vendor", "Vendor"),
-                    Pair("/product", "Product")
-                )
-
-                val infos = mutableListOf<StoragePartitionInfo>()
-                for ((path, label) in partitions) {
-                    val result = rootShellForResult("df -k $path 2>/dev/null")
-                    if (result.isSuccess && result.out.size >= 2) {
-                        val dataLine = result.out.lastOrNull()?.trim() ?: continue
-                        val parts = dataLine.split(Regex("\\s+"))
-                        if (parts.size >= 5) {
-                            val totalKb = parts[1].toLongOrNull() ?: continue
-                            val usedKb = parts[2].toLongOrNull() ?: continue
-                            val totalBytes = totalKb * 1024
-                            val usedBytes = usedKb * 1024
-                            if (totalBytes > 0) {
-                                infos.add(StoragePartitionInfo(label, totalBytes, usedBytes))
-                            }
-                        }
-                    }
-                }
-
-                infos
-            } catch (e: Exception) {
-                Log.e(TAG, "Error reading storage partitions", e)
-                emptyList()
-            }
-        }
-    }
 }

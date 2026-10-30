@@ -35,8 +35,6 @@ Icons.Outlined.AutoAwesome
 Icons.Outlined.AutoFixHigh
 Icons.Outlined.Autorenew
 Icons.Outlined.Badge
-Icons.Outlined.BatteryChargingFull
-Icons.Outlined.BatteryStd
 Icons.Outlined.Block
 Icons.Outlined.BorderStyle
 Icons.Outlined.BrokenImage
@@ -113,8 +111,10 @@ Icons.Outlined.Navigation
 Icons.Outlined.Opacity
 Icons.Outlined.Palette
 Icons.Outlined.Pause
+Icons.Outlined.Person
 Icons.Outlined.PersonPin
 Icons.Outlined.PhoneAndroid
+Icons.Outlined.PieChart
 Icons.Outlined.PlayArrow
 Icons.Outlined.Policy
 Icons.Outlined.PowerSettingsNew
@@ -138,7 +138,6 @@ Icons.Outlined.SettingsApplications
 Icons.Outlined.Share
 Icons.Outlined.Shield
 Icons.Outlined.Speed
-Icons.Outlined.Storage
 Icons.Outlined.Store
 Icons.Outlined.Storefront
 Icons.Outlined.SurroundSound
@@ -155,7 +154,6 @@ Icons.Outlined.TouchApp
 Icons.Outlined.Translate
 Icons.Outlined.Tune
 Icons.Outlined.Update
-Icons.Outlined.Upload
 Icons.Outlined.Verified
 Icons.Outlined.Vibration
 Icons.Outlined.VideoFile
@@ -167,5 +165,4 @@ Icons.Outlined.Wallpaper
 Icons.Outlined.Warning
 Icons.Outlined.WaterDrop
 Icons.Outlined.Waves
-Icons.Outlined.Widgets
 Icons.Outlined.WifiOff
