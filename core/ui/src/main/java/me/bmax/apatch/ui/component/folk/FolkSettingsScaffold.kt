@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.LargeFlexibleTopAppBar
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -71,7 +72,11 @@ fun folkDefaultAppBarColors(): TopAppBarColors =
             scrolledContainerColor = Color.Transparent,
         )
     } else {
-        TopAppBarDefaults.topAppBarColors()
+        val container = MaterialTheme.colorScheme.surfaceContainer
+        TopAppBarDefaults.topAppBarColors(
+            containerColor = container,
+            scrolledContainerColor = container,
+        )
     }
 
 /**
