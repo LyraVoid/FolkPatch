@@ -22,7 +22,7 @@ fun HomeBottomSpacer(modifier: Modifier = Modifier) {
 
     val targetHeight by animateDpAsState(
         targetValue = when {
-            isFloatingMode && bottomBarVisible -> 80.dp + navBarBottom
+            isFloatingMode && bottomBarVisible -> 104.dp + navBarBottom
             isFloatingMode -> navBarBottom
             else -> 16.dp
         },

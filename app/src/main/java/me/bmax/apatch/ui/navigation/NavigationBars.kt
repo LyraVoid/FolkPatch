@@ -6,6 +6,7 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.WindowInsets
@@ -30,6 +31,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.lerp
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -183,7 +186,11 @@ fun BottomBar(
         }
 
         val wallpaper = LocalFolkWallpaperTokens.current
-        val containerColor = wallpaper?.chrome?.fill ?: FolkTheme.palette.groupedSurface
+        val containerColor = wallpaper?.chrome?.fill ?: if (isFloating) {
+            floatingBarContainerColor()
+        } else {
+            FolkTheme.palette.groupedSurface
+        }
 
         if (isFloating) {
             BoxWithConstraints(
@@ -260,8 +267,13 @@ fun BottomBar(
                                 MaterialTheme.shapes.large
                             },
                             color = containerColor,
-                            tonalElevation = if (isCustomBg) 0.dp else 3.dp,
-                            shadowElevation = if (isCustomBg) 0.dp else 8.dp
+                            tonalElevation = 0.dp,
+                            shadowElevation = if (isCustomBg) 0.dp else 8.dp,
+                            border = if (isCustomBg) {
+                                null
+                            } else {
+                                BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
+                            },
                         ) {
                             BottomBarContent(
                                 isDrawer = isDrawer,
@@ -302,4 +314,13 @@ fun BottomBar(
             )
         }
     }
+}
+
+@Composable
+private fun floatingBarContainerColor(): Color =
+    resolveFloatingBarContainerColor(MaterialTheme.colorScheme.surfaceContainer)
+
+internal fun resolveFloatingBarContainerColor(canvas: Color): Color {
+    val step = if (canvas.luminance() < 0.5f) 0.16f else 0.62f
+    return lerp(canvas, Color.White, step)
 }
