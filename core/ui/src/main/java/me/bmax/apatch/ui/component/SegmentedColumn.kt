@@ -179,7 +179,7 @@ fun SegmentedColumn(
                                 shape = itemShape,
                                 color = rowColor,
                                 contentColor = rowContentColor,
-                                tonalElevation = if (flat) 0.dp else 1.dp,
+                                tonalElevation = 0.dp,
                             ) {
                                 Column(
                                     modifier = Modifier.drawBehind {
