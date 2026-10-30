@@ -86,7 +86,6 @@ import me.bmax.apatch.ui.screen.settings.SettingsRegistry
 import me.bmax.apatch.ui.screen.settings.SettingsSearchResults
 import me.bmax.apatch.ui.screen.settings.SettingsSearchShortcut
 import me.bmax.apatch.ui.screen.settings.SettingsSearchShortcuts
-import me.bmax.apatch.ui.screen.settings.general.CleanStorageDialog
 import me.bmax.apatch.util.ui.showToast
 import me.bmax.apatch.util.BiometricUtils
 import me.bmax.apatch.util.SafeUriResolver
@@ -211,7 +210,6 @@ fun SettingScreen(navigator: DestinationsNavigator) {
         showDevDialog = false
     }
 
-    val cleanStorageDialogState = remember { mutableStateOf(false) }
     val disclaimerDialogState = remember { mutableStateOf(false) }
 
     // The icon grid holds our secondary entries - the settings categories. The
@@ -389,13 +387,6 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                             onClick = { uriHandler.openUri(FEEDBACK_URL) },
                         )
                     }
-                    item(key = "utility_clean_storage") {
-                        SegmentedNavigationItem(
-                            icon = Icons.Outlined.CleaningServices,
-                            title = stringResource(R.string.settings_clear_cache),
-                            onClick = { cleanStorageDialogState.value = true },
-                        )
-                    }
                     item(key = "utility_disclaimer") {
                         SegmentedNavigationItem(
                             icon = Icons.Outlined.Policy,
@@ -443,10 +434,6 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                 NavigationBarsSpacer()
             }
         }
-    }
-
-    if (cleanStorageDialogState.value) {
-        CleanStorageDialog(cleanStorageDialogState, R.string.settings_clear_cache)
     }
 
     if (disclaimerDialogState.value) {
