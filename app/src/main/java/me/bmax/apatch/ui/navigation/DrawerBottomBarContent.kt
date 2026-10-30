@@ -78,7 +78,7 @@ fun DrawerBottomBarContent(
                         label = "drawerIconScale",
                     )
                     val selectedPillColor = wallpaper?.selection?.fill
-                        ?: MaterialTheme.colorScheme.surfaceBright
+                        ?: MaterialTheme.colorScheme.secondaryContainer
                     val background by animateColorAsState(
                         targetValue = if (selected) selectedPillColor
                             else Color.Transparent,
@@ -89,7 +89,7 @@ fun DrawerBottomBarContent(
                     val count = badgeCount(destination)
                     val badgeLabel = if (count > 0) ", $count" else ""
                     val tint = if (selected) wallpaper?.selection?.contentColor
-                        ?: MaterialTheme.colorScheme.onSurface
+                        ?: MaterialTheme.colorScheme.onSecondaryContainer
                         else MaterialTheme.colorScheme.onSurfaceVariant
                     Row(
                         modifier = Modifier.weight(1f + (openWeight - 1f) * expansion)
