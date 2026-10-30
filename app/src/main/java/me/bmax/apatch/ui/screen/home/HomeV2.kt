@@ -1,12 +1,21 @@
 package me.bmax.apatch.ui.screen.home
 
+import android.animation.ValueAnimator
 import me.bmax.apatch.ui.theme.tokens.FolkColors
 import me.bmax.apatch.ui.theme.tokens.FolkDimens
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.PressInteraction
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material.icons.outlined.LockOpen
@@ -19,6 +28,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
@@ -42,22 +52,10 @@ import android.os.Build
 import me.bmax.apatch.apApp
 import me.bmax.apatch.util.Version.getManagerVersion
 import me.bmax.apatch.util.ui.HomeBottomSpacer
-import android.content.ActivityNotFoundException
-import android.net.Uri
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.ui.input.pointer.pointerInput
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import me.bmax.apatch.ui.component.BackgroundOptionsDialog
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.semantics.Role
 import me.bmax.apatch.ui.component.TonalCard
-import me.bmax.apatch.ui.component.rememberConfirmDialog
-import me.bmax.apatch.ui.theme.BackgroundManager
-import me.bmax.apatch.util.PermissionUtils
-import me.bmax.apatch.util.ui.showToast
 import me.bmax.apatch.ui.theme.tokens.FolkShape
 
 private val managerVersion = getManagerVersion()
@@ -242,58 +240,58 @@ fun StatusCardBig(
     // Let's assume white text for image background with dimming
     val contentColor = if (useCustomGridBg) FolkColors.MediaContent else baseContentColor
 
-    // Long-press card options (only when working and card background feature enabled)
-    val scope = rememberCoroutineScope()
-    var showCardOptionsDialog by remember { mutableStateOf(false) }
-    val isLongPressEnabled = isWorking && BackgroundConfig.isGridWorkingCardBackgroundEnabled
+    val interactionSource = remember { MutableInteractionSource() }
+    val haptics = LocalHapticFeedback.current
+    val reduceMotion = !ValueAnimator.areAnimatorsEnabled()
+    var longPressActive by remember { mutableStateOf(false) }
+    var petCount by remember { mutableIntStateOf(0) }
+    val petBounce = remember { Animatable(0f) }
+    val pressed by interactionSource.collectIsPressedAsState()
+    val heldDeformation by animateFloatAsState(
+        targetValue = if (useCustomGridBg && !reduceMotion) {
+            if (longPressActive) 0.16f else if (pressed) 0.045f else 0f
+        } else 0f,
+        animationSpec = spring(dampingRatio = 0.55f, stiffness = 300f),
+        label = "petHeldDeformation",
+    )
 
-    val pickGridImageLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.GetContent()
-    ) { uri: Uri? ->
-        uri?.let {
-            scope.launch {
-                val success = BackgroundManager.saveAndApplyGridWorkingCardBackground(context, it)
-                if (success) {
-                    showToast(context, R.string.settings_grid_working_card_background_saved)
-                } else {
-                    showToast(context, R.string.settings_grid_working_card_background_error)
-                }
+    LaunchedEffect(petCount, reduceMotion, useCustomGridBg) {
+        if (petCount > 0 && !reduceMotion && useCustomGridBg) {
+            petBounce.snapTo(0.14f)
+            petBounce.animateTo(0f, spring(dampingRatio = 0.28f, stiffness = 180f))
+        } else {
+            petBounce.snapTo(0f)
+        }
+    }
+
+    LaunchedEffect(interactionSource) {
+        interactionSource.interactions.collect { interaction ->
+            if (interaction is PressInteraction.Release || interaction is PressInteraction.Cancel) {
+                longPressActive = false
             }
         }
     }
 
-    val clearGridBackgroundDialog = rememberConfirmDialog(
-        onConfirm = {
-            scope.launch {
-                BackgroundManager.clearGridWorkingCardBackground(context)
-                showToast(context, context.getString(R.string.settings_grid_working_card_background_cleared))
-            }
-        }
-    )
-
     Card(
         modifier = modifier
-            .then(
-                if (isLongPressEnabled) {
-                    Modifier.pointerInput(Unit) {
-                        detectTapGestures(
-                            onTap = {
-                                if (isJailbreak || kpState == APApplication.State.UNKNOWN_STATE && isPermissive) {
-                                    jailbreakState.performPrimaryAction()
-                                } else {
-                                    onClick()
-                                }
-                            },
-                            onLongPress = { showCardOptionsDialog = true }
-                        )
-                    }
+            .combinedClickable(
+                interactionSource = interactionSource,
+                indication = null,
+                role = Role.Button,
+                onLongClick = if (useCustomGridBg) {
+                    { longPressActive = true }
                 } else {
-                    Modifier.clickable {
-                        if (isJailbreak || kpState == APApplication.State.UNKNOWN_STATE && isPermissive) {
-                            jailbreakState.performPrimaryAction()
-                        } else {
-                            onClick()
-                        }
+                    null
+                },
+                onClick = {
+                    if (useCustomGridBg) {
+                        haptics.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                        if (isWorking && !isJailbreak) petCount++
+                    }
+                    if (isJailbreak || kpState == APApplication.State.UNKNOWN_STATE && isPermissive) {
+                        jailbreakState.performPrimaryAction()
+                    } else {
+                        onClick()
                     }
                 }
             ),
@@ -337,6 +335,11 @@ fun StatusCardBig(
                     modifier = Modifier
                         .fillMaxSize()
                         .alpha(BackgroundConfig.getEffectiveGridBackgroundOpacity(isDarkTheme))
+                        .graphicsLayer {
+                            val deformation = heldDeformation + petBounce.value
+                            scaleX = 1f + deformation * 0.7f
+                            scaleY = 1f - deformation
+                        }
                 )
                 // Add a dim layer for readability
                 Box(
@@ -405,36 +408,31 @@ fun StatusCardBig(
                     tint = contentColor
                 )
             }
+            if (useCustomGridBg && reduceMotion) {
+                ReducedMotionPressBorder(interactionSource, longPressActive, contentColor)
+            }
         }
     }
+}
 
-    // Card Options Dialog
-    BackgroundOptionsDialog(
-        showDialog = showCardOptionsDialog,
-        onDismiss = { showCardOptionsDialog = false },
-        title = stringResource(R.string.settings_grid_working_card_background),
-        selectLabel = stringResource(R.string.settings_select_background_image),
-        clearLabel = stringResource(R.string.settings_clear_grid_working_card_background),
-        hasExisting = !BackgroundConfig.gridWorkingCardBackgroundUri.isNullOrEmpty(),
-        onSelectImage = {
-            if (PermissionUtils.hasExternalStoragePermission(context)) {
-                try {
-                    pickGridImageLauncher.launch("image/*")
-                } catch (e: ActivityNotFoundException) {
-                    showToast(context, e.message ?: "")
-                }
-            } else {
-                showToast(context, context.getString(R.string.settings_background_permission_required))
-            }
-        },
-        onClearImage = {
-            clearGridBackgroundDialog.showConfirm(
-                title = context.getString(R.string.settings_clear_grid_working_card_background),
-                content = context.getString(R.string.settings_clear_grid_working_card_background_confirm),
-                markdown = false,
-            )
-        },
-    )
+@Composable
+private fun BoxScope.ReducedMotionPressBorder(
+    interactionSource: MutableInteractionSource,
+    longPressActive: Boolean,
+    color: Color,
+) {
+    val pressed by interactionSource.collectIsPressedAsState()
+    if (pressed) {
+        Box(
+            modifier = Modifier
+                .matchParentSize()
+                .border(
+                    width = if (longPressActive) 3.dp else 2.dp,
+                    color = color.copy(alpha = if (longPressActive) 1f else 0.8f),
+                    shape = FolkShape.Corner20,
+                )
+        )
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
