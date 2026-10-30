@@ -1,6 +1,9 @@
 package me.bmax.apatch.ui.screen.home
 
 import me.bmax.apatch.ui.theme.tokens.FolkDimens
+import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.Extension
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -12,6 +15,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -20,33 +25,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
 import me.bmax.apatch.apApp
 import me.bmax.apatch.ui.theme.BackgroundConfig
-import me.bmax.apatch.util.rootShellForResult
 import me.bmax.apatch.util.ui.HomeBottomSpacer
 
-/**
- * HomeV4 - Dashboard Pro 风格首页布局
- * 
- * 特色功能：
- * - Hero状态卡：大型动态状态展示区，显示APatch状态和工作模式
- * - 内核补丁安装/卸载UI：完整的安装流程和进度显示
- * - 计数卡片组：超级用户、APM模块、内核补丁模块数量
- * - 快捷操作面板：重启菜单、SELinux切换等
- * - 系统信息网格：设备信息、内核版本、存储空间
- * - 响应式设计：宽屏双栏，窄屏单栏
- * - 动画效果：呼吸动画、颜色过渡、组件显示/隐藏动画
- */
 @Composable
 fun HomeScreenV4(
     innerPadding: PaddingValues,
@@ -84,39 +70,15 @@ fun HomeScreenV4(
         )
     }
 
-    // 获取系统信息
-    val context = LocalContext.current
-    val prefs = APApplication.sharedPreferences
-    val isWallpaperMode = BackgroundConfig.isCustomBackgroundEnabled && 
+    val isWallpaperMode = BackgroundConfig.isCustomBackgroundEnabled &&
         (BackgroundConfig.customBackgroundUri != null || BackgroundConfig.isMultiBackgroundEnabled)
-    
-    // 隐藏APatch卡片设置
-    val hideApatchCard = prefs.getBoolean("hide_apatch_card", false)
-
-    // 系统信息状态
-    var zygiskImplement by remember { mutableStateOf("None") }
-    var mountImplement by remember { mutableStateOf("None") }
-    var deviceSlot by remember { mutableStateOf(context.getString(R.string.home_info_auth_na)) }
-
-    LaunchedEffect(Unit) {
-        withContext(Dispatchers.IO) {
-            try {
-                zygiskImplement = me.bmax.apatch.util.getZygiskImplement()
-                mountImplement = me.bmax.apatch.util.getMountImplement()
-                val result = rootShellForResult("getprop ro.boot.slot_suffix")
-                if (result.isSuccess) {
-                    val slot = result.out.firstOrNull()?.trim()?.removePrefix("_")
-                    if (!slot.isNullOrEmpty()) {
-                        deviceSlot = slot.uppercase()
-                    }
-                }
-            } catch (_: Exception) {}
-        }
+    val hideApatchCard = APApplication.sharedPreferences.getBoolean("hide_apatch_card", false)
+    val showCounts = kpStateResolved != APApplication.State.UNKNOWN_STATE || isJailbreak
+    if (showCounts) {
+        LaunchedEffect(Unit) { me.bmax.apatch.util.AppData.DataRefreshManager.ensureCountsLoaded() }
     }
-
-    // 响应式布局
-    val configuration = LocalConfiguration.current
-    val isWide = configuration.screenWidthDp >= 600
+    val superuserCount by me.bmax.apatch.util.AppData.DataRefreshManager.superuserCount.collectAsStateWithLifecycle()
+    val moduleCount by me.bmax.apatch.util.AppData.DataRefreshManager.apmModuleCount.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier
@@ -134,8 +96,6 @@ fun HomeScreenV4(
             apState = apStateResolved,
             navigator = navigator,
             showUninstallDialog = showUninstallDialog,
-            showInstallDialog = showInstallDialog,
-            isWallpaperMode = isWallpaperMode
         )
 
         // Android补丁状态卡片（Half模式时显示）
@@ -154,50 +114,71 @@ fun HomeScreenV4(
             )
         }
 
-        // 系统信息网格
-        if (isWide) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size16)
-            ) {
-                SystemInfoCard(
-                    kpState = kpStateResolved,
-                    apState = apStateResolved,
-                    zygiskImplement = zygiskImplement,
-                    mountImplement = mountImplement,
-                    modifier = Modifier.weight(1f)
-                )
-                Column(
+        if (showCounts) {
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size16)) {
+                DashboardCountCard(
+                    icon = androidx.compose.material.icons.Icons.Outlined.Person,
+                    label = androidx.compose.ui.res.stringResource(R.string.superuser),
+                    count = superuserCount,
                     modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(FolkDimens.Size16)
-                ) {
-                    HomeV4DeviceStatusCard(isWallpaperMode = isWallpaperMode)
-                    StorageInfoCard()
-                    // 了解更多卡片 - 只在平板布局右侧栏显示
-                    if (!hideApatchCard) {
-                        LearnMoreCardV4()
-                    }
-                }
-            }
-        } else {
-            SystemInfoCard(
-                kpState = kpStateResolved,
-                apState = apStateResolved,
-                zygiskImplement = zygiskImplement,
-                mountImplement = mountImplement
-            )
-            HomeV4DeviceStatusCard(isWallpaperMode = isWallpaperMode)
-            StorageInfoCard()
-            // 窄屏布局在下方显示
-            if (!hideApatchCard) {
-                LearnMoreCardV4()
+                    onClick = {
+                        navigator.navigate(me.bmax.apatch.ui.navigation.BottomBarDestination.SuperUser.direction) {
+                            popUpTo(com.ramcosta.composedestinations.generated.NavGraphs.root) { saveState = true }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    },
+                )
+                DashboardCountCard(
+                    icon = androidx.compose.material.icons.Icons.Outlined.Extension,
+                    label = androidx.compose.ui.res.stringResource(R.string.module),
+                    count = moduleCount,
+                    modifier = Modifier.weight(1f),
+                    onClick = {
+                        navigator.navigate(me.bmax.apatch.ui.navigation.BottomBarDestination.AModule.direction) {
+                            popUpTo(com.ramcosta.composedestinations.generated.NavGraphs.root) { saveState = true }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    },
+                )
             }
         }
+        InfoCardCircle(kpStateResolved, apStateResolved)
+        HomeV4DeviceStatusCard(isWallpaperMode = isWallpaperMode)
+        StorageInfoCard()
+        if (!hideApatchCard) LearnMoreCardV4()
 
         HomeBottomSpacer()
     }
 }
 
-/**
- * Hero状态卡 - 大型动态状态展示区
- */
+@Composable
+private fun DashboardCountCard(
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    label: String,
+    count: Int,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+) {
+    val supporting = me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens.current?.group?.supportingColor
+        ?: androidx.compose.material3.MaterialTheme.colorScheme.onSurfaceVariant
+    me.bmax.apatch.ui.component.TonalCard(modifier = modifier, onClick = onClick, flat = true) {
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = FolkDimens.Size20, vertical = FolkDimens.Size16),
+            verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
+        ) {
+            androidx.compose.material3.Icon(icon, contentDescription = null, modifier = Modifier.size(FolkDimens.Size20), tint = supporting)
+            Spacer(Modifier.width(FolkDimens.Size16))
+            Column {
+                androidx.compose.material3.Text(label, style = me.bmax.apatch.ui.theme.tokens.FolkType.Caption, color = supporting, maxLines = 1, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis)
+                Spacer(Modifier.height(FolkDimens.Size4))
+                androidx.compose.material3.Text(
+                    count.toString(),
+                    style = me.bmax.apatch.ui.theme.tokens.FolkType.Title,
+                    color = androidx.compose.material3.MaterialTheme.colorScheme.onSurface,
+                )
+            }
+        }
+    }
+}

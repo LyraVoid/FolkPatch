@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -25,7 +26,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.CircularWavyProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FilledTonalButton
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
@@ -59,6 +59,7 @@ import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.util.SystemInfoCollector
 import me.bmax.apatch.core.ui.R as CoreR
 import me.bmax.apatch.ui.theme.tokens.FolkShape
+import me.bmax.apatch.ui.theme.tokens.FolkType
 
 @Composable
 fun HomeV4DeviceStatusCard(isWallpaperMode: Boolean, modifier: Modifier = Modifier) {
@@ -151,12 +152,12 @@ fun HomeV4StatusCircle(
             }
             Text(
                 text = value,
-                style = MaterialTheme.typography.titleLargeEmphasized,
+                style = FolkType.Title,
             )
         }
         Text(
             text = label,
-            style = MaterialTheme.typography.bodyMediumEmphasized,
+            style = FolkType.Caption,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
     }
@@ -175,9 +176,9 @@ fun HomeV4MagiskStyleCard(
     modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit
 ) {
-    TonalCard(modifier = modifier) {
+    TonalCard(modifier = modifier, flat = true) {
         Column(
-            modifier = Modifier.padding(FolkDimens.Size16)
+            modifier = Modifier.padding(horizontal = FolkDimens.Size20, vertical = FolkDimens.Size24),
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -192,7 +193,7 @@ fun HomeV4MagiskStyleCard(
                 Spacer(modifier = Modifier.width(FolkDimens.Size16))
                 Text(
                     text = title,
-                    style = MaterialTheme.typography.titleLargeEmphasized,
+                    style = FolkType.Title,
                     modifier = Modifier.weight(1f)
                 )
                 
@@ -207,11 +208,8 @@ fun HomeV4MagiskStyleCard(
                 }
             }
             
-            HorizontalDivider(
-                modifier = Modifier.padding(vertical = FolkDimens.Size16),
-                color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
-            )
-            
+            Spacer(Modifier.height(FolkDimens.Size16))
+
             Column(
                 verticalArrangement = Arrangement.spacedBy(FolkDimens.Size8)
             ) {
