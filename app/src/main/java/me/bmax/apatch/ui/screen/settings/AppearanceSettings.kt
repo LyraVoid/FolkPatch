@@ -125,8 +125,8 @@ fun AppearanceSettingsContent(
 
     var customColorScheme by remember { mutableStateOf(prefs.getString("custom_color", "indigo")) }
     var amoledTheme by remember { mutableStateOf(prefs.getBoolean("amoled_theme", false)) }
-    var colorGenerationMode by remember { mutableStateOf(ColorGenerationMode.fromKey(prefs.getString("color_generation_mode", "classic"))) }
-    var colorStandard by remember { mutableStateOf(ColorStandard.fromName(prefs.getString("color_standard", "MD3_2021"))) }
+    var colorGenerationMode by remember { mutableStateOf(ColorGenerationMode.fromKey(prefs.getString("color_generation_mode", "custom"))) }
+    var colorStandard by remember { mutableStateOf(ColorStandard.fromName(prefs.getString("color_standard", "M3E_2025"))) }
     var colorStyle by remember { mutableStateOf(ColorStyle.fromName(prefs.getString("color_style", "TONAL_SPOT"))) }
     var colorContrast by remember { mutableStateOf(ColorContrast.fromName(prefs.getString("color_contrast", "STANDARD"))) }
 
@@ -139,8 +139,8 @@ fun AppearanceSettingsContent(
         selectedFontMode = FontConfig.fontMode
         customColorScheme = prefs.getString("custom_color", "indigo")
         amoledTheme = prefs.getBoolean("amoled_theme", false)
-        colorGenerationMode = ColorGenerationMode.fromKey(prefs.getString("color_generation_mode", "classic"))
-        colorStandard = ColorStandard.fromName(prefs.getString("color_standard", "MD3_2021"))
+        colorGenerationMode = ColorGenerationMode.fromKey(prefs.getString("color_generation_mode", "custom"))
+        colorStandard = ColorStandard.fromName(prefs.getString("color_standard", "M3E_2025"))
         colorStyle = ColorStyle.fromName(prefs.getString("color_style", "TONAL_SPOT"))
         colorContrast = ColorContrast.fromName(prefs.getString("color_contrast", "STANDARD"))
         currentStyle = prefs.getString("home_layout_style", APApplication.HOME_LAYOUT_STYLE_DEFAULT)
@@ -180,8 +180,8 @@ fun AppearanceSettingsContent(
                 "use_system_color_theme" -> useSystemDynamicColor = prefs.getBoolean(key, false)
                 "custom_color" -> customColorScheme = prefs.getString(key, "indigo")
                 "amoled_theme" -> amoledTheme = prefs.getBoolean(key, false)
-                "color_generation_mode" -> colorGenerationMode = ColorGenerationMode.fromKey(prefs.getString(key, "classic"))
-                "color_standard" -> colorStandard = ColorStandard.fromName(prefs.getString(key, "MD3_2021"))
+                "color_generation_mode" -> colorGenerationMode = ColorGenerationMode.fromKey(prefs.getString(key, "custom"))
+                "color_standard" -> colorStandard = ColorStandard.fromName(prefs.getString(key, "M3E_2025"))
                 "color_style" -> colorStyle = ColorStyle.fromName(prefs.getString(key, "TONAL_SPOT"))
                 "color_contrast" -> colorContrast = ColorContrast.fromName(prefs.getString(key, "STANDARD"))
                 "home_layout_style" -> currentStyle = prefs.getString(key, APApplication.HOME_LAYOUT_STYLE_DEFAULT)

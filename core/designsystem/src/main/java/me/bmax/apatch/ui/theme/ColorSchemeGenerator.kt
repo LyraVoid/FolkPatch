@@ -4,6 +4,8 @@ import android.content.Context
 import android.os.Build
 import android.util.LruCache
 import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.ui.graphics.Color
 import com.materialkolor.PaletteStyle
 import com.materialkolor.dynamicColorScheme
@@ -42,10 +44,7 @@ object ColorSchemeGenerator {
         }
     }
 
-    /**
-     * Generate a ColorScheme using system wallpaper seed color (Android 12+).
-     * Extracts the seed from system accent color resources.
-     */
+    /** Generate from the same platform primary seed FinaSU feeds to MaterialKolor. */
     fun generateFromContext(
         context: Context,
         isDark: Boolean,
@@ -53,20 +52,16 @@ object ColorSchemeGenerator {
         specVersion: ColorSpec.SpecVersion,
         contrastLevel: Double = 0.0,
     ): ColorScheme {
-        val seedColor = extractSystemSeedColor(context)
+        val seedColor = extractSystemSeedColor(context, isDark)
         return generate(seedColor, isDark, style, specVersion, contrastLevel)
     }
 
-    /**
-     * Extract seed color from system wallpaper (Android 12+).
-     * Falls back to a default blue if system colors are unavailable.
-     */
-    private fun extractSystemSeedColor(context: Context): Color {
+    private fun extractSystemSeedColor(context: Context, isDark: Boolean): Color {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             return try {
-                val colorRes = android.R.color.system_accent1_300
-                val color = context.getColor(colorRes)
-                Color(color)
+                val systemScheme =
+                    if (isDark) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+                systemScheme.primary
             } catch (_: Exception) {
                 Color(0xFF4285F4) // fallback blue
             }

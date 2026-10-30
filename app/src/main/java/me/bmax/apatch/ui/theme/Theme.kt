@@ -152,8 +152,8 @@ fun APatchTheme(
     }
     var customColorScheme by remember { mutableStateOf(prefs.getString("custom_color", "indigo")) }
     var amoledTheme by remember { mutableStateOf(prefs.getBoolean("amoled_theme", false)) }
-    var colorGenerationMode by remember { mutableStateOf(prefs.getString("color_generation_mode", "classic")) }
-    var colorStandard by remember { mutableStateOf(prefs.getString("color_standard", "MD3_2021")) }
+    var colorGenerationMode by remember { mutableStateOf(prefs.getString("color_generation_mode", "custom")) }
+    var colorStandard by remember { mutableStateOf(prefs.getString("color_standard", "M3E_2025")) }
     var colorStyle by remember { mutableStateOf(prefs.getString("color_style", "TONAL_SPOT")) }
     var colorContrast by remember { mutableStateOf(prefs.getString("color_contrast", "STANDARD")) }
 
@@ -165,8 +165,8 @@ fun APatchTheme(
                 "use_system_color_theme" -> dynamicColor = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) prefs.getBoolean(key, false) else false
                 "custom_color" -> customColorScheme = prefs.getString(key, "indigo")
                 "amoled_theme" -> amoledTheme = prefs.getBoolean(key, false)
-                "color_generation_mode" -> colorGenerationMode = prefs.getString(key, "classic")
-                "color_standard" -> colorStandard = prefs.getString(key, "MD3_2021")
+                "color_generation_mode" -> colorGenerationMode = prefs.getString(key, "custom")
+                "color_standard" -> colorStandard = prefs.getString(key, "M3E_2025")
                 "color_style" -> colorStyle = prefs.getString(key, "TONAL_SPOT")
                 "color_contrast" -> colorContrast = prefs.getString(key, "STANDARD")
             }
@@ -188,8 +188,8 @@ fun APatchTheme(
             ) else false
             customColorScheme = prefs.getString("custom_color", "indigo")
             amoledTheme = prefs.getBoolean("amoled_theme", false)
-            colorGenerationMode = prefs.getString("color_generation_mode", "classic")
-            colorStandard = prefs.getString("color_standard", "MD3_2021")
+            colorGenerationMode = prefs.getString("color_generation_mode", "custom")
+            colorStandard = prefs.getString("color_standard", "M3E_2025")
             colorStyle = prefs.getString("color_style", "TONAL_SPOT")
             colorContrast = prefs.getString("color_contrast", "STANDARD")
             BackgroundManager.loadCustomBackground(context)

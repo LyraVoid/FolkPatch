@@ -86,8 +86,8 @@ internal object ThemeIO {
                     nightModeEnabled = prefs.getBoolean("night_mode_enabled", true),
                     nightModeFollowSys = prefs.getBoolean("night_mode_follow_sys", false),
                     useSystemDynamicColor = prefs.getBoolean("use_system_color_theme", false),
-                    colorGenerationMode = prefs.getString("color_generation_mode", "classic") ?: "classic",
-                    colorStandard = prefs.getString("color_standard", "MD3_2021") ?: "MD3_2021",
+                    colorGenerationMode = prefs.getString("color_generation_mode", "custom") ?: "custom",
+                    colorStandard = prefs.getString("color_standard", "M3E_2025") ?: "M3E_2025",
                     colorStyle = prefs.getString("color_style", "TONAL_SPOT") ?: "TONAL_SPOT",
                     colorContrast = prefs.getString("color_contrast", "STANDARD") ?: "STANDARD",
                     appLanguage = AppCompatDelegate.getApplicationLocales().toLanguageTags(),
@@ -576,8 +576,8 @@ internal object ThemeIO {
                 val nightModeEnabled = json.optBoolean("nightModeEnabled", true)
                 val nightModeFollowSys = json.optBoolean("nightModeFollowSys", true)
                 val useSystemDynamicColor = json.optBoolean("useSystemDynamicColor", true)
-                val colorGenerationMode = json.optString("colorGenerationMode", "classic")
-                val colorStandard = json.optString("colorStandard", "MD3_2021")
+                val colorGenerationMode = json.optString("colorGenerationMode", "custom")
+                val colorStandard = json.optString("colorStandard", "M3E_2025")
                 val colorStyle = json.optString("colorStyle", "TONAL_SPOT")
                 val colorContrast = json.optString("colorContrast", "STANDARD")
                 val appLanguage = json.optString("appLanguage", "")
@@ -1101,8 +1101,8 @@ internal object ThemeIO {
                     .putString("custom_color", "indigo")
                     .putString("home_layout_style", APApplication.HOME_LAYOUT_STYLE_DEFAULT)
                     .putString("stats_top_layout", "list")
-                    .putString("color_generation_mode", "classic")
-                    .putString("color_standard", "MD3_2021")
+                    .putString("color_generation_mode", "custom")
+                    .putString("color_standard", "M3E_2025")
                     .putString("color_style", "TONAL_SPOT")
                     .putString("color_contrast", "STANDARD")
                     .remove("appLanguage")

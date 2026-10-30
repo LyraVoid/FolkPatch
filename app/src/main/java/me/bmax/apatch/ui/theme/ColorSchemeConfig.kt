@@ -14,7 +14,7 @@ enum class ColorGenerationMode(val key: String) {
 
     companion object {
         fun fromKey(key: String?): ColorGenerationMode =
-            entries.find { it.key == key } ?: CLASSIC
+            entries.find { it.key == key } ?: CUSTOM
     }
 }
 
@@ -27,7 +27,7 @@ enum class ColorStandard(val specVersion: ColorSpec.SpecVersion, @StringRes val 
 
     companion object {
         fun fromName(name: String?): ColorStandard =
-            entries.find { it.name == name } ?: MD3_2021
+            entries.find { it.name == name } ?: M3E_2025
     }
 }
 

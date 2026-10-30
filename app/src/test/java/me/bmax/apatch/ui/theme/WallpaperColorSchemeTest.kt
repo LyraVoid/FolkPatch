@@ -69,4 +69,21 @@ class WallpaperColorSchemeTest {
 
         assertTrue(guarded != null && guarded > 0f)
     }
+
+    @Test
+    fun semanticErrorMatchesTheMaterialBaseline() {
+        val light = lightColorScheme(primary = Color(0xFF123456)).withSemanticError(false)
+        val dark = darkColorScheme(primary = Color(0xFF123456)).withSemanticError(true)
+
+        assertEquals(lightColorScheme().errorContainer, light.errorContainer)
+        assertEquals(lightColorScheme().onErrorContainer, light.onErrorContainer)
+        assertEquals(darkColorScheme().errorContainer, dark.errorContainer)
+        assertEquals(darkColorScheme().onErrorContainer, dark.onErrorContainer)
+    }
+
+    @Test
+    fun generationDefaultsMatchFinaSU() {
+        assertEquals(ColorGenerationMode.CUSTOM, ColorGenerationMode.fromKey(null))
+        assertEquals(ColorStandard.M3E_2025, ColorStandard.fromName(null))
+    }
 }

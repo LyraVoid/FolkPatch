@@ -3,8 +3,10 @@ package me.bmax.apatch.ui.theme
 import android.content.Context
 import android.os.Build
 import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
 import me.bmax.apatch.ui.component.themeColorOptions
 import me.bmax.apatch.ui.theme.tokens.FolkThemeCatalog
@@ -26,7 +28,7 @@ internal fun generateColorScheme(
     colorStyle: String?,
     contrastLevel: Double,
 ): ColorScheme {
-    return when {
+    val scheme = when {
         // Custom dynamic generation (MaterialKolor) with system wallpaper seed
         colorGenerationMode == "custom" && dynamicColor -> {
             val standard = ColorStandard.fromName(colorStandard)
@@ -73,6 +75,17 @@ internal fun generateColorScheme(
         // Classic themes, from the catalog.
         else -> FolkThemeCatalog.scheme(customColorScheme, darkTheme)
     }
+    return scheme.withSemanticError(darkTheme)
+}
+
+internal fun ColorScheme.withSemanticError(isDark: Boolean): ColorScheme {
+    val semantic = if (isDark) darkColorScheme() else lightColorScheme()
+    return copy(
+        error = semantic.error,
+        onError = semantic.onError,
+        errorContainer = semantic.errorContainer,
+        onErrorContainer = semantic.onErrorContainer,
+    )
 }
 
 /**
