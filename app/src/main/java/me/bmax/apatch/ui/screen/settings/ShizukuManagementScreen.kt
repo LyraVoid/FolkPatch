@@ -78,7 +78,7 @@ private data class ShizukuLoadResult(
     val apps: List<ShizukuApp>,
 )
 
-@Destination<RootGraph>
+@Destination<RootGraph>(wrappers = [me.bmax.apatch.ui.navigation.NavContainerTransformWrapper::class])
 @Composable
 fun ShizukuManagementScreen(navigator: DestinationsNavigator) {
     val context = LocalContext.current

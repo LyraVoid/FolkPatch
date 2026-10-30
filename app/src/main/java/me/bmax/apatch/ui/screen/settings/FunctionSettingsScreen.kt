@@ -68,7 +68,7 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
 
 @OptIn(FlowPreview::class, ExperimentalMaterial3Api::class)
-@Destination<RootGraph>
+@Destination<RootGraph>(wrappers = [me.bmax.apatch.ui.navigation.NavContainerTransformWrapper::class])
 @Composable
 fun FunctionSettingsScreen(navigator: DestinationsNavigator, highlightKey: String? = null) {
     val state by APApplication.apStateLiveData.observeAsState(APApplication.State.UNKNOWN_STATE)

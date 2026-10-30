@@ -62,7 +62,7 @@ import me.bmax.apatch.util.reboot
 
 private const val TAG = "Patches"
 
-@Destination<RootGraph>
+@Destination<RootGraph>(wrappers = [me.bmax.apatch.ui.navigation.NavContainerTransformWrapper::class])
 @Composable
 fun Patches(mode: PatchesViewModel.PatchMode) {
     var jailbreakBlocked by remember { mutableStateOf(false) }

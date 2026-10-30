@@ -64,7 +64,7 @@ import me.bmax.apatch.ui.wallpaper.WallpaperDevice
 import me.bmax.apatch.ui.wallpaper.WallpaperItem
 import me.bmax.apatch.util.WallpaperDownloader
 
-@Destination<RootGraph>
+@Destination<RootGraph>(wrappers = [me.bmax.apatch.ui.navigation.NavContainerTransformWrapper::class])
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WallpaperGalleryScreen(navigator: DestinationsNavigator) {

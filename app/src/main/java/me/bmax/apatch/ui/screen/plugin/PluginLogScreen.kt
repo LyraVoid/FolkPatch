@@ -63,7 +63,7 @@ data class PluginLogEntry(
     val log: String,
 )
 
-@Destination<RootGraph>
+@Destination<RootGraph>(wrappers = [me.bmax.apatch.ui.navigation.NavContainerTransformWrapper::class])
 @Composable
 fun PluginLogScreen(navigator: DestinationsNavigator) {
     val context = LocalContext.current

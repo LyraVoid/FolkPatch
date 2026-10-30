@@ -50,12 +50,13 @@ import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.ConfirmResult
 import me.bmax.apatch.ui.component.folk.FolkScaffold
 import me.bmax.apatch.ui.component.folk.FolkTitleStyle
+import me.bmax.apatch.ui.component.folk.navOrigin
 import me.bmax.apatch.ui.component.rememberConfirmDialog
 import me.bmax.apatch.ui.component.splicedLazyColumnGroup
 import me.bmax.apatch.ui.viewmodel.PluginViewModel
 import me.bmax.apatch.util.ui.showToast
 
-@Destination<RootGraph>
+@Destination<RootGraph>(wrappers = [me.bmax.apatch.ui.navigation.NavContainerTransformWrapper::class])
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PluginScreen(navigator: DestinationsNavigator) {
@@ -108,10 +109,20 @@ fun PluginScreen(navigator: DestinationsNavigator) {
         subtitle = stringResource(R.string.plugin_subtitle),
         onBack = { navigator.popBackStack() },
         actions = {
-            IconButton(onClick = dropUnlessResumed { navigator.navigate(com.ramcosta.composedestinations.generated.destinations.OnlinePluginScreenDestination) }) {
+            IconButton(
+                onClick = dropUnlessResumed {
+                    navigator.navigate(com.ramcosta.composedestinations.generated.destinations.OnlinePluginScreenDestination)
+                },
+                modifier = Modifier.navOrigin(captureBitmap = true),
+            ) {
                 Icon(Icons.Outlined.Storefront, contentDescription = stringResource(R.string.online_plugin_title))
             }
-            IconButton(onClick = dropUnlessResumed { navigator.navigate(com.ramcosta.composedestinations.generated.destinations.PluginLogScreenDestination) }) {
+            IconButton(
+                onClick = dropUnlessResumed {
+                    navigator.navigate(com.ramcosta.composedestinations.generated.destinations.PluginLogScreenDestination)
+                },
+                modifier = Modifier.navOrigin(captureBitmap = true),
+            ) {
                 Icon(Icons.AutoMirrored.Outlined.Article, contentDescription = stringResource(R.string.plugin_log_title))
             }
             IconButton(onClick = { viewModel.fetchPlugins() }) {

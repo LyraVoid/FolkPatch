@@ -68,6 +68,7 @@ import kotlinx.coroutines.launch
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.folk.FolkScaffold
+import me.bmax.apatch.ui.component.folk.navOrigin
 import me.bmax.apatch.ui.navigation.LocalBottomBarVisible
 import me.bmax.apatch.ui.navigation.LocalIsFloatingNavMode
 import me.bmax.apatch.ui.navigation.fabNavBottomClearance
@@ -81,7 +82,7 @@ import me.bmax.apatch.util.ui.showToast
 
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
-@Destination<RootGraph>
+@Destination<RootGraph>(wrappers = [me.bmax.apatch.ui.navigation.NavContainerTransformWrapper::class])
 @Composable
 fun SuperUserScreen(navigator: DestinationsNavigator) {
     val prefs = APApplication.sharedPreferences
@@ -270,7 +271,10 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
                     scrollBehavior = if (m3eLayout) searchBarScrollBehavior else null,
                     title = { Text(stringResource(R.string.su_title)) },
                     navigationIcon = {
-                        IconButton(onClick = { navigator.navigate(SuAuditLogScreenDestination) }) {
+                        IconButton(
+                            onClick = { navigator.navigate(SuAuditLogScreenDestination) },
+                            modifier = Modifier.navOrigin(captureBitmap = true),
+                        ) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Outlined.Article,
                                 contentDescription = stringResource(R.string.su_audit_log_title),
@@ -374,6 +378,7 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
                 val fabContent: @Composable () -> Unit = {
                     FloatingActionButton(
                         onClick = { navigator.navigate(ScriptLibraryScreenDestination) },
+                        modifier = Modifier.navOrigin(captureBitmap = true),
                         shape = CircleShape,
                         contentColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 1f),
                         containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),

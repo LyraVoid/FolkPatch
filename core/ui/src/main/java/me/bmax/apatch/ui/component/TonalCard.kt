@@ -16,8 +16,11 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.unit.Dp
 import me.bmax.apatch.ui.component.folk.FolkWallpaperSurface
 import me.bmax.apatch.ui.component.folk.folkPressScale
+import me.bmax.apatch.ui.component.folk.navOrigin
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import me.bmax.apatch.ui.theme.tokens.FolkShape
 import me.bmax.apatch.ui.theme.tokens.FolkTheme
 import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
@@ -31,6 +34,7 @@ fun TonalCard(
     shape: Shape = FolkShape.Corner20,
     onClick: (() -> Unit)? = null,
     flat: Boolean = false,
+    navOriginRadius: Dp = FolkDimens.Size20,
     content: @Composable () -> Unit,
 ) {
     val wallpaper = LocalFolkWallpaperTokens.current
@@ -55,6 +59,11 @@ fun TonalCard(
             Box(
                 modifier = modifier
                     .fillMaxWidth()
+                    .navOrigin(
+                        cornerRadius = navOriginRadius,
+                        color = fill,
+                        interactionSource = interactionSource,
+                    )
                     .folkPressScale(interactionSource)
                     .clickable(
                         role = Role.Button,
@@ -80,6 +89,11 @@ fun TonalCard(
         } else {
             modifier
                 .fillMaxWidth()
+                .navOrigin(
+                    cornerRadius = navOriginRadius,
+                    color = fill,
+                    interactionSource = interactionSource,
+                )
                 .folkPressScale(interactionSource)
                 .clickable(
                     role = Role.Button,
@@ -108,13 +122,21 @@ fun TonalCard(
         CardDefaults.elevatedCardColors(containerColor = fill, contentColor = foreground)
     }
     val cardModifier = modifier.fillMaxWidth()
+    val clickableModifier = if (onClick == null) {
+        cardModifier
+    } else {
+        cardModifier.navOrigin(
+            cornerRadius = navOriginRadius,
+            color = fill,
+        )
+    }
 
     if (flat) {
         if (onClick == null) {
-            Card(modifier = cardModifier, colors = colors, shape = shape, content = { content() })
+            Card(modifier = clickableModifier, colors = colors, shape = shape, content = { content() })
         } else {
             Card(
-                modifier = cardModifier,
+                modifier = clickableModifier,
                 colors = colors,
                 shape = shape,
                 onClick = onClick,
@@ -122,10 +144,10 @@ fun TonalCard(
             )
         }
     } else if (onClick == null) {
-        ElevatedCard(modifier = cardModifier, colors = colors, shape = shape, content = { content() })
+        ElevatedCard(modifier = clickableModifier, colors = colors, shape = shape, content = { content() })
     } else {
         ElevatedCard(
-            modifier = cardModifier,
+            modifier = clickableModifier,
             colors = colors,
             shape = shape,
             onClick = onClick,

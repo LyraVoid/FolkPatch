@@ -51,7 +51,7 @@ import androidx.compose.material.icons.Icons
 import kotlinx.coroutines.CoroutineScope
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
-@Destination<RootGraph>
+@Destination<RootGraph>(wrappers = [me.bmax.apatch.ui.navigation.NavContainerTransformWrapper::class])
 @Composable
 fun OnlinePluginScreen(navigator: DestinationsNavigator) {
     val viewModel = viewModel<OnlinePluginViewModel>()

@@ -68,7 +68,7 @@ import java.util.Locale
 import me.bmax.apatch.ui.theme.tokens.FolkShape
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Destination<RootGraph>
+@Destination<RootGraph>(wrappers = [me.bmax.apatch.ui.navigation.NavContainerTransformWrapper::class])
 @Composable
 fun SuAuditLogScreen(navigator: DestinationsNavigator) {
     val context = LocalContext.current

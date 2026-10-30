@@ -71,7 +71,7 @@ import androidx.compose.material.icons.outlined.Extension
 import me.bmax.apatch.ui.theme.tokens.FolkShape
 import me.bmax.apatch.ui.component.folk.folkInsetColor
 
-@Destination<RootGraph>
+@Destination<RootGraph>(wrappers = [me.bmax.apatch.ui.navigation.NavContainerTransformWrapper::class])
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ApmBulkInstallScreen(navigator: DestinationsNavigator, initialUris: ArrayList<Uri>? = null) {

@@ -62,7 +62,7 @@ enum class MODULE_TYPE {
 }
 
 @Composable
-@Destination<RootGraph>
+@Destination<RootGraph>(wrappers = [me.bmax.apatch.ui.navigation.NavContainerTransformWrapper::class])
 fun InstallScreen(navigator: DestinationsNavigator, uri: Uri, type: MODULE_TYPE) {
     var text by rememberSaveable { mutableStateOf("") }
     val displayBuffer = remember { StringBuffer() }

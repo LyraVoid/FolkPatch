@@ -52,7 +52,7 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import me.bmax.apatch.core.ui.R as CoreR
 
-@Destination<RootGraph>
+@Destination<RootGraph>(wrappers = [me.bmax.apatch.ui.navigation.NavContainerTransformWrapper::class])
 @Composable
 fun RepoModuleDetailScreen(
     navigator: DestinationsNavigator,

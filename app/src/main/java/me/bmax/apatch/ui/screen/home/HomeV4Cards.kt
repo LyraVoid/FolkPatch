@@ -297,11 +297,13 @@ internal fun LearnMoreCardV4() {
     val supporting = me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens.current?.group?.supportingColor
         ?: MaterialTheme.colorScheme.onSurfaceVariant
 
-    TonalCard(flat = true) {
+    TonalCard(
+        flat = true,
+        onClick = { uriHandler.openUri("https://fp.mysqil.com/") },
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable { uriHandler.openUri("https://fp.mysqil.com/") }
                 .padding(horizontal = FolkDimens.Size24, vertical = FolkDimens.Size20),
             verticalAlignment = Alignment.CenterVertically,
         ) {

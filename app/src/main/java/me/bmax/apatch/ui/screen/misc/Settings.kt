@@ -76,6 +76,7 @@ import me.bmax.apatch.ui.component.folk.FolkScaffold
 import me.bmax.apatch.ui.component.SegmentedColumn
 import me.bmax.apatch.ui.component.folk.folkGroupColor
 import me.bmax.apatch.ui.component.folk.folkPressScale
+import me.bmax.apatch.ui.component.folk.navOrigin
 import me.bmax.apatch.ui.component.rememberLoadingDialog
 import me.bmax.apatch.ui.component.rememberSystemCropLauncher
 import me.bmax.apatch.ui.component.SearchAppBar
@@ -145,7 +146,7 @@ private fun openSettingEntry(navigator: DestinationsNavigator, entry: ResolvedEn
     }
 }
 
-@Destination<RootGraph>
+@Destination<RootGraph>(wrappers = [me.bmax.apatch.ui.navigation.NavContainerTransformWrapper::class])
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun SettingScreen(navigator: DestinationsNavigator) {
@@ -309,7 +310,10 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                 onSearchTextChange = { searchText = it },
                 searchPlaceholder = stringResource(R.string.settings_search_title),
                 actions = {
-                    IconButton(onClick = dropUnlessResumed { navigator.navigate(PluginScreenDestination) }) {
+                    IconButton(
+                        onClick = dropUnlessResumed { navigator.navigate(PluginScreenDestination) },
+                        modifier = Modifier.navOrigin(captureBitmap = true),
+                    ) {
                         Icon(Icons.Outlined.Extension, contentDescription = stringResource(R.string.plugin_title))
                     }
                     IconButton(onClick = { showDevDialog = true }) {
@@ -595,6 +599,11 @@ private fun GridEntry(
     Column(
         modifier = modifier
             .clip(FolkShape.Corner12)
+            .navOrigin(
+                cornerRadius = FolkDimens.Size12,
+                color = folkGroupColor(),
+                interactionSource = interactionSource,
+            )
             .folkPressScale(interactionSource)
             .clickable(role = Role.Button, 
                 interactionSource = interactionSource,

@@ -16,6 +16,7 @@ import me.bmax.apatch.ui.LayoutVariant
 import me.bmax.apatch.ui.LocalLayoutVariant
 import me.bmax.apatch.ui.component.SearchAppBar
 import me.bmax.apatch.ui.component.SearchAppBarScrollBehavior
+import me.bmax.apatch.ui.component.folk.navOrigin
 
 @Composable
 fun KPMTopBar(
@@ -38,7 +39,10 @@ fun KPMTopBar(
         onSearchTextChange = onSearchQueryChange,
         onClearClick = { onSearchQueryChange("") },
         navigationIcon = {
-            IconButton(onClick = dropUnlessResumed { navigator.navigate(OnlineKPMScreenDestination) }) {
+            IconButton(
+                onClick = dropUnlessResumed { navigator.navigate(OnlineKPMScreenDestination) },
+                modifier = androidx.compose.ui.Modifier.navOrigin(captureBitmap = true),
+            ) {
                 Icon(
                     imageVector = Icons.Outlined.Cloud,
                     contentDescription = stringResource(R.string.online_kpm_title)

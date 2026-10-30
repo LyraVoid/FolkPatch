@@ -112,7 +112,7 @@ private fun parseLines(raw: String): List<LogLine> {
         }
 }
 
-@Destination<RootGraph>
+@Destination<RootGraph>(wrappers = [me.bmax.apatch.ui.navigation.NavContainerTransformWrapper::class])
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ShizukuLogScreen(navigator: DestinationsNavigator) {

@@ -85,6 +85,10 @@ import me.bmax.apatch.ui.navigation.LocalIsFloatingNavMode
 import me.bmax.apatch.ui.navigation.ScrollState
 import me.bmax.apatch.ui.navigation.rememberScrollConnection
 import me.bmax.apatch.ui.navigation.createNavTransitions
+import me.bmax.apatch.ui.component.folk.LocalNavOriginState
+import me.bmax.apatch.ui.component.folk.rememberNavOriginState
+import me.bmax.apatch.ui.component.folk.trackNavPointer
+import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
 import me.bmax.apatch.util.ui.navBarLiquefiable
 import me.bmax.apatch.util.ui.rememberNavBarGlassLiquidState
 import me.bmax.apatch.util.ui.isRealTimeBlurAvailable
@@ -143,6 +147,7 @@ DisposableEffect(Unit) {
 
 val navController = rememberNavController()
 val navigator = navController.rememberDestinationsNavigator()
+val navOriginState = rememberNavOriginState()
 val snackBarHostState = remember { SnackbarHostState() }
 val bottomBarRoutes = remember {
     BottomBarDestination.entries.map { it.direction.route }.toSet()
@@ -235,7 +240,10 @@ LaunchedEffect(Unit) {
     }
 }
 
-CompositionLocalProvider(LocalLayoutVariant provides layoutVariant) {
+CompositionLocalProvider(
+    LocalLayoutVariant provides layoutVariant,
+    LocalNavOriginState provides navOriginState,
+) {
     APatchThemeWithBackground(
         navController = navController,
         folkXEngineEnabled = folkXEngineEnabled,
@@ -481,10 +489,25 @@ CompositionLocalProvider(LocalLayoutVariant provides layoutVariant) {
             rememberNavBarGlassLiquidState()
         } else null
 
+        val wallpaperActive = LocalFolkWallpaperTokens.current != null
         val navTransitions = remember(
-            folkXEngineEnabled, folkXAnimationType, folkXAnimationSpeed, bottomBarRoutes, useNavigationRail
+            folkXEngineEnabled,
+            folkXAnimationType,
+            folkXAnimationSpeed,
+            bottomBarRoutes,
+            useNavigationRail,
+            navOriginState,
+            wallpaperActive,
         ) {
-            createNavTransitions(folkXEngineEnabled, folkXAnimationType, folkXAnimationSpeed, bottomBarRoutes, useNavigationRail)
+            createNavTransitions(
+                folkXEngineEnabled = folkXEngineEnabled,
+                folkXAnimationType = folkXAnimationType,
+                folkXAnimationSpeed = folkXAnimationSpeed,
+                bottomBarRoutes = bottomBarRoutes,
+                useNavigationRail = useNavigationRail,
+                navOriginState = navOriginState,
+                wallpaperActive = wallpaperActive,
+            )
         }
 
         val scrollConnection = rememberScrollConnection(
@@ -492,7 +515,7 @@ CompositionLocalProvider(LocalLayoutVariant provides layoutVariant) {
             onUserScroll = { resetBottomBarAutoHide() }
         )
 
-        Box(modifier = Modifier.fillMaxSize()) {
+        Box(modifier = Modifier.fillMaxSize().trackNavPointer(navOriginState)) {
             val baseContentModifier = Modifier
                 .navBarLiquefiable(
                     if (shouldExposeContentToLiquid) floatingLiquidState else null

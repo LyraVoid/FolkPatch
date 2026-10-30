@@ -48,7 +48,7 @@ import java.util.Date
 import java.util.Locale
 
 @Composable
-@Destination<RootGraph>
+@Destination<RootGraph>(wrappers = [me.bmax.apatch.ui.navigation.NavContainerTransformWrapper::class])
 fun ExecuteAPMActionScreen(navigator: DestinationsNavigator, moduleId: String) {
     var text by rememberSaveable { mutableStateOf("") }
     val displayBuffer = remember { StringBuffer() }

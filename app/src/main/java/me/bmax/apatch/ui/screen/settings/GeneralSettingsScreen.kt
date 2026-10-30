@@ -23,7 +23,7 @@ import me.bmax.apatch.util.isGlobalNamespaceEnabled as checkGlobalNamespaceEnabl
 import me.bmax.apatch.util.isMagicMountEnabled as checkMagicMountEnabled
 import me.bmax.apatch.util.ui.LocalSnackbarHost
 
-@Destination<RootGraph>
+@Destination<RootGraph>(wrappers = [me.bmax.apatch.ui.navigation.NavContainerTransformWrapper::class])
 @Composable
 fun GeneralSettingsScreen(navigator: DestinationsNavigator, highlightKey: String? = null) {
     val state by APApplication.apStateLiveData.observeAsState(APApplication.State.UNKNOWN_STATE)

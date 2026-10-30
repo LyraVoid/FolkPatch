@@ -85,7 +85,7 @@ import me.bmax.apatch.core.ui.R as CoreR
 private const val TAG = "KernelPatchModule"
 private val kpmInstallMutex = Mutex()
 
-@Destination<RootGraph>
+@Destination<RootGraph>(wrappers = [me.bmax.apatch.ui.navigation.NavContainerTransformWrapper::class])
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun KPModuleScreen(navigator: DestinationsNavigator) {

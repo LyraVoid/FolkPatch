@@ -37,7 +37,7 @@ import androidx.compose.material.icons.outlined.Api
 import androidx.compose.material.icons.outlined.Warning
 import me.bmax.apatch.ui.theme.tokens.FolkShape
 
-@Destination<RootGraph>
+@Destination<RootGraph>(wrappers = [me.bmax.apatch.ui.navigation.NavContainerTransformWrapper::class])
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ApiMarketplaceScreen(

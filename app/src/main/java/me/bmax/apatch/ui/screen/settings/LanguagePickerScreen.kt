@@ -49,7 +49,7 @@ import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.util.ui.NavigationBarsSpacer
 import java.util.Locale
 
-@Destination<RootGraph>
+@Destination<RootGraph>(wrappers = [me.bmax.apatch.ui.navigation.NavContainerTransformWrapper::class])
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LanguagePickerScreen(navigator: DestinationsNavigator) {

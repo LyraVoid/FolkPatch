@@ -46,7 +46,7 @@ import me.bmax.apatch.ui.component.folk.FolkStateView
 import androidx.compose.material.icons.outlined.Code
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Destination<RootGraph>
+@Destination<RootGraph>(wrappers = [me.bmax.apatch.ui.navigation.NavContainerTransformWrapper::class])
 @Composable
 fun ScriptLibraryScreen(navigator: DestinationsNavigator) {
     val viewModel = viewModel<ScriptLibraryViewModel>()

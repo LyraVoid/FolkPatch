@@ -43,6 +43,7 @@ import kotlinx.coroutines.sync.withPermit
 import kotlinx.coroutines.withContext
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.folk.folkPressScale
+import me.bmax.apatch.ui.component.folk.navOrigin
 import me.bmax.apatch.ui.component.BackgroundOptionsDialog
 import me.bmax.apatch.ui.component.ModuleInfoData
 import me.bmax.apatch.ui.component.rememberLoadingDialog
@@ -321,6 +322,11 @@ fun ModuleItem(
     val clickModifier = Modifier
         .fillMaxWidth()
         .animateContentSize(animationSpec = MaterialTheme.motionScheme.defaultSpatialSpec())
+        .navOrigin(
+            cornerRadius = cardCorner,
+            color = cardColor,
+            interactionSource = cardInteractionSource,
+        )
         .folkPressScale(cardInteractionSource)
         .combinedClickable(
             interactionSource = cardInteractionSource,

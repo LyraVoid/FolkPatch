@@ -69,7 +69,7 @@ private val FAQ_LANGUAGE_ALIASES = mapOf("id" to "in", "he" to "iw", "yi" to "ji
 
 internal data class FaqItem(val title: String, val body: String)
 
-@Destination<RootGraph>
+@Destination<RootGraph>(wrappers = [me.bmax.apatch.ui.navigation.NavContainerTransformWrapper::class])
 @Composable
 fun FaqScreen(navigator: DestinationsNavigator) {
     val context = LocalContext.current

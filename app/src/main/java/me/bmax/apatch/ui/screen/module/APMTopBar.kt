@@ -37,6 +37,7 @@ import me.bmax.apatch.ui.LocalLayoutVariant
 import me.bmax.apatch.ui.LayoutVariant
 import me.bmax.apatch.ui.component.SearchAppBarScrollBehavior
 import me.bmax.apatch.ui.component.rememberSearchAppBarScrollBehavior
+import me.bmax.apatch.ui.component.folk.navOrigin
 import me.bmax.apatch.core.ui.R as CoreR
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -77,7 +78,8 @@ fun TopBar(
         snackbarHostState = snackBarHost,
         navigationIcon = {
             androidx.compose.material3.IconButton(
-                onClick = { navigator.navigate(OnlineModuleScreenDestination) }
+                onClick = { navigator.navigate(OnlineModuleScreenDestination) },
+                modifier = androidx.compose.ui.Modifier.navOrigin(captureBitmap = true),
             ) {
                 Icon(
                     imageVector = Icons.Outlined.Cloud,

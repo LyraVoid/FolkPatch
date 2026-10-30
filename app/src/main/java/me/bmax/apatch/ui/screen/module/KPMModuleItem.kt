@@ -60,6 +60,7 @@ import kotlinx.coroutines.withContext
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.ExpressiveSwitch
 import me.bmax.apatch.ui.component.folk.folkPressScale
+import me.bmax.apatch.ui.component.folk.navOrigin
 import me.bmax.apatch.ui.component.ModuleLabel
 import me.bmax.apatch.ui.component.rememberLoadingDialog
 import me.bmax.apatch.ui.viewmodel.KPModel
@@ -223,6 +224,11 @@ fun KPModuleItem(
     val clickModifier = Modifier
         .fillMaxWidth()
         .animateContentSize(animationSpec = MaterialTheme.motionScheme.defaultSpatialSpec())
+        .navOrigin(
+            cornerRadius = FolkDimens.Size20,
+            color = cardColor,
+            interactionSource = cardInteractionSource,
+        )
         .folkPressScale(cardInteractionSource)
         .combinedClickable(
             interactionSource = cardInteractionSource,

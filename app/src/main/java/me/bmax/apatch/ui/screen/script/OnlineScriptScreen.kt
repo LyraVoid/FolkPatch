@@ -41,7 +41,7 @@ import androidx.compose.material.icons.outlined.Warning
 import androidx.compose.material.icons.Icons
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
-@Destination<RootGraph>
+@Destination<RootGraph>(wrappers = [me.bmax.apatch.ui.navigation.NavContainerTransformWrapper::class])
 @Composable
 fun OnlineScriptScreen(navigator: DestinationsNavigator) {
     val viewModel = viewModel<OnlineScriptViewModel>()

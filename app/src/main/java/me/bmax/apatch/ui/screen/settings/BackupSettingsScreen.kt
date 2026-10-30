@@ -15,7 +15,7 @@ import me.bmax.apatch.ui.component.folk.FolkSettingsScaffold
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.util.ui.LocalSnackbarHost
 
-@Destination<RootGraph>
+@Destination<RootGraph>(wrappers = [me.bmax.apatch.ui.navigation.NavContainerTransformWrapper::class])
 @Composable
 fun BackupSettingsScreen(navigator: DestinationsNavigator, highlightKey: String? = null) {
     val prefs = APApplication.sharedPreferences

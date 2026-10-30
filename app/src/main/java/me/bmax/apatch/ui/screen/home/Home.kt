@@ -86,7 +86,7 @@ private enum class ApatchUninstallOption(
     ),
 }
 
-@Destination<RootGraph>(start = true)
+@Destination<RootGraph>(start = true, wrappers = [me.bmax.apatch.ui.navigation.NavContainerTransformWrapper::class])
 @Composable
 fun HomeScreen(navigator: DestinationsNavigator) {
     var showPatchFloatAction by remember { mutableStateOf(true) }

@@ -34,6 +34,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import me.bmax.apatch.ui.component.SegmentedChevron
+import me.bmax.apatch.ui.component.folk.navOrigin
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -65,6 +66,7 @@ fun AppItemM3E(
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .navOrigin(cornerRadius = FolkDimens.Size20)
             .background(
                 if (isSelected && selectionMode) 
                     MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.12f)

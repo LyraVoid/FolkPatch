@@ -65,6 +65,7 @@ import me.bmax.apatch.util.Version
 import me.bmax.apatch.util.getSELinuxStatus
 import me.bmax.apatch.util.ui.showToast
 import me.bmax.apatch.ui.theme.tokens.FolkShape
+import me.bmax.apatch.ui.component.folk.navOrigin
 
 @OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class)
 @Composable
@@ -150,11 +151,17 @@ fun HeroStatusCard(
         isUpdate -> stringResource(R.string.home_kp_cando_update)
         else -> stringResource(R.string.home_click_to_install)
     }
+    val cardFill = wallpaper?.group?.fill
+        ?: me.bmax.apatch.ui.theme.tokens.FolkTheme.palette.groupedSurface
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .clip(FolkShape.Corner20)
+            .navOrigin(
+                cornerRadius = FolkDimens.Size20,
+                color = cardFill,
+            )
             .then(
                 if (wallpaperEnabled || (!isWorking && !isJailbreak)) {
                     Modifier.combinedClickable(
@@ -170,8 +177,7 @@ fun HeroStatusCard(
             ),
         shape = FolkShape.Corner20,
         colors = CardDefaults.cardColors(
-            containerColor = wallpaper?.group?.fill
-                ?: me.bmax.apatch.ui.theme.tokens.FolkTheme.palette.groupedSurface,
+            containerColor = cardFill,
             contentColor = contentColor,
         ),
     ) {
