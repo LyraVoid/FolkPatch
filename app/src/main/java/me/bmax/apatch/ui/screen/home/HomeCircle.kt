@@ -25,6 +25,7 @@ import me.bmax.apatch.ui.navigation.BottomBarDestination
 import me.bmax.apatch.util.AppData
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.util.ui.HomeBottomSpacer
+import me.bmax.apatch.ui.theme.tokens.FolkType
 
 @Composable
 fun HomeScreenCircle(
@@ -80,7 +81,7 @@ fun HomeScreenCircle(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(FolkDimens.Size16)
             ) {
-                TonalCard(modifier = Modifier.weight(1f)) {
+                TonalCard(modifier = Modifier.weight(1f), flat = true) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -97,7 +98,7 @@ fun HomeScreenCircle(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
-                            imageVector = Icons.Outlined.Security,
+                            imageVector = Icons.Outlined.Person,
                             contentDescription = null,
                             modifier = Modifier.size(FolkDimens.Size20),
                             tint = MaterialTheme.colorScheme.onSurfaceVariant
@@ -106,21 +107,21 @@ fun HomeScreenCircle(
                         Column {
                             Text(
                                 text = stringResource(R.string.superuser),
-                                style = MaterialTheme.typography.bodyLarge,
+                                style = FolkType.Summary,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             )
                             Spacer(Modifier.height(FolkDimens.Size4))
                             Text(
                                 text = superuserCount.toString(),
-                                style = MaterialTheme.typography.bodyMedium,
+                                style = FolkType.Numeral,
                                 color = MaterialTheme.colorScheme.outline
                             )
                         }
                     }
                 }
                 
-                TonalCard(modifier = Modifier.weight(1f)) {
+                TonalCard(modifier = Modifier.weight(1f), flat = true) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -137,7 +138,7 @@ fun HomeScreenCircle(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
-                            imageVector = Icons.Outlined.Widgets,
+                            imageVector = Icons.Outlined.Extension,
                             contentDescription = null,
                             modifier = Modifier.size(FolkDimens.Size20),
                             tint = MaterialTheme.colorScheme.onSurfaceVariant
@@ -146,14 +147,14 @@ fun HomeScreenCircle(
                         Column {
                             Text(
                                 text = stringResource(R.string.module),
-                                style = MaterialTheme.typography.bodyLarge,
+                                style = FolkType.Summary,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             )
                             Spacer(Modifier.height(FolkDimens.Size4))
                             Text(
                                 text = moduleCount.toString(),
-                                style = MaterialTheme.typography.bodyMedium,
+                                style = FolkType.Numeral,
                                 color = MaterialTheme.colorScheme.outline
                             )
                         }

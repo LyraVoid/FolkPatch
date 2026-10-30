@@ -10,6 +10,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material.icons.automirrored.outlined.HelpOutline
+import androidx.compose.material.icons.automirrored.outlined.KeyboardArrowRight
 import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material.icons.outlined.LockOpen
 import androidx.compose.material.icons.outlined.Warning
@@ -42,6 +43,7 @@ import kotlinx.coroutines.withContext
 import me.bmax.apatch.core.ui.R as CoreR
 import me.bmax.apatch.ui.theme.tokens.FolkShape
 import me.bmax.apatch.ui.theme.tokens.LocalFolkWallpaperTokens
+import me.bmax.apatch.ui.theme.tokens.FolkType
 
 @Composable
 fun StatusCardCircle(
@@ -74,6 +76,7 @@ fun StatusCardCircle(
     TonalCard(
         containerColor = finalContainerColor,
         contentColor = if (isWallpaperMode) MaterialTheme.colorScheme.onSurface else null,
+        flat = true,
     ) {
         Row(
             modifier = Modifier
@@ -97,62 +100,60 @@ fun StatusCardCircle(
                 Column(Modifier.padding(start = FolkDimens.Size20).weight(1f)) {
                     Text(
                         text = stringResource(R.string.settings_jailbreak_mode),
-                        style = MaterialTheme.typography.titleMedium
+                        style = FolkType.Title
                     )
                     Spacer(Modifier.height(FolkDimens.Size4))
                     Text(
                         text = stringResource(R.string.settings_jailbreak_mode_summary),
-                        style = MaterialTheme.typography.bodyMedium
+                        style = FolkType.Summary,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
             } else if (isWorking) {
-                 Icon(Icons.Outlined.CheckCircle, stringResource(R.string.home_working))
-                 Column(Modifier.padding(start = FolkDimens.Size20).weight(1f)) {
-                     val isFull = apState == APApplication.State.ANDROIDPATCH_INSTALLED
-                    val modeTextTitle = if (isFull) "Kpm" else "Half"
-                    val modeTextCaps = if (isFull) "KPM" else "HALF"
-                    val modeText = BackgroundConfig.getCustomBadgeText() ?: modeTextCaps
-
-                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(
-                            text = if (classicEmojiEnabled) {
-                                stringResource(R.string.home_working) + "😋"
-                            } else {
-                                stringResource(R.string.home_working)
-                            },
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                        Spacer(Modifier.width(FolkDimens.Size8))
-
-                       // Full/Half Label
-                      if (!classicEmojiEnabled) {
-                          ModeLabelText(label = modeText)
-                      }
-                   }
-                   Spacer(Modifier.height(FolkDimens.Size4))
-                   Text(
-                       text = stringResource(R.string.home_version, getManagerVersion().second.toString()) +
-                               if (classicEmojiEnabled) " - $modeTextTitle" else "",
-                       style = MaterialTheme.typography.bodyMedium
-                   )
+                Icon(Icons.Outlined.CheckCircle, stringResource(R.string.home_working))
+                val isFull = apState == APApplication.State.ANDROIDPATCH_INSTALLED
+                val modeTextTitle = if (isFull) "Kpm" else "Half"
+                val modeTextCaps = if (isFull) "KPM" else "HALF"
+                val modeText = BackgroundConfig.getCustomBadgeText() ?: modeTextCaps
+                Column(Modifier.padding(start = FolkDimens.Size20).weight(1f)) {
+                    Text(
+                        text = if (classicEmojiEnabled) {
+                            stringResource(R.string.home_working) + "😋"
+                        } else {
+                            stringResource(R.string.home_working)
+                        },
+                        style = FolkType.Title
+                    )
+                    Spacer(Modifier.height(FolkDimens.Size4))
+                    Text(
+                        text = stringResource(R.string.home_version, getManagerVersion().second.toString()) +
+                                if (classicEmojiEnabled) " - $modeTextTitle" else "",
+                        style = FolkType.Summary,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+                if (!classicEmojiEnabled) {
+                    Spacer(Modifier.width(FolkDimens.Size16))
+                    ModeLabelText(label = modeText)
                 }
             } else {
-                 // Not installed or error
-                 val icon = if (isUpdate) Icons.Outlined.SystemUpdate else Icons.Outlined.Warning
-                 val title = if (isUpdate) stringResource(R.string.home_kp_need_update) else stringResource(R.string.home_not_installed)
+                // Not installed or error
+                val icon = if (isUpdate) Icons.Outlined.SystemUpdate else Icons.Outlined.Warning
+                val title = if (isUpdate) stringResource(R.string.home_kp_need_update) else stringResource(R.string.home_not_installed)
 
-                 Icon(icon, title)
-                 Column(Modifier.padding(start = FolkDimens.Size20).weight(1f)) {
-                     Text(
-                         text = title,
-                         style = MaterialTheme.typography.titleMedium
-                     )
-                     Spacer(Modifier.height(FolkDimens.Size4))
-                     Text(
-                         text = stringResource(R.string.home_click_to_install),
-                         style = MaterialTheme.typography.bodyMedium
-                     )
-                 }
+                Icon(icon, title)
+                Column(Modifier.padding(start = FolkDimens.Size20).weight(1f)) {
+                    Text(
+                        text = title,
+                        style = FolkType.Title
+                    )
+                    Spacer(Modifier.height(FolkDimens.Size4))
+                    Text(
+                        text = stringResource(R.string.home_click_to_install),
+                        style = FolkType.Summary,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
             }
             if (isJailbreak || kpState == APApplication.State.UNKNOWN_STATE && isPermissive) {
                 IconButton(
@@ -177,7 +178,7 @@ fun StatusCardCircle(
 fun InfoCardCircle(kpState: APApplication.State, apState: APApplication.State) {
     val context = LocalContext.current
 
-    TonalCard {
+    TonalCard(flat = true) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -236,10 +237,10 @@ fun InfoCardCircle(kpState: APApplication.State, apState: APApplication.State) {
                     icon()
                     Spacer(Modifier.width(FolkDimens.Size16))
                     Column {
-                        Text(text = label, style = MaterialTheme.typography.bodyLarge)
+                        Text(text = label, style = FolkType.Summary)
                         Text(
                             text = content,
-                            style = MaterialTheme.typography.bodyMedium,
+                            style = FolkType.Machine,
                             color = MaterialTheme.colorScheme.outline,
                         )
                     }
@@ -380,7 +381,7 @@ fun ModeLabelText(
 
 @Composable
 fun AStatusCardCircle(apState: APApplication.State) {
-    TonalCard {
+    TonalCard(flat = true) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -389,7 +390,7 @@ fun AStatusCardCircle(apState: APApplication.State) {
         ) {
             Text(
                 text = stringResource(R.string.android_patch),
-                style = MaterialTheme.typography.titleMedium
+                style = FolkType.Title
             )
             Spacer(Modifier.height(FolkDimens.Size12))
             Row(
@@ -429,35 +430,35 @@ fun AStatusCardCircle(apState: APApplication.State) {
                         APApplication.State.ANDROIDPATCH_NOT_INSTALLED -> {
                             Text(
                                 text = stringResource(R.string.home_not_installed),
-                                style = MaterialTheme.typography.titleMedium
+                                style = FolkType.Title
                             )
                         }
 
                         APApplication.State.ANDROIDPATCH_INSTALLING -> {
                             Text(
                                 text = stringResource(R.string.home_installing),
-                                style = MaterialTheme.typography.titleMedium
+                                style = FolkType.Title
                             )
                         }
 
                         APApplication.State.ANDROIDPATCH_INSTALLED -> {
                             Text(
                                 text = stringResource(R.string.home_working),
-                                style = MaterialTheme.typography.titleMedium
+                                style = FolkType.Title
                             )
                         }
 
                         APApplication.State.ANDROIDPATCH_NEED_UPDATE -> {
                             Text(
                                 text = stringResource(R.string.home_kp_need_update),
-                                style = MaterialTheme.typography.titleMedium
+                                style = FolkType.Title
                             )
                         }
 
                         else -> {
                             Text(
                                 text = stringResource(R.string.home_install_unknown),
-                                style = MaterialTheme.typography.titleMedium
+                                style = FolkType.Title
                             )
                         }
                     }
@@ -509,28 +510,42 @@ fun AStatusCardCircle(apState: APApplication.State) {
 fun LearnMoreCardCircle() {
     val uriHandler = LocalUriHandler.current
 
-    TonalCard {
+    TonalCard(flat = true) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable {
                     uriHandler.openUri("https://fp.mysqil.com/")
                 }
-                .padding(FolkDimens.Size24),
+                .padding(horizontal = FolkDimens.Size24, vertical = FolkDimens.Size20),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Column {
+            Icon(
+                imageVector = Icons.Outlined.Info,
+                contentDescription = stringResource(R.string.home_learn_apatch),
+                modifier = Modifier.size(FolkDimens.Size20),
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Spacer(Modifier.width(FolkDimens.Size16))
+            Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = stringResource(R.string.home_learn_apatch),
-                    style = MaterialTheme.typography.titleSmall
+                    style = FolkType.Summary
                 )
                 Spacer(Modifier.height(FolkDimens.Size4))
                 Text(
                     text = stringResource(R.string.home_click_to_learn_apatch),
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = FolkType.Caption,
                     color = MaterialTheme.colorScheme.outline
                 )
             }
+            Spacer(Modifier.width(FolkDimens.Size12))
+            Icon(
+                imageVector = Icons.AutoMirrored.Outlined.KeyboardArrowRight,
+                contentDescription = null,
+                modifier = Modifier.size(FolkDimens.Size20),
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
         }
     }
 }
