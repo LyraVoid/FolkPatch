@@ -21,10 +21,14 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.PlaylistAddCheck
 import androidx.compose.material.icons.outlined.Close
+import androidx.compose.material.icons.outlined.Check
 import androidx.compose.material.icons.outlined.Deselect
 import androidx.compose.material.icons.outlined.History
 import androidx.compose.material.icons.outlined.MoreVert
 import androidx.compose.material.icons.outlined.Terminal
+import androidx.compose.material3.CheckableDropdownMenuItem
+import androidx.compose.material3.DropdownMenuGroup
+import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FloatingActionButton
@@ -33,6 +37,8 @@ import androidx.compose.material3.FloatingActionButtonMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
+import androidx.compose.material3.SelectableDropdownMenuItem
 import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
@@ -46,8 +52,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -65,8 +73,6 @@ import me.bmax.apatch.ui.navigation.LocalBottomBarVisible
 import me.bmax.apatch.ui.navigation.LocalIsFloatingNavMode
 import me.bmax.apatch.ui.navigation.fabNavBottomClearance
 import me.bmax.apatch.ui.component.SearchAppBar
-import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenu
-import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenuItem
 import me.bmax.apatch.ui.component.splicedLazyColumnGroup
 import me.bmax.apatch.ui.viewmodel.SuperUserViewModel
 import me.bmax.apatch.util.ui.showToast
@@ -88,6 +94,7 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
     val viewModel = viewModel<SuperUserViewModel>()
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
+    val haptic = LocalHapticFeedback.current
 
     val backupLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.CreateDocument("application/json")
@@ -224,41 +231,74 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
                                 )
                             }
 
-                            WallpaperAwareDropdownMenu(
+                            DropdownMenuPopup(
                                 expanded = showSuperUserMenu,
                                 onDismissRequest = { showSuperUserMenu = false },
                             ) {
-                                WallpaperAwareDropdownMenuItem(
-                                    text = { Text(stringResource(R.string.su_refresh)) },
-                                    onClick = {
-                                        showSuperUserMenu = false
-                                        scope.launch { viewModel.fetchAppList() }
-                                    },
-                                )
-                                WallpaperAwareDropdownMenuItem(
-                                    text = { Text(
-                                        if (viewModel.showSystemApps) stringResource(R.string.su_hide_system_apps)
-                                        else stringResource(R.string.su_show_system_apps)
-                                    ) },
-                                    onClick = {
-                                        showSuperUserMenu = false
-                                        viewModel.showSystemApps = !viewModel.showSystemApps
-                                    },
-                                )
-                                WallpaperAwareDropdownMenuItem(
-                                    text = { Text(stringResource(R.string.su_backup_list)) },
-                                    onClick = {
-                                        showSuperUserMenu = false
-                                        backupLauncher.launch("FolkPatch_list_backup.json")
-                                    },
-                                )
-                                WallpaperAwareDropdownMenuItem(
-                                    text = { Text(stringResource(R.string.su_restore_list)) },
-                                    onClick = {
-                                        showSuperUserMenu = false
-                                        restoreLauncher.launch(arrayOf("application/json", "*/*"))
-                                    },
-                                )
+                                DropdownMenuGroup(shapes = MenuDefaults.groupShapes()) {
+                                    SelectableDropdownMenuItem(
+                                        text = { Text(stringResource(R.string.su_refresh)) },
+                                        selected = false,
+                                        onClick = {
+                                            showSuperUserMenu = false
+                                            scope.launch { viewModel.fetchAppList() }
+                                        },
+                                        shapes = MenuDefaults.itemShape(index = 0, count = 1),
+                                    )
+                                }
+
+                                Spacer(Modifier.height(MenuDefaults.GroupSpacing))
+
+                                DropdownMenuGroup(shapes = MenuDefaults.groupShapes()) {
+                                    CheckableDropdownMenuItem(
+                                        text = {
+                                            Text(
+                                                if (viewModel.showSystemApps) {
+                                                    stringResource(R.string.su_hide_system_apps)
+                                                } else {
+                                                    stringResource(R.string.su_show_system_apps)
+                                                }
+                                            )
+                                        },
+                                        checked = viewModel.showSystemApps,
+                                        checkedLeadingIcon = {
+                                            Icon(
+                                                imageVector = Icons.Outlined.Check,
+                                                contentDescription = null,
+                                                modifier = Modifier.size(MenuDefaults.LeadingIconSize),
+                                            )
+                                        },
+                                        onCheckedChange = {
+                                            haptic.performHapticFeedback(HapticFeedbackType.VirtualKey)
+                                            showSuperUserMenu = false
+                                            viewModel.showSystemApps = !viewModel.showSystemApps
+                                        },
+                                        shapes = MenuDefaults.itemShape(index = 0, count = 1),
+                                    )
+                                }
+
+                                Spacer(Modifier.height(MenuDefaults.GroupSpacing))
+
+                                DropdownMenuGroup(shapes = MenuDefaults.groupShapes()) {
+                                    SelectableDropdownMenuItem(
+                                        text = { Text(stringResource(R.string.su_backup_list)) },
+                                        selected = false,
+                                        onClick = {
+                                            showSuperUserMenu = false
+                                            backupLauncher.launch("FolkPatch_list_backup.json")
+                                        },
+                                        shapes = MenuDefaults.itemShape(index = 0, count = 2),
+                                    )
+                                    SelectableDropdownMenuItem(
+                                        text = { Text(stringResource(R.string.su_restore_list)) },
+                                        selected = false,
+                                        onClick = {
+                                            showSuperUserMenu = false
+                                            restoreLauncher.launch(arrayOf("application/json", "*/*"))
+                                        },
+                                        shapes = MenuDefaults.itemShape(index = 1, count = 2),
+                                    )
+                                }
                             }
                         }
                     },
