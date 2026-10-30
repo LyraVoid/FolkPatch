@@ -427,7 +427,7 @@ private fun BoxScope.ReducedMotionPressBorder(
             modifier = Modifier
                 .matchParentSize()
                 .border(
-                    width = if (longPressActive) 3.dp else 2.dp,
+                    width = if (longPressActive) FolkDimens.Size3 else FolkDimens.Size2,
                     color = color.copy(alpha = if (longPressActive) 1f else 0.8f),
                     shape = FolkShape.Corner20,
                 )

@@ -25,7 +25,6 @@ Icons.Outlined.AdminPanelSettings
 Icons.Outlined.Alarm
 Icons.Outlined.AlternateEmail
 Icons.Outlined.Android
-Icons.Outlined.Animation
 Icons.Outlined.Api
 Icons.Outlined.AppRegistration
 Icons.Outlined.Apps
