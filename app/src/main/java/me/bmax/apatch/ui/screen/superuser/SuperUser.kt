@@ -236,20 +236,6 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
                                 onDismissRequest = { showSuperUserMenu = false },
                             ) {
                                 DropdownMenuGroup(shapes = MenuDefaults.groupShapes()) {
-                                    SelectableDropdownMenuItem(
-                                        text = { Text(stringResource(R.string.su_refresh)) },
-                                        selected = false,
-                                        onClick = {
-                                            showSuperUserMenu = false
-                                            scope.launch { viewModel.fetchAppList() }
-                                        },
-                                        shapes = MenuDefaults.itemShape(index = 0, count = 1),
-                                    )
-                                }
-
-                                Spacer(Modifier.height(MenuDefaults.GroupSpacing))
-
-                                DropdownMenuGroup(shapes = MenuDefaults.groupShapes()) {
                                     CheckableDropdownMenuItem(
                                         text = {
                                             Text(
@@ -273,13 +259,8 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
                                             showSuperUserMenu = false
                                             viewModel.showSystemApps = !viewModel.showSystemApps
                                         },
-                                        shapes = MenuDefaults.itemShape(index = 0, count = 1),
+                                        shapes = MenuDefaults.itemShape(index = 0, count = 3),
                                     )
-                                }
-
-                                Spacer(Modifier.height(MenuDefaults.GroupSpacing))
-
-                                DropdownMenuGroup(shapes = MenuDefaults.groupShapes()) {
                                     SelectableDropdownMenuItem(
                                         text = { Text(stringResource(R.string.su_backup_list)) },
                                         selected = false,
@@ -287,7 +268,7 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
                                             showSuperUserMenu = false
                                             backupLauncher.launch("FolkPatch_list_backup.json")
                                         },
-                                        shapes = MenuDefaults.itemShape(index = 0, count = 2),
+                                        shapes = MenuDefaults.itemShape(index = 1, count = 3),
                                     )
                                     SelectableDropdownMenuItem(
                                         text = { Text(stringResource(R.string.su_restore_list)) },
@@ -296,7 +277,7 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
                                             showSuperUserMenu = false
                                             restoreLauncher.launch(arrayOf("application/json", "*/*"))
                                         },
-                                        shapes = MenuDefaults.itemShape(index = 1, count = 2),
+                                        shapes = MenuDefaults.itemShape(index = 2, count = 3),
                                     )
                                 }
                             }
