@@ -24,8 +24,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -61,6 +59,7 @@ import me.bmax.apatch.ui.component.folk.FolkLogEmptyState
 import me.bmax.apatch.ui.component.folk.folkLogTextStyle
 import me.bmax.apatch.ui.component.folk.FolkTitleStyle
 import me.bmax.apatch.ui.component.folk.folkInsetColor
+import me.bmax.apatch.ui.component.SegmentedChoiceRow
 import me.bmax.apatch.ui.component.splicedLazyColumnGroup
 import me.bmax.apatch.util.SuAuditLog
 import java.text.SimpleDateFormat
@@ -127,17 +126,18 @@ fun SuAuditLogScreen(navigator: DestinationsNavigator) {
                 .fillMaxSize()
                 .padding(innerPadding),
         ) {
-            TabRow(selectedTabIndex = selectedTab) {
-                tabs.forEachIndexed { index, title ->
-                    Tab(
-                        selected = selectedTab == index,
-                        onClick = { selectedTab = index },
-                        text = { Text(title, style = MaterialTheme.typography.bodyMedium) },
-                    )
-                }
-            }
+            SegmentedChoiceRow(
+                items = tabs,
+                selectedIndex = selectedTab,
+                onItemSelection = { selectedTab = it },
+                modifier = Modifier.padding(vertical = FolkDimens.Size8),
+            )
 
-            Crossfade(targetState = selectedTab, label = "auditTab") { tab ->
+            Crossfade(
+                targetState = selectedTab,
+                modifier = Modifier.weight(1f),
+                label = "auditTab",
+            ) { tab ->
                 when (tab) {
                     0 -> KernelAuditList(entries = kernelEntries)
                     1 -> AppAuditList(entries = appEntries)
