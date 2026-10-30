@@ -4,7 +4,6 @@ import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -20,11 +19,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.Article
 import androidx.compose.material.icons.automirrored.outlined.PlaylistAddCheck
-import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material.icons.outlined.Check
 import androidx.compose.material.icons.outlined.Deselect
-import androidx.compose.material.icons.outlined.History
 import androidx.compose.material.icons.outlined.MoreVert
 import androidx.compose.material.icons.outlined.Terminal
 import androidx.compose.material3.CheckableDropdownMenuItem
@@ -33,8 +31,6 @@ import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.FloatingActionButtonMenu
-import androidx.compose.material3.FloatingActionButtonMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -274,6 +270,14 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
                     searchPlaceholder = stringResource(R.string.su_search_hint),
                     scrollBehavior = if (m3eLayout) searchBarScrollBehavior else null,
                     title = { Text(stringResource(R.string.su_title)) },
+                    navigationIcon = {
+                        IconButton(onClick = { navigator.navigate(SuAuditLogScreenDestination) }) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Outlined.Article,
+                                contentDescription = stringResource(R.string.su_audit_log_title),
+                            )
+                        }
+                    },
                     searchText = viewModel.search,
                     onSearchTextChange = { viewModel.updateSearch(it) },
                     onClearClick = { viewModel.updateSearch("") },
@@ -371,60 +375,18 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
         },
         floatingActionButton = run {
             {
-                var fabExpanded by remember { mutableStateOf(false) }
                 val isFloatingMode = LocalIsFloatingNavMode.current
 
                 val fabContent: @Composable () -> Unit = {
-                    FloatingActionButtonMenu(
-                        expanded = fabExpanded,
-                        button = {
-                            FloatingActionButton(
-                                onClick = { fabExpanded = !fabExpanded },
-                                shape = CircleShape,
-                                contentColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 1f),
-                                containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
-                            ) {
-                                Crossfade(
-                                    targetState = fabExpanded,
-                                    animationSpec = MaterialTheme.motionScheme.defaultEffectsSpec(),
-                                    label = "fabIconCrossfade"
-                                ) { isExpanded ->
-                                    if (isExpanded) {
-                                        Icon(Icons.Outlined.Close, contentDescription = stringResource(R.string.close))
-                                    } else {
-                                        Icon(Icons.Outlined.History, contentDescription = stringResource(R.string.su_audit_log_title))
-                                    }
-                                }
-                            }
-                        },
+                    FloatingActionButton(
+                        onClick = { navigator.navigate(ScriptLibraryScreenDestination) },
+                        shape = CircleShape,
+                        contentColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 1f),
+                        containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
                     ) {
-                        FloatingActionButtonMenuItem(
-                            onClick = {
-                                fabExpanded = false
-                                navigator.navigate(ScriptLibraryScreenDestination)
-                            },
-                            icon = {
-                                Icon(
-                                    Icons.Outlined.Terminal,
-                                    contentDescription = stringResource(R.string.script_library),
-                                    modifier = Modifier.size(FolkDimens.Size18)
-                                )
-                            },
-                            text = { Text(stringResource(R.string.script_library), style = MaterialTheme.typography.bodyMedium) },
-                        )
-                        FloatingActionButtonMenuItem(
-                            onClick = {
-                                fabExpanded = false
-                                navigator.navigate(SuAuditLogScreenDestination)
-                            },
-                            icon = {
-                                Icon(
-                                    Icons.Outlined.History,
-                                    contentDescription = stringResource(R.string.su_audit_log_title),
-                                    modifier = Modifier.size(FolkDimens.Size18)
-                                )
-                            },
-                            text = { Text(stringResource(R.string.su_audit_log_title), style = MaterialTheme.typography.bodyMedium) },
+                        Icon(
+                            imageVector = Icons.Outlined.Terminal,
+                            contentDescription = stringResource(R.string.script_library),
                         )
                     }
                 }
