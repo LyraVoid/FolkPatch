@@ -4,6 +4,8 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
+import com.materialkolor.PaletteStyle
+import com.materialkolor.dynamiccolor.ColorSpec
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -85,5 +87,32 @@ class WallpaperColorSchemeTest {
     fun generationDefaultsMatchFinaSU() {
         assertEquals(ColorGenerationMode.CUSTOM, ColorGenerationMode.fromKey(null))
         assertEquals(ColorStandard.M3E_2025, ColorStandard.fromName(null))
+    }
+
+    @Test
+    fun generatedStandardSchemesKeepAccessibleTextAndControls() {
+        for (mode in listOf("light", "dark", "amoled")) {
+            val dark = mode != "light"
+            val generated = ColorSchemeGenerator.generate(
+                Color(0xFF4355B9), dark, PaletteStyle.TonalSpot, ColorSpec.SpecVersion.SPEC_2025,
+            ).withSemanticError(dark)
+            val scheme = if (mode == "amoled") generated.toAmoled() else generated
+            fun ratio(a: Color, b: Color): Float {
+                val x = a.luminance()
+                val y = b.luminance()
+                return (maxOf(x, y) + 0.05f) / (minOf(x, y) + 0.05f)
+            }
+            val pairs = mapOf(
+                "onBackground/background" to (scheme.onBackground to scheme.background),
+                "onSurface/surface" to (scheme.onSurface to scheme.surface),
+                "onPrimary/primary" to (scheme.onPrimary to scheme.primary),
+                "onPrimaryContainer/primaryContainer" to (scheme.onPrimaryContainer to scheme.primaryContainer),
+                "onSecondaryContainer/secondaryContainer" to (scheme.onSecondaryContainer to scheme.secondaryContainer),
+                "onTertiaryContainer/tertiaryContainer" to (scheme.onTertiaryContainer to scheme.tertiaryContainer),
+                "onErrorContainer/errorContainer" to (scheme.onErrorContainer to scheme.errorContainer),
+            )
+            pairs.forEach { (name, colors) -> assertTrue("$mode $name", ratio(colors.first, colors.second) >= 4.5f) }
+            assertTrue("$mode outline/surface", ratio(scheme.outline, scheme.surface) >= 3f)
+        }
     }
 }

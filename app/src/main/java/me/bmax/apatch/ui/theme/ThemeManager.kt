@@ -25,7 +25,6 @@ object ThemeManager {
         val colorGenerationMode: String = "custom",
         val colorStandard: String = "M3E_2025",
         val colorStyle: String = "TONAL_SPOT",
-        val colorContrast: String = "STANDARD",
         val appLanguage: String?,
         // Grid Working Card Background
         val isGridWorkingCardBackgroundEnabled: Boolean = false,

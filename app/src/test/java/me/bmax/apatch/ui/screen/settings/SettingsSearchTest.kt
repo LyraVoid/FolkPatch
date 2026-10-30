@@ -58,4 +58,9 @@ class SettingsSearchTest {
     fun queryWhitespaceIsIgnored() {
         assertEquals(listOf("search", "theme"), settingsSearchTokens("  search   theme "))
     }
+
+    @Test
+    fun contrastSelectorIsNotIndexed() {
+        assertTrue(SettingsRegistry.allSettings.none { it.key == "appearance_color_contrast" })
+    }
 }

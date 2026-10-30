@@ -399,6 +399,7 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
         }
         apApp = this
         sharedPreferences = getSharedPreferences(SP_NAME, Context.MODE_PRIVATE)
+        me.bmax.apatch.ui.theme.removeLegacyContrastPreference(sharedPreferences)
         me.bmax.apatch.ui.component.SwitchIconState.showIcon =
             sharedPreferences.getBoolean("show_switch_icon", true)
 
