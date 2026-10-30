@@ -20,7 +20,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -28,7 +32,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import me.bmax.apatch.R
+import me.bmax.apatch.ui.component.BackgroundOptionsDialog
 import me.bmax.apatch.ui.component.DualBackgroundSettings
+import me.bmax.apatch.ui.component.rememberConfirmDialog
 import me.bmax.apatch.ui.component.TonalCard
 import me.bmax.apatch.ui.component.LoadingDialogHandle
 import me.bmax.apatch.ui.component.SegmentedColumn
@@ -48,6 +54,13 @@ fun AppearanceDashboardCardSection(
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
+    var showOptions by remember { mutableStateOf(false) }
+    val clearBackgroundDialog = rememberConfirmDialog(
+        onConfirm = {
+            BackgroundManager.clearDashboardCardBackground(context)
+            showToast(context, context.getString(R.string.dashboard_card_background_cleared))
+        }
+    )
 
     val pickDashboardCardImageLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.GetContent()
@@ -124,17 +137,7 @@ fun AppearanceDashboardCardSection(
             item(key = "appearance_dashboard_card_select") {
                 TonalCard(
                     flat = flat,
-                    onClick = {
-                        if (PermissionUtils.hasExternalStoragePermission(context)) {
-                            try {
-                                pickDashboardCardImageLauncher.launch("image/*")
-                            } catch (e: ActivityNotFoundException) {
-                                showToast(context, e.message ?: "")
-                            }
-                        } else {
-                            showToast(context, context.getString(R.string.focus_card_permission_required))
-                        }
-                    },
+                    onClick = { showOptions = true },
                 ) {
                     Row(
                         modifier = Modifier.fillMaxWidth().padding(FolkDimens.Size16),
@@ -160,5 +163,34 @@ fun AppearanceDashboardCardSection(
                 }
             }
         }
+    }
+
+    if (showOptions) {
+        BackgroundOptionsDialog(
+            showDialog = showOptions,
+            onDismiss = { showOptions = false },
+            title = stringResource(R.string.dashboard_card_background_title),
+            selectLabel = stringResource(R.string.settings_select_background_image),
+            clearLabel = stringResource(R.string.dashboard_card_background_clear),
+            hasExisting = BackgroundConfig.dashboardCardBgUri != null,
+            onSelectImage = {
+                if (PermissionUtils.hasExternalStoragePermission(context)) {
+                    try {
+                        pickDashboardCardImageLauncher.launch("image/*")
+                    } catch (e: ActivityNotFoundException) {
+                        showToast(context, e.message ?: "")
+                    }
+                } else {
+                    showToast(context, context.getString(R.string.focus_card_permission_required))
+                }
+            },
+            onClearImage = {
+                clearBackgroundDialog.showConfirm(
+                    title = context.getString(R.string.dashboard_card_background_clear),
+                    content = context.getString(R.string.dashboard_card_background_clear_confirm),
+                    markdown = false,
+                )
+            },
+        )
     }
 }

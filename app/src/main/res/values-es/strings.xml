@@ -1367,8 +1367,6 @@ Aquí hay algunas posibles razones para el fallo de autenticación—por favor v
     <string name="dashboard_card_background_saved">Fondo del panel guardado correctamente</string>
     <string name="dashboard_card_background_error">Error al guardar el fondo del panel</string>
     <string name="dashboard_card_background_cleared">Fondo del panel borrado</string>
-    <string name="dashboard_card_background_restore">Restablecer predeterminado</string>
-    <string name="dashboard_card_background_restored">Fondo del panel restablecido</string>
     <string name="settings_dashboard_card_dual_dim">Activar atenuación dual día/noche</string>
     <string name="settings_dashboard_card_dual_dim_desc">Ajustar automáticamente el oscurecimiento del fondo del panel según el tema claro u oscuro</string>
     <string name="settings_dashboard_card_day_dim">Atenuación del fondo del panel en modo día</string>

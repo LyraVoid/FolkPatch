@@ -1173,10 +1173,6 @@ internal object ThemeIO {
                     }
                 }
 
-                // 重置后恢复内置默认仪表盘卡片壁纸
-                BackgroundManager.provisionDefaultDashboardCardBg(context)
-
-      
                 FontConfig.clearFont(context)
 
       

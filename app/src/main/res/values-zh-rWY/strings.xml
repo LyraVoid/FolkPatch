@@ -988,8 +988,6 @@ KernelPatch 須用 boot 之像以補。
     <string name="dashboard_card_background_saved">DashboardUI 壁飾已存</string>
     <string name="dashboard_card_background_error">存 DashboardUI 壁飾而敗</string>
     <string name="dashboard_card_background_cleared">DashboardUI 壁飾已清</string>
-    <string name="dashboard_card_background_restore">復素定</string>
-    <string name="dashboard_card_background_restored">已復素定之壁飾</string>
     <string name="settings_dashboard_card_dual_dim">開晝夜兩晦</string>
     <string name="settings_dashboard_card_dual_dim_desc">依晝夜之題，自調 DashboardUI 壁飾之晦</string>
     <string name="settings_dashboard_card_day_dim">晝時 DashboardUI 壁飾之晦</string>
