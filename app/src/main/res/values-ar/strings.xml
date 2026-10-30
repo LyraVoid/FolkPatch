@@ -1,5 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="settings_layout_variant">نمط التخطيط</string>
+    <string name="settings_layout_variant_summary">استخدم أشرطة علوية كبيرة بنمط M3E مع بحث مضمّن قابل للطي، أو أبقِ الأشرطة العلوية المدمجة التقليدية.</string>
+    <string name="settings_layout_variant_traditional">التقليدي</string>
+    <string name="settings_layout_variant_m3e">M3E</string>
+    <string name="apm_search_hint">البحث في وحدات النظام</string>
+    <string name="kpm_search_hint">البحث في وحدات النواة</string>
+    <string name="su_search_hint">ابحث عن التطبيقات</string>
     <string name="launcher_icon_style_anime">أنيمي</string>
     <string name="launcher_icon_style_geometry">هندسي</string>
     <string name="launcher_icon_style_apatch">APatch</string>

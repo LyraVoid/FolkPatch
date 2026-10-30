@@ -14,6 +14,7 @@ object FolkDimens {
     val Size8 = 8.dp
     val Size10 = 10.dp
     val Size12 = 12.dp
+    val Size13 = 13.dp
     val Size14 = 14.dp
     val Size16 = 16.dp
     val Size18 = 18.dp
@@ -27,15 +28,19 @@ object FolkDimens {
     val Size38 = 38.dp
     val Size40 = 40.dp
     val Size42 = 42.dp
+    val Size44 = 44.dp
     val Size48 = 48.dp
     val Size52 = 52.dp
     val Size56 = 56.dp
     val Size58 = 58.dp
     val Size64 = 64.dp
     val Size68 = 68.dp
+    val Size69 = 69.dp
+    val Size72 = 72.dp
     val Size78 = 78.dp
     val Size80 = 80.dp
     val Size86 = 86.dp
+    val Size88 = 88.dp
     val Size96 = 96.dp
     val Size110 = 110.dp
     val Size128 = 128.dp

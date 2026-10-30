@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="settings_layout_variant">布局之制</string>
+    <string name="settings_layout_variant_summary">或取 M3E 大题与可收之寻索栏，或循紧凑旧制顶栏</string>
+    <string name="settings_layout_variant_traditional">旧制</string>
+    <string name="settings_layout_variant_m3e">M3E</string>
+    <string name="apm_search_hint">寻索系统模块</string>
+    <string name="kpm_search_hint">寻索内核模块</string>
+    <string name="su_search_hint">寻索应用</string>
     <string name="launcher_icon_style_anime">漫符</string>
     <string name="launcher_icon_style_geometry">幾何之符</string>
     <string name="launcher_icon_style_apatch">APatch</string>

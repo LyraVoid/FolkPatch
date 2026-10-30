@@ -35,6 +35,8 @@ import androidx.compose.material3.FloatingActionButtonMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -89,6 +91,9 @@ import androidx.compose.ui.platform.LocalConfiguration
 
 import me.bmax.apatch.util.BiometricUtils
 import me.bmax.apatch.ui.theme.tokens.FolkShape
+import me.bmax.apatch.ui.LocalLayoutVariant
+import me.bmax.apatch.ui.LayoutVariant
+import me.bmax.apatch.ui.component.rememberSearchAppBarScrollBehavior
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Destination<RootGraph>
@@ -111,6 +116,10 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
     var splicedCardGroup by remember { mutableStateOf(prefs.getBoolean("spliced_card_group", true)) }
 
     val viewModel = viewModel<APModuleViewModel>()
+    val m3eLayout = LocalLayoutVariant.current == LayoutVariant.M3E
+    val topAppBarScrollBehavior =
+        TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
+    val searchBarScrollBehavior = rememberSearchAppBarScrollBehavior(topAppBarScrollBehavior)
 
     DisposableEffect(Unit) {
         val listener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPrefs, key ->
@@ -193,6 +202,7 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
     val hideInstallButton = hasMagisk
 
     val moduleListState = rememberLazyListState()
+    val searchModuleListState = rememberLazyListState()
 
     var searchQuery by rememberSaveable { mutableStateOf("") }
     val filteredModuleList = remember(viewModel.moduleList, searchQuery) {
@@ -230,6 +240,38 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
                 BackgroundConfig.save(context)
             },
             onSortClick = { showModuleSortSheet = true },
+            scrollBehavior = if (m3eLayout) searchBarScrollBehavior else null,
+            searchContent = { bottomPadding, _ ->
+                ModuleList(
+                    navigator = navigator,
+                    viewModel = viewModel,
+                    modules = filteredModuleList,
+                    showMoreModuleInfo = showMoreModuleInfo,
+                    foldSystemModule = foldSystemModule,
+                    simpleListBottomBar = simpleListBottomBar,
+                    splicedCardGroup = splicedCardGroup,
+                    checkStrongBiometric = ::checkStrongBiometric,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(bottom = bottomPadding),
+                    state = searchModuleListState,
+                    onInstallModule = {
+                        navigator.navigate(InstallScreenDestination(it, MODULE_TYPE.APM))
+                    },
+                    onClickModule = { id, name, hasWebUi ->
+                        if (hasWebUi) {
+                            webUILauncher.launch(
+                                Intent(
+                                    context, WebUIActivity::class.java
+                                ).setData("apatch://webui/$id".toUri()).putExtra("id", id)
+                                    .putExtra("name", name)
+                            )
+                        }
+                    },
+                    snackBarHost = snackBarHost,
+                    context = context,
+                )
+            },
         )
     }, floatingActionButton = if (hideInstallButton) {
         { /* Empty */ }
@@ -383,6 +425,11 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
                     modifier = Modifier
                         .padding(innerPadding)
                         .fillMaxSize(),
+                    scrollConnection = if (m3eLayout) {
+                        searchBarScrollBehavior.nestedScrollConnection
+                    } else {
+                        null
+                    },
                     state = moduleListState,
                     onInstallModule = {
                         navigator.navigate(InstallScreenDestination(it, MODULE_TYPE.APM))

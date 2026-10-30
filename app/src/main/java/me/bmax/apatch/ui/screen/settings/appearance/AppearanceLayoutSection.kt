@@ -8,6 +8,7 @@ import me.bmax.apatch.util.ui.showToast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.material.icons.Icons
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.core.content.edit
@@ -25,6 +26,10 @@ import me.bmax.apatch.ui.component.SegmentedColumn
 import me.bmax.apatch.ui.component.SegmentedSliderItem
 import me.bmax.apatch.ui.component.SegmentedSwitchItem
 import me.bmax.apatch.ui.component.SegmentedValueItem
+import me.bmax.apatch.ui.component.SegmentedSelectableItem
+import me.bmax.apatch.ui.component.folk.ExpressiveDialog
+import me.bmax.apatch.ui.LayoutVariant
+import me.bmax.apatch.ui.theme.tokens.FolkDimens
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
@@ -64,6 +69,21 @@ fun AppearanceLayoutSection(
     val prefs = APApplication.sharedPreferences
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
+    var layoutVariant by remember {
+        mutableStateOf(LayoutVariant.fromValue(prefs.getString("layout_variant", LayoutVariant.M3E)))
+    }
+
+    DisposableEffect(prefs) {
+        val listener = android.content.SharedPreferences.OnSharedPreferenceChangeListener { preferences, key ->
+            if (key == "layout_variant") {
+                layoutVariant = LayoutVariant.fromValue(
+                    preferences.getString("layout_variant", LayoutVariant.M3E)
+                )
+            }
+        }
+        prefs.registerOnSharedPreferenceChangeListener(listener)
+        onDispose { prefs.unregisterOnSharedPreferenceChangeListener(listener) }
+    }
 
         val pickTitleImageLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.GetContent()
@@ -84,6 +104,49 @@ fun AppearanceLayoutSection(
     }
 
     SegmentedColumn(title = stringResource(R.string.settings_appearance_layout), flat = flat, highlightKey = highlightKey) {
+        item(key = "appearance_layout_variant") {
+            var showDialog by remember { mutableStateOf(false) }
+            SegmentedValueItem(
+                icon = Icons.Outlined.ViewAgenda,
+                title = stringResource(R.string.settings_layout_variant),
+                summary = stringResource(
+                    if (layoutVariant == LayoutVariant.TRADITIONAL) {
+                        R.string.settings_layout_variant_traditional
+                    } else {
+                        R.string.settings_layout_variant_m3e
+                    }
+                ),
+                onClick = { showDialog = true },
+            )
+            if (showDialog) {
+                ExpressiveDialog(onDismissRequest = { showDialog = false }) {
+                    Column(Modifier.padding(FolkDimens.Size24)) {
+                        Text(
+                            text = stringResource(R.string.settings_layout_variant),
+                            style = MaterialTheme.typography.headlineSmall,
+                            modifier = Modifier.padding(bottom = FolkDimens.Size16),
+                        )
+                        LayoutVariant.supported.forEach { variant ->
+                            SegmentedSelectableItem(
+                                title = stringResource(
+                                    if (variant == LayoutVariant.TRADITIONAL) {
+                                        R.string.settings_layout_variant_traditional
+                                    } else {
+                                        R.string.settings_layout_variant_m3e
+                                    }
+                                ),
+                                selected = layoutVariant == variant,
+                                onClick = {
+                                    prefs.edit().putString("layout_variant", variant).apply()
+                                    showDialog = false
+                                },
+                            )
+                        }
+                    }
+                }
+            }
+        }
+
         item(key = "appearance_home_layout") {
             SegmentedValueItem(
             icon = Icons.Outlined.Dashboard,

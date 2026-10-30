@@ -1,5 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="settings_layout_variant">Wariant układu</string>
+    <string name="settings_layout_variant_summary">Używaj dużych górnych pasków M3E ze zwijanym polem wyszukiwania albo zachowaj tradycyjne kompaktowe paski.</string>
+    <string name="settings_layout_variant_traditional">Tradycyjny</string>
+    <string name="settings_layout_variant_m3e">M3E</string>
+    <string name="apm_search_hint">Szukaj modułów systemowych</string>
+    <string name="kpm_search_hint">Szukaj modułów jądra</string>
+    <string name="su_search_hint">Szukaj aplikacji</string>
     <string name="settings_launcher_icon">Ikona launchera</string>
     <string name="launcher_icon_style_anime">Anime</string>
     <string name="launcher_icon_style_geometry">Geometryczny</string>

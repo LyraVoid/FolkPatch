@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="settings_layout_variant">布局变体喵</string>
+    <string name="settings_layout_variant_summary">用超大 M3E 顶栏和能折叠的行内搜索栏，或者照旧用紧凑顶栏喵</string>
+    <string name="settings_layout_variant_traditional">传统喵</string>
+    <string name="settings_layout_variant_m3e">M3E</string>
+    <string name="apm_search_hint">搜索系统模块喵</string>
+    <string name="kpm_search_hint">搜内核模块喵</string>
+    <string name="su_search_hint">搜索应用喵</string>
     <string name="launcher_icon_style_anime">动漫喵</string>
     <string name="launcher_icon_style_geometry">几何喵</string>
     <string name="launcher_icon_style_apatch">APatch</string>

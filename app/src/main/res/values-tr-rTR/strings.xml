@@ -1,5 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="settings_layout_variant">Düzen varyantı</string>
+    <string name="settings_layout_variant_summary">Daraltılabilir satır içi arama içeren büyük M3E üst çubuklarını kullanın veya geleneksel kompakt üst çubukları koruyun.</string>
+    <string name="settings_layout_variant_traditional">Geleneksel</string>
+    <string name="settings_layout_variant_m3e">M3E</string>
+    <string name="apm_search_hint">Sistem modüllerinde ara</string>
+    <string name="kpm_search_hint">Çekirdek modüllerinde ara</string>
+    <string name="su_search_hint">Uygulama ara</string>
     <string name="settings_launcher_icon">Launcher Simgesi</string>
     <string name="launcher_icon_style_anime">Anime</string>
     <string name="launcher_icon_style_geometry">Geometrik</string>

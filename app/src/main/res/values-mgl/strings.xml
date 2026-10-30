@@ -1,5 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="settings_layout_variant">布局变体</string>
+    <string name="settings_layout_variant_summary">使用带可折叠内嵌搜索的大号 M3E 顶栏，或保留传统紧凑顶栏。</string>
+    <string name="settings_layout_variant_traditional">古典</string>
+    <string name="settings_layout_variant_m3e">M3E</string>
+    <string name="apm_search_hint">搜寻系统魔法阵</string>
+    <string name="kpm_search_hint">搜寻内核法器</string>
+    <string name="su_search_hint">搜索应用</string>
     <string name="launcher_icon_style_anime">魔法少女</string>
     <string name="launcher_icon_style_geometry">几何魔法阵</string>
     <string name="launcher_icon_style_apatch">APatch</string>

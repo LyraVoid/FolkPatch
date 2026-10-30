@@ -1,5 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="settings_layout_variant">佈局變體</string>
+    <string name="settings_layout_variant_summary">在系統模組、超級使用者與核心模組頁面使用 Material 3 Expressive 大字標題與可收合的內嵌搜尋列，或沿用經典的緊湊頂欄。</string>
+    <string name="settings_layout_variant_traditional">傳統</string>
+    <string name="settings_layout_variant_m3e">M3E</string>
+    <string name="apm_search_hint">搜尋系統模組</string>
+    <string name="kpm_search_hint">搜尋核心模組</string>
+    <string name="su_search_hint">搜尋應用程式</string>
     <string name="launcher_icon_style_anime">動漫</string>
     <string name="launcher_icon_style_geometry">幾何</string>
     <string name="launcher_icon_style_apatch">APatch</string>

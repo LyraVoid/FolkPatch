@@ -76,6 +76,9 @@ import me.bmax.apatch.util.isJailbreakMode
 import me.bmax.apatch.util.kpmCustomModuleInfoStorage
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import me.bmax.apatch.ui.LocalLayoutVariant
+import me.bmax.apatch.ui.LayoutVariant
+import me.bmax.apatch.ui.component.rememberSearchAppBarScrollBehavior
 import me.bmax.apatch.core.ui.R as CoreR
 
 
@@ -111,6 +114,10 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
     }
 
     val viewModel = viewModel<KPModuleViewModel>()
+    val m3eLayout = LocalLayoutVariant.current == LayoutVariant.M3E
+    val topAppBarScrollBehavior =
+        TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
+    val searchBarScrollBehavior = rememberSearchAppBarScrollBehavior(topAppBarScrollBehavior)
 
     val context = LocalContext.current
 
@@ -148,6 +155,7 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
     }
 
     val kpModuleListState = rememberLazyListState()
+    val searchKpModuleListState = rememberLazyListState()
 
     var searchQuery by rememberSaveable { mutableStateOf("") }
     val filteredModuleList = remember(viewModel.moduleList, searchQuery) {
@@ -189,7 +197,25 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
             KPMTopBar(
                 navigator,
                 searchQuery,
-            ) { searchQuery = it }
+                onSearchQueryChange = { searchQuery = it },
+                scrollBehavior = if (m3eLayout) searchBarScrollBehavior else null,
+                searchContent = { bottomPadding, _ ->
+                    KPModuleList(
+                        viewModel = viewModel,
+                        moduleList = filteredModuleList,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(bottom = bottomPadding),
+                        state = searchKpModuleListState,
+                        showMoreModuleInfo = showMoreModuleInfo,
+                        foldSystemModule = foldSystemModule,
+                        simpleListBottomBar = simpleListBottomBar,
+                        splicedCardGroup = splicedCardGroup,
+                        showKpmStatusBadge = showKpmStatusBadge,
+                        checkStrongBiometric = ::checkStrongBiometric,
+                    )
+                },
+            )
         },
         floatingActionButton = run {
         {
@@ -357,6 +383,11 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize(),
+            scrollConnection = if (m3eLayout) {
+                searchBarScrollBehavior.nestedScrollConnection
+            } else {
+                null
+            },
             state = kpModuleListState,
             showMoreModuleInfo = showMoreModuleInfo,
             foldSystemModule = foldSystemModule,

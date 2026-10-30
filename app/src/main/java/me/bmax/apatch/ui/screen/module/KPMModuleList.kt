@@ -28,6 +28,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -74,6 +76,7 @@ fun KPModuleList(
     viewModel: KPModuleViewModel,
     moduleList: List<KPModel.KPMInfo>,
     modifier: Modifier = Modifier,
+    scrollConnection: NestedScrollConnection? = null,
     state: LazyListState,
     showMoreModuleInfo: Boolean,
     foldSystemModule: Boolean,
@@ -169,7 +172,15 @@ fun KPModuleList(
 
         if (isWideScreen) {
             TwoColumnGrid(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .then(
+                        if (scrollConnection != null) {
+                            Modifier.nestedScroll(scrollConnection)
+                        } else {
+                            Modifier
+                        }
+                    ),
                 items = if (moduleList.isEmpty()) emptyList() else moduleList,
                 key = { module -> module.name },
                 verticalSpacing = FolkDimens.Size16,
@@ -256,7 +267,15 @@ fun KPModuleList(
             )
         } else {
             LazyColumn(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .then(
+                        if (scrollConnection != null) {
+                            Modifier.nestedScroll(scrollConnection)
+                        } else {
+                            Modifier
+                        }
+                    ),
                 state = state,
                 contentPadding = run {
                     val bottomClearance = fabNavBottomClearance()

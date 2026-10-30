@@ -1,5 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="settings_layout_variant">Varian tata letak</string>
+    <string name="settings_layout_variant_summary">Gunakan bilah atas M3E besar dengan pencarian sebaris yang dapat diciutkan, atau pertahankan bilah atas ringkas tradisional.</string>
+    <string name="settings_layout_variant_traditional">Tradisional</string>
+    <string name="settings_layout_variant_m3e">M3E</string>
+    <string name="apm_search_hint">Cari modul sistem</string>
+    <string name="kpm_search_hint">Cari modul kernel</string>
+    <string name="su_search_hint">Cari aplikasi</string>
     <string name="launcher_icon_style_anime">Anime</string>
     <string name="launcher_icon_style_geometry">Geometri</string>
     <string name="launcher_icon_style_apatch">APatch</string>

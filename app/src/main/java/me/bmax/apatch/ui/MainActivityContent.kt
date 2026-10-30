@@ -114,6 +114,9 @@ var folkXAnimationType by remember {
 var folkXAnimationSpeed by remember {
     mutableStateOf(prefs.getFloat("folkx_animation_speed", 1.0f))
 }
+var layoutVariant by remember {
+    mutableStateOf(LayoutVariant.fromValue(prefs.getString("layout_variant", LayoutVariant.M3E)))
+}
 
 DisposableEffect(Unit) {
     val listener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
@@ -125,6 +128,11 @@ DisposableEffect(Unit) {
         }
         if (key == "folkx_animation_speed") {
             folkXAnimationSpeed = sharedPreferences.getFloat("folkx_animation_speed", 1.0f)
+        }
+        if (key == "layout_variant") {
+            layoutVariant = LayoutVariant.fromValue(
+                sharedPreferences.getString("layout_variant", LayoutVariant.M3E)
+            )
         }
     }
     prefs.registerOnSharedPreferenceChangeListener(listener)
@@ -227,12 +235,13 @@ LaunchedEffect(Unit) {
     }
 }
 
-APatchThemeWithBackground(
-    navController = navController,
-    folkXEngineEnabled = folkXEngineEnabled,
-    folkXAnimationType = folkXAnimationType,
-    folkXAnimationSpeed = folkXAnimationSpeed
-) {
+CompositionLocalProvider(LocalLayoutVariant provides layoutVariant) {
+    APatchThemeWithBackground(
+        navController = navController,
+        folkXEngineEnabled = folkXEngineEnabled,
+        folkXAnimationType = folkXAnimationType,
+        folkXAnimationSpeed = folkXAnimationSpeed
+    ) {
     
     val showUpdateDialog = remember { mutableStateOf(false) }
     val context = LocalContext.current
@@ -598,6 +607,7 @@ APatchThemeWithBackground(
                 )
             }
         }
+    }
     }
 }
         }

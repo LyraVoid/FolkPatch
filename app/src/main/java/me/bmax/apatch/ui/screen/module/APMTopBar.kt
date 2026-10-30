@@ -3,7 +3,7 @@ package me.bmax.apatch.ui.screen.module
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import androidx.compose.material.icons.outlined.Storefront
+import androidx.compose.material.icons.outlined.Cloud
 import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -21,6 +21,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.launch
 import me.bmax.apatch.R
@@ -32,6 +33,10 @@ import com.ramcosta.composedestinations.generated.destinations.OnlineModuleScree
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Sort
 import androidx.compose.material.icons.outlined.MoreVert
+import me.bmax.apatch.ui.LocalLayoutVariant
+import me.bmax.apatch.ui.LayoutVariant
+import me.bmax.apatch.ui.component.SearchAppBarScrollBehavior
+import me.bmax.apatch.ui.component.rememberSearchAppBarScrollBehavior
 import me.bmax.apatch.core.ui.R as CoreR
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -45,6 +50,8 @@ fun TopBar(
     onSearchQueryChange: (String) -> Unit,
     onToggleModuleBanner: () -> Unit,
     onSortClick: () -> Unit,
+    scrollBehavior: SearchAppBarScrollBehavior?,
+    searchContent: @Composable (bottomPadding: Dp, closeSearch: () -> Unit) -> Unit,
 ) {
     val confirmDialog = rememberConfirmDialog()
     val scope = rememberCoroutineScope()
@@ -53,23 +60,32 @@ fun TopBar(
     val confirm = stringResource(android.R.string.ok)
     val cancel = stringResource(android.R.string.cancel)
     val context = LocalContext.current
+    val m3eLayout = LocalLayoutVariant.current == LayoutVariant.M3E
 
     var showMenu by remember { mutableStateOf(false) }
 
     SearchAppBar(
+        largeTitle = m3eLayout,
+        topSearch = !m3eLayout,
+        collapsibleSearch = m3eLayout,
+        scrollBehavior = scrollBehavior,
+        searchPlaceholder = stringResource(R.string.apm_search_hint),
         title = { Text(stringResource(R.string.apm)) },
         searchText = searchQuery,
         onSearchTextChange = onSearchQueryChange,
         onClearClick = { onSearchQueryChange("") },
-        dropdownContent = {
-            androidx.compose.material3.IconButton(onClick = {
-                navigator.navigate(OnlineModuleScreenDestination)
-            }) {
+        snackbarHostState = snackBarHost,
+        navigationIcon = {
+            androidx.compose.material3.IconButton(
+                onClick = { navigator.navigate(OnlineModuleScreenDestination) }
+            ) {
                 Icon(
-                    imageVector = Icons.Outlined.Storefront,
+                    imageVector = Icons.Outlined.Cloud,
                     contentDescription = stringResource(R.string.online_module_title)
                 )
             }
+        },
+        dropdownContent = {
             androidx.compose.material3.IconButton(onClick = onSortClick) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Outlined.Sort,
@@ -124,6 +140,12 @@ fun TopBar(
                     }
                 }
             }
-        }
+        },
+        defaultContent = { bottomPadding, closeSearch ->
+            searchContent(bottomPadding, closeSearch)
+        },
+        searchContent = { bottomPadding, closeSearch ->
+            searchContent(bottomPadding, closeSearch)
+        },
     )
 }

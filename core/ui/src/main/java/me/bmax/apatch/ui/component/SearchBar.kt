@@ -20,10 +20,12 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -70,16 +72,48 @@ fun SearchAppBar(
     leadingActions: @Composable (() -> Unit)? = null,
     trailingActions: @Composable (() -> Unit)? = null,
     startInSearchMode: Boolean = false,
+    navigationIcon: (@Composable () -> Unit)? = null,
+    snackbarHostState: SnackbarHostState? = null,
+    scrollBehavior: TopAppBarScrollBehavior? = null,
+    largeTitle: Boolean = false,
+    topSearch: Boolean = false,
+    collapsibleSearch: Boolean = false,
     defaultContent: (@Composable BoxScope.(bottomPadding: Dp, closeSearch: () -> Unit) -> Unit)? = null,
     searchContent: (@Composable BoxScope.(bottomPadding: Dp, closeSearch: () -> Unit) -> Unit)? = null,
 ) {
-    if (defaultContent != null || searchContent != null) {
-        ExpandedSearchAppBar(
+    if (defaultContent != null || searchContent != null || largeTitle || topSearch ||
+        collapsibleSearch || scrollBehavior != null
+    ) {
+        AdaptiveSearchAppBar(
             title = title,
             searchText = searchText,
             onSearchTextChange = onSearchTextChange,
+            onClearClick = onClearClick,
             searchPlaceholder = searchPlaceholder,
-            actions = actions,
+            actions = {
+                leadingActions?.invoke()
+                actions()
+                dropdownContent?.invoke()
+                trailingActions?.invoke()
+            },
+            navigationIcon = navigationIcon ?: onBackClick?.let { backClick ->
+                {
+                    IconButton(
+                        onClick = backClick,
+                        content = {
+                            Icon(
+                                Icons.AutoMirrored.Outlined.ArrowBack,
+                                stringResource(R.string.core_action_back),
+                            )
+                        },
+                    )
+                }
+            },
+            snackbarHostState = snackbarHostState,
+            scrollBehavior = scrollBehavior,
+            largeTitle = largeTitle,
+            topSearch = topSearch || (!largeTitle && (defaultContent != null || searchContent != null)),
+            collapsibleSearch = collapsibleSearch,
             defaultContent = defaultContent ?: { _, _ -> },
             searchContent = searchContent ?: { _, _ -> },
         )

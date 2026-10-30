@@ -1,5 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="settings_layout_variant">布局之式</string>
+    <string name="settings_layout_variant_summary">于法宝、Root 与仙符之页用 M3E 之大题与可收之行间搜寻栏，或循古法紧凑仙顶栏。</string>
+    <string name="settings_layout_variant_traditional">古法</string>
+    <string name="settings_layout_variant_m3e">M3E</string>
+    <string name="apm_search_hint">搜寻系统仙符</string>
+    <string name="kpm_search_hint">尋內核之器</string>
+    <string name="su_search_hint">搜寻凡器</string>
     <string name="launcher_icon_style_anime">仙漫畫卷</string>
     <string name="launcher_icon_style_geometry">幾何仙陣</string>
     <string name="launcher_icon_style_apatch">APatch</string>

@@ -1,5 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="settings_layout_variant">레이아웃 변형</string>
+    <string name="settings_layout_variant_summary">접을 수 있는 인라인 검색이 있는 큰 M3E 상단 표시줄을 사용하거나 기존의 간결한 상단 표시줄을 유지합니다.</string>
+    <string name="settings_layout_variant_traditional">클래식</string>
+    <string name="settings_layout_variant_m3e">M3E</string>
+    <string name="apm_search_hint">시스템 모듈 검색</string>
+    <string name="kpm_search_hint">커널 모듈 검색</string>
+    <string name="su_search_hint">앱 검색</string>
     <string name="settings_launcher_icon">런처 아이콘</string>
     <string name="launcher_icon_style_anime">애니메</string>
     <string name="launcher_icon_style_geometry">지오메트리</string>

@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.ExperimentalMaterialApi
@@ -40,9 +41,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.SelectableDropdownMenuItem
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -56,6 +59,7 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -73,7 +77,10 @@ import me.bmax.apatch.ui.navigation.LocalBottomBarVisible
 import me.bmax.apatch.ui.navigation.LocalIsFloatingNavMode
 import me.bmax.apatch.ui.navigation.fabNavBottomClearance
 import me.bmax.apatch.ui.component.SearchAppBar
+import me.bmax.apatch.ui.component.rememberSearchAppBarScrollBehavior
 import me.bmax.apatch.ui.component.splicedLazyColumnGroup
+import me.bmax.apatch.ui.LayoutVariant
+import me.bmax.apatch.ui.LocalLayoutVariant
 import me.bmax.apatch.ui.viewmodel.SuperUserViewModel
 import me.bmax.apatch.util.ui.showToast
 
@@ -95,6 +102,10 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val haptic = LocalHapticFeedback.current
+    val m3eLayout = LocalLayoutVariant.current == LayoutVariant.M3E
+    val topAppBarScrollBehavior =
+        TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
+    val searchBarScrollBehavior = rememberSearchAppBarScrollBehavior(topAppBarScrollBehavior)
 
     val backupLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.CreateDocument("application/json")
@@ -193,6 +204,57 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
     }
 
     val filteredApps = viewModel.appList
+    val searchListState = androidx.compose.foundation.lazy.rememberLazyListState()
+    val appItems: LazyListScope.() -> Unit = {
+        if (useLegacySuPage) {
+            items(
+                filteredApps,
+                key = { it.packageName + it.uid }
+            ) { app ->
+                AppItemLegacy(
+                    app = app,
+                    isSelected = viewModel.isUidSelected(app.uid),
+                    selectionMode = viewModel.isSelectionMode,
+                    onToggleSelection = { viewModel.toggleSelection(app.uid) },
+                    onLongPress = {
+                        viewModel.enterSelectionMode()
+                        viewModel.toggleSelection(app.uid)
+                    }
+                )
+            }
+        } else {
+            item { Spacer(Modifier.height(FolkDimens.Size8)) }
+            splicedLazyColumnGroup(
+                items = filteredApps,
+                key = { _, app -> app.packageName + app.uid },
+                contentType = { _, _ -> "AppItem" },
+            ) { _, app ->
+                AppItemM3E(
+                    app = app,
+                    isSelected = viewModel.isUidSelected(app.uid),
+                    selectionMode = viewModel.isSelectionMode,
+                    onClick = {
+                        if (viewModel.isSelectionMode) {
+                            viewModel.toggleSelection(app.uid)
+                        } else {
+                            navigator.navigate(AppProfileScreenDestination(app.packageName, app.uid))
+                        }
+                    },
+                    onLongClick = {
+                        if (!viewModel.isSelectionMode) {
+                            viewModel.enterSelectionMode()
+                            viewModel.toggleSelection(app.uid)
+                        } else {
+                            selectedApp = app
+                            showAppActionDialog = true
+                        }
+                    },
+                    onToggleSelection = { viewModel.toggleSelection(app.uid) }
+                )
+            }
+            item { Spacer(Modifier.height(FolkDimens.Size8)) }
+        }
+    }
 
     FolkScaffold(
         topBar = {
@@ -206,10 +268,31 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
                 )
             } else {
                 SearchAppBar(
+                    largeTitle = m3eLayout,
+                    topSearch = !m3eLayout,
+                    collapsibleSearch = m3eLayout,
+                    searchPlaceholder = stringResource(R.string.su_search_hint),
+                    scrollBehavior = if (m3eLayout) searchBarScrollBehavior else null,
                     title = { Text(stringResource(R.string.su_title)) },
                     searchText = viewModel.search,
                     onSearchTextChange = { viewModel.updateSearch(it) },
                     onClearClick = { viewModel.updateSearch("") },
+                    defaultContent = { bottomPadding, _ ->
+                        LazyColumn(
+                            state = searchListState,
+                            modifier = Modifier.fillMaxSize(),
+                            contentPadding = PaddingValues(bottom = bottomPadding),
+                            content = appItems,
+                        )
+                    },
+                    searchContent = { bottomPadding, _ ->
+                        LazyColumn(
+                            state = searchListState,
+                            modifier = Modifier.fillMaxSize(),
+                            contentPadding = PaddingValues(bottom = bottomPadding),
+                            content = appItems,
+                        )
+                    },
                     leadingActions = {
                         IconButton(onClick = {
                             viewModel.enterSelectionMode()
@@ -367,7 +450,10 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
         // fabNavBottomClearance, so the scaffold must not add more.
         addBottomClearance = false,
     ) { innerPadding ->
-        Box(modifier = Modifier.padding(innerPadding)) {
+        Box(
+            modifier = Modifier
+                .padding(innerPadding)
+        ) {
             val pullToRefreshState = rememberPullToRefreshState()
             PullToRefreshBox(
             onRefresh = { scope.launch { viewModel.fetchAppList() } },
@@ -376,63 +462,21 @@ private fun SuperUserScreenModern(navigator: DestinationsNavigator, useLegacySuP
             indicator = { PullToRefreshDefaults.LoadingIndicator(state = pullToRefreshState, isRefreshing = viewModel.isRefreshing, modifier = Modifier.align(Alignment.TopCenter)) }
         ) {
             LazyColumn(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .then(
+                        if (m3eLayout) {
+                            Modifier.nestedScroll(searchBarScrollBehavior.nestedScrollConnection)
+                        } else {
+                            Modifier
+                        }
+                    ),
                 contentPadding = run {
                     val bottomClearance = fabNavBottomClearance()
                     remember(bottomClearance) { PaddingValues(bottom = bottomClearance) }
-                }
-            ) {
-                if (useLegacySuPage) {
-                    items(
-                        filteredApps,
-                        key = { it.packageName + it.uid }
-                    ) { app ->
-                        AppItemLegacy(
-                            app = app,
-                            isSelected = viewModel.isUidSelected(app.uid),
-                            selectionMode = viewModel.isSelectionMode,
-                            onToggleSelection = { viewModel.toggleSelection(app.uid) },
-                            onLongPress = {
-                                viewModel.enterSelectionMode()
-                                viewModel.toggleSelection(app.uid)
-                            }
-                        )
-                    }
-                } else {
-                    item { Spacer(Modifier.height(FolkDimens.Size8)) }
-                    splicedLazyColumnGroup(
-                        items = filteredApps,
-                        key = { _, app -> app.packageName + app.uid },
-                        contentType = { _, _ -> "AppItem" },
-                    ) { _, app ->
-                        AppItemM3E(
-                            app = app,
-                            isSelected = viewModel.isUidSelected(app.uid),
-                            selectionMode = viewModel.isSelectionMode,
-                            onClick = {
-                                if (viewModel.isSelectionMode) {
-                                    viewModel.toggleSelection(app.uid)
-                                } else {
-                                    navigator.navigate(AppProfileScreenDestination(app.packageName, app.uid))
-                                }
-                            },
-                            onLongClick = {
-                                if (!viewModel.isSelectionMode) {
-                                    viewModel.enterSelectionMode()
-                                    viewModel.toggleSelection(app.uid)
-                                } else {
-                                    selectedApp = app
-                                    showAppActionDialog = true
-                                }
-                            },
-                            onToggleSelection = { viewModel.toggleSelection(app.uid) }
-                        )
-                    }
-                    item {
-                        Spacer(Modifier.height(FolkDimens.Size8)) // bottom clearance handled by contentPadding
-                    }
-                }
-            }
+                },
+                content = appItems,
+            )
         }
 
         }

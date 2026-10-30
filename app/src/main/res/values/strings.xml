@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="settings_layout_variant">Layout variant</string>
+    <string name="settings_layout_variant_summary">Use large M3E top bars with collapsible inline search, or keep the compact traditional top bars.</string>
+    <string name="settings_layout_variant_traditional">Traditional</string>
+    <string name="settings_layout_variant_m3e">M3E</string>
+    <string name="apm_search_hint">Search system modules</string>
+    <string name="kpm_search_hint">Search kernel modules</string>
+    <string name="su_search_hint">Search apps</string>
     <string name="launcher_icon_style_anime">Anime</string>
     <string name="launcher_icon_style_geometry">Geometry</string>
     <string name="launcher_icon_style_apatch">APatch</string>

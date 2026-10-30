@@ -47,6 +47,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.text.style.TextAlign
@@ -89,6 +91,7 @@ fun ModuleList(
     splicedCardGroup: Boolean,
     checkStrongBiometric: suspend () -> Boolean,
     modifier: Modifier = Modifier,
+    scrollConnection: NestedScrollConnection? = null,
     state: LazyListState,
     onInstallModule: (Uri) -> Unit,
     onClickModule: (id: String, name: String, hasWebUi: Boolean) -> Unit,
@@ -256,7 +259,15 @@ fun ModuleList(
 
         if (isWideScreen) {
             TwoColumnGrid(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .then(
+                        if (scrollConnection != null) {
+                            Modifier.nestedScroll(scrollConnection)
+                        } else {
+                            Modifier
+                        }
+                    ),
                 items = if (modules.isEmpty()) emptyList() else modules,
                 key = { module -> module.id },
                 verticalSpacing = FolkDimens.Size16,
@@ -365,7 +376,15 @@ fun ModuleList(
             )
         } else {
             LazyColumn(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .then(
+                        if (scrollConnection != null) {
+                            Modifier.nestedScroll(scrollConnection)
+                        } else {
+                            Modifier
+                        }
+                    ),
                 state = state,
                 contentPadding = run {
                     val bottomClearance = fabNavBottomClearance()

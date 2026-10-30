@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="settings_layout_variant">布局变体</string>
+    <string name="settings_layout_variant_summary">在系统模块、超级用户与内核模块页面使用 Material 3 Expressive 大标题与可折叠的内嵌搜索栏，或沿用经典的紧凑顶栏。</string>
+    <string name="settings_layout_variant_traditional">传统</string>
+    <string name="settings_layout_variant_m3e">M3E</string>
+    <string name="apm_search_hint">搜索系统模块</string>
+    <string name="kpm_search_hint">搜索内核模块</string>
+    <string name="su_search_hint">搜索应用</string>
     <string name="settings_launcher_icon">桌面图标</string>
     <string name="launcher_icon_style_anime">动漫</string>
     <string name="launcher_icon_style_geometry">几何</string>
