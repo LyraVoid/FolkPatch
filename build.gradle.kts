@@ -52,8 +52,14 @@ fun getVersionCode(): Int {
     return code
 }
 
+/**
+ * Branch names may contain '/', which is not a legal character in a file name.
+ * The branch only feeds the APK archive name, so keep it filesystem-safe here
+ * instead of failing later in the manifest task.
+ */
 fun getbranch(): String {
     return exec("git rev-parse --abbrev-ref HEAD", "unknown")
+        .replace(Regex("[^A-Za-z0-9._-]"), "-")
 }
 
 fun getVersionName(): String {

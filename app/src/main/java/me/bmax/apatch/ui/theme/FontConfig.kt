@@ -12,6 +12,7 @@ import androidx.core.content.res.ResourcesCompat
 import me.bmax.apatch.R
 import me.bmax.apatch.util.SafeUriResolver
 import java.io.File
+import java.io.FileInputStream
 
 /**
  * How the application renders text.
@@ -76,7 +77,7 @@ object FontConfig {
         // else keeps the platform font the user already had.
         val storedMode = FontMode.fromName(prefs.getString(KEY_FONT_MODE, null))
         val legacyEnabled = prefs.getBoolean(KEY_CUSTOM_FONT_ENABLED, false)
-        fontMode = storedMode ?: if (legacyEnabled) FontMode.CUSTOM else FontMode.SYSTEM_DEFAULT
+        fontMode = resolveFontMode(storedMode, legacyEnabled)
         isCustomFontEnabled = fontMode == FontMode.CUSTOM
         var needsPersist = storedMode == null
 
@@ -92,14 +93,16 @@ object FontConfig {
             }
         }
 
-        // Validate if file exists. A missing custom file must not leave the app
-        // in a broken state, so fall back to the platform font.
-        if (isCustomFontEnabled) {
-            val file = customFontFilename?.let { File(context.filesDir, it) }
-            if (file == null || !file.exists()) {
+        // A stored file that disappeared only drops the stale name: the CUSTOM
+        // choice itself is kept, so the picker keeps offering "Select Font File"
+        // and text falls back to the platform font until a file is imported.
+        // Downgrading the mode here is what made picking "Custom" before
+        // choosing a file bounce straight back to "System default".
+        val storedName = customFontFilename
+        if (isCustomFontEnabled && storedName != null) {
+            val resolved = resolveCustomFontName(storedName) { File(context.filesDir, it).exists() }
+            if (resolved == null) {
                 customFontFilename = null
-                fontMode = FontMode.SYSTEM_DEFAULT
-                isCustomFontEnabled = false
                 needsPersist = true
             }
         }
@@ -119,42 +122,45 @@ object FontConfig {
     }
 
     fun applyCustomFont(context: Context, sourceFile: File) {
-        val newFilename = "custom_font_${System.currentTimeMillis()}.ttf"
-        val oldFilename = customFontFilename
-        
-        try {
-            val destFile = File(context.filesDir, newFilename)
-            sourceFile.copyTo(destFile, overwrite = true)
-            
-            // Delete old file if it exists and is different
-            if (oldFilename != null && oldFilename != newFilename) {
-                val oldFile = File(context.filesDir, oldFilename)
-                if (oldFile.exists()) {
-                    oldFile.delete()
-                }
-            }
-            
-            fontMode = FontMode.CUSTOM
-            isCustomFontEnabled = true
-            customFontFilename = newFilename
-            save(context)
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to apply custom font", e)
-        }
+        installCustomFont(context, sourceFile)
     }
 
     fun saveFontFile(context: Context, uri: Uri): Boolean {
+        val tempFile = File(context.filesDir, "custom_font_import_${System.currentTimeMillis()}.ttf")
         return try {
-            val newFilename = "custom_font_${System.currentTimeMillis()}.ttf"
-            val oldFilename = customFontFilename
-            
-            SafeUriResolver.openInputStream(context, uri)?.use { input ->
-                val file = File(context.filesDir, newFilename)
-                file.outputStream().use { output ->
-                    input.copyTo(output)
-                }
+            val copied = SafeUriResolver.openInputStream(context, uri)?.use { input ->
+                tempFile.outputStream().use { output -> input.copyTo(output) }
+                true
+            } ?: false
+            if (!copied || !isSupportedFontFile(tempFile)) {
+                tempFile.delete()
+                false
+            } else {
+                installCustomFont(context, tempFile).also { tempFile.delete() }
             }
-            
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to save font file", e)
+            tempFile.delete()
+            false
+        }
+    }
+
+    /**
+     * Copies [sourceFile] into app storage and makes it the active custom font.
+     * Anything that is not a real font file is rejected here, so a bad pick can
+     * never leave [fontMode] on CUSTOM pointing at a file that renders nothing.
+     */
+    private fun installCustomFont(context: Context, sourceFile: File): Boolean {
+        if (!isSupportedFontFile(sourceFile)) {
+            Log.e(TAG, "Rejected ${sourceFile.name}: not a supported font file")
+            return false
+        }
+        val newFilename = "custom_font_${System.currentTimeMillis()}.ttf"
+        val oldFilename = customFontFilename
+        val destFile = File(context.filesDir, newFilename)
+        return try {
+            sourceFile.copyTo(destFile, overwrite = true)
+
             // Delete old file if it exists and is different
             if (oldFilename != null && oldFilename != newFilename) {
                 val oldFile = File(context.filesDir, oldFilename)
@@ -162,14 +168,29 @@ object FontConfig {
                     oldFile.delete()
                 }
             }
-            
+
             fontMode = FontMode.CUSTOM
             isCustomFontEnabled = true
             customFontFilename = newFilename
             save(context)
             true
         } catch (e: Exception) {
-            Log.e(TAG, "Failed to save font file", e)
+            Log.e(TAG, "Failed to apply custom font", e)
+            destFile.delete()
+            false
+        }
+    }
+
+    /** True when [file] starts with a known sfnt signature (TTF/OTF/TTC). */
+    private fun isSupportedFontFile(file: File): Boolean {
+        if (!file.isFile || file.length() < 12L) return false
+        return try {
+            FileInputStream(file).use { input ->
+                val header = ByteArray(4)
+                input.read(header) == 4 && FONT_SIGNATURES.any { it.contentEquals(header) }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to inspect font file", e)
             false
         }
     }
@@ -235,3 +256,30 @@ object FontConfig {
         cachedMode = null
     }
 }
+
+/**
+ * Resolves the persisted mode. A stored choice always wins — only a preference
+ * that was never written falls back to the legacy boolean, and CUSTOM is never
+ * downgraded here.
+ */
+internal fun resolveFontMode(stored: FontMode?, legacyCustomFontEnabled: Boolean): FontMode =
+    stored ?: if (legacyCustomFontEnabled) FontMode.CUSTOM else FontMode.SYSTEM_DEFAULT
+
+/**
+ * Drops a stale custom font name without touching the selected mode.
+ *
+ * A missing file must not silently move the user back to another mode: the
+ * CUSTOM choice survives, text falls back to the platform font and the picker
+ * keeps offering "Select Font File" until a file is imported again.
+ */
+internal fun resolveCustomFontName(name: String?, exists: (String) -> Boolean): String? =
+    if (name != null && !exists(name)) null else name
+
+/** sfnt signatures Android can render: TrueType, 'OTTO' CFF, 'true', 'typ1' and collections. */
+private val FONT_SIGNATURES: List<ByteArray> = listOf(
+    byteArrayOf(0x00, 0x01, 0x00, 0x00),
+    byteArrayOf(0x4F, 0x54, 0x54, 0x4F),
+    byteArrayOf(0x74, 0x72, 0x75, 0x65),
+    byteArrayOf(0x74, 0x79, 0x70, 0x31),
+    byteArrayOf(0x74, 0x74, 0x63, 0x66),
+)
