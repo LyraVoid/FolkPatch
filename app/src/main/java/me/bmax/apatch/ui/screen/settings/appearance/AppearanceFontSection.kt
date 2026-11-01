@@ -64,6 +64,13 @@ fun AppearanceFontSection(
                 SegmentedValueItem(
                     icon = Icons.Outlined.FontDownload,
                     title = stringResource(id = R.string.settings_select_font_file),
+                    // Custom mode stays selected without a file, so the row has to
+                    // say that nothing is imported yet instead of looking done.
+                    summary = if (FontConfig.customFontFilename == null) {
+                        stringResource(id = R.string.settings_font_select_hint)
+                    } else {
+                        null
+                    },
                     onClick = {
                         try {
                             pickFontLauncher.launch("*/*")

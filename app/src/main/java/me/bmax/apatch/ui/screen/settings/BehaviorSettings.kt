@@ -1,6 +1,12 @@
 package me.bmax.apatch.ui.screen.settings
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.AddToHomeScreen
@@ -170,31 +176,41 @@ fun BehaviorSettingsContent(
                     },
                 )
 
-                if (expanded) {
-                    SegmentedCheckboxItem(
-                        title = stringResource(id = R.string.badge_superuser),
-                        checked = enableSuperUserBadge,
-                        onCheckedChange = {
-                            enableSuperUserBadge = it
-                            prefs.edit().putBoolean("badge_superuser", it).apply()
-                        },
-                    )
-                    SegmentedCheckboxItem(
-                        title = stringResource(id = R.string.badge_apm),
-                        checked = enableApmBadge,
-                        onCheckedChange = {
-                            enableApmBadge = it
-                            prefs.edit().putBoolean("badge_apm", it).apply()
-                        },
-                    )
-                    SegmentedCheckboxItem(
-                        title = stringResource(id = R.string.badge_kernel),
-                        checked = enableKernelBadge,
-                        onCheckedChange = {
-                            enableKernelBadge = it
-                            prefs.edit().putBoolean("badge_kernel", it).apply()
-                        },
-                    )
+                // Same disclosure motion as the navigation layout setting on the
+                // appearance page, so both rows open and close identically.
+                AnimatedVisibility(
+                    visible = expanded,
+                    enter = fadeIn(MaterialTheme.motionScheme.defaultEffectsSpec()) +
+                        expandVertically(MaterialTheme.motionScheme.defaultSpatialSpec()),
+                    exit = shrinkVertically(MaterialTheme.motionScheme.fastSpatialSpec()) +
+                        fadeOut(MaterialTheme.motionScheme.fastEffectsSpec()),
+                ) {
+                    Column {
+                        SegmentedCheckboxItem(
+                            title = stringResource(id = R.string.badge_superuser),
+                            checked = enableSuperUserBadge,
+                            onCheckedChange = {
+                                enableSuperUserBadge = it
+                                prefs.edit().putBoolean("badge_superuser", it).apply()
+                            },
+                        )
+                        SegmentedCheckboxItem(
+                            title = stringResource(id = R.string.badge_apm),
+                            checked = enableApmBadge,
+                            onCheckedChange = {
+                                enableApmBadge = it
+                                prefs.edit().putBoolean("badge_apm", it).apply()
+                            },
+                        )
+                        SegmentedCheckboxItem(
+                            title = stringResource(id = R.string.badge_kernel),
+                            checked = enableKernelBadge,
+                            onCheckedChange = {
+                                enableKernelBadge = it
+                                prefs.edit().putBoolean("badge_kernel", it).apply()
+                            },
+                        )
+                    }
                 }
             }
         }
